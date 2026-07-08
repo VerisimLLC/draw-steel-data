@@ -1,0 +1,113 @@
+__typeName: CharacterComplication
+id: 88987f84-5478-4136-9334-a57a4e8dbbf3
+ctime: 1755518514677
+mtime: 1780538187744
+benefit: While you are taunted by a creature, you gain an edge on strikes against that creature. Additionally, you can spend 1 Heroic Resource to have a double edge instead.
+description: You're quick to anger, never letting an insult go without slinging one right back. In combat, you fight as if possessed by a literal spirit of wrath. No matter the tactical circumstances, when someone injures you, you feel compelled to answer blood with blood.
+drawback: In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 91a63735-52e5-485b-a3e6-6473a16d50cf
+    canHavePrerequisites: true
+    description: While you are taunted by a creature, you gain an edge on strikes against that creature. Additionally, you can spend 1 Heroic Resource to have a double edge instead.
+    modifiers:
+    - __typeName: CharacterModifier
+      modtype: edge
+      rollType: ability_power_roll
+      sourceguid: 91a63735-52e5-485b-a3e6-6473a16d50cf
+      behavior: power
+      guid: 65567296-15e0-4f63-b49b-2b2e64045fe5
+      displayCondition: Target = ConditionCaster("Taunted")
+      keywords:
+        Strike: true
+      description: While you are taunted by a creature, you gain an edge on strikes against that creature. Additionally, you can spend 1 Heroic Resource to have a double edge instead.
+      source: Complications
+      activationCondition: Target = ConditionCaster("Taunted")
+      name: Wrathful Spirit - Edge
+    - __typeName: CharacterModifier
+      modtype: double_edge
+      rollType: ability_power_roll
+      resourceCostType: cost
+      sourceguid: 91a63735-52e5-485b-a3e6-6473a16d50cf
+      keywords:
+        Strike: true
+      guid: 321acb80-1a13-4065-9983-51034a59e1e0
+      behavior: power
+      displayCondition: Target = ConditionCaster("Taunted")
+      description: While you are taunted by a creature, you gain an edge on strikes against that creature. Additionally, you can spend 1 Heroic Resource to have a double edge instead.
+      source: Complications
+      activationCondition: "0"
+      name: Wrathful Spirit - Double Edge
+    source: Complications
+    name: Wrathful Spirit - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: ac4350d5-0459-4cc6-bd91-b24eb3fa4094
+    canHavePrerequisites: true
+    description: In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 4dcd6f59-7f55-4e49-8f38-3fbbb8fa10cf
+      sourceguid: ac4350d5-0459-4cc6-bd91-b24eb3fa4094
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        strain: []
+        targetType: attacker
+        conditionFormula: not Conditions has "Taunted"
+        behaviors:
+        - __typeName: ActivatedAbilityFloatTextBehavior
+          color:
+            __usertype: LuaColor
+            h: 0
+            s: 0.9638671875
+            v: 0.978164851665497
+            a: 1
+          applyto: caster
+          text: Wrathful Spirit
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          applyto: caster
+          rule: taunted (EoT)
+        - __typeName: ActivatedAbilityConditionSourceBehavior
+          filterTarget: Target = Attacker
+          conditionMode: ability
+          applyto: targets
+          condid: 85e26e12-e853-464d-bbbc-98ddf2c0071a
+        persistence: []
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: c6de8bcd-44ce-46bc-b121-39fd95a481fd
+        repeatTargets: false
+        description: In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+        trigger: attacked
+        range: 1
+        name: Wrathful Spirit - Drawback
+      description: In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+      source: Complications
+      behavior: trigger
+      name: Wrathful Spirit - Drawback
+    - __typeName: CharacterModifier
+      color: red
+      texttype: negotiation
+      sourceguid: ac4350d5-0459-4cc6-bd91-b24eb3fa4094
+      guid: cacd4db6-c3ab-4cf6-8e2b-4d1380713385
+      text: Whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+      description: In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.
+      source: Complications
+      name: Wrathful Spirit - Drawback
+      behavior: movementtext
+    source: Complications
+    name: Wrathful Spirit - Drawback
+name: Wrathful Spirit
+_table: complications

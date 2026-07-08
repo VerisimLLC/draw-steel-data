@@ -1,0 +1,119 @@
+__typeName: equipment
+imbueTarget: implement
+hidden: true
+imbuements:
+  9613252b-565c-4389-9aaa-e3ddc07c1e0a: true
+  byLevel:
+  - 9613252b-565c-4389-9aaa-e3ddc07c1e0a
+type: Gear
+weight: 1
+mtime: 1774700272400
+unique: true
+description: A mundane implement suitable for imbuing.
+features:
+- __typeName: CharacterFeature
+  guid: 6eaeff61-c747-49e1-95b5-7c5fe96313ac
+  itemAttached: true
+  addText: Add Magical Property
+  description: "Immediately after using a magic or psionic ability that requires a main action, you can shift up to 3 squares, or you can use the Escape Grab maneuver as a free maneuver (see Maneuvers in Chapter 10: Combat)."
+  modifiers:
+  - __typeName: CharacterModifier
+    guid: 7113d5b3-6662-49a7-aafc-dd4c6d9df2d2
+    name: Celerity
+    sourceguid: 6eaeff61-c747-49e1-95b5-7c5fe96313ac
+    description: "Immediately after using a magic or psionic ability that requires a main action, you can shift up to 3 squares, or you can use the Escape Grab maneuver as a free maneuver (see Maneuvers in Chapter 10: Combat)."
+    source: Celerity Imbuement
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      mandatory: false
+      triggerPrompt: Immediately after using a magic or psionic ability that requires a main action, you can shift up to 3 squares, or you can use the Escape Grab maneuver as a free maneuver.
+      strain: []
+      targetType: self
+      conditionFormula: Used Ability.main action and (Used Ability.keywords has "magic" or Used Ability.keywords has "psionic")
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Conditions has "Grabbed"
+        rule: shift 3
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          castImmediately: true
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+            modifier:
+              __typeName: CharacterModifier
+              attributes: []
+              cannotModifyAction: true
+              guid: ad99c248-db05-4684-bd8c-88441f24a974
+              behavior: modifyability
+              name: Modify Attack
+              description: ""
+              source: ""
+              filterAbility: Ability.name = "Escape Grab"
+              ability:
+                __typeName: ActivatedAbility
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+                abilityType: none
+                numTargets: "1"
+                targetType: self
+                modifiers: []
+                behaviors: []
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: 7e505e8e-2c6f-4235-8c6e-5b07dc3931e0
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
+          categorization: Hidden
+          iconid: ui-icons/skills/1.png
+          guid: a1507b82-1bcc-4b63-9439-71d34b05a18e
+          abilityType: none
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
+        filterTarget: Conditions has "Grabbed"
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      guid: 3bdf0a45-f65a-483b-a67e-2b3037ba0c7d
+      description: "Immediately after using a magic or psionic ability that requires a main action, you can shift up to 3 squares, or you can use the Escape Grab maneuver as a free maneuver (see Maneuvers in Chapter 10: Combat)."
+      trigger: useability
+      repeatTargets: false
+      range: 1
+      name: Celerity
+    behavior: trigger
+  source: Celerity Imbuement
+  name: Celerity
+iconid: cc913329-17fb-46c0-9a66-25e9bafbd445
+category: Gear
+id: 6ddabf79-e6d1-4a45-8d3b-451807a3d157
+domains:
+  item:6ddabf79-e6d1-4a45-8d3b-451807a3d157: true
+ctime: 1774700137323
+implementation: 0
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+name: Imbued Mundane implement
+_table: tbl_Gear

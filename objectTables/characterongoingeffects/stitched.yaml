@@ -1,0 +1,74 @@
+__typeName: CharacterOngoingEffect
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+custom: true
+mtime: 1775325159508
+modifiers:
+- __typeName: CharacterModifier
+  modtype: bane
+  rollType: ability_power_roll
+  activationAfterRoll: false
+  description: While stitched together a target takes a bane on power rolls while not adjacent to a creature they are stitched to.
+  displayCondition: ""
+  behavior: power
+  guid: 103a01f9-557e-46f7-a4eb-c991c7d995ad
+  sourceguid: 87f1775b-960d-4c65-ab57-787da859f54e
+  domains:
+    CharacterOngoingEffect:87f1775b-960d-4c65-ab57-787da859f54e: true
+  keywords: []
+  source: Ongoing Effect
+  activationCondition: Count Nearby Creatures(1, "Stitched") < 1
+  name: Stitched
+- __typeName: CharacterModifier
+  name: Stitched
+  guid: d9db1751-b5f1-4224-b2a0-5d1e95c0444b
+  sourceguid: 87f1775b-960d-4c65-ab57-787da859f54e
+  domains:
+    CharacterOngoingEffect:87f1775b-960d-4c65-ab57-787da859f54e: true
+  description: While stitched together a target takes a bane on power rolls while not adjacent to a creature they are stitched to.
+  source: Ongoing Effect
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    strain: []
+    targetType: self
+    conditionFormula: BoundOngoingEffect(Subject, "Stitched") and (not  BoundOngoingEffect(Attacker, "Stitched"))
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      roll: Cast.Damage Dealt Against(Subject)*0.5
+      doesNotTrigger: true
+      chatMessage: Stitched Shared Damage
+    persistence: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    subject: other
+    numTargets: "1"
+    modifiers: []
+    description: ""
+    iconid: ui-icons/skills/1.png
+    guid: 2ff66787-10e8-437b-b446-e7677f9102d7
+    abilityType: none
+    domains:
+      CharacterOngoingEffect:87f1775b-960d-4c65-ab57-787da859f54e: true
+    trigger: losehitpoints
+    repeatTargets: false
+    range: 1
+    name: Stitched
+  behavior: trigger
+description: 'While stitched together a target takes a bane on power rolls while not adjacent to a creature they are stitched to. Whenever a stitched target takes damage that was not dealt by or also taken by another stitched target each other stitched target takes half the damage the initial target took. '
+association: []
+iconid: ui-icons/skills/1.png
+guid: 87f1775b-960d-4c65-ab57-787da859f54e
+casterTracking: bond
+domains:
+  CharacterOngoingEffect:87f1775b-960d-4c65-ab57-787da859f54e: true
+ctime: 1765944643134
+source: Ongoing Effect
+id: 87f1775b-960d-4c65-ab57-787da859f54e
+name: Stitched
+_table: characterOngoingEffects

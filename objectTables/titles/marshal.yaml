@@ -1,0 +1,258 @@
+__typeName: Title
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    description: "Choose one of the following benefits:"
+    options:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: cb4baaf2-0980-47bc-b9d9-efa84fab9e1e
+      canHavePrerequisites: true
+      description: When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage
+      modifiers:
+      - __typeName: CharacterModifier
+        filterCondition: (not Conditions has "Surprised") and (Taken Turn = 0)
+        targetType: self
+        rules: When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage
+        description: When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage
+        sourceguid: 6589398c-4c2f-4e23-ba7c-f33c2cd5dccc
+        powerRollModifier:
+          __typeName: CharacterModifier
+          modtype: none
+          rollType: enemy_ability_power_roll
+          rules: ""
+          resourceRefreshType: encounter
+          displayCondition: ""
+          name: Guess It’s the Hard Way Then
+          guid: 5e772fe1-0002-4775-903c-458aa42610a4
+          description: When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage
+          damageMultiplier: half
+          keywords: []
+          source: Trigger
+          activationCondition: ""
+          behavior: power
+        guid: 5bfe9167-488b-48fb-a8fb-3c4af752ab17
+        name: Guess It’s the Hard Way Then
+        type: trigger
+        trigger: takedamage
+        source: Feat
+        range: 10
+        behavior: powertabletrigger
+      source: Feat
+      name: Guess It’s the Hard Way Then
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 24a614fd-e824-41d6-945d-ca1c05b160c7
+      canHavePrerequisites: true
+      description: Once on each of your turns, you can use a free maneuver to deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: d6967cb5-0e94-4ecd-a579-7e1568934678
+        behavior: activated
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 3
+          castImmediately: true
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: 1d6
+            cannotBeReduced: true
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: b8eeec54-7cb5-4040-b867-d92e191bbadc
+            ongoingEffect: b8eeec54-7cb5-4040-b867-d92e191bbadc
+            duration: 0
+          sourceReference:
+            __typeName: SourceReference
+            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+            page: 341
+          persistence: []
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+          iconid: b4d8d555-a8c8-44e9-aa8c-cf3718d3d1ea
+          guid: 0a8f5dd5-e122-4f8e-8ec0-3b8b9d3fe0c7
+          categorization: Ability
+          domains: []
+          description: Once on each of your turns, you can use a free maneuver to deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.
+          display:
+            bgcolor:
+              __usertype: LuaColor
+              h: 0.0957493782043457
+              s: 0.946288704872131
+              v: 0.904310584068298
+              a: 1
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Heedless Pursuer
+        description: Once on each of your turns, you can use a free maneuver to deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.
+        source: Feat
+        name: Heedless Pursuer
+        sourceguid: 24a614fd-e824-41d6-945d-ca1c05b160c7
+      source: Feat
+      name: Heedless Pursuer
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 13d9a644-4350-4ab2-884d-d132f88a30ce
+      canHavePrerequisites: true
+      description: You have a badge granted to you by your organization. While you wear it, you gain the My Life for Yours feature from the censor class. When you use that ability, you can’t spend wrath unless you have the Wrath class feature.
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 6efbb883-7783-48f4-92ec-8d9b8a6f527a
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: Spend a Recovery and the target regains Stamina equal to your Recovery value.
+          strain: []
+          targetType: subject
+          conditionFormula: Resources.Recovery > 0
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            roll: Caster.Recovery Value
+          - __typeName: ActivatedAbilityReplenishBehavior
+            mode: expend
+            resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+            applyto: caster
+          hasManualVersion: true
+          multipleModes: true
+          persistence: []
+          subjectRange: "10"
+          selfTarget: true
+          repeatTargets: false
+          subject: selfandallies
+          numTargets: "1"
+          modeList: []
+          abilityFilters:
+          - reason: You have no Recoveries left to spend.
+            formula: Resources.Recovery > 0
+          modifiers: []
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          trigger: losehitpoints
+          iconid: ui-icons/skills/1.png
+          guid: 4d3dfeb9-33af-4537-b63d-154b1b591d7e
+          abilityType: none
+          domains:
+            class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: My Life For Yours
+        guid: c2688383-65e1-4e99-9156-92e91abdf472
+        name: My Life For Yours
+        domains:
+          class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+        description: You can channel your will to mend your wounds or the wounds of your allies. You gain the following ability.
+        source: Feat
+        filterCondition: not (Domains has "Life" and Level >= 4)
+        behavior: trigger
+      - __typeName: CharacterModifier
+        sourceguid: 6efbb883-7783-48f4-92ec-8d9b8a6f527a
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: Spend a Recovery and the target regains Stamina equal to your Recovery value.
+          strain: []
+          targetType: subject
+          conditionFormula: Resources.Recovery > 0 and (Subject.stamina < Subject.Maximum Stamina)
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            roll: Caster.Recovery Value
+          - __typeName: ActivatedAbilityReplenishBehavior
+            mode: expend
+            resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+            applyto: caster
+          selfTarget: true
+          multipleModes: true
+          persistence: []
+          repeatTargets: false
+          subject: selfandallies
+          numTargets: "1"
+          subjectRange: "10"
+          guid: a75f5c3a-c8e3-48e9-a68f-ff30be84c7d6
+          modifiers: []
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          modeList: []
+          description: ""
+          domains:
+            class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+          trigger: beginturn
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: My Life For Yours
+        guid: aa2b8ba2-22a5-42ec-9b53-b3a3bc75fa16
+        name: My Life For Yours
+        domains:
+          class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+        description: You can channel your will to mend your wounds or the wounds of your allies. You gain the following ability.
+        source: Feat
+        filterCondition: not (Domains has "Life" and Level >= 4)
+        behavior: trigger
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: 0e6268ee-e383-4a80-be2b-daf972b0f66a
+        sourceguid: 6efbb883-7783-48f4-92ec-8d9b8a6f527a
+        domains:
+          class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+        description: You can channel your will to mend your wounds or the wounds of your allies. You gain the following ability.
+        source: Feat
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 1776a2ef-5e7c-4c07-aab5-6cef4d7f5303
+          target: Self or one ally
+          trigger: "Trigger: The target starts their turn or takes damage."
+          keywords: []
+          name: My Life for Yours
+          flavor: "The first principle of the oath: defend the righteous."
+          effect: You spend a Recovery and the target regains Stamina equal to your Recovery value.
+        name: My Life For Yours
+      source: Feat
+      name: Silver Shield
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 61b34f15-9611-4300-9ae8-b0040c9e1efb
+      canHavePrerequisites: true
+      description: You gain an edge on tests made to track criminals.
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: edge
+        rollType: test_power_roll
+        sourceguid: 61b34f15-9611-4300-9ae8-b0040c9e1efb
+        description: You gain an edge on tests made to track criminals.
+        guid: fd70017e-191e-4b78-8e11-887546640009
+        skills:
+        - a27ca113-bc01-49d0-9864-3316e6f525f4
+        name: Trained Tracker
+        keywords: []
+        source: Feat
+        activationCondition: false
+        behavior: power
+      source: Feat
+      name: Trained Tracker
+    guid: 98ddb48a-51ec-4886-a180-6da7089b53d7
+    name: Marshal Benefit
+prerequisite: "You join an organization that hunts criminals, such as the Far Mariners (see Orden and the Timescape in Chapter 1: The Basics), or you are deputized to act for the local authorities."
+mtime: 1777728152986
+description: I said you had twenty-four hours to leave town. That was … what, about twenty-four hours ago?
+ctime: 1762349784395
+id: 62c5e41f-8ffa-45dc-b628-d3f07adf448b
+name: Marshal
+effect: "Choose one of the following benefits:"
+_table: titles

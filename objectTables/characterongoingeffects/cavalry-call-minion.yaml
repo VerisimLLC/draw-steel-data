@@ -1,0 +1,135 @@
+__typeName: CharacterOngoingEffect
+id: d3d88f68-9aec-4adb-9e98-1a71aceef3c6
+custom: true
+association: []
+modifiers:
+- __typeName: CharacterModifier
+  guid: b16a7f49-bba0-45a9-a60b-b02d5be1e18f
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:d3d88f68-9aec-4adb-9e98-1a71aceef3c6: true
+  description: Whenever this minion deals damage to an enemy, that enemy is compelled to move toward it.
+  name: Cavalry Call Minion
+  sourceguid: d3d88f68-9aec-4adb-9e98-1a71aceef3c6
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    mandatory: true
+    castImmediately: true
+    strain: []
+    targetType: target
+    conditionFormula: ""
+    behaviors:
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      filterTarget: ""
+      standardAbilityParams:
+        targetid: "<<Caster.id>>"
+      abilityType: standard
+      customAbility:
+        __typeName: ActivatedAbility
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        targetType: self
+        modifiers: []
+        behaviors: []
+        iconid: ui-icons/skills/1.png
+        guid: d6d7e359-01e6-41cc-97d7-19483b750714
+        description: ""
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        range: 1
+        name: Invoked Ability
+      standardAbility: 2ed70c5e-6494-47e3-bf84-3dd30e9e8b9c
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      filterTarget: not Passes Potency("R", (Caster.Summoner.Average + (Number of Attackers-1)))
+      standardAbilityParams:
+        distance: "5"
+      abilityType: standard
+      customAbility:
+        __typeName: ActivatedAbility
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        targetType: self
+        modifiers: []
+        behaviors: []
+        iconid: ui-icons/skills/1.png
+        guid: 4d29c2b7-9f1e-4151-91c6-9cd9b5b42a80
+        description: ""
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        range: 1
+        name: Invoked Ability
+      standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+    targetFilter: ""
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    abilityType: none
+    whenActive: combat
+    iconid: ui-icons/skills/1.png
+    guid: 96dcbf2a-6be4-480f-9e32-9d98824eef60
+    numTargets: "1"
+    repeatTargets: false
+    trigger: dealdamage
+    description: ""
+    range: 1
+    name: Cavalry Call
+- __typeName: CharacterModifier
+  guid: 1f7b25b4-f24d-4912-af8d-2a04c9ffd46a
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:d3d88f68-9aec-4adb-9e98-1a71aceef3c6: true
+  description: This minion is removed at the end of the summoner's turn.
+  name: Cavalry Call Minion
+  sourceguid: d3d88f68-9aec-4adb-9e98-1a71aceef3c6
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    mandatory: true
+    castImmediately: true
+    strain: []
+    targetType: self
+    conditionFormula: Subject = Self.Summoner
+    behaviors:
+    - __typeName: ActivatedAbilityRemoveCreatureBehavior
+      waitForAbilitiesToFinish: false
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    abilityType: none
+    numTargets: "1"
+    trigger: endturn
+    iconid: ui-icons/skills/1.png
+    guid: 1f5cc814-9959-4b4c-827f-964a5b0ecefa
+    repeatTargets: false
+    whenActive: combat
+    description: ""
+    subject: other
+    range: 1
+    name: Cavalry Call Expiry
+iconid: ui-icons/skills/1.png
+guid: d3d88f68-9aec-4adb-9e98-1a71aceef3c6
+mtime: 1780544074001
+domains:
+  CharacterOngoingEffect:d3d88f68-9aec-4adb-9e98-1a71aceef3c6: true
+description: |-
+  Whenever this minion deals damage to an enemy, that enemy is R < Average compelled to move 5 squares toward it (provoking opportunity attacks). The potency increases by 1 for enemies targeted by two or more of these minions.
+  This minion is removed at the end of the summoner's turn.
+source: Ongoing Effect
+display:
+  brightness: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+  saturation: 1
+name: Cavalry Call Minion
+_table: characterOngoingEffects

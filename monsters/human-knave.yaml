@@ -1,0 +1,370 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: a384f351-02fe-4057-bddc-9a516567f843
+    offtokenPortraitId: 261d1f2b-45f1-4bf0-9936-d39e5c984c56
+    portraitFrameId: ac7e5d6a-bddf-43c3-83ee-f962e7094076
+    portraitRibbon: null
+    backgroundId: 2b02a5ab-38ce-4406-b4a5-3889b80ab574
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: -0.06275767
+      y: 0.1617811
+    frameHueShift: 0.6012795
+    frameSaturation: 0.3826432
+    frameBrightness: 0.2171043
+    popoutScale: 0.49
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 9455e9a5-cac0-442a-b2d4-00f147ececbc
+  properties:
+    __typeName: monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 927a362a-eaf3-48aa-acf6-040883025848
+      domains:
+        CharacterFeature:927a362a-eaf3-48aa-acf6-040883025848: true
+      description: Whenever an adjacent creature the knave has taunted deals damage to a creature other than the knave, the knave can make a free strike against them.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: I'm Your Enemy
+        guid: 55cab0db-c526-4d8b-bc5b-c151ea5a3f9e
+        sourceguid: 927a362a-eaf3-48aa-acf6-040883025848
+        domains:
+          CharacterFeature:927a362a-eaf3-48aa-acf6-040883025848: true
+        description: Whenever an adjacent creature the knave has taunted deals damage to a creature other than the knave, the knave can make a free strike against them.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          castImmediately: false
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: 952ff59e-8467-4141-aae6-d9ce35094c25
+            promptText: Free Strike Against Taunted Target
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: bcf83b7b-f31f-44d3-a9f2-d582f1162785
+              description: ""
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              range: 1
+              name: Invoked Ability
+            abilityType: standard
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          subject: other
+          numTargets: "1"
+          description: Whenever an adjacent creature the knave has taunted deals damage to a creature other than the knave, the knave can make a free strike against them.
+          modifiers: []
+          characterConditionInflictedBySelf: true
+          abilityType: none
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          characterConditionRequired: 85e26e12-e853-464d-bbbc-98ddf2c0071a
+          repeatTargets: false
+          guid: 8d2e79e0-a985-4a20-8088-cd587488c6af
+          trigger: dealdamage
+          subjectRange: "1"
+          range: 1
+          name: I'm Your Enemy
+        behavior: trigger
+      source: Trait
+      name: I'm Your Enemy
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 581b1944-e8a0-4055-8f66-43f4f788f92e
+      domains:
+        CharacterFeature:581b1944-e8a0-4055-8f66-43f4f788f92e: true
+      description: An enemy who starts their turn adjacent to the knave can't shift.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Overwhelm
+        guid: b679cf47-b75c-48f9-bfa2-40c6f54a789b
+        sourceguid: 581b1944-e8a0-4055-8f66-43f4f788f92e
+        domains:
+          CharacterFeature:581b1944-e8a0-4055-8f66-43f4f788f92e: true
+        description: An enemy who starts their turn adjacent to the knave can't shift.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          strain: []
+          targetType: subject
+          conditionFormula: Distance(Subject) <= 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: 0
+            ongoingEffect: 7d43f8e4-05e9-4795-bd63-ffe5e2fd5015
+            ongoingEffectCustom: false
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          subject: enemy
+          whenActive: combat
+          modifiers: []
+          description: An enemy who starts their turn adjacent to the knave can't shift.
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          guid: cf5ecd80-753e-4ddf-9232-100cc035f532
+          repeatTargets: false
+          numTargets: "1"
+          trigger: beginturn
+          abilityType: none
+          range: 1
+          name: Overwhelm
+        behavior: trigger
+      source: Trait
+      name: Overwhelm
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: d44878cf-1dba-4b92-acb6-2deaa4ab825a
+      domains:
+        CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
+      description: The knave ignores concealment if it's granted by a supernatural effect.
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: remove_bane
+        rollType: ability_power_roll
+        description: The knave ignores concealment if it's granted by a supernatural effect.
+        displayCondition: Target.Conditions has "concealment"
+        name: Supernatural Insight
+        guid: a49159e4-1cf9-4cc2-bffb-3c704dc60052
+        sourceguid: d44878cf-1dba-4b92-acb6-2deaa4ab825a
+        domains:
+          CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
+        keywords: []
+        source: Trait
+        activationCondition: ""
+        behavior: power
+      source: Trait
+      name: Supernatural Insight
+    inflictedConditions: []
+    walkingSpeed: 5
+    opportunityAttack: 4
+    damage_taken: 0
+    max_hitpoints: 50
+    initiativeGrouping: 9dfa788f-e2f6-4ab6-a77d-4420254d1c5d
+    groupid: f185d16e-35aa-42db-9fbd-529f55ab7935
+    resources:
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        used: 1
+    traitNames: []
+    minion: false
+    equipment: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 4
+      objectTarget: true
+      strain: []
+      targetType: target
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 2
+        tiers:
+        - 6 damage
+        - 9 damage
+        - 12 damage; M<2, the target has a double bane on their next power roll
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: taunted (eot)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: target.might < 2
+        duration: eoe
+        ongoingEffectCustom: false
+        ongoingEffect: f0b84c94-74a3-4d46-a891-32a8394d170f
+        tiersSelected:
+        - 3
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 183
+      effectImplemented: false
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      flavor: ""
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+        Ranged: true
+      iconid: d15fe212-5892-433b-869f-4778a5a9604d
+      guid: 6a637ae9-df7d-4a50-9b46-eddc815d52b5
+      repeatTargets: false
+      categorization: Signature Ability
+      description: The target is taunted (EoT).
+      meleeRange: 1
+      range: 5
+      name: Morningstar & Javelin
+    skillProficiencies: []
+    max_hitpoints_roll: "50"
+    levelChoices: []
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        fde1ab00-0035-4de6-990f-ee2396a03503:
+          note: Morningstar & Javelin
+          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
+          set: 1/1
+        17aca8d0-0063-4079-ab23-38ff2f5520cc:
+          note: Morningstar & Javelin
+          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
+          set: 1/1
+        8a2bc078-6456-481d-ae75-5feaad283b22:
+          note: Morningstar & Javelin
+          refreshid: 09f726b4-b589-466b-959a-91a65d8d9940-5
+          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
+          set: 0/1
+    cr: 2
+    titles: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    keywords:
+      Human: true
+      Humanoid: true
+    ev: 8
+    movementSpeeds: []
+    attributes:
+      inu:
+        id: inu
+        baseValue: 0
+      agl:
+        id: agl
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 2
+      rea:
+        id: rea
+        baseValue: 1
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: corruption
+      dr: 2
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: psychic
+      dr: 2
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: c8d664fb-a723-46d1-aa5f-b0c4c92f8002-593
+    monster_type: Human Knave
+    stability: 0
+    savingThrowRatings: []
+    role: Platoon Defender
+    import:
+      type: mcdm
+      override: true
+      data: |+
+        Human Knave	Level 2 Platoon Defender
+        Human, Humanoid	EV 8
+        <b>Stamina</b> 50	<b>Immunity</b> Corruption 2, Psychic 2
+        <b>Speed</b> 5	<b>Size</b> 1M/ <b>Stability</b> 0
+        	<b>Free Strike</b> 4
+        Might +2	Agility +0	Reason +1	Intuition +0	Presence +0
+        <b>Morningstar & Javelin</b> (Action) %E2%97%86 2d10 + 2 %E2%97%86 Signature
+        <b>Keywords</b> Melee, Ranged, Strike, Weapon
+        <b>Distance</b> Melee 1 or Ranged 5	<b>Target</b> One creature or object
+        %E2%9C%A6	%E2%89%A411	6 damage
+        %E2%98%85	12%E2%80%9316	9 damage
+        %E2%9C%B8	17+	12 damage; M<2 the target has a double bane on their next power roll
+        <b>Effect </b>Taunted (EoT).
+
+        <b>I'm Your Enemy</b>
+        The knave can make a free strike against an adjacent creature they have taunted whenever the creature deals damage to a creature other than the knave.
+
+        <b>Overwhelm</b>
+        An enemy who starts their turn adjacent to the knave can't shift.
+
+        <b>Supernatural Insight</b>
+        The knave ignores concealment if it's granted by a supernatural effect, or the target is supernatural.
+
+    creatureSize: 1M
+    monster_category: Monster
+    skillRatings: []
+  tokenType: null
+  bestiaryId: baf66366-7d32-4172-8484-99dfb52fb188
+  summonerid: null
+  ownerId: ""
+  partyid: null
+  size: 2
+  createdTimestamp: 1726301040866
+description: Human Knave
+parentFolder: 7fcca4d0-0ce3-4e95-946b-bd6053158331
+artist: null
+ord: 0
+ctime: 1741590300791
+mtime: 1775375117719
+hidden: false
+id: baf66366-7d32-4172-8484-99dfb52fb188

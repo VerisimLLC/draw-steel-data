@@ -1,0 +1,485 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: d4c534ff-d6e4-4cea-b9be-99e268ab67cd
+    offtokenPortraitId: null
+    portraitFrameId: e0946fe5-d98e-4543-bc4a-407534377572
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 0.7876106
+    portraitOffset:
+      x: -0.01105784
+      y: 0.09955637
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: e7da59b1-ca18-4dc8-a4d8-24db0740449c
+  properties:
+    __typeName: monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      guid: 36132a27-c374-4656-af2c-3969b74aae35
+      domains:
+        CharacterFeature:36132a27-c374-4656-af2c-3969b74aae35: true
+      description: The basalt stone giant ignores difficult terrain.
+      modifiers: []
+      source: Trait
+      name: Stone Steps
+    - __typeName: CharacterFeature
+      guid: e65d818a-0db0-400b-acaf-a7fa68f6e8ce
+      domains:
+        CharacterFeature:e65d818a-0db0-400b-acaf-a7fa68f6e8ce: true
+      description: Whenever an enemy gets a tier 1 result on a melee strike against the basalt stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+      modifiers: []
+      source: Trait
+      name: Stonebreaker Flesh
+    - __typeName: CharacterFeature
+      guid: 09327ae9-0bb1-4f07-96e3-2a5de65a5cd3
+      domains:
+        CharacterFeature:09327ae9-0bb1-4f07-96e3-2a5de65a5cd3: true
+      description: The basalt stone giant can burrow through stone, but can't drag other creatures underground when they do so.
+      modifiers: []
+      source: Trait
+      name: Stone Swim
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: f7c4c299-d4c6-47a7-b7cf-36af7e0c3447
+      domains:
+        CharacterFeature:f7c4c299-d4c6-47a7-b7cf-36af7e0c3447: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: f7c4c299-d4c6-47a7-b7cf-36af7e0c3447
+        guid: c16448ab-84fa-47c3-bc14-591df1b3f452
+        name: Resonate Rune
+        domains:
+          CharacterFeature:f7c4c299-d4c6-47a7-b7cf-36af7e0c3447: true
+        description: ""
+        source: Character Feature
+        behavior: triggerdisplay
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: fab85cd5-c1ca-4654-837c-063bca7273af
+          implementationNotes: Gold implementation
+          keywords: []
+          trigger: The basalt stone giant takes damage.
+          effect: The target is pushed up to 3 sqiuares, or if they have A<3 they are pushed up to 6 squares and knocked prone.
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          objectTarget: false
+          strain: []
+          targetType: all
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            filterTarget: Target.Agility < 3
+            abilityType: standard
+            promptText: If target has agility A<3, they are pushed up to 6 squares and knocked prone.
+            standardAbilityParams:
+              range: "6"
+            autoTarget: false
+            customAbility:
+              __typeName: ActivatedAbility
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: f84d26c6-d322-4619-8a1a-49657724001d
+              description: ""
+              repeatTargets: false
+              range: 1
+              name: Invoked Ability
+            standardAbility: 8acf7d21-2e06-4439-bff0-bfaf72c24514
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            filterTarget: Target.Agility < 3
+            ongoingEffectSource: specific
+            ongoingEffect: c885a4ba-bb51-4676-977d-95df9aa19d85
+            ongoingEffectCustom: false
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            filterTarget: Target.Agility >= 3
+            autoTarget: false
+            customAbility:
+              __typeName: ActivatedAbility
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: 4ccfca69-cf56-4ce0-aa0f-3cbec54b1d0f
+              description: ""
+              repeatTargets: false
+              range: 1
+              name: Invoked Ability
+            promptText: If target has agility A<3, they are pushed up to 6 squares and knocked prone.
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          whenActive: combat
+          triggerPrompt: The basalt Stone giant takes damage.
+          iconid: ui-icons/skills/1.png
+          guid: e9586fa4-9319-40f0-a3e2-c864deafab0e
+          trigger: losehitpoints
+          targetAllegiance: enemy
+          description: ""
+          repeatTargets: false
+          range: "2"
+          name: Resonate Rune
+        guid: 1a25e693-df91-482b-904b-af37d1feaa7a
+        sourceguid: f7c4c299-d4c6-47a7-b7cf-36af7e0c3447
+        domains:
+          CharacterFeature:f7c4c299-d4c6-47a7-b7cf-36af7e0c3447: true
+        description: ""
+        source: Character Feature
+        name: Resonate Rune
+        behavior: trigger
+      source: Character Feature
+      name: Resonate Rune
+    inflictedConditions: []
+    stability: 10
+    opportunityAttack: 8
+    cr: 8
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 207
+    keywords:
+      Stone Giant: true
+      Giant: true
+    skillRatings: []
+    role: Elite Controller
+    ev: 40
+    movementSpeeds:
+      burrow: 7
+    monster_type: Basalt Stone Giant
+    groupid: c65d0a89-5546-48aa-a79e-9838030eef8d
+    resources: []
+    resistances: []
+    attributes:
+      inu:
+        id: inu
+        baseValue: 2
+      agl:
+        id: agl
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 4
+      rea:
+        id: rea
+        baseValue: 1
+    minion: false
+    innateAttacks: []
+    savingThrowRatings: []
+    equipment: []
+    import:
+      type: mcdm
+      data: |+
+        Basalt Stone Giant	Level 8 Elite Controller
+        Giant, Stone Giant	EV 40
+        <b>Stamina</b> 207
+        <b>Speed</b> 7 (burrow)	<b>Size</b> 4 /<b> Stability</b> 10
+        <b>Free Strike</b> 8
+        Might +4	Agility +2	Reason +1	Intuition +2	Presence +1
+        <b>Rune Signed Blade</b> (Action)%E2%97%86 2d10 + 4%E2%97%86 Signature
+        <b>Keywords</b> Magic, Melee, Strike, Weapon
+        <b>Distance</b> Melee 3<b>	Target</b> 2 creatures or objects
+        %E2%9C%A6	<b>%E2%89%A411</b>	12 damage; M<2 slowed (save ends)
+        %E2%98%85	<b>12%E2%80%9316</b>	17 damage; M<3 slowed (save ends)
+        %E2%9C%B8	<b>17</b>	21 damage; M<4 slowed (save ends)
+        <b>Effect</b> This ability reduces a target's speed to 0 (EoT) if they were already slowed.
+
+        <b>Forked Knife</b> (Action)%E2%97%86 2d10 + 4%E2%97%86 3 Malice
+        <b>Keywords</b> Melee, Ranged, Weapon
+        <b>Distance</b> Melee 3 or Ranged 12<b>	Target</b> 1 creature or object
+        %E2%9C%A6	<b>%E2%89%A411</b>	10 damage; A<2 restrained by knife (save ends)
+        %E2%98%85	<b>12%E2%80%9316</b>	16 damage; A<3 restrained by knife (save ends)
+        %E2%9C%B8	<b>17</b>	20 damage; prone; A<4 restrained by knife (save ends)
+        <b>Effect</b> The knife lands in the target's square. The knife has 30 Stamina and damage immunity 5. Whenever the knife takes damage, the knife vibrates and deals 4 sonic damage to each enemy within 3 squares.
+
+        <b>Cobble Stone Shape</b> (Maneuver)
+        <b>Keywords</b> -
+        <b>Distance</b> Self<b>	Target</b> Self
+        <b>Effect</b> The basalt stone giant moves up to their speed. Each square that they leave during this movement is considered difficult terrain for enemies. Giants can move through 2 affected squares for the normal cost of 1 speed.
+
+        <b>Resonate Rune</b> (Triggered Action)
+        <b>Keywords</b> Area, Magic, Melee
+        <b>Distance</b> 2 burst<b>	Target</b> All enemies in the burst
+        <b>Trigger</b> The basalt stone giant takes damage.
+        <b>Effect</b> Push 3 or <b>A<3</b> push 6 and knocked prone.
+
+        <b>Stone Steps</b>
+        The basalt stone giant ignores difficult terrain.
+
+        <b>Stonebreaker Flesh</b>
+        Whenever an enemy gets a tier 1 result on a melee strike against the basalt stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+
+
+
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 3
+      targetType: target
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 4
+        tiers:
+        - 12 damage; M<2 slowed (save ends)
+        - 17 damage; M<3 slowed (save ends)
+        - 21 damage; M<4 slowed (save ends)
+      categorization: Signature Ability
+      effectImplemented: false
+      repeatTargets: false
+      abilityType: none
+      numTargets: 2
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: 5e698a77-9ef7-4e14-88cc-8a4e7c3823b6
+      flavor: ""
+      keywords:
+        Strike: true
+        Magic: true
+        Melee: true
+        Weapon: true
+      description: This ability reduces a target's speed to 0 (EoT) if they were already slowed.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      range: 3
+      name: Rune Signed Blade
+    - __typeName: ActivatedAbility
+      implementation: 3
+      targetType: target
+      flavor: ""
+      categorization: Heroic Ability
+      effectImplemented: false
+      resourceNumber: 3
+      repeatTargets: false
+      abilityType: none
+      numTargets: 1
+      keywords:
+        Melee: true
+        Weapon: true
+        Ranged: true
+      modifiers: []
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: 873bbb17-a592-4d89-9ff1-b5ee6cc188b1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 10 damage; A<2 restrained (save ends)
+        - 16 damage; A<3 restrained (save ends)
+        - 20 damage; prone; A<4 restrained (save ends)
+      range: 12
+      description: The knife lands in the target's square. The knife has 30 Stamina and damage immunity 5. Whenever the knife takes damage, the knife vibrates and deals 4 sonic damage to each enemy within 3 squares.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      meleeRange: 3
+      name: Forked Knife
+    - __typeName: ActivatedAbility
+      implementation: 0
+      targetType: self
+      behaviors: []
+      categorization: Signature Ability
+      effectImplemented: false
+      repeatTargets: false
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 9ad85d27-7654-45c2-a818-25ab62ed66c5
+      flavor: ""
+      keywords: []
+      description: The basalt stone giant moves up to their speed. Each square that they leave during this movement is considered difficult terrain for enemies. Giants can move through 2 affected squares for the normal cost of 1 speed.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      range: 1
+      name: Cobble Stone Shape
+    - __typeName: ActivatedAbility
+      implementation: 0
+      strain: []
+      targetType: all
+      behaviors: []
+      categorization: Signature Ability
+      targetFilter: Enemy
+      effectImplemented: false
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      flavor: ""
+      iconid: ui-icons/skills/1.png
+      guid: d5b62576-71ae-452e-a795-9e73fc7bcef0
+      keywords:
+        Melee: true
+        Magic: true
+        Area: true
+      repeatTargets: false
+      description: Push 3 or A<3 push 6 and knocked prone.
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 146
+      range: 2
+      name: Resonate Rune
+    - __typeName: ActivatedAbility
+      implementation: 3
+      targetType: target
+      flavor: ""
+      categorization: Signature Ability
+      keywords:
+        Strike: true
+        Magic: true
+        Melee: true
+        Weapon: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 2
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: f997c480-0b67-48ff-9af6-c6e6e03ae35e
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 146
+      repeatTargets: false
+      description: If a target was already slowed, that condition continues but their speed is 0 until the end of their next turn.
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 12 damage; M<2 slowed (save ends)
+        - 17 damage; M<3 slowed (save ends)
+        - 21 damage; M<4 slowed (save ends)
+      range: 3
+      name: Rune-Signed Blade
+    - __typeName: ActivatedAbility
+      implementation: 0
+      targetType: target
+      flavor: ""
+      categorization: Ability
+      keywords:
+        "-": true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 291cead8-faf6-41db-8a44-4ac0158bd33f
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 146
+      repeatTargets: false
+      description: The basalt stone giant moves up to their speed. Each square that they leave during this move is difficult terrain for enemies Giants ignore this difficult terrain.
+      behaviors: []
+      range: 1
+      name: Cobblestone Shape
+    walkingSpeed: 7
+    traitNames: []
+    max_hitpoints_roll: "207"
+    levelChoices: []
+    monster_category: Monster
+    creatureSize: "4"
+  tokenType: null
+  bestiaryId: 8294bf44-ea3b-4a2e-b3d2-eb182bd98ab3
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1726301040866
+description: Basalt Stone Giant
+parentFolder: df6abed8-c255-4902-a351-776e8730267f
+artist: null
+ord: 0
+ctime: 1741590273473
+mtime: 1775375107564
+hidden: false
+id: 8294bf44-ea3b-4a2e-b3d2-eb182bd98ab3

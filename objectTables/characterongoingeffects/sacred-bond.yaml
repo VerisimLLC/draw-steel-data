@@ -1,0 +1,131 @@
+__typeName: CharacterOngoingEffect
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+custom: true
+mtime: 1746993176588
+modifiers:
+- __typeName: CharacterModifier
+  description: "Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.  \n\nAdditionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery. "
+  filterCondition: Ongoing Effects has "Sacred Bond"
+  source: Ongoing Effect
+  targetType: self
+  rules: When you take damage, the other Hero with Sacred Bond can use a free triggered action to take this damage instead.
+  trigger: takedamage
+  sourceguid: 3f3709f5-00f2-405a-8130-5c387e8936ec
+  behavior: powertabletrigger
+  guid: 63e90b71-2822-48c8-9746-92ccba8e039d
+  forceReroll: false
+  domains:
+    CharacterOngoingEffect:3f3709f5-00f2-405a-8130-5c387e8936ec: true
+  type: trigger
+  powerRollModifier:
+    __typeName: CharacterModifier
+    changeTarget: true
+    rollType: ability_power_roll
+    rules: ""
+    changeTargetDistance: 40
+    keywords: []
+    changeTargetFilter: Ongoing Effects has "Sacred Bond"
+    guid: 5a097f28-f26c-4576-8a96-edb546f0652a
+    modtype: none
+    behavior: power
+    changeTargetRange: distance
+    source: Trigger
+    activationCondition: false
+    name: Sacred Bond
+  range: 10
+  name: Sacred Bond
+- __typeName: CharacterModifier
+  name: Sacred Bond
+  guid: 9528cde3-cda3-439f-a433-5c7de27c497a
+  sourceguid: 3f3709f5-00f2-405a-8130-5c387e8936ec
+  domains:
+    CharacterOngoingEffect:3f3709f5-00f2-405a-8130-5c387e8936ec: true
+  description: "Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.  \n\nAdditionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery. "
+  source: Ongoing Effect
+  ability:
+    __typeName: TriggeredAbilityDisplay
+    guid: ae154290-dc1c-4520-8167-450b62129796
+    effect: |-
+      Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.  
+
+      Additionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery.
+    keywords: []
+    type: free
+    trigger: One Sacred Bond Target takes damage.
+    flavor: You forge a divine connection between two creatures.
+    name: Sacred Bond
+  behavior: triggerdisplay
+- __typeName: CharacterModifier
+  name: Sacred Bond
+  guid: 55d6d3f8-24c4-43b7-8667-9b2368d36185
+  sourceguid: 3f3709f5-00f2-405a-8130-5c387e8936ec
+  domains:
+    CharacterOngoingEffect:3f3709f5-00f2-405a-8130-5c387e8936ec: true
+  description: "Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.  \n\nAdditionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery. "
+  source: Ongoing Effect
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    abilityType: none
+    whenActive: combat
+    description: whenever one Sacred Bond target spends a Recovery, the other Sacred Bond target can use a free triggered action to spend a Recovery.
+    targetType: self
+    modifiers: []
+    behaviors:
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      targeting: prompt
+      abilityType: standard
+      promptText: Sacred Bonded Hero may also spend a recovery
+      standardAbility: a478d5f1-fed3-4772-9930-c3e82dc23f12
+      standardAbilityParams:
+        numtargets: "1"
+        numrecoveries: "1"
+        range: "40"
+      customAbility:
+        __typeName: ActivatedAbility
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        targetType: self
+        modifiers: []
+        behaviors: []
+        iconid: ui-icons/skills/1.png
+        guid: d4671c5a-a9f7-4dd6-8228-61d696f6bf18
+        description: ""
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        range: 1
+        name: Invoked Ability
+      filterTarget: has Ongoing Effects "Sacred Bond"
+    conditionFormula: Resource is "recovery"
+    iconid: c67ad3e5-353e-42d1-9843-7bc665ac7bf8
+    guid: 9c3c7dfd-68b3-4bb1-a334-e8b81e67bd03
+    numTargets: "1"
+    repeatTargets: false
+    trigger: useresource
+    targetFilter: has Ongoing Effects "Sacred Bond"
+    range: "50"
+    name: Sacred Bond
+  behavior: trigger
+description: "Until the end of the encounter, whenever one target takes damage, the other target can use a free triggered action to take the damage instead. The original target suffers any effects associated with the damage.  \n\nAdditionally, whenever one target spends a Recovery, the other target can use a free triggered action to spend a Recovery. "
+iconid: c67ad3e5-353e-42d1-9843-7bc665ac7bf8
+guid: 3f3709f5-00f2-405a-8130-5c387e8936ec
+association: []
+domains:
+  CharacterOngoingEffect:3f3709f5-00f2-405a-8130-5c387e8936ec: true
+ctime: 1746956004507
+source: Ongoing Effect
+id: 3f3709f5-00f2-405a-8130-5c387e8936ec
+name: Sacred Bond
+_table: characterOngoingEffects

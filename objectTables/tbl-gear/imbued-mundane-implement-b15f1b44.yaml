@@ -1,0 +1,134 @@
+__typeName: equipment
+imbueTarget: implement
+hidden: true
+imbuements:
+  byLevel:
+  - 75ac6a82-df8a-4129-92bf-3b30c4577a5f
+  - 280c394a-8350-40fa-9fc3-d1496ea6a666
+  280c394a-8350-40fa-9fc3-d1496ea6a666: true
+  75ac6a82-df8a-4129-92bf-3b30c4577a5f: true
+type: Gear
+weight: 1
+mtime: 1773924515272
+unique: true
+description: A mundane implement suitable for imbuing.
+features:
+- __typeName: CharacterFeature
+  guid: f8a9b0c1-d2e3-4567-fabc-678901234fab
+  itemAttached: true
+  addText: Add Magical Property
+  description: Whenever you damage a creature using a magic or psionic ability and obtain a tier 3 outcome, you can teleport that creature up to 2 squares after the ability's effects resolve.
+  modifiers:
+  - __typeName: CharacterModifier
+    modtype: none
+    rollType: ability_power_roll
+    matchAnyKeywords: true
+    description: Whenever you damage a creature using a magic or psionic ability and obtain a tier 3 outcome, you can teleport that creature up to 2 squares after the ability's effects resolve.
+    displayCondition: ability.doesdamage
+    keywords:
+      Psionic: true
+      Magic: true
+    guid: e7f8a9b0-c1d2-3456-efab-567890123efa
+    sourceguid: f8a9b0c1-d2e3-4567-fabc-678901234fab
+    behavior: power
+    addText: // // You teleport the target up to 2 squares
+    source: Item
+    activationCondition: ability.doesdamage
+    name: Displacing I
+  source: Item
+  name: Displacing I
+- __typeName: CharacterFeature
+  guid: b0c1d2e3-f4a5-6789-bcde-890123456bcd
+  itemAttached: true
+  addText: Add Magical Property
+  description: "Displacing II: When you use the implement's Displacing I enhancement, you can teleport the creature up to 4 squares. Additionally, the creature takes a bane on their next power roll made before the end of their next turn."
+  modifiers:
+  - __typeName: CharacterModifier
+    modtype: none
+    rollType: ability_power_roll
+    description: "Displacing II: When you use the implement's Displacing I enhancement, you can teleport the creature up to 4 squares. Additionally, the creature takes a bane on their next power roll made before the end of their next turn."
+    matchAnyKeywords: true
+    keywords:
+      Psionic: true
+      Magic: true
+    customTrigger:
+      __typeName: TriggeredAbility
+      repeatTargets: false
+      castImmediately: true
+      numTargets: "1"
+      strain: []
+      targetType: self
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: DisplacingII
+        value: Cast.Tier = 3
+      description: ""
+      iconid: ui-icons/skills/1.png
+      guid: 8e34fc43-9a2c-40ce-97ef-0c8645cbe15a
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      trigger: d20roll
+      persistence: []
+      range: 1
+      name: DisplacingII
+    sourceguid: b0c1d2e3-f4a5-6789-bcde-890123456bcd
+    hasCustomTrigger: true
+    guid: a9b0c1d2-e3f4-5678-abcd-789012345abc
+    behavior: power
+    displayCondition: ability.doesdamage
+    addText: // // teleport 4
+    source: Item
+    activationCondition: ability.doesdamage
+    name: Displacing II
+  - __typeName: CharacterModifier
+    guid: 4ed10ca0-47b0-4dce-82ca-53d8e7427269
+    name: Displacing II
+    sourceguid: b0c1d2e3-f4a5-6789-bcde-890123456bcd
+    description: "Displacing II: When you use the implement's Displacing I enhancement, you can teleport the creature up to 4 squares. Additionally, the creature takes a bane on their next power roll made before the end of their next turn."
+    source: Item
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      strain: []
+      targetType: subject
+      conditionFormula: Trigger Name = "DisplacingII" and Trigger Value = 3
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectSource: specific
+        ongoingEffect: db4a514a-7380-47d7-a842-e5f09309d372
+        ongoingEffectCustom: false
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      subject: other
+      numTargets: "1"
+      modifiers: []
+      description: ""
+      iconid: ui-icons/skills/1.png
+      subjectRange: "100"
+      repeatTargets: false
+      guid: 88c30819-5876-4e86-b04f-d12871c4affe
+      trigger: custom
+      abilityType: none
+      range: 1
+      name: Displacing II
+    behavior: trigger
+  source: Item
+  name: Displacing II
+iconid: cc913329-17fb-46c0-9a66-25e9bafbd445
+category: Gear
+id: 67d979db-24fe-4e5a-b393-d74dbe1c2d81
+domains:
+  item:67d979db-24fe-4e5a-b393-d74dbe1c2d81: true
+ctime: 1773923638480
+implementation: 0
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+name: Imbued Mundane implement
+_table: tbl_Gear

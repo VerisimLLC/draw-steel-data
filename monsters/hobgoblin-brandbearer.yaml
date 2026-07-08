@@ -1,0 +1,313 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: cd187ee4-169c-4c3f-85d7-63313fa3eace
+    offtokenPortraitId: null
+    portraitFrameId: 9f13cbbb-ffc7-4325-ba9b-daf5d0b1d9e3
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 0.7876113
+    portraitOffset:
+      x: 0.06633657
+      y: 0.1991153
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: b2db7bd7-7fb6-425f-b6d8-6d1c93883b58
+  properties:
+    __typeName: monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 92b1922f-a900-43d8-aeee-9fa76dc8bfb8
+      domains:
+        CharacterFeature:92b1922f-a900-43d8-aeee-9fa76dc8bfb8: true
+      description: Whenever an enemy takes fire damage, they take 1 extra fire damage for each brandbearer adjacent to them.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Open Furnace
+        guid: f5306373-bcb5-43aa-8cea-cd831c54b64d
+        behavior: trigger
+        domains:
+          CharacterFeature:92b1922f-a900-43d8-aeee-9fa76dc8bfb8: true
+        description: Whenever an enemy takes fire damage, they take 1 extra fire damage for each brandbearer adjacent to them.
+        source: Trait
+        sourceguid: 92b1922f-a900-43d8-aeee-9fa76dc8bfb8
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          strain: []
+          targetType: subject
+          conditionFormula: Damage Type is fire and not (Subject.Ongoing Effects has "Open Furnace")
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            filterTarget: not (Subject.Ongoing Effects has "Open Furnace")
+            chatMessage: Fire Damage with Brandbearer Adjacent
+            damageType: fire
+            doesNotTrigger: true
+            roll: Subject.Count Nearby Enemies(1, "hobgoblin brandbearer")
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: ad795ae5-19cd-4fc2-8d63-41bdec9fdcac
+            guid: b49cc3e8-8dad-47a9-86e3-8ae35941703d
+            ongoingEffect: ad795ae5-19cd-4fc2-8d63-41bdec9fdcac
+            duration: 0
+          - __typeName: ActivatedAbilityDelayBehavior
+            delay: "1"
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            purgeType: all
+            ongoingEffect: ad795ae5-19cd-4fc2-8d63-41bdec9fdcac
+            mode: effect
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          whenActive: always
+          guid: 572736c8-4f78-4ba5-b13f-d4aead9dd213
+          iconid: ui-icons/skills/1.png
+          subjectRange: "1"
+          description: ""
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          trigger: losehitpoints
+          subject: enemy
+          range: 1
+          name: Infernal Ichor
+      source: Trait
+      name: Open Furnace
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: d6ef7831-efb4-472c-9fab-800105096e32
+      domains:
+        CharacterFeature:0f750900-c30d-46e5-a58e-5d391f389519: true
+        CharacterFeature:d6ef7831-efb4-472c-9fab-800105096e32: true
+      description: If the brandbearer is reduced to 0 Stamina, they spray burning blood. Each creature within 1 of the brandbearer takes 2 fire damage.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: 21623f33-10d6-4303-8507-bb6849b99cd2
+        name: Infernal Ichor
+        domains:
+          CharacterFeature:d6ef7831-efb4-472c-9fab-800105096e32: true
+        description: If the brandbearer is reduced to 0 Stamina, they spray burning blood. Each creature within 1 of the brandbearer takes 2 fire damage.
+        source: Trait
+        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          strain: []
+          targetType: all
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: fire
+            titleText: Infernal Ichor
+            roll: "2"
+            chatMessage: Infernal Ichor
+          targetFilter: Enemy
+          displayName: Infernal Ichor
+          persistence: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 8604cf44-61d4-4f2f-9ce9-0e00fef3c4fc
+          repeatTargets: false
+          domains:
+            CharacterFeature:d6ef7831-efb4-472c-9fab-800105096e32: true
+          description: ""
+          trigger: creaturedeath
+          range: 1
+          name: Infernal Ichor
+      source: Trait
+      name: Infernal Ichor
+    inflictedConditions: []
+    walkingSpeed: 5
+    opportunityAttack: 2
+    damage_taken: 0
+    max_hitpoints: 7
+    skillRatings: []
+    groupid: 640fe403-2a42-4777-9bf3-2216561dde19
+    resources: []
+    traitNames: []
+    minion: true
+    equipment: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 4
+      strain: []
+      targetType: target
+      flavor: ""
+      categorization: Signature Ability
+      keywords:
+        Strike: true
+        Magic: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: 52cfa3c0-8b6f-4771-87e5-05583f8d1f86
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 172
+      repeatTargets: false
+      description: ""
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Presence
+        tiers:
+        - 2 fire damage
+        - 4 fire damage; M<2 fire weakness 5 (save ends)
+        - 6 fire damage; M<3 fire weakness 5 (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: target.might < 2
+        stacks: "5"
+        duration: save_ends
+        ongoingEffectCustom: fd892daa-e828-46e6-a073-5fe5713c2e45
+        ongoingEffectSource: specific
+        ongoingEffect: c7e6ec1c-5d74-4248-957d-e6a4eddcfaac
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: target.might < 3
+        guid: 2f75c356-7f37-4a33-9f56-6025121a07da
+        tiersSelected:
+        - 3
+        ongoingEffectCustom: fd892daa-e828-46e6-a073-5fe5713c2e45
+        duration: save_ends
+        ongoingEffectSource: specific
+        ongoingEffect: c7e6ec1c-5d74-4248-957d-e6a4eddcfaac
+        stacks: "5"
+      range: 1
+      name: Searing Grasp
+    max_hitpoints_roll: "7"
+    levelChoices: []
+    monster_type: Hobgoblin Brandbearer
+    stability: 0
+    titles: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    keywords:
+      Goblin: true
+      Infernal: true
+      Hobgoblin: true
+      Humanoid: true
+    ev: 6
+    movementSpeeds: []
+    attributes:
+      inu:
+        id: inu
+        baseValue: 0
+      agl:
+        id: agl
+        baseValue: 1
+      prs:
+        id: prs
+        baseValue: 3
+      mgt:
+        id: mgt
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 2
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: fire
+      dr: 2
+    withCaptain: Gain an edge on strikes
+    role: Minion Hexer
+    import:
+      type: mcdm
+      data: |+
+        Hobgoblin Brandbearer	Level 4 Minion Hexer
+        Goblin, Hobgoblin, Humanoid, Infernal	EV 6 for four minions
+        <b>Stamina</b> 7	<b>Immunity</b> fire 2
+        <b>Speed</b> 5	<b>Size</b> 1M /<b> Stability</b> 0
+        <b>With Captain </b>Edge on strikes<b>Free Strike</b> 2
+        Might 0	Agility +1	Reason +2	Intuition 0	Presence +3
+        <b>Searing Grasp</b> (Action) %E2%97%86 2d10 + 3 %E2%97%86 Signature
+        <b>Keywords</b> Magic, Melee, Strike
+        <b>Distance</b> Melee 1<b>	Target</b> 1 creature or object per minion
+        %E2%9C%A6	<b>%E2%89%A411</b>	2 fire damage
+        %E2%98%85	<b>12%E2%80%9316</b>	4 fire damage; M<2 fire weakness 5 (save ends)
+        %E2%9C%B8	<b>17</b>	6 fire damage; M<3 fire weakness 5 (save ends)
+
+        <b>Open Furnace</b>
+        An enemy that takes fire damage receives 1 additional fire damage for each adjacent brandbearer.
+
+        <b>Infernal Ichor</b>
+        If the brandbearer's Stamina drops to 0, they spray burning blood. Each creature within 1 of the brandbearer takes 2 fire damage.
+
+    savingThrowRatings: []
+    creatureSize: 1M
+    monster_category: Monster
+    cr: 4
+  tokenType: null
+  bestiaryId: 8fcfb8c5-a19b-4496-a19a-38b1ee0374b0
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1726301040866
+description: Hobgoblin Brandbearer
+parentFolder: ae0ffd42-2d5c-4de1-a94b-282a9cf676f0
+artist: null
+ord: 0
+ctime: 1741590281774
+mtime: 1775375034700
+hidden: false
+id: 8fcfb8c5-a19b-4496-a19a-38b1ee0374b0

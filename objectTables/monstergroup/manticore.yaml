@@ -1,0 +1,226 @@
+__typeName: MonsterGroup
+id: c0dba3a9-0f77-4b85-9c0e-3884efcc9d1c
+mtime: 1779636787875
+traits: []
+ctime: 1758524882937
+maliceAbilities:
+- __typeName: MaliceAbility
+  objectTarget: false
+  strain: []
+  targetType: target
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    duration: save_ends
+    ongoingEffect: b0e4128f-ecab-49d9-a586-abc74f13e403
+    ongoingEffectCustom: b0e4128f-ecab-49d9-a586-abc74f13e403
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 202
+  persistence: []
+  resourceNumber: "3"
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  guid: 08964cca-f5f3-407f-ac44-4ab41a8e370d
+  description: The manticore uses their mimicry in an attempt to unnerve one creature within their line of effect. If the target has R<4, they take a bane on power rolls against the manticore (save ends). Each time this feature is used against the same target during the encounter, its potency decreases by 2.
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  range: 1
+  name: Uncanny Mimicry
+- __typeName: MaliceAbility
+  implementation: 4
+  castImmediately: true
+  strain: []
+  targetType: self
+  behaviors:
+  - __typeName: ActivatedAbilityReplenishBehavior
+    resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    guid: 6e743023-ddb5-46d3-99a8-4d4b601117b3
+    applyto: caster
+    chatMessage: Solo Action
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 202
+  persistence: []
+  resourceNumber: "5"
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+  guid: 796fa972-beed-47ec-8336-4914e6d46802
+  description: The manticore takes an additional main action on their turn. They can use this feature even if they are dazed.
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  range: 1
+  name: Solo Action
+- __typeName: MaliceAbility
+  implementation: 3
+  objectTarget: false
+  strain: []
+  targetType: all
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    namedAbility: Intuition Test
+    abilityType: custom
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      strain: []
+      targetType: self
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Intuition
+        tiers:
+        - Frightened (Save Ends)
+        - Frightened (EoT)
+        - No Effect.
+        isTest: true
+        attrid: inu
+        resistanceRoll: false
+        applyto: caster
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 202
+      iconid: ui-icons/skills/1.png
+      guid: 618c2032-9b11-4f1e-bb5f-609250850b7b
+      description: ""
+      repeatTargets: false
+      range: 1
+      name: Desperate Howl Intuition Test
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 202
+  targetFilter: Line of Sight(Caster, Target) >=0.5
+  persistence: []
+  resourceNumber: "5"
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  guid: e9daadeb-d5e7-4135-b473-7f2333b26d22
+  targetAllegiance: enemy
+  implementationDetails: Creatures outside line of effect are not targeted, but neither are creatures who only have cover, when they should be targeted.
+  description: |
+    The manticore lets out an unnerving cry. Each enemy within the manticore's line of effect makes an Intuition test.
+    - Tier 1 (<=11): Frightened (save ends)
+    - Tier 2 (12-16): Frightened (EoT)
+    - Tier 3 (17+): No effect.
+  repeatTargets: false
+  range: "100"
+  name: Desperate Howl
+- __typeName: MaliceAbility
+  implementation: 2
+  objectTarget: false
+  strain: []
+  targetType: all
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    filterTarget: not Friends(target, caster) and Target.Agility < 3
+    duration: save_ends
+    ongoingEffectSource: specific
+    ongoingEffect: 08d6e8e7-5209-43e9-9eba-cd124aa81d51
+    ongoingEffectCustom: false
+  - __typeName: ActivatedAbilityAuraBehavior
+    applyto: caster
+    guid: a2dd5bfc-78c3-4ce0-80a7-6e9bfd8fd29c
+    aura:
+      __typeName: Aura
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      movedamage: poison
+      implementation: 2
+      description: The manticore sprays tail spikes across the ground within 5 squares of them. Each enemy in that area who has A<3 is bleeding (save ends). Additionally, the area is difficult terrain, and any enemy takes 3 poison damage for each square of the area they enter. An enemy who takes 9 poison damage this way on one turn is weakened until the end of the encoutner.
+      modifiers: []
+      concealment: true
+      damage: 3
+      blocks_line_of_effect: false
+      guid: 09bec898-494b-407c-878b-e70cd6802701
+      difficult_terrain: true
+      objectid: 4623e5a8-2823-4611-98aa-63ee700f38ab
+      triggers:
+      - trigger: onenter
+        ability:
+          __typeName: TriggeredAbility
+          strain: []
+          targetType: self
+          behaviors: []
+          radius: 0
+          silent: true
+          persistence: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 7d56fcd7-1b6e-4baa-b67f-038e1a1db788
+          repeatTargets: false
+          trigger: onenter
+          description: ""
+          range: 5
+          name: Aura Trigger
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      applyto: enemies
+      name: Barrage of Barbs Poison Aura
+    duration: eoe
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 202
+  persistence: []
+  resourceNumber: "7"
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  guid: af2283d2-e553-4978-b9d4-c1d5e69a9cd5
+  repeatTargets: false
+  implementationDetails: 'Ability does not count when an enemy takes 9 poison damage from moving through the area and so does not apply weakened until the end of the encounter automatically. '
+  description: |
+    The manticore sprays tail spikes across the ground within 5 squares of them. Each enemy in that area who has A<3 is bleeding (save ends). Additionally, the area is difficult terrain, and any enemy takes 3 poison damage for each square of the area they enter. An enemy who takes 9 poison damage this way on one turn is weakened until the end of the encounter.
+  targetAllegiance: enemy
+  range: "5"
+  name: Barrage of Barbs
+attacks: []
+name: Manticore
+_table: MonsterGroup

@@ -1,0 +1,288 @@
+__typeName: MonsterGroup
+id: f3f01a76-0278-4aea-9ac0-fc527ec3d731
+attacks: []
+maliceAbilities:
+- __typeName: MaliceAbility
+  implementation: 3
+  strain: []
+  targetType: self
+  behaviors:
+  - __typeName: ActivatedAbilityHealBehavior
+    roll: 5*Level
+  persistence: []
+  resourceNumber: 3
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: 59057dc1-7abf-4304-8375-46e5905a875a
+  guid: 9b3c64f8-f96e-440d-92ec-be34df1ea988
+  description: |
+    One war dog acting this turn tears apart a nearby corpse of a humanoid and incorporates its body parts into their own. The war dog regains Stamina equal to 5 times their level.
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  range: 1
+  name: Reconstitute
+- __typeName: MaliceAbility
+  implementation: 3
+  strain: []
+  targetType: cube
+  behaviors:
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    isTest: false
+    resistanceAttr: agl
+    roll: 2d10 + Might or Agility
+    resistanceRoll: true
+    tiers:
+    - 5 fire damage; slowed or weakened (save ends)
+    - 5 fire damage; slowed or weakened (EoT)
+    - 5 fire damage
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    modesSelected:
+    - 1
+    rule: slowed (save ends)
+    applyto: targets
+    tiersSelected:
+    - 1
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    modesSelected:
+    - 1
+    rule: slowed (EoT)
+    applyto: targets
+    tiersSelected:
+    - 2
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    modesSelected:
+    - 2
+    rule: weakened (save ends)
+    applyto: targets
+    tiersSelected:
+    - 1
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    modesSelected:
+    - 2
+    tiersSelected:
+    - 2
+    rule: weakened (EoT)
+  radius: "4"
+  multipleModes: true
+  keywords:
+    Magic: true
+    Area: true
+    Ranged: true
+  persistence: []
+  resourceNumber: 5
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: ui-icons/skills/1.png
+  guid: c2058c67-c81c-4d69-a538-978719ee06ee
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  description: |
+    Area, Magic, Ranged. 4 cube within 10. Each creature in the area makes an Agility test. The same condition is imposed on each affected target.
+    - Tier 1 (<=11): 5 fire damage; slowed or weakened (save ends)
+    - Tier 2 (12-16): 5 fire damage; slowed or weakened (EoT)
+    - Tier 3 (17+): 5 fire damage
+  modeList:
+  - rules: ""
+    text: Slowed
+  - text: Weakened
+  range: "10"
+  name: Fire for Effect
+- __typeName: MaliceAbility
+  strain: []
+  targetType: map
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    targeting: inherit
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      strain: []
+      targetType: self
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        targeting: self
+        abilityType: standard
+        promptText: Shift up to your speed
+        standardAbilityParams:
+          distance: "<<movement speed>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 4fead516-78f7-41f0-83db-8b2ad3769e61
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptText: Make a free strike
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: c65311da-a5cb-46c4-865c-ad5a13cbebde
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+      - __typeName: ActivatedAbilityDestroyBehavior
+      categorization: Hidden
+      iconid: ui-icons/skills/1.png
+      guid: c027eb06-3a8f-4b50-8a11-c1f685db8682
+      repeatTargets: false
+      description: ""
+      persistence: []
+      range: 1
+      name: Invoked Ability
+    promptText: ""
+  targetFilter: (not enemy) and target.minion and target.Type is War Dog
+  persistence: []
+  resourceNumber: 7
+  reasonedFilters: []
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: ui-icons/skills/1.png
+  guid: 3f56dfe3-403a-405a-b9db-5c89b432fe21
+  repeatTargets: false
+  description: |
+    Each war dog minion in the encounter shifts up to their speed and can make a free strike. A minion who does so is then reduced to 0 Stamina.
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  range: 1
+  name: Fodder Run
+- __typeName: MaliceAbility
+  implementation: 0
+  minLevel: 4
+  strain: []
+  targetType: map
+  behaviors: []
+  selfTarget: true
+  targetFilter: ""
+  persistence: []
+  resourceNumber: 5
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
+  guid: 76b4318b-f2ec-46ff-b81c-006042f13d1f
+  description: |
+    Magic, Ranged. Two war dogs. Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target's Loyalty Collar trait is resolved, each enemy adjacent to either target makes a Presence test.
+    - Tier 1 (<=11): Push 4; the enemy is frightened of the nearest non-minion war dog (save ends)
+    - Tier 2 (12-16): Push 2; the enemy is frightened of the nearest non-minion war dog (EoT)
+    - Tier 3 (17+): Push 2
+  repeatTargets: false
+  range: 1
+  name: Loyalty Unto Death
+- __typeName: MaliceAbility
+  implementation: 0
+  minLevel: 7
+  strain: []
+  targetType: map
+  behaviors: []
+  selfTarget: true
+  targetFilter: ""
+  persistence: []
+  resourceNumber: 7
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
+  guid: 1fea394f-fcd6-4f18-940c-e1dddbe7f2bc
+  description: |
+    A bank of choking chemicals sweeps across the area of the encounter map. Each enemy in the encounter makes a Might test.
+    - Tier 1 (<=11): 8 poison damage; dazed (EoT)
+    - Tier 2 (12-16): 7 poison damage; weakened (EoT)
+    - Tier 3 (17+): 4 poison damage
+  repeatTargets: false
+  range: 1
+  name: Alchemical Cloud
+- __typeName: MaliceAbility
+  implementation: 0
+  minLevel: 10
+  strain: []
+  targetType: map
+  behaviors: []
+  selfTarget: true
+  targetFilter: ""
+  persistence: []
+  resourceNumber: 7
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
+  guid: 619304c6-03a2-4f76-81fb-05c67699c5ee
+  description: |
+    Area, Magic. 3 burst. Each enemy in the area.
+    - Tier 1 (<=11): 7 psychic damage
+    - Tier 2 (12-16): 11 psychic damage; P<4 frightened (save ends)
+    - Tier 3 (17+): 14 psychic damage; P<5 frightened (save ends)
+    Effect: Each war dog within distance deals an extra 15 damage with strikes until the end of their next turn. Additionally, they end any effect on them that can be ended by a saving throw or that ends at the end of their turn, then shift up to their speed and can make a free strike. This ability can't be used by a minion.
+  repeatTargets: false
+  range: 1
+  name: Cry Havoc
+traits: []
+name: War Dog
+_table: MonsterGroup

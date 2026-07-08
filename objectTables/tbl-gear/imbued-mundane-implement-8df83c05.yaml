@@ -1,0 +1,127 @@
+__typeName: equipment
+implementation: 0
+hidden: true
+mtime: 1774483588227
+description: A mundane implement suitable for imbuing.
+category: Gear
+unique: true
+imbuements:
+  byLevel:
+  - d68fec8c-66cb-4c35-9284-a224c37154c1
+  d68fec8c-66cb-4c35-9284-a224c37154c1: true
+features:
+- __typeName: CharacterFeature
+  implementation: 4
+  guid: 98d8a806-b654-487c-94f2-68dfc2c2abd8
+  modifiers:
+  - __typeName: CharacterModifier
+    guid: 2b0144b1-3039-4dc0-9751-da2e25473249
+    name: Rejuvenating III
+    sourceguid: 98d8a806-b654-487c-94f2-68dfc2c2abd8
+    description: Whenever you use an ability that costs 1 or more of your Heroic Resource, roll a d10. On a 7 or higher, you gain 1 Heroic Resource, and you or a creature of your choice within 3 squares can spend a Recovery. This replaces the benefit of Rejuvenating II.
+    source: Item
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      mandatory: false
+      castImmediately: true
+      triggerPrompt: You used an ability that cost 1 or more of your Heroic Resource. Roll a d10, on a 7 or higher, you gain 1 Heroic Resource and you or a creature of your choice within 3 squares can spend a Recovery
+      strain: []
+      targetType: self
+      conditionFormula: Used Ability.HeroicResourceCost > 0
+      behaviors:
+      - __typeName: ActivatedAbilityRollBehavior
+        roll: 1d10
+        rollDescription: Rejuvenating III
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: RejuvenatingRoll
+        value: cast.Roll
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 4af4ccee-f664-43d2-b971-3abaec71aa42
+        runOnController: true
+        standardAbilityParams:
+          numtargets: "1"
+          numrecoveries: "1"
+          range: "3"
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: ec6fff72-6a64-4cee-831f-17dfda5332f1
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        abilityType: standard
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      guid: 060ef4db-858d-432f-8a45-be519f43d8c7
+      description: Whenever you use an ability that costs 1 or more of your Heroic Resource, roll a d10. On a 7 or higher, you gain 1 Heroic Resource, and you or a creature of your choice within 3 squares can spend a Recovery. This replaces the benefit of Rejuvenating II.
+      trigger: useability
+      repeatTargets: false
+      range: 1
+      name: Rejuvenating III
+    behavior: trigger
+  - __typeName: CharacterModifier
+    guid: 553133f9-1551-4f1b-89d4-9904abf2d45a
+    name: Rejuvenating III
+    sourceguid: 98d8a806-b654-487c-94f2-68dfc2c2abd8
+    description: Whenever you use an ability that costs 1 or more of your Heroic Resource, roll a d10. On a 7 or higher, you gain 1 Heroic Resource, and you or a creature of your choice within 3 squares can spend a Recovery. This replaces the benefit of Rejuvenating II.
+    source: Item
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      castImmediately: true
+      strain: []
+      targetType: self
+      conditionFormula: Trigger Name = "RejuvenatingRoll" and Trigger Value >= 7
+      behaviors:
+      - __typeName: ActivatedAbilityReplenishBehavior
+        chatMessage: Rejuvenating III Heroic Resource Gain
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      guid: 8b53ae80-b683-48ae-96d1-050d2ddf419c
+      description: ""
+      trigger: custom
+      repeatTargets: false
+      range: 1
+      name: Rejuvenating III
+    behavior: trigger
+  addText: Add Magical Property
+  description: Whenever you use an ability that costs 1 or more of your Heroic Resource, roll a d10. On a 7 or higher, you gain 1 Heroic Resource, and you or a creature of your choice within 3 squares can spend a Recovery. This replaces the benefit of Rejuvenating II.
+  itemAttached: true
+  source: Item
+  name: Rejuvenating III
+iconid: cc913329-17fb-46c0-9a66-25e9bafbd445
+imbueTarget: implement
+weight: 1
+type: Gear
+ctime: 1774483584639
+id: 89b07951-6120-4f3e-a05c-6c3500709737
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+name: Imbued Mundane implement
+_table: tbl_Gear

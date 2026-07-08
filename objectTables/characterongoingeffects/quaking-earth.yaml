@@ -1,0 +1,140 @@
+__typeName: CharacterOngoingEffect
+id: cb3859c6-ed31-4c59-942e-3342f7236239
+custom: true
+mtime: 1775274687001
+description: ""
+modifiers:
+- __typeName: CharacterModifier
+  seq: dd1ca1e4-53a1-4c91-99a4-2385492da384
+  conditionFormula: Level >= 7
+  sourceguid: cb3859c6-ed31-4c59-942e-3342f7236239
+  radius: Reason
+  guid: d917098a-6533-4e91-aaeb-d37f83755524
+  aura:
+    __typeName: Aura
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    guid: 129eabcc-9af1-4c57-abb1-9e3101a52e8d
+    objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
+    modifiers:
+    - __typeName: CharacterModifier
+      color: white
+      texttype: negotiation
+      sourceguid: 129eabcc-9af1-4c57-abb1-9e3101a52e8d
+      guid: 06b2f119-2283-4ab2-a25f-cdfb5d0e68fe
+      name: Quaking Earth
+      description: ""
+      source: Aura
+      text: Creatures in the area of the mantle’s aura have their starting patience increased by 1 (to a maximum of 5) during any negotiation.  If you have 5 or more Victories, the bonus to patience increases to 2.
+      behavior: movementtext
+    - __typeName: CharacterModifier
+      modtype: edge
+      rollType: test_power_roll
+      skills:
+      - ff54a691-e0a0-4246-8ceb-7975b8826e92
+      sourceguid: 129eabcc-9af1-4c57-abb1-9e3101a52e8d
+      keywords: []
+      guid: 963f492c-c6b4-46ca-8f7f-5ed7c06523a0
+      description: While in the area, you and any ally gain an edge on tests that use the Handle Animals skill. If you have 5 or more Victories, tests that use the Handle Animals skill have a double edge.
+      name: Quaking Earth
+      filterCondition: Victories < 5
+      source: Aura
+      activationCondition: true
+      behavior: power
+    - __typeName: CharacterModifier
+      modtype: double_edge
+      rollType: test_power_roll
+      skills:
+      - ff54a691-e0a0-4246-8ceb-7975b8826e92
+      sourceguid: 129eabcc-9af1-4c57-abb1-9e3101a52e8d
+      keywords: []
+      guid: 6862e2d0-96f4-42ea-817b-9f00c0515397
+      description: While in the area, you and any ally gain an edge on tests that use the Handle Animals skill. If you have 5 or more Victories, tests that use the Handle Animals skill have a double edge.
+      name: Quaking Earth
+      filterCondition: Victories >= 5
+      source: Aura
+      activationCondition: true
+      behavior: power
+    applyto: selfandfriends
+    name: Quaking Earth
+  domains:
+    CharacterOngoingEffect:cb3859c6-ed31-4c59-942e-3342f7236239: true
+  description: ""
+  source: Ongoing Effect
+  name: Quaking Earth
+  behavior: aura
+- __typeName: CharacterModifier
+  name: Quaking Earth
+  guid: f1933b34-b6fe-4b03-b359-f6ba6b2fe3e5
+  sourceguid: cb3859c6-ed31-4c59-942e-3342f7236239
+  domains:
+    CharacterOngoingEffect:cb3859c6-ed31-4c59-942e-3342f7236239: true
+  description: ""
+  source: Ongoing Effect
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    objectTarget: false
+    strain: []
+    targetType: all
+    conditionFormula:
+      __typeName: GoblinScriptTable
+      id: table
+      entries:
+      - script: Heroic Resources Available to Spend >= 3
+        threshold: 1
+      - script: Hero = 1
+        threshold: 7
+      field: Level
+      editableField: true
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: push {Reason}
+    persistence: []
+    targetAllegiance: enemy
+    abilityType: none
+    whenActive: combat
+    modifiers: []
+    description: ""
+    numTargets: "1"
+    iconid: ui-icons/skills/1.png
+    guid: 5d483397-f648-40f0-ab3e-bd775092eea5
+    repeatTargets: false
+    domains:
+      CharacterOngoingEffect:cb3859c6-ed31-4c59-942e-3342f7236239: true
+    trigger: endturn
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    range: Reason
+    name: Quaking Earth
+  behavior: trigger
+association: []
+canEndWithAction: true
+iconid: ui-icons/skills/1.png
+guid: cb3859c6-ed31-4c59-942e-3342f7236239
+ctime: 1767215995170
+domains:
+  CharacterOngoingEffect:cb3859c6-ed31-4c59-942e-3342f7236239: true
+sustainFormula:
+  __typeName: GoblinScriptTable
+  id: table
+  entries:
+  - script: Heroic Resources Available to Spend >= 3
+    threshold: 1
+  - script: Heroic Resources Available to Spend >= 0
+    threshold: 7
+  field: Level
+  editableField: true
+source: Ongoing Effect
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+name: Quaking Earth
+_table: characterOngoingEffects

@@ -1,0 +1,82 @@
+__typeName: CharacterComplication
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 1
+    guid: 51b86f1f-74e0-4506-917b-7cdaee46ef84
+    canHavePrerequisites: true
+    description: When you finish a respite, choose a skill you don't have. You have that skill until the end of your next respite.
+    modifiers: []
+    source: Complications
+    name: Loner - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 5e437b33-6031-4552-bb7b-2c509f2ab547
+    canHavePrerequisites: true
+    description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 6afb94e1-0283-4fd7-ba05-716dcf4e87f2
+      name: Loner - Drawback
+      sourceguid: 5e437b33-6031-4552-bb7b-2c509f2ab547
+      description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: ""
+        strain: []
+        targetType: self
+        conditionFormula: ""
+        behaviors:
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          applyto: targets
+          rule: taunted (Eoe)
+        - __typeName: ActivatedAbilityFloatTextBehavior
+          color:
+            __usertype: LuaColor
+            h: 0
+            s: 0.830634832382202
+            v: 0.998205065727234
+            a: 1
+          text: Loner Drawback
+        - __typeName: ActivatedAbilityConditionSourceBehavior
+          filterTarget: Target = Attacker
+          applyto: all_creatures
+          condid: 85e26e12-e853-464d-bbbc-98ddf2c0071a
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: eoe
+          applyto: subject
+          ongoingEffect: e5b9fa52-b2aa-4cc2-b46a-d18828bdcf9a
+          ongoingEffectCustom: e5b9fa52-b2aa-4cc2-b46a-d18828bdcf9a
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        subject: otherheroes
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 2d8be557-e492-4417-953f-a9a96712c793
+        description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+        abilityType: none
+        trigger: dying
+        repeatTargets: false
+        range: 1
+        name: Loner Drawback
+      behavior: trigger
+    source: Complications
+    name: Loner - Drawback
+mtime: 1775107597199
+benefit: When you finish a respite, choose a skill you don't have. You have that skill until the end of your next respite.
+_fork: H4sIAAAAAAAACsVX227cNhD9FXb7kBawHN0vBvrguAkaIE0DZIGgT8aIGq4YS6RKUnYXQf+9Q0rrOPbaSfrSwEgkai7nnLkw/rS5vHT7Cd/CiJuzzUUPBrhDc6HHaZAcnNRqc8I23ElvkFRFUSRFVSR5UdBxiwqFdOT5oUfF9npmQippewbMoJ2kwxPGe60t0om9ksMQjDqtnjnWwzWesj/p3T8x14NbbWbl5EAHyFB1TAvvZJjCv90h7KlH1aHlRk4B5NmGAj2jMDDcwN6yFgkQsEErZDd6EKfsg3Q9U5r5ExwIkdNsQFB0cOITeOdJ8ivs2DyR60hIKDKzs7mW10B4DH21FKiXvGcjdMiko3wL0lEb9LaTkVaqHbs5KPJRS0UxAwU+G4OKnLpr+mc23nBntM9HRIWe6W8fTABl3wdUHfG+RsOulL5ZAirEDrtFAQM3LfArov9W3ywSrlUgXPtF2An1NJAKvWYcCCS0eg5mgTap44sxIKFSey+OgytfDRwZkJQ/MF/bAAEYNwgEG6kM3czRBjEP9aGMko5I1pi9d8RAwZLBJ3VARSUZ2v2C8jbSUutDgP0ze/Bl0rJe7npKTB6KxScEUDv/fus8ElQbcqzxT5g2dxtneeTafzRBMrW0+htCbvz7qDspJJrXSujN2ad7AzGAtW+I/OBNxZLVerPkoe1heF4tZt7DEi0ePt4bKEmvOFIPLCdn8YN2/l8mioP6jTzfGTT410yN7DxbZ2bKutnNsiNgRdLWpUhEVOUYR3kRl1GTVG1U8Q4Q8xJFnd8XmkXsxbor7kgehLwcZthCO5CtABrLf8jgzpnP7Y/S79Pbnx3TOXug8zfTxjyr2iyLyjhLiHaRRm1LtFNexI1IoS3y6gjtXw8Tep/3Ew30+2p3lNET8R8SW7GXINomxySK0zqLctFVUQtxEVVJ2XGRY12J1JvThtvtSIPuvJWDdPsHELf3DTwrWl3gtNnfKubA7NBtyY1cLA5iE+4K6kmpHyN/TlfMNbjbyJ7Xe4c40OT4DC9Wdx8KpmnYO5rWNZP1h2b27bI57JmfXurtz5tv7aX72V8NGtyWpuNuWkfvt8rf1Z3rgSxCzNmicQvxNzNchA9k0S8TTtzj0zqLyyyvszSr0zRO6fjaHzdNncY0TEWVVmmWe5p04T4yDdlXGVxo1UnfCe9DAx2Xjxbu5WGX2oUJefmOqQtMS0zSCOuCOqbMO+r2lkdN3XUi5XFcJRBWohyoYbehDL4/wgP7hZ07R+IsLXwEf/5V/Oce5B9qR5fn7qUQyL8ohb774WK2To8UA4u2EeAHMwWIcs7pKS8h6pK6TuuWWr2BLwWwc/uRIoThmc26Izao8UGS7wh/hO+xJTfRIpDW0e2Ej+3BJ2adg3WvxxE7SaINn2dPzeN2HYozGrPPQ02v3Z7ohKWy0j7bhPuUfvRSf4MTdcNtgADkqcWSdnWLRVFFmDdplOdJFTVFJiJooCmrJOVVk4U1TI0VHGYZ+Wf7PFxL9nlyOi2QvnondNJOA4SV1M9oeyncMlTtbp2/zY9i/RM4+q5eK5p4M5KhdwqtXd6PVIkfZuaVNuM8wMrVgNrh4gRLc66rTVFdQipnQKrHgK/6vzP0XwC3hjySfFn033nZHJaqX3xrmb+9Af+7WcDIO4KYZEC3f5ZHedKKqInrJGpEXRWlqMo2DbUfD787lHVWF2VNzPIjYf8FcRdkaYsMAAA=
+description: You've always been a lone wolf. With no one else to lean on, you've picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group and found the family you'd never known you needed.
+drawback: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+id: cd37b13a-9134-41bf-9081-9f8756f76b23
+ctime: 1775106066768
+name: Loner
+_table: complications

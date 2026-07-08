@@ -1,0 +1,125 @@
+__typeName: CharacterComplication
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: de7ecf79-6674-4cd3-932c-59ec5eb54b1a
+    canHavePrerequisites: true
+    description: While you wear your sibling's shield on your back, you can't be flanked.
+    modifiers:
+    - __typeName: CharacterModifier
+      name: Sibling's Shield - Benefit
+      guid: 235f2396-467b-4001-818d-6c6e1d710308
+      value: 1
+      attribute: 0dede2a8-4f44-45aa-be20-342fdffd4916
+      description: ""
+      source: Complications
+      sourceguid: de7ecf79-6674-4cd3-932c-59ec5eb54b1a
+      behavior: attribute
+    source: Complications
+    name: Sibling's Shield - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 44ec8f79-5ecb-4575-933a-57329de49bc4
+    canHavePrerequisites: true
+    description: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: f1fe5481-4037-40c5-ab9d-3ba014c6554a
+      name: Sibling's Shield - Drawback
+      sourceguid: 44ec8f79-5ecb-4575-933a-57329de49bc4
+      description: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+        strain: []
+        targetType: self
+        conditionFormula: Ongoing Effects has "Started respite at not full recoveries"
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          isTest: true
+          roll: 2d10 + Might or Agility
+          attrid: inu
+          resistanceRoll: false
+          tiers:
+          - You regain 1 fewer Recoveries than usual when you finish the respite.
+          - You regain 1 fewer Recoveries than usual when you finish the respite.
+          - No effect
+        - __typeName: ActivatedAbilityReplenishBehavior
+          mode: expend
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+          chatMessage: Visions of your dead sibling haunt you at night.
+          tiersSelected:
+          - 1
+          - 2
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          ongoingEffect: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+          mode: effect
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 0cad76ff-f812-4517-a093-e5bcea76e535
+        description: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+        trigger: endrespite
+        repeatTargets: false
+        range: 1
+        name: Sibling's Shield Drawback
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: 7209bf44-ad54-432a-8803-28e297379dab
+      name: Sibling's Shield - Drawback
+      sourceguid: 44ec8f79-5ecb-4575-933a-57329de49bc4
+      description: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+        strain: []
+        targetType: self
+        conditionFormula: Resources.Recovery < Maximum Recoveries
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+          ongoingEffectCustom: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 0fa9508d-88bc-4e93-8cd1-34cbb6c190de
+        description: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+        trigger: startrespite
+        repeatTargets: false
+        range: 1
+        name: Sibling's Shield Drawback
+      behavior: trigger
+    source: Complications
+    name: Sibling's Shield - Drawback
+mtime: 1775230192657
+benefit: While you wear your sibling's shield on your back, you can't be flanked.
+_fork: H4sIAAAAAAAACq1V247bNhD9lYFf8mIakq2LvY8NUHSB3tAEDQIUWIzIkUUsRbokZcEI+u8dUvZus0nQBMibNXN4ZjhzePxh9fAQLyf6FUda3a1eD+hRRvKv3XgyWmLUzq7WsFIUpNen/Hm3eu8mmMkTRAyPpGDWcQBFRp/Ja3sEBMnZ0VmNBsKgySiIDi5u8uCMIg9Bd4aR6ww11HmMiQe9186voXce4kDaw4XQB3A9BPJnLWkD7wayiQoS+MynMF6xgxspREK1zvneTVal1Mi9oQJnrzjlnGfcael7ibnZQpidV2CcOjKrvqE7lI8beOug10znpgjz4EDpRK1DulcqIQRydh4uQqTaiqRWlG+dK2m74JgvDI7CBu6ZRxvDI3wknsI8aEMJPmKUA0ynp4FdR/UqgKEjysuaedx0HDZpL3bZ25snzJs87ZTSihPFoS1kRZ2guiBRFT0KbMqDaAtsmp3cU1E1CSyjTkRlW9d12ZZtW7QNhzuy1OvIRO9yf5e8ePQvO7vu2NklkUa27ECifRWhI+gNWpZKbnp0Svea/L3t3eruwwsJGgzhZzqTSdCeME6eQoKVn2Jvcv1xgX2q1O/ZNgd/wjP97lnbf0866Jj6in6iNG1+LzSSjcuTudtx7DjlHShqSfbtQTRNW4lKqp047LZS1AeSNXV11ZX437H832V/ueLSmcB9S/rGQh+PaPXc6XZX99vdoRFV03aslqIU+3KvRCMbKlVbFrtin+AYo9fdFFNbBcuctrgXVV9x0RpRdLQtxK7a9qrvVXUos8LOaKaksC+LFgT8cNXb083SvV9YUUcDntklOPXcB8cfzIRvsTO07OSfj0M9mpBjX+T9qq6+sshnYOPzC2uKqiyb7b5Iu/A4J91x5T9ZUs5ms8tyzKZ1FSsMONm42F4Eq49DXJyQH0qW9c1H+K2cWJhr9pH0beHexkmnOwLLNTkln1/knRFToFQQ7eUvGx7ZkDbwm2WeyAKDEpIPp1/bZHyS/XV5H56diA2yhJ74fwD+IOmS9VNI/JZJJzb++WbUbJw6ZKO9tbf53Cz/BXJWQwGMBgAA
+description: You were tasked with delivering a ceremonial shield to your older sibling, a celebrated warrior, for their years of service. When you arrived at their homestead, you found them dead on their doorstep with their own sword lodged in their back. To find out who did this to them--and why--you decided to step into their shoes. It will take a while to match up to your sibling's legacy, though.
+drawback: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+id: 0970c4eb-e50e-40fa-a619-70a663c8e046
+ctime: 1775047721924
+name: Sibling's Shield
+_table: complications

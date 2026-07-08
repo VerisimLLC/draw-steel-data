@@ -1,0 +1,80 @@
+__typeName: CharacterComplication
+id: 16d3c636-0931-4851-a891-4ad5dfe03e78
+description: A powerful artifact has bonded to you, though you don't know whether you're destined to wield the artifact or to destroy it. You're not powerful enough to use it at the moment, although you might be someday. For now, though, the artifact has no effect beyond getting you in trouble
+mtime: 1775105509199
+benefit: "Choose an artifact (see Treasures in Chapter 13: Rewards). The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first."
+ctime: 1774440684057
+drawback: Each time the artifact appears, you lose a Recovery. If you have no Recoveries remaining, you take 1d10 damage instead, which can't be reduced in any way.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 2
+    guid: 2dc221da-7aac-40ad-93f3-8c368ad47167
+    canHavePrerequisites: true
+    description: |-
+      Choose an artifact (see Treasures in Chapter 13: Rewards). The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first.
+
+      Each time the artifact appears, you lose a Recovery. If you have no Recoveries remaining, you take 1d10 damage instead, which can't be reduced in any way.
+    modifiers:
+    - __typeName: CharacterModifier
+      name: Artifact Bonded - Benefit and Drawback
+      guid: 58002813-c7a1-4ad1-a22f-20527a82996c
+      sourceguid: 2dc221da-7aac-40ad-93f3-8c368ad47167
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: Your artifact appears! It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina.
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityFloatTextBehavior
+          color:
+            __usertype: LuaColor
+            h: 0.140000000596046
+            s: 0.899999976158142
+            v: 1
+            a: 1
+          text: Artifact Appears!
+        - __typeName: ActivatedAbilityDamageBehavior
+          filterTarget: Recoveries Available to Spend = 0
+          cannotBeReduced: true
+          roll: 1d10
+        - __typeName: ActivatedAbilityReplenishBehavior
+          filterTarget: Recoveries Available to Spend > 0
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+          chatMessage: The artifact appears and you lose a recovery
+          mode: expend
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        whenActive: combat
+        modifiers: []
+        description: The first time in an encounter that you are reduced to 0 Stamina, the artifact appears on your person.
+        iconid: ui-icons/skills/1.png
+        guid: 1b23ef9f-1e09-4e0e-bb84-5ea9ab881545
+        usageLimitOptions:
+          resourceid: 58002813-c7a1-4ad1-a22f-20527a82996c
+          charges: "1"
+          resourceRefreshType: encounter
+        numTargets: "1"
+        trigger: dying
+        repeatTargets: false
+        range: 1
+        name: Artifact Bonded Benefit
+      description: |-
+        Choose an artifact (see Treasures in Chapter 13: Rewards). The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first.
+
+        Each time the artifact appears, you lose a Recovery. If you have no Recoveries remaining, you take 1d10 damage instead, which can't be reduced in any way.
+      source: Complications
+      resourceRefreshType: encounter
+      behavior: trigger
+    source: Complications
+    name: Artifact Bonded - Benefit and Drawback
+name: Artifact Bonded
+_table: complications

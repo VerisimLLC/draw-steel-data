@@ -1,0 +1,428 @@
+__typeName: GlobalRuleMod
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 3f8f2a02-4e73-463f-9d6d-0bbdefab1678
+    description: "Choose an enemy adjacent to you.\n\nThe next ability power roll an ally who makes against that creature before the start of your next turn has an edge. "
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: e3da6e60-5244-4691-941f-3b9b8895a1ec
+      behavior: activated
+      name: Aid Attack
+      description: "Choose an enemy adjacent to you.\n\nThe next ability power roll an ally who makes against that creature before the start of your next turn has an edge. "
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 3f8f2a02-4e73-463f-9d6d-0bbdefab1678
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          durationUntilEndOfTurn: false
+          duration: 1
+          ongoingEffect: e234f1f4-9953-43bd-894c-d96adbb63f84
+          ongoingEffectCustom: e234f1f4-9953-43bd-894c-d96adbb63f84
+        categorization: Common Ability
+        hasCustomIcon: true
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        iconid: 26c46951-a120-4245-bcd0-0c72fe5722ad
+        guid: 54924c9b-3d27-43a8-a188-61cff992a02c
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 273
+        domains: []
+        description: "Choose an enemy adjacent to you.\n\nThe next ability power roll an ally who makes against that creature before the start of your next turn has an edge. "
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.0185185205191374
+            s: -0.00267529487609863
+            v: 1.0030654668808
+            a: 1
+          saturation: 1
+        range: 1
+        name: Aid Attack
+    source: Maneuvers Global Rule Mod Feature
+    name: Aid Attack
+  - __typeName: CharacterFeature
+    implementation: 3
+    guid: 86ef635b-8dde-40bf-b1d6-52db9b4d5858
+    description: 'Using the Hide maneuver, you attempt to hide from other creatures who aren’t observing you while you have cover or concealment (see Hide and Sneak). '
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 3c5b1c14-7eb8-441e-9cae-3c4d201bbc8a
+      behavior: activated
+      name: Hide
+      description: 'Using the Hide maneuver, you attempt to hide from other creatures who aren’t observing you while you have cover or concealment (see Hide and Sneak). '
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 86ef635b-8dde-40bf-b1d6-52db9b4d5858
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 3
+        castImmediately: true
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          rule: hidden (eoe)
+        categorization: Common Ability
+        hasCustomIcon: true
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        properties:
+          remainhidden: true
+        flavor: Using the Hide maneuver, you attempt to hide from other creatures who aren’t observing you while you have cover or concealment.
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        domains: []
+        iconid: 059bafff-ae6f-4f09-919b-f931a904f5f6
+        guid: 48ee3631-c735-4afe-a48c-f12201068aac
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.665032684803009
+            s: -0.00267529487609863
+            v: 1.0030654668808
+            a: 1
+          saturation: 1
+        implementationDetails: Hidden is a general effect. Hidden that is creature to creature specific is WiP.
+        description: You become hidden. You must have cover or concealment from a creature to become hidden, and that creature cannot be observing you.
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 273
+        range: 5
+        name: Hide
+    source: Maneuvers Global Rule Mod Feature
+    name: Hide
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 251abe3e-b761-48f3-9a47-1356aa71dad4
+    description: "You attempt to shove an adjacent creature using a power roll.\n\nYou can normally only target creatures and objects up to your size category. If your Might score is 2 or higher, you can target creatures and objects with a size equal to your Might score or lower. "
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: d9b900b5-6594-46ef-9c20-4e41fae3d8dd
+      behavior: activated
+      name: Knockback
+      description: "You attempt to shove an adjacent creature using a power roll.\n\nYou can normally only target creatures and objects up to your size category. If your Might score is 2 or higher, you can target creatures and objects with a size equal to your Might score or lower. "
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 251abe3e-b761-48f3-9a47-1356aa71dad4
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityCustomTriggerBehavior
+          triggerName: BeginKnockback
+          applyto: caster
+          value: ""
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          filterTarget: ""
+          tiers:
+          - Push 1
+          - Push 2
+          - Push 3
+          roll: 2d10 + Might
+        categorization: Common Ability
+        targetFilter: ""
+        keywords:
+          Melee: true
+          Weapon: true
+        persistence: []
+        reasonedFilters:
+        - reason: This creature is too large for you to knockback.
+          formula: |-
+            (Target.Knockback Target Size<= caster.Knockback Caster Size) or (Caster.Grab Characteristic >= 2 and (Target.Knockback Target Size-3) <= Caster.Grab Characteristic)
+
+            {Note that we must either be equal to or bigger than the target, or have a Might ("Grab Characteristic") greater than or equal to size. Since size 1L is equal to size '4', we subtract 3 from the Knockback Target Size when making this calculation}
+        - reason: Grabbed creatures cannot be force moved, except by the grabber.
+          formula: (Not (target.conditions has "Grabbed")) or (ConditionCaster("Grabbed") = Caster)
+        abilityType: none
+        numTargets: Knockback Targets
+        repeatTargets: false
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.538348972797394
+            s: -0.00267529487609863
+            v: 1.0030654668808
+            a: 1
+          saturation: 1
+        iconid: 652d9c4c-f87d-4b50-af37-683cfc52a727
+        guid: fcf7f003-73d0-41b0-af9c-35786c62c889
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 273
+        domains: []
+        description: "You attempt to shove an adjacent creature using a power roll.\n\nYou can normally only target creatures and objects up to your size category. If your Might score is 2 or higher, you can target creatures and objects with a size equal to your Might score or lower. "
+        hasCustomIcon: true
+        range: "1"
+        name: Knockback
+    source: Maneuvers Global Rule Mod Feature
+    name: Knockback
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 22f53f3a-7cf8-48b0-a68a-73cf498da13b
+    description: ""
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: ec6f18a2-edfa-432c-adc5-f9c728d013a8
+      behavior: activated
+      name: Search for Hidden Creatures
+      description: ""
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 22f53f3a-7cf8-48b0-a68a-73cf498da13b
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: all
+        behaviors:
+        - __typeName: ActivatedAbilityOpposedRollBehavior
+          defenseAttributes:
+            "1":
+              attribute: agl
+              skill: fdd43bde-6062-484d-aea6-3803d396ea8e
+            attribute: mgt
+          attackAttributes:
+            "1":
+              attribute: inu
+              skill: 7f6d9375-0ab0-415c-8196-4d99e98aa12b
+            attribute: mgt
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions:
+          - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+          applyto: hit_targets
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 274
+        targetFilter: Conditions has "hidden"
+        hasCustomIcon: true
+        persistence: []
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        flavor: You can use this maneuver to attempt to search for creatures hidden from you.
+        iconid: 42bc5c96-a946-446e-b8bc-6186986b7d66
+        guid: d4c248aa-2d7b-42a7-bac8-0cb46f179ab5
+        categorization: Common Ability
+        domains: []
+        description: |
+          You can search for creatures who are hidden from you as long as those creatures are within 10 squares and you have line of effect to them. To do so, you use a maneuver to make an Intuition test using the Search skill, and any hidden creatures within 10 squares of you each make an opposed Agility test using the Hide skill. At the Director’s discretion, different characteristics and skills can be used in this opposed test. For example, your foe might make a Presence test using the Handle Animals skill to hide among a flock of sheep without disturbing them, or you could make a Reason test using the Eavesdrop skill to pick out the breathing of a creature hidden in the dark.
+          If the total of your test is higher than that of a hidden creature, they are no longer hidden from you. Otherwise, they remain hidden from you.
+          As part of the maneuver used to search for hidden creatures, you can point out any creatures you notice to allies within 10 squares of you, making those creatures no longer hidden from those allies.
+          If a creature is hidden from your allies but not from you, you can use a maneuver without making a test to point that creature out to your allies.
+        repeatTargets: false
+        range: "10"
+        name: Search for Hidden Creatures
+    source: Maneuvers Global Rule Mod Feature
+    name: Search for Hidden Creatures
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 6d907044-22da-4963-a4da-58cb108e2ff4
+    description: 'A creature can use the Stand Up maneuver to stand up if they are prone, ending that condition. Alternatively, they can use this maneuver to make a willing adjacent prone creature stand up. '
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 40c44e51-d096-481c-a2e8-5e04d0feffb0
+      behavior: activated
+      name: Stand Up
+      description: 'A creature can use the Stand Up maneuver to stand up if they are prone, ending that condition. Alternatively, they can use this maneuver to make a willing adjacent prone creature stand up. '
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 6d907044-22da-4963-a4da-58cb108e2ff4
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          mode: conditions
+          chatMessage: Stood up!
+          conditions:
+          - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+          ongoingEffect: 00cb5e88-2ed8-4760-82e4-6e4e3b73a81f
+          purgeType: all
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 274
+        targetFilter: (target.conditions has "Prone") and (target.Cannot Stand = 0)
+        hasCustomIcon: true
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        categorization: Common Ability
+        iconid: dba8a5c1-3594-4f61-acbb-64f5ae6c825e
+        guid: b6d282d9-2c8c-4824-ac1d-09394e8a39e8
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.309999704360962
+            s: -0.00267529487609863
+            v: 1.0030654668808
+            a: 1
+          saturation: 1
+        domains: []
+        description: 'You can use this maneuver to stand up if you are prone, ending that condition. Alternatively, you can use this maneuver to make a willing adjacent prone creature stand up. '
+        selfTarget: true
+        range: 1
+        name: Stand Up
+    source: Maneuvers Global Rule Mod Feature
+    name: Stand Up
+  - __typeName: CharacterFeature
+    implementation: 2
+    guid: 34e0f70c-37d4-47c0-b12c-52faec2300da
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: b58f0bbb-73f8-4d8b-8008-8a880b759fdc
+      behavior: activated
+      name: Claw Dirt
+      description: If a creature who can’t burrow wants to dig into the ground, they can use the following ability provided their speed is 2 or more.
+      source: Maneuvers Global Rule Mod Feature
+      sourceguid: 34e0f70c-37d4-47c0-b12c-52faec2300da
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 2
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Might
+          applyto: caster
+          tiers:
+          - You can move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed and weakened (EoT).
+          - You can use your main action this turn to move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed (EoT).
+          - You can move 1 square into, out of, or through ground you are touching that can be burrowed through.
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          tiersSelected:
+          - 1
+          rule: Slowed and Weakened (EoT)
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          tiersSelected:
+          - 2
+          rule: Slowed (EoT)
+        abilityFilters: []
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 268
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+          saturation: 1
+        iconid: d7fe0545-7c6e-4305-a6be-50572d2bbea8
+        guid: a3766261-c2cd-4de1-9795-085cecbb703f
+        flavor: ""
+        domains: []
+        description: If a creature who can’t burrow wants to dig into the ground, they can use the following ability provided their speed is 2 or more.
+        categorization: Common Ability
+        range: 1
+        name: Claw Dirt
+    description: If a creature who can’t burrow wants to dig into the ground, they can use the following ability provided their speed is 2 or more.
+    source: Maneuvers Global Rule Mod Feature
+    canHavePrerequisites: true
+    name: Claw Dirt
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: a6f1b4e0-9405-4f86-b9e4-b490b0fb74a6
+    modifiers:
+    - __typeName: CharacterModifier
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityCustomTriggerBehavior
+          triggerName: Dig
+          applyto: caster
+          value: ""
+        - __typeName: ActivatedAbilityDigVerticalBehavior
+        abilityFilters:
+        - reason: You can only Dig while walking on solid ground or already burrowing -- not while flying, hovering, or swimming.
+          formula: (Burrowing Speed > 0) and (Movement Type = "Walk" or Movement Type = "Burrow")
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 268
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+          saturation: 1
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        hideWhenFiltered: true
+        iconid: ui-icons/skills/1.png
+        guid: ed58920b-b726-44e6-83f3-59fb70142d75
+        conditionalReminders:
+        - text: If a burrowing creature has a creature who is not unconscious grabbed, they can't willingly move deeper into the ground. It's too difficult to dig with a flailing enemy in your claws
+          formula: Movement Type = "Burrow" and Number of Creatures Grabbed > 0 and Can Dig While Grabbing = 0
+        - formula: Movement Type = "Burrow" and Number of Creatures Grabbed > 0 and Can Dig While Grabbing > 0
+          positive: true
+          text: "{Name} can dig while grabbing another creature"
+        selfTarget: true
+        description: A creature with a burrow speed can use the Dig maneuver to move up to their size vertically, straight up or down through the ground.
+        categorization: Heroic Ability
+        range: "0"
+        name: Dig
+      guid: d159ca1a-8fe4-475c-a1f9-225e69b1c3e1
+      sourceguid: a6f1b4e0-9405-4f86-b9e4-b490b0fb74a6
+      behavior: activated
+      filterCondition: ""
+      source: Maneuvers Global Rule Mod Feature
+      description: A creature with a burrow speed can use the Dig maneuver to move up to their size vertically, straight up or down through the ground.
+      name: Dig
+    description: ""
+    source: Maneuvers Global Rule Mod Feature
+    canHavePrerequisites: true
+    name: Dig
+mtime: 1782903232796
+_migrated_apply: true
+ctime: 1709477751315
+id: 4d0ead0e-65af-4cc4-93e0-d6adfe7d06b2
+name: Maneuvers
+_table: globalRuleMods

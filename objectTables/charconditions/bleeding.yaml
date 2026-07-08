@@ -1,0 +1,63 @@
+__typeName: CharacterCondition
+implementation: 3
+mtime: 1782508372952
+powertable: true
+ctime: 1710002647486
+modifiers:
+- __typeName: CharacterModifier
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    mandatory: false
+    strain: []
+    targetType: self
+    conditionFormula: (not Ignores Bleeding) and (Used Ability.Main Action or Used Ability.Trigger or ((Used Ability.Characteristics has "Might" or Used Ability.Characteristics has "Agility") and not (Used Ability.Characteristics has "Reason" or Used Ability.Characteristics has "Intuition" or Used Ability.Characteristics has "Presence")) or (Used Ability.Characteristics has "Highest" and not (Highest Characteristic = max(Reason,max(Intuition,Presence)))))
+    behaviors:
+    - __typeName: ActivatedAbilityDelayBehavior
+      delay: "0.5"
+    - __typeName: ActivatedAbilityDamageBehavior
+      filterTarget: Caster.Conditions has "Bleeding"
+      cannotBeReduced: true
+      roll: 1d6+Level
+      applyto: caster
+    persistence: []
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    abilityType: none
+    whenActive: always
+    modifiers: []
+    iconid: bd44e33a-fb70-490c-acac-882da0d34642
+    guid: 10995c88-5ede-4e94-ade4-cb297732e184
+    numTargets: "1"
+    repeatTargets: false
+    description: While a creature is bleeding, whenever they use a main action, use a triggered action, or make a test or ability roll using Might or Agility, they lose Stamina equal to 1d6 + their level after the main action, triggered action, or power roll is resolved. This Stamina loss can’t be prevented in any way.
+    trigger: finishability
+    range: 1
+    name: Bleeding
+  guid: fbc732e6-7539-4732-9ed8-58fc889f7cb6
+  sourceguid: 9fb25aff-bd2b-465f-a17a-af24eda29dcb
+  domains:
+    CharacterCondition:18ff50ab-053b-49d2-a456-927f8e4f9cf9: true
+  description: 'While a creature is bleeding, whenever they make a test using Might or Agility, make a strike, or use an action, a maneuver, or a triggered action, they lose Stamina equal to 1d6 + their level after the test, strike, action, maneuver, or triggered action is resolved. This Stamina loss can’t be prevented in any way. '
+  source: Condition
+  behavior: trigger
+  name: Bleeding
+stackable: false
+immunityPossible: false
+iconid: bd44e33a-fb70-490c-acac-882da0d34642
+guid: 9fb25aff-bd2b-465f-a17a-af24eda29dcb
+id: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+domains:
+  CharacterCondition:18ff50ab-053b-49d2-a456-927f8e4f9cf9: true
+description: |-
+  While a creature is bleeding, whenever they make a test using Might or Agility, make a strike, or use an action, or a triggered action, they lose Stamina equal to 1d6 + their level after the test, strike, action, or triggered action is resolved. This Stamina loss can’t be prevented in any way.
+
+  You take damage from this condition when you use a main action off your turn. For example, a signature ability used as a free triggered action with the assistance of the tactician’s Strike Now ability triggers the damage from the bleeding condition.
+trackCaster: true
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+name: Bleeding
+_table: charConditions

@@ -1,0 +1,77 @@
+__typeName: GlobalRuleMod
+id: 9061da45-8fd5-49c7-99bf-c3e98bb6a2e2
+mtime: 1779447802914
+_migrated_apply: true
+applyCompanions: true
+applyMonsters: false
+applyRetainers: true
+ctime: 1766651969592
+applyCharacters: true
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: ccf96bd1-5bf2-4097-b793-bf8a1f8b7ceb
+    description: 'By using the Catch Breath, maneuver, you spend a Recovery and regain Stamina in an amount equal to your recovery value. '
+    source: Catch Breath Global Rule Mod Feature
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: f3749034-8224-4819-8172-4e4a8c550d38
+      behavior: activated
+      name: Catch Breath
+      description: 'By using the Catch Breath, maneuver, you spend a Recovery and regain Stamina in an amount equal to your recovery value. '
+      source: Catch Breath Global Rule Mod Feature
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          mode: expend
+          chatMessage: Recovery Spent
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+          applyto: caster
+          filterTarget: ""
+        - __typeName: ActivatedAbilityHealBehavior
+          roll: Recovery Value
+          applyto: caster
+        abilityFilters:
+        - reason: You do not have any recoveries.
+          formula: resources.Recovery > 0	
+        - reason: You cannot use Catch Breath when you are dying.
+          formula: not (Conditions has "dying")
+        hasCustomIcon: true
+        persistence: []
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.384999752044678
+            s: -0.00267529487609863
+            v: 1.0030654668808
+            a: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        repeatTargets: false
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        categorization: Common Ability
+        iconid: 9d51a1b8-ebec-48fd-b90e-e71aa5a72fb5
+        guid: ca322ca9-4729-46b2-81bc-d3ac4098fc47
+        reasonedFilters: []
+        domains: []
+        description: You regain stamina equal to your Recovery Value.
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 273
+        range: 1
+        name: Catch Breath
+      sourceguid: 5df1bf0a-ba4b-4a0b-b13e-eaf034d4d47b
+    name: Catch Breath
+name: Catch Breath
+_table: globalRuleMods

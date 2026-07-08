@@ -1,0 +1,267 @@
+__typeName: MonsterGroup
+id: 0ae58107-0b97-4f12-9234-b35fa95de40b
+mtime: 1778602304439
+attacks: []
+ctime: 1758524915860
+maliceAbilities:
+- __typeName: MaliceAbility
+  implementation: 3
+  objectTarget: false
+  strain: []
+  targetType: map
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    duration: 0
+    ongoingEffect: 4c593376-10ea-48a8-ac49-f41d7b2d1745
+    ongoingEffectCustom: 4c593376-10ea-48a8-ac49-f41d7b2d1745
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    standardAbilityParams:
+      distance: "<<walking speed>>"
+    abilityType: standard
+    promptText: Each orc shifts up to their speed, moving through enemy spaces if they can. Each enemy passed through during this movement makes a Might test.
+    promptWhenResolvingText: Choose orc marching order
+    standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+    promptWhenResolving: true
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      targetType: self
+      modifiers: []
+      behaviors: []
+      iconid: ui-icons/skills/1.png
+      guid: 7a318f9c-9d12-46d8-ba04-618caca777a0
+      description: ""
+      repeatTargets: false
+      range: 1
+      name: Invoked Ability
+    invokeOnCaster: false
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 216
+  targetFilter: target.keywords has "Orc"
+  persistence: []
+  resourceNumber: "3"
+  reasonedFilters: []
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+  guid: 91a2996e-b9ec-46aa-9e28-800d33ba71a2
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  description: |
+    Each orc shifts up to their speed, moving through enemy spaces if they can. Each enemy passed through during this movement makes a Might test.
+    - Tier 1 (<=11): 6 damage; prone
+    - Tier 2 (12-16): 4 damage; prone
+    - Tier 3 (17+): Push 2
+  repeatTargets: false
+  range: 1
+  name: Overwhelming March
+- __typeName: MaliceAbility
+  strain: []
+  targetType: line
+  behaviors:
+  - __typeName: ActivatedAbilityChangeElevationBehavior
+    shape: square
+    height: "-2"
+  - __typeName: ActivatedAbilityChangeTerrainBehavior
+    tileid: "-MBVQqKrE73ix3K9-MjS"
+    shape: square
+  - __typeName: ActivatedAbilityAuraBehavior
+    aura:
+      __typeName: Aura
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      modifiers: []
+      guid: 759c58f6-cda1-4ca2-893b-c656f6c070d5
+      difficult_terrain: true
+    duration: eoe
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      abilityType: none
+      numTargets: "2"
+      strain: []
+      targetType: emptyspace
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilitySummonBehavior
+        monsterType: 4870c075-8467-444b-96f3-6041bf09fa58
+        allCreaturesTheSame: true
+        numSummons: "1"
+      iconid: ui-icons/skills/1.png
+      guid: 1378aaaa-278b-4539-8c24-63a43e4014ef
+      repeatTargets: false
+      description: ""
+      persistence: []
+      range: "10"
+      name: Invoked Ability
+    applyto: caster
+  radius: "1"
+  targeting: direct
+  persistence: []
+  lineDistance: "10"
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  abilityType: none
+  numTargets: "10"
+  resourceNumber: "5"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  repeatTargets: false
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  guid: b74ad246-69a3-4a5b-bb15-bd012963c4b6
+  name: Mohler Trench
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 216
+  description: |
+    An orc acting this turn summons 2 mohlers out of the ground, who dig a trench that is a 10 x 1 line within 10 squares when they appear. The trench is 2 squares deep and is difficult terrain. The trench can't be created directly underneath creatures.
+  targetTextOverride: The trench can't be created directly underneath creatures.
+  range: "10"
+  rangeTextOverride: 10 x 1 line within 10 squares
+- __typeName: MaliceAbility
+  implementation: 4
+  strain: []
+  targetType: cube
+  behaviors:
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    filterTarget: target.type != "Orc"
+    tiers:
+    - 4 damage; the target falls; prone and can't stand (EoT)
+    - 4 damage; the target falls
+    - The target can shift into the nearest unoccupied space outside the pit.
+    roll: 2d10 + Agility
+    resistanceAttr: agl
+    attrid: agl
+    resistanceRoll: true
+    isTest: false
+  - __typeName: ActivatedAbilityChangeTerrainBehavior
+    shape: square
+    tileid: "-MBVQqKrE73ix3K9-MjS"
+    radius: 5
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    filterTarget: target.type = "Orc"
+    standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+    promptText: Each orc in the area can shift into the nearest unoccupied space outside the pit before it is completed
+    standardAbilityParams:
+      targetfilter: ""
+      distance: "3"
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      targetType: self
+      modifiers: []
+      behaviors: []
+      iconid: ui-icons/skills/1.png
+      guid: 67464844-075d-4bdd-ad1c-0c67216fc1e6
+      description: ""
+      repeatTargets: false
+      range: 1
+      name: Invoked Ability
+    abilityType: standard
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    filterTarget: target.type != "Orc"
+    standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+    promptText: On a Tier 3 Agility Test Result, you can shift into the nearest unoccupied space outside the pit.
+    tiersSelected:
+    - 3
+    standardAbilityParams:
+      distance: "3"
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      targetType: self
+      modifiers: []
+      behaviors: []
+      iconid: ui-icons/skills/1.png
+      guid: 1fc3eb77-6a0c-4f25-b9ac-6afb02bc8266
+      description: ""
+      repeatTargets: false
+      range: 1
+      name: Invoked Ability
+    abilityType: standard
+  - __typeName: ActivatedAbilityChangeElevationBehavior
+    radius: 5
+    height: "-5"
+    testFalling: false
+    shape: square
+  - __typeName: ActivatedAbilityAuraBehavior
+    applyto: original_targets
+    aliveafterdeath: true
+    aura:
+      __typeName: Aura
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      difficult_terrain: true
+      modifiers: []
+      guid: fc783861-ab8a-41c5-9160-64ef8005415a
+      blocks_line_of_effect: false
+    duration: eoe
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 216
+  persistence: []
+  resourceNumber: "7"
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  guid: 1a9a6ce6-f315-40ea-9b2e-2cb6f28ce2db
+  radius: "5"
+  description: |
+    The ground shakes as a group of mohlers dig a 5 cube pit beneath an area where at least one creature is on the ground. The area is difficult terrain. Each orc in the area can shift into the nearest unoccupied space outside the pit before it is completed. Each non-orc in the area makes an Agility test.
+    - Tier 1 (<=11): 4 damage; the target falls; prone and can't stand (EoT)
+    - Tier 2 (12-16): 4 damage; the target falls
+    - Tier 3 (17+): The target can shift into the nearest unoccupied space outside the pit.
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  range: "100"
+  name: Mohler Cavity
+traits: []
+name: Orc
+_table: MonsterGroup

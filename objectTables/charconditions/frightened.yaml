@@ -1,0 +1,105 @@
+__typeName: CharacterCondition
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+mtime: 1782208791544
+powertable: true
+implementation: 2
+modifiers:
+- __typeName: CharacterModifier
+  modtype: bane
+  rollType: ability_power_roll
+  description: Any ability roll you make against the source of your fear takes a bane.
+  sourceguid: a0e3a5c6-6cd5-4567-9b0a-910c735173eb
+  name: Frightened
+  guid: 7b551f3b-d02d-4934-8bb4-014a7336aaca
+  displayCondition: ConditionCaster("Frightened") = Target
+  domains:
+    CharacterCondition:1211270f-bfce-45a6-b937-d72f0e8a06a8: true
+  keywords: []
+  source: Condition
+  activationCondition: ConditionCaster("Frightened") = Target
+  behavior: power
+- __typeName: CharacterModifier
+  modtype: edge
+  rollType: enemy_ability_power_roll
+  description: Your ability rolls made against the creature frightened of you gain an edge.
+  sourceguid: a0e3a5c6-6cd5-4567-9b0a-910c735173eb
+  name: Frightened
+  guid: af2e877c-e1af-4b9f-a61e-10b9c5f1a6e1
+  displayCondition: "1"
+  domains:
+    CharacterCondition:1211270f-bfce-45a6-b937-d72f0e8a06a8: true
+  keywords: []
+  source: Condition
+  activationCondition: Target.ConditionCaster("Frightened") = Caster
+  behavior: power
+- __typeName: CharacterModifier
+  description: 'When a creature is frightened, any ability roll they make against the source of their fear takes a bane. If that source is a creature, their ability rolls made against the frightened creature gain an edge. A frightened creature can’t willingly move closer to the source of their fear if they know the location of that source. If a creature gains the frightened condition from one source while already frightened by a different source, the new condition replaces the old one. '
+  guid: 95638325-1ce1-4827-a7f1-95c39af3bfb6
+  behavior: movementrestriction
+  domains:
+    CharacterCondition:1211270f-bfce-45a6-b937-d72f0e8a06a8: true
+  targetFormula: ConditionCaster("Frightened")
+  source: Condition
+  sourceguid: a0e3a5c6-6cd5-4567-9b0a-910c735173eb
+  name: Frightened
+- __typeName: CharacterModifier
+  color: red
+  sourceguid: a0e3a5c6-6cd5-4567-9b0a-910c735173eb
+  guid: fbb60313-b306-4671-a29a-f5e91f61df5c
+  text: You cannot move closer to the source of your fear
+  domains:
+    CharacterCondition:1211270f-bfce-45a6-b937-d72f0e8a06a8: true
+  description: 'When a creature is frightened, any ability roll they make against the source of their fear takes a bane. If that source is a creature, their ability rolls made against the frightened creature gain an edge. A frightened creature can’t willingly move closer to the source of their fear if they know the location of that source. If a creature gains the frightened condition from one source while already frightened by a different source, the new condition replaces the old one. '
+  source: Condition
+  behavior: movementtext
+  name: Frightened
+- __typeName: CharacterModifier
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    strain: []
+    targetType: self
+    conditionFormula: self.ConditionCaster("Frightened") = subject
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      chatMessage: Source of fear died
+      conditions:
+      - 1211270f-bfce-45a6-b937-d72f0e8a06a8
+    persistence: []
+    repeatTargets: false
+    abilityType: none
+    numTargets: "1"
+    modifiers: []
+    iconid: ui-icons/skills/1.png
+    guid: 019a6952-70f7-408f-af3d-634e4d8d8253
+    subject: other
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    trigger: creaturedeath
+    description: ""
+    range: 1
+    name: Taunted
+  guid: de81a3f0-33ce-4727-87e4-8d17e5c9aa9d
+  sourceguid: f28db13b-e475-4dc0-89e5-1986c71ed01a
+  domains:
+    CharacterCondition:85e26e12-e853-464d-bbbc-98ddf2c0071a: true
+  description: 'If you are taunted, you have a double bane on ability power rolls that don’t target the creature who taunted you while you have line of effect to that creature. If you gain the taunted condition from one creature while already taunted by a different creature, the new condition replaces the old one. '
+  source: Condition
+  name: Taunted
+  behavior: trigger
+id: 1211270f-bfce-45a6-b937-d72f0e8a06a8
+description: When a creature is frightened, any ability roll they make against the source of their fear takes a bane. If that source is a creature, their ability rolls made against the frightened creature gain an edge. A frightened creature can’t willingly move closer to the source of their fear if they know the location of that source. If a creature gains the frightened condition from one source while already frightened by a different source, the new condition replaces the old one.
+iconid: 667a484a-c982-4f5f-aa65-6ee87031eb9c
+_fork: H4sIAAAAAAAACtVTy27cIBT9FeRuQwR+gO1tpEhdtIuq+9EFrscoHjMCXMmK8u8FZpom6lRqF13UCwvu45xzHzxXh0Pcz/gZTliN1cMMHnRE/+BWY6N1a3VHKoNBe3su17H6OJHdbQQ8ksnb4xxxRXNHIEbQT6H4TvCEBI5g1xBJnJEEt3mNxJVUTyYET8I2TegJJwpWvCcJNs4Qf4TaQIBojxA3jwl93V8ZEuD+niJz5mMGc269z6LXS0WPrxKz0Wq3WpPMQhsQvBO0b7WirR46OgyyoQa7VjUMRM+7nHCKNsNwyaRsZdsNtZS5IzacF9ir8blShWDFEFJYcs0bhtlOsRpZuoWsHy6dy1511G5xPin4MF2/THNYNvgKaklU0W/4kkz6lbkTfZ30NE2bBTljJ4s+ZG6ef7cH+Oka99/O74KTS3q7ijenatwp4+Rm/LrAI685ryWbqJo00rYDQdXQSGpkPTHsgQnoL22/PQiFM3yzZWYGTnDEQllOj3Z591bGCZaQYY5b2bK6Gxgy0dAWjKBtYqTK8J5q0aPshWQtVz9rvSYBwwY6LWja0S7pFZIOigEdONOy6bhssCSVTdi/uGVJSZcp/GaV3piKwJd/3rO/LKUE/xHnDbrvBQxTA8MEAAA=
+guid: a0e3a5c6-6cd5-4567-9b0a-910c735173eb
+domains:
+  CharacterCondition:1211270f-bfce-45a6-b937-d72f0e8a06a8: true
+ctime: 1710002924980
+trackCaster: true
+stackable: true
+name: Frightened
+_table: charConditions

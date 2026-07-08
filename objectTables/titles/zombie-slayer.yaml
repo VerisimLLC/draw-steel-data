@@ -1,0 +1,149 @@
+__typeName: Title
+id: 18fa7ca0-28c2-472f-b520-81cba8564dce
+prerequisite: You defeat a leader or solo creature with the Undead keyword, such as a ghost.
+mtime: 1773772209841
+effect: "Choose one of the following benefits:"
+ctime: 1762351131747
+description: Why won’t you die?! You’ve already done it once, you should be good at it by now!
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    description: "Choose one of the following benefits:"
+    options:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 2953f0c8-5933-44d3-9d87-c0b92da55a1a
+      canHavePrerequisites: true
+      description: Whenever you use a damage-dealing weapon ability, that ability can deal holy damage instead of its usual damage type.
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: none
+        rollType: ability_power_roll
+        description: Whenever you use a damage-dealing weapon ability, that ability can deal holy damage instead of its usual damage type.
+        displayCondition: Ability.doesdamage
+        name: Blessed Weapons
+        guid: 6b94705c-205e-47ff-b6cd-474a13fe85eb
+        damageTypeMappings:
+          all: holy
+        sourceguid: 2953f0c8-5933-44d3-9d87-c0b92da55a1a
+        keywords:
+          Weapon: true
+        source: Feat
+        activationCondition: ""
+        behavior: power
+      source: Feat
+      name: Blessed Weapons
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: dea7edca-22a2-4b72-be8f-ff6b6dfe7043
+      canHavePrerequisites: true
+      description: You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 559330a8-a74a-4f69-9978-4c3ea698d0ad
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: corruption
+          dr: Highest Characteristic
+        name: Divine Health
+        description: You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.
+        source: Feat
+        sourceguid: dea7edca-22a2-4b72-be8f-ff6b6dfe7043
+        behavior: resistance
+      source: Feat
+      name: Divine Health
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 9c9dc88a-e6ec-48c5-9b5c-3208b9182218
+      canHavePrerequisites: true
+      description: You have the following ability, which can be paid for using the Heroic Resource of your class.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: fbe62693-5aeb-4df4-9a01-7dcc8f682a57
+        name: Holy Terror
+        sourceguid: 9c9dc88a-e6ec-48c5-9b5c-3208b9182218
+        description: You have the following ability, which can be paid for using the Heroic Resource of your class.
+        source: Feat
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 3
+          objectTarget: false
+          strain: []
+          targetType: all
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: Reason
+            damageType: holy
+            modesSelected:
+            - 1
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: holy
+            guid: e1cf5d4f-b5f4-447f-ac89-31657bc1dd02
+            roll: Intuition
+            modesSelected:
+            - 2
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: holy
+            guid: b0975316-b5a8-4154-ae3c-526438afc954
+            roll: Presence
+            modesSelected:
+            - 3
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: P<{Strong} frightened (save ends)
+          categorization: Heroic Ability
+          multipleModes: variations
+          domains: []
+          sourceReference:
+            __typeName: SourceReference
+            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+            page: 342
+          targetTextOverride: Each undead enemy in the area
+          keywords:
+            Area: true
+            Magic: true
+          persistence: []
+          resourceNumber: "3"
+          flavor: Return to your grave!
+          display:
+            bgcolor:
+              __usertype: LuaColor
+              h: 0.163249492645264
+              s: 0.952148079872131
+              v: 0.953756630420685
+              a: 1
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          guid: 2daffb72-6e8e-48ac-85a3-d10a780ce85c
+          modifiers: []
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          targetAllegiance: enemy
+          iconid: 8fcd17db-789d-4aaa-a00c-5de692654476
+          modeList:
+          - condition: ""
+            rules: Each target takes holy damage equal to your Reason
+            text: Reason
+          - rules: Each target takes holy damage equal to your Intuition
+            text: Intuition
+          - rules: Each target takes holy damage equal to your Presence
+            text: Presence
+          repeatTargets: false
+          implementationDetails: When you use this ability you are presented with 3 modes to choose. These are to use your Reason, Intuition or Presence score for the holy damage.
+          description: Each target takes holy damage equal to your Reason, Intuition, or Presence score (your choice). Additionally, each target who has P<Strong is frightened (save ends).
+          targetFilter: Type = "undead"
+          range: "3"
+          name: Holy Terror
+        behavior: activated
+      source: Feat
+      name: Holy Terror
+    guid: dc36aea9-e584-4b9c-b4c9-560a098e7101
+    name: Zombie Slayer Benefits
+name: Zombie Slayer
+_table: titles

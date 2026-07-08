@@ -1,0 +1,67 @@
+__typeName: GlobalRuleMod
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 3
+    guid: 573add23-769b-4003-baae-c4982901b13b
+    description: ""
+    modifiers:
+    - __typeName: CharacterModifier
+      sourceguid: 573add23-769b-4003-baae-c4982901b13b
+      guid: fffe0f4a-d924-4b47-ae7a-9a13c471318e
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: local
+        strain: []
+        targetType: self
+        conditionFormula: Minion Prevent Death < 1
+        behaviors:
+        - __typeName: ActivatedAbilityDelayBehavior
+          proceedCondition: Cannot be Removed = 0
+          delay: (1 when not minion) + DelayDeath
+        - __typeName: ActivatedAbilityRemoveCreatureBehavior
+          filterTarget: (target.dead or target.minion) and not Summoned
+          dropsLoot: true
+          applyto: targets
+          leavesCorpse: true
+        - __typeName: ActivatedAbilityRemoveCreatureBehavior
+          filterTarget: (target.dead or target.minion) and Summoned
+          guid: be116b74-5899-4a7d-a46d-b07d5cefcec0
+          dropsLoot: true
+          leavesCorpse: true
+          waitForTriggers: false
+          applyto: targets
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 1e4d8ac3-6ad6-4d1c-8ddf-e1cf6968434e
+        repeatTargets: false
+        description: ""
+        trigger: creaturedeath
+        range: 1
+        name: Monster Death
+      name: Monster Death
+      filterCondition: not retainer
+      source: Monster Death Global Rule Mod Feature
+      description: ""
+      behavior: trigger
+    source: Monster Death Global Rule Mod Feature
+    name: Monster Death
+mtime: 1779075420991
+_migrated_apply: true
+applyCompanions: false
+applyMonsters: true
+applyRetainers: false
+ctime: 1752027308859
+id: 42a8dd10-c3a1-4d69-b03a-2e18095c2a49
+applyCharacters: false
+name: Monster Death
+_table: globalRuleMods

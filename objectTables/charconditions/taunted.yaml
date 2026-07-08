@@ -1,0 +1,74 @@
+__typeName: CharacterCondition
+display:
+  bgcolor:
+    __usertype: LuaColor
+    h: 0.789500176906586
+    s: 1.00169110298157
+    v: 0.99999988079071
+    a: 1
+  hueshift: 0
+mtime: 1780558930853
+immunityPossible: true
+id: 85e26e12-e853-464d-bbbc-98ddf2c0071a
+modifiers:
+- __typeName: CharacterModifier
+  modtype: double_bane
+  rollType: ability_power_roll
+  sourceguid: f28db13b-e475-4dc0-89e5-1986c71ed01a
+  description: If you are taunted, you suffer a bane on attacks that don’t include a creature who taunted you. If you gain the taunted condition from a creature while already taunted by a different creature, the new condition, including the value, replaces the old one.
+  guid: fe289274-9047-4c71-9c78-6c57a732d187
+  behavior: power
+  domains:
+    CharacterCondition:85e26e12-e853-464d-bbbc-98ddf2c0071a: true
+  keywords: []
+  source: Condition
+  activationCondition: not cast.HasTarget(ConditionCaster("Taunted")) and Line of Sight(Caster,ConditionCaster("Taunted")) >0
+  name: Taunted
+- __typeName: CharacterModifier
+  name: Taunted
+  guid: f153f27f-1b86-406b-b444-ac59823843e2
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    strain: []
+    targetType: self
+    conditionFormula: self.ConditionCaster("Taunted") = subject
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      chatMessage: Taunter died
+      conditions:
+      - 85e26e12-e853-464d-bbbc-98ddf2c0071a
+    persistence: []
+    repeatTargets: false
+    subject: other
+    numTargets: "1"
+    modifiers: []
+    iconid: ui-icons/skills/1.png
+    guid: 157f8287-fe86-4528-8054-42a0d3136804
+    abilityType: none
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    trigger: creaturedeath
+    description: ""
+    range: 1
+    name: Taunted
+  domains:
+    CharacterCondition:85e26e12-e853-464d-bbbc-98ddf2c0071a: true
+  description: 'If you are taunted, you have a double bane on ability power rolls that don’t target the creature who taunted you while you have line of effect to that creature. If you gain the taunted condition from one creature while already taunted by a different creature, the new condition replaces the old one. '
+  source: Condition
+  behavior: trigger
+  sourceguid: f28db13b-e475-4dc0-89e5-1986c71ed01a
+stackable: false
+implementation: 3
+iconid: da22a911-febf-451c-8e0f-d53673a62216
+guid: f28db13b-e475-4dc0-89e5-1986c71ed01a
+powertable: true
+domains:
+  CharacterCondition:85e26e12-e853-464d-bbbc-98ddf2c0071a: true
+ctime: 1699691789880
+trackCaster: true
+description: 'If you are taunted, you have a double bane on ability power rolls that don’t target the creature who taunted you while you have line of effect to that creature. If you gain the taunted condition from one creature while already taunted by a different creature, the new condition replaces the old one. '
+name: Taunted
+_table: charConditions

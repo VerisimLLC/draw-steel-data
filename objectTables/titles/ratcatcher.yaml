@@ -1,0 +1,139 @@
+__typeName: Title
+id: d31aa674-b4ec-4512-aac8-0a0fa05e8d4b
+prerequisite: You defeat a leader or solo creature who is size 1S or smaller, such as a goblin monarch.
+mtime: 1775306223327
+effect: "Choose one of the following benefits:"
+ctime: 1762349955482
+description: I like fighting these little guys. Means I don’t have to waste money on a helmet.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    description: "Choose one of the following benefits:"
+    options:
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: e824d8fe-0147-4f28-8bc9-b17fecc83de2
+      canHavePrerequisites: true
+      description: You have the following ability, which can be paid for using the Heroic Resource of your class.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 8e2f84ff-5b41-45b2-971a-64ce3587811e
+        name: Come Out to Play
+        sourceguid: e824d8fe-0147-4f28-8bc9-b17fecc83de2
+        description: You have the following ability, which can be paid for using the Heroic Resource of your class.
+        source: Feat
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 2
+          objectTarget: false
+          strain: []
+          targetType: all
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            filterTarget: ""
+            rule: P < Average taunted (EoT)
+          categorization: Heroic Ability
+          targetFilter: Conditions has "Hidden"
+          keywords:
+            Area: true
+            Magic: true
+          persistence: []
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          implementationDetails: This ability will apply taunted (EoT) to creatures who have P < Average but we don't currently track who a creature is hidden from, they are hidden or they aren't. As the hidden creature's position is only known to the player, they remain hidden.
+          flavor: Come out to play-yay!
+          modifiers: []
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          iconid: f3ca1e31-fa85-4a4f-aa5d-36d4a551310f
+          guid: 9f35c432-a636-454b-9970-47079328b8e9
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          domains: []
+          description: Each target who has P < Average is taunted by you until the end of their next turn, and you know the location of each creature taunted in this way.
+          targetAllegiance: enemy
+          range: "5"
+          name: Come Out to Play
+        behavior: activated
+      source: Feat
+      name: Come Out to Play
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 0f1050d1-972a-4f29-8bc6-100f520d1ba3
+      canHavePrerequisites: true
+      description: Your strikes gain a +3 damage bonus against creatures whose size is smaller than yours.
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: none
+        rollType: ability_power_roll
+        sourceguid: 0f1050d1-972a-4f29-8bc6-100f520d1ba3
+        keywords: []
+        displayCondition: Target.Size < Size
+        damageModifier: "3"
+        guid: c87fbb03-9f5b-4941-a194-05ce17c3a675
+        behavior: power
+        damageModifierType: none
+        description: Your strikes gain a +3 damage bonus against creatures whose size is smaller than yours.
+        source: Feat
+        activationCondition: Target.Size < Size
+        name: Deadly and Big
+      source: Feat
+      name: Deadly and Big
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: f5d7b21b-8e19-4a0c-af44-ba1e7a6875ed
+      canHavePrerequisites: true
+      description: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
+      modifiers:
+      - __typeName: CharacterModifier
+        attributes:
+        - reasonedFilters:
+          - formula: Number of Targets < 1 or Size < Caster.Size
+            reason: "**Ratcatcher:** Confirm creatures size is your size if targeting 1 additional creature, or smaller if targeting 2 additonal creatures."
+          id: reasonfilter
+          value: ""
+          operation: reasonfilter
+        - id: numtargets
+          value: "2"
+          operation: Add
+        sourceguid: f5d7b21b-8e19-4a0c-af44-ba1e7a6875ed
+        name: Everybody Move!
+        guid: efa1f469-107d-4329-abde-3de21019c41d
+        ability:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors: []
+          abilityModification: true
+          iconid: ui-icons/skills/1.png
+          guid: 082331a1-257f-44b8-99f3-f29f586bbdf3
+          description: ""
+          repeatTargets: false
+          range: 1
+          name: New Ability
+        modifyDescription: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
+        description: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
+        source: Feat
+        filterAbility: Ability.Name = "Knockback"
+        behavior: modifyability
+      source: Feat
+      name: Everybody Move!
+    guid: 216f4a95-43e1-4371-b1d0-eb60915a9606
+    name: Ratcatcher Benefit
+name: Ratcatcher
+_table: titles

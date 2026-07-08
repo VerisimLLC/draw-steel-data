@@ -1,0 +1,340 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: null
+    offtokenPortraitId: null
+    portraitFrameId: null
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: Flow of Magma
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: dc309ec6-f1b3-4ce0-b90d-7f107601d944
+  properties:
+    __typeName: monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 74ecee3b-4ab6-448a-8c47-1edc0ea55de4
+      domains:
+        CharacterFeature:74ecee3b-4ab6-448a-8c47-1edc0ea55de4: true
+      description: ""
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: resistance
+        guid: 9e1d2326-3f1a-4cea-9409-80ab7cbbd2a7
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: fire
+          dr: Summoner.Reason
+        domains:
+          CharacterFeature:74ecee3b-4ab6-448a-8c47-1edc0ea55de4: true
+        description: ""
+        source: Character Feature
+        sourceguid: 74ecee3b-4ab6-448a-8c47-1edc0ea55de4
+        name: Immunity
+      name: Immunity
+    - __typeName: CharacterFeature
+      guid: c08e9747-8f47-49da-8a96-c9a8470df1d3
+      domains:
+        CharacterFeature:c08e9747-8f47-49da-8a96-c9a8470df1d3: true
+      description: When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A < Average 4 fire damage.
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Eruption
+        guid: c9cc0254-c92c-4e31-b439-934f309a7a60
+        sourceguid: c08e9747-8f47-49da-8a96-c9a8470df1d3
+        domains:
+          CharacterFeature:c08e9747-8f47-49da-8a96-c9a8470df1d3: true
+        description: When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A < Average 4 fire damage.
+        source: Character Feature
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 91dd5947-bb7e-41f5-aa27-856dd5f55bb7
+          keywords: []
+          name: Eruption (1 Essence)
+          type: passive
+          effect: When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A < Average 4 fire damage.
+        behavior: triggerdisplay
+      - __typeName: CharacterModifier
+        name: Eruption
+        guid: 7d7f2a42-9d36-4521-a482-aba5e044b5c3
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: You may launch lava to affect an area
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityAddNewTargetsBehavior
+            targetMode: replace
+            promptText: Select Eruption Area
+            targetingAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: cube
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityAuraBehavior
+                aliveafterdeath: true
+                aura:
+                  __typeName: Aura
+                  display:
+                    brightness: 1
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    saturation: 1
+                  modifiers: []
+                  guid: 45a5bdac-4b37-44f4-81fa-8e62572e2d35
+                  description: The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A< Average 4 fire damage.
+                  objectid: ed3dfc6b-0e6d-4a2f-b833-7523e86742eb
+                  triggers:
+                  - trigger: onenter
+                    ability:
+                      __typeName: TriggeredAbility
+                      strain: []
+                      targetType: self
+                      behaviors:
+                      - __typeName: ActivatedAbilityDamageBehavior
+                        damageType: fire
+                        chatMessage: Eruption Damage
+                        roll: "4"
+                      radius: 0
+                      targetFilter: Agility < 1
+                      persistence: []
+                      repeatTargets: false
+                      abilityType: none
+                      numTargets: "1"
+                      modifiers: []
+                      iconid: ui-icons/skills/1.png
+                      guid: 260e9d92-0ddc-4ce5-8f2a-671b8f0214dc
+                      silent: true
+                      display:
+                        brightness: 1
+                        hueshift: 0
+                        bgcolor: "#ffffffff"
+                        saturation: 1
+                      trigger: onenter
+                      description: ""
+                      range: 5
+                      name: Eruption
+                  difficult_terrain: true
+                  applyto: enemies
+                  name: Eruption
+                duration: eoe
+              categorization: Hidden
+              iconid: ui-icons/skills/1.png
+              guid: 3a54e7e4-16da-480a-b187-2471492d5972
+              radius: 1 + Tile Size
+              description: ""
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              range: "5"
+              name: Select Area to Launch Lava
+          persistence: []
+          resourceNumber: 1
+          repeatTargets: false
+          subject: self
+          numTargets: "1"
+          modifiers: []
+          resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          iconid: ui-icons/skills/1.png
+          guid: 65b4487c-eb46-4bb3-994e-c1ed2a687c9c
+          abilityType: none
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          trigger: creaturedeath
+          description: ""
+          range: 1
+          name: Eruption
+        domains:
+          CharacterFeature:c08e9747-8f47-49da-8a96-c9a8470df1d3: true
+        description: When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The affected area becomes difficult terrain for enemies until the end of the encounter. An enemy that enters an affected square or starts their turn there takes A < Average 4 fire damage.
+        source: Character Feature
+        sourceguid: c08e9747-8f47-49da-8a96-c9a8470df1d3
+        behavior: trigger
+      name: Eruption
+    - __typeName: CharacterFeature
+      guid: 5c5c199b-7918-47a2-8952-6b3a7b1ed6af
+      domains:
+        CharacterFeature:5c5c199b-7918-47a2-8952-6b3a7b1ed6af: true
+      description: ""
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: d240ab50-3a4d-4435-b6b3-7c99e0b2fbc7
+        sourceguid: 5c5c199b-7918-47a2-8952-6b3a7b1ed6af
+        guid: 04eac622-98d8-43a1-8081-0f83e758095b
+        value: 3
+        domains:
+          CharacterFeature:5c5c199b-7918-47a2-8952-6b3a7b1ed6af: true
+        description: ""
+        source: Character Feature
+        behavior: attribute
+        name: New Feature
+      - __typeName: CharacterModifier
+        attribute: f62f2f5f-d4ea-4cfc-89cd-427aed05db17
+        sourceguid: 5c5c199b-7918-47a2-8952-6b3a7b1ed6af
+        guid: 55848657-f9ef-49db-a8ce-cc43753d035e
+        value: 2
+        domains:
+          CharacterFeature:5c5c199b-7918-47a2-8952-6b3a7b1ed6af: true
+        description: ""
+        source: Character Feature
+        behavior: attribute
+        name: New Feature
+      name: New Feature
+    inflictedConditions: []
+    stability: 2
+    opportunityAttack: 4
+    creatureTemplates:
+    - d808c4b7-1e5d-4272-8b84-d91339560dda
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 6
+    notes:
+    - title: Monster Notes
+      text: ""
+    skillRatings: []
+    keywords:
+      Fire: true
+      Elemental: true
+      Earth: true
+    ev: 1
+    movementSpeeds:
+      climb: 5
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+      agl:
+        __typeName: CharacterAttribute
+        baseValue: -2
+        id: agl
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+      prs:
+        __typeName: CharacterAttribute
+        baseValue: 1
+        id: prs
+      mgt:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: mgt
+    innateAttacks: []
+    resistances: []
+    minion: true
+    role: Minion Harrier
+    creatureSize: 1L
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    monster_category: Monster
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 2
+      objectTarget: true
+      strain: []
+      targetType: target
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Summoner.Reason
+        tiers:
+        - 4 fire damage; shift 3
+        - 6 fire damage; shift 4
+        - 8 fire damage; shift 5
+      categorization: Signature Ability
+      keywords:
+        Melee: true
+        Magic: true
+        Strike: true
+      repeatTargets: false
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: 35348766-259c-40a6-ac11-5f2937527b2b
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      description: Each square that the flow shifts into becomes wreathed in flames until the start of the flow’s next turn. An enemy that enters an affected square takes 2 damage
+      targetTextOverride: One creature or object per minion
+      range: "2"
+      name: Molten Strike
+    walkingSpeed: 5
+    resources: []
+    savingThrowRatings: []
+    levelChoices: []
+    monster_type: Flow of Magma
+    cr: 1
+  tokenType: null
+  bestiaryId: 6de7163b-7af2-4dcb-a17c-9259fee22433
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1777139101432
+description: null
+parentFolder: da447b25-e416-4338-8c3d-a3d1cd8ef2a0
+artist: null
+ord: 2
+ctime: 1777139101432
+mtime: 1777239520889
+hidden: true
+id: 6de7163b-7af2-4dcb-a17c-9259fee22433

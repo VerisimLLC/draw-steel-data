@@ -1,0 +1,113 @@
+__typeName: equipment
+imbueTarget: implement
+hidden: true
+imbuements:
+  fe19f456-2d5c-4503-b8a6-27613a4ac3ba: true
+  byLevel:
+  - fe19f456-2d5c-4503-b8a6-27613a4ac3ba
+type: Gear
+weight: 1
+mtime: 1774583831196
+unique: true
+description: A mundane implement suitable for imbuing.
+features:
+- __typeName: CharacterFeature
+  guid: 123c21cc-d5c0-4a06-a919-24b759688b53
+  itemAttached: true
+  addText: Add Magical Property
+  description: Whenever you damage a creature using a magic or psionic ability and obtain a tier 3 outcome, that creature must make an opportunity attack against their nearest ally if possible after the ability’s effects resolve. This strike deals extra damage equal to the highest of your Reason, Intuition, or Presence scores.
+  modifiers:
+  - __typeName: CharacterModifier
+    guid: 315092a3-1337-444e-aad8-db09f831b649
+    name: Berserking
+    sourceguid: 123c21cc-d5c0-4a06-a919-24b759688b53
+    description: Whenever you damage a creature using a magic or psionic ability and obtain a tier 3 outcome, that creature must make an opportunity attack against their nearest ally if possible after the ability’s effects resolve. This strike deals extra damage equal to the highest of your Reason, Intuition, or Presence scores.
+    source: Item
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      strain: []
+      targetType: self
+      conditionFormula: Ability.doesdamage and (Ability.Keywords has "magic" or Ability.keywords has "psionic") and Tier Three
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbilityParams:
+          characteristicbonus: "{Highest Characteristic}"
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            promptText: Make free strike against nearest ally
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              castImmediately: true
+              objectTarget: false
+              strain: []
+              targetType: target
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                roll: Free Strike Damage + <<characteristicbonus>>
+                chatMessage: Monster Free Strike
+              abilityType: none
+              iconid: ui-icons/skills/1.png
+              guid: c1f1ebd4-ca1b-49ed-b6ed-c3c55c432764
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              numTargets: "1"
+              description: ""
+              persistence: []
+              range: Free Strike Range
+              name: Free Strike
+          iconid: ui-icons/skills/1.png
+          guid: eb9b29b3-c2e3-47ce-9514-8645a473a6de
+          numTargets: "1"
+          repeatTargets: false
+          description: ""
+          persistence: []
+          range: "100"
+          name: Invoked Ability
+        promptText: Select the creature you attacked
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      subject: self
+      numTargets: "1"
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      guid: 3dc9f402-0eb8-4b30-8188-d8a0549042d4
+      description: ""
+      abilityType: none
+      trigger: rollpower
+      repeatTargets: false
+      range: 1
+      name: Berserking
+    behavior: trigger
+  source: Item
+  name: Berserking
+iconid: cc913329-17fb-46c0-9a66-25e9bafbd445
+category: Gear
+id: e464c536-ac42-4bc5-a9d8-f1ca469f6e70
+domains:
+  item:e464c536-ac42-4bc5-a9d8-f1ca469f6e70: true
+ctime: 1774580521017
+implementation: 0
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+name: Imbued Mundane implement
+_table: tbl_Gear

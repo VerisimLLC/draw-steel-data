@@ -1,0 +1,214 @@
+__typeName: CharacterComplication
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: deed8da8-7967-406d-ad85-483722b7b12d
+    canHavePrerequisites: true
+    description: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 60940af2-ab52-40f2-a590-e2bc28448c46
+      name: Slight Case of Lycanthropy - Benefit
+      sourceguid: deed8da8-7967-406d-ad85-483722b7b12d
+      description: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: Test Winded
+        strain: []
+        targetType: self
+        conditionFormula: (not subject.Minion) and (Attacker = Self)
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          chatMessage: Wind a non-minion creature
+          resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        subject: enemy
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: ee3f8e0f-e924-4189-b889-d01e515caa1e
+        description: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+        abilityType: none
+        trigger: winded
+        repeatTargets: false
+        range: 1
+        name: Slight Case of Lycanthropy Benefit
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: c1046be0-f566-46e8-8e1e-06c5de7f0093
+      name: Slight Case of Lycanthropy - Benefit
+      sourceguid: deed8da8-7967-406d-ad85-483722b7b12d
+      description: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: Test Death
+        strain: []
+        targetType: self
+        conditionFormula: (not Target.minion) and (Target.Stamina < 1) and (Target.Stamina + Damage > 0)
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          chatMessage: Kill a non-minion creature
+          resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        subject: self
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 3709a8f2-21ac-4513-a19e-c8ac1c127713
+        description: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+        abilityType: none
+        trigger: dealdamage
+        repeatTargets: false
+        range: 1
+        name: Slight Case of Lycanthropy Benefit
+      behavior: trigger
+    source: Complications
+    name: Slight Case of Lycanthropy - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 6637fc22-e6bd-4599-8238-cf915d9943f5
+    prerequisites: []
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: a84b4d30-3be8-4475-b60e-8d77e14adb7d
+      name: Slight Case of Lycanthropy - Drawback
+      sourceguid: 6637fc22-e6bd-4599-8238-cf915d9943f5
+      description: At the start of each of your turns, if you have five or more surges -- or one or more surges while in moonlight -- you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: You have five or more surges (or one or more surges while in moonlight). You lose all your surges and become a wolfish hybrid until the end of your turn.
+        strain: []
+        targetType: self
+        conditionFormula: Subject.Resources.Surges >= 5
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          mode: expend
+          resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+          chatMessage: Started turn in moonlight or with 5+ surges
+          quantity: Resources.Surges
+        - __typeName: ActivatedAbilityDisguiseBehavior
+          mode: bestiary
+          monsterType: a704249e-ef65-4805-a3e8-4537b31371be
+          appearanceName: Wolfish Hybrid
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: 0
+          ongoingEffect: 085c357f-b4f9-4b61-bcd9-851251c825c4
+          ongoingEffectCustom: 085c357f-b4f9-4b61-bcd9-851251c825c4
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          runOnController: false
+          standardAbilityParams:
+            distance: Walking Speed
+          promptText: "You must make a melee free strike against the nearest creature. You can shift up to your speed toward that creature if necessary.\vIf allies and enemies are equally near, you target an ally."
+          standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+          customAbility:
+            __typeName: ActivatedAbility
+            repeatTargets: false
+            abilityType: none
+            numTargets: "1"
+            targetType: self
+            modifiers: []
+            behaviors: []
+            iconid: ui-icons/skills/1.png
+            guid: 84a26865-9839-4ee0-9ecd-e11f8d5331c3
+            description: ""
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            range: 1
+            name: Invoked Ability
+          abilityType: standard
+          applyto: caster
+          invokeOnCaster: true
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
+          promptText: You must make a melee free strike against the nearest creature. If allies and enemies are equally near, you target an ally.
+          runOnController: false
+          standardAbility: 9b123334-6d7c-4848-8b17-db3255c4012c
+          customAbility:
+            __typeName: ActivatedAbility
+            repeatTargets: false
+            abilityType: none
+            numTargets: "1"
+            targetType: self
+            modifiers: []
+            behaviors: []
+            iconid: ui-icons/skills/1.png
+            guid: 6bedabe5-c293-4bd2-b8ef-3f13a58067d2
+            description: ""
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            range: 1
+            name: Invoked Ability
+          applyto: caster
+          invokeOnCaster: true
+        hasManualVersion: true
+        persistence:
+          enabled: false
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: b71b3369-0793-48f8-9eed-7c4b795c9dbd
+        guid: 98a0a6e6-3d66-4587-8018-b990d7325c0e
+        description: At the start of each of your turns, if you have five or more surges -- or one or more surges while in moonlight -- you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.
+        trigger: beginturn
+        repeatTargets: false
+        range: 1
+        name: Slight Case of Lycanthropy Drawback
+      behavior: trigger
+    - __typeName: CharacterModifier
+      monsterDefault: a704249e-ef65-4805-a3e8-4537b31371be
+      guid: e3760592-ceb0-4c78-b884-ae7d969ac800
+      name: Slight Case of Lycanthropy - Drawback
+      appearance: Wolfish Hybrid
+      description: At the start of each of your turns, if you have five or more surges -- or one or more surges while in moonlight -- you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.
+      source: Complications
+      sourceguid: 6637fc22-e6bd-4599-8238-cf915d9943f5
+      behavior: alternateappearance
+    description: At the start of each of your turns, if you have five or more surges -- or one or more surges while in moonlight -- you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.
+    canHavePrerequisites: true
+    source: Complications
+    name: Slight Case of Lycanthropy - Drawback
+mtime: 1775223868234
+benefit: Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.
+_fork: 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
+description: |-
+  Maybe you were bitten as a child, or maybe it's a family curse. Either way, you have a malady that is best not discussed in public, lest torches and pitchforks make an appearance. 
+
+  Special: You can't take this complication if you are a fury with the stormwight primordial aspect.
+prerequisite: not Subclasses has "Stormwight"
+drawback: At the start of each of your turns, if you have five or more surges -- or one or more surges while in moonlight -- you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.
+id: 5fb0486d-0a04-46c6-8b4f-a6d7fe111baf
+ctime: 1770956027383
+name: Slight Case of Lycanthropy
+_table: complications

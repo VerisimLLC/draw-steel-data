@@ -1,0 +1,127 @@
+__typeName: CharacterOngoingEffect
+implementation: 3
+stackable: false
+condition: none
+source: Ongoing Effect
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+custom: true
+mtime: 1773146844007
+modifiers:
+- __typeName: CharacterModifier
+  name: Carefully Observed
+  guid: e2156a65-1806-4a8d-b11b-75a07dbf7692
+  sourceguid: 54436ed6-156d-4765-8aca-90708c6ee19f
+  domains:
+    CharacterOngoingEffect:54436ed6-156d-4765-8aca-90708c6ee19f: true
+  description: "Effect: As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature. "
+  source: Ongoing Effect
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    castImmediately: true
+    strain: []
+    targetType: self
+    conditionFormula: HasAttacker and Self.Effect Caster("Carefully Observed", Attacker) and (not Subject.Effect Caster("Carefully Observed", Attacker) and Self != Subject)
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      mode: effect
+      fromCaster: Attacker
+      conditions: []
+      applyto: targets
+      ongoingEffect: 54436ed6-156d-4765-8aca-90708c6ee19f
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      mode: effect
+      conditions: []
+      applyto: none
+      ongoingEffect: 512c4f56-5af8-430d-a32e-5d9fc8398918
+      useStacks: true
+    persistence: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    subject: any
+    numTargets: "1"
+    modifiers: []
+    description: ""
+    iconid: ui-icons/skills/1.png
+    subjectRange: "100"
+    repeatTargets: false
+    guid: 784bb4dc-44b7-4abf-9e02-ff896ed64cb4
+    trigger: losehitpoints
+    abilityType: none
+    range: 1
+    name: Carefully Observed
+  behavior: trigger
+- __typeName: CharacterModifier
+  name: Carefully Observed
+  guid: 5cebb87d-f82d-4083-862c-7b221624225f
+  sourceguid: 54436ed6-156d-4765-8aca-90708c6ee19f
+  domains:
+    CharacterOngoingEffect:54436ed6-156d-4765-8aca-90708c6ee19f: true
+  description: "Effect: As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature. "
+  source: Ongoing Effect
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    strain: []
+    targetType: self
+    conditionFormula: Self.Effect Caster("Carefully Observed", Subject) and (Self.Distance(Subject) > 20 or Line of Sight(Subject,Self) = 0)
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      mode: effect
+      conditions: []
+      applyto: none
+      ongoingEffect: 512c4f56-5af8-430d-a32e-5d9fc8398918
+      useStacks: true
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      mode: effect
+      fromCaster: Subject
+      conditions: []
+      applyto: caster
+      ongoingEffect: 54436ed6-156d-4765-8aca-90708c6ee19f
+    persistence: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    subject: other
+    numTargets: "1"
+    modifiers: []
+    iconid: ui-icons/skills/1.png
+    guid: 2ffe8c28-b010-4fea-beeb-de2926810d37
+    description: ""
+    abilityType: none
+    trigger: finishmove
+    repeatTargets: false
+    range: "100"
+    name: Carefully Observed
+  behavior: trigger
+- __typeName: CharacterModifier
+  modtype: edge
+  rollType: enemy_ability_power_roll
+  surges: "1"
+  description: 'As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature. '
+  sourceguid: 54436ed6-156d-4765-8aca-90708c6ee19f
+  behavior: power
+  guid: e8ecc70a-e883-4f48-b407-d945e82a687a
+  displayCondition: "1"
+  domains:
+    CharacterOngoingEffect:54436ed6-156d-4765-8aca-90708c6ee19f: true
+  keywords: []
+  source: Ongoing Effect
+  activationCondition: Target.Effect Caster("Carefully Observed",Caster)
+  name: Carefully Observed
+description: As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain an edge on the next strike you make against the assessed creature, and gain 1 surge you can use only on that strike.
+iconid: dbcb0452-c5b1-4fda-abad-098447ac70aa
+guid: 54436ed6-156d-4765-8aca-90708c6ee19f
+association: []
+domains:
+  CharacterOngoingEffect:54436ed6-156d-4765-8aca-90708c6ee19f: true
+ctime: 1747030335122
+id: 54436ed6-156d-4765-8aca-90708c6ee19f
+casterTracking: multiple
+name: Carefully Observed
+_table: characterOngoingEffects

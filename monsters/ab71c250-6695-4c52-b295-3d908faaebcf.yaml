@@ -1,0 +1,369 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: 660d5069-35c3-43f3-8516-9b5c92a80f5f
+    offtokenPortraitId: f99b465d-142f-4d71-884e-42c0c7a22444
+    portraitFrameId: 72f0634e-8d6a-4afc-884b-b9c824746cc8
+    portraitRibbon: null
+    backgroundId: 8b4ceb69-af16-4cc1-9f34-1f2cc9d9584c
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: Gushing Spewler
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 48a8671d-4f2c-4f70-8e3a-8d76773f66bc
+  properties:
+    __typeName: monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 1fbbd864-a92c-4fc2-9c94-a55f767874e8
+      domains:
+        CharacterFeature:1fbbd864-a92c-4fc2-9c94-a55f767874e8: true
+      description: The spewler’s ranged free strikes have a distance of 10 and slides the target R + 2 squares.
+      modifiers:
+      - __typeName: CharacterModifier
+        attributes: []
+        applyToTriggeredAbilities: false
+        replaceBehaviors: replace
+        applyToPowerRollTriggers: false
+        behavior: modifyability
+        sourceguid: 1fbbd864-a92c-4fc2-9c94-a55f767874e8
+        modifyDescription: ""
+        guid: ebacad73-a77f-406b-918a-32b291108877
+        name: Gushing Strike
+        domains:
+          CharacterFeature:1fbbd864-a92c-4fc2-9c94-a55f767874e8: true
+        description: The spewler’s ranged free strikes have a distance of 10 and slides the target R + 2 squares.
+        source: Character Feature
+        filterAbility: Ability.Free Strike
+        ability:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            separateRolls: true
+            roll: Free Strike Damage * Charges * Cast.NumAttackers(target)
+            damageType: acid
+          abilityModification: true
+          iconid: ui-icons/skills/1.png
+          guid: 83c4cd7c-e38b-4ef5-8273-507b1778f5f5
+          description: ""
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          range: 1
+          name: New Ability
+      - __typeName: CharacterModifier
+        attributes:
+        - id: range
+          value: "5"
+          operation: Add
+        applyToTriggeredAbilities: false
+        behavior: modifyability
+        sourceguid: 1fbbd864-a92c-4fc2-9c94-a55f767874e8
+        modifyDescription: The spewler’s ranged free strikes have a distance of 10 and slides the target R + 2 squares.
+        guid: 19d46ea8-c78b-4019-b481-00de6fef0930
+        name: Gushing Strike
+        domains:
+          CharacterFeature:1fbbd864-a92c-4fc2-9c94-a55f767874e8: true
+        description: The spewler’s ranged free strikes have a distance of 10 and slides the target R + 2 squares.
+        source: Character Feature
+        filterAbility: Ability.name = "Ranged Free Strike"
+        ability:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: Slide {Summoner.Reason + 2}
+          abilityModification: true
+          iconid: ui-icons/skills/1.png
+          guid: 0be94e17-1aa7-4807-afe7-73743ade5109
+          description: ""
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          range: 1
+          name: New Ability
+      source: Character Feature
+      name: Gushing Strike
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: a4f6d5a2-fba5-4497-823c-a1e13d986596
+      domains:
+        CharacterFeature:a4f6d5a2-fba5-4497-823c-a1e13d986596: true
+      description: Each time the spewler takes damage, the spewler shifts 2 after all effects resolve. Each square they exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: emptyspace
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                targetMoveVicinity: true
+                movementType: shift
+              - __typeName: ActivatedAbilityAuraBehavior
+                aliveafterdeath: true
+                aura:
+                  __typeName: Aura
+                  display:
+                    brightness: 1
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    saturation: 1
+                  guid: cdfcfb1e-16a7-45d3-b8ca-a6eea4cf8409
+                  objectid: "-Mh207qK2XOwNp0FbeLj"
+                  modifiers:
+                  - __typeName: CharacterModifier
+                    modtype: bane
+                    rollType: ability_power_roll
+                    activationAfterRoll: false
+                    sourceguid: cdfcfb1e-16a7-45d3-b8ca-a6eea4cf8409
+                    guid: 978bd042-489d-4c5e-9a04-a3b2e3999985
+                    description: An enemy has a bane on strikes while occupying a slimed square.
+                    behavior: power
+                    keywords: []
+                    source: Aura
+                    activationCondition: true
+                    name: Spew Slide
+                  applyto: enemies
+                  name: Spew Slide
+                duration: eoe
+              categorization: Hidden
+              iconid: ui-icons/skills/1.png
+              guid: b9f04a88-96ba-4fb8-9e44-0427fda363c9
+              targeting: pathfind
+              description: Each square you exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              range: "2"
+              name: Spew Slide
+          triggerPrompt: Shift 2 squares leaving slime in each square you passthrough
+          iconid: ui-icons/skills/1.png
+          guid: e4536720-180a-4de0-834f-d76affb8b882
+          mandatory: false
+          description: ""
+          trigger: losehitpoints
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          range: 1
+          name: Spew Slide
+        guid: dd9a7c71-6589-4881-87e5-92538d29ff9b
+        behavior: trigger
+        domains:
+          CharacterFeature:a4f6d5a2-fba5-4497-823c-a1e13d986596: true
+        description: Each time the spewler takes damage, the spewler shifts 2 after all effects resolve. Each square they exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.
+        source: Character Feature
+        sourceguid: a4f6d5a2-fba5-4497-823c-a1e13d986596
+        name: Spew Slide
+      source: Character Feature
+      name: Spew Slide
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: be1caf84-e920-4b9b-8465-a6c259c69669
+      domains:
+        CharacterFeature:142f96c5-4e73-4f2c-b612-6aa2a764a747: true
+        CharacterFeature:010b2ce1-0408-4bba-9e89-94023f707637: true
+        CharacterFeature:be1caf84-e920-4b9b-8465-a6c259c69669: true
+        CharacterFeature:b2087b80-e965-45db-b6dd-100b57bf1e98: true
+      description: Each creature adjacent to the spewler can’t be hidden from them.
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        value: 1
+        guid: 7d7dce45-7d9d-4a2e-8e18-99b5a8caeb9e
+        name: Soulsight
+        domains:
+          CharacterFeature:142f96c5-4e73-4f2c-b612-6aa2a764a747: true
+          CharacterFeature:010b2ce1-0408-4bba-9e89-94023f707637: true
+          CharacterFeature:be1caf84-e920-4b9b-8465-a6c259c69669: true
+          CharacterFeature:b2087b80-e965-45db-b6dd-100b57bf1e98: true
+        description: Each creature adjacent to the spewler can’t be hidden from them.
+        source: Character Feature
+        sourceguid: be1caf84-e920-4b9b-8465-a6c259c69669
+        behavior: attribute
+      source: Character Feature
+      name: Soulsight
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: da189f77-d469-4a14-80cf-3c909a06da16
+      domains:
+        CharacterFeature:844f73af-ffb2-4d11-9e98-ae2b295b3b2c: true
+        CharacterFeature:da189f77-d469-4a14-80cf-3c909a06da16: true
+        CharacterFeature:75d44802-0177-4a53-8714-e401a7f66f3f: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: d240ab50-3a4d-4435-b6b3-7c99e0b2fbc7
+        value: 5
+        guid: eb08b42f-14a2-45ed-af65-e955f58c56a5
+        name: Summoned  Cost
+        domains:
+          CharacterFeature:844f73af-ffb2-4d11-9e98-ae2b295b3b2c: true
+          CharacterFeature:da189f77-d469-4a14-80cf-3c909a06da16: true
+          CharacterFeature:75d44802-0177-4a53-8714-e401a7f66f3f: true
+        description: ""
+        source: Character Feature
+        sourceguid: da189f77-d469-4a14-80cf-3c909a06da16
+        behavior: attribute
+      - __typeName: CharacterModifier
+        attribute: f62f2f5f-d4ea-4cfc-89cd-427aed05db17
+        value: 3
+        guid: 4f096277-de57-4a9b-b3d6-1c2a75cffe10
+        name: Summoned  Cost
+        domains:
+          CharacterFeature:844f73af-ffb2-4d11-9e98-ae2b295b3b2c: true
+          CharacterFeature:da189f77-d469-4a14-80cf-3c909a06da16: true
+          CharacterFeature:75d44802-0177-4a53-8714-e401a7f66f3f: true
+        description: ""
+        source: Character Feature
+        sourceguid: da189f77-d469-4a14-80cf-3c909a06da16
+        behavior: attribute
+      source: Character Feature
+      name: Summoned  Cost
+    inflictedConditions: []
+    cr: 2
+    opportunityAttack: 3
+    creatureTemplates:
+    - d808c4b7-1e5d-4272-8b84-d91339560dda
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 4
+    notes:
+    - title: Monster Notes
+      text: A spewler’s mouth makes up most of its size. They unleash torrents of acid and bile from their pitless stomachs before consuming their prey with bag-like maws.
+    skillRatings: []
+    role: Minion Controller
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 3
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 0
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 3
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: -2
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: holy
+      dr: -1
+    minion: true
+    notesRevision: 3bbf0173-5e61-4efd-9b8a-f318fc5d8d3b
+    withCaptain: "-"
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    savingThrowRatings: []
+    keywords:
+      Summoner: true
+      Demon: true
+      Heroic: true
+      Abyssal: true
+    monster_type: Gushing Spewler
+    groupid: b685b1bd-6c99-4dd1-86d8-6694c8e32ef2
+    walkingSpeed: 5
+    levelChoices: []
+    monster_category: Monster
+    resources: []
+  tokenType: null
+  bestiaryId: ab71c250-6695-4c52-b295-3d908faaebcf
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1759959056647
+description: null
+parentFolder: 3e822995-20d8-4254-841c-394cb1cd01a3
+artist: null
+ord: 1
+ctime: 1759959056647
+mtime: 1775375028315
+hidden: false
+id: ab71c250-6695-4c52-b295-3d908faaebcf

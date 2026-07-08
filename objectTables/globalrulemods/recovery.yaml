@@ -1,0 +1,71 @@
+__typeName: GlobalRuleMod
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 3
+    guid: 5242d942-366a-4dc8-ab0d-2eb2a9c77f5f
+    description: |
+      By using the Catch Breath action, you spend a Recovery and heal an amount equal to your recovery value. In addition, you can also take the Defend action when you use the Catch Breath action.
+      You can’t take the Catch Breath action if you are dying, but other creatures can help you spend recoveries.
+    source: Recovery Global Rule Mod Feature
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: a01ae0a5-58fc-45ef-a819-548968b2a492
+      name: Catch Breath
+      sourceguid: fb1502b4-5c00-4cf9-a450-e732a1c35616
+      description: |
+        By using the Catch Breath action, you spend a Recovery and heal an amount equal to your recovery value. In addition, you can also take the Defend action when you use the Catch Breath action.
+        You can’t take the Catch Breath action if you are dying, but other creatures can help you spend recoveries.
+      source: Recovery Global Rule Mod Feature
+      activatedAbility:
+        __typeName: ActivatedAbility
+        attributeOverride: no_attribute
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityHealBehavior
+          roll: Maximum Hitpoints / 3
+          filterTarget: ""
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          filterTarget: hitpoints = >1
+          duration: 1
+          ongoingEffectCustom: false
+          applyto: caster
+          ongoingEffect: 5ca9517b-ddbf-4f61-bd59-68e3a62708eb
+          durationUntilEndOfTurn: true
+        targetFilter: not Resources.StrainMind>=4	
+        display:
+          bgcolor:
+            __usertype: LuaColor
+            h: 0.0510204024612904
+            s: 0.604938268661499
+            v: 0.317647069692612
+            a: 1
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        resourceCost: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+        iconid: 12cdef25-2e5b-47e0-bccf-758198de8442
+        guid: b6cdd827-fc7f-4e3f-8825-f4e1295cc5c7
+        repeatTargets: false
+        domains: []
+        description: Catch Breath (can’t use while dying) - Spend 1 recovery and Defend.
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        range: 5
+        name: Catch Breath
+      behavior: activated
+    name: Catch Breath
+hidden: true
+mtime: 1743835145820
+applyCharacters: true
+applyCompanions: false
+applyMonsters: false
+applyRetainers: false
+ctime: 1699858412201
+_migrated_apply: true
+id: 63e5da39-954c-424c-83b3-7b21cc7ec6a1
+name: Recovery
+_table: globalRuleMods

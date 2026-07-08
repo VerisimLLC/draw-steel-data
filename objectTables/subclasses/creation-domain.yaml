@@ -1,0 +1,235 @@
+__typeName: Class
+id: b774e01a-7639-4d1e-abb4-1004ec062d76
+mtime: 1770394397134
+primaryClassId: e0263246-c362-433a-9c1e-ee29c3b63b2c
+prerequisite: Deity.Domains has "Creation"
+levels:
+  level-3:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  tutoriallevel-2:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 4bf5220a-0cfc-44b5-9a94-51b6e6f030fd
+      classid: b774e01a-7639-4d1e-abb4-1004ec062d76
+      domains:
+        class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+        class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        resourceRefreshType: none
+        sourceguid: 31248f94-79dc-42d7-baf1-49bb4ec6a81c
+        guid: dbfbbab6-fb09-4659-94b0-9fdec2f41e42
+        behavior: trigger
+        domains:
+          class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+          class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+        description: ""
+        source: Creation Domain Class Feature
+        name: Creation Domain Piety
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: game:heroicresourcetriggers
+          triggerPrompt: "Ability with Area Keyword: Gain Piety"
+          strain: []
+          targetType: self
+          conditionFormula: Used Ability.Keywords has "area"
+          behaviors:
+          - __typeName: ActivatedAbilityReplenishBehavior
+            checklistid: 1aabc802-6498-436e-8bc7-d44d9f61473e
+            chatMessage: Area Keyword Ability used
+            quantity: 3 when level >=4 else 2
+            applyto: caster
+            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          subject: any
+          whenActive: combat
+          description: |-
+            You gain 2 piety the first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword.
+
+            At 4th level or higher, you gain 1 additional piety from this feature.
+          usageLimitOptions:
+            resourceid: dbfbbab6-fb09-4659-94b0-9fdec2f41e42
+            charges: "1"
+            resourceRefreshType: none
+          modifiers: []
+          numTargets: "1"
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          guid: c189e2ab-30e3-45a5-ac69-0243f0bfa087
+          repeatTargets: false
+          domains:
+            class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+          trigger: useability
+          subjectRange: "10"
+          range: 1
+          name: Area Ability Used
+      source: Creation Domain Class Feature
+      name: Creation Domain Piety
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: 1c038966-41eb-46bb-bc61-4c7f9de56309
+      classid: b774e01a-7639-4d1e-abb4-1004ec062d76
+      domains:
+        class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+        class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+      description: You create a 5 wall of stone within 10 squares of you.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Creation Domain Effect
+        guid: 3f2e9891-0cc3-4441-b49e-a68333163643
+        sourceguid: c6bb54be-2748-4c9c-98a6-25066821a932
+        domains:
+          class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+          class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+        description: You create a 5 wall of stone within 10 squares of you.
+        source: Creation Domain Class Feature
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 2
+          strain: []
+          targetType: anyspace
+          behaviors:
+          - __typeName: ActivatedAbilityChangeElevationBehavior
+            shape: square
+          - __typeName: ActivatedAbilityChangeTerrainBehavior
+            tileid: "-MBVRbloUEmdjp2s5SdP"
+            shape: square
+          categorization: Trigger
+          targeting: contiguous_wall
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: 5 + Intuition
+          radius: "1"
+          modifiers: []
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          implementationDetails: The wall does not end when the encounter ends
+          iconid: fbfb413b-5378-48cc-9a8d-44af9bddd71c
+          guid: 5ceb3597-fa5c-4875-ac9b-81e4bcd54cf5
+          repeatTargets: false
+          domains:
+            class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+          description: You summon the forces of creation and create a wall of stone within 10 squares whose size is 5 + your Intuition score. The wall lasts until the end of the encounter
+          sourceReference:
+            __typeName: SourceReference
+            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+            page: 96
+          range: "10"
+          name: Creation Domain Effect
+        behavior: activated
+      source: Creation Domain Class Feature
+      name: Creation Domain Effect
+  level-10:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  multiclass:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-2:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  tutoriallevel-4:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-5:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-4:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-1:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-8:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-9:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-6:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  tutoriallevel-3:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  primary:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  level-7:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+  tutoriallevel-1:
+    __typeName: ClassLevel
+    domains:
+      class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+      class:b774e01a-7639-4d1e-abb4-1004ec062d76: true
+    features: []
+isSubclass: true
+ctime: 1728003719881
+heroicResourceChecklist:
+- details: "You gain 2 piety the first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword. \n\nAt 4th level or higher, you gain 1 additional piety from this feature. "
+  guid: 1aabc802-6498-436e-8bc7-d44d9f61473e
+  quantity: 2 + 1 when level >= 4
+  name: Area Ability Used
+name: Creation Domain
+_table: subclasses

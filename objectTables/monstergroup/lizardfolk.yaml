@@ -1,0 +1,178 @@
+__typeName: MonsterGroup
+id: d3456343-2a59-400e-af7d-dbb4bd9c8347
+mtime: 1779198106124
+traits: []
+ctime: 1758524876939
+maliceAbilities:
+- __typeName: MaliceAbility
+  implementation: 3
+  objectTarget: false
+  strain: []
+  channeledResource: none
+  behaviors:
+  - __typeName: ActivatedAbilityCreateObjectBehavior
+    objectid: a85283a8-4cc4-4c97-aad9-47a0f54c1862
+  radius: "1"
+  persistence: []
+  resourceNumber: "3"
+  targetAllegiance: enemy
+  abilityType: none
+  numTargets: "1"
+  repeatTargets: false
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  targetType: cube
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  guid: 2fbcb4da-efc8-4544-a93f-efea82ed390e
+  preDescription: A lizardfolk acting this turn sets up a net trap into the area. The first time an enemy steps into a square with a net trap, they make an Agility test. If the creature was unaware of the trap, they take a bane on the test.
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 198
+  description: |
+    Area, Ranged, Weapon. Maneuver. 1 cube within 3. A lizardfolk acting this turn sets up a net trap into the area. The first time an enemy steps into a square with a net trap, they make an Agility test. If the creature was unaware of the trap, they take a bane on the test.
+    - Tier 1 (<=11): Restrained (save ends).
+    - Tier 2 (12-16): Restrained (EoT).
+    - Tier 3 (17+): No effect.
+    Effect: Any creature not also restrained by a net trap who is adjacent to a creature restrained by the trap can free them as a maneuver.
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  range: "3"
+  name: Net Trap
+- __typeName: MaliceAbility
+  implementation: 3
+  objectTarget: false
+  strain: []
+  targetType: emptyspace
+  behaviors:
+  - __typeName: ActivatedAbilityChangeElevationBehavior
+    height: "-2"
+    radius: 2.5
+  - __typeName: ActivatedAbilityChangeTerrainBehavior
+    radius: 2
+    tileid: fa021543-8a84-4856-8645-47dcb516abe3
+    shape: square
+  - __typeName: ActivatedAbilityAuraBehavior
+    applyto: targets
+    aliveafterdeath: true
+    aura:
+      __typeName: Aura
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      guid: aa325e51-459f-477e-8792-d244f1a1657a
+      triggers:
+      - trigger: onenter
+        ability:
+          __typeName: TriggeredAbility
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+            stamina: "10"
+            chatMessage: Moved through Water Pit
+            filterTarget: target.Your Turn = true
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: effect
+            chatMessage: Tail Regrown
+            conditions: []
+            filterTarget: Target.Ongoing Effects has "Lost Tail"
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            purgeType: all
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: conditions
+            chatMessage: Ended 1 Save Ends effect
+            conditions: []
+            purgeType: one
+            targetDuration: save
+          radius: 0
+          silent: true
+          persistence: []
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 80fcb8f4-e46b-4507-b33f-9f891daefbae
+          trigger: onenter
+          description: ""
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          range: 5
+          name: Aura Trigger
+      modifiers: []
+      applyto: selfandfriends
+      creatureFilter: Target.Keywords has "Lizardfolk"
+    duration: eoe
+  - __typeName: ActivatedAbilityCreateObjectBehavior
+    objectid: 485cc7eb-a052-44ce-bcf0-b983480a1e88
+  radius: "2"
+  hasCustomIcon: true
+  persistence: []
+  resourceNumber: "5"
+  repeatTargets: false
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  guid: 221fbb4b-d73e-4530-8597-3a83a8b74179
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  implementationDetails: Codex implementation does not include a maneuver to drain the pit for adjacent creatures.
+  description: |
+    A lizardfolk acting this turn unearths a magical size 2 pit that is 2 squares deep and filled with water. Any lizardfolk who moves into, then exits the pit on their turn gains 10 temporary Stamina, regrows their tail if applicable, and ends one effect on them that can be ended by a saving throw. While adjacent to the pit, any creature who can burrow or who has the Nature skill can make a Might test or a Reason test to drain it.
+    - Tier 1 (<=11): The creature falls into the pit and is knocked prone.
+    - Tier 2 (12-16): The creature fails to empty the pit.
+    - Tier 3 (17+): The pit empties of water.
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 198
+  range: "100"
+  name: Water Pit
+- __typeName: MaliceAbility
+  strain: []
+  targetType: map
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    filterTarget: target.Keywords has "Lizardfolk"
+    duration: eoe
+    ongoingEffect: 5c9947cc-74f1-4795-8490-4bd652bfff99
+    ongoingEffectCustom: 5c9947cc-74f1-4795-8490-4bd652bfff99
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 198
+  targetFilter: ""
+  persistence: []
+  resourceNumber: "7"
+  display:
+    brightness: 1
+    hueshift: 0
+    bgcolor: "#ffffffff"
+    saturation: 1
+  abilityType: none
+  numTargets: "1"
+  modifiers: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  guid: 6c4d1e16-1381-40d5-842d-e88a48c600f1
+  description: Waist-high water floods the entire encounter map. Any lizardfolk submerged in water gains an edge on abilities and doubles their speed while swimming. If there are no open water pits on the encounter map, the water drains away at the end of the round.
+  repeatTargets: false
+  range: 1
+  name: Flood the Shores
+attacks: []
+name: Lizardfolk
+_table: MonsterGroup

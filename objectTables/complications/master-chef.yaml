@@ -1,0 +1,144 @@
+__typeName: CharacterComplication
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 4e0f03cf-7fe8-4db8-aaa1-a9c51bcdc668
+    canHavePrerequisites: true
+    description: You have the Cooking skill (from the crafting skill group). Additionally, whenever you finish a respite or wake up after a night's sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to ten creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.
+    modifiers:
+    - __typeName: CharacterModifier
+      proficiency: proficient
+      equate: false
+      sourceguid: 4e0f03cf-7fe8-4db8-aaa1-a9c51bcdc668
+      guid: 64e4f83a-6179-4d33-98f6-1c633f2dd224
+      name: Master Chef - Cooking Skill
+      subtype: skill
+      description: You have the Cooking skill (from the crafting skill group).
+      source: Complications
+      skills:
+        becbc5ec-de63-481b-8247-e62c2a6fd8cb: true
+      behavior: proficiency
+    - __typeName: CharacterModifier
+      guid: c993a469-b07a-4ce7-9b34-ffbffa21c413
+      name: Master Chef - Benefit
+      sourceguid: 4e0f03cf-7fe8-4db8-aaa1-a9c51bcdc668
+      description: You have the Cooking skill (from the crafting skill group). Additionally, whenever you finish a respite or wake up after a night's sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to ten creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: Prepare an excellent meal
+        strain: []
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          promptText: Feed your friends
+          customAbility:
+            __typeName: ActivatedAbility
+            objectTarget: false
+            strain: []
+            targetType: target
+            behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              ongoingEffect: c9c12832-baed-4814-a184-6b1193cb0c06
+              ongoingEffectCustom: c9c12832-baed-4814-a184-6b1193cb0c06
+            categorization: Hidden
+            persistence: []
+            display:
+              bgcolor:
+                __usertype: LuaColor
+                h: 0.146926283836365
+                s: 0.285558342933655
+                v: 0.989884197711945
+                a: 1
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            abilityType: none
+            numTargets: "10"
+            modifiers: []
+            iconid: 11d94f0a-d2cb-4f82-a64e-b36bc75e8670
+            guid: f79c7f93-ae5e-4645-a3e9-0c7fd0c28c8e
+            repeatTargets: false
+            description: Whenever you finish a respite or wake up after a night's sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to ten creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.
+            selfTarget: true
+            range: "100"
+            name: Invoked Ability
+          invokeOnCaster: true
+        hasManualVersion: true
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 70ef9769-bb8b-40ea-9961-20202e939481
+        description: You have the Cooking skill (from the crafting skill group). Additionally, whenever you finish a respite or wake up after a night's sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to ten creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.
+        trigger: endrespite
+        repeatTargets: false
+        range: 1
+        name: Master Chef Benefit
+      behavior: trigger
+    source: Complications
+    name: Master Chef - Benefit
+  - __typeName: CharacterFeature
+    implementation: 0
+    guid: f9856bcf-55a6-4c13-89f9-3908c8f134aa
+    canHavePrerequisites: true
+    description: The first time each day you eat food you didn't prepare, you lose 2 Recoveries.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: fb77c27c-ad62-49dc-9787-2ac637c3b1de
+      name: Master Chef - Drawback
+      sourceguid: f9856bcf-55a6-4c13-89f9-3908c8f134aa
+      description: The first time each day you eat food you didn't prepare, you lose 2 Recoveries.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: The first time each day you eat food you didn't prepare, you lose 2 Recoveries.
+        strain: []
+        targetType: self
+        conditionFormula: "0"
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          mode: expend
+          quantity: "2"
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+        hasManualVersion: true
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 1623ba74-ddcc-4084-a793-036497cb75ce
+        description: The first time each day you eat food you didn't prepare, you lose 2 Recoveries.
+        trigger: losehitpoints
+        repeatTargets: false
+        range: 1
+        name: Master Chef Drawback
+      behavior: trigger
+    source: Complications
+    name: Master Chef - Drawback
+mtime: 1775226947252
+benefit: You have the Cooking skill (from the crafting skill group). Additionally, whenever you finish a respite or wake up after a night's sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to ten creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.
+_fork: H4sIAAAAAAAACu1VS48jNRD+K1YuA1I8Sj/S6c6NHYRYiQUEe+E0qrbLaWscu7Hdk41W+98pu5PZaCa7sAgkDtySqnLV9yi73y/u7+NxxB9hj4vt4m4ADyKiv3P70WgBUTu7WLKFxCC8HvPf7eIVKueRHd3EDkg/gA3o3fIyIAZUnIOV7DCgzRmPUXucqwZ4RNbrHRsN2MCoXQp7ZvFdpMIQYfJgI6O4tvaWvbYsDsj2SEG9n5vc0CA3x41zD26KuY8Himu78yg12hioAKiRNUeCdSBE6CnLQD5SdvLomQDLlLbyln2jiDsDY5ZMx5uEy8n5/B4eMORZB+eNZDvHvJvoTFJn76RWGv1rq9xi+/6ZpgZC+AEf0aRShZCGhlRWvKw96//dXPZS+t/O4iUod0Q7cQkP2hj2lfJun+PCg4ofEztCOn5N7KTUqQ3xOy6zL4QqC5/o6zCQQARt1BGT8AeizKaRwSwKs3o3JFGCQRxnG5NyYURyuWCT1ZYK/TRGlGxIbkbHRo9jMoQK8Z1AY0j0ZKPJXlF3qom0IMKfhFnSEfeoJfV4WpRLN9NKiRPv6JwJt+wnKwhwopLI5xUq64yAuiGI4ak7kXYUieG8TSZT2IGe96gnSZSmbVEzrbwo7BcUqfuRHXQc0ppdyeU9sLOLbyAkxe7oCjDOXs09U55mfU98fqalw98nHUhoWoToJ7xYoj9bjTenuk8OPG/Fr8n8VBWmPjWiwnAO/WNLlfuT0iJjfPZq9EhdtfOUIlOVFmShOKbMbtKSok2NtWor4E2x6Xgtq4p3rWp4IZqqUqWUZVmnclILIk1QYAI+TTw1qXGlVpVQfKOwpSZ9ywGg4NCJddELKZqmzTAT7qxuj6IXaxRcYlPxui163pb1hmNTihIaJVvRP/lybyZ4C73BOfKBQpdkLqhlj6+UX4QygQ8fBfir2DUJi3saMWu7LT8n+xUI5d94at6S6Ur7EFl6cueLJOGYryWdmR/H9EdqaW/i+arPL4NxAVl5vh4aw6cvyLceDj2Ihy+7IZ8RVXXtuulJ1PUaGl6LouJtpzpedatWtKqoaoBroq6+UNRrEK6UvSSdhyekVblZSSyQVyUSUoSO96gEXxX1qlaiLldttn+fHFhsi816vS7WXbOuqi75dVbuXzFLXB96eiP//xb9t79FzxfxD1lyAmzqCQAA
+description: Before you were a hero, you were a chef--and when you retire, you have big plans for your next restaurant or inn. In the meantime, you're on the lookout for rare ingredients that only a wandering adventurer can find. After all, it's food that makes the world go round.
+drawback: The first time each day you eat food you didn't prepare, you lose 2 Recoveries.
+id: 3270de1e-32e6-4ea9-befc-01404fc42088
+ctime: 1775129754779
+name: Master Chef
+_table: complications

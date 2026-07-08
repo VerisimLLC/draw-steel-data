@@ -1,0 +1,123 @@
+__typeName: GlobalRuleMod
+id: 1d642117-27c8-49c5-b37b-a8fc94b5ca5b
+mtime: 1779447739249
+_migrated_apply: true
+ctime: 1745963144454
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 86a67591-f6b0-483e-972f-1a1cfff27d21
+    description: ""
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: 99f534af-3c62-4f7e-982f-40100f94bd54
+      behavior: activated
+      sourceguid: 86a67591-f6b0-483e-972f-1a1cfff27d21
+      description: ""
+      source: Grab Global Rule Mod Feature
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 4
+        strain: []
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          tiers:
+          - No effect
+          - The target is grabbed by you. They make a melee free strike against you immediately before becoming grabbed.
+          - The target is grabbed by you.
+          roll: 2d10 + Might
+          modesSelected:
+          - 1
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          tiers:
+          - No effect
+          - No effect
+          - The target is grabbed by you.
+          roll: 2d10 + Might
+          modesSelected:
+          - 2
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          standardAbilityParams:
+            targetid: "<<self.id>>"
+          promptText: Free Strike against grabbing creature
+          tiersSelected:
+          - 2
+          autoTarget: false
+          customAbility:
+            __typeName: ActivatedAbility
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            abilityType: none
+            numTargets: "1"
+            targetType: self
+            modifiers: []
+            behaviors: []
+            iconid: ui-icons/skills/1.png
+            guid: 7ae321ce-ff93-4f8c-aa26-7e2eab7f311f
+            description: ""
+            repeatTargets: false
+            range: 1
+            name: Invoked Ability
+          filterTarget: ""
+          standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+          abilityType: standard
+          runOnController: true
+          modesSelected:
+          - 1
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          filterTarget: cast.Tier for Target(Target) > mode
+          rule: grabbed
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 273
+        multipleModes: true
+        keywords:
+          Melee: true
+          Weapon: true
+        persistence: []
+        display:
+          bgcolor:
+            __usertype: LuaColor
+            h: 0
+            s: 1.00267481803894
+            v: 1.00306558609009
+            a: 1
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        reasonedFilters:
+        - formula: Caster.Grab Characteristic < 2 or (target.size <= caster.size or (caster.Grab Characteristic >= 2 and (target.TileSize) <= caster.Grab Characteristic))
+          reason: You cannot grab creatures that are larger than you and larger than your Might.
+        - formula: Caster.Grab Characteristic >= 2 or caster.size >= target.size
+          reason: You cannot grab creatures that are larger than you.
+        targetFilter: ""
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        categorization: Common Ability
+        iconid: b97ea207-70b7-4c5e-982f-a5fba3314e65
+        guid: adc7542e-9f0f-488e-b8dc-47247339044d
+        modeList:
+        - condition: ""
+          rules: By grabbing aggressively, a tier 2 result means the target can use a Free Strike on you, but you will be able to grab them.
+          text: Aggressive
+        - rules: By grabbing safely, a tier 2 result means you won't grab the target, but they won't be able to make a Free Strike against you.
+          text: Safe
+        domains: []
+        description: ""
+        repeatTargets: false
+        range: Grab Range
+        name: Grab
+      name: Grab
+    source: Grab Global Rule Mod Feature
+    name: Grab
+name: Grab
+_table: globalRuleMods

@@ -1,0 +1,211 @@
+__typeName: CharacterComplication
+id: 1b873fbb-c8b3-4480-9c30-d9fbd7b9bb85
+description: You have contracted a rare magical disease called evanesceria. From time to time, you’re not quite yourself—or anyone else either. You simply… vanish, then return later with no memory of your absence.
+mtime: 1775105657371
+benefit: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+ctime: 1774705283751
+drawback: Whenever you start a respite activity, roll 2d10. If you roll a 1 on either die, you inadvertently absent yourself from reality, reappearing at the end of the respite. You gain the benefits of taking a respite but don’t perform the respite activity.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 3
+    guid: 1fd8af3d-532d-4604-8ae9-fad670ce2cad
+    canHavePrerequisites: true
+    description: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+    modifiers:
+    - __typeName: CharacterModifier
+      name: Evanesceria - Benefit
+      guid: 54e246dd-b509-4ed7-8819-7228847ec1e5
+      sourceguid: 1fd8af3d-532d-4604-8ae9-fad670ce2cad
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: You can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn.
+        strain: []
+        targetType: self
+        conditionFormula: ""
+        behaviors:
+        - __typeName: ActivatedAbilityRollBehavior
+          roll: 1d10
+        - __typeName: ActivatedAbilityCustomTriggerBehavior
+          triggerName: Evanesceria Roll
+          value: cast.Roll
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 124764d3-ce68-49d6-9d33-556ede41e333
+        description: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+        usageLimitOptions:
+          resourceid: 54e246dd-b509-4ed7-8819-7228847ec1e5
+          charges: "1"
+          resourceRefreshType: encounter
+        trigger: beginround
+        repeatTargets: false
+        range: 1
+        name: Evanesceria Benefit
+      description: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+      source: Complications
+      resourceRefreshType: encounter
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: f708c7ca-98e3-4869-84ff-12f4ed7d4687
+      name: Evanesceria - Benefit
+      sourceguid: 1fd8af3d-532d-4604-8ae9-fad670ce2cad
+      description: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        castImmediately: true
+        strain: []
+        targetType: self
+        conditionFormula: Trigger Value >= 6 and Trigger Name = "Evanesceria Roll"
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: 95f8f8fa-564a-48f3-9760-9802f4e2fa7f
+          ongoingEffectCustom: 95f8f8fa-564a-48f3-9760-9802f4e2fa7f
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 700da4c8-c160-440a-a661-7bc74b8c3004
+        description: ""
+        trigger: custom
+        repeatTargets: false
+        range: 1
+        name: Evanesceria Roll
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: 7e730e1b-b1c1-4ae3-a8cf-791a460b2abc
+      name: Evanesceria - Benefit
+      sourceguid: 1fd8af3d-532d-4604-8ae9-fad670ce2cad
+      description: At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: false
+        triggerPrompt: Reappear in an adjacent space
+        strain: []
+        targetType: self
+        conditionFormula: Ongoing Effects has "Evanesceria"
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
+          promptText: Reappear in the space you left or the nearest unoccupied space of your choice.
+          runOnController: false
+          standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+          customAbility:
+            __typeName: ActivatedAbility
+            repeatTargets: false
+            abilityType: none
+            numTargets: "1"
+            targetType: self
+            modifiers: []
+            behaviors: []
+            iconid: ui-icons/skills/1.png
+            guid: 813d2baa-677f-4477-b443-fc300feb4f6b
+            description: ""
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            range: 1
+            name: Invoked Ability
+          applyto: caster
+          standardAbilityParams:
+            range: "1"
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          ongoingEffect: 95f8f8fa-564a-48f3-9760-9802f4e2fa7f
+          mode: effect
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 2c9e4d77-02b2-4090-af82-c98b28896a5f
+        description: ""
+        trigger: beginturn
+        repeatTargets: false
+        range: 1
+        name: Evanesceria Benefit
+      behavior: trigger
+    source: Complications
+    name: Evanesceria - Benefit
+  - __typeName: CharacterFeature
+    implementation: 3
+    guid: f335d37a-4274-49fe-8f0b-27d80f6234f8
+    canHavePrerequisites: true
+    description: Whenever you start a respite activity, roll 2d10. If you roll a 1 on either die, you inadvertently absent yourself from reality, reappearing at the end of the respite. You gain the benefits of taking a respite but don’t perform the respite activity.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: c86b3e96-ac11-4f34-a65c-2b06aec187c6
+      name: Evanesceria - Drawback
+      sourceguid: f335d37a-4274-49fe-8f0b-27d80f6234f8
+      description: Whenever you start a respite activity, roll 2d10. If you roll a 1 on either die, you inadvertently absent yourself from reality, reappearing at the end of the respite. You gain the benefits of taking a respite but don’t perform the respite activity.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        repeatTargets: false
+        castImmediately: true
+        numTargets: "1"
+        strain: []
+        targetType: self
+        modifiers: []
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          resistanceRoll: false
+          roll: 2d10
+          isTest: false
+          tiers:
+          - ""
+          - ""
+          - ""
+        - __typeName: ActivatedAbilityFloatTextBehavior
+          filterTarget: Cast.Low Roll = 1
+          color:
+            __usertype: LuaColor
+            h: 0
+            s: 0.872070372104645
+            v: 0.993026316165924
+            a: 1
+          text: You take a respite but cannot use a respite activity
+        description: Whenever you start a respite activity, roll 2d10. If you roll a 1 on either die, you inadvertently absent yourself from reality, reappearing at the end of the respite. You gain the benefits of taking a respite but don’t perform the respite activity.
+        iconid: ui-icons/skills/1.png
+        guid: 68cb05d9-3979-4064-a778-1e2ab2aaa5b6
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        trigger: startrespite
+        persistence: []
+        range: 1
+        name: Evanesceria - Drawback
+      behavior: trigger
+    source: Complications
+    name: Evanesceria - Drawback
+name: Evanesceria
+_table: complications

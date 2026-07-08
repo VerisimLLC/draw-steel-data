@@ -1,0 +1,109 @@
+__typeName: CharacterComplication
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 0
+    guid: 9c9349d8-ff45-4ecb-b285-f96895dfdc2f
+    canHavePrerequisites: true
+    description: The Director tells you when you hear the voice. The voice seems to be aware of your surroundings, and its advice is usually vague but helpful. Someday its motivations might be different from your own, but for now, the voice seems keen on making sure you survive.
+    modifiers: []
+    source: Complications
+    name: Voice in Your Head - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 82ce57c1-888b-41f4-9b40-4a4d05e629a8
+    canHavePrerequisites: true
+    description: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+    modifiers:
+    - __typeName: CharacterModifier
+      guid: f1fe5481-4037-40c5-ab9d-3ba014c6554a
+      name: Voice in Your Head - Drawback
+      sourceguid: 44ec8f79-5ecb-4575-933a-57329de49bc4
+      description: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: false
+        castImmediately: true
+        triggerPrompt: Is the voice displeased with you?
+        strain: []
+        targetType: self
+        conditionFormula: Ongoing Effects has "Started respite at not full recoveries"
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          mode: expend
+          chatMessage: The voice is displeased
+          tiersSelected:
+          - 1
+          - 2
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+          quantity: "2"
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          ongoingEffect: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+          mode: effect
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 0cad76ff-f812-4517-a093-e5bcea76e535
+        description: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+        trigger: endrespite
+        repeatTargets: false
+        range: 1
+        name: Voice in Your Head Drawback
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: 7209bf44-ad54-432a-8803-28e297379dab
+      name: Voice in Your Head - Drawback
+      sourceguid: 44ec8f79-5ecb-4575-933a-57329de49bc4
+      description: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+      source: Complications
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        mandatory: true
+        castImmediately: true
+        triggerPrompt: Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can't make use of any skill. On a tier 1 or tier 2 outcome, you regain 1 fewer Recoveries than usual when you finish the respite.
+        strain: []
+        targetType: self
+        conditionFormula: Resources.Recovery < Maximum Recoveries
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffectSource: specific
+          ongoingEffect: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+          ongoingEffectCustom: 3ea4afa1-85a1-4f53-b350-429c6b34d22d
+        persistence: []
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        guid: 0fa9508d-88bc-4e93-8cd1-34cbb6c190de
+        description: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+        trigger: startrespite
+        repeatTargets: false
+        range: 1
+        name: Voice in Your Head Drawback
+      behavior: trigger
+    source: Complications
+    name: Voice in Your Head - Drawback
+mtime: 1775230171532
+benefit: The Director tells you when you hear the voice. The voice seems to be aware of your surroundings, and its advice is usually vague but helpful. Someday its motivations might be different from your own, but for now, the voice seems keen on making sure you survive.
+_fork: H4sIAAAAAAAACs1U0WrbMBT9lUte+hIHx7ETu49rN1oYY2xlsKciS1exiC15kmwTxv59V3JDs7YUtpf1KYp8pHvuOefq5+L+3h97/MQ6XFwurhpmGfdor0zXt4ozr4xeLGFRo0apPEHuGoRrZZF7Y8Fj2zo4mgGmBnVcNMhon0CjURxXcHdagkPsHHgDNQKbmEUwMhyx4AZrzaCF0nu3BKYFKO+AiTEcUw4GN7C2PcLI9gNCPXiq0vZyaFfw1XQo2DEe6IxXY6RMa7VvfKgklJRoUXuQ1nRzPTPpZbxGUg/aTMtHwg8sD0jtGA0dOxCpQBBjd7QY1YiroImwbKoZP5Ao70cqEDmeX2VxREb6KA8T00TQEVnfhAtPXAjNfFzMhLWZsUGm3ppRCZLwVp5dSnII5foWmUMBk/JNOL4MRTjToDS5Z4fez51adB7EYENNFv71yuOSkIMLW5GBof09UxoykDihhS/IzYhWoQv09Cx/bFkJalZWmzVKVieyyKsk5+tdUu5KmXBRpyXnhVzXaQDrOVPfZtoavgdCN8hE+NgZMkahvdXSLC5/Polhy5z7SOq1ASqRedLfBdj6OfYU2Q8zLNKk8GJHlsz5vUzPCsZr7tuB3bG6pQskOYS/CEDq3bARP1tKy49BORKKsN4OpNdiP8TWK15t8kqUiZR5keTI66TOyiKR1basCiEFz2SMBjpuVT9Xf2Mj86o1kMC7h1EnmKNtHkV+8hyc6RcECvJl/9eZVJS1ZCJLJEee5GRTUm7SNMl2dZWWlFeK5nNn/nlu39JQvmbm9emN+ks3X7LhBVjnVai93hXFNs3X26zIy2ciEx8wnDNHf2MmY97ZSTo9i0KbYgl7NZ4kMFZQJuiHMk8veBQrxnsVOgRh9IWHA73eNEjmTy/ozNQco/rkXBygaEcYg9PUXYxIz3/bmokcC6fny4NnF4/jE97g8D1OoAsDFwTjj20X69023WX55gWBfgPtWb8XXQcAAA==
+description: You occasionally hear a voice in your head, giving you orders or offering advice. You don't know who the voice is or why it comes to you, but when you've followed the advice, it's usually proved to be sound
+drawback: Eventually, the voice reveals it wants something from you that you might not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than usual.
+id: f931efab-f549-4c17-878f-cdb08cc5f1b0
+ctime: 1755604162548
+name: Voice in Your Head
+_table: complications

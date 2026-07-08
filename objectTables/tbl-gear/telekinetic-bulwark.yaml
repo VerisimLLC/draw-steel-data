@@ -1,0 +1,180 @@
+__typeName: equipment
+implementation: 2
+level5: The shield’s bonus to Stamina increases to +5, and you can use the shield’s free triggered action against any enemy within 10 squares who uses an ability. Additionally, any enemy who uses the Escape Grab maneuver while grabbed this way takes a bane on the test.
+flavor: An unseen force seems to draw this steel shield toward nearby creatures.
+level9: The shield’s bonus to Stamina increases to +9. Additionally, you can use a maneuver to pull any number of targets the shield has grabbed up to 5 squares.
+keywords:
+  Psionic: true
+  Shield: true
+name: Telekinetic Bulwark
+id: 6092debc-daa9-45db-b9e5-b554be1bdb93
+specialDescription: ""
+projectGoal: "450"
+mtime: 1777282075709
+weight: 1
+projectSource: Texts or lore in Variac
+type: Gear
+features:
+- __typeName: CharacterFeature
+  implementation: 3
+  guid: d93eaabe-b176-47b0-865e-b705a0b47d54
+  itemAttached: true
+  addText: Add Magical Property
+  description: 2/5/9
+  modifiers:
+  - __typeName: CharacterModifier
+    attribute: hitpoints
+    guid: eb5cde90-dec2-4bcc-988c-88efac2ce742
+    name: Telekinetic Bulwark Stamina Increase
+    value:
+      __typeName: GoblinScriptTable
+      id: table
+      entries:
+      - script: "2"
+        threshold: 1
+      - script: "5"
+        threshold: 5
+      - script: "9"
+        threshold: 9
+      field: Level
+      editableField: true
+    description: 2/5/9
+    source: Item
+    behavior: attribute
+    sourceguid: d93eaabe-b176-47b0-865e-b705a0b47d54
+  source: Item
+  name: Telekinetic Bulwark Stamina Increase
+- __typeName: CharacterFeature
+  implementation: 3
+  guid: 2b9a1e10-9bd2-4624-8c14-4ed803a850a7
+  itemAttached: true
+  addText: Add Magical Property
+  description: Once per turn when an adjacent enemy uses an ability, you can use a free triggered action to use the Grab maneuver against that enemy. You can have any number of  enemies grabbed in this way.
+  modifiers:
+  - __typeName: CharacterModifier
+    sourceguid: 2b9a1e10-9bd2-4624-8c14-4ed803a850a7
+    guid: 2fe4cdd3-3cb1-4d1c-b189-be9b3537f243
+    triggeredAbility:
+      __typeName: TriggeredAbility
+      mandatory: false
+      castImmediately: true
+      strain: []
+      targetType: self
+      behaviors:
+      - __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        lingerTime: 2
+        momentaryEffect:
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          guid: bcbadc09-c124-4e88-9692-a718cc421c74
+          iconid: ui-icons/skills/1.png
+          id: bcbadc09-c124-4e88-9692-a718cc421c74
+          description: You can have any number of creatures grabbed this way
+          modifiers:
+          - __typeName: CharacterModifier
+            attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+            guid: e41ffefa-89cc-4abf-b432-63ca64ef60c3
+            name: Telekinetic Bulwark
+            value: 10
+            description: You can have any number of creatures grabbed this way
+            source: Ongoing Effect
+            behavior: attribute
+            sourceguid: bcbadc09-c124-4e88-9692-a718cc421c74
+          source: Ongoing Effect
+          name: Telekinetic Bulwark
+        name: Ability Duration Effect
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        targeting: prompt
+        targetingFormula: ""
+        promptText: Select adjacent creature that triggered this ability.
+        namedAbility: Grab
+        abilityType: named
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: 855751f3-c087-4fa8-9a7f-e0807a9e9c08
+              description: ""
+              repeatTargets: false
+              range: 1
+              name: Invoked Ability
+            filterTarget: ""
+          iconid: ui-icons/skills/1.png
+          guid: 3b742cc1-bd6d-4789-ad7c-7ea6d28295a3
+          targetFilter: ""
+          repeatTargets: false
+          description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
+        runOnController: true
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      usageLimitOptions:
+        resourceid: 2fe4cdd3-3cb1-4d1c-b189-be9b3537f243
+        charges: "1"
+        resourceRefreshType: turn
+      numTargets: "1"
+      abilityType: none
+      modifiers: []
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      subject: enemy
+      iconid: ui-icons/skills/1.png
+      subjectRange: 10 when Level >= 5 else 1
+      repeatTargets: false
+      guid: fa0248a8-77e1-4d56-aece-3b28c1bd0a4a
+      description: Once per turn when an adjacent enemy uses an ability, you can use a free triggered action to use the Grab maneuver against that enemy. You can have any number of  enemies grabbed in this way.
+      trigger: useability
+      range: 1
+      name: Telekinetic Bulwark - Adjacent Grab
+    behavior: trigger
+    description: Once per turn when an adjacent enemy uses an ability, you can use a free triggered action to use the Grab maneuver against that enemy. You can have any number of  enemies grabbed in this way.
+    source: Item
+    resourceRefreshType: turn
+    name: Telekinetic Bulwark - Adjacent Grab
+  source: Item
+  name: Telekinetic Bulwark - Adjacent Grab
+iconid: 61696f63-34a2-41b0-be78-2c36ecd0bce0
+projectRollCharacteristic:
+  inu: true
+  rea: true
+  mgt: true
+description: While you wield or carry this shield, you gain a +2 bonus to Stamina. This Stamina bonus adds to the Stamina bonus granted by other treasures. Additionally, once per turn when an adjacent enemy uses an ability, you can use a free triggered action to use the Grab maneuver against that enemy. You can have any number of enemies grabbed in this way.
+domains:
+  item:6092debc-daa9-45db-b9e5-b554be1bdb93: true
+ctime: 1759400575273
+itemPrerequisite: Three ingots of steel, six crystals that resonate with psionic power
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+category: Gear
+_table: tbl_Gear

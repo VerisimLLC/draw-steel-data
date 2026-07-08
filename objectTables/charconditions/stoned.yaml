@@ -1,0 +1,132 @@
+__typeName: CharacterCondition
+display:
+  brightness: 1
+  hueshift: 0
+  bgcolor:
+    __usertype: LuaColor
+    h: 0.0833333358168602
+    s: 0.301960796117783
+    v: 0.662745118141174
+    a: 1
+  saturation: 1
+mtime: 1782209585297
+powertable: true
+implementation: 3
+modifiers:
+- __typeName: CharacterModifier
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    repeatTargets: false
+    abilityType: none
+    numTargets: "1"
+    strain: []
+    targetType: self
+    modifiers: []
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      damageType: corruption
+      roll: Caster.Might
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    iconid: ui-icons/skills/1.png
+    guid: 9d5ecb60-af4d-4b37-c94a-e5bf8a4dac13
+    description: Each time you fail a save against Stoned, you take corruption damage equal to the basilisk's Might.
+    conditionFormula: EffectName = "Stoned"
+    trigger: savefail
+    persistence: []
+    range: 5
+    name: Stoned
+  guid: 8c4dba5f-9e3c-4a26-b839-d4ae7f3c9b02
+  sourceguid: 7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91
+  domains:
+    CharacterCondition:7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91: true
+  description: Each time you fail a save against Stoned, you take corruption damage equal to the basilisk's Might.
+  source: Condition
+  name: Stoned
+  behavior: trigger
+- __typeName: CharacterModifier
+  radius: "1"
+  name: Stoned
+  guid: ae6fdc71-b05e-4c48-da5b-f6c09b5ebd24
+  aura:
+    __typeName: Aura
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    guid: bf70ed82-c16f-4d59-bb6c-07d1ac6fce35
+    objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+    triggers: []
+    modifiers:
+    - __typeName: CharacterModifier
+      name: Stoned
+      guid: c081fe93-d270-4e6a-bc7d-18e2bd7d0f46
+      sourceguid: bf70ed82-c16f-4d59-bb6c-07d1ac6fce35
+      domains:
+        CharacterCondition:7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91: true
+      description: As a maneuver, cut the stone off an adjacent Stoned creature, ending Stoned and dealing damage to them equal to twice the basilisk's Might (cannot be reduced).
+      source: Aura
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 3
+        objectTarget: false
+        strain: []
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityDamageBehavior
+          cannotBeReduced: true
+          damageType: corruption
+          roll: Target.ConditionCaster("Stoned").Might * 2
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions:
+          - 7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91
+          mode: conditions
+          purgeType: all
+        selfTarget: true
+        targeting: direct
+        keywords: []
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        iconid: ui-icons/skills/1.png
+        guid: d192ef04-e381-4b7b-bd8e-29f3ce8e1057
+        categorization: Ability
+        display:
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+          saturation: 1
+        description: Cut the stone off this Stoned creature, ending Stoned and dealing damage to them equal to twice the basilisk's Might (cannot be reduced).
+        reasonedFilters:
+        - reason: This maneuver can only target a Stoned creature.
+          formula: Target.Conditions has "Stoned"
+        range: 1
+        name: Cut Away
+      behavior: activated
+    applyto: selfandfriends
+    name: Stoned
+  domains:
+    CharacterCondition:7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91: true
+  description: While you are Stoned, you and adjacent allies can use a maneuver to cut away the stone, ending the effect and dealing damage to you equal to twice the basilisk's Might (cannot be reduced).
+  source: Condition
+  sourceguid: 7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91
+  behavior: aura
+indefiniteDuration: false
+id: 7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91
+iconid: bd3cba92-1b6f-4f23-894a-f1b572d2213c
+guid: 7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91
+immunityPossible: false
+domains:
+  CharacterCondition:7f3a9c2e-8b4d-4f15-a728-c39d6e2b8a91: true
+description: A stoned creature is magically turning to stone. Each time it fails the saving throw, it takes corruption damage equal to the basilisk's Might. A stoned creature or adjacent creature can use a maneuver to cut away the stone, ending the effect and dealing damage equal to twice the basilisk's Might (can't be reduced). A creature reduced to 0 Stamina while stoned is turned to stone until restored by magical means.
+trackCaster: true
+stackable: false
+name: Stoned
+_table: charConditions

@@ -1,0 +1,136 @@
+__typeName: CharacterComplication
+id: 6d150697-ecb9-4300-8d15-6adb67fe6b1e
+description: "You wear a loyalty collar from one of Ajax’s war dogs (see Draw Steel: Monsters). You’ve managed to rig the collar so it explodes outward while keeping you safe."
+mtime: 1775395008633
+benefit: |-
+  Even if you are a war dog yourself, other war dogs can’t use their Posthumous Promotion ability on you while you wear your collar. Additionally, you have the following ability:
+
+  Posthumous Retirement
+ctime: 1755518283176
+drawback: Each time you use your Posthumous Retirement ability, the Director can spend 3 Malice to make your collar malfunction and deal its damage to you in addition to the usual targets.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: d76a0203-b50a-4591-956a-d7b2205ad3e9
+    canHavePrerequisites: true
+    description: |-
+      Even if you are a war dog yourself, other war dogs can’t use their Posthumous Promotion ability on you while you wear your collar. Additionally, you have the following ability:
+
+      Posthumous Retirement
+    modifiers:
+    - __typeName: CharacterModifier
+      resourceRefreshType: none
+      activatedAbility:
+        __typeName: ActivatedAbility
+        implementation: 3
+        objectTarget: false
+        strain: []
+        targetType: all
+        behaviors:
+        - __typeName: ActivatedAbilityDamageBehavior
+          roll: 5+Level
+          damageType: fire
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: eoe
+          applyto: caster
+          ongoingEffect: c53587cb-53a6-46e1-92ef-ac3eb5d35efb
+          ongoingEffectCustom: c53587cb-53a6-46e1-92ef-ac3eb5d35efb
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          targeting: prompt
+          standardAbilityParams:
+            targetid: "<<Caster.ID>>"
+          promptText: Spend 3 Malice to make the Hero's war dog collar malfunction, dealing the same damage back to them. Skip if you wish to not spend malice.
+          customAbility:
+            __typeName: ActivatedAbility
+            castImmediately: true
+            objectTarget: false
+            strain: []
+            targetType: target
+            behaviors:
+            - __typeName: ActivatedAbilityDamageBehavior
+              roll: Target.Level + 5
+              damageType: fire
+            - __typeName: ActivatedAbilityReplenishBehavior
+              mode: expend
+              resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+              applyto: caster
+              quantity: "3"
+            categorization: Hidden
+            targetFilter: Target.ID = <<targetid>>
+            persistence: []
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            abilityType: none
+            numTargets: "1"
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            guid: 95cb833f-24ee-4609-a275-dfb03c7e3927
+            description: ""
+            repeatTargets: false
+            range: "100"
+            name: Invoked Ability
+          applyto: first_target
+          filterTarget: Target.Malice >= 3
+        categorization: Ability
+        keywords:
+          Area: true
+          Magic: true
+        persistence: []
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        display:
+          bgcolor:
+            __usertype: LuaColor
+            h: 0
+            s: 0.940429747104645
+            v: 0.929467916488647
+            a: 1
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        usageLimitOptions:
+          multicharge: false
+          resourceid: 8ab61f09-e457-4d44-976c-c6b0957187d1
+          charges: "1"
+          resourceRefreshType: none
+        modifiers: []
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        flavor: You make your modified collar explode.
+        iconid: 0e377747-2985-47cb-87aa-52e6563a1230
+        guid: e90ecc40-9bb6-4dc5-a5c8-36581b14600b
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 246
+        domains: []
+        description: Your loyalty collar detonates, dealing fire damage equal to 5 plus your level to each target. Once you use this ability, you can’t use it again until you spend 1 uninterrupted minute out of combat resetting the collar
+        targetAllegiance: enemy
+        range: 1
+        name: Posthumous Retirement
+      guid: 8ab61f09-e457-4d44-976c-c6b0957187d1
+      behavior: activated
+      description: |-
+        Even if you are a war dog yourself, other war dogs can’t use their Posthumous Promotion ability on you while you wear your collar. Additionally, you have the following ability:
+
+        Posthumous Retirement
+      source: Complications
+      sourceguid: 248c9b2d-f9ec-452f-859e-d1e6fcf42679
+      name: War Dog Collar - Benefit
+    source: Complications
+    name: War Dog Collar - Benefit
+  - __typeName: CharacterFeature
+    implementation: 4
+    guid: 8284d3eb-959f-4d85-aee6-58909edd7b1e
+    canHavePrerequisites: true
+    description: Each time you use your Posthumous Retirement ability, the Director can spend 3 Malice to make your collar malfunction and deal its damage to you in addition to the usual targets.
+    modifiers: []
+    source: Complications
+    name: War Dog Collar - Drawback
+name: War Dog Collar
+_table: complications

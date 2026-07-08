@@ -1,0 +1,49 @@
+__typeName: ActivatedAbility
+objectTarget: false
+strain: []
+targetType: target
+behaviors:
+- __typeName: ActivatedAbilityCustomTriggerBehavior
+  triggerName: BeginKnockback
+  applyto: caster
+  value: ""
+- __typeName: ActivatedAbilityPowerRollBehavior
+  roll: 2d10 + Might
+  tiers:
+  - Push 1
+  - Push 2
+  - Push 3
+categorization: Skill
+keywords:
+  Melee: true
+  Weapon: true
+persistence: []
+description: "You attempt to shove an adjacent creature using a power roll.\n\nYou can normally only target creatures and objects up to your size category. If your Might score is 2 or higher, you can target creatures and objects with a size equal to your Might score or lower. "
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+abilityType: none
+mtime: 1771247864842
+source: Monster
+documentation: Used to invoke Knockback, without using the global rule
+modifiers: []
+actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+id: e4ffaca5-52ed-44e2-b880-da6f25e0c23c
+iconid: ui-icons/skills/1.png
+guid: 57395c4e-5b74-464c-addc-437e446126fa
+repeatTargets: false
+numTargets: Knockback Targets
+ctime: 1764120574740
+reasonedFilters:
+- formula: |-
+    (Target.Knockback Target Size<= caster.Knockback Caster Size) or (Caster.Grab Characteristic >= 2 and (Target.Knockback Target Size-3) <= Caster.Grab Characteristic)
+
+    {Note that we must either be equal to or bigger than the target, or have a Might ("Grab Characteristic") greater than or equal to size. Since size 1L is equal to size '4', we subtract 3 from the Knockback Target Size when making this calculation}
+  reason: This creature is too large for you to knockback.
+- formula: (Not (target.conditions has "Grabbed")) or (ConditionCaster("Grabbed") = Caster)
+  reason: Grabbed creatures cannot be force moved, except by the grabber.
+range: 1
+name: Knockback
+_table: standardAbilities

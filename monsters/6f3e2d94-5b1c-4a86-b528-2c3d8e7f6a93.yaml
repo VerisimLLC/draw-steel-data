@@ -1,0 +1,344 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: 638fd90c-bc4c-44ec-8551-dfff0f5bdc52
+    offtokenPortraitId: null
+    portraitFrameId: 928698a5-1bde-4274-8c84-e7c41c390652
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: Hellhound
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise:
+    portraitId: null
+    offtokenPortraitId: null
+    portraitFrameId: null
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 7d4f3c95-6c2a-4b87-a528-9d2e3f6c7b04
+  properties:
+    __typeName: AnimalCompanion
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 9a4e1d83-3b6f-4a76-b418-7c2d6e3f5a82
+      domains:
+        CharacterFeature:9a4e1d83-3b6f-4a76-b418-7c2d6e3f5a82: true
+      description: You have 1 stability.
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: forcedmoveresistance
+        value: 1
+        behavior: attribute
+        guid: 1b5f3c84-5c2a-4f87-a428-8d3e1f6c5b73
+        sourceguid: 9a4e1d83-3b6f-4a76-b418-7c2d6e3f5a82
+        domains:
+          CharacterFeature:9a4e1d83-3b6f-4a76-b418-7c2d6e3f5a82: true
+        description: You have 1 stability.
+        source: Character Feature
+        operation: set
+        name: Attributes
+      source: Character Feature
+      name: Attributes
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 2c6e4d95-4b1a-4f87-a528-9d2e6f3c7b04
+      domains:
+        CharacterFeature:2c6e4d95-4b1a-4f87-a528-9d2e6f3c7b04: true
+      description: You have fire immunity equal to the hellhound's fire immunity.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: modsummoner
+        guid: 3d7f5e94-5c1b-4a96-b418-1e3f7d8c2a15
+        name: Hellish Pact
+        domains:
+          CharacterFeature:2c6e4d95-4b1a-4f87-a528-9d2e6f3c7b04: true
+        description: The beastheart has fire immunity equal to the hellhound's fire immunity.
+        source: Character Feature
+        feature:
+          __typeName: CharacterFeature
+          guid: 4e8f1c95-6d2b-4b97-a519-2f4e8c9d3a26
+          description: Fire immunity granted by the hellhound companion.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 5f9d2e84-7c3a-4f87-b418-3e5f9d1c4b37
+            resistances:
+            - __typeName: ResistanceEntry
+              apply: Damage Reduction
+              damageType: fire
+              dr: 3
+            name: Hellish Pact
+            description: Fire immunity 3 from Hellhound's Hellish Pact.
+            source: Beastheart
+            sourceguid: 4e8f1c95-6d2b-4b97-a519-2f4e8c9d3a26
+            behavior: resistance
+          source: Beastheart
+          name: Hellish Pact
+        sourceguid: 2c6e4d95-4b1a-4f87-a528-9d2e6f3c7b04
+      source: Character Feature
+      name: Hellish Pact
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 9e6f8a05-7d3b-4ca8-b548-bf3f6a4b8c95
+      domains:
+        CharacterFeature:9e6f8a05-7d3b-4ca8-b548-bf3f6a4b8c95: true
+      description: Whenever the hellhound makes a strike while rampaging, they can cause a target who has P < Average to be frightened until the end of the target's next turn.
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: casttargets
+          conditionFormula: Self.Rampaging and Self.Level >= 3 and (Used Ability.Keywords has "Strike")
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            targeting: prompt_inherit
+            guid: c19dae38-9f7d-4eca-e75b-d05a9b4c0eb8
+            promptText: The hellhound frightens a creature with P < Average.
+            abilityType: custom
+            targetingFormula: not (Target.PassesPotency("P", Caster.Average))
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: target
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                guid: e3bfc05a-b19f-4afc-097d-f27cad6e2fda
+                applyto: targets
+                rule: Frightened (EoT)
+              categorization: Hidden
+              iconid: ui-icons/skills/1.png
+              guid: d2aebf49-a08e-4fdb-f86c-e16bac5d1fc9
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              description: ""
+              persistence: []
+              range: 10
+              name: Infernal Apparition
+            applyto: caster
+            invokeOnCaster: true
+          trigger: finishability
+          iconid: ui-icons/skills/1.png
+          guid: b08c9d27-8e6c-4db9-d64a-cf4f8a3b9da7
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          modifiers: []
+          description: ""
+          repeatTargets: false
+          range: 1
+          name: Infernal Apparition
+        guid: af7a9b16-8e4c-4db9-c658-c04a7b5c9da6
+        name: Infernal Apparition
+        domains:
+          CharacterFeature:9e6f8a05-7d3b-4ca8-b548-bf3f6a4b8c95: true
+        description: Whenever the hellhound makes a strike while rampaging, they can cause a target who has P < Average to be frightened until the end of the target's next turn.
+        source: Character Feature
+        sourceguid: 9e6f8a05-7d3b-4ca8-b548-bf3f6a4b8c95
+        behavior: trigger
+      source: Character Feature
+      name: Infernal Apparition
+    inflictedConditions: []
+    cr: 1
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 13
+    notes:
+    - text: ""
+      title: Backstory
+    initiativeGrouping: 92f5d944-a1f9-42ee-9a82-0f9c9f872c2c
+    animations:
+      guid: 8e5d2c94-7b1f-4a86-b428-1c3d6e7f5a82
+      anim:
+      - animType: consumeResource
+        resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 2
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 2
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 1
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
+        used: 1
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: fire
+      dr: 3
+    classes: []
+    import: []
+    walkingSpeed: 7
+    savingThrowRatings: []
+    equipment: []
+    skillRatings:
+      cb214a42-7f8c-4d02-b6ac-1399724a8b5f: true
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 4
+      objectTarget: true
+      strain: []
+      targetType: target
+      flavor: The hellhound exhales infernal flames.
+      categorization: Signature Ability
+      multipleModes: true
+      keywords:
+        Melee: true
+        Magic: true
+        Ranged: true
+        Companion: true
+      persistence: []
+      repeatTargets: false
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 6e1f3d95-4b2c-4a87-b528-3d4e6f8c9b15
+      modeList:
+      - rules: "{3 + Might} fire damage; Melee 1 or Ranged 2"
+        text: Normal
+      - condition: Heroic Resources Available to Spend >= 1
+        rules: "{3 + Might + Intuition} fire damage; Melee 1 or Ranged 2"
+        text: Ferocity +Damage
+      - condition: Heroic Resources Available to Spend >= 1
+        rules: "{3 + Might} fire damage; Melee 1 or Ranged {2 + Intuition}"
+        text: Ferocity +Distance
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        guid: 7f2e4c94-5d3b-4b87-a528-4e5f7c8d9b26
+        modesSelected:
+        - 1
+        - 3
+        rule: "{3 + Might} fire damage"
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        guid: 8a3f5d95-6e1c-4c98-b619-5f6a8d9e1a37
+        modesSelected:
+        - 2
+        rule: "{3 + Might + Intuition} fire damage"
+      - __typeName: ActivatedAbilityReplenishBehavior
+        mode: expend
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        applyto: caster
+        modesSelected:
+        - 2
+        - 3
+      description: |-
+        Target takes {3 + Might} fire damage.
+
+        **Spend 1 Ferocity:** Gain a bonus to damage OR distance equal to the hellhound's Intuition.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      range: 2 + (Intuition when Mode = 3)
+      name: Fire Breath
+    innateAttacks: []
+    skillProficiencies: []
+    max_hitpoints_roll: 2d8+2
+    levelChoices: []
+    monster_category: Infernal
+    monster_type: Hellhound
+  tokenType: null
+  bestiaryId: 6f3e2d94-5b1c-4a86-b528-2c3d8e7f6a93
+  summonerid: null
+  ownerId: ""
+  partyid: 0339ff3e-f288-4a85-a02c-a458c091684f
+  size: 2
+  createdTimestamp: 1778600000000
+description: null
+parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
+artist: null
+ord: 8
+ctime: 1779087601456
+mtime: 1779587355840
+hidden: false
+id: 6f3e2d94-5b1c-4a86-b528-2c3d8e7f6a93

@@ -1,0 +1,166 @@
+__typeName: Title
+id: dcf5eeb4-d822-43a5-b480-fb2f42ea5621
+prerequisite: You defeat three leader or solo creatures who each have at least one ability with the Magic keyword.
+mtime: 1773772108399
+effect: "Choose one of the following benefits:"
+ctime: 1762349751224
+description: Their power is dangerous. Unnatural. Someone needs to do something.
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    description: "Choose one of the following benefits:"
+    options:
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 42840ce7-522e-4c49-8b7f-b8dc699ebb6f
+      canHavePrerequisites: true
+      description: When resisting potencies from magic abilities, your characteristic scores are considered to be 1 higher than usual.
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: none
+        rollType: enemy_ability_power_roll
+        description: When resisting potencies from magic abilities, your characteristic scores are considered to be 1 higher than usual.
+        displayCondition: ability.haspotency
+        sourceguid: 42840ce7-522e-4c49-8b7f-b8dc699ebb6f
+        guid: 5488bfe8-16a9-47b0-80b0-3f97780c7a5b
+        potencymod: "-1"
+        name: Arcane Dampening
+        keywords:
+          Magic: true
+        source: Feat
+        activationCondition: ability.haspotency
+        behavior: power
+      source: Feat
+      name: Arcane Dampening
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 22aa0f80-0c3f-45e6-b890-8e63bb07cb6c
+      canHavePrerequisites: true
+      description: Whenever an adjacent creature uses an ability with the Magic keyword, you can make a free strike against them as atriggered action.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: aefabe9a-c4af-4b6a-98c2-a602f2f165e7
+        name: Oh No, You Don't!
+        sourceguid: 22aa0f80-0c3f-45e6-b890-8e63bb07cb6c
+        description: Whenever an adjacent creature uses an ability with the Magic keyword, you can make a free strike against them as atriggered action.
+        source: Feat
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          castImmediately: true
+          triggerPrompt: Adjacent creature used an ability with the Magic Keyword. Make a free strike against them as a triggered action.
+          strain: []
+          targetType: self
+          conditionFormula: Used Ability.Keywords has "Magic"
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            filterTarget: ""
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+            promptText: Make free strike against the creature who used the Magic Ability
+            runOnController: true
+            standardAbility: 952ff59e-8467-4141-aae6-d9ce35094c25
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              castImmediately: true
+              numTargets: "1"
+              strain: []
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: 95dbcde2-e2e2-4ac3-9d80-90a05a955d10
+              abilityType: none
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              description: ""
+              persistence: []
+              range: 1
+              name: Free Strike Against Trigger Subject
+            abilityType: standard
+          hasManualVersion: true
+          targetFilter: ""
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          subject: enemy
+          numTargets: "1"
+          modifiers: []
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          description: Whenever an adjacent creature uses an ability with the Magic keyword, you can make a free strike against them as a triggered action.
+          iconid: ui-icons/skills/1.png
+          guid: 7a72d8dd-7b3f-4b7f-b675-9a1ba999b89a
+          subjectRange: "1"
+          abilityType: none
+          trigger: useability
+          repeatTargets: false
+          range: 1
+          name: Oh No, You Don't!
+        behavior: trigger
+      source: Feat
+      name: Oh No, You Don't!
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: 5b450cc9-a553-4110-9383-258e3e02be3d
+      canHavePrerequisites: true
+      description: As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 3011a76f-680e-41bb-bb36-fb3dcb702826
+        name: Stink of Magic
+        sourceguid: 5b450cc9-a553-4110-9383-258e3e02be3d
+        description: As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.
+        source: Feat
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 2
+          castImmediately: true
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: 1
+            durationUntilEndOfTurn: true
+            ongoingEffect: d9b2dcf2-5354-491c-99f2-f63d39c0c39a
+            ongoingEffectCustom: d9b2dcf2-5354-491c-99f2-f63d39c0c39a
+          sourceReference:
+            __typeName: SourceReference
+            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+            page: 341
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          repeatTargets: false
+          modifiers: []
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          flavor: You open your senses to the residue of magic.
+          iconid: ui-icons/skills/1.png
+          guid: 432d98d4-b3a7-4c8f-b041-15f898b31254
+          categorization: Ability
+          domains: []
+          description: 'Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour '
+          implementationDetails: 'This ability does not functionally do anything but we have had an ongoing effect to track the duration and to remind the Player & Director of the effect. '
+          range: 1
+          name: Stink of Magic
+        behavior: activated
+      source: Feat
+      name: Stink of Magic
+    guid: 047ce3e7-e6bd-4fd9-9f2b-7c8d08f23e81
+    name: Mage Hunter Benefit
+name: Mage Hunter
+_table: titles

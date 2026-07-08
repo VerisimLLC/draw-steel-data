@@ -1,0 +1,482 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: 601077c7-f8c5-4f6a-98dc-d4258c6df7c6
+    loc:
+    - 22
+    - -18
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: null
+    offtokenPortraitId: null
+    portraitFrameId: 928698a5-1bde-4274-8c84-e7c41c390652
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 7addce7d-263a-4679-9803-5c21331c6aee
+  properties:
+    __typeName: monster
+    notesRevision: eee975b6-31f3-45a2-9be8-e5fff4a50a06
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 0b02046e-ac37-4d9a-88a1-8d9f8661035b
+      domains:
+        CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
+        CharacterFeature:0b02046e-ac37-4d9a-88a1-8d9f8661035b: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: resistance
+        guid: b0ec947f-01d6-41e2-92f7-d8e2f0ffaeb8
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: poison
+          dr: Summoner.Reason
+        domains:
+          CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
+          CharacterFeature:0b02046e-ac37-4d9a-88a1-8d9f8661035b: true
+        description: ""
+        source: Character Feature
+        name: Poison Immunity
+        sourceguid: 0b02046e-ac37-4d9a-88a1-8d9f8661035b
+      source: Character Feature
+      name: Poison Immunity
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 1ed2dff2-110d-4585-b5db-93d3f86fc7bc
+      domains:
+        CharacterFeature:1ed2dff2-110d-4585-b5db-93d3f86fc7bc: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: forcedmoveresistance
+        value: Summoner.Reason
+        guid: cedf26d7-f0fe-47d2-b3c5-3601844e6bd5
+        behavior: attribute
+        domains:
+          CharacterFeature:1ed2dff2-110d-4585-b5db-93d3f86fc7bc: true
+        description: ""
+        source: Character Feature
+        sourceguid: 1ed2dff2-110d-4585-b5db-93d3f86fc7bc
+        name: Stability
+      source: Character Feature
+      name: Stability
+    - __typeName: CharacterFeature
+      implementation: 2
+      guid: dd0b1251-5c71-481d-8345-cc2bd88c5037
+      domains:
+        CharacterFeature:dd0b1251-5c71-481d-8345-cc2bd88c5037: true
+      description: |-
+        The reaver has cover while adjacent to another reaver they were summoned with. Whenever they receive an effect that allows them to move or shift outside of their move action, they share the effect with each adjacent reaver they were summoned with.
+        *Implementation Note:* Only Cover while adjacent is implemented
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: eb16736e-b50b-4dcd-8966-c28ce9c33d7e
+        value: 1
+        sourceguid: dd0b1251-5c71-481d-8345-cc2bd88c5037
+        guid: 182ae5e7-bf79-4982-a515-c59bcc967b1b
+        behavior: attribute
+        domains:
+          CharacterFeature:dd0b1251-5c71-481d-8345-cc2bd88c5037: true
+        description: |-
+          The reaver has cover while adjacent to another reaver they were summoned with. Whenever they receive an effect that allows them to move or shift outside of their move action, they share the effect with each adjacent reaver they were summoned with.
+          *Implementation Note:* Only Cover while adjacent is implemented
+        source: Character Feature
+        filterCondition: Count Nearby Friends(1, "Minion", "Iron Reaver")
+        name: Decentralized Segments
+      source: Character Feature
+      name: Decentralized Segments
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 0e2a4dcb-d6cb-49b4-910e-aa683522b12a
+      domains:
+        CharacterFeature:0e2a4dcb-d6cb-49b4-910e-aa683522b12a: true
+      description: |-
+        The reaver’s free strikes inflict M < Weak, bleeding (save ends). Each time the reaver inflicts bleeding on a creature, they can shift 2 and make an additional free strike on a new target.
+        *Implementation Note :* The Codex does not limit free strike targeting to new targets
+      modifiers:
+      - __typeName: CharacterModifier
+        attributes: []
+        ability:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: M < Weak, bleeding (save ends)
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            filterTarget: Cast.Inflicted Conditions
+            applyto: caster
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: emptyspace
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: shift
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                promptText: Free Strike on a New Target
+                standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+                customAbility:
+                  __typeName: ActivatedAbility
+                  repeatTargets: false
+                  abilityType: none
+                  numTargets: "1"
+                  targetType: self
+                  modifiers: []
+                  behaviors: []
+                  iconid: ui-icons/skills/1.png
+                  guid: 87e7dd3e-6b9a-4eea-8310-37be6f1ac18c
+                  description: ""
+                  display:
+                    brightness: 1
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    saturation: 1
+                  range: 1
+                  name: Invoked Ability
+                abilityType: standard
+              categorization: Hidden
+              targeting: pathfind
+              guid: 09318b46-8339-4148-9ce5-d19f9b181b16
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              description: ""
+              iconid: ui-icons/skills/1.png
+              range: "2"
+              name: Bladed Strike
+            promptText: "Bladed Strike: You may shift 2 and make an additional free strike against a new target"
+          abilityModification: true
+          iconid: ui-icons/skills/1.png
+          guid: 75aa4080-dcb1-4fba-bae7-23073f8a5f1d
+          description: ""
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          range: 1
+          name: New Ability
+        sourceguid: 0e2a4dcb-d6cb-49b4-910e-aa683522b12a
+        domains:
+          CharacterFeature:0e2a4dcb-d6cb-49b4-910e-aa683522b12a: true
+        guid: 0473eb09-17af-46ca-aa1f-8b153fb56879
+        name: Bladed Strike
+        modifyDescription: The reaver’s free strikes inflict M < Weak, bleeding (save ends). Each time the reaver inflicts bleeding on a creature, they can shift 2 and make an additional free strike on a new target.
+        description: |-
+          The reaver’s free strikes inflict M < Weak, bleeding (save ends). Each time the reaver inflicts bleeding on a creature, they can shift 2 and make an additional free strike on a new target.
+          *Implementation Note :* The Codex does not limit free strike targeting to new targets
+        source: Character Feature
+        filterAbility: Ability.Free Strike
+        behavior: modifyability
+      source: Character Feature
+      name: Bladed Strike
+    - __typeName: CharacterFeature
+      guid: f7a84b56-4ba7-45b1-809c-9fcbb15d9b74
+      domains:
+        CharacterFeature:f7a84b56-4ba7-45b1-809c-9fcbb15d9b74: true
+      description: When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: 4ab42378-ba46-4734-bc79-43d236ec457b
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: Spend an essense to create a line of iron shards that grant allies damage immunity and cover
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              objectTarget: false
+              strain: []
+              targetType: line
+              behaviors:
+              - __typeName: ActivatedAbilityAuraBehavior
+                aliveafterdeath: true
+                aura:
+                  __typeName: Aura
+                  display:
+                    brightness: 1
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    saturation: 1
+                  guid: 4d742481-1578-47f2-813d-5c80d5e36227
+                  objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+                  modifiers:
+                  - __typeName: CharacterModifier
+                    guid: 30259698-09f9-4ab0-9fdd-d60c721d2658
+                    resistances:
+                    - __typeName: ResistanceEntry
+                      apply: Damage Reduction
+                      damageType: all
+                      dr: "2"
+                    behavior: resistance
+                    description: ""
+                    source: Aura
+                    sourceguid: 4d742481-1578-47f2-813d-5c80d5e36227
+                    name: Iron Barricade
+                  - __typeName: CharacterModifier
+                    behavior: attribute
+                    guid: dd36482d-dcc8-438e-8e58-8a932a581fd6
+                    value: 1
+                    name: Iron Barricade
+                    attribute: eb16736e-b50b-4dcd-8966-c28ce9c33d7e
+                    source: Aura
+                    description: ""
+                    sourceguid: 4d742481-1578-47f2-813d-5c80d5e36227
+                  applyto: friends
+                  name: Iron Barricade
+                duration: eoe
+              categorization: Hidden
+              canChooseLowerRange: true
+              lineDistance: "0"
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              modifiers: []
+              iconid: ui-icons/skills/1.png
+              guid: 64fa502a-701e-47f7-9dbd-8ed531294c0d
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              description: ""
+              radius: "1"
+              range:
+                __typeName: GoblinScriptTable
+                id: table
+                entries:
+                - script: "2"
+                  threshold: 4
+                - script: "4"
+                  threshold: 5
+                - script: "6"
+                  threshold: 6
+                - script: "8"
+                  threshold: 7
+                - script: "10"
+                  threshold: 8
+                field: Size
+                editableField: true
+              name: Invoked Ability
+            promptText: Create a line of iron shards
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            runOnDismiss: true
+            leavesCorpse: true
+          resourceNumber: 1
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          iconid: ui-icons/skills/1.png
+          guid: fd6fa927-be1d-43e6-892a-b4c8faa4d2a5
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          trigger: creaturedeath
+          description: ""
+          range: 1
+          name: Iron Barricade
+        domains:
+          CharacterFeature:f7a84b56-4ba7-45b1-809c-9fcbb15d9b74: true
+        description: When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.
+        source: Character Feature
+        sourceguid: f7a84b56-4ba7-45b1-809c-9fcbb15d9b74
+        name: Iron Barricade
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: 4c7cd709-4249-4924-932b-d21bd19d1150
+        name: Iron Barricade
+        domains:
+          CharacterFeature:f7a84b56-4ba7-45b1-809c-9fcbb15d9b74: true
+        description: When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.
+        source: Character Feature
+        sourceguid: f7a84b56-4ba7-45b1-809c-9fcbb15d9b74
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 541ab84b-ae61-4372-bdc5-3f75f080482e
+          type: passive
+          name: Iron Barricade
+          keywords: []
+          effect: When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.
+      - __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        value: 1
+        guid: 4e24fdaa-da19-406a-a301-d0a56700e0b4
+        behavior: attribute
+        domains:
+          CharacterFeature:f7a84b56-4ba7-45b1-809c-9fcbb15d9b74: true
+        description: When the reaver is reduced to 0 Stamina, they create a line equal to 2 × their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally has cover and damage immunity 2 while occupying an affected square.
+        source: Character Feature
+        sourceguid: f7a84b56-4ba7-45b1-809c-9fcbb15d9b74
+        name: Iron Barricade
+      name: Iron Barricade
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: bdbf6502-fff5-4bee-aa76-1c4ecd37e068
+      domains:
+        CharacterFeature:bdbf6502-fff5-4bee-aa76-1c4ecd37e068: true
+        CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: f62f2f5f-d4ea-4cfc-89cd-427aed05db17
+        value: 3
+        guid: d325f545-7887-4720-a785-cc0ecdb0b565
+        behavior: attribute
+        domains:
+          CharacterFeature:bdbf6502-fff5-4bee-aa76-1c4ecd37e068: true
+          CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+        description: ""
+        source: Character Feature
+        sourceguid: bdbf6502-fff5-4bee-aa76-1c4ecd37e068
+        name: Summon Cost
+      - __typeName: CharacterModifier
+        attribute: d240ab50-3a4d-4435-b6b3-7c99e0b2fbc7
+        value: 7
+        guid: e89f8c7e-3871-4a3b-a249-e4e0bf942823
+        behavior: attribute
+        domains:
+          CharacterFeature:bdbf6502-fff5-4bee-aa76-1c4ecd37e068: true
+          CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+        description: ""
+        source: Character Feature
+        sourceguid: bdbf6502-fff5-4bee-aa76-1c4ecd37e068
+        name: Summon Cost
+      source: Character Feature
+      name: Summon Cost
+    inflictedConditions: []
+    walkingSpeed: 6
+    opportunityAttack: 6
+    creatureTemplates:
+    - d808c4b7-1e5d-4272-8b84-d91339560dda
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 10
+    notes:
+    - text: Iron reavers are long, gnashing lines of centipede-like bladed legs. Their bodies endlessly shed metal shavings and hard sheets of iron as they move.
+      title: Monster Notes
+    skillRatings: []
+    role: Minion Harrier
+    ev: 1
+    movementSpeeds:
+      burrow: 6
+    withCaptain: "-"
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 0
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 4
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: 0
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: -1
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 3
+    innateAttacks: []
+    retainer: false
+    cr: 5
+    minion: true
+    keywords:
+      Summoner: true
+      Heroic: true
+      Earth: true
+      Elemental: true
+      Fire: true
+      Void: true
+    groupid: b685b1bd-6c99-4dd1-86d8-6694c8e32ef2
+    availableTriggers: []
+    monster_type: Iron Reaver
+    savingThrowRatings: []
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    skillProficiencies: []
+    levelChoices: []
+    creatureSize: 1L
+    monster_category: Summoner
+    resources: []
+  tokenType: null
+  bestiaryId: 1718c0ea-811b-4752-ad6b-c72900ab0859
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1782506582637
+description: null
+parentFolder: 8b578988-3c62-49f2-884f-d33d42f9e398
+artist: null
+ord: 1
+ctime: 1782507854840
+mtime: 1782507861084
+hidden: false
+id: 1718c0ea-811b-4752-ad6b-c72900ab0859
