@@ -36,7 +36,7 @@ GoblinScript symbols:
 A simple ongoing effect with no modifiers -- just a flag on the target.
 
 ```yaml
-# File: compendium/import/my-marker.yaml
+# File: data/objectTables/characterongoingeffects/my-marker.yaml
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 id: <marker-uuid>
@@ -162,7 +162,7 @@ that checks for the marker on the target.
 ### Wolf -- "Blood Frenzy" Trait
 - **Trigger:** `dealdamage` with `Target.Conditions has "Bleeding"`
 - **Effect:** Grants a surge to self
-- **File:** `compendium/import/wolf.yaml`
+- **File:** `data/monsters/wolf.yaml`
 
 ## Why Not Per-Ability ApplyOngoingEffectBehavior?
 

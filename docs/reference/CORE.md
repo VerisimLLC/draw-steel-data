@@ -1,7 +1,7 @@
 # Core Reference
 
 Shared knowledge needed for ALL compendium content types: pitfalls, table names,
-GoblinScript conventions, UUID maps, and import workflow.
+GoblinScript conventions, UUID maps, and file format/placement.
 
 See also: [MONSTERS.md](MONSTERS.md) for monster-specific structures.
 See also: [CHARACTERS.md](CHARACTERS.md) for character options (classes, kits, ancestries, etc.).
@@ -137,15 +137,18 @@ Keywords has "Elemental"   # Returns 1 if has keyword, 0 if not
 
 ---
 
-## Import Workflow
+## File Format and Placement
 
-Files placed in `compendium/import/` can be imported via `/import <filename>`.
+Content lives as YAML files in the `data/` submodule, one asset per file. Editing a file
+there is the change -- the running dev instance reads `data/` live, so there is no import or
+upload step.
 
-**Monster files**: Detected by presence of `info:` top-level key. The file's UUID becomes the
-monster's ID in the bestiary.
+**Monster files**: Identified by a top-level `info:` key. They live in `data/monsters/`, one
+`MonsterAsset` per file; the file's `id:` is the monster's ID.
 
-**Table entries**: Detected by presence of `__typeName:` top-level key. Must also include a
-`_table:` metadata field specifying which table the entry belongs to:
+**Table entries**: Identified by a top-level `__typeName:` key plus a `_table:` metadata field
+naming the table the entry belongs to. They live in `data/objectTables/<tablefolder>/` (the
+folder name is lowercased; `_table:` keeps the canonical mixed-case name):
 
 ```yaml
 _table: characterOngoingEffects
@@ -155,23 +158,8 @@ name: "My Effect"
 ...
 ```
 
-**Bundle files**: For importing multiple related items (e.g., a monster + custom ongoing effects),
-use the bundle format:
-
-```yaml
-_bundle:
-  - _type: monster
-    data:
-      info: ...
-      description: "My Monster"
-      ...
-  - _type: table
-    _table: characterOngoingEffects
-    data:
-      __typeName: CharacterOngoingEffect
-      id: ...
-      ...
-```
+**Multiple related entries** (e.g. a monster plus a custom ongoing effect it applies) are just
+separate files in their respective folders; keep the cross-referenced UUIDs consistent.
 
 ---
 

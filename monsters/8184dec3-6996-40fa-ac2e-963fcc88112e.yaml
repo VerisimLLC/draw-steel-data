@@ -131,17 +131,30 @@ info:
           CharacterFeature:0ad8280f-38e6-482b-8054-a4e596e5f722: true
         description: ""
         source: Character Feature
-        ability:
-          __typeName: TriggeredAbilityDisplay
-          distance: Melee 1
-          guid: 821ce54d-6c59-47fe-8820-a763c7956150
+        behavior: powertabletrigger
+        type: trigger
+        trigger: strike
+        targetType: anycreature
+        multitarget: one
+        range: ""
+        targetFilter: Target.WallCreator = Triggerer.ID
+        rules: 'Trigger: A creature damages a wall created by the wallmaster''s Living Labyrinth trait with a strike. Effect: The target of this ability becomes the target of the triggering strike.'
+        powerRollModifier:
+          __typeName: CharacterModifier
+          behavior: power
+          name: Wall Redirect
+          guid: 4a98c6d6-338d-4d11-85ee-ccf3932ced4d
+          source: Trigger
+          rules: ""
           keywords: []
-          trigger: A creature damages a wall created by the wallmaster's Living Labyrinth trait with a strike.
-          target: One Ally
-          effect: |-
-            The target of this ability becomes the target of the
-            triggering strike.
-        behavior: triggerdisplay
+          modtype: none
+          rollType: enemy_ability_power_roll
+          hasCustomTrigger: false
+          changeTarget: true
+          changeTargetEffect: none
+          changeTargetRange: distance
+          changeTargetDistance: 1
+          changeTargetFilter: Friends(Triggerer, Target) and (not (Target = Triggerer)) and Distance(Current) <= 1
       source: Character Feature
       name: Wall Redirect
     - __typeName: CharacterFeature
@@ -149,7 +162,105 @@ info:
       domains:
         CharacterFeature:80b174b7-e497-4ca5-ab83-6b20e624fbeb: true
       description: The wallmaster starts combat affixed to a wall. At the start of each round while affixed to a wall, the wallmaster can create a 20 wall of stone within 10 squares. Any wall created by the wallmaster in the previous round is destroyed or replaced by the new wall.
-      modifiers: []
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Living Labyrinth (Affix)
+        guid: 2de5c517-2a02-4298-a597-ab619c45af7f
+        sourceguid: 80b174b7-e497-4ca5-ab83-6b20e624fbeb
+        domains:
+          CharacterFeature:80b174b7-e497-4ca5-ab83-6b20e624fbeb: true
+        description: The wallmaster starts combat affixed to a wall.
+        source: Trait
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: true
+          castImmediately: true
+          whenActive: combat
+          trigger: rollinitiative
+          targetType: self
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          abilityType: none
+          strain: []
+          persistence: []
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          guid: ed4e0eb8-80ee-4010-aeab-95b9ab2af5a7
+          description: ""
+          name: Living Labyrinth (Affix)
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            ongoingEffect: 77e8cd69-648b-4a60-b620-5792656f85a0
+      - __typeName: CharacterModifier
+        name: Living Labyrinth
+        guid: e8503707-5729-4e76-9dc9-624f84429efd
+        sourceguid: 80b174b7-e497-4ca5-ab83-6b20e624fbeb
+        domains:
+          CharacterFeature:80b174b7-e497-4ca5-ab83-6b20e624fbeb: true
+        description: At the start of each round while affixed to a wall, the wallmaster can create a 20 wall of stone within 10 squares. Any wall created by the wallmaster in the previous round is destroyed or replaced by the new wall.
+        source: Trait
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: At the start of each round while affixed to a wall, the wallmaster can create a 20 wall of stone within 10 squares. Any wall created by the wallmaster in the previous round is destroyed or replaced by the new wall.
+          whenActive: combat
+          trigger: beginround
+          conditionFormula: Ongoing Effects has "Affixed to Wall"
+          targetType: self
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          abilityType: none
+          strain: []
+          persistence: []
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          guid: a09f38ca-5886-4194-9d2a-f9e3ace4b5cc
+          description: ""
+          name: Living Labyrinth
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            promptText: The wallmaster creates a 20 wall of stone within 10 squares.
+            customAbility:
+              __typeName: ActivatedAbility
+              name: Living Labyrinth
+              guid: ba7e5d2a-cda1-40a1-9fca-4d3ae0e8f2f1
+              targetType: emptyspace
+              targeting: contiguous_wall
+              wallStacking: true
+              numTargets: "20"
+              range: 10
+              repeatTargets: false
+              abilityType: none
+              strain: []
+              persistence: []
+              modifiers: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              iconid: ui-icons/skills/1.png
+              description: Create a 20 wall of stone within 10 squares. Any wall created by the wallmaster in the previous round is destroyed or replaced.
+              behaviors:
+              - __typeName: ActivatedAbilityBuildWallBehavior
+                objectid: 5dffb1f7-c558-40ab-a159-7743d2d788ce
+                replacePrevious: true
       source: Character Feature
       name: Living Labyrinth
     inflictedConditions: []
@@ -220,13 +331,41 @@ info:
       objectTarget: true
       strain: []
       channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      targetFilter: Target.WallCreator = Caster.ID and Target.WallTop
+      rangeTextOverride: Melee 1; see below
       behaviors:
+      - __typeName: ActivatedAbilityAddNewTargetsBehavior
+        targetMode: replace
+        allowDuplicates: true
+        promptText: Choose a target for the toppling wall square
+        targetingAbility:
+          __typeName: ActivatedAbility
+          name: Wall Slam Topple
+          guid: 662797c9-25c7-48bb-bd4c-a41d313791a7
+          targetType: target
+          range: 1
+          numTargets: "1"
+          repeatTargets: false
+          abilityType: none
+          strain: []
+          persistence: []
+          modifiers: []
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          description: ""
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 2
         tiers:
         - 6 damage
         - 9 damage; A<1 prone
         - 12 damage; A<2 prone
+      - __typeName: ActivatedAbilityDestroyBehavior
+        applyto: original_targets
       categorization: Signature Ability
       keywords:
         Strike: true
@@ -252,19 +391,48 @@ info:
         **3+ Malice:** The wallmaster targets one additional target with
         an additional square of wall for each 3 Malice spent.
       targetType: target
-      range: 1
+      range: 10
       name: Wall Slam
     - __typeName: ActivatedAbility
       objectTarget: true
       strain: []
       targetType: target
+      targetFilter: Target.WallCreator = Caster.ID and Target.WallTop
+      rangeTextOverride: Melee 1; see below
       behaviors:
+      - __typeName: ActivatedAbilityForcedMovementLocBehavior
+        type: target
+      - __typeName: ActivatedAbilityAddNewTargetsBehavior
+        targetMode: replace
+        promptText: Choose the target the wall square pushes
+        targetingAbility:
+          __typeName: ActivatedAbility
+          name: Dead End Victim
+          guid: cd26a9bd-5e0e-41bb-9799-3b2dcd5261ca
+          targetType: target
+          range: 1
+          numTargets: "1"
+          repeatTargets: false
+          abilityType: none
+          strain: []
+          persistence: []
+          modifiers: []
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          description: ""
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might or Agility
         tiers:
         - Push 2
         - Push 4
         - Push 5
+      - __typeName: ActivatedAbilityShiftWallVoxelBehavior
+        applyto: original_targets
       categorization: Signature Ability
       persistence: []
       display:
@@ -280,7 +448,7 @@ info:
       guid: 4180be06-844c-470a-b5f7-79ced749f409
       description: The wallmaster chooses one square of a wall created with their Living Labyrinth trait within 10 squares. That square of wall pushes one target within distance and shifts into any square they leave behind, potentially detaching the square from the wall.
       repeatTargets: false
-      range: 1
+      range: 10
       name: Dead End
     - __typeName: ActivatedAbility
       castImmediately: true
@@ -311,6 +479,9 @@ info:
           range: 1
           name: Invoked Ability
         abilityType: standard
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 77e8cd69-648b-4a60-b620-5792656f85a0
       categorization: Signature Ability
       persistence: []
       resourceNumber: "5"

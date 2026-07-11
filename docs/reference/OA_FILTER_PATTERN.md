@@ -33,7 +33,7 @@ This goes on the creature that should NOT be able to make OAs against a specific
 It uses `casterTracking: one` so the engine remembers who applied it.
 
 ```yaml
-# File: compendium/import/my-oa-filter.yaml
+# File: data/objectTables/characterongoingeffects/my-oa-filter.yaml
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 id: <uuid>
