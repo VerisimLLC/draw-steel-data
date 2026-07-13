@@ -1,0 +1,112 @@
+__typeName: CharacterOngoingEffect
+id: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+custom: true
+buffType: buff
+association: []
+iconid: ui-icons/skills/1.png
+modifiers:
+- __typeName: CharacterModifier
+  attribute: fly
+  value: 1
+  behavior: attribute
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e22
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+  source: Ongoing Effect
+  name: Elements Unleashed
+  description: Your companion can fly.
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e23
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+  source: Ongoing Effect
+  name: Elements Unleashed (Passthrough)
+  description: Deals 5 cold damage to a creature it passes through.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    trigger: movethrough
+    subject: self
+    targetType: target
+    targetAllegiance: enemy
+    conditionFormula: not Friends(Self, Target)
+    mandatory: true
+    numTargets: "1"
+    abilityType: none
+    repeatTargets: false
+    range: 1
+    persistence: []
+    strain: []
+    modifiers: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e24
+    name: Elements Unleashed (Passthrough)
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: "5 cold damage"
+- __typeName: CharacterModifier
+  behavior: resistance
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e25
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+  source: Ongoing Effect
+  name: Elements Unleashed - Cold Immunity
+  description: Immunity to cold; damage reduction 5 versus all other damage.
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: cold
+    dr: "999"
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: all
+    dr: "5"
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e26
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e21
+  source: Ongoing Effect
+  name: Elements Unleashed (Strike)
+  description: Deals 5 cold damage to a creature it strikes.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    trigger: dealdamage
+    subject: self
+    targetType: target
+    conditionFormula: Keywords has "Strike"
+    mandatory: true
+    numTargets: "1"
+    abilityType: none
+    repeatTargets: false
+    range: 1
+    persistence: []
+    strain: []
+    modifiers: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e27
+    name: Elements Unleashed (Strike)
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: "5 cold damage"
+display:
+  bgcolor:
+    __usertype: LuaColor
+    h: 0.55
+    s: 0.7
+    v: 0.95
+    a: 1
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+description: Transformed into living ice - can fly, deals 5 cold damage on pass-through, immune to cold, damage reduction 5 versus all other damage.
+source: Ongoing Effect
+name: Elements Unleashed (Cold)
+_table: characterOngoingEffects
