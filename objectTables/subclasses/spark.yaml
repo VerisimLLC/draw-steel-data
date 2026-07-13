@@ -1,10 +1,12 @@
 __typeName: Class
-heroicResourceChecklist: []
-primaryClassId: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
 name: Spark
+primaryClassId: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+heroicResourceChecklist: []
+id: 38b11f24-1972-4469-86f7-1d2888aa213d
 details: Elemental storm magic crackles from your hands and claws. You have the Magic skill.
+isSubclass: true
 levels:
-  level-9:
+  tutoriallevel-2:
     __typeName: ClassLevel
     features: []
     domains:
@@ -22,13 +24,316 @@ levels:
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  multiclass:
+  level-7:
     __typeName: ClassLevel
     features: []
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-1:
+  level-2:
+    __typeName: ClassLevel
+    features:
+    - __typeName: CharacterFeatureChoice
+      description: Choose one Wild Nature ability.
+      numChoices: 1
+      name: 2nd-Level Wild Nature Ability
+      allowDuplicateChoices: false
+      guid: 9b8e1c42-3a5d-4f76-b428-7c9e1d3f5a82
+      options:
+      - __typeName: CharacterFeature
+        modifiers:
+        - __typeName: CharacterModifier
+          activatedAbility:
+            __typeName: ActivatedAbility
+            modeList:
+            - rules: Deal fire damage.
+              text: Fire
+            - rules: Deal lightning damage.
+              text: Lightning
+            - rules: Spend 1 Ferocity to wield a second whip - extra fire damage equal to the companion's Intuition.
+              condition: Heroic Resources Available to Spend >= 1
+              text: Fire + 1 Ferocity
+            - rules: Spend 1 Ferocity to wield a second whip - extra lightning damage equal to the companion's Intuition.
+              condition: Heroic Resources Available to Spend >= 1
+              text: Lightning + 1 Ferocity
+            strain: []
+            name: Burning Lash
+            persistence: []
+            repeatTargets: false
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            range: 2
+            guid: 9b8e1c45-3a5d-4f76-b428-7c9e1d3f5a82
+            targetAllegiance: any
+            multipleModes: true
+            display:
+              hueshift: 0
+              bgcolor: "#ffffffff"
+              brightness: 1
+              saturation: 1
+            modifiers: []
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              attrid: inu
+              roll: 2d10 + Intuition
+              tiers:
+              - 6 + I fire damage; M < [Weak] prone
+              - 9 + I fire damage; M < [Average] prone
+              - 14 + I fire damage; M < [Strong] prone (EoT)
+              modesSelected:
+              - 1
+              - 3
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              attrid: inu
+              roll: 2d10 + Intuition
+              tiers:
+              - 6 + I lightning damage; M < [Weak] prone
+              - 9 + I lightning damage; M < [Average] prone
+              - 14 + I lightning damage; M < [Strong] prone (EoT)
+              modesSelected:
+              - 2
+              - 4
+            - __typeName: ActivatedAbilityDamageBehavior
+              damageType: fire
+              chatMessage: Burning Lash - Second whip extra fire damage
+              roll: Intuition
+              applyto: targets
+              modesSelected:
+              - 3
+            - __typeName: ActivatedAbilityDamageBehavior
+              damageType: lightning
+              chatMessage: Burning Lash - Second whip extra lightning damage
+              roll: Intuition
+              applyto: targets
+              modesSelected:
+              - 4
+            - __typeName: ActivatedAbilityReplenishBehavior
+              resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              quantity: "1"
+              chatMessage: Burning Lash - Spend 1 Ferocity
+              mode: expend
+              guid: 9b8e1c46-4a5d-4f76-b428-7c9e1d3f5a82
+              applyto: caster
+              modesSelected:
+              - 3
+              - 4
+            flavor: A blazing tongue of energy entangles a foe.
+            rangeTextOverride: Melee 2
+            numTargets: "1"
+            description: "Tier 1 (<=11): 6 + I fire or lightning damage; M < Weak: prone. Tier 2 (12-16): 9 + I fire or lightning damage; M < Average: prone. Tier 3 (17+): 14 + I fire or lightning damage; M < Strong: prone and can't stand (EoT). Spend 1 Ferocity: If within distance of the target, use a free maneuver to wield a second whip, dealing extra fire or lightning damage equal to your Intuition score."
+            implementationDetails: T3 'can't stand (EoT)' is approximated as prone (EoT). Fire/lightning chosen via modeList; the Spend 1 Ferocity second-whip rider is modeled as two extra modes (fire/lightning) adding flat damage equal to the companion's Intuition.
+            implementation: 2
+            keywords:
+              Weapon: true
+              Strike: true
+              Melee: true
+              Magic: true
+              Companion: true
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            abilityType: none
+            resourceNumber: "5"
+            targetType: target
+            categorization: Heroic Ability
+            domains:
+              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            iconid: ui-icons/skills/1.png
+          behavior: activated
+          source: Spark Class Feature
+          guid: 9b8e1c44-2a5d-4f76-b428-7c9e1d3f5a82
+          name: Burning Lash
+          sourceguid: 9b8e1c43-1a5d-4f76-b428-7c9e1d3f5a82
+          domains:
+            class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: A blazing tongue of energy entangles a foe.
+        name: Burning Lash
+        implementationDetails: T3 'can't stand (EoT)' is approximated as prone (EoT) - the engine has no exact 'can't stand' condition. Damage-type choice between fire and lightning is offered via modeList.
+        classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+        source: Spark Class Feature
+        implementation: 2
+        guid: 9b8e1c43-1a5d-4f76-b428-7c9e1d3f5a82
+        canHavePrerequisites: true
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        description: A blazing tongue of energy entangles a foe.
+      - __typeName: CharacterFeature
+        modifiers:
+        - __typeName: CharacterModifier
+          description: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
+          behavior: activated
+          source: Spark Class Feature
+          guid: 9b8e1c48-6a5d-4f76-b428-7c9e1d3f5a82
+          name: Howling Gale
+          sourceguid: 9b8e1c47-5a5d-4f76-b428-7c9e1d3f5a82
+          domains:
+            class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          activatedAbility:
+            __typeName: ActivatedAbility
+            strain: []
+            name: Howling Gale
+            persistence: []
+            repeatTargets: false
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            numTargets: "1"
+            range: "5"
+            categorization: Heroic Ability
+            targetType: cube
+            display:
+              hueshift: 0
+              bgcolor: "#ffffffff"
+              brightness: 1
+              saturation: 1
+            modifiers: []
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              attrid: inu
+              roll: 2d10 + Intuition
+              tiers:
+              - 6 damage; slide 1
+              - 9 damage; slide 2
+              - 13 damage; slide 4
+            - __typeName: ActivatedAbilityModifyPowerRollBehavior
+              guid: a2f1b6e4-3c9d-4a2b-8e5f-1d7c9a3b5e21
+              modifier:
+                __typeName: CharacterModifier
+                activationCondition: true
+                behavior: power
+                name: Howling Gale - Damage Type
+                sourceguid: a2f1b6e4-3c9d-4a2b-8e5f-1d7c9a3b5e21
+                damageTypeMappings:
+                  untyped:
+                  - cold
+                  - sonic
+                keywords: []
+                description: Choose whether Howling Gale deals cold or sonic damage.
+                guid: a2f1b6e5-3c9d-4a2b-8e5f-1d7c9a3b5e22
+                rollType: ability_power_roll
+                domains: []
+                modtype: none
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              ongoingEffect: 9b8e1c4a-8a5d-4f76-b428-7c9e1d3f5a82
+              name: Howling Gale Flight
+              duration: end_of_next_turn
+              applyto: caster
+              ongoingEffectCustom: false
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              ongoingEffect: 9b8e1c4a-8a5d-4f76-b428-7c9e1d3f5a82
+              name: Howling Gale Flight
+              duration: end_of_next_turn
+              applyto: caster_summoner
+              ongoingEffectCustom: false
+            flavor: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
+            rangeTextOverride: 3 cube within 5
+            radius: 3
+            targetTextOverride: Each enemy in the area
+            implementation: 3
+            keywords:
+              Companion: true
+              Magic: true
+              Area: true
+            description: "Each enemy in a 3 cube within 5 takes cold or sonic damage (your choice) and is slid (1/2/4 by tier). Effect: Until the end of your next turn, you and your companion can fly and gain a +3 bonus to speed."
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            abilityType: none
+            resourceNumber: "5"
+            targetAllegiance: enemy
+            guid: 9b8e1c49-7a5d-4f76-b428-7c9e1d3f5a82
+            domains:
+              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            iconid: ui-icons/skills/1.png
+        name: Howling Gale
+        implementationDetails: Damage-type choice (cold or sonic) is offered via a multi-destination damageTypeMappings dropdown on the power roll. The fly + speed +3 ongoing effect is applied to both the companion (caster) and the beastheart (summoner) until the end of the next turn.
+        classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+        source: Spark Class Feature
+        implementation: 3
+        guid: 9b8e1c47-5a5d-4f76-b428-7c9e1d3f5a82
+        canHavePrerequisites: true
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        description: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
+      domains:
+        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+    - __typeName: CharacterFeature
+      description: Whenever you or your companion deals cold, fire, lightning, sonic, or untyped damage, you can change the damage type to cold, fire, lightning, or sonic damage.
+      implementation: 3
+      source: Spark Class Feature
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+      name: Stormheart
+      guid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
+      domains:
+        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      modifiers:
+      - __typeName: CharacterModifier
+        activationCondition: false
+        behavior: power
+        modtype: none
+        sourceguid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
+        damageTypeMappings:
+          all:
+          - cold
+          - fire
+          - lightning
+          - sonic
+        keywords: []
+        name: Stormheart
+        source: Spark Class Feature
+        description: Change the damage type to cold, fire, lightning, or sonic.
+        guid: 44c43fda-c751-4a64-921e-5b39859cd32a
+        rollType: ability_power_roll
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        displayCondition: Ability.doesdamage
+      - __typeName: CharacterModifier
+        description: Your companion can change the damage type of cold, fire, lightning, sonic, or untyped damage.
+        behavior: modcompanion
+        source: Spark Class Feature
+        guid: ef4f816c-8d93-4703-9e37-f1e5937f8211
+        name: Stormheart (Companion)
+        sourceguid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        feature:
+          __typeName: CharacterFeature
+          description: ""
+          source: Beastheart
+          name: Stormheart
+          guid: c7aeb99b-d7cc-48ea-a967-2f71fee101c7
+          modifiers:
+          - __typeName: CharacterModifier
+            activationCondition: false
+            behavior: power
+            name: Stormheart
+            damageTypeMappings:
+              all:
+              - cold
+              - fire
+              - lightning
+              - sonic
+            description: Change the damage type to cold, fire, lightning, or sonic.
+            source: Beastheart
+            keywords: []
+            guid: ad939010-01ec-47df-9015-f41557115271
+            displayCondition: Ability.doesdamage
+            modtype: none
+            rollType: ability_power_roll
+    domains:
+      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-10:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  tutoriallevel-4:
     __typeName: ClassLevel
     features: []
     domains:
@@ -39,88 +344,137 @@ levels:
     features:
     - __typeName: CharacterFeature
       description: Elemental storm magic crackles from your hands and claws. You have the Magic skill.
-      guid: 4e7c1d92-5b3f-4a86-b248-9c1d6e3f7a85
-      modifiers:
-      - __typeName: CharacterModifier
-        skills:
-          57101165-410a-4734-98ee-d4e5b656d3df: true
-        guid: 8d4c2f93-1e7b-4a56-c138-5f9d6c2e1a84
-        proficiency: proficient
-        behavior: proficiency
-        sourceguid: 1c6f4d82-7e3b-4a95-b218-3d6c1f8e5a94
-        subtype: skill
-        name: Wild Nature
-        description: Elemental storm magic crackles from your hands and claws. You have the Magic skill.
-        source: Spark Class Feature
-        equate: false
-        domains:
-          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      implementation: 3
+      source: Spark Class Feature
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
       name: Wild Nature
+      guid: 4e7c1d92-5b3f-4a86-b248-9c1d6e3f7a85
       domains:
         class:38b11f24-1972-4469-86f7-1d2888aa213d: true
         class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      source: Spark Class Feature
-      implementation: 3
-    - __typeName: CharacterFeature
-      description: Your companion can use the following signature ability.
-      guid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a82
       modifiers:
       - __typeName: CharacterModifier
-        guid: f4c8e3d1-7b2a-4f96-b138-9c5d6e1a4f73
-        sourceguid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a82
-        behavior: activated
-        name: Ability
+        behavior: proficiency
+        equate: false
+        name: Wild Nature
+        sourceguid: 1c6f4d82-7e3b-4a95-b218-3d6c1f8e5a94
+        subtype: skill
+        description: Elemental storm magic crackles from your hands and claws. You have the Magic skill.
+        proficiency: proficient
+        guid: 8d4c2f93-1e7b-4a56-c138-5f9d6c2e1a84
+        skills:
+          57101165-410a-4734-98ee-d4e5b656d3df: true
         domains:
           class:38b11f24-1972-4469-86f7-1d2888aa213d: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Your companion can use the following signature ability.
         source: Spark Class Feature
+    - __typeName: CharacterFeature
+      description: Your companion can use the following signature ability.
+      implementation: 3
+      source: Spark Class Feature
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+      name: Feral Strike
+      guid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a82
+      domains:
+        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      modifiers:
+      - __typeName: CharacterModifier
         activatedAbility:
           __typeName: ActivatedAbility
+          categorization: Signature Ability
+          name: Feral Strike
+          persistence: []
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          range: 1
+          strain: []
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          repeatTargets: false
+          description: Your companion moves up to a number of squares equal to their Intuition score straight toward the closest enemy they are aware of, avoiding damaging terrain, ending the movement when adjacent to that enemy. After the move you choose cold, fire, lightning, or sonic damage, then your companion makes the following power roll against each creature in the area. You gain 1 surge.
+          flavor: Your companion lunges into the fray, attacking wildly with teeth, claws, or other weapons.
+          rangeTextOverride: 1 burst
+          numTargets: "1"
           targetType: self
+          implementation: 3
+          targetTextOverride: Each creature in the area
+          keywords:
+            Weapon: true
+            Strike: true
+            Area: true
+            Companion: true
+            Melee: true
+          guid: 8c1e3d92-5b7f-4a46-b218-3c5d1f6e7a92
+          abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
             roll: 2d10 + Might
+            filterTarget: 0 {Display only - real roll runs inside the burst sub-ability.}
             tiers:
             - 1 + M cold damage
             - 3 + M cold damage
             - 4 + M cold damage
-            filterTarget: 0 {Display only - real roll runs inside the burst sub-ability.}
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            applyto: caster
-            abilityType: custom
-            promptText: Move up to your Intuition in a straight line toward the closest enemy.
             customAbility:
               __typeName: ActivatedAbility
               repeatTargets: false
-              targetType: emptyspace
+              targeting: straightpath
+              categorization: Hidden
+              name: Feral Strike Approach
               iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              description: ""
+              guid: 4e7c1d92-5b3f-4a86-b248-9c1d6e3f7a86
+              abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityRelocateCreatureBehavior
                 movementType: move
+              targetType: emptyspace
               range: Intuition
-              targeting: straightpath
-              categorization: Hidden
-              abilityType: none
-              numTargets: "1"
-              name: Feral Strike Approach
+              modifiers: []
               display:
-                bgcolor: "#ffffffff"
                 hueshift: 0
+                bgcolor: "#ffffffff"
                 brightness: 1
                 saturation: 1
-              description: ""
-              guid: 4e7c1d92-5b3f-4a86-b248-9c1d6e3f7a86
-              modifiers: []
+            abilityType: custom
+            applyto: caster
+            promptText: Move up to your Intuition in a straight line toward the closest enemy.
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             inheritKeywords: true
             abilityType: custom
-            applyto: caster
+            promptText: Choose damage type and resolve the burst against each enemy in the area.
             customAbility:
               __typeName: ActivatedAbility
+              modeList:
+              - text: Cold
+              - text: Fire
+              - text: Lightning
+              - text: Sonic
+              categorization: Hidden
+              name: Feral Strike Burst
+              guid: 8d4c2f93-1e7b-4a56-c138-5f9d6c2e1a85
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              modifiers: []
+              rangeTextOverride: 1 burst
+              keywords:
+                Weapon: true
+                Strike: true
+                Area: true
+                Companion: true
+                Melee: true
+              abilityType: none
+              repeatTargets: false
+              description: Choose cold, fire, lightning, or sonic damage.
               targetType: all
+              targetTextOverride: Each creature in the area
               behaviors:
               - __typeName: ActivatedAbilityPowerRollBehavior
                 roll: 2d10 + Might
@@ -154,98 +508,81 @@ levels:
                 - 4 + M sonic damage
                 modesSelected:
                 - 4
-              range: 1
-              categorization: Hidden
-              numTargets: "1"
-              name: Feral Strike Burst
-              description: Choose cold, fire, lightning, or sonic damage.
-              repeatTargets: false
-              keywords:
-                Area: true
-                Strike: true
-                Companion: true
-                Weapon: true
-                Melee: true
-              iconid: ui-icons/skills/1.png
-              modeList:
-              - text: Cold
-              - text: Fire
-              - text: Lightning
-              - text: Sonic
-              abilityType: none
-              modifiers: []
-              targetTextOverride: Each creature in the area
               multipleModes: true
-              rangeTextOverride: 1 burst
-              display:
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                brightness: 1
-                saturation: 1
-              guid: 8d4c2f93-1e7b-4a56-c138-5f9d6c2e1a85
-            promptText: Choose damage type and resolve the burst against each enemy in the area.
-          - __typeName: ActivatedAbilityReplenishBehavior
-            guid: 7d4c2e83-5b1f-4a96-b528-3c1d6e7f5a82
+              range: 1
+              numTargets: "1"
+              iconid: ui-icons/skills/1.png
             applyto: caster
-            chatMessage: Spark - Gain Surge
-            resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+          - __typeName: ActivatedAbilityReplenishBehavior
             quantity: "1"
-          range: 1
-          categorization: Signature Ability
-          numTargets: "1"
-          name: Feral Strike
-          targetTextOverride: Each creature in the area
+            guid: 7d4c2e83-5b1f-4a96-b528-3c1d6e7f5a82
+            chatMessage: Spark - Gain Surge
+            applyto: caster
+            resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
           castImmediately: true
-          repeatTargets: false
-          keywords:
-            Area: true
-            Strike: true
-            Companion: true
-            Weapon: true
-            Melee: true
-          iconid: a393d50b-bef4-4a90-a1bf-767971ef2117
-          rangeTextOverride: 1 burst
-          flavor: Your companion lunges into the fray, attacking wildly with teeth, claws, or other weapons.
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          guid: 8c1e3d92-5b7f-4a46-b218-3c5d1f6e7a92
-          abilityType: none
-          strain: []
+          modifiers: []
           domains:
             class:38b11f24-1972-4469-86f7-1d2888aa213d: true
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          persistence: []
-          modifiers: []
-          description: Your companion moves up to a number of squares equal to their Intuition score straight toward the closest enemy they are aware of, avoiding damaging terrain, ending the movement when adjacent to that enemy. After the move you choose cold, fire, lightning, or sonic damage, then your companion makes the following power roll against each creature in the area. You gain 1 surge.
-          implementation: 3
-      name: Feral Strike
-      domains:
-        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      source: Spark Class Feature
-      implementation: 3
-    - __typeName: CharacterFeature
-      description: Your foes are torn by a tempest of primordial teeth and claws.
-      guid: 8e2c5d41-3b7f-4a96-c528-1d6e3c8f5a92
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: a5f1c8d2-7b3e-4f96-b428-9d1c5e8a4f73
-        sourceguid: 8e2c5d41-3b7f-4a96-c528-1d6e3c8f5a92
+          iconid: a393d50b-bef4-4a90-a1bf-767971ef2117
         behavior: activated
+        source: Spark Class Feature
+        guid: f4c8e3d1-7b2a-4f96-b138-9c5d6e1a4f73
         name: Ability
+        sourceguid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a82
         domains:
           class:38b11f24-1972-4469-86f7-1d2888aa213d: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Your foes are torn by a tempest of primordial teeth and claws.
-        source: Spark Class Feature
+        description: Your companion can use the following signature ability.
+    - __typeName: CharacterFeature
+      description: Your foes are torn by a tempest of primordial teeth and claws.
+      implementation: 3
+      source: Spark Class Feature
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+      name: Jaws of the Storm
+      guid: 8e2c5d41-3b7f-4a96-c528-1d6e3c8f5a92
+      domains:
+        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      modifiers:
+      - __typeName: CharacterModifier
         activatedAbility:
           __typeName: ActivatedAbility
+          modeList:
+          - text: Cold
+          - text: Fire
+          - text: Lightning
+          - text: Sonic
+          numTargets: "1"
+          name: Jaws of the Storm
+          persistence: []
+          iconid: ui-icons/skills/1.png
           targetType: cube
+          channelDescription: Spend 1 Ferocity to enlarge the cube by 1.
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          multipleModes: true
+          guid: 4c2d8e91-3b1f-4a87-c528-9d1e7f3c5a82
+          categorization: Ability
+          targetTextOverride: Each enemy in the area
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          modifiers: []
+          keywords:
+            Magic: true
+            Beastheart: true
+            Area: true
+          flavor: Your foes are torn by a tempest of primordial teeth and claws.
+          rangeTextOverride: "{2 + Charges} cube within 5"
+          radius: 2 + Charges
+          implementation: 3
+          repeatTargets: false
+          maxChannel: "1"
+          description: Each target takes cold, fire, lightning, or sonic damage (your choice) equal to your Might score. Spend 1 Ferocity to increase the size of the cube by 1.
+          range: 5
+          abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: "{Caster.Might} cold damage"
@@ -267,805 +604,771 @@ levels:
             applyto: targets
             modesSelected:
             - 4
-          range: 5
-          channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-          categorization: Ability
-          guid: 4c2d8e91-3b1f-4a87-c528-9d1e7f3c5a82
-          description: Each target takes cold, fire, lightning, or sonic damage (your choice) equal to your Might score. Spend 1 Ferocity to increase the size of the cube by 1.
-          numTargets: "1"
-          multipleModes: true
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          modeList:
-          - text: Cold
-          - text: Fire
-          - text: Lightning
-          - text: Sonic
+          targetAllegiance: enemy
+          strain: []
           domains:
             class:38b11f24-1972-4469-86f7-1d2888aa213d: true
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          radius: 2 + Charges
-          repeatTargets: false
-          keywords:
-            Area: true
-            Beastheart: true
-            Magic: true
-          iconid: ui-icons/skills/1.png
-          rangeTextOverride: "{2 + Charges} cube within 5"
-          flavor: Your foes are torn by a tempest of primordial teeth and claws.
-          targetAllegiance: enemy
-          modifiers: []
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          targetTextOverride: Each enemy in the area
-          abilityType: none
-          strain: []
-          name: Jaws of the Storm
-          persistence: []
-          channelDescription: Spend 1 Ferocity to enlarge the cube by 1.
-          maxChannel: "1"
-          implementation: 3
-      name: Jaws of the Storm
-      domains:
-        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      source: Spark Class Feature
-      implementation: 3
-    - __typeName: CharacterFeature
-      guid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      source: Spark Class Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: 5f010002-0001-4096-bcde-7d8e9f0a1b2c
-        type: trigger
-        range: 0
-        powerRollModifier:
-          __typeName: CharacterModifier
-          damageMultiplier: half
-          guid: 5f010003-0001-4096-bcde-7d8e9f0a1b2c
-          modtype: none
-          activationCondition: false
-          source: Trigger
-          name: Pyre
-          keywords: []
-          rollType: ability_power_roll
-          hasCustomTrigger: true
-          rules: ""
-          behavior: power
-          customTrigger:
-            __typeName: TriggeredAbility
-            repeatTargets: false
-            targetType: self
-            iconid: ui-icons/skills/1.png
-            behaviors:
-            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-              applyto: caster
-              rule: teleport 5
-            range: 1
-            persistence: []
-            modifiers: []
-            numTargets: "1"
-            description: ""
-            abilityType: none
-            strain: []
-            name: Pyre
-            display:
-              bgcolor: "#ffffffff"
-              hueshift: 0
-              brightness: 1
-              saturation: 1
-            trigger: d20roll
-            castImmediately: true
-            guid: 5f010004-0001-4096-bcde-7d8e9f0a1b2c
-        behavior: powertabletrigger
+          channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        behavior: activated
         source: Spark Class Feature
-        trigger: takedamage
-        sourceguid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
-        description: When you take damage, you take half and teleport up to 5 squares. Spend 1 Ferocity to also blast each enemy adjacent to your original space for Intuition lightning damage.
-        name: Pyre
+        guid: a5f1c8d2-7b3e-4f96-b428-9d1c5e8a4f73
+        name: Ability
+        sourceguid: 8e2c5d41-3b7f-4a96-c528-1d6e3c8f5a92
         domains:
           class:38b11f24-1972-4469-86f7-1d2888aa213d: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        description: Your foes are torn by a tempest of primordial teeth and claws.
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: powertabletrigger
         additionalCostModifiers:
         - __typeName: CharacterModifier
           resourceCostType: cost
-          keywords: []
-          overrideBase: true
-          modtype: none
-          activationCondition: false
           behavior: power
-          source: Trigger
           rulesText: Each enemy adjacent to your original space takes lightning damage equal to your Intuition score.
           resourceCostAmount: "1"
-          rollType: ability_power_roll
-          guid: 5f010005-0001-4096-bcde-7d8e9f0a1b2c
-          name: Pyre +1 Ferocity (Lightning)
-          hasCustomTrigger: true
-          rules: ""
+          modtype: none
           damageMultiplier: half
+          rollType: ability_power_roll
+          rules: ""
+          keywords: []
+          name: Pyre +1 Ferocity (Lightning)
+          source: Trigger
+          hasCustomTrigger: true
+          guid: 5f010005-0001-4096-bcde-7d8e9f0a1b2c
           customTrigger:
             __typeName: TriggeredAbility
             repeatTargets: false
-            targetType: self
             iconid: ui-icons/skills/1.png
+            numTargets: "1"
+            castImmediately: true
+            name: Pyre +1 Ferocity (Lightning)
+            range: 1
+            persistence: []
+            targetType: self
+            description: ""
+            strain: []
+            abilityType: none
             behaviors:
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              applyto: caster
-              abilityType: custom
-              promptText: Each enemy adjacent to your space takes Intuition lightning damage.
               customAbility:
                 __typeName: ActivatedAbility
                 repeatTargets: false
-                targetType: all
-                iconid: ui-icons/skills/1.png
-                behaviors:
-                - __typeName: ActivatedAbilityDamageBehavior
-                  roll: Caster.Intuition
-                  damageType: lightning
-                  applyto: targets
-                  chatMessage: Pyre lightning burn
-                range: 1
-                categorization: Hidden
+                numTargets: "1"
+                name: Pyre Burn (Lightning)
                 display:
-                  bgcolor: "#ffffffff"
                   hueshift: 0
+                  bgcolor: "#ffffffff"
                   brightness: 1
                   saturation: 1
-                abilityType: none
+                range: 1
                 modifiers: []
-                name: Pyre Burn (Lightning)
                 description: ""
+                targetType: all
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityDamageBehavior
+                  chatMessage: Pyre lightning burn
+                  roll: Caster.Intuition
+                  applyto: targets
+                  damageType: lightning
                 targetAllegiance: enemy
+                categorization: Hidden
                 guid: 5f010007-0001-4096-bcde-7d8e9f0a1b2c
-                numTargets: "1"
+                iconid: ui-icons/skills/1.png
+              abilityType: custom
+              applyto: caster
+              promptText: Each enemy adjacent to your space takes Intuition lightning damage.
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
               applyto: caster
               rule: teleport 5
-            range: 1
-            persistence: []
+            guid: 5f010006-0001-4096-bcde-7d8e9f0a1b2c
             modifiers: []
-            numTargets: "1"
-            description: ""
-            abilityType: none
-            strain: []
-            name: Pyre +1 Ferocity (Lightning)
+            trigger: d20roll
             display:
-              bgcolor: "#ffffffff"
               hueshift: 0
+              bgcolor: "#ffffffff"
               brightness: 1
               saturation: 1
-            trigger: d20roll
-            castImmediately: true
-            guid: 5f010006-0001-4096-bcde-7d8e9f0a1b2c
+          overrideBase: true
+          activationCondition: false
         - __typeName: CharacterModifier
           resourceCostType: cost
-          keywords: []
-          overrideBase: true
-          modtype: none
-          activationCondition: false
           behavior: power
-          source: Trigger
           rulesText: Each enemy adjacent to your original space takes fire damage equal to your Intuition score.
           resourceCostAmount: "1"
-          rollType: ability_power_roll
-          guid: 5f010020-0001-4096-bcde-7d8e9f0a1b2c
-          name: Pyre +1 Ferocity (Fire)
-          hasCustomTrigger: true
-          rules: ""
+          modtype: none
           damageMultiplier: half
+          rollType: ability_power_roll
+          rules: ""
+          keywords: []
+          name: Pyre +1 Ferocity (Fire)
+          source: Trigger
+          hasCustomTrigger: true
+          guid: 5f010020-0001-4096-bcde-7d8e9f0a1b2c
           customTrigger:
             __typeName: TriggeredAbility
             repeatTargets: false
-            targetType: self
             iconid: ui-icons/skills/1.png
+            numTargets: "1"
+            castImmediately: true
+            name: Pyre +1 Ferocity (Fire)
+            range: 1
+            persistence: []
+            targetType: self
+            description: ""
+            strain: []
+            abilityType: none
             behaviors:
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              applyto: caster
-              abilityType: custom
-              promptText: Each enemy adjacent to your space takes Intuition fire damage.
               customAbility:
                 __typeName: ActivatedAbility
                 repeatTargets: false
-                targetType: all
-                iconid: ui-icons/skills/1.png
-                behaviors:
-                - __typeName: ActivatedAbilityDamageBehavior
-                  roll: Caster.Intuition
-                  damageType: fire
-                  applyto: targets
-                  chatMessage: Pyre fire burn
-                range: 1
-                categorization: Hidden
+                numTargets: "1"
+                name: Pyre Burn (Fire)
                 display:
-                  bgcolor: "#ffffffff"
                   hueshift: 0
+                  bgcolor: "#ffffffff"
                   brightness: 1
                   saturation: 1
-                abilityType: none
+                range: 1
                 modifiers: []
-                name: Pyre Burn (Fire)
                 description: ""
+                targetType: all
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityDamageBehavior
+                  chatMessage: Pyre fire burn
+                  roll: Caster.Intuition
+                  applyto: targets
+                  damageType: fire
                 targetAllegiance: enemy
+                categorization: Hidden
                 guid: 5f010022-0001-4096-bcde-7d8e9f0a1b2c
-                numTargets: "1"
+                iconid: ui-icons/skills/1.png
+              abilityType: custom
+              applyto: caster
+              promptText: Each enemy adjacent to your space takes Intuition fire damage.
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
               applyto: caster
               rule: teleport 5
-            range: 1
-            persistence: []
+            guid: 5f010021-0001-4096-bcde-7d8e9f0a1b2c
             modifiers: []
-            numTargets: "1"
-            description: ""
-            abilityType: none
-            strain: []
-            name: Pyre +1 Ferocity (Fire)
+            trigger: d20roll
             display:
-              bgcolor: "#ffffffff"
               hueshift: 0
+              bgcolor: "#ffffffff"
               brightness: 1
               saturation: 1
-            trigger: d20roll
-            castImmediately: true
-            guid: 5f010021-0001-4096-bcde-7d8e9f0a1b2c
-        targetType: self
-        rules: You take half the damage and teleport up to 5 squares.
-      - __typeName: CharacterModifier
-        guid: 5f010008-0001-4096-bcde-7d8e9f0a1b2c
-        sourceguid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
+          overrideBase: true
+          activationCondition: false
         name: Pyre
+        sourceguid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
+        powerRollModifier:
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          damageMultiplier: half
+          name: Pyre
+          rollType: ability_power_roll
+          keywords: []
+          source: Trigger
+          hasCustomTrigger: true
+          guid: 5f010003-0001-4096-bcde-7d8e9f0a1b2c
+          modtype: none
+          rules: ""
+          customTrigger:
+            __typeName: TriggeredAbility
+            repeatTargets: false
+            iconid: ui-icons/skills/1.png
+            numTargets: "1"
+            castImmediately: true
+            name: Pyre
+            range: 1
+            persistence: []
+            targetType: self
+            description: ""
+            strain: []
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              applyto: caster
+              rule: teleport 5
+            guid: 5f010004-0001-4096-bcde-7d8e9f0a1b2c
+            modifiers: []
+            trigger: d20roll
+            display:
+              hueshift: 0
+              bgcolor: "#ffffffff"
+              brightness: 1
+              saturation: 1
+        type: trigger
+        description: When you take damage, you take half and teleport up to 5 squares. Spend 1 Ferocity to also blast each enemy adjacent to your original space for Intuition lightning damage.
+        trigger: takedamage
+        source: Spark Class Feature
+        targetType: self
+        range: 0
+        guid: 5f010002-0001-4096-bcde-7d8e9f0a1b2c
         domains:
           class:38b11f24-1972-4469-86f7-1d2888aa213d: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        rules: You take half the damage and teleport up to 5 squares.
+      - __typeName: CharacterModifier
         behavior: triggerdisplay
         source: Spark Class Feature
         ability:
           __typeName: TriggeredAbilityDisplay
-          flavor: You burn to ash before your foes' eyes.
           keywords: []
-          target: Self
-          name: Pyre
+          flavor: You burn to ash before your foes' eyes.
+          distance: Self
+          guid: 5f010009-0001-4096-bcde-7d8e9f0a1b2c
           effect: |-
             You take half the damage and teleport up to 5 squares.
             <b>Spend 1 Ferocity:</b> Each enemy adjacent to your original space takes lightning or fire damage (your choice) equal to your Intuition score.
-          distance: Self
-          trigger: You take damage.
-          guid: 5f010009-0001-4096-bcde-7d8e9f0a1b2c
-      - __typeName: CharacterModifier
-        feature:
-          __typeName: CharacterFeature
-          guid: 5f01000b-0001-4096-bcde-7d8e9f0a1b2c
-          modifiers:
-          - __typeName: CharacterModifier
-            guid: 5f01000c-0001-4096-bcde-7d8e9f0a1b2c
-            type: trigger
-            range: 0
-            behavior: powertabletrigger
-            powerRollModifier:
-              __typeName: CharacterModifier
-              damageMultiplier: half
-              guid: 5f01000d-0001-4096-bcde-7d8e9f0a1b2c
-              modtype: none
-              activationCondition: false
-              source: Trigger
-              name: Pyre
-              keywords: []
-              rollType: ability_power_roll
-              hasCustomTrigger: true
-              rules: ""
-              behavior: power
-              customTrigger:
-                __typeName: TriggeredAbility
-                repeatTargets: false
-                targetType: self
-                iconid: ui-icons/skills/1.png
-                behaviors:
-                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                  applyto: caster
-                  rule: teleport 5
-                range: 1
-                persistence: []
-                modifiers: []
-                numTargets: "1"
-                description: ""
-                abilityType: none
-                strain: []
-                name: Pyre
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                trigger: d20roll
-                castImmediately: true
-                guid: 5f01000e-0001-4096-bcde-7d8e9f0a1b2c
-            targetType: self
-            name: Pyre
-            source: Beastheart
-            rules: You take half the damage and teleport up to 5 squares.
-            additionalCostModifiers:
-            - __typeName: CharacterModifier
-              resourceCostType: cost
-              keywords: []
-              overrideBase: true
-              modtype: none
-              activationCondition: false
-              behavior: power
-              source: Trigger
-              rulesText: Each enemy adjacent to your original space takes lightning damage equal to your Intuition score.
-              resourceCostAmount: "1"
-              rollType: ability_power_roll
-              guid: 5f01000f-0001-4096-bcde-7d8e9f0a1b2c
-              name: Pyre +1 Ferocity (Lightning)
-              hasCustomTrigger: true
-              rules: ""
-              damageMultiplier: half
-              customTrigger:
-                __typeName: TriggeredAbility
-                repeatTargets: false
-                targetType: self
-                iconid: ui-icons/skills/1.png
-                behaviors:
-                - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                  applyto: caster
-                  abilityType: custom
-                  promptText: Each enemy adjacent to your space takes Intuition lightning damage.
-                  customAbility:
-                    __typeName: ActivatedAbility
-                    repeatTargets: false
-                    targetType: all
-                    iconid: ui-icons/skills/1.png
-                    behaviors:
-                    - __typeName: ActivatedAbilityDamageBehavior
-                      roll: Caster.Intuition
-                      damageType: lightning
-                      applyto: targets
-                      chatMessage: Pyre lightning burn
-                    range: 1
-                    categorization: Hidden
-                    display:
-                      bgcolor: "#ffffffff"
-                      hueshift: 0
-                      brightness: 1
-                      saturation: 1
-                    abilityType: none
-                    modifiers: []
-                    name: Pyre Burn (Lightning)
-                    description: ""
-                    targetAllegiance: enemy
-                    guid: 5f010011-0001-4096-bcde-7d8e9f0a1b2c
-                    numTargets: "1"
-                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                  applyto: caster
-                  rule: teleport 5
-                range: 1
-                persistence: []
-                modifiers: []
-                numTargets: "1"
-                description: ""
-                abilityType: none
-                strain: []
-                name: Pyre +1 Ferocity (Lightning)
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                trigger: d20roll
-                castImmediately: true
-                guid: 5f010010-0001-4096-bcde-7d8e9f0a1b2c
-            - __typeName: CharacterModifier
-              resourceCostType: cost
-              keywords: []
-              overrideBase: true
-              modtype: none
-              activationCondition: false
-              behavior: power
-              source: Trigger
-              rulesText: Each enemy adjacent to your original space takes fire damage equal to your Intuition score.
-              resourceCostAmount: "1"
-              rollType: ability_power_roll
-              guid: 5f010023-0001-4096-bcde-7d8e9f0a1b2c
-              name: Pyre +1 Ferocity (Fire)
-              hasCustomTrigger: true
-              rules: ""
-              damageMultiplier: half
-              customTrigger:
-                __typeName: TriggeredAbility
-                repeatTargets: false
-                targetType: self
-                iconid: ui-icons/skills/1.png
-                behaviors:
-                - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                  applyto: caster
-                  abilityType: custom
-                  promptText: Each enemy adjacent to your space takes Intuition fire damage.
-                  customAbility:
-                    __typeName: ActivatedAbility
-                    repeatTargets: false
-                    targetType: all
-                    iconid: ui-icons/skills/1.png
-                    behaviors:
-                    - __typeName: ActivatedAbilityDamageBehavior
-                      roll: Caster.Intuition
-                      damageType: fire
-                      applyto: targets
-                      chatMessage: Pyre fire burn
-                    range: 1
-                    categorization: Hidden
-                    display:
-                      bgcolor: "#ffffffff"
-                      hueshift: 0
-                      brightness: 1
-                      saturation: 1
-                    abilityType: none
-                    modifiers: []
-                    name: Pyre Burn (Fire)
-                    description: ""
-                    targetAllegiance: enemy
-                    guid: 5f010025-0001-4096-bcde-7d8e9f0a1b2c
-                    numTargets: "1"
-                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                  applyto: caster
-                  rule: teleport 5
-                range: 1
-                persistence: []
-                modifiers: []
-                numTargets: "1"
-                description: ""
-                abilityType: none
-                strain: []
-                name: Pyre +1 Ferocity (Fire)
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                trigger: d20roll
-                castImmediately: true
-                guid: 5f010024-0001-4096-bcde-7d8e9f0a1b2c
-            trigger: takedamage
           name: Pyre
-          description: ""
-          source: Beastheart
-        guid: 5f01000a-0001-4096-bcde-7d8e9f0a1b2c
+          trigger: You take damage.
+          target: Self
+        guid: 5f010008-0001-4096-bcde-7d8e9f0a1b2c
         sourceguid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
-        name: Pyre (Companion)
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        name: Pyre
+      - __typeName: CharacterModifier
         description: Companion can use the Pyre triggered action.
         behavior: modcompanion
         source: Spark Class Feature
+        guid: 5f01000a-0001-4096-bcde-7d8e9f0a1b2c
+        name: Pyre (Companion)
+        sourceguid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
         domains:
           class:38b11f24-1972-4469-86f7-1d2888aa213d: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      name: Pyre
-      domains:
-        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      description: ""
-      id: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
-      implementation: 3
-    domains:
-      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-10:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-2:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeatureChoice
-      name: 2nd-Level Wild Nature Ability
-      guid: 9b8e1c42-3a5d-4f76-b428-7c9e1d3f5a82
-      description: Choose one Wild Nature ability.
-      allowDuplicateChoices: false
-      options:
-      - __typeName: CharacterFeature
-        guid: 9b8e1c43-1a5d-4f76-b428-7c9e1d3f5a82
-        classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-        source: Spark Class Feature
-        domains:
-          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        modifiers:
-        - __typeName: CharacterModifier
-          activatedAbility:
-            __typeName: ActivatedAbility
-            targetType: target
-            behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              roll: 2d10 + Intuition
-              tiers:
-              - 6 + I fire damage; M < [Weak] prone
-              - 9 + I fire damage; M < [Average] prone
-              - 14 + I fire damage; M < [Strong] prone (EoT)
-              attrid: inu
-              modesSelected:
-              - 1
-              - 3
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              roll: 2d10 + Intuition
-              tiers:
-              - 6 + I lightning damage; M < [Weak] prone
-              - 9 + I lightning damage; M < [Average] prone
-              - 14 + I lightning damage; M < [Strong] prone (EoT)
-              attrid: inu
-              modesSelected:
-              - 2
-              - 4
-            - __typeName: ActivatedAbilityDamageBehavior
-              roll: Intuition
-              applyto: targets
-              modesSelected:
-              - 3
-              chatMessage: Burning Lash - Second whip extra fire damage
-              damageType: fire
-            - __typeName: ActivatedAbilityDamageBehavior
-              roll: Intuition
-              applyto: targets
-              modesSelected:
-              - 4
-              chatMessage: Burning Lash - Second whip extra lightning damage
-              damageType: lightning
-            - __typeName: ActivatedAbilityReplenishBehavior
-              mode: expend
-              resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-              quantity: "1"
-              guid: 9b8e1c46-4a5d-4f76-b428-7c9e1d3f5a82
-              modesSelected:
-              - 3
-              - 4
-              applyto: caster
-              chatMessage: Burning Lash - Spend 1 Ferocity
-            range: 2
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            targetAllegiance: any
-            numTargets: "1"
-            multipleModes: true
-            display:
-              bgcolor: "#ffffffff"
-              hueshift: 0
-              brightness: 1
-              saturation: 1
-            categorization: Heroic Ability
-            implementationDetails: T3 'can't stand (EoT)' is approximated as prone (EoT). Fire/lightning chosen via modeList; the Spend 1 Ferocity second-whip rider is modeled as two extra modes (fire/lightning) adding flat damage equal to the companion's Intuition.
-            persistence: []
-            repeatTargets: false
-            keywords:
-              Melee: true
-              Strike: true
-              Magic: true
-              Weapon: true
-              Companion: true
-            iconid: ui-icons/skills/1.png
-            modeList:
-            - text: Fire
-              rules: Deal fire damage.
-            - text: Lightning
-              rules: Deal lightning damage.
-            - rules: Spend 1 Ferocity to wield a second whip - extra fire damage equal to the companion's Intuition.
-              condition: Heroic Resources Available to Spend >= 1
-              text: Fire + 1 Ferocity
-            - rules: Spend 1 Ferocity to wield a second whip - extra lightning damage equal to the companion's Intuition.
-              condition: Heroic Resources Available to Spend >= 1
-              text: Lightning + 1 Ferocity
-            flavor: A blazing tongue of energy entangles a foe.
-            resourceNumber: "5"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            strain: []
-            name: Burning Lash
-            abilityType: none
-            modifiers: []
-            guid: 9b8e1c45-3a5d-4f76-b428-7c9e1d3f5a82
-            domains:
-              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            rangeTextOverride: Melee 2
-            description: "Tier 1 (<=11): 6 + I fire or lightning damage; M < Weak: prone. Tier 2 (12-16): 9 + I fire or lightning damage; M < Average: prone. Tier 3 (17+): 14 + I fire or lightning damage; M < Strong: prone and can't stand (EoT). Spend 1 Ferocity: If within distance of the target, use a free maneuver to wield a second whip, dealing extra fire or lightning damage equal to your Intuition score."
-            implementation: 2
-          guid: 9b8e1c44-2a5d-4f76-b428-7c9e1d3f5a82
-          source: Spark Class Feature
-          name: Burning Lash
-          domains:
-            class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: A blazing tongue of energy entangles a foe.
-          behavior: activated
-          sourceguid: 9b8e1c43-1a5d-4f76-b428-7c9e1d3f5a82
-        name: Burning Lash
-        description: A blazing tongue of energy entangles a foe.
-        canHavePrerequisites: true
-        implementationDetails: T3 'can't stand (EoT)' is approximated as prone (EoT) - the engine has no exact 'can't stand' condition. Damage-type choice between fire and lightning is offered via modeList.
-        implementation: 2
-      - __typeName: CharacterFeature
-        guid: 9b8e1c47-5a5d-4f76-b428-7c9e1d3f5a82
-        classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-        source: Spark Class Feature
-        domains:
-          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        modifiers:
-        - __typeName: CharacterModifier
-          guid: 9b8e1c48-6a5d-4f76-b428-7c9e1d3f5a82
-          sourceguid: 9b8e1c47-5a5d-4f76-b428-7c9e1d3f5a82
-          behavior: activated
-          name: Howling Gale
-          domains:
-            class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
-          source: Spark Class Feature
-          activatedAbility:
-            __typeName: ActivatedAbility
-            guid: 9b8e1c49-7a5d-4f76-b428-7c9e1d3f5a82
-            behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              attrid: inu
-              tiers:
-              - 6 damage; slide 1
-              - 9 damage; slide 2
-              - 13 damage; slide 4
-              roll: 2d10 + Intuition
-            - __typeName: ActivatedAbilityModifyPowerRollBehavior
-              modifier:
-                __typeName: CharacterModifier
-                guid: a2f1b6e5-3c9d-4a2b-8e5f-1d7c9a3b5e22
-                damageTypeMappings:
-                  untyped:
-                  - cold
-                  - sonic
-                activationCondition: true
-                behavior: power
-                sourceguid: a2f1b6e4-3c9d-4a2b-8e5f-1d7c9a3b5e21
-                keywords: []
-                name: Howling Gale - Damage Type
-                description: Choose whether Howling Gale deals cold or sonic damage.
-                modtype: none
-                rollType: ability_power_roll
-                domains: []
-              guid: a2f1b6e4-3c9d-4a2b-8e5f-1d7c9a3b5e21
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              applyto: caster
-              name: Howling Gale Flight
-              duration: end_of_next_turn
-              ongoingEffect: 9b8e1c4a-8a5d-4f76-b428-7c9e1d3f5a82
-              ongoingEffectCustom: false
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              applyto: caster_summoner
-              name: Howling Gale Flight
-              duration: end_of_next_turn
-              ongoingEffect: 9b8e1c4a-8a5d-4f76-b428-7c9e1d3f5a82
-              ongoingEffectCustom: false
-            range: "5"
-            categorization: Heroic Ability
-            numTargets: "1"
-            name: Howling Gale
-            targetTextOverride: Each enemy in the area
-            display:
-              bgcolor: "#ffffffff"
-              hueshift: 0
-              brightness: 1
-              saturation: 1
-            targetType: cube
-            radius: 3
-            repeatTargets: false
-            keywords:
-              Area: true
-              Companion: true
-              Magic: true
-            iconid: ui-icons/skills/1.png
-            rangeTextOverride: 3 cube within 5
-            flavor: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            domains:
-              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            resourceNumber: "5"
-            abilityType: none
-            strain: []
-            modifiers: []
-            persistence: []
-            targetAllegiance: enemy
-            description: "Each enemy in a 3 cube within 5 takes cold or sonic damage (your choice) and is slid (1/2/4 by tier). Effect: Until the end of your next turn, you and your companion can fly and gain a +3 bonus to speed."
-            implementation: 3
-        name: Howling Gale
-        description: A blizzard or thunderstorm sends foes flying and lifts you like a feather.
-        canHavePrerequisites: true
-        implementationDetails: Damage-type choice (cold or sonic) is offered via a multi-destination damageTypeMappings dropdown on the power roll. The fly + speed +3 ongoing effect is applied to both the companion (caster) and the beastheart (summoner) until the end of the next turn.
-        implementation: 3
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      domains:
-        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      numChoices: 1
-    - __typeName: CharacterFeature
-      description: Whenever you or your companion deals cold, fire, lightning, sonic, or untyped damage, you can change the damage type to cold, fire, lightning, or sonic damage.
-      guid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
-      modifiers:
-      - __typeName: CharacterModifier
-        keywords: []
-        damageTypeMappings:
-          all:
-          - cold
-          - fire
-          - lightning
-          - sonic
-        activationCondition: false
-        displayCondition: Ability.doesdamage
-        source: Spark Class Feature
-        guid: 44c43fda-c751-4a64-921e-5b39859cd32a
-        sourceguid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
-        modtype: none
-        rollType: ability_power_roll
-        domains:
-          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Change the damage type to cold, fire, lightning, or sonic.
-        name: Stormheart
-        behavior: power
-      - __typeName: CharacterModifier
         feature:
           __typeName: CharacterFeature
-          guid: c7aeb99b-d7cc-48ea-a967-2f71fee101c7
-          modifiers:
-          - __typeName: CharacterModifier
-            keywords: []
-            damageTypeMappings:
-              all:
-              - cold
-              - fire
-              - lightning
-              - sonic
-            activationCondition: false
-            displayCondition: Ability.doesdamage
-            source: Beastheart
-            modtype: none
-            name: Stormheart
-            description: Change the damage type to cold, fire, lightning, or sonic.
-            guid: ad939010-01ec-47df-9015-f41557115271
-            rollType: ability_power_roll
-            behavior: power
-          name: Stormheart
           description: ""
           source: Beastheart
-        guid: ef4f816c-8d93-4703-9e37-f1e5937f8211
-        sourceguid: a434dc47-68d8-46a4-83e5-45a69e27e5a4
-        name: Stormheart (Companion)
-        description: Your companion can change the damage type of cold, fire, lightning, sonic, or untyped damage.
-        source: Spark Class Feature
-        behavior: modcompanion
-        domains:
-          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      name: Stormheart
+          name: Pyre
+          guid: 5f01000b-0001-4096-bcde-7d8e9f0a1b2c
+          modifiers:
+          - __typeName: CharacterModifier
+            behavior: powertabletrigger
+            name: Pyre
+            powerRollModifier:
+              __typeName: CharacterModifier
+              activationCondition: false
+              behavior: power
+              damageMultiplier: half
+              name: Pyre
+              rollType: ability_power_roll
+              keywords: []
+              source: Trigger
+              hasCustomTrigger: true
+              guid: 5f01000d-0001-4096-bcde-7d8e9f0a1b2c
+              modtype: none
+              rules: ""
+              customTrigger:
+                __typeName: TriggeredAbility
+                repeatTargets: false
+                iconid: ui-icons/skills/1.png
+                numTargets: "1"
+                castImmediately: true
+                name: Pyre
+                range: 1
+                persistence: []
+                targetType: self
+                description: ""
+                strain: []
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  applyto: caster
+                  rule: teleport 5
+                guid: 5f01000e-0001-4096-bcde-7d8e9f0a1b2c
+                modifiers: []
+                trigger: d20roll
+                display:
+                  hueshift: 0
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  saturation: 1
+            type: trigger
+            rules: You take half the damage and teleport up to 5 squares.
+            source: Beastheart
+            guid: 5f01000c-0001-4096-bcde-7d8e9f0a1b2c
+            targetType: self
+            additionalCostModifiers:
+            - __typeName: CharacterModifier
+              resourceCostType: cost
+              behavior: power
+              rulesText: Each enemy adjacent to your original space takes lightning damage equal to your Intuition score.
+              resourceCostAmount: "1"
+              modtype: none
+              damageMultiplier: half
+              rollType: ability_power_roll
+              rules: ""
+              keywords: []
+              name: Pyre +1 Ferocity (Lightning)
+              source: Trigger
+              hasCustomTrigger: true
+              guid: 5f01000f-0001-4096-bcde-7d8e9f0a1b2c
+              customTrigger:
+                __typeName: TriggeredAbility
+                repeatTargets: false
+                iconid: ui-icons/skills/1.png
+                numTargets: "1"
+                castImmediately: true
+                name: Pyre +1 Ferocity (Lightning)
+                range: 1
+                persistence: []
+                targetType: self
+                description: ""
+                strain: []
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  customAbility:
+                    __typeName: ActivatedAbility
+                    repeatTargets: false
+                    numTargets: "1"
+                    name: Pyre Burn (Lightning)
+                    display:
+                      hueshift: 0
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      saturation: 1
+                    range: 1
+                    modifiers: []
+                    description: ""
+                    targetType: all
+                    abilityType: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityDamageBehavior
+                      chatMessage: Pyre lightning burn
+                      roll: Caster.Intuition
+                      applyto: targets
+                      damageType: lightning
+                    targetAllegiance: enemy
+                    categorization: Hidden
+                    guid: 5f010011-0001-4096-bcde-7d8e9f0a1b2c
+                    iconid: ui-icons/skills/1.png
+                  abilityType: custom
+                  applyto: caster
+                  promptText: Each enemy adjacent to your space takes Intuition lightning damage.
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  applyto: caster
+                  rule: teleport 5
+                guid: 5f010010-0001-4096-bcde-7d8e9f0a1b2c
+                modifiers: []
+                trigger: d20roll
+                display:
+                  hueshift: 0
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  saturation: 1
+              overrideBase: true
+              activationCondition: false
+            - __typeName: CharacterModifier
+              resourceCostType: cost
+              behavior: power
+              rulesText: Each enemy adjacent to your original space takes fire damage equal to your Intuition score.
+              resourceCostAmount: "1"
+              modtype: none
+              damageMultiplier: half
+              rollType: ability_power_roll
+              rules: ""
+              keywords: []
+              name: Pyre +1 Ferocity (Fire)
+              source: Trigger
+              hasCustomTrigger: true
+              guid: 5f010023-0001-4096-bcde-7d8e9f0a1b2c
+              customTrigger:
+                __typeName: TriggeredAbility
+                repeatTargets: false
+                iconid: ui-icons/skills/1.png
+                numTargets: "1"
+                castImmediately: true
+                name: Pyre +1 Ferocity (Fire)
+                range: 1
+                persistence: []
+                targetType: self
+                description: ""
+                strain: []
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  customAbility:
+                    __typeName: ActivatedAbility
+                    repeatTargets: false
+                    numTargets: "1"
+                    name: Pyre Burn (Fire)
+                    display:
+                      hueshift: 0
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      saturation: 1
+                    range: 1
+                    modifiers: []
+                    description: ""
+                    targetType: all
+                    abilityType: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityDamageBehavior
+                      chatMessage: Pyre fire burn
+                      roll: Caster.Intuition
+                      applyto: targets
+                      damageType: fire
+                    targetAllegiance: enemy
+                    categorization: Hidden
+                    guid: 5f010025-0001-4096-bcde-7d8e9f0a1b2c
+                    iconid: ui-icons/skills/1.png
+                  abilityType: custom
+                  applyto: caster
+                  promptText: Each enemy adjacent to your space takes Intuition fire damage.
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  applyto: caster
+                  rule: teleport 5
+                guid: 5f010024-0001-4096-bcde-7d8e9f0a1b2c
+                modifiers: []
+                trigger: d20roll
+                display:
+                  hueshift: 0
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  saturation: 1
+              overrideBase: true
+              activationCondition: false
+            trigger: takedamage
+            range: 0
+      name: Pyre
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+      source: Spark Class Feature
+      id: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
+      guid: 5f010001-0001-4096-bcde-7d8e9f0a1b2c
+      description: ""
       domains:
         class:38b11f24-1972-4469-86f7-1d2888aa213d: true
         class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
-      source: Spark Class Feature
       implementation: 3
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-3:
+  level-5:
     __typeName: ClassLevel
-    features: []
+    features:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        filterAbility: Ability.name = "Pyre Burn (Fire)"
+        behavior: modifyability
+        ability:
+          __typeName: ActivatedAbility
+          modifiers: []
+          numTargets: "1"
+          abilityModification: true
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          strain: []
+          description: ""
+          range: 1
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: true
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              strain: []
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              name: Wildfire Pyre Burn (Fire)
+              modifiers: []
+              targetAllegiance: enemy
+              targetType: all
+              description: ""
+              categorization: Hidden
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                filterTarget: Target.Distance(Caster.Companion) <= 1 and Target.Distance(Caster) > 1
+                damageType: fire
+                chatMessage: Wildfire Pyre fire burn
+                roll: Caster.Intuition
+                applyto: targets
+              range: 50
+              numTargets: "1"
+              guid: 7e110003-a1b2-4c3d-8e4f-5a6b7c8d9e03
+              iconid: ui-icons/skills/1.png
+            abilityType: custom
+          guid: 7e110002-a1b2-4c3d-8e4f-5a6b7c8d9e02
+          targetType: self
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+        modifyDescription: The Pyre blast also strikes each enemy adjacent to your companion.
+        attributes: []
+        source: Spark Class Feature
+        name: Wildfire Pyre
+        guid: 7e110001-a1b2-4c3d-8e4f-5a6b7c8d9e01
+        applyToTriggeredAbilities: true
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        replaceBehaviors: after
+      - __typeName: CharacterModifier
+        filterAbility: Ability.name = "Pyre Burn (Lightning)"
+        behavior: modifyability
+        ability:
+          __typeName: ActivatedAbility
+          modifiers: []
+          numTargets: "1"
+          abilityModification: true
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          strain: []
+          description: ""
+          range: 1
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: true
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              strain: []
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              name: Wildfire Pyre Burn (Lightning)
+              modifiers: []
+              targetAllegiance: enemy
+              targetType: all
+              description: ""
+              categorization: Hidden
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                filterTarget: Target.Distance(Caster.Companion) <= 1 and Target.Distance(Caster) > 1
+                damageType: lightning
+                chatMessage: Wildfire Pyre lightning burn
+                roll: Caster.Intuition
+                applyto: targets
+              range: 50
+              numTargets: "1"
+              guid: 7e110006-a1b2-4c3d-8e4f-5a6b7c8d9e06
+              iconid: ui-icons/skills/1.png
+            abilityType: custom
+          guid: 7e110005-a1b2-4c3d-8e4f-5a6b7c8d9e05
+          targetType: self
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+        modifyDescription: The Pyre blast also strikes each enemy adjacent to your companion.
+        attributes: []
+        source: Spark Class Feature
+        name: Wildfire Pyre
+        guid: 7e110004-a1b2-4c3d-8e4f-5a6b7c8d9e04
+        applyToTriggeredAbilities: true
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        replaceBehaviors: after
+      - __typeName: CharacterModifier
+        description: Your companion's Pyre also strikes each enemy adjacent to you.
+        behavior: modcompanion
+        source: Spark Class Feature
+        name: Wildfire Pyre
+        guid: 7e110007-a1b2-4c3d-8e4f-5a6b7c8d9e07
+        domains:
+          class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        feature:
+          __typeName: CharacterFeature
+          description: ""
+          source: Spark Class Feature
+          name: Wildfire Pyre
+          guid: 7e110008-a1b2-4c3d-8e4f-5a6b7c8d9e08
+          domains:
+            class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          modifiers:
+          - __typeName: CharacterModifier
+            filterAbility: Ability.name = "Pyre Burn (Fire)"
+            behavior: modifyability
+            ability:
+              __typeName: ActivatedAbility
+              modifiers: []
+              numTargets: "1"
+              abilityModification: true
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              strain: []
+              description: ""
+              range: 1
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                applyto: caster
+                autoTarget: true
+                customAbility:
+                  __typeName: ActivatedAbility
+                  repeatTargets: false
+                  strain: []
+                  display:
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    saturation: 1
+                  name: Wildfire Pyre Burn (Fire)
+                  modifiers: []
+                  targetAllegiance: enemy
+                  targetType: all
+                  description: ""
+                  categorization: Hidden
+                  abilityType: none
+                  behaviors:
+                  - __typeName: ActivatedAbilityDamageBehavior
+                    filterTarget: Target.Distance(Caster.Summoner) <= 1 and Target.Distance(Caster) > 1
+                    damageType: fire
+                    chatMessage: Wildfire Pyre fire burn
+                    roll: Caster.Intuition
+                    applyto: targets
+                  range: 50
+                  numTargets: "1"
+                  guid: 7e11000b-a1b2-4c3d-8e4f-5a6b7c8d9e0b
+                  iconid: ui-icons/skills/1.png
+                abilityType: custom
+              guid: 7e11000a-a1b2-4c3d-8e4f-5a6b7c8d9e0a
+              targetType: self
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+            modifyDescription: The Pyre blast also strikes each enemy adjacent to your summoner.
+            attributes: []
+            source: Spark Class Feature
+            name: Wildfire Pyre
+            guid: 7e110009-a1b2-4c3d-8e4f-5a6b7c8d9e09
+            applyToTriggeredAbilities: true
+            domains:
+              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            replaceBehaviors: after
+          - __typeName: CharacterModifier
+            filterAbility: Ability.name = "Pyre Burn (Lightning)"
+            behavior: modifyability
+            ability:
+              __typeName: ActivatedAbility
+              modifiers: []
+              numTargets: "1"
+              abilityModification: true
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              strain: []
+              description: ""
+              range: 1
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                applyto: caster
+                autoTarget: true
+                customAbility:
+                  __typeName: ActivatedAbility
+                  repeatTargets: false
+                  strain: []
+                  display:
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    saturation: 1
+                  name: Wildfire Pyre Burn (Lightning)
+                  modifiers: []
+                  targetAllegiance: enemy
+                  targetType: all
+                  description: ""
+                  categorization: Hidden
+                  abilityType: none
+                  behaviors:
+                  - __typeName: ActivatedAbilityDamageBehavior
+                    filterTarget: Target.Distance(Caster.Summoner) <= 1 and Target.Distance(Caster) > 1
+                    damageType: lightning
+                    chatMessage: Wildfire Pyre lightning burn
+                    roll: Caster.Intuition
+                    applyto: targets
+                  range: 50
+                  numTargets: "1"
+                  guid: 7e11000e-a1b2-4c3d-8e4f-5a6b7c8d9e0e
+                  iconid: ui-icons/skills/1.png
+                abilityType: custom
+              guid: 7e11000d-a1b2-4c3d-8e4f-5a6b7c8d9e0d
+              targetType: self
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+            modifyDescription: The Pyre blast also strikes each enemy adjacent to your summoner.
+            attributes: []
+            source: Spark Class Feature
+            name: Wildfire Pyre
+            guid: 7e11000c-a1b2-4c3d-8e4f-5a6b7c8d9e0c
+            applyToTriggeredAbilities: true
+            domains:
+              class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            replaceBehaviors: after
+      name: Wildfire Pyre
+      implementation: 4
+      source: Spark Class Feature
+      classid: 38b11f24-1972-4469-86f7-1d2888aa213d
+      guid: 5e11c24b-6379-466d-9e3a-5ffe0f11b133
+      canHavePrerequisites: true
+      domains:
+        class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      description: When you or your companion deals damage with your Pyre ability, each enemy adjacent to either of you takes the damage.
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-7:
+  level-9:
     __typeName: ClassLevel
     features: []
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   primary:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  multiclass:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-1:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-3:
     __typeName: ClassLevel
     features: []
     domains:
@@ -1083,24 +1386,4 @@ levels:
     domains:
       class:38b11f24-1972-4469-86f7-1d2888aa213d: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-5:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  tutoriallevel-2:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  tutoriallevel-4:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:38b11f24-1972-4469-86f7-1d2888aa213d: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-id: 38b11f24-1972-4469-86f7-1d2888aa213d
-isSubclass: true
 _table: subclasses
