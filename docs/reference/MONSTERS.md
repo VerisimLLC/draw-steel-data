@@ -550,6 +550,43 @@ groupInitiativeWithCaster: true
 applyto: targets
 ```
 
+**Placement modes** (pick one; if neither is set, summons spawn at each target's
+location, nudged to the nearest free squares):
+
+- `choosePlacement: true` + `summonRange: "N"` -- the user clicks a placement
+  square for each summon, within N squares of the **caster**.
+- `tweakPlacement: true` + `tweakRadius: "N"` -- **preferred for "X appear
+  adjacent to / around each target" effects.** Summons are auto-placed around
+  each target (spawned hidden from players, rendered ghosted to the Director
+  with a move icon), the legal radius around each target is marked on the map,
+  and the user may drag each summon within its radius before pressing Continue
+  to reveal them. Rearranging uses raw location changes, so no move triggers
+  (opportunity attacks, auras) fire. With `applyto: targets` the radius anchors
+  on each target; with a self-targeted ability it anchors on the caster.
+  `choosePlacement` takes precedence if both are set.
+
+  Optional tweak fields:
+  - `tweakAnchor: casterstart` -- anchor on the squares the caster occupied at
+    the START of the cast instead of on targets. Use for "minions appear in the
+    space the caster leaves behind" after an earlier teleport behavior;
+    `tweakRadius: "0"` restricts placement to exactly those squares.
+  - `tweakMessage: "..."` -- overrides the text after the creature names in the
+    rearrange prompt (default "placed around targets. Rearrange positions
+    before continuing.").
+
+```yaml
+# Two ensnarers appear in unoccupied spaces adjacent to each target (tiers 1-2)
+- __typeName: ActivatedAbilitySummonBehavior
+  applyto: targets
+  tiersSelected: [1, 2]
+  monsterType: <ensnarer-uuid>
+  numSummons: "2"
+  tweakPlacement: true
+  tweakRadius: "1"
+  casterChoosesCreatures: false
+  groupInitiativeWithCaster: true
+```
+
 #### ActivatedAbilityAuraBehavior
 **Purpose**: Create a persistent zone on the map with terrain effects, modifiers, and triggers.
 Auras are the primary way to create difficult terrain, hazardous zones, walls, and
