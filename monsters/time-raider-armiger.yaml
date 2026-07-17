@@ -50,39 +50,126 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: d9c3aef4-26a1-4442-9aa5-0110cb80d01b
+  updateid: b54b0a99-4518-4e68-88c4-f43e1bb8c78a
   properties:
     __typeName: monster
+    damage_taken: 0
+    savingThrowRatings: []
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:45ca56af-824d-4081-b6fe-36ec031d0a0d: true
+        CharacterFeature:d2ac65e7-7ef5-4290-b3c9-56ceb0238d51: true
+      name: 'Foresight '
+      source: Trait
+      guid: d2ac65e7-7ef5-4290-b3c9-56ceb0238d51
+      description: The armiger doesn't have a bane on strikes against concealed creatures.
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        value: 1
+        source: Trait
+        guid: 92cd3311-b999-40e2-8374-f4481c9cff61
+        description: The armiger doesn't have a bane on strikes against concealed creatures.
+        domains:
+          CharacterFeature:45ca56af-824d-4081-b6fe-36ec031d0a0d: true
+          CharacterFeature:d2ac65e7-7ef5-4290-b3c9-56ceb0238d51: true
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        behavior: attribute
+        sourceguid: d2ac65e7-7ef5-4290-b3c9-56ceb0238d51
+        name: 'Foresight '
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f450c11b-5868-425e-b41f-9bc303f96604: true
+        CharacterFeature:32afd8b2-611e-4c31-b94b-baab73a9d6cd: true
+      name: Kuran'zoi Heraldry
+      source: Trait
+      guid: 32afd8b2-611e-4c31-b94b-baab73a9d6cd
+      implementation: 4
+      description: While any time raider starts their turn with line of effect to the armiger, that time raider can end one condition affecting them.
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 32afd8b2-611e-4c31-b94b-baab73a9d6cd
+        name: Kuran'zoi Heraldry
+        behavior: trigger
+        guid: 7a76fa38-1044-4558-8909-2e6f559e4205
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          abilityType: none
+          trigger: beginturn
+          targetType: subject
+          mandatory: false
+          subject: allies
+          iconid: ui-icons/skills/1.png
+          triggerPrompt: While any time raider starts their turn with line of effect to the time raider armiger, that time raider can end one condition affecting them.
+          description: Any time raider who starts their turn with line of effect to the armiger can end one condition affecting them.
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+          strain: []
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            chatMessage: "Armiger Kuran'zoi Heraldry Trait "
+            filterTarget: ""
+            conditions: []
+            mode: conditions
+          modifiers: []
+          range: 1
+          name: Kuran'zoi Heraldry
+          guid: 210a9d87-8a47-4a07-b91d-79b9e5aa3744
+          conditionFormula: Subject.Keywords has "Time Raider" and Subject.ConditionCount > 0 and Line Of Sight(Subject, Self) > 0
+          whenActive: combat
+        description: While any time raider starts their turn with line of effect to the armiger, that time raider can end one condition affecting them.
+        source: Trait
+        domains:
+          CharacterFeature:32afd8b2-611e-4c31-b94b-baab73a9d6cd: true
+    equipment: []
+    stability: 0
+    keywords:
+      Time Raider: true
+      Humanoid: true
     skillRatings: []
-    opportunityAttack: 5
-    cr: 3
+    inflictedConditions: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    titles: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      flavor: ""
-      strain: []
-      categorization: Signature Ability
-      name: Serrated Saber
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 256
+      repeatTargets: false
       guid: 06aded4d-a201-409f-b2c7-308648778d0a
-      range: 1
       implementation: 4
-      iconid: ui-icons/skills/1.png
+      targetType: target
       keywords:
-        Psionic: true
-        Weapon: true
         Strike: true
+        Weapon: true
         Melee: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        saturation: 1
-        brightness: 1
+        Psionic: true
+      flavor: ""
+      categorization: Signature Ability
+      modifiers: []
       description: |2-
 
         **2 Malice**: A creature weakened this way is also bleeding.
+      numTargets: 1
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      sourceReference:
+        __typeName: SourceReference
+        page: 256
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      range: 1
+      name: Serrated Saber
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -91,64 +178,58 @@ info:
         - 10 damage
         - 13 damage; R<2 weakened (save ends)
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptText: "**Spend 2 Malice**: A creature weakened this way is also bleeding."
         customAbility:
           __typeName: ActivatedAbility
-          targetType: all
-          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-          guid: 487ca729-250d-4c58-ab7d-6e3de554ee37
-          iconid: ui-icons/skills/1.png
+          repeatTargets: false
           targetFilter: "<<strucktarget>> = Target.ID"
-          name: Serrated Saber Bleeding
+          guid: 487ca729-250d-4c58-ab7d-6e3de554ee37
+          resourceNumber: "2"
+          description: ""
+          numTargets: "1"
           display:
+            brightness: 1
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
-            brightness: 1
-          description: ""
-          resourceNumber: "2"
+          modifiers: []
+          targetType: all
+          abilityType: none
+          iconid: ui-icons/skills/1.png
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: bleeding (save ends)
+          name: Serrated Saber Bleeding
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
           range: "100"
-          numTargets: "1"
-          abilityType: none
-          repeatTargets: false
-          modifiers: []
-        autoTarget: false
-        abilityType: custom
         tiersSelected:
         - 3
-        filterTarget: Cast.PrimaryTarget.Reason < 2 and Malice >= 2
-        applyto: caster
         standardAbilityParams:
           strucktarget: "<<cast.PrimaryTarget.id>>"
-        promptText: "**Spend 2 Malice**: A creature weakened this way is also bleeding."
         targeting: prompt
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      targetType: target
-      numTargets: 1
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-    - __typeName: ActivatedAbility
-      flavor: ""
-      description: ""
-      name: Shared Sickness
-      guid: 75371f37-51c0-47f2-9aee-b73ba12c4a9c
-      range: 1
-      implementation: 4
+        applyto: caster
+        filterTarget: Cast.PrimaryTarget.Reason < 2 and Malice >= 2
+        abilityType: custom
+        autoTarget: false
       iconid: ui-icons/skills/1.png
+      strain: []
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      abilityType: none
+      implementation: 4
+      targetType: self
       keywords:
-        Psionic: true
         Ranged: true
+        Psionic: true
+      flavor: ""
+      iconid: ui-icons/skills/1.png
+      description: ""
+      numTargets: 1
       display:
+        brightness: 1
         bgcolor: "#ffffffff"
         hueshift: 0
         saturation: 1
-        brightness: 1
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      categorization: Signature Ability
-      targetType: self
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -156,126 +237,25 @@ info:
         - 4 psychic damage; R<0 5 poison damage
         - 6 psychic damage; R<1 5 poison damage
         - 9 psychic damage; R<2 5 poison damage
-      numTargets: 1
-      abilityType: none
-      repeatTargets: false
       modifiers: []
-    savingThrowRatings: []
-    titles: []
-    movementSpeeds: []
+      guid: 75371f37-51c0-47f2-9aee-b73ba12c4a9c
+      name: Shared Sickness
+      categorization: Signature Ability
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      range: 1
+    ev: 10
+    walkingSpeed: 5
+    resources: []
     resistances:
     - __typeName: ResistanceEntry
-      damageType: psychic
-      apply: Damage Reduction
       dr: 3
-    monster_type: Time Raider Armiger
-    traitNames: []
-    characterFeatures:
-    - __typeName: CharacterFeature
-      description: The armiger doesn't have a bane on strikes against concealed creatures.
-      source: Trait
-      implementation: 4
-      name: 'Foresight '
-      guid: d2ac65e7-7ef5-4290-b3c9-56ceb0238d51
-      domains:
-        CharacterFeature:d2ac65e7-7ef5-4290-b3c9-56ceb0238d51: true
-        CharacterFeature:45ca56af-824d-4081-b6fe-36ec031d0a0d: true
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: 16228928-9f29-4510-a703-65344f2356ef
-        value: 1
-        domains:
-          CharacterFeature:d2ac65e7-7ef5-4290-b3c9-56ceb0238d51: true
-          CharacterFeature:45ca56af-824d-4081-b6fe-36ec031d0a0d: true
-        description: The armiger doesn't have a bane on strikes against concealed creatures.
-        source: Trait
-        behavior: attribute
-        sourceguid: d2ac65e7-7ef5-4290-b3c9-56ceb0238d51
-        name: 'Foresight '
-        guid: 92cd3311-b999-40e2-8374-f4481c9cff61
-    - __typeName: CharacterFeature
-      description: While any time raider starts their turn with line of effect to the armiger, that time raider can end one condition affecting them.
-      source: Trait
-      name: Kuran'zoi Heraldry
-      guid: 32afd8b2-611e-4c31-b94b-baab73a9d6cd
-      domains:
-        CharacterFeature:f450c11b-5868-425e-b41f-9bc303f96604: true
-        CharacterFeature:32afd8b2-611e-4c31-b94b-baab73a9d6cd: true
-      modifiers:
-      - __typeName: CharacterModifier
-        description: While any time raider starts their turn with line of effect to the armiger, that time raider can end one condition affecting them.
-        behavior: trigger
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          conditionFormula: Subject.Keywords has "Time Raider" and Subject.ConditionCount > 0 and Line Of Sight(Subject, Self) > 0
-          subject: selfandallies
-          mandatory: false
-          name: Kuran'zoi Heraldry
-          guid: 210a9d87-8a47-4a07-b91d-79b9e5aa3744
-          range: 1
-          trigger: beginturn
-          iconid: ui-icons/skills/1.png
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            saturation: 1
-            brightness: 1
-          whenActive: combat
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            mode: conditions
-            conditions: []
-            purgeType: one
-          description: Any time raider who starts their turn with line of effect to the armiger can end one condition affecting them.
-          targetType: subject
-          numTargets: "1"
-          abilityType: none
-          repeatTargets: false
-          modifiers: []
-        sourceguid: 32afd8b2-611e-4c31-b94b-baab73a9d6cd
-        name: Kuran'zoi Heraldry
-        guid: 7a76fa38-1044-4558-8909-2e6f559e4205
-        domains:
-          CharacterFeature:32afd8b2-611e-4c31-b94b-baab73a9d6cd: true
-        source: Trait
-    notes:
-    - title: Monster Notes
-      text: ""
-    max_hitpoints_roll: "60"
-    damage_taken: 0
-    max_hitpoints: 60
-    levelChoices: []
-    ev: 10
-    inflictedConditions: []
-    monster_category: Monster
-    creatureSize: 1M
-    innateAttacks: []
-    attributes:
-      rea:
-        baseValue: 2
-        id: rea
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        baseValue: 2
-        id: inu
-      agl:
-        baseValue: 2
-        id: agl
-      mgt:
-        baseValue: 0
-        id: mgt
-      prs:
-        baseValue: 0
-        id: prs
-    role: Platoon Defender
+      apply: Damage Reduction
+      damageType: psychic
     minion: false
-    equipment: []
-    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
-    walkingSpeed: 5
+    innateAttacks: []
+    movementSpeeds: []
+    opportunityAttack: 5
     import:
-      type: mcdm
       data: |+
         Time Raider Armiger	Level 3 Platoon Defender
         Humanoid, Time Raider	EV 10
@@ -306,11 +286,36 @@ info:
         While any time raider starts their turn with line of effect to the armiger, that time raider can end one condition affecting them.
 
       override: true
-    resources: []
-    stability: 0
-    keywords:
-      Time Raider: true
-      Humanoid: true
+      type: mcdm
+    levelChoices: []
+    max_hitpoints: 60
+    monster_type: Time Raider Armiger
+    cr: 3
+    role: Platoon Defender
+    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    max_hitpoints_roll: "60"
+    monster_category: Monster
+    attributes:
+      inu:
+        baseValue: 2
+        id: inu
+      agl:
+        baseValue: 2
+        id: agl
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      mgt:
+        baseValue: 0
+        id: mgt
+      prs:
+        baseValue: 0
+        id: prs
+      rea:
+        baseValue: 2
+        id: rea
+    traitNames: []
+    creatureSize: 1M
   tokenType: null
   bestiaryId: 9bf9fbc6-6c9d-4bb9-81a5-372f77d40ee7
   summonerid: null

@@ -1,116 +1,169 @@
 __typeName: MonsterGroup
-id: 408e6baa-a5a0-40e8-bd81-0bb2a911cbfa
-mtime: 1762959934285
 traits: []
 ctime: 1758524933941
+id: 408e6baa-a5a0-40e8-bd81-0bb2a911cbfa
+name: Shambling Mound
+attacks: []
 maliceAbilities:
 - __typeName: MaliceAbility
+  targetType: self
+  strain: []
+  modeList:
+  - text: Push
+  - text: Vertical Push
+  description: |
+    The shambling mound seeps noxious residue from their vines. The next time they use their Vine Lash ability before the end of their next turn, they deal an extra 12 poison damage to each target.
+  name: Poisoned Vines
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 246
+  guid: 2fd70eba-b5af-4563-9489-5a3955b0e2f6
+  range: 1
+  persistence: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  implementation: 4
+  iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
     brightness: 1
     saturation: 1
-  abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: "3"
-  iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
-  guid: 2fd70eba-b5af-4563-9489-5a3955b0e2f6
-  behaviors: []
-  repeatTargets: false
-  description: |
-    The shambling mound seeps noxious residue from their vines. The next time they use their Vine Lash ability before the end of their next turn, they deal an extra 12 poison damage to each target.
-  persistence: []
-  range: 1
-  name: Poisoned Vines
-- __typeName: MaliceAbility
-  objectTarget: false
-  strain: []
-  targetType: all
+  multipleModes: false
   behaviors:
-  - __typeName: ActivatedAbilityPowerRollBehavior
-    isTest: true
-    roll: 2d10 + Agility
-    attrid: agl
-    resistanceRoll: false
-    tiers:
-    - 7 damage; push 7 or vertical push 3; restrained (save ends)
-    - 6 damage; push 5 or vertical push 2
-    - 3 damage
-  persistence: []
-  resourceNumber: "5"
-  targetAllegiance: enemy
-  abilityType: none
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffectCustom: c60bda72-026c-49cf-8566-9686830c328c
+    duration: end_of_next_turn
+    ongoingEffect: c60bda72-026c-49cf-8566-9686830c328c
   numTargets: "1"
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
-  guid: 86012e2b-7523-4af3-b005-0d692b518ac6
+  abilityType: none
   repeatTargets: false
+  modifiers: []
+- __typeName: MaliceAbility
+  targetType: all
+  strain: []
+  modeList:
+  - rules: Depending on roll outcome this pushes 7 / 5 / 0.
+    text: Push
+    condition: ""
+  - rules: 'Depending on roll outcome this vertically pushes 3 / 2 / 0 '
+    text: Vertical Push
   description: |
     The shambling mound lashes out at each enemy within 10 squares of them, driving them back or into the air. Each target makes an Agility test.
     - Tier 1 (<=11): 7 damage; push 7 or vertical push 3; restrained (save ends)
     - Tier 2 (12-16): 6 damage; push 5 or vertical push 2
     - Tier 3 (17+): 3 damage
+  name: Frenzy Lash
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 246
+  guid: 86012e2b-7523-4af3-b005-0d692b518ac6
+  range: "10"
+  persistence: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  implementation: 3
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
     brightness: 1
     saturation: 1
-  range: "10"
-  name: Frenzy Lash
+  multipleModes: true
+  implementationDetails: One mode is selected that affects all creatures, determining push or vertical push.
+  resourceNumber: "5"
+  objectTarget: false
+  behaviors:
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    modesSelected:
+    - 1
+    resistanceRoll: true
+    resistanceAttr: agl
+    roll: 2d10 + Agility
+    isTest: false
+    tiers:
+    - 7 damage; push 7; restrained (save ends)
+    - 6 damage; push 5
+    - 3 damage
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    modesSelected:
+    - 2
+    resistanceRoll: true
+    resistanceAttr: agl
+    roll: 2d10 + Agility
+    isTest: false
+    tiers:
+    - 7 damage; vertical push 3; restrained (save ends)
+    - 6 damage; vertical push 2
+    - 3 damage
+  abilityType: none
+  numTargets: "1"
+  targetAllegiance: enemy
+  repeatTargets: false
+  modifiers: []
 - __typeName: MaliceAbility
+  targetType: self
   castImmediately: true
   strain: []
-  targetType: self
+  description: The shambling mound takes an additional main action on their turn. They can use this feature even if they are dazed.
+  name: Solo Action
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 246
+  guid: 8d84b23c-b2b3-4b48-ad1a-87da5411b9c3
+  range: 1
+  persistence: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  implementation: 4
+  iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  resourceNumber: "5"
   behaviors:
   - __typeName: ActivatedAbilityReplenishBehavior
+    resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    chatMessage: Solo Action
     applyto: caster
     guid: d7510c28-15c1-4321-bbed-7b7b291e0695
-    chatMessage: Solo Action
-    resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-  persistence: []
-  resourceNumber: "5"
-  display:
-    bgcolor: "#ffffffff"
-    hueshift: 0
-    brightness: 1
-    saturation: 1
-  abilityType: none
   numTargets: "1"
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-  guid: 8d84b23c-b2b3-4b48-ad1a-87da5411b9c3
-  description: The shambling mound takes an additional main action on their turn. They can use this feature even if they are dazed.
+  abilityType: none
   repeatTargets: false
-  range: 1
-  name: Solo Action
+  modifiers: []
 - __typeName: MaliceAbility
-  display:
-    bgcolor: "#ffffffff"
-    hueshift: 0
-    brightness: 1
-    saturation: 1
-  abilityType: none
-  numTargets: "1"
-  strain: []
   targetType: self
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "7"
-  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
-  guid: b532d6b0-18f2-4fe3-9fce-61e9ce459d85
-  behaviors: []
-  repeatTargets: false
+  strain: []
   description: |
     Until the end of the shambling mound's next turn, the area within 10 squares of them is difficult terrain for enemies, and any enemy in the area takes a bane on power rolls. Any enemy who starts their turn in the area takes 4 acid damage, and the shambling mound regains an equal amount of Stamina.
-  persistence: []
-  range: 1
   name: Leeching Wilds
-attacks: []
-name: Shambling Mound
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 246
+  guid: b532d6b0-18f2-4fe3-9fce-61e9ce459d85
+  range: 1
+  persistence: []
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  implementation: 4
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  resourceNumber: "7"
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffectCustom: 4f890459-d434-4ad6-96a3-fd8d6f6c5e21
+    duration: end_of_next_turn
+    ongoingEffect: 4f890459-d434-4ad6-96a3-fd8d6f6c5e21
+  numTargets: "1"
+  abilityType: none
+  repeatTargets: false
+  modifiers: []
+mtime: 1784123130284
 _table: MonsterGroup
