@@ -93,121 +93,138 @@ info:
   updateid: bcffc7cb-6e68-4b47-8ba8-5ef7d92715eb
   properties:
     __typeName: monster
+    skillRatings: []
+    max_hitpoints_roll: "7"
+    minion: true
+    minionSquad: Radenwight Scrapper Squad 1
+    titles: []
+    traitNames:
+    - With Captain Melee distance +2
+    resistances: []
     characterFeatures:
     - __typeName: CharacterFeature
-      implementation: 3
+      description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+      source: Character Feature
+      implementation: 4
+      name: Ready Rodent
       guid: 5294cdb2-34c5-497e-ac49-adf73cfaa6eb
       domains:
-        CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-        CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-        CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
         CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
-      description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+        CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+        CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+        CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
       modifiers:
       - __typeName: CharacterModifier
-        name: Ready Rodent
-        guid: 0d6cbc1c-cd48-47db-96fc-ba528c2fa045
-        sourceguid: 5294cdb2-34c5-497e-ac49-adf73cfaa6eb
-        domains:
-          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
-          CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
         description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
-        source: Character Feature
+        name: Ready Rodent
+        sourceguid: 5294cdb2-34c5-497e-ac49-adf73cfaa6eb
         ability:
           __typeName: TriggeredAbilityDisplay
-          distance: Melee 1
-          guid: 2efe591e-fcd1-4499-ad9a-a772a8bc01c6
-          keywords:
-            Melee: true
-            Weapon: true
+          effect: The bruxer makes a free strike against the target.
           trigger: An ally deals damage to the target.
           name: Ready Rodent
-          effect: The bruxer makes a free strike against the target.
+          distance: Melee 1
+          keywords:
+            Weapon: true
+            Melee: true
+          guid: 2efe591e-fcd1-4499-ad9a-a772a8bc01c6
         behavior: triggerdisplay
+        source: Character Feature
+        domains:
+          CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
+          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+        guid: 0d6cbc1c-cd48-47db-96fc-ba528c2fa045
       - __typeName: CharacterModifier
+        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
         name: Ready Rodent
         guid: 96039f90-d7ef-4670-b122-7a3fe0a34fc2
-        sourceguid: 5294cdb2-34c5-497e-ac49-adf73cfaa6eb
-        domains:
-          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
-          CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
-        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
         source: Character Feature
+        behavior: trigger
+        sourceguid: 5294cdb2-34c5-497e-ac49-adf73cfaa6eb
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          triggerPrompt: Make a free strike aganst the target.
-          strain: []
-          targetType: self
           conditionFormula: HasAttacker and Friends(self, Attacker) and Attacker != self
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
-            standardAbilityParams:
-              targetid: "<<subject.id>>"
-            autoTarget: true
-            customAbility:
-              __typeName: ActivatedAbility
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
-              behaviors: []
-              iconid: ui-icons/skills/1.png
-              guid: a0f19df3-57b7-45f1-8aeb-b42d7144c4b3
-              description: ""
-              display:
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                brightness: 1
-                saturation: 1
-              range: 1
-              name: Invoked Ability
-            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+          strain: []
+          subject: enemy
+          mandatory: false
+          name: Ready Rodent
+          description: ""
+          guid: 542111a2-3ebf-4213-ab15-d78f38b43775
+          range: 1
           persistence: []
+          targetType: self
+          trigger: losehitpoints
+          subjectRange: "1"
+          numTargets: "1"
+          abilityType: none
+          domains:
+            CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
+            CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+            CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+            CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+          iconid: ui-icons/skills/1.png
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             brightness: 1
             saturation: 1
-          subject: enemy
-          whenActive: combat
-          description: ""
-          numTargets: "1"
-          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              range: 1
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              description: ""
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              name: Invoked Ability
+              abilityType: none
+              repeatTargets: false
+              guid: a0f19df3-57b7-45f1-8aeb-b42d7144c4b3
+            abilityType: standard
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+            autoTarget: true
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-          abilityType: none
-          iconid: ui-icons/skills/1.png
-          guid: 542111a2-3ebf-4213-ab15-d78f38b43775
+          whenActive: combat
+          triggerPrompt: Make a free strike aganst the target.
           repeatTargets: false
-          domains:
-            CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-            CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-            CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
-            CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
-          trigger: losehitpoints
-          subjectRange: "1"
-          range: 1
-          name: Ready Rodent
-        behavior: trigger
-      source: Character Feature
-      name: Ready Rodent
-    inflictedConditions: []
-    walkingSpeed: 5
-    opportunityAttack: 1
-    minionSquad: Radenwight Scrapper Squad 1
+          modifiers: []
+        domains:
+          CharacterFeature:5294cdb2-34c5-497e-ac49-adf73cfaa6eb: true
+          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
     damage_taken: 0
-    max_hitpoints: 5
+    availableTriggers: []
+    levelChoices: []
+    ev: 3
+    keywords:
+      Humanoid: true
+      Radenwight: true
+    role: Defender Defender
     initiativeGrouping: 89fde508-40f8-42b1-a65f-fcf2f44cac64
-    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
-    resources: []
-    traitNames:
-    - With Captain Melee distance +2
+    inflictedConditions: []
+    opportunityAttack: 1
+    innateAttacks: []
+    savingThrowRatings: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    max_hitpoints: 5
+    skillProficiencies: []
+    stability: 0
+    monster_type: Radenwight Scrapper
     import:
       type: mcdm
       data: |+
@@ -230,109 +247,96 @@ info:
         <b>Trigger</b> An ally deals damage to the target.
         <b>Effect</b> The ratagast makes a free strike against the target.
 
-    equipment: []
+    attributes:
+      rea:
+        baseValue: 0
+        id: rea
+      prs:
+        baseValue: 2
+        id: prs
+      agl:
+        baseValue: 1
+        id: agl
+      mgt:
+        baseValue: -1
+        id: mgt
+      inu:
+        baseValue: 0
+        id: inu
+    movementSpeeds:
+      climb: 6
+    monster_category: Monster
+    creatureSize: 1S
+    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
+    resources: []
+    walkingSpeed: 5
+    cr: 1
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      strain: []
       targetType: target
-      flavor: ""
+      strain: []
       categorization: Signature Ability
-      keywords:
-        Strike: true
-        Magic: true
-        Melee: true
-      persistence: []
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      name: Buckler Bash
+      sourceReference:
+        __typeName: SourceReference
+        page: 226
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
       guid: 7e19068b-e3d2-4771-b3a0-d23f9ed80d80
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
         tiers:
         - 2 damage
         - 3 damage; taunted (EoT)
         - 4 damage; taunted (EoT)
-      description: ""
+        roll: 2d10 + 2
+      persistence: []
+      implementation: 4
+      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      keywords:
+        Magic: true
+        Strike: true
+        Melee: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
-      name: Buckler Bash
-    - __typeName: ActivatedAbility
-      implementation: 0
-      strain: []
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      effectImplemented: false
-      persistence: []
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
+      description: ""
       modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
+      flavor: ""
+      range: 1
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      categorization: Signature Ability
+      name: 'Ready Rodent '
       guid: e059c673-afa6-4425-88c0-2d8f40853c84
       behaviors: []
+      persistence: []
+      implementation: 4
+      iconid: ui-icons/skills/1.png
       keywords:
-        Melee: true
         Weapon: true
-      description: The ratagast makes a free strike against the target.
+        Melee: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
+      description: The ratagast makes a free strike against the target.
+      modifiers: []
       range: 1
-      name: 'Ready Rodent '
-    skillProficiencies: []
-    max_hitpoints_roll: "7"
-    levelChoices: []
-    monster_type: Radenwight Scrapper
-    stability: 0
-    titles: []
-    notes:
-    - title: Monster Notes
-      text: ""
-    keywords:
-      Radenwight: true
-      Humanoid: true
-    ev: 3
-    movementSpeeds:
-      climb: 6
-    attributes:
-      inu:
-        id: inu
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 1
-      prs:
-        id: prs
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: -1
-      rea:
-        id: rea
-        baseValue: 0
-    innateAttacks: []
-    resistances: []
-    availableTriggers: []
-    minion: true
-    savingThrowRatings: []
-    role: Defender Defender
-    cr: 1
-    creatureSize: 1S
-    monster_category: Monster
-    skillRatings: []
+      targetType: target
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+    equipment: []
   tokenType: null
   bestiaryId: 713ff7bb-6fcf-46d0-8f36-679340efaa8b
   summonerid: null

@@ -53,64 +53,189 @@ info:
   updateid: a613a969-bc71-4bdd-bcbd-05cf512dac0c
   properties:
     __typeName: monster
+    inflictedConditions: []
+    opportunityAttack: 5
+    savingThrowRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      description: A layer of ground or floor beneath the area that is 1 square deep is destroyed.
+      name: Sunderbuss
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 250
+      targetTextOverride: Each enemy in the area
+      guid: ef91194c-0a0e-4549-9210-2c882cd5c9e6
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Agility
+        tiers:
+        - 4 sonic damage
+        - 7 sonic damage
+        - 10 sonic damage; prone; M<2 slowed (save ends)
+      - __typeName: ActivatedAbilityChangeTerrainBehavior
+        radius: 3
+        shape: square
+      - __typeName: ActivatedAbilityChangeElevationBehavior
+        shape: square
+        radius: 3
+        height: "-1"
+      targetAllegiance: enemy
+      categorization: Signature Ability
+      implementation: 4
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      keywords:
+        Psionic: true
+        Ranged: true
+        Weapon: true
+        Area: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      radius: "3"
+      objectTarget: false
+      targetType: cube
+      range: "10"
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    monster_type: Time Raider Cannonfall
+    titles: []
+    traitNames: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: psychic
+      apply: Damage Reduction
+      dr: 3
+    max_hitpoints_roll: "40"
+    cr: 3
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: a81863f5-dd47-4500-a5de-892d5955122f
-      domains:
-        CharacterFeature:a81863f5-dd47-4500-a5de-892d5955122f: true
-      description: The cannonfall doesn't have a bane on strikes against concealed creatures.
-      modifiers: []
-      source: Trait
-      name: 'Foresight '
-    - __typeName: CharacterFeature
+      description: The cannonfall doesn't take a bane on strikes against creatures with concealment or cover.
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        value: 1
+        domains:
+          CharacterFeature:c42a7c06-ad45-42da-8564-391cd1075c5a: true
+        description: The cannonfall doesn't take a bane on strikes against creatures with concealment or cover.
+        source: Trait
+        behavior: attribute
+        name: Foresight Squared
+        sourceguid: c42a7c06-ad45-42da-8564-391cd1075c5a
+        guid: e009571f-09bf-43ca-8168-bfaf11afe693
+      - __typeName: CharacterModifier
+        attribute: 33b6a265-6b89-4def-b86d-507d86061fe8
+        value: 1
+        domains:
+          CharacterFeature:c42a7c06-ad45-42da-8564-391cd1075c5a: true
+        description: The cannonfall doesn't take a bane on strikes against creatures with concealment or cover.
+        source: Trait
+        behavior: attribute
+        name: Foresight Squared
+        sourceguid: c42a7c06-ad45-42da-8564-391cd1075c5a
+        guid: b85b8ae5-424a-43f7-b131-e9d0cc93f007
+      implementation: 4
+      name: Foresight Squared
       guid: c42a7c06-ad45-42da-8564-391cd1075c5a
       domains:
         CharacterFeature:c42a7c06-ad45-42da-8564-391cd1075c5a: true
-      description: The cannonfall doesn't take a bane on strikes against creatures with concealment or cover.
-      modifiers: []
       source: Trait
-      name: Foresight Squared
-    inflictedConditions: []
-    walkingSpeed: 5
-    opportunityAttack: 5
-    cr: 3
-    titles: []
+    - __typeName: CharacterFeature
+      description: |-
+        **Trigger:** A creature damages the cannonfall with a ranged or area ability.
+
+        **Effect:** The damage is halved for the cannonfall and each target also affected by the triggering ability.
+
+        **Codex Note**: not usable on abilities that do damage without a power roll. Eg. Telepath Talent's "Feedback Loop" ability.
+      modifiers:
+      - __typeName: CharacterModifier
+        range: 10
+        trigger: takedamage
+        type: free
+        behavior: powertabletrigger
+        source: Character Feature
+        domains:
+          CharacterFeature:c2f244c7-abda-4df1-8e1e-bcf14c7d8fda: true
+        description: |-
+          **Trigger:** A creature damages the cannonfall with a ranged or area ability.
+
+          **Effect:** The damage is halved for the cannonfall and each target also affected by the triggering ability.
+
+          **Codex Note**: not usable on abilities that do damage without a power roll. Eg. Telepath Talent's "Feedback Loop" ability.
+        rules: The damage is halved for the cannonfall and each target also affected by the triggering ability.
+        name: Buss Buffer
+        powerRollModifier:
+          __typeName: CharacterModifier
+          activationCondition: false
+          matchAnyKeywords: true
+          keywords:
+            Area: true
+            Ranged: true
+          source: Trigger
+          rules: ""
+          damageMultiplier: half
+          applyToAllTargets: true
+          behavior: power
+          name: Buss Buffer
+          rollType: ability_power_roll
+          modtype: none
+          guid: 39a7432d-013d-4f14-9e8c-fe0d5d48e98f
+        sourceguid: c2f244c7-abda-4df1-8e1e-bcf14c7d8fda
+        abilityFilter: ability.keywords has "Ranged" or ability.keywords has "Area"
+        targetType: self
+        guid: a0004860-cff5-453b-8a34-90f81b79ecb6
+      implementation: 3
+      name: Buss Buffer
+      guid: c2f244c7-abda-4df1-8e1e-bcf14c7d8fda
+      domains:
+        CharacterFeature:c2f244c7-abda-4df1-8e1e-bcf14c7d8fda: true
+      source: Character Feature
+    notes:
+    - text: ""
+      title: Monster Notes
+    skillRatings: []
     damage_taken: 0
     max_hitpoints: 40
+    levelChoices: []
+    ev: 10
+    creatureSize: 1L
+    innateAttacks: []
+    minion: false
+    monster_category: Monster
     keywords:
       Time Raider: true
       Humanoid: true
-    skillRatings: []
     role: Platoon Artillery
-    ev: 10
-    movementSpeeds: []
-    monster_type: Time Raider Cannonfall
-    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: psychic
-      dr: 3
+    equipment: []
     attributes:
-      inu:
-        id: inu
+      rea:
         baseValue: 2
-      agl:
-        id: agl
-        baseValue: 2
+        id: rea
       dex:
         __typeName: CharacterAttribute
         id: dex
-      prs:
-        id: prs
-        baseValue: 0
-      mgt:
-        id: mgt
-        baseValue: 0
-      rea:
-        id: rea
+      inu:
         baseValue: 2
+        id: inu
+      agl:
+        baseValue: 2
+        id: agl
+      mgt:
+        baseValue: 0
+        id: mgt
+      prs:
+        baseValue: 0
+        id: prs
+    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    movementSpeeds: []
     import:
       type: mcdm
       data: |+
@@ -138,80 +263,8 @@ info:
         The cannonfall doesn't have a bane on strikes against concealed creatures.
 
 
-    minion: false
-    innateAttacks: []
-    equipment: []
-    savingThrowRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      objectTarget: false
-      targetType: cube
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Agility
-        tiers:
-        - 4 sonic damage
-        - 7 sonic damage
-        - 10 sonic damage; prone; M<2 slowed (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      targetTextOverride: Each enemy in the area
-      targetAllegiance: enemy
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      radius: "3"
-      iconid: ui-icons/skills/1.png
-      guid: ef91194c-0a0e-4549-9210-2c882cd5c9e6
-      flavor: ""
-      keywords:
-        Psionic: true
-        Weapon: true
-        Area: true
-        Ranged: true
-      description: A layer of ground or floor beneath the area that is 1 square deep is destroyed.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: "10"
-      name: Sunderbuss
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 1
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Psionic: true
-        Area: true
-      iconid: ui-icons/skills/1.png
-      guid: 3a425a97-30b3-4e9a-a64d-e61f7f216bf2
-      behaviors: []
-      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
-      description: The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Buss Buffer
-    creatureSize: 1L
-    traitNames: []
-    max_hitpoints_roll: "40"
-    levelChoices: []
-    monster_category: Monster
+    walkingSpeed: 5
+    resources: []
     stability: 3
   tokenType: null
   bestiaryId: 223828dd-0509-4b1c-aa1a-0d1501f8990a
