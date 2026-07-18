@@ -443,7 +443,6 @@ tiersSelected:                       # Which tiers apply this effect (1-indexed)
   - 1                                # Tier 1 (<=11)
   - 2                                # Tier 2 (12-16)
   - 3                                # Tier 3 (17+)
-potencyAttr: inu                     # Characteristic for potency gate (mgt/agl/rea/inu/prs)
 ```
 
 **Potency with ongoing effects:** When an ability applies a custom ongoing effect gated
@@ -456,28 +455,36 @@ by potency (e.g., "I<2 cursed (save ends)"), use the two-part pattern:
      - "5 corruption damage; I<2 cursed (save ends)"
      - "7 corruption damage; I<3 cursed (save ends)"
    ```
-   The power table parser auto-recognizes the potency gate (`I<1`, `I<2`, `I<3`) and
-   the condition name. The escalating potency values across tiers reflect that higher
-   tiers are harder to resist.
+   For STANDARD conditions (prone, dazed, weakened, etc.) the power table parser
+   resolves the potency gate natively and no extra behavior is needed. For CUSTOM
+   effect names (like "cursed" or "hexed") the tier text is display-only.
 
-2. **`ApplyOngoingEffectBehavior` handles actual application** with `potencyAttr` set
-   to the gating characteristic. The behavior reads the potency threshold from the
-   tier text and checks it against the target's characteristic:
+2. **`ApplyOngoingEffectBehavior` handles actual application.** There is NO
+   `potencyAttr` field (it does not exist in the engine -- live-tested 2026-07:
+   an ApplyOngoingEffectBehavior carrying it applies to every target
+   unconditionally). Gate each tier's application with a `filterTarget`
+   GoblinScript check against the target's potency resistance, one behavior per
+   tier:
    ```yaml
    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
      ongoingEffect: <effect-uuid>
      duration: save_ends
-     potencyAttr: inu              # Checks target's Intuition vs threshold
-     tiersSelected: [1, 2, 3]      # Apply on all tiers (1-indexed)
+     tiersSelected: [1]
+     filterTarget: Intuition Potency Resistance < 1
+   - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+     ongoingEffect: <effect-uuid>
+     duration: save_ends
+     tiersSelected: [2]
+     filterTarget: Intuition Potency Resistance < 2
+   - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+     ongoingEffect: <effect-uuid>
+     duration: save_ends
+     tiersSelected: [3]
+     filterTarget: Intuition Potency Resistance < 3
    ```
-   On Tier 1, the target must have Intuition < 1 to be cursed. On Tier 2, < 2.
-   On Tier 3, < 3. The behavior automatically extracts the correct threshold
-   from each tier's text.
-
-**Important:** The potency values in the tier text (`I<1`, `I<2`, `I<3`) are NOT just
-display -- they are the actual thresholds used by the behavior. The `potencyAttr` field
-tells the system WHICH characteristic to check, and the tier text tells it WHAT VALUE
-to check against. Do not omit the potency text from tier strings when using `potencyAttr`.
+   The potency-resistance symbols are `Might/Agility/Reason/Intuition/Presence
+   Potency Resistance` (base value = the characteristic, modified by potency
+   resistance attributes).
 
 **`tiersSelected`:** Controls which power roll tiers trigger this behavior. Values are
 **1-indexed**: `[1]` = Tier 1 only, `[1, 2]` = Tiers 1 and 2, `[1, 2, 3]` = all tiers.

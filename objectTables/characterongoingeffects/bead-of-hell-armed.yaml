@@ -1,0 +1,151 @@
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+id: f3b04cd2-f327-4e52-a9a0-dae6727a237d
+guid: f3b04cd2-f327-4e52-a9a0-dae6727a237d
+name: Bead of Hell (Armed)
+description: Ajax has thrown a glowing bead. It ignites at the start of his next turn, dealing 20 fire damage to each enemy in the area (A<5 dazed save ends) and leaving a burning area until the start of his following turn.
+custom: true
+buffType: buff
+source: Ongoing Effect
+hiddenFromEnemies: true
+iconid: ui-icons/skills/1.png
+display:
+  bgcolor: "#ff8833ff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+association: []
+domains:
+  CharacterOngoingEffect:f3b04cd2-f327-4e52-a9a0-dae6727a237d: true
+modifiers:
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: c5b7059c-a49a-4a6b-988f-227b4b397aec
+  sourceguid: f3b04cd2-f327-4e52-a9a0-dae6727a237d
+  source: Ongoing Effect
+  name: Bead of Hell (Armed)
+  description: At the start of Ajax's turn, the bead ignites.
+  domains:
+    CharacterOngoingEffect:f3b04cd2-f327-4e52-a9a0-dae6727a237d: true
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Bead of Hell Ignites
+    guid: b18759cb-189d-40cb-96cc-a28a9f55db8c
+    description: The bead ignites at the start of Ajax's turn.
+    trigger: beginturn
+    mandatory: true
+    targetType: self
+    abilityType: none
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    modifiers: []
+    persistence: []
+    strain: []
+    behaviors:
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      guid: 04694638-0ddb-45dd-aa3f-e95e6652c58c
+      abilityType: custom
+      promptText: The Bead of Hell ignites! Place the 5 cube on the bead's marked area.
+      autoTarget: false
+      applyto: caster
+      invokeOnCaster: false
+      customAbility:
+        __typeName: ActivatedAbility
+        name: Bead of Hell Ignition
+        guid: 36d217eb-9aa5-44cb-a35d-f9f5b802be4f
+        description: Each enemy in the area takes 20 fire damage, and if they have A<5, they are dazed (save ends). The area burns until the start of Ajax's following turn; any enemy who starts their turn in the burning area takes 10 fire damage.
+        flavor: ""
+        targetType: cube
+        radius: "5"
+        range: 50
+        targetFilter: Enemy
+        targetTextOverride: Each enemy in the area
+        objectTarget: false
+        abilityType: none
+        numTargets: "1"
+        keywords:
+          Area: true
+          Magic: true
+          Ranged: true
+        categorization: Ability
+        repeatTargets: false
+        modifiers: []
+        persistence: []
+        behaviors:
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          guid: c0ba6292-0848-40b0-8f71-18480fa33ec1
+          rule: 20 fire damage; A<5 dazed (save ends)
+          applyto: targets
+        - __typeName: ActivatedAbilityAuraBehavior
+          guid: a7e2a988-4a35-45c8-b7ef-a526b65b4e68
+          duration: nextturn
+          aliveafterdeath: true
+          aura:
+            __typeName: Aura
+            name: Bead of Hell
+            description: Any enemy who starts their turn in the burning area takes 10 fire damage.
+            guid: eac6c124-6b08-4e67-ad2a-05ba3ac56aec
+            applyto: enemies
+            difficult_terrain: false
+            display:
+              bgcolor: "#ff5511ff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            triggers: []
+            modifiers:
+            - __typeName: CharacterModifier
+              behavior: trigger
+              guid: d3935d20-964d-4031-a76f-f4abb8101857
+              source: Aura
+              sourceguid: eac6c124-6b08-4e67-ad2a-05ba3ac56aec
+              name: Bead of Hell
+              description: Any enemy who starts their turn in the burning area takes 10 fire damage.
+              domains: {}
+              triggeredAbility:
+                __typeName: TriggeredAbility
+                name: Bead of Hell Burn
+                guid: 8ba1f902-0852-4316-b898-a5fab7c4b7c7
+                description: This creature started their turn in the Bead of Hell's burning area.
+                trigger: beginturn
+                mandatory: true
+                silent: true
+                targetType: self
+                abilityType: none
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                modifiers: []
+                persistence: []
+                strain: []
+                behaviors:
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  guid: 3f196df2-80a5-4eb5-a1c7-111bd5532807
+                  rule: 10 fire damage
+                  applyto: targets
+                iconid: ui-icons/skills/1.png
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+        iconid: ui-icons/skills/1.png
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      guid: cb62ed96-4f63-4331-8e75-5253a5485b11
+      mode: effect
+      ongoingEffect: f3b04cd2-f327-4e52-a9a0-dae6727a237d
+      purgeType: all
+      conditions: []
+      applyto: targets
+    iconid: ui-icons/skills/1.png
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
