@@ -78,87 +78,57 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 44030c9f-30c9-4fa6-954f-c7d237891482
+  updateid: 5b8a70e1-c903-4ed6-8fc3-a3b3e9e8f7d3
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: ea7bbb36-1227-4600-8820-87b18cb1d167
-      domains:
-        CharacterFeature:ea7bbb36-1227-4600-8820-87b18cb1d167: true
-      description: Each creature within 2 of the remasch can't be hidden from them.
-      source: Trait
-      modifiers: []
-      name: Soulsight
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: 09893355-81e5-411b-bf4f-10f6ba389677
-      domains:
-        CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
-        CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
-        CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
-        CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
-      description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        modtype: edge
-        rollType: ability_power_roll
-        sourceguid: 23264442-8abf-42bb-8867-c855deca0a10
-        name: Lethe
-        guid: f9c71b0a-7624-4ac8-b33e-1187b5ce7fb6
-        description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
-        domains:
-          CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
-          CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
-          CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
-          CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
-        keywords: []
-        source: Trait
-        activationCondition: self.Winded = 1
-        behavior: power
-      - __typeName: CharacterModifier
-        modtype: edge
-        rollType: enemy_ability_power_roll
-        sourceguid: 23264442-8abf-42bb-8867-c855deca0a10
-        name: Lethe
-        guid: 9cc74857-5c3d-4036-bb2f-43898c0f2240
-        description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
-        domains:
-          CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
-          CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
-          CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
-          CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
-        keywords: []
-        source: Trait
-        activationCondition: Target.Winded = 1
-        behavior: power
-      name: Lethe
-    inflictedConditions: []
-    walkingSpeed: 5
-    opportunityAttack: 3
-    damage_taken: 0
     max_hitpoints: 20
-    initiativeGrouping: b4cd4de3-b4ee-417a-9502-57edaf2be815
-    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
-    resources:
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
-        used: 1
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
-        used: 1
+    movementSpeeds:
+      teleport: 5
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: holy
+      dr: -3
+      apply: Damage Reduction
+    max_hitpoints_roll: "20"
     traitNames: []
-    minion: false
-    equipment: []
+    innateAttacks: []
+    damage_taken: 0
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: true
+      maxChannel: ""
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+      description: "**5 Malice:** The remasch takes an adjacent creature with them when they teleport. The creature appears in an unoccupied space adjacent to the remasch’s destination."
+      modeList:
+      - text: Base
+      - rules: The remasch takes an adjacent creature with them when they teleport.
+        condition: Malice >= 5
+        text: 5 Malice
+      channelDescription: ""
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
       strain: []
+      objectTarget: true
+      numTargets: 1
+      implementation: 4
+      keywords:
+        Weapon: true
+        Strike: true
+        Melee: true
+      channelIncrement: 1
+      range: 1
+      modifiers: []
+      repeatTargets: false
       channeledResource: none
+      name: Abyssal Strike
+      guid: 9dfefbe5-5331-476a-b484-26e4f4372eb9
+      targetType: target
+      flavor: ""
+      multipleModes: true
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         tiers:
@@ -167,96 +137,97 @@ info:
         - "8 damage; #the remasch teleports 5 squares"
         roll: 2d10 + 2
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: the remasch teleports {5 when Cast.Tier = 3 else (Cast.Tier +1)} squares
         filterTarget: Charges = 0
+        applyto: caster
         modesSelected:
         - 1
-        applyto: caster
-        rule: the remasch teleports {5 when Cast.Tier = 3 else (Cast.Tier +1)} squares
       - __typeName: ActivatedAbilityAddNewTargetsBehavior
-        filterTarget: ""
-        targetMode: replace
-        promptText: Select a target to teleport with you
         targetingAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: target
-          modifiers: []
-          behaviors: []
-          categorization: Hidden
           iconid: ui-icons/skills/1.png
-          guid: 2ec4a00c-5c12-41f9-9e3f-c00ece04a02c
-          description: ""
+          modifiers: []
           repeatTargets: false
-          range: "1"
+          abilityType: none
           name: Choose target to teleport
+          guid: 2ec4a00c-5c12-41f9-9e3f-c00ece04a02c
+          targetType: target
+          range: "1"
+          categorization: Hidden
+          behaviors: []
+          description: ""
+          numTargets: "1"
         applyto: caster
+        filterTarget: ""
         modesSelected:
         - 2
+        targetMode: replace
+        promptText: Select a target to teleport with you
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        promptText: Teleport self then teleport target to unoccupied adjacent square
         autoTarget: true
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: 7f79b216-1ed7-49ac-bc87-72003b2687cf
-          description: ""
-          repeatTargets: false
-          range: 1
-          name: Invoked Ability
-        filterTarget: ""
-        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
         standardAbilityParams:
           range: "<<5 when Cast.Tier = 3 else (Cast.Tier +1)>>"
         runOnController: false
+        abilityType: standard
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
         targeting: inherit
+        applyto: caster
+        filterTarget: ""
         modesSelected:
         - 2
-        applyto: caster
         invokeOnCaster: false
+        promptText: Teleport self then teleport target to unoccupied adjacent square
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          repeatTargets: false
+          abilityType: none
+          name: Invoked Ability
+          guid: 7f79b216-1ed7-49ac-bc87-72003b2687cf
+          targetType: self
+          range: 1
+          behaviors: []
+          description: ""
+          numTargets: "1"
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbility: 7891188c-3bba-4649-b533-4c73127d0add
+        modesSelected:
+        - 2
         standardAbilityParams:
           targetid: "<<Caster.ID>>"
         abilityType: standard
         customAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
           iconid: ui-icons/skills/1.png
-          guid: 8e7b71a5-f774-4011-8019-12488d23ab44
-          description: ""
+          modifiers: []
           repeatTargets: false
-          range: 1
+          abilityType: none
           name: Invoked Ability
+          guid: 8e7b71a5-f774-4011-8019-12488d23ab44
+          targetType: self
+          range: 1
+          behaviors: []
+          description: ""
+          numTargets: "1"
+        standardAbility: 7891188c-3bba-4649-b533-4c73127d0add
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
         modesSelected:
         - 2
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbility: 86145a1e-29cd-4658-8561-81705fa48c62
         standardAbilityParams:
           targetid: "<<Target.ID>>"
           range: "<<7 when Cast.Tier = 3 else (Cast.Tier +3)>>"
@@ -264,221 +235,233 @@ info:
         customAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
           iconid: ui-icons/skills/1.png
-          guid: 2c28b264-8899-4fa4-99e8-2b1145253a79
-          description: ""
+          modifiers: []
           repeatTargets: false
-          range: 1
+          abilityType: none
           name: Invoked Ability
-        modesSelected:
-        - 2
+          guid: 2c28b264-8899-4fa4-99e8-2b1145253a79
+          targetType: self
+          range: 1
+          behaviors: []
+          description: ""
+          numTargets: "1"
+        standardAbility: 86145a1e-29cd-4658-8561-81705fa48c62
       - __typeName: ActivatedAbilityReplenishBehavior
-        mode: expend
-        chatMessage: ""
         resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-        quantity: "5"
+        mode: expend
         applyto: caster
+        quantity: "5"
+        chatMessage: ""
         modesSelected:
         - 2
-      categorization: Signature Ability
-      multipleModes: true
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      persistence: []
-      targetType: target
-      repeatTargets: false
       abilityType: none
-      numTargets: 1
-      flavor: ""
-      modeList:
-      - text: Base
-      - condition: Malice >= 5
-        rules: The remasch takes an adjacent creature with them when they teleport.
-        text: 5 Malice
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      channelIncrement: 1
-      iconid: ui-icons/skills/1.png
-      guid: 9dfefbe5-5331-476a-b484-26e4f4372eb9
+      persistence: []
+    - __typeName: ActivatedAbility
       display:
-        brightness: 1
         hueshift: 0
         bgcolor: "#ffffffff"
+        brightness: 1
         saturation: 1
-      maxChannel: ""
-      description: "**5 Malice:** The remasch takes an adjacent creature with them when they teleport. The creature appears in an unoccupied space adjacent to the remasch’s destination."
-      channelDescription: ""
-      range: 1
-      name: Abyssal Strike
-    - __typeName: ActivatedAbility
-      implementation: 3
-      castImmediately: true
+      description: The resmach teleports 2 squares and uses Abyssal Strike.
+      effectImplemented: false
+      abilityType: none
+      resourceNumber: 3
       strain: []
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
+      numTargets: "1"
+      implementation: 3
       keywords:
         Magic: true
-      persistence: []
-      resourceNumber: 3
-      repeatTargets: false
-      abilityType: none
-      numTargets: "1"
+      iconid: ui-icons/skills/1.png
+      range: 1
       modifiers: []
+      repeatTargets: false
+      castImmediately: true
+      name: Grasping Shadow
+      guid: 0256f04b-9c36-47b3-af9f-8a152e1f8a17
+      targetType: self
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      categorization: Heroic Ability
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
           iconid: ui-icons/skills/1.png
-          guid: 9818cc68-c6eb-44f4-9b53-46cd3c9164ed
-          description: ""
+          modifiers: []
           repeatTargets: false
-          range: 1
+          abilityType: none
           name: Invoked Ability
+          guid: 9818cc68-c6eb-44f4-9b53-46cd3c9164ed
+          targetType: self
+          range: 1
+          behaviors: []
+          description: ""
+          numTargets: "1"
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: true
+        applyto: caster
         abilityType: standard
         standardAbilityParams:
           range: "2"
-        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+        runOnController: true
         customAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
           iconid: ui-icons/skills/1.png
+          modifiers: []
+          repeatTargets: false
+          abilityType: none
+          name: Invoked Ability
           guid: a08771ac-cbae-4aca-af7f-6c56c5179312
-          description: ""
-          repeatTargets: false
+          targetType: self
           range: 1
-          name: Invoked Ability
-        runOnController: true
-        applyto: caster
-        invokeOnCaster: true
+          behaviors: []
+          description: ""
+          numTargets: "1"
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: named
-        runOnController: true
-        namedAbility: Abyssal Strike
         applyto: caster
+        namedAbility: Abyssal Strike
+        invokeOnCaster: true
+        runOnController: true
+        abilityType: named
         customAbility:
           __typeName: ActivatedAbility
           display:
-            brightness: 1
             hueshift: 0
             bgcolor: "#ffffffff"
+            brightness: 1
             saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
           iconid: ui-icons/skills/1.png
-          guid: 9b149c49-5d6b-47a7-80e6-f4d6f6376dce
-          description: ""
+          modifiers: []
           repeatTargets: false
-          range: 1
+          abilityType: none
           name: Invoked Ability
-        invokeOnCaster: true
-      iconid: ui-icons/skills/1.png
-      guid: 0256f04b-9c36-47b3-af9f-8a152e1f8a17
-      effectImplemented: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      description: The resmach teleports 2 squares and uses Abyssal Strike.
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      range: 1
-      name: Grasping Shadow
-    skillProficiencies: []
-    max_hitpoints_roll: "20"
-    levelChoices: []
-    monster_type: Demon Remasch
-    cr: 2
-    titles: []
-    notes:
-    - text: Remasches (REE-mash-iz) have physical forms blended with the nature of the wastes where they dwell. A remasch teleports around the battlefield, inflicting chaos on their enemies directly or through the minions they control. These demons are rumored to be the initial source of the teachings of all shadows through the College of Black Ash.
-      title: Monster Notes
-    role: Horde Ambusher
-    ev: 4
-    movementSpeeds:
-      teleport: 5
+          guid: 9b149c49-5d6b-47a7-80e6-f4d6f6376dce
+          targetType: self
+          range: 1
+          behaviors: []
+          description: ""
+          numTargets: "1"
+      flavor: ""
+      persistence: []
     attributes:
-      inu:
-        baseValue: 0
-        id: inu
       agl:
         baseValue: 2
         id: agl
       dex:
         __typeName: CharacterAttribute
         id: dex
-      prs:
-        baseValue: 2
-        id: prs
-      rea:
+      inu:
         baseValue: 0
-        id: rea
+        id: inu
       mgt:
         baseValue: 0
         id: mgt
-    savingThrowRatings: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: holy
-      dr: -3
-    keywords:
-      Demon: true
-      Abyssal: true
-    innateAttacks: []
+      rea:
+        baseValue: 0
+        id: rea
+      prs:
+        baseValue: 2
+        id: prs
+    monster_type: Demon Remasch
     a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
       __typeName: StatHistory
       entries:
         3728885b-b2f4-469f-b396-7d1e63d56c9d:
-          timestamp: 1782265401084
-          set: 0/1
-          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
-          note: Grasping Shadow
           userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
-    stability: 0
+          note: Grasping Shadow
+          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+          set: 0/1
+    skillProficiencies: []
+    characterFeatures:
+    - __typeName: CharacterFeature
+      guid: ea7bbb36-1227-4600-8820-87b18cb1d167
+      domains:
+        CharacterFeature:ea7bbb36-1227-4600-8820-87b18cb1d167: true
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        sourceguid: c5ea49e4-0b0d-427c-99ca-1d490c0380ae
+        description: Each creature within 2 of the fiktin can't be hidden from them.
+        name: Soulsight
+        guid: 5f213284-24a9-4814-934d-20654a317fcd
+        domains:
+          CharacterFeature:c5ea49e4-0b0d-427c-99ca-1d490c0380ae: true
+        value: 2
+        source: Trait
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+      description: Each creature within 2 of the remasch can't be hidden from them.
+      source: Trait
+      name: Soulsight
+    - __typeName: CharacterFeature
+      implementation: 4
+      domains:
+        CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
+        CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
+        CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
+        CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: power
+        keywords: []
+        sourceguid: 23264442-8abf-42bb-8867-c855deca0a10
+        description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
+        name: Lethe
+        modtype: edge
+        domains:
+          CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
+          CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
+          CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
+          CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
+        rollType: ability_power_roll
+        activationCondition: self.Winded = 1
+        source: Trait
+        guid: f9c71b0a-7624-4ac8-b33e-1187b5ce7fb6
+      - __typeName: CharacterModifier
+        behavior: power
+        keywords: []
+        sourceguid: 23264442-8abf-42bb-8867-c855deca0a10
+        description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
+        name: Lethe
+        modtype: edge
+        domains:
+          CharacterFeature:09893355-81e5-411b-bf4f-10f6ba389677: true
+          CharacterFeature:063d33f3-86e9-4ad5-ac99-8594db5f487f: true
+          CharacterFeature:74ffacce-971e-45e9-b44a-e4196727278d: true
+          CharacterFeature:23264442-8abf-42bb-8867-c855deca0a10: true
+        rollType: enemy_ability_power_roll
+        activationCondition: Target.Winded = 1
+        source: Trait
+        guid: 9cc74857-5c3d-4036-bb2f-43898c0f2240
+      guid: 09893355-81e5-411b-bf4f-10f6ba389677
+      description: While winded, the remasch has an edge on strikes, and strikes have an edge against them.
+      source: Trait
+      name: Lethe
+    titles: []
+    opportunityAttack: 3
+    notes:
+    - text: Remasches (REE-mash-iz) have physical forms blended with the nature of the wastes where they dwell. A remasch teleports around the battlefield, inflicting chaos on their enemies directly or through the minions they control. These demons are rumored to be the initial source of the teachings of all shadows through the College of Black Ash.
+      title: Monster Notes
+    monster_category: Monster
+    creatureSize: 1S
+    savingThrowRatings: []
     skillRatings: []
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
-      guid: 646ac7e6-65a2-43d2-9ce6-67b40e117be7-79
-    notesRevision: 1192dbac-e6cb-4882-a3e6-0674b0dd90c7
     import:
       type: mcdm
       data: |+
@@ -507,29 +490,54 @@ info:
         <b>Soulsight</b>
         Each creature within 2 of the remasch can't be hidden from them.
 
-    creatureSize: 1S
-    monster_category: Monster
+    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: 646ac7e6-65a2-43d2-9ce6-67b40e117be7-79
+    keywords:
+      Abyssal: true
+      Demon: true
+    initiativeGrouping: b4cd4de3-b4ee-417a-9502-57edaf2be815
+    equipment: []
+    ev: 4
+    minion: false
+    stability: 0
+    walkingSpeed: 5
+    cr: 2
+    notesRevision: 1192dbac-e6cb-4882-a3e6-0674b0dd90c7
     d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
       __typeName: StatHistory
       entries:
         85c6c3c1-ce2f-4c87-a63b-b6b547776595:
-          timestamp: 1782270615948
-          set: 1/1
-          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+          userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
           note: Critical Hit!
-          userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
+          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+          set: 1/1
         56d441e7-9bb8-4d48-a890-5ebb35017566:
-          timestamp: 1782270688723
-          set: 0/1
-          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+          userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
           note: Abyssal Strike
-          userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
-        8549ed56-0897-4469-8665-c35c86743da0:
-          timestamp: 1782264484275
-          set: 0/1
           refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
-          note: Use Move Action
+          set: 0/1
+        8549ed56-0897-4469-8665-c35c86743da0:
           userid: 7C9SQf9WJgV09zNx5Mmh7AqGNDG3
+          note: Use Move Action
+          refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+          set: 0/1
+    inflictedConditions: []
+    levelChoices: []
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+        used: 1
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        refreshid: 58eb4958-1986-438f-9cf4-b9e4b758f6e3-1-d0bb15ef-8dd1-49f4-b674-a0603813d007-0
+        used: 1
+    role: Horde Ambusher
   tokenType: null
   bestiaryId: 37a0a7d7-dfb9-4f75-ad79-4f8fc9b871ef
   summonerid: null

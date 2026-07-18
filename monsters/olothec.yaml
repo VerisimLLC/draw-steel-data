@@ -53,139 +53,208 @@ info:
   updateid: 370b099f-5620-47ee-a0b3-f74aba0fa52e
   properties:
     __typeName: monster
+    skillRatings: []
+    max_hitpoints_roll: "450"
+    minion: false
+    titles: []
+    movementSpeeds:
+      fly: 7
+      swim: 7
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: psychic
+      apply: Damage Reduction
+      dr: 6
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: e2949155-081f-4601-b96f-3503c7c6d6e2
+      description: A creature permanently devolves into a slime servant if they spend 1 continuous minute weakened by Devolving Tentacles, they are reduced to 0 or lower Stamina by the psychic damage from Devolving Tentacles, or they suffer all three transformations from Oozing Transformation.
+      source: Trait
+      implementation: 2
+      name: Gelatinosis
       domains:
         CharacterFeature:e2949155-081f-4601-b96f-3503c7c6d6e2: true
-      description: A creature permanently devolves into a slime servant if they spend 1 continuous minute weakened by Devolving Tentacles, they are reduced to 0 or lower Stamina by the psychic damage from Devolving Tentacles, or they suffer all three transformations from Oozing Transformation.
       modifiers: []
-      source: Trait
-      name: Gelatinosis
+      guid: e2949155-081f-4601-b96f-3503c7c6d6e2
     - __typeName: CharacterFeature
-      guid: ce22c165-3a00-4afa-ade1-67a4bd4fc6bf
+      description: The olothec can't be made frightened or taunted.
+      modifiers:
+      - __typeName: CharacterModifier
+        description: The olothec can't be made frightened or taunted.
+        source: Trait
+        conditions:
+        - 1211270f-bfce-45a6-b937-d72f0e8a06a8
+        - 85e26e12-e853-464d-bbbc-98ddf2c0071a
+        domains:
+          CharacterFeature:ce22c165-3a00-4afa-ade1-67a4bd4fc6bf: true
+        behavior: conditionimmunity
+        name: Primordial Mind
+        sourceguid: ce22c165-3a00-4afa-ade1-67a4bd4fc6bf
+        guid: 0892b285-e168-4305-8c1d-95163a6176c0
+      implementation: 4
+      name: Primordial Mind
       domains:
         CharacterFeature:ce22c165-3a00-4afa-ade1-67a4bd4fc6bf: true
-      description: The olothec is immune to the frightened and taunted conditions.
-      modifiers: []
+      guid: ce22c165-3a00-4afa-ade1-67a4bd4fc6bf
       source: Trait
-      name: Primordial Mind
     - __typeName: CharacterFeature
-      guid: 0e0de07c-5754-458a-9334-7383c98eef8e
+      description: |-
+        A slimed or transformed creature can't be hidden or concealed from the olothec.
+
+        **Codex Note:** Implemented via the individual Slimed and Transformation ongoing effects
+      source: Trait
+      implementation: 3
+      name: Slime Sense
       domains:
         CharacterFeature:0e0de07c-5754-458a-9334-7383c98eef8e: true
-      description: A slimed or transformed creature can't be hidden or concealed from the olothec.
       modifiers: []
-      source: Trait
-      name: Slime Sense
+      guid: 0e0de07c-5754-458a-9334-7383c98eef8e
     - __typeName: CharacterFeature
-      implementation: 4
-      guid: ce81ee2a-0530-4dc5-a175-92353e383604
-      domains:
-        CharacterFeature:ce81ee2a-0530-4dc5-a175-92353e383604: true
       description: "End Effect: At the end of each of their turns, the olothec can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.Solo Turns: The olothec can take two turns each round. They can't take turns consecutively."
       modifiers:
       - __typeName: CharacterModifier
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        name: End Effect
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
         description: ""
         source: Trait
+        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        behavior: trigger
+        name: End Effect
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          castImmediately: true
-          triggerPrompt: End effect for 10
-          strain: []
           targetType: self
+          castImmediately: true
+          strain: []
+          description: ""
+          name: End Effect
+          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            purgeType: one
-            damageToSelf: "10"
             targetDuration: save
             conditions: []
+            damageToSelf: "10"
+            purgeType: one
+          persistence: []
+          trigger: endturn
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          mandatory: false
+          whenActive: combat
+          range: 1
+          triggerPrompt: End effect for 10
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+      implementation: 4
+      name: Solo Monster
+      domains:
+        CharacterFeature:ce81ee2a-0530-4dc5-a175-92353e383604: true
+      guid: ce81ee2a-0530-4dc5-a175-92353e383604
+      source: Trait
+    - __typeName: CharacterFeature
+      description: The olothec can take two turns each round. They can’t take turns consecutively.
+      source: Character Feature
+      implementation: 4
+      name: Solo Turns
+      domains:
+        CharacterFeature:9f9f9b69-aaff-4d69-b04e-a7ff6199b78e: true
+        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+      guid: 9f9f9b69-aaff-4d69-b04e-a7ff6199b78e
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: extraturns
+        value: 1
+        source: Character Feature
+        description: The olothec can take two turns each round. They can’t take turns consecutively.
+        domains:
+          CharacterFeature:9f9f9b69-aaff-4d69-b04e-a7ff6199b78e: true
+          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+        sourceguid: 9f9f9b69-aaff-4d69-b04e-a7ff6199b78e
+        name: Solo Turns
+        behavior: attribute
+        guid: def485c0-65f3-4ce8-9944-91baea897712
+    - __typeName: CharacterFeature
+      description: |-
+        **Trigger:** An enemy within distance deals damage to the olothec.
+
+        **Effect:** The target takes 8 psychic damage and has psychic weakness 3 until the end of the olothec’s next turn.
+      modifiers:
+      - __typeName: CharacterModifier
+        description: |-
+          **Trigger:** An enemy within distance deals damage to the olothec.
+
+          **Effect:** The target takes 8 psychic damage and has psychic weakness 3 until the end of the olothec’s next turn.
+        source: Monster Feature
+        domains:
+          class:58b82a67-8b93-468b-99c5-2ac452033071: true
+          class:19c04f9f-5d72-4f12-afd3-b572d4671cfc: true
+        name: Liquify
+        behavior: trigger
+        sourceguid: f79f318f-d866-4745-b747-5cf387a2f29f
+        guid: 3ca4472e-7082-4c43-91c9-dcc96f07cc5d
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: attacker
+          strain: []
+          subject: self
+          description: ""
+          name: Liquify
+          guid: 0aeaf074-8cf2-491b-80cd-0a143ed450a5
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: psychic
+            chatMessage: Feedback Loop
+            roll: "8"
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: end_of_next_turn
+            stacks: "3"
+            ongoingEffect: 17d7f3a5-c10a-435b-aaaf-aaf637751bf9
           persistence: []
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
-            brightness: 1
             saturation: 1
-          abilityType: none
-          whenActive: combat
-          modifiers: []
+            brightness: 1
+          trigger: losehitpoints
           iconid: ui-icons/skills/1.png
-          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          description: ""
-          repeatTargets: false
-          trigger: endturn
+          abilityType: none
+          modifiers: []
+          domains:
+            class:58b82a67-8b93-468b-99c5-2ac452033071: true
+            class:19c04f9f-5d72-4f12-afd3-b572d4671cfc: true
+          conditionFormula: (Has attacker) and attacker.Distance(self) <= 8
+          range: "8"
+          subjectRange: "8"
+          mandatory: false
           numTargets: "1"
-          range: 1
-          name: End Effect
-        behavior: trigger
-      source: Trait
-      name: Solo Monster
-    - __typeName: CharacterFeature
+          triggerPrompt: The target takes 8 psychic damage and has psychic weakness 3 until the end of the olothec's next turn.
+          repeatTargets: false
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
       implementation: 4
-      guid: 9f9f9b69-aaff-4d69-b04e-a7ff6199b78e
+      name: Liquify
       domains:
-        CharacterFeature:9f9f9b69-aaff-4d69-b04e-a7ff6199b78e: true
-        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-      description: The olothec can take two turns each round. They can’t take turns consecutively.
-      source: Character Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: extraturns
-        sourceguid: 9f9f9b69-aaff-4d69-b04e-a7ff6199b78e
-        guid: def485c0-65f3-4ce8-9944-91baea897712
-        name: Solo Turns
-        domains:
-          CharacterFeature:9f9f9b69-aaff-4d69-b04e-a7ff6199b78e: true
-          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-        description: The olothec can take two turns each round. They can’t take turns consecutively.
-        source: Character Feature
-        value: 1
-        behavior: attribute
-      name: Solo Turns
-    inflictedConditions: []
-    walkingSpeed: 7
-    opportunityAttack: 7
+        CharacterFeature:fb86da44-1000-496f-b37d-40e486a6c295: true
+      source: Monster Feature
+      guid: fb86da44-1000-496f-b37d-40e486a6c295
+    equipment: []
+    availableTriggers: []
     cr: 6
-    titles: []
-    damage_taken: 0
-    max_hitpoints: 450
-    keywords:
-      Olothec: true
-      Horror: true
-    skillRatings: []
-    role: Solo
     ev: 96
-    movementSpeeds:
-      fly: 7
-      swim: 7
-    monster_type: Olothec
-    groupid: 90d1c287-70e6-4218-8991-218899b0399a
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: psychic
-      dr: 6
-    attributes:
-      inu:
-        id: inu
-        baseValue: 2
-      agl:
-        id: agl
-        baseValue: -1
-      prs:
-        id: prs
-        baseValue: 3
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: 4
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        6dcce9a4-7a62-42bd-988c-0bd49f0809ed:
+          timestamp: 1783591913624
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: Devolving Tentacles
+          refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-274df070-d36b-4e46-8e32-7f6443076b53-0
+          set: 0/1
+    role: Solo
     import:
       type: mcdm
       data: |+
@@ -268,14 +337,57 @@ info:
         %E2%9C%B8	17	16 psychic damage; R<4 devolved (save ends)
         <b>Effect</b> A devolved creature has a -1 modifier to all their characteristic scores other than Reason until the condition ends.
 
-    minion: false
+    inflictedConditions: []
+    opportunityAttack: 7
     innateAttacks: []
-    equipment: []
     savingThrowRatings: []
+    notes:
+    - text: ""
+      title: Monster Notes
+    groupid: 90d1c287-70e6-4218-8991-218899b0399a
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-274df070-d36b-4e46-8e32-7f6443076b53-0
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-274df070-d36b-4e46-8e32-7f6443076b53-0
+    creatureSize: "2"
+    skillProficiencies: []
+    stability: 0
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
       targetType: target
+      strain: []
+      effectImplemented: false
+      modeList:
+      - rules: A Tier 1 or 2 outcome using this ability will apply the Weakened condition to a suitable target.
+        text: Apply Weakened
+      - rules: A Tier 1 or 2 outcome using this ability will apply the Slimed ongoing effect to a suitable target.
+        text: Apply Slimed
+      description: A slimed target takes 4 psychic damage whenever they roll power until the condition ends.
+      name: Devolving Tentacles
+      sourceReference:
+        __typeName: SourceReference
+        page: 213
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      guid: 1a2edf7f-e719-4f06-9545-d9956a8129a7
+      range: 3
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -283,31 +395,63 @@ info:
         - 11 damage; M<2 weakened or the target is slimed (save ends)
         - 17 damage; M<3 weakened or the target is slimed (save ends)
         - 20 damage; M<4 weakened and the target is slimed (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 1a2edf7f-e719-4f06-9545-d9956a8129a7
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: Weakened by Devolving Tentacles
+        modesSelected:
+        - 1
+        tiersSelected:
+        - 1
+        filterTarget: Target.Might < 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        modesSelected:
+        - 1
+        tiersSelected:
+        - 2
+        filterTarget: Target.Might < 3
+        rule: Weakened by Devolving Tentacles
+        guid: 5309ba25-7f18-4dea-852b-5e302738a7db
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: Weakened by Devolving Tentacles
+        guid: e0c31509-110c-4d77-9116-3bc3302f1458
+        tiersSelected:
+        - 3
+        filterTarget: Target.Might < 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 1
+        duration: save_ends
+        guid: a5fa6fea-2314-4664-b2fc-5dab458ae68c
+        applyto: targets
+        ongoingEffect: e1d7509e-03d2-4a0e-bf8a-2c614dca4459
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+        duration: save_ends
+        guid: b0cd6f49-55d5-42a0-9d4b-c2feff9a229f
+        applyto: targets
+        ongoingEffect: e1d7509e-03d2-4a0e-bf8a-2c614dca4459
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
+        duration: save_ends
+        guid: 6fee1e0e-16c6-4758-83eb-777dcdf6a95a
+        applyto: targets
+        ongoingEffect: e1d7509e-03d2-4a0e-bf8a-2c614dca4459
       flavor: ""
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      description: A slimed target takes 4 psychic damage whenever they roll power until the condition ends.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 3
-      name: Devolving Tentacles
+      repeatTargets: false
+      numTargets: 2
+      abilityType: none
+      multipleModes: true
+      modifiers: []
     - __typeName: ActivatedAbility
-      implementation: 3
       targetType: line
+      radius: 2
+      description: A creature pushed by this ability is pushed to the squares within the line that are furthest from the olothec.
+      name: 'Slime Spew '
+      guid: 2859902a-4602-4874-b1e1-94a3593244eb
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -315,45 +459,43 @@ info:
         - 6 acid damage; A<2 push special
         - 10 acid damage; A<3 push special
         - 13 acid damage; A<4 push special and prone
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      flavor: ""
+      implementation: 3
       iconid: ui-icons/skills/1.png
-      guid: 2859902a-4602-4874-b1e1-94a3593244eb
+      categorization: Signature Ability
       keywords:
-        Area: true
         Weapon: true
-      radius: 2
-      description: A creature pushed by this ability is pushed to the squares within the line that are furthest from the olothec.
+        Area: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
-      range: 7
-      name: 'Slime Spew '
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
+        brightness: 1
       flavor: ""
-      categorization: Heroic Ability
       effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
       modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Strike: true
-        Psionic: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
+      range: 7
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      modeList:
+      - rules: The target’s head becomes a ball of slime. They can’t communicate and have line of effect only within 3 squares.
+        text: Head Transformation
+        condition: ""
+      - rules: The target’s legs become pillars of ooze. They are slowed while on land and can automatically swim at full speed while moving.
+        text: Legs Tranformation
+      - rules: The target’s arms become gelatinous. They can’t benefit from edges or double edges and can’t gain or use surges.
+        text: Torso Transformation
+      description: Each time a creature is transformed, the Director chooses one of the following transformations. When a creature ends the transformed effect, all transformations end.
+      name: Oozing Transformation
+      sourceReference:
+        __typeName: SourceReference
+        page: 213
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
       guid: 738210e1-d7a5-4e6d-942c-77ee85b7de41
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
@@ -362,130 +504,388 @@ info:
         - 13 psychic damage; I<2 the target is transformed (save ends)
         - 20 psychic damage; I<3 the target is transformed (save ends)
         - 23 psychic damage; I<4 the target is transformed (save ends)
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: Each time a creature is transformed, the Director chooses one of the following transformations. When a creature ends the transformed effect, all transformations end.
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+        modesSelected:
+        - 1
+        tiersSelected:
+        - 1
+        filterTarget: Target.Intuition < 2
+        duration: save_ends
+        ongoingEffect: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+        modesSelected:
+        - 1
+        duration: save_ends
+        filterTarget: Target.Intuition < 3
+        tiersSelected:
+        - 2
+        ongoingEffect: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+        guid: 7888938e-e6ca-4f17-9dc2-9521931b5bae
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+        modesSelected:
+        - 1
+        duration: save_ends
+        filterTarget: Target.Intuition < 4
+        tiersSelected:
+        - 3
+        ongoingEffect: 4f59dac0-3b5b-4e79-945c-132ca145aba5
+        guid: 33993f8c-66d2-465d-a720-461291d37c2a
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+        modesSelected:
+        - 2
+        tiersSelected:
+        - 1
+        filterTarget: Target.Intuition < 2
+        duration: save_ends
+        ongoingEffect: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+        modesSelected:
+        - 2
+        duration: save_ends
+        filterTarget: Target.Intuition < 3
+        tiersSelected:
+        - 2
+        ongoingEffect: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+        guid: 84653f8b-f93e-4f3f-939e-ac8c9340a8f5
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+        modesSelected:
+        - 2
+        duration: save_ends
+        filterTarget: Target.Intuition < 4
+        tiersSelected:
+        - 3
+        ongoingEffect: afef514f-fdf8-4f8e-a1b6-a070a477b2fa
+        guid: f0635d1f-61d7-49eb-b314-90e09e9d5ac1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 299d4b59-6989-4b55-acc6-c96f0d0e3ae7
+        modesSelected:
+        - 3
+        tiersSelected:
+        - 1
+        filterTarget: Target.Intuition < 2
+        duration: eoe
+        ongoingEffect: 299d4b59-6989-4b55-acc6-c96f0d0e3ae7
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        modesSelected:
+        - 3
+        duration: eoe
+        filterTarget: Target.Intuition < 3
+        tiersSelected:
+        - 2
+        ongoingEffect: 299d4b59-6989-4b55-acc6-c96f0d0e3ae7
+        ongoingEffectSource: specific
+        guid: 06336cfd-8d47-468c-bd8b-6d96658e9aff
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 570ad6a3-28fd-4728-b2ea-766d2ea92fee
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 3
+        filterTarget: Target.Intuition < 4
+        guid: fbb7efae-fcc8-4935-9117-3ed9e921cd7e
+        duration: eoe
+        modesSelected:
+        - 3
+        ongoingEffect: 299d4b59-6989-4b55-acc6-c96f0d0e3ae7
+      categorization: Heroic Ability
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      targetType: target
+      keywords:
+        Ranged: true
+        Psionic: true
+        Strike: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
-      range: 10
-      name: Oozing Transformation
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
+        brightness: 1
       repeatTargets: false
-      abilityType: none
+      resourceNumber: 2
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      range: 10
       numTargets: 1
+      abilityType: none
+      multipleModes: true
       modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
+    - __typeName: ActivatedAbility
+      targetType: self
+      strain: []
+      effectImplemented: false
+      modeList:
+      - rules: The olothec teleports to an unoccupied spaces within 10 squares.
+        text: Teleport 10 squares
+      - rules: The olothec swaps places with a creature or object within 5 squares of them.
+        text: Swap Places with a Creature or Object
+      description: The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.
+      name: Jaunt
+      sourceReference:
+        __typeName: SourceReference
+        page: 213
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
       guid: 2f26f9e4-ce04-4cae-a63a-b3bd02f5c119
-      flavor: ""
+      range: 1
+      implementationDetails: If swapping places with an **object**, the Olothec does teleport to the location of the object, but the object does not relocate.
+      categorization: Signature Ability
+      implementation: 3
+      iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       keywords:
         Psionic: true
-      description: The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
-      range: 1
-      name: Jaunt
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
         brightness: 1
-        saturation: 1
       abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 12617b8d-6dd0-42ff-9ac3-7facb2aa0795
+      flavor: ""
       repeatTargets: false
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+        modesSelected:
+        - 1
+        applyto: caster
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          numTargets: "1"
+          range: 1
+          modifiers: []
+          name: Invoked Ability
+          abilityType: none
+          repeatTargets: false
+          guid: a1b83f6f-8bc7-43dd-9000-d7546e464830
+        standardAbilityParams:
+          range: "10"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: false
+        modesSelected:
+        - 2
+        standardAbility: fc0a431a-f572-4fbc-b2cc-f5ad58c7a76c
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          targetType: target
+          strain: []
+          description: ""
+          name: Swap Places with Creature or object.
+          sourceReference:
+            __typeName: SourceReference
+            page: 213
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+          guid: 4d96c40a-9bc9-4bd5-adef-9af79585e32c
+          behaviors:
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+            swapObjects: true
+            swapCreatures: false
+          implementation: 4
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Psionic: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          categorization: Ability
+          objectTarget: true
+          modifiers: []
+          range: "5"
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        promptText: Select another creature or object within range to swap places with.
+        abilityType: custom
+        standardAbilityParams:
+          range: "5"
+        guid: ab2781dc-c9b7-4c2c-9d5b-7191c691d1d4
+      numTargets: 1
+      hasCustomIcon: true
+      multipleModes: true
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      effectImplemented: false
+      description: The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec's next turn.
+      name: Liquify
+      guid: 12617b8d-6dd0-42ff-9ac3-7facb2aa0795
+      range: 5
+      implementation: 0
+      iconid: ui-icons/skills/1.png
+      targetFilter: Enemy
       keywords:
         Psionic: true
         Ranged: true
-      description: The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec's next turn.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      categorization: Signature Ability
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      targetType: target
       behaviors: []
-      range: 5
-      name: Liquify
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: self
+      flavor: ""
+      effectImplemented: false
+      description: This ability targets each enemy the olothec has line of effect to. A frightened enemy can't save against any other effect until they are no longer frightened.
+      name: Horrifying Form
+      categorization: Heroic Ability
+      guid: ed130343-4aa2-4f4b-bea1-6c62d81bfde3
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
         tiers:
-        - 10 psychic damage; P<2 frightened (save ends)
-        - 14 psychic damage; P<3 frightened (save ends)
-        - 17 psychic damage; P<4 frightened (save ends)
-      categorization: Heroic Ability
+        - 10 psychic damage; P<2 frightened by horrifying form (save ends)
+        - 14 psychic damage; P<3 frightened by horrifying form (save ends)
+        - 17 psychic damage; P<4 frightened by horrifying form (save ends)
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      usageLimitOptions: "{'multicharge': False, 'resourceid': '8bcb0639-c56a-4889-9e8"
+      implementation: 3
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
       targetFilter: Enemy
-      effectImplemented: false
+      keywords:
+        Ranged: true
+        Psionic: true
+        Strike: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
-      villainAction: Villain Action 1
-      numTargets: 1
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '8bcb0639-c56a-4889-9e8"
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Strike: true
-        Psionic: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: ed130343-4aa2-4f4b-bea1-6c62d81bfde3
+        brightness: 1
       abilityType: none
-      repeatTargets: false
-      description: This ability targets each enemy the olothec has line of effect to. A frightened enemy can't save against any other effect until they are no longer frightened.
-      flavor: ""
+      targetType: self
+      villainAction: Villain Action 1
       range: 1
-      name: Horrifying Form
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: all
-      behaviors: []
-      categorization: Heroic Ability
-      effectImplemented: false
-      repeatTargets: false
-      villainAction: Villain Action 2
       numTargets: 1
-      flavor: ""
+      hasCustomIcon: true
+      repeatTargets: false
       modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      description: Each target takes 12 psychic damage, slides 5, and if they have M<3 is weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.
+      name: 'Psychic Pulse '
+      sourceReference:
+        __typeName: SourceReference
+        page: 213
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Villain Action
+      guid: 0649575b-2c9c-4fed-b512-0f6ebe49458d
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptWhenResolving: true
+        targeting: inherit
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          numTargets: "1"
+          modifiers: []
+          range: 1
+          name: Invoked Ability
+          abilityType: none
+          repeatTargets: false
+          guid: 564b2bef-fd68-424a-81ef-1a6b9462bae5
+        promptWhenResolvingText: Choose creatures to slide up to 5 squares in your preferred order.
+        abilityType: standard
+        standardAbility: 21f855e5-cef6-46a9-96aa-976d1ac35a6c
+        standardAbilityParams:
+          range: "5"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          numTargets: "1"
+          modifiers: []
+          range: 1
+          name: Invoked Ability
+          abilityType: none
+          repeatTargets: false
+          guid: d72df4dc-7be7-4d39-8634-e6e4796a779c
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        duration: end_of_next_turn
+        stacks: "4"
+        applyto: targets
+        filterTarget: Target.Might < 3
+        ongoingEffect: b9b52786-292c-4dad-9ac0-247bbfa77662
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: Target.Might < 3
+        applyto: targets
+        ongoingEffect: e1d7509e-03d2-4a0e-bf8a-2c614dca4459
+      targetType: all
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      implementation: 4
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      abilityType: none
       keywords:
         Psionic: true
         Area: true
-      iconid: ui-icons/skills/1.png
-      guid: 0649575b-2c9c-4fed-b512-0f6ebe49458d
-      abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'b66c16a6-e9cb-40bd-a83"
-      description: Each target takes 12 psychic damage, slides 5, and is M<3 weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
+        brightness: 1
       range: 10
-      name: 'Psychic Pulse '
+      villainAction: Villain Action 2
+      repeatTargets: false
+      targetTextOverride: Each creature in the area
+      numTargets: 1
+      hasCustomIcon: true
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'b66c16a6-e9cb-40bd-a83"
+      modifiers: []
     - __typeName: ActivatedAbility
-      implementation: 3
       targetType: all
+      strain: []
+      effectImplemented: false
+      description: A devolved creature has a -1 modifier to all their characteristic scores other than Reason until the condition ends.
+      name: Return to Perfection
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 213
+      guid: de10220d-6316-4593-94ab-0dd56b895eb2
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -493,36 +893,83 @@ info:
         - 7 psychic damage; R<2 the target is devolved (save ends)
         - 13 psychic damage; R<3 the target is devolved (save ends)
         - 16 psychic damage; R<3 the target is devolved (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        hasTemporaryHitpoints: false
+        duration: save_ends
+        stacks: "1"
+        applyto: targets
+        tiersSelected:
+        - 1
+        - 2
+        - 3
+        filterTarget: (Cast.Tier = 1 and Self.Reason < 2) or (Cast.Tier >= 2 and Self.Reason < 3)
+        ongoingEffect: b909352e-b415-4994-be77-e783c9dcf64c
+      hasCustomIcon: true
       categorization: Heroic Ability
-      effectImplemented: false
-      repeatTargets: false
-      villainAction: Villain Action 3
-      numTargets: 1
-      flavor: ""
-      modifiers: []
+      implementation: 4
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       keywords:
+        Ranged: true
         Psionic: true
         Area: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: de10220d-6316-4593-94ab-0dd56b895eb2
-      abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '77ae4abe-1472-4e77-905"
-      description: A devolved creature has a -1 modifier to all their characteristic scores other than Reason until the condition ends.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
         saturation: 1
+        brightness: 1
       range: 10
-      name: Return to Perfection
-    creatureSize: "2"
+      villainAction: Villain Action 3
+      repeatTargets: false
+      flavor: ""
+      numTargets: 1
+      abilityType: none
+      usageLimitOptions: "{'multicharge': False, 'resourceid': '77ae4abe-1472-4e77-905"
+      modifiers: []
+    implementation: 3
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+      guid: aa78a0de-71cc-42c3-8343-7313dbc6b88e-1595
+    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
+      __typeName: StatHistory
+      entries:
+        36f7b348-8648-499b-9058-20bf284a9112:
+          timestamp: 1783602640137
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: Jaunt
+          refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-274df070-d36b-4e46-8e32-7f6443076b53-0
+          set: 0/1
+    attributes:
+      rea:
+        baseValue: 4
+        id: rea
+      prs:
+        baseValue: 3
+        id: prs
+      inu:
+        baseValue: 2
+        id: inu
+      mgt:
+        baseValue: 4
+        id: mgt
+      agl:
+        baseValue: -1
+        id: agl
     traitNames: []
-    max_hitpoints_roll: "450"
-    levelChoices: []
+    initiativeGrouping: 79847630-c0e8-4134-a279-f5488822a429
+    monster_type: Olothec
     monster_category: Monster
-    stability: 0
+    keywords:
+      Olothec: true
+      Horror: true
+    walkingSpeed: 7
+    damage_taken: 0
+    max_hitpoints: 450
+    levelChoices: []
   tokenType: null
   bestiaryId: 76512ae6-4cf1-4e52-a470-3e29192fa83c
   summonerid: null

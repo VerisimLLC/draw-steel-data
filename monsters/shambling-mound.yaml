@@ -54,368 +54,714 @@ info:
   updateid: 007c96a5-4c03-4194-99fd-02f5a6b126fb
   properties:
     __typeName: monster
+    skillRatings: []
+    max_hitpoints_roll: "400"
+    minion: false
+    titles: []
+    traitNames: []
+    resistances: []
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: f79dd440-bac5-47bd-bdc0-12fb269d1ea5
-      domains:
-        CharacterFeature:f79dd440-bac5-47bd-bdc0-12fb269d1ea5: true
-      description: The shambling mound has a vegetative sack on their body where they carry engulfed creatures. The sack has 30 Stamina, damage immunity 5, and fire weakness 10. Destroying the sack frees creatures trapped by the shambling mound's Engulf action. The shambling mound regrows the sack at the beginning of their next turn.
-      modifiers: []
-      source: Trait
-      name: Engulfing Sack
-    - __typeName: CharacterFeature
-      guid: dfa999bc-3b94-4784-94ae-502975a6563a
-      domains:
-        CharacterFeature:dfa999bc-3b94-4784-94ae-502975a6563a: true
-      description: While the shambling mound remains motionless, they are indistinguishable from ordinary vegetation.
-      modifiers: []
-      source: Trait
-      name: False Appearance
-    - __typeName: CharacterFeature
-      guid: b90c0cd0-5fb2-4f53-9b91-38a530a36418
-      domains:
-        CharacterFeature:b90c0cd0-5fb2-4f53-9b91-38a530a36418: true
-      description: The area within 6 squares of the shambling mound is considered difficult terrain.
-      modifiers: []
-      source: Trait
-      name: Frothing Flora
-    - __typeName: CharacterFeature
-      implementation: 3
+      description: "End Effect: At the end of each of their turns, the shambling mound can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. Solo Turns: The shambling mound can take two turns each round. They can't take turns consecutively."
       guid: c975be9c-bd75-43f9-b55d-3509ed5a75af
+      implementation: 4
+      name: Solo Monster
+      source: Trait
       domains:
         CharacterFeature:c975be9c-bd75-43f9-b55d-3509ed5a75af: true
-      description: "End Effect: At the end of each of their turns, the shambling mound can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.Solo Turns: The shambling mound can take two turns each round. They can't take turns consecutively."
       modifiers:
       - __typeName: CharacterModifier
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        name: End Effect
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
-        description: ""
-        source: Trait
+        description: "End Effect: At the end of each of their turns, the shambling mound can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. Solo Turns: The shambling mound can take two turns each round. They can't take turns consecutively."
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          castImmediately: true
-          triggerPrompt: End effect for 10
-          strain: []
           targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            purgeType: one
-            damageToSelf: "10"
-            targetDuration: save
-            conditions: []
+          castImmediately: true
+          strain: []
+          description: ""
+          name: End Effect
+          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
+          range: 1
           persistence: []
+          trigger: endturn
+          iconid: ui-icons/skills/1.png
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             brightness: 1
             saturation: 1
-          abilityType: none
-          whenActive: combat
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          description: ""
-          repeatTargets: false
-          trigger: endturn
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            targetDuration: save
+            damageToSelf: "10"
+            conditions: []
+            purgeType: one
+          mandatory: false
           numTargets: "1"
-          range: 1
-          name: End Effect
+          triggerPrompt: End effect for 10
+          whenActive: combat
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        source: Trait
+        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        name: End Effect
         behavior: trigger
-      source: Trait
-      name: Solo Monster
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
     - __typeName: CharacterFeature
-      guid: 11dce143-abc6-4c46-97f2-9eb2320fc7e6
+      description: The shambling mound can take two turns each round. They can’t take turns consecutively.
+      guid: cf47b74b-6867-4b67-92e9-3551e6432de1
+      implementation: 3
+      name: Solo Turn
+      source: Character Feature
       domains:
-        CharacterFeature:11dce143-abc6-4c46-97f2-9eb2320fc7e6: true
-      description: "After a shambling mound dies, a creature can make a Reason test to extract toxins from the remains.!The creature extracts no toxins.@The creature extracts enough toxins to craft one vial of poison.#The creature extracts enough toxins to craft three vials of poison.Creating poison from the extracted toxins requires the completion of a special crafting project.Item Prerequisite: Shambling mound toxins Project Source: Texts or lore in Caelian Project Roll Characteristic: Reason or Intuition Project Goal: 45 As a maneuver, one vial of poison can be applied to a weapon. For 1 minute after the poison is applied, damage dealing abilities using that weapon deal an extra 4 + 1d6 poison damage."
-      modifiers: []
+        CharacterFeature:cf47b74b-6867-4b67-92e9-3551e6432de1: true
+        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: extraturns
+        value: 1
+        domains:
+          CharacterFeature:cf47b74b-6867-4b67-92e9-3551e6432de1: true
+          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+        description: The shambling mound can take two turns each round. They can’t take turns consecutively.
+        sourceguid: cf47b74b-6867-4b67-92e9-3551e6432de1
+        name: Solo Turn
+        source: Character Feature
+        behavior: attribute
+        guid: e115dc76-3925-4ddb-9e3f-96b619bdcf88
+    - __typeName: CharacterFeature
+      description: |-
+        The shambling mound has a vegetative sack on their body where they carry engulfed creatures. The sack has 30 Stamina, damage immunity 5, and fire weakness 10. Destroying the sack frees creatures trapped by the shambling mound's Engulf action.
+
+        The shambling mound regrows a destroyed sack at the start of their next turn.
       source: Trait
+      implementation: 3
+      name: Engulfing Sack
+      domains:
+        CharacterFeature:b0abda36-737d-4c15-96d3-e9b9a2f2acef: true
+        CharacterFeature:f79dd440-bac5-47bd-bdc0-12fb269d1ea5: true
+      guid: b0abda36-737d-4c15-96d3-e9b9a2f2acef
+      modifiers:
+      - __typeName: CharacterModifier
+        description: When the shambling mound dies, each engulfed creature is freed and appears in an unoccupied space within 2 squares of the shambling mound.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: effect
+            ongoingEffect: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+            filterTarget: Ongoing Effects has "Engulfed"
+          castImmediately: true
+          targetType: all
+          trigger: zerohitpoints
+          strain: []
+          mandatory: true
+          name: Engulfing Sack Ruptures
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          range: 5
+          guid: 47ac5906-293d-47f1-963d-01951a768816
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        behavior: trigger
+        guid: 60a329ac-57ee-4eed-8903-e627997bfa47
+        name: Engulfing Sack
+        source: Trait
+    - __typeName: CharacterFeature
+      description: While the shambling mound remains motionless, they are indistinguishable from ordinary vegetation.
+      guid: c204855f-581f-464e-800a-4c7a05617d9b
+      implementation: 0
+      name: False Appearance
+      source: Trait
+      domains:
+        CharacterFeature:dfa999bc-3b94-4784-94ae-502975a6563a: true
+        CharacterFeature:c204855f-581f-464e-800a-4c7a05617d9b: true
+      modifiers: []
+    - __typeName: CharacterFeature
+      description: The area within 6 squares of the shambling mound is considered difficult terrain.
+      guid: c7070178-2813-46e2-b748-71985e1264a7
+      implementation: 4
+      name: Frothing Flora
+      source: Trait
+      domains:
+        CharacterFeature:b90c0cd0-5fb2-4f53-9b91-38a530a36418: true
+        CharacterFeature:c7070178-2813-46e2-b748-71985e1264a7: true
+      modifiers:
+      - __typeName: CharacterModifier
+        description: The area within 6 squares of the shambling mound is difficult terrain.
+        guid: 4818a960-0031-455e-8bdf-00ef5ad93bd8
+        sourceguid: c7070178-2813-46e2-b748-71985e1264a7
+        radius: "6"
+        name: Frothing Flora
+        behavior: aura
+        aura:
+          __typeName: Aura
+          description: The area within 6 squares of the shambling mound is difficult terrain.
+          applyto: all
+          name: Frothing Flora
+          guid: 4d74dbd7-eb96-447a-b1f6-c410bc867b5a
+          difficult_terrain: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+        source: Trait
+    - __typeName: CharacterFeature
+      description: "After a shambling mound dies, a creature can make a Reason test to extract toxins from the remains.!The creature extracts no toxins.@The creature extracts enough toxins to craft one vial of poison.#The creature extracts enough toxins to craft three vials of poison.Creating poison from the extracted toxins requires the completion of a special crafting project.Item Prerequisite: Shambling mound toxins Project Source: Texts or lore in Caelian Project Roll Characteristic: Reason or Intuition Project Goal: 45 As a maneuver, one vial of poison can be applied to a weapon. For 1 minute after the poison is applied, damage dealing abilities using that weapon deal an extra 4 + 1d6 poison damage."
+      source: Trait
+      implementation: 0
       name: Alchemical Ingredients
-    inflictedConditions: []
-    walkingSpeed: 3
-    opportunityAttack: 7
-    damage_taken: 0
-    max_hitpoints: 400
-    skillRatings: []
-    groupid: 408e6baa-a5a0-40e8-bd81-0bb2a911cbfa
-    resources: []
-    traitNames: []
-    minion: false
+      domains:
+        CharacterFeature:2197dc55-a499-4ee4-a46f-e577f56ba40c: true
+        CharacterFeature:11dce143-abc6-4c46-97f2-9eb2320fc7e6: true
+        CharacterFeature:e5958acb-d24f-4116-8a6d-035c9bc5fa4a: true
+      modifiers:
+      - __typeName: CharacterModifier
+        description: After a shambling mound dies, a creature can make a Reason test to extract toxins from the remains.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          behaviors:
+          - __typeName: ActivatedAbilityHarvestCorpseBehavior
+            attrid: rea
+            items:
+            - itemid: df644b6c-338b-4179-9338-e0bf5b601b06
+              quantities:
+              - 0
+              - 1
+              - 3
+            tiers:
+            - The creature extracts no toxins.
+            - The creature extracts enough toxins to craft one vial of poison.
+            - The creature extracts enough toxins to craft three vials of poison.
+            title: Alchemical Ingredients
+          castImmediately: true
+          trigger: zerohitpoints
+          iconid: ui-icons/skills/1.png
+          targetType: self
+          mandatory: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          name: Alchemical Ingredients
+          range: 1
+          guid: c8267cde-60c8-46f4-8c70-1190e2886a7a
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        sourceguid: 2197dc55-a499-4ee4-a46f-e577f56ba40c
+        name: Alchemical Ingredients
+        source: Trait
+        behavior: trigger
+        guid: b8dd2bb3-9684-4658-ac5b-eb7e08c8dc1d
+      guid: 2197dc55-a499-4ee4-a46f-e577f56ba40c
+    - __typeName: CharacterFeature
+      description: |-
+        **Trigger:** A creature within distance willingly moves. The shambling mound lashes out with a vine to tether the triggering creature down.
+
+        **Effect:** The shambling mound can use their Tether Down ability against the target.
+      source: Trait
+      implementation: 4
+      name: Tether Down
+      domains:
+        CharacterFeature:4c9dc683-9609-44c6-a7e8-612e3c3262f3: true
+      modifiers:
+      - __typeName: CharacterModifier
+        description: |-
+          **Trigger:** A creature within distance willingly moves. The shambling mound lashes out with a vine to tether the triggering creature down.
+
+          **Effect:** The shambling mound can use their Tether Down ability against the target.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          conditionFormula: not path.forced
+          strain: []
+          subject: enemy
+          description: "**Trigger:** A creature within distance willingly moves."
+          name: Tether Down
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          guid: ee28fe40-59ba-4c85-8349-a36f3a4217a7
+          range: 6 + 4*(Ongoing Effects has "Exposed Crux")
+          mandatory: false
+          numTargets: "1"
+          trigger: move
+          iconid: ui-icons/skills/1.png
+          domains:
+            CharacterFeature:4c9dc683-9609-44c6-a7e8-612e3c3262f3: true
+          keywords:
+            Melee: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Might
+            tiers:
+            - 7 damage; M<2 restrained (EoT)
+            - 12 damage; M<3 restrained (EoT)
+            - 15 damage; M<4 restrained (EoT)
+          abilityType: none
+          targetType: subject
+          subjectRange: 6 + 4*(Ongoing Effects has "Exposed Crux")
+          whenActive: combat
+          triggerPrompt: When a creature willingly moves, the shambling mound can use Tether Down ability against them.
+          repeatTargets: false
+          modifiers: []
+        sourceguid: 4c9dc683-9609-44c6-a7e8-612e3c3262f3
+        guid: de06dd96-b1cf-4399-8c24-5f6539860736
+        name: Tether Down
+        source: Trait
+        behavior: trigger
+        domains:
+          CharacterFeature:4c9dc683-9609-44c6-a7e8-612e3c3262f3: true
+      guid: 4c9dc683-9609-44c6-a7e8-612e3c3262f3
     equipment: []
+    cr: 5
+    ev: 84
+    keywords:
+      Plant: true
+      Shambling Mound: true
+    role: Solo
+    initiativeGrouping: 53bdaabe-8d22-419a-b898-6daa5bbd28eb
+    inflictedConditions: []
+    opportunityAttack: 7
+    inventory: []
+    innateAttacks: []
+    savingThrowRatings: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    max_hitpoints: 400
+    skillProficiencies: []
+    stability: 5
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
       flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 4e191c27-21bc-41d1-aec7-cde6c8e24055
-      repeatTargets: false
-      description: |-
-        Each target takes 7 poison damage.
-        **2 Malice**: The shambling mound can slide each target up to 6 squares.
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 11 damage; A<3 grabbed
-        - 16 damage; A<4 grabbed
-        - 19 damage; grabbed
-      range: 6
-      name: Vine Lash
-    - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: self
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Area: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 31fdb2e5-9393-42e1-b19f-8e59f2bd4ad4
-      repeatTargets: false
-      description: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 4 damage; M<2 dazed (save ends)
-        - 6 damage; M<3 dazed (save ends)
-        - 7 damage; M<4 dazed (save ends)
-      range: 1
-      name: Seismic Slam
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Melee: true
-        Area: true
-      iconid: ui-icons/skills/1.png
-      guid: a45b2db9-f78f-4fc3-ae2b-2ce5916dfb1f
-      behaviors: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: The shambling mound reaches out with writhing vines and A<3 engulfs an enemy size 1L or smaller into their sack. The potency increases by 1 if the target is grabbed by the shambling mound. An engulfed creature is restrained, takes 3 poison damage at the start of each turn of combat, and can't take damage from abilities used from outside the sack. When the shambling mound moves, the engulfed creature moves with them. If the mound dies or their engulfing sack is destroyed, each engulfed creature is freed and shunted to an unoccupied square within 2 squares.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 6
-      name: Engulf
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 7480acc3-a7df-469d-b072-36a96aa63b11
-      flavor: ""
-      keywords: []
-      description: 5 poison damage. The shambling mound gains 5 temporary Stamina for each creature affected by this maneuver.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Leech
-    - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: target
-      flavor: ""
-      categorization: Heroic Ability
-      keywords: []
-      resourceNumber: 1
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 739d3e14-f34b-4824-97d9-4285b99aafc6
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      description: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 7 damage; M<2 restrained (EoT)
-        - 12 damage; M<3 restrained (EoT)
-        - 15 damage; M<4 restrained (EoT)
-      range: 6
-      name: Tether Down
-    - __typeName: ActivatedAbility
-      implementation: 4
       strain: []
-      targetType: line
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 7 damage; pull 3
-        - 12 damage; the target has poison weakness 3 until the end of the encounter; pull 4
-        - 15 damage; the target has poison weakness 5 until the end of the encounter; pull 6
-        promptWhenResolving: true
-        promptWhenResolvingText: Select targets to pull within your preferred order.
-        roll: 2d10 + Might
+      categorization: Signature Ability
+      name: Vine Lash
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 247
+      guid: 4e191c27-21bc-41d1-aec7-cde6c8e24055
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 11 damage; A<3 grabbed
+        - 16 damage; A<4 grabbed
+        - 19 damage; grabbed
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          flavor: ""
+          strain: []
+          modeList:
+          - rules: The shambling mound can slide each target up to 6 squares.
+            text: Spend 2 Malice
+          - rules: |-
+              The shambling mound can slide each target up to 6 squares;
+              and
+              each target takes 7 poison damage.
+            text: Spend 3 Malice
+          description: |-
+            **2 Malice:** The shambling mound can slide each target up to 6 squares.
+            **3 Malice:** Each target takes 7 poison damage.
+          name: Spend 2 or 3 Malice
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 247
+          guid: 9bdebf59-b3e1-4a44-8297-7d7fd1b71414
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            promptWhenResolving: true
+            promptWhenResolvingText: Slide the targets in your preferred order.
+            rule: slide 6
+            filterTarget: ""
+          - __typeName: ActivatedAbilityDamageBehavior
+            modesSelected:
+            - 2
+            roll: "7"
+            chatMessage: Vine Lash Malice
+            damageType: poison
+          - __typeName: ActivatedAbilityReplenishBehavior
+            modesSelected:
+            - 2
+            mode: expend
+            applyto: caster
+            resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          implementation: 4
+          iconid: ui-icons/skills/1.png
+          preDescription: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          repeatTargets: false
+          resourceNumber: "2"
+          targetType: self
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          multipleModes: true
+          modifiers: []
+        targeting: inherit
+        applyto: caster
+        promptText: "Spend 2 Malice: The Shambling Mound can slide each target up to 6 squares."
+      implementation: 4
+      iconid: ui-icons/skills/1.png
       keywords:
-        Melee: true
-        Area: true
+        Strike: true
         Weapon: true
-      persistence: []
-      lineDistance: "1"
+        Melee: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      villainAction: Villain Action 1
-      numTargets: 1
-      categorization: Heroic Ability
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'aaf4d050-c170-4e0d-8f5"
-      modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      abilityType: none
-      iconid: ui-icons/skills/1.png
-      guid: 5e3d5ec2-4b9b-4b83-8b96-0a2ee7737568
-      repeatTargets: false
-      flavor: ""
-      description: ""
-      radius: "2"
-      range: "10"
-      name: Ravenous Overgrowth
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: all
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      villainAction: Villain Action 2
-      numTargets: 1
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '18d87136-2044-4bef-b68"
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Melee: true
-        Area: true
-        Weapon: true
-      iconid: ui-icons/skills/1.png
-      guid: 99c5a4b7-45d6-4f44-8bb0-3f573e7d677d
-      abilityType: none
-      repeatTargets: false
-      description: The shambling mound attempts to devour each enemy within distance with its Engulf action without spending malice.
-      flavor: ""
       range: 6
-      name: 'Composting '
+      description: |2-
+
+        **2 Malice**: The shambling mound can slide each target up to 6 squares.
+
+        **3 Malice**: Each target takes 7 poison damage.
+      targetType: target
+      numTargets: 2
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Heroic Ability
+      targetType: all
+      strain: []
+      categorization: Signature Ability
+      name: Seismic Slam
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 247
+      guid: 31fdb2e5-9393-42e1-b19f-8e59f2bd4ad4
+      range: "6"
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      flavor: ""
+      implementation: 4
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      description: ""
+      keywords:
+        Weapon: true
+        Area: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      objectTarget: false
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 4 damage; M<2 dazed (save ends)
+        - 6 damage; M<3 dazed (save ends)
+        - 7 damage; M<4 dazed (save ends)
+        roll: 2d10 + Might
+      hasCustomIcon: true
+      numTargets: 1
+      targetAllegiance: enemy
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
       effectImplemented: false
+      categorization: Heroic Ability
+      name: Engulf
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      targetType: target
+      guid: a45b2db9-f78f-4fc3-ae2b-2ce5916dfb1f
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: pull 6 ignoring stability, without damage
+        filterTarget: Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4))
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4))
+        temporaryHitpoints: "30"
+        ongoingEffect: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+        hasTemporaryHitpoints: true
+      - __typeName: ActivatedAbilityFloatTextBehavior
+        text: Resisted
+        color: "#aaaaffff"
+        filterTarget: not (Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4)))
+      range: 6
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 0
+      iconid: ui-icons/skills/1.png
+      description: |-
+        The target must be size 1L or smaller. The shambling mound reaches out with writhing vines, and if the target has A<3, they are pulled adjacent to the shambling mound (taking no damage from this movement) and engulfed into its sack. If the target is grabbed by the shambling mound, the potency increases by 1. An engulfed creature is restrained, takes 3 poison damage at the start of each of their turns, and can't take damage from abilities used from outside the sack: damage from outside instead strikes the sack (the Engulfed effect's 30 temporary Stamina; the sack has damage immunity 5 and fire weakness 10). When the shambling mound moves, the engulfed creature moves with them. If the shambling mound dies or their sack is destroyed, each engulfed creature is freed and appears in an unoccupied space within 2 squares of the shambling mound.
+
+        **2+ Malice**: The shambling mound can engulf one additional target for each 2 Malice spent.
+      keywords:
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      resourceNumber: 2
+      objectTarget: true
+      channelIncrement: 2
+      channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: 1 + 1*Charges
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      effectImplemented: false
+      description: Each creature engulfed by the shambling mound takes 5 poison damage. The shambling mound gains 5 temporary Stamina for each creature who takes damage this way.
+      name: Leech
+      guid: 7480acc3-a7df-469d-b072-36a96aa63b11
+      behaviors:
+      - __typeName: ActivatedAbilityLeechTempStaminaBehavior
+        damageType: poison
+        roll: "5"
+        tempPerTarget: "5"
+        filterTarget: Ongoing Effects has "Engulfed"
+      implementation: 0
+      iconid: ui-icons/skills/1.png
+      keywords: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      range: 1
+      categorization: Signature Ability
+      targetType: all
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      description: "**Trigger:** A creature within distance willingly moves."
+      name: Tether Down
+      guid: 739d3e14-f34b-4824-97d9-4285b99aafc6
+      range: 6
+      resourceCost: none
+      implementation: 4
+      iconid: ui-icons/skills/1.png
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      keywords:
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      targetType: target
+      resourceNumber: 1
+      categorization: Heroic Ability
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 7 damage; M<2 restrained (EoT)
+        - 12 damage; M<3 restrained (EoT)
+        - 15 damage; M<4 restrained (EoT)
+        roll: 2d10 + Might
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      targetType: line
+      strain: []
+      radius: 2
+      categorization: Heroic Ability
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Ravenous Overgrowth
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 247
+      hasCustomIcon: true
+      guid: 5e3d5ec2-4b9b-4b83-8b96-0a2ee7737568
+      range: "10"
+      persistence: []
+      modifiers: []
+      implementation: 4
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      repeatTargets: false
+      keywords:
+        Area: true
+        Weapon: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      description: ""
+      lineDistance: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        promptWhenResolving: true
+        roll: 2d10 + Might
+        promptWhenResolvingText: Select targets to pull within your preferred order.
+        tiers:
+        - 7 damage; pull 3
+        - 12 damage; pull 4; the target has poison weakness 3 until the end of the encounter
+        - 15 damage; pull 6; the target has poison weakness 5 until the end of the encounter
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        stacks: "3"
+        tiersSelected:
+        - 2
+        ongoingEffect: 0bfd296e-8fbe-403e-843e-2569910ba8b7
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        stacks: "5"
+        tiersSelected:
+        - 3
+        ongoingEffect: 0bfd296e-8fbe-403e-843e-2569910ba8b7
+      flavor: ""
+      numTargets: 1
+      abilityType: none
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'aaf4d050-c170-4e0d-8f5"
+      villainAction: Villain Action 1
+    - __typeName: ActivatedAbility
+      flavor: ""
+      effectImplemented: false
+      description: The shambling mound uses Engulf against each target without spending Malice. (Each enemy within distance who is size 1L or smaller and has A<3, or A<4 if grabbed by the shambling mound, is engulfed.)
+      name: Composting
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      guid: 99c5a4b7-45d6-4f44-8bb0-3f573e7d677d
+      range: 6
+      hasCustomIcon: true
+      categorization: Heroic Ability
+      implementation: 0
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      targetFilter: Enemy
+      keywords:
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      targetType: all
+      villainAction: Villain Action 2
+      usageLimitOptions: "{'multicharge': False, 'resourceid': '18d87136-2044-4bef-b68"
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: pull 6 ignoring stability, without damage
+        filterTarget: Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4))
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4))
+        temporaryHitpoints: "30"
+        ongoingEffect: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+        hasTemporaryHitpoints: true
+      - __typeName: ActivatedAbilityFloatTextBehavior
+        text: Resisted
+        color: "#aaaaffff"
+        filterTarget: not (Size <= 4 and (Agility < 3 or (Conditions has "Grabbed" and Agility < 4)))
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      effectImplemented: false
+      description: The shambling mound rips themself apart to lay waste, exposing the crux of magic holding them together. The distance of the shambling mound's melee abilities increases to 10, they have a double edge on power rolls, and strikes have an edge against them.
+      name: Exposed Crux
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 247
+      guid: 2bd3d537-99f4-4683-a7ba-6fd464bc269c
+      range: 1
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        ongoingEffect: f3acac87-6446-412d-a3d1-27ce96a2c657
+      implementation: 4
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      categorization: Heroic Ability
+      keywords: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      targetType: self
+      modifiers: []
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'b1c8fc7c-8cc9-4f90-80e"
+      abilityType: none
+      numTargets: 1
+      hasCustomIcon: true
       repeatTargets: false
       villainAction: Villain Action 3
-      numTargets: 1
-      flavor: ""
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords: []
-      iconid: ui-icons/skills/1.png
-      guid: 2bd3d537-99f4-4683-a7ba-6fd464bc269c
-      abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'b1c8fc7c-8cc9-4f90-80e"
-      description: The shambling mound rips themself apart to lay waste, exposing the crux of magic holding them together. The distance of the shambling mound's melee abilities increases to 10, they have a double edge on power rolls, and strikes have an edge against them.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Exposed Crux
-    skillProficiencies: []
-    max_hitpoints_roll: "400"
+    groupid: 408e6baa-a5a0-40e8-bd81-0bb2a911cbfa
+    animations:
+      anim:
+      - animType: giveItem
+        items:
+          df644b6c-338b-4179-9338-e0bf5b601b06: 1
+      guid: 8df1a5e3-7bb9-4368-a6fb-7ec51778d2b7-368
+    equipmentMeta:
+      trinket1: []
+      trinket2: []
+      trinket5: []
+      trinket7: []
+      trinket9: []
+      trinket4: []
+      leveled4: []
+      leveled5: []
+      trinket10: []
+      leveled3: []
+      trinket3: []
+      trinket6: []
+      trinket8: []
+      leveled1: []
+      leveled2: []
+    attributes:
+      rea:
+        baseValue: 0
+        id: rea
+      inu:
+        baseValue: 1
+        id: inu
+      agl:
+        baseValue: -1
+        id: agl
+      mgt:
+        baseValue: 4
+        id: mgt
+      prs:
+        baseValue: 0
+        id: prs
+    creatureSize: "3"
+    resources: []
     levelChoices: []
     monster_type: Shambling Mound
-    cr: 5
-    titles: []
-    keywords:
-      Shambling Mound: true
-      Plant: true
-    ev: 84
-    movementSpeeds: []
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: -1
-      prs:
-        id: prs
-        baseValue: 0
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: 0
-    innateAttacks: []
-    resistances: []
-    savingThrowRatings: []
-    role: Solo
+    damage_taken: 0
+    walkingSpeed: 3
     import:
       type: mcdm
       data: |+
@@ -490,10 +836,8 @@ info:
         <b>Distance</b> Self<b>	Target</b> Self
         <b>Effect</b> The shambling mound rips themself apart to lay waste, exposing the crux of magic holding them together. The distance of the shambling mound's melee abilities increases to 10, they have a double edge on power rolls, and strikes have an edge against them.
 
-    initiativeGrouping: 53bdaabe-8d22-419a-b898-6daa5bbd28eb
-    creatureSize: "3"
+    movementSpeeds: []
     monster_category: Monster
-    stability: 5
   tokenType: null
   bestiaryId: 8d5232d9-63cc-4c87-9ac9-7a98593cdf7f
   summonerid: null

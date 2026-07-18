@@ -1,0 +1,54 @@
+__typeName: CharacterOngoingEffect
+implementation: 2
+iconid: ui-icons/skills/1.png
+statusEffect: false
+mtime: 1784039455014
+description: Internal plumbing, not player- or Director-facing. Refreshed every round by Torso Transformation's own trigger. If it ever ticks over without being refreshed (because Torso Transformation ended), it replaces itself with Suffered Torso Transformation, then expires on its own shortly after.
+guid: a0f79dbf-b32b-4a0b-8c4f-b77c2d27d5ed
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+custom: true
+name: Torso Transformation Watcher
+source: Ongoing Effect
+id: a0f79dbf-b32b-4a0b-8c4f-b77c2d27d5ed
+modifiers:
+- __typeName: CharacterModifier
+  description: Internal plumbing, not player- or Director-facing. Refreshed every round by Torso Transformation's own trigger. If it ever ticks over without being refreshed (because Torso Transformation ended), it replaces itself with Suffered Torso Transformation, then expires on its own shortly after.
+  behavior: trigger
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    targetType: self
+    castImmediately: true
+    description: ""
+    name: Torso Transformation Ended
+    guid: 463da368-88ab-47e0-84a9-94bc0cfc43cc
+    range: 1
+    trigger: beginturn
+    iconid: ui-icons/skills/1.png
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    conditionFormula: not (Self.Ongoing Effects has "Torso Transformation")
+    mandatory: true
+    numTargets: "1"
+    domains: []
+    whenActive: combat
+    abilityType: none
+    repeatTargets: false
+    behaviors:
+    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+      ongoingEffectCustom: false
+      duration: eoe
+      applyto: targets
+      ongoingEffect: a15a69e7-fbdd-48e5-8b8c-02969bb0e552
+  sourceguid: a0f79dbf-b32b-4a0b-8c4f-b77c2d27d5ed
+  name: Torso Transformation Watcher
+  domains: []
+  guid: ba95bd70-833e-4e85-8896-3f3aaf5dfd29
+  source: Ongoing Effect
+_table: characterOngoingEffects

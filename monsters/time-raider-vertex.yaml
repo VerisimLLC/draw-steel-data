@@ -53,59 +53,210 @@ info:
   updateid: 1cda41fd-d6ff-408f-a02f-d0c36aec5fd7
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: bb64c014-c1ee-4f99-8edf-c902ec5398a9
-      domains:
-        CharacterFeature:bb64c014-c1ee-4f99-8edf-c902ec5398a9: true
-      description: The vertex doesn't have a bane on strikes against concealed creatures.
-      modifiers: []
-      source: Trait
-      name: 'Foresight '
-    inflictedConditions: []
-    walkingSpeed: 5
-    opportunityAttack: 5
-    cr: 3
-    damage_taken: 0
-    max_hitpoints: 62
-    keywords:
-      Time Raider: true
-      Humanoid: true
     skillRatings: []
-    role: Platoon Support
-    ev: 10
-    movementSpeeds:
-      fly: 5
-    monster_type: Time Raider Vertex
-    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
-    resources: []
+    max_hitpoints_roll: "62"
+    minion: false
+    cr: 3
+    titles: []
+    traitNames: []
     resistances:
     - __typeName: ResistanceEntry
-      apply: Damage Reduction
       damageType: psychic
+      apply: Damage Reduction
       dr: 3
+    keywords:
+      Humanoid: true
+      Time Raider: true
+    monster_type: Time Raider Vertex
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: The vertex doesn't have a bane on strikes against concealed creatures.
+      guid: f7e74065-1526-437b-9cf4-9e2f1d71a229
+      implementation: 4
+      name: 'Foresight '
+      domains:
+        CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
+        CharacterFeature:f7e74065-1526-437b-9cf4-9e2f1d71a229: true
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        value: 1
+        domains:
+          CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
+          CharacterFeature:f7e74065-1526-437b-9cf4-9e2f1d71a229: true
+        description: The vertex doesn't have a bane on strikes against concealed creatures.
+        source: Trait
+        behavior: attribute
+        sourceguid: f7e74065-1526-437b-9cf4-9e2f1d71a229
+        name: 'Foresight '
+        guid: 78571c13-83c3-4880-8cdd-efdb4487b371
+      source: Trait
+    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      categorization: Signature Ability
+      name: Psionic Slam
+      sourceReference:
+        __typeName: SourceReference
+        page: 252
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      guid: 7732d165-0c2a-4dea-bfa8-24f5d7fcdd28
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 5 damage; 2 psychic damage
+        - 7 damage; 3 psychic damage
+        - 9 damage; 4 psychic damage
+        roll: 2d10 + Reason
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: f27ab18a-b583-4b4c-8202-11ef4810411f
+        ongoingEffectSource: specific
+        duration: 1
+        durationUntilEndOfTurn: false
+        ongoingEffect: 2f1d66ca-f269-425c-a71c-481413a7b5d1
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Psionic: true
+        Strike: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      description: Power rolls made against the target have an edge until the start of the vertex's next turn.
+      range: 2
+      targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      targetType: self
+      effectImplemented: false
+      categorization: Heroic Ability
+      name: Split Space
+      sourceReference:
+        __typeName: SourceReference
+        page: 252
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      guid: efefbe21-8710-4e61-94fc-3beb43cd54f7
+      behaviors: []
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 0
+      iconid: ui-icons/skills/1.png
+      description: A portal fills the area, leading to a location the vertex has experienced (in person or otherwise) on any plane of existence. Each creature who touches the portal is instantly teleported to the nearest unoccupied square at the chosen location. The portal lasts until the vertex dies, uses this ability again, dismisses the portal (no action required), or is transported by the portal.
+      keywords:
+        Ranged: true
+        Psionic: true
+        Area: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      range: 1
+      resourceNumber: 5
+      flavor: ""
+      modifiers: []
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      effectImplemented: false
+      categorization: Signature Ability
+      name: Invigorated March
+      guid: b9fda001-138f-405a-9642-79d5cbffe9b1
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          targetType: self
+          iconid: ui-icons/skills/1.png
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          numTargets: "1"
+          range: 1
+          guid: d100fbde-8101-44e2-821f-88d48047d434
+          name: Invoked Ability
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        promptWhenResolving: true
+        promptWhenResolvingText: "Choose allies' to shift up to half their speed in your preferred order. "
+        abilityType: standard
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          range: "4"
+          distance: "4"
+      hasCustomIcon: true
+      range: 4
+      implementation: 4
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      targetAllegiance: ally
+      keywords:
+        Psionic: true
+        Area: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      description: Each target shifts up to half their speed.
+      objectTarget: false
+      targetType: all
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    equipment: []
+    max_hitpoints: 62
+    levelChoices: []
+    stability: 2
+    ev: 10
+    innateAttacks: []
+    savingThrowRatings: []
+    resources: []
     attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 1
+      rea:
+        baseValue: 2
+        id: rea
       dex:
         __typeName: CharacterAttribute
         id: dex
       prs:
-        id: prs
         baseValue: 0
-      mgt:
-        id: mgt
+        id: prs
+      agl:
         baseValue: 1
-      rea:
-        id: rea
-        baseValue: 2
+        id: agl
+      mgt:
+        baseValue: 1
+        id: mgt
+      inu:
+        baseValue: 1
+        id: inu
+    role: Platoon Support
+    damage_taken: 0
+    creatureSize: "2"
+    monster_category: Monster
+    walkingSpeed: 5
     import:
       type: mcdm
-      override: true
       data: |+
         Time Raider Vertex	Level 3 Platoon Support
         Humanoid, Time Raider	EV 10
@@ -136,102 +287,11 @@ info:
 
 
 
-    minion: false
-    innateAttacks: []
-    equipment: []
-    savingThrowRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Reason
-        tiers:
-        - 5 damage; 2 psychic damage
-        - 7 damage; 3 psychic damage
-        - 9 damage; 4 psychic damage
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 7732d165-0c2a-4dea-bfa8-24f5d7fcdd28
-      flavor: ""
-      keywords:
-        Strike: true
-        Psionic: true
-        Melee: true
-      description: Power rolls made against the target have an edge until the start of the vertex's next turn.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 2
-      name: Psionic Slam
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 5
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Psionic: true
-        Area: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: efefbe21-8710-4e61-94fc-3beb43cd54f7
-      behaviors: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: A portal fills the area, leading to a location the vertex has experienced (in person or otherwise) on any plane of existence. Each creature who touches the portal is instantly teleported to the nearest unoccupied square at the chosen location. The portal lasts until the vertex dies, uses this ability again, dismisses the portal (no action required), or is transported by the portal.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Split Space
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: all
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: b9fda001-138f-405a-9642-79d5cbffe9b1
-      flavor: ""
-      keywords:
-        Psionic: true
-        Area: true
-      description: Each target shifts up to half their speed.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 4
-      name: Invigorated March
-    creatureSize: "2"
-    traitNames: []
-    max_hitpoints_roll: "62"
-    levelChoices: []
-    monster_category: Monster
-    stability: 2
+      override: true
+    inflictedConditions: []
+    movementSpeeds:
+      fly: 5
+    opportunityAttack: 5
   tokenType: null
   bestiaryId: 2d1eac95-f765-41e5-8bea-eea559b685f6
   summonerid: null

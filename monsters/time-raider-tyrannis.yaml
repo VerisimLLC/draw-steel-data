@@ -50,108 +50,503 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: e31c1b67-0a68-42b7-9a17-f5884038adde
+  updateid: b656bcd1-6b5a-4b74-8bcc-dadadb964887
   properties:
     __typeName: monster
+    damage_taken: 0
+    savingThrowRatings: []
     characterFeatures:
     - __typeName: CharacterFeature
-      implementation: 3
-      guid: 2f2162fe-00b6-4b99-85c9-f71dc42cb0f3
       domains:
         CharacterFeature:2f2162fe-00b6-4b99-85c9-f71dc42cb0f3: true
+      name: End Effect
+      source: Trait
+      guid: 2f2162fe-00b6-4b99-85c9-f71dc42cb0f3
       description: At the end of each of their turns, the tyrannis can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        name: End Effect
         sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
-        description: ""
-        source: Trait
+        name: End Effect
+        behavior: trigger
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          castImmediately: true
-          triggerPrompt: End effect for 5
-          strain: []
+          repeatTargets: false
+          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
+          trigger: endturn
           targetType: self
+          persistence: []
+          name: End Effect
+          modifiers: []
+          abilityType: none
+          description: ""
+          numTargets: "1"
+          triggerPrompt: End effect for 5
+          castImmediately: true
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             purgeType: one
+            conditions: []
             damageToSelf: "5"
             targetDuration: save
-            conditions: []
-          persistence: []
+          range: 1
+          mandatory: false
+          strain: []
+          iconid: ui-icons/skills/1.png
           display:
+            saturation: 1
             bgcolor: "#ffffffff"
             hueshift: 0
             brightness: 1
-            saturation: 1
-          abilityType: none
           whenActive: combat
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          description: ""
-          repeatTargets: false
-          trigger: endturn
-          numTargets: "1"
-          range: 1
-          name: End Effect
-        behavior: trigger
-      source: Trait
-      name: End Effect
+        description: ""
+        source: Trait
     - __typeName: CharacterFeature
-      guid: 814026be-c5ba-481c-944b-27338bfe47a4
       domains:
-        CharacterFeature:814026be-c5ba-481c-944b-27338bfe47a4: true
-      description: The tyrannis doesn't have a bane on strikes against concealed creatures.
-      modifiers: []
-      source: Trait
+        CharacterFeature:4a6fef78-2d2f-4bda-9a57-c4c61f14ef46: true
+        CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
       name: 'Foresight '
-    inflictedConditions: []
-    walkingSpeed: 10
-    opportunityAttack: 5
-    cr: 3
-    damage_taken: 0
+      source: Trait
+      guid: 4a6fef78-2d2f-4bda-9a57-c4c61f14ef46
+      description: The tyrannis doesn't have a bane on strikes against concealed creatures.
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        value: 1
+        source: Trait
+        guid: 215b4c1c-5d95-4ff9-98a5-24268eb57235
+        description: The tyrannis doesn't have a bane on strikes against concealed creatures.
+        domains:
+          CharacterFeature:4a6fef78-2d2f-4bda-9a57-c4c61f14ef46: true
+          CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        behavior: attribute
+        name: 'Foresight '
+        sourceguid: 4a6fef78-2d2f-4bda-9a57-c4c61f14ef46
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f0e0cf44-d297-4d07-aa4b-67c242185d42: true
+      name: Precog Reflexes
+      source: Character Feature
+      guid: f0e0cf44-d297-4d07-aa4b-67c242185d42
+      description: |-
+        **Trigger:** A creature within distance makes a strike against the tyrannis.
+
+        **Effect:** The strike takes a bane. After the strike resolves, the tyrannis can make a free strike against the target.
+
+        **2 Malice:** The strike has a double bane instead.
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Precog Reflexes
+        source: Character Feature
+        type: trigger
+        rules: The strike takes a bane. After the strike resolves, the tyrannis can make a free strike against the target.
+        description: |-
+          **Trigger:** A creature within distance makes a strike against the tyrannis.
+
+          **Effect:** The strike takes a bane. After the strike resolves, the tyrannis can make a free strike against the target.
+
+          **2 Malice:** The strike has a double bane instead.
+        guid: 759a31cb-7f32-46e3-9cb8-dcf346c200e2
+        abilityFilter: Distance(Caster) <= 10
+        sourceguid: f0e0cf44-d297-4d07-aa4b-67c242185d42
+        targetType: self
+        additionalCostModifiers:
+        - __typeName: CharacterModifier
+          modtype: bane
+          name: Precog Reflexes+
+          source: Trigger
+          guid: e24ee63b-0db9-4561-81d1-e5c2d138bac9
+          rules: ""
+          rulesText: The strike has a double bane instead.
+          resourceCostType: cost
+          keywords: []
+          activationCondition: false
+          rollType: ability_power_roll
+          resourceCostAmount: "2"
+          behavior: power
+        behavior: powertabletrigger
+        powerRollModifier:
+          __typeName: CharacterModifier
+          modtype: bane
+          name: Precog Reflexes
+          source: Trigger
+          guid: 1e865084-de85-4c0e-b92f-0f5ea18fba4d
+          rules: ""
+          hasCustomTrigger: true
+          keywords: []
+          activationCondition: false
+          rollType: ability_power_roll
+          customTrigger:
+            __typeName: TriggeredAbility
+            repeatTargets: false
+            iconid: ui-icons/skills/1.png
+            abilityType: none
+            guid: c1c1baac-5195-4a09-a2e7-fe1ae05bddc0
+            description: ""
+            numTargets: "1"
+            display:
+              saturation: 1
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+            name: Precog Reflexes
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              invokeOnCaster: false
+              promptText: "**Precog Reflexes:** The tyrannis can make a free strike against the triggering creature."
+              customAbility:
+                __typeName: ActivatedAbility
+                repeatTargets: false
+                iconid: ui-icons/skills/1.png
+                guid: 5105491e-f9a5-496d-bd8c-8f62c885663e
+                description: ""
+                numTargets: "1"
+                display:
+                  saturation: 1
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                behaviors: []
+                modifiers: []
+                abilityType: none
+                name: Invoked Ability
+                targetType: self
+                range: 1
+              standardAbilityParams:
+                targetid: "<<abilitycaster.id>>"
+              standardAbility: 952ff59e-8467-4141-aae6-d9ce35094c25
+              applyto: caster
+              abilityType: standard
+              runOnController: true
+              autoTarget: false
+            targetType: self
+            modifiers: []
+            strain: []
+            persistence: []
+            trigger: d20roll
+            range: 1
+          behavior: power
+        trigger: strike
+        domains:
+          CharacterFeature:f0e0cf44-d297-4d07-aa4b-67c242185d42: true
+        range: 10
+    equipment: []
+    stability: 2
     max_hitpoints: 120
-    keywords:
-      Time Raider: true
-      Humanoid: true
     skillRatings: []
-    role: Leader
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      guid: b6ea5c02-dd45-4a7c-8fb5-988e272c327b
+      implementation: 4
+      targetType: target
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+        Psionic: true
+        Ranged: true
+      flavor: ""
+      name: Gatling Blaster
+      modifiers: []
+      abilityType: none
+      iconid: ui-icons/skills/1.png
+      description: Each target's speed is reduced by 2 until the start of the tyrannis' next turn.
+      numTargets: 2
+      effectImplemented: false
+      strain: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      sourceReference:
+        __typeName: SourceReference
+        page: 253
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      meleeRange: 2
+      categorization: Signature Ability
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Agility
+        tiers:
+        - 8 corruption damage
+        - 12 corruption damage
+        - 15 corruption damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: 1
+        durationUntilEndOfTurn: false
+        ongoingEffectSource: specific
+        ongoingEffect: 9a7dbce9-0dc4-4178-9ad9-23e134612f63
+        ongoingEffectCustom: false
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      range: 10
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      guid: be37dbe1-bc8d-459d-b995-73ebbe230d2a
+      resourceNumber: 3
+      implementation: 4
+      preDescription: Each target is psionically lifted into the air, flies up to their speed, and makes a free strike. If a target doesn't land in an unoccupied space, they fall.
+      targetType: target
+      keywords:
+        Ranged: true
+        Psionic: true
+      flavor: ""
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      name: Air Raid!
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      abilityType: none
+      numTargets: "3"
+      description: ""
+      modifiers: []
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      targetFilter: Target.Keywords has "Time Raider"
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptWhenResolvingText: Select targets to fly up to their speed and make a free strike in your preferred order. If a target doesn't land in an unoccupied space, they fall
+        abilityType: custom
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          categorization: Hidden
+          guid: 277a85da-3807-460d-b93a-ee86f09099f6
+          description: ""
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyAbilityDurationEffect
+            momentaryEffect:
+              __typeName: CharacterOngoingEffect
+              name: Air Raid Flight
+              iconid: ui-icons/skills/1.png
+              id: 06345ea9-949d-4cdd-92f1-6d51ab02b2fe
+              guid: 06345ea9-949d-4cdd-92f1-6d51ab02b2fe
+              source: Ongoing Effect
+              description: Psionically lifted into the air; can fly.
+              modifiers:
+              - __typeName: CharacterModifier
+                sourceguid: 06345ea9-949d-4cdd-92f1-6d51ab02b2fe
+                value: 1
+                behavior: attribute
+                guid: 03b4995b-7711-4007-a840-b007beb3bd93
+                source: Ongoing Effect
+                description: Psionically lifted into the air; can fly.
+                name: Air Raid Flight
+                attribute: fly
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                saturation: 1
+            name: Ability Duration Effect
+          - __typeName: ActivatedAbilityLiftVerticalBehavior
+            distance: "1"
+            landAtEnd: true
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: 1c423f02-73e6-4c44-8341-17d854f15fc5
+            promptText: Fly up to your speed and make a free strike.
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              guid: 731458b0-3b70-44d3-9e79-cb4c18a03490
+              description: ""
+              numTargets: "1"
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                saturation: 1
+              targetType: self
+              modifiers: []
+              abilityType: none
+              name: New Ability
+              behaviors: []
+              range: 1
+            abilityType: standard
+          modifiers: []
+          abilityType: none
+          name: Air Raid Flight
+          targetType: self
+          iconid: ui-icons/skills/1.png
+          range: 1
+        promptText: Fly up to your speed and make a free strike.
+        promptWhenResolving: true
+      sourceReference:
+        __typeName: SourceReference
+        page: 260
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      objectTarget: false
+      categorization: Heroic Ability
+      iconid: ui-icons/skills/1.png
+      effectImplemented: false
+      range: "10"
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      guid: f4df217f-35d4-4c3d-9583-f32b4a206cd8
+      selfTarget: false
+      implementation: 4
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'a8a60963-8237-4f0f-a14"
+      targetType: target
+      keywords:
+        Ranged: true
+        Psionic: true
+      flavor: ""
+      strain: []
+      hasCustomIcon: true
+      name: We Will Won!
+      behaviors:
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        stamina: "15"
+        chatMessage: Villain Action 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        stacks: Walking Speed
+        ongoingEffectSource: specific
+        ongoingEffect: 18db6893-4788-44ca-8a84-d3e0eb56452d
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        stamina: "15"
+        chatMessage: Villain Action 1
+        applyto: caster
+        guid: 3c95ac74-f3f7-4b3d-8880-3151138fba29
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        guid: 0b10b044-5f9a-454f-9789-18af0f1ef1db
+      villainAction: Villain Action 1
+      abilityType: none
+      description: Each target gains 15 temporary Stamina and has their speed doubled until the end of their turn.
+      modifiers: []
+      effectImplemented: false
+      numTargets: 3
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      sourceReference:
+        __typeName: SourceReference
+        page: 253
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Villain Action
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      targetFilter: not Enemy
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      range: 10
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      guid: 5f0c8263-24f2-4de7-93fa-18671bb87f92
+      implementation: 4
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'e14a3e19-d6b8-4707-878"
+      targetType: all
+      targetAllegiance: ally
+      selfTarget: true
+      keywords:
+        Area: true
+      flavor: ""
+      hasCustomIcon: true
+      name: 'Stick To The Plan! '
+      villainAction: Villain Action 2
+      description: Each target can end one effect or condition affecting them or can move up to their speed.
+      modifiers: []
+      effectImplemented: true
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      numTargets: 1
+      categorization: Heroic Ability
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        guid: 8d1f6a30-4c9b-4f0e-9d21-6a5b0c7e2f41
+        abilityType: custom
+        applyto: targets
+        invokeOnCaster: false
+        autoTarget: false
+        promptText: "**Stick To The Plan!:** End one effect or condition affecting you."
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          guid: 2f7c9b14-58ad-4f6b-8c3e-1d0a4e93b7c5
+          categorization: Hidden
+          name: 'Stick To The Plan! '
+          description: ""
+          numTargets: "1"
+          abilityType: none
+          targetType: self
+          modifiers: []
+          iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            mode: conditions_and_effects
+            conditions: []
+            targetDuration: all
+            chatMessage: Stick To The Plan!
+            reminderText: End one effect or condition affecting you.
+          range: 1
+      range: 10
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      guid: 6b674979-b029-41c9-89ef-1151a1526faa
+      implementation: 0
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'd9747ea0-0326-44a3-8bb"
+      targetType: self
+      keywords:
+        Area: true
+      flavor: ""
+      hasCustomIcon: true
+      name: Armageddon
+      villainAction: Villain Action 3
+      description: The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.
+      modifiers: []
+      effectImplemented: false
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      numTargets: 1
+      categorization: Heroic Ability
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      behaviors: []
+      range: 1
     ev: 20
-    movementSpeeds:
-      teleport: 10
-    monster_type: Time Raider Tyrannis
-    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    max_hitpoints_roll: "120"
     resources: []
     resistances:
     - __typeName: ResistanceEntry
+      dr: 3
       apply: Damage Reduction
       damageType: psychic
-      dr: 3
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 3
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      prs:
-        id: prs
-        baseValue: 0
-      mgt:
-        id: mgt
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: 3
+    minion: false
+    innateAttacks: []
+    movementSpeeds:
+      teleport: 10
+    opportunityAttack: 5
+    monster_category: Monster
     import:
-      type: mcdm
-      override: true
       data: |
         Time Raider Tyrannis	Level 3 Leader
         Humanoid, Time Raider	EV 20
@@ -201,184 +596,39 @@ info:
         <b>Effect</b> The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.
 
         Retainer
-    minion: false
-    innateAttacks: []
-    equipment: []
-    savingThrowRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 10
-      iconid: ui-icons/skills/1.png
-      guid: b6ea5c02-dd45-4a7c-8fb5-988e272c327b
-      keywords:
-        Melee: true
-        Psionic: true
-        Ranged: true
-        Strike: true
-        Weapon: true
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Agility
-        tiers:
-        - 8 corruption damage
-        - 12 corruption damage
-        - 15 corruption damage
-      description: Each target's speed is reduced by 2 until the start of the tyrannis' next turn.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      meleeRange: 2
-      name: Gatling Blaster
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 3
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Psionic: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: be37dbe1-bc8d-459d-b995-73ebbe230d2a
-      behaviors: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      description: Each target is psionically lifted into the air, flies up to their speed, and makes a free strike. If a target doesn't land in an unoccupied space, they fall.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Air Raid!
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 8090c7a8-ee04-4672-8e17-9486d843b842
-      flavor: ""
-      keywords:
-        Psionic: true
-        Ranged: true
-      description: The strike has a bane. After the strike resolves, the tyrannis makes a free strike against the target.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 10
-      name: Precog Reflexes
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: not Enemy
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      villainAction: Villain Action 1
-      numTargets: 3
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'a8a60963-8237-4f0f-a14"
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Psionic: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: f4df217f-35d4-4c3d-9583-f32b4a206cd8
-      abilityType: none
-      repeatTargets: false
-      description: Each target gains 15 temporary Stamina and has their speed doubled until the end of their turn.
-      flavor: ""
-      range: 10
-      name: We Will Won!
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Heroic Ability
-      effectImplemented: false
-      repeatTargets: false
-      villainAction: Villain Action 2
-      numTargets: 1
-      flavor: ""
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Area: true
-      iconid: ui-icons/skills/1.png
-      guid: 5f0c8263-24f2-4de7-93fa-18671bb87f92
-      abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'e14a3e19-d6b8-4707-878"
-      description: Each target can end one effect or condition affecting them or can move up to their speed.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: 'Stick To The Plan! '
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Heroic Ability
-      effectImplemented: false
-      repeatTargets: false
-      villainAction: Villain Action 3
-      numTargets: 1
-      flavor: ""
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Area: true
-      iconid: ui-icons/skills/1.png
-      guid: 6b674979-b029-41c9-89ef-1151a1526faa
-      abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'd9747ea0-0326-44a3-8bb"
-      description: The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Armageddon
-    creatureSize: "2"
-    traitNames: []
-    max_hitpoints_roll: "120"
+      override: true
+      type: mcdm
     levelChoices: []
-    monster_category: Monster
-    stability: 2
+    cr: 3
+    monster_type: Time Raider Tyrannis
+    traitNames: []
+    role: Leader
+    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    keywords:
+      Time Raider: true
+      Humanoid: true
+    walkingSpeed: 10
+    attributes:
+      inu:
+        baseValue: 1
+        id: inu
+      mgt:
+        baseValue: 0
+        id: mgt
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      agl:
+        baseValue: 3
+        id: agl
+      prs:
+        baseValue: 0
+        id: prs
+      rea:
+        baseValue: 3
+        id: rea
+    titles: []
+    creatureSize: "2"
   tokenType: null
   bestiaryId: 53f19334-fcae-4e03-90d2-bd92403dd866
   summonerid: null

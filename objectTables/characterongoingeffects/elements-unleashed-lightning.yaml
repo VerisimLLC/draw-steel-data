@@ -1,0 +1,112 @@
+__typeName: CharacterOngoingEffect
+id: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+custom: true
+buffType: buff
+association: []
+iconid: ui-icons/skills/1.png
+modifiers:
+- __typeName: CharacterModifier
+  attribute: fly
+  value: 1
+  behavior: attribute
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e42
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+  source: Ongoing Effect
+  name: Elements Unleashed
+  description: Your companion can fly.
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e43
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+  source: Ongoing Effect
+  name: Elements Unleashed (Passthrough)
+  description: Deals 5 lightning damage to a creature it passes through.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    trigger: movethrough
+    subject: self
+    targetType: target
+    targetAllegiance: enemy
+    conditionFormula: not Friends(Self, Target)
+    mandatory: true
+    numTargets: "1"
+    abilityType: none
+    repeatTargets: false
+    range: 1
+    persistence: []
+    strain: []
+    modifiers: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e44
+    name: Elements Unleashed (Passthrough)
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: "5 lightning damage"
+- __typeName: CharacterModifier
+  behavior: resistance
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e45
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+  source: Ongoing Effect
+  name: Elements Unleashed - Lightning Immunity
+  description: Immunity to lightning; damage reduction 5 versus all other damage.
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: lightning
+    dr: "999"
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: all
+    dr: "5"
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e46
+  sourceguid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e41
+  source: Ongoing Effect
+  name: Elements Unleashed (Strike)
+  description: Deals 5 lightning damage to a creature it strikes.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    trigger: dealdamage
+    subject: self
+    targetType: target
+    conditionFormula: Keywords has "Strike"
+    mandatory: true
+    numTargets: "1"
+    abilityType: none
+    repeatTargets: false
+    range: 1
+    persistence: []
+    strain: []
+    modifiers: []
+    display:
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      brightness: 1
+      saturation: 1
+    guid: f1e2d3c4-0a1b-4c2d-8e3f-4a5b6c7d8e47
+    name: Elements Unleashed (Strike)
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: "5 lightning damage"
+display:
+  bgcolor:
+    __usertype: LuaColor
+    h: 0.15
+    s: 0.85
+    v: 0.98
+    a: 1
+  hueshift: 0
+  brightness: 1
+  saturation: 1
+description: Transformed into living lightning - can fly, deals 5 lightning damage on pass-through, immune to lightning, damage reduction 5 versus all other damage.
+source: Ongoing Effect
+name: Elements Unleashed (Lightning)
+_table: characterOngoingEffects

@@ -53,93 +53,47 @@ info:
   updateid: 1a4b8113-8bc7-4fdf-96e0-977b9dc9a5e8
   properties:
     __typeName: monster
+    skillRatings: []
+    max_hitpoints_roll: "7"
+    minion: true
+    titles: []
+    movementSpeeds: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: psychic
+      apply: Damage Reduction
+      dr: 3
     characterFeatures:
     - __typeName: CharacterFeature
+      description: The archon doesn't have a bane on strikes against concealed creatures.
+      source: Trait
+      implementation: 4
+      name: 'Foresight '
       guid: 6ebc9928-b60f-47f7-afc2-39d672c1e909
       domains:
         CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
-      description: The archon doesn't have a bane on strikes against concealed creatures.
-      modifiers: []
-      source: Trait
-      name: 'Foresight '
-    inflictedConditions: []
-    stability: 0
-    opportunityAttack: 2
-    cr: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        value: 1
+        domains:
+          CharacterFeature:6ebc9928-b60f-47f7-afc2-39d672c1e909: true
+        description: The archon doesn't have a bane on strikes against concealed creatures.
+        source: Trait
+        behavior: attribute
+        sourceguid: 6ebc9928-b60f-47f7-afc2-39d672c1e909
+        name: 'Foresight '
+        guid: 9650492a-936e-4f0c-8ae4-d820e575897f
     withCaptain: +1 damage bonus to strikes
-    damage_taken: 0
-    max_hitpoints: 7
+    equipment: []
+    levelChoices: []
+    ev: 5
     keywords:
       Time Raider: true
       Humanoid: true
-    skillRatings: []
     role: Minion Harrier
-    ev: 5
-    movementSpeeds: []
-    monster_type: Time Raider Archon
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 2
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      prs:
-        id: prs
-        baseValue: -1
-      mgt:
-        id: mgt
-        baseValue: 2
-      rea:
-        id: rea
-        baseValue: 2
-    resources: []
-    traitNames: []
-    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
-    minion: true
-    innateAttacks: []
-    savingThrowRatings: []
-    equipment: []
-    walkingSpeed: 7
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Strike: true
-        Psionic: true
-        Melee: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 501d488a-9cfe-4259-858d-9ca0149a347b
-      repeatTargets: false
-      description: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 2 damage
-        - 4 damage
-        - 5 damage; one ally can make a free strike against the target
-      range: 1
-      name: Brutal Flail
     import:
       type: mcdm
-      override: true
       data: |+
         Time Raider Archon	Level 3 Minion Harrier
         Humanoid, Time Raider	EV 5 for four minions
@@ -157,15 +111,114 @@ info:
         <b>Foresight </b>
         The archon doesn't have a bane on strikes against concealed creatures.
 
-    levelChoices: []
-    max_hitpoints_roll: "7"
+      override: true
+    inflictedConditions: []
+    opportunityAttack: 2
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      description: ""
+      name: Brutal Flail
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 249
+      guid: 501d488a-9cfe-4259-858d-9ca0149a347b
+      range: 1
+      implementation: 4
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Psionic: true
+        Weapon: true
+        Strike: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 2 damage
+        - 4 damage
+        - 5 damage; one ally can make a free strike against the target
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: true
+        autoTarget: false
+        standardAbility: 7cb2aa05-2a8d-42ed-acd0-e1086e87beb0
+        standardAbilityParams:
+          range: "999"
+          targetcount: "1"
+          targetid: "<<target.id>>"
+        applyto: targets
+        targeting: prompt
+        customAbility:
+          __typeName: ActivatedAbility
+          targetType: self
+          iconid: ui-icons/skills/1.png
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          name: Invoked Ability
+          guid: ea220e70-73a7-4ff6-9102-0794862cfb8e
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        promptText: Choose an Ally to Make a Free Strike Against the Target
+        abilityType: standard
+        tiersSelected:
+        - 3
+      categorization: Signature Ability
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      targetType: target
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    savingThrowRatings: []
+    notes:
+    - text: ""
+      title: Monster Notes
     creatureSize: 1M
+    stability: 0
+    resources: []
+    attributes:
+      rea:
+        baseValue: 2
+        id: rea
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      inu:
+        baseValue: 1
+        id: inu
+      agl:
+        baseValue: 2
+        id: agl
+      mgt:
+        baseValue: 2
+        id: mgt
+      prs:
+        baseValue: -1
+        id: prs
+    innateAttacks: []
+    monster_type: Time Raider Archon
     monster_category: Monster
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: psychic
-      dr: 3
+    groupid: 0fd6ab3a-e0ae-4c61-86e3-82f06865d109
+    cr: 3
+    walkingSpeed: 7
+    max_hitpoints: 7
+    damage_taken: 0
+    traitNames: []
   tokenType: null
   bestiaryId: e90ee0e1-d80b-4cdd-9496-64bf0b9e2d5e
   summonerid: null

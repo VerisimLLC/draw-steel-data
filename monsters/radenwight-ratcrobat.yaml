@@ -53,148 +53,515 @@ info:
   updateid: 5ffbedd6-30d9-4f83-92c0-f927ca41d317
   properties:
     __typeName: monster
-    cr: 1
+    moveDiag: 0
+    max_hitpoints_roll: "30"
+    minion: false
+    moveDistance: 1
+    titles: []
+    movementSpeeds:
+      climb: 7
+    resistances: []
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: 2662ad65-d944-469d-bdcf-5b927a15c34d
+      description: The ratcrobat has an edge on strikes against larger creatures.
       domains:
         CharacterFeature:2662ad65-d944-469d-bdcf-5b927a15c34d: true
-      description: The ratcrobat has an edge on strikes against larger creatures.
-      modifiers: []
-      source: Trait
+      implementation: 4
       name: Gymratstics
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: 695055ca-090b-47c5-a691-e568d63b4ea9
-      domains:
-        CharacterFeature:695055ca-090b-47c5-a691-e568d63b4ea9: true
-      description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+      source: Trait
       modifiers:
       - __typeName: CharacterModifier
-        name: Ready Rodent
-        guid: b0d3dd56-8b67-4a33-a65a-19ce8c827091
-        sourceguid: 695055ca-090b-47c5-a691-e568d63b4ea9
+        modtype: edge
+        activationAfterRoll: false
+        keywords: []
+        source: Trait
+        description: The ratcrobat has an edge on strikes against larger creatures.
+        sourceguid: 2662ad65-d944-469d-bdcf-5b927a15c34d
+        name: Gymratstics
+        activationCondition: Caster.Size < Target.Size
+        behavior: power
+        rollType: ability_power_roll
         domains:
-          CharacterFeature:695055ca-090b-47c5-a691-e568d63b4ea9: true
+          CharacterFeature:2662ad65-d944-469d-bdcf-5b927a15c34d: true
+        guid: 727b2519-55fa-4350-b446-23ec05369be7
+      guid: 2662ad65-d944-469d-bdcf-5b927a15c34d
+    - __typeName: CharacterFeature
+      description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+      guid: 695055ca-090b-47c5-a691-e568d63b4ea9
+      implementation: 3
+      name: Ready Rodent
+      domains:
+        CharacterFeature:695055ca-090b-47c5-a691-e568d63b4ea9: true
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
         description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
-        source: Character Feature
+        behavior: triggerdisplay
+        guid: b0d3dd56-8b67-4a33-a65a-19ce8c827091
         ability:
           __typeName: TriggeredAbilityDisplay
-          distance: Melee 1
-          guid: 82a21647-e090-43d0-a108-f14333dbfdca
-          trigger: An ally deals damage to the target
-          keywords: []
-          effect: Make a free strike against the target
-          target: One creature
           name: Ready Rodent
-        behavior: triggerdisplay
-      - __typeName: CharacterModifier
-        name: Ready Rodent
-        guid: 73f53482-c018-409c-8a94-5048876c81c7
+          effect: Make a free strike against the target
+          trigger: An ally deals damage to the target
+          target: One creature
+          distance: Melee 1
+          keywords: []
+          guid: 82a21647-e090-43d0-a108-f14333dbfdca
         sourceguid: 695055ca-090b-47c5-a691-e568d63b4ea9
+        source: Character Feature
+        name: Ready Rodent
         domains:
           CharacterFeature:695055ca-090b-47c5-a691-e568d63b4ea9: true
+      - __typeName: CharacterModifier
         description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
-        source: Character Feature
+        name: Ready Rodent
+        guid: 73f53482-c018-409c-8a94-5048876c81c7
+        behavior: trigger
+        sourceguid: 695055ca-090b-47c5-a691-e568d63b4ea9
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          triggerPrompt: Make a Melee Free Strike
-          strain: []
-          targetType: self
           conditionFormula: subject.Distance(self) <= Reach and HasAttacker and Friends(Attacker, Self)
+          strain: []
+          subject: other
+          hasManualVersion: true
+          mandatory: false
+          name: Ready Rodent
+          guid: 0fc83a14-9ae7-4997-982d-fc2b00ca92a9
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
             promptText: "Ready Rodent: Make a Melee Free Strike"
+            abilityType: standard
             standardAbilityParams:
               targetid: "<<subject.id>>"
             customAbility:
               __typeName: ActivatedAbility
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
               behaviors: []
               iconid: ui-icons/skills/1.png
-              guid: d70f9ad4-5d81-4afe-8993-eda909dec19c
-              description: ""
+              range: 1
               display:
                 bgcolor: "#ffffffff"
                 hueshift: 0
-                brightness: 1
                 saturation: 1
-              range: 1
+                brightness: 1
+              description: ""
+              targetType: self
               name: Invoked Ability
-            abilityType: standard
-          hasManualVersion: true
+              modifiers: []
+              numTargets: "1"
+              abilityType: none
+              repeatTargets: false
+              guid: d70f9ad4-5d81-4afe-8993-eda909dec19c
           persistence: []
+          trigger: losehitpoints
+          iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
+          subjectRange: "1"
+          description: ""
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
-            brightness: 1
             saturation: 1
-          subject: other
-          numTargets: "1"
-          modifiers: []
+            brightness: 1
+          targetType: self
+          range: 1
+          abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          numTargets: "1"
+          triggerPrompt: Make a Melee Free Strike
+          repeatTargets: false
+          modifiers: []
+        source: Character Feature
+        domains:
+          CharacterFeature:695055ca-090b-47c5-a691-e568d63b4ea9: true
+    damage_taken: 0
+    availableTriggers: []
+    levelChoices: []
+    ev: 6
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        d26efbf0-e601-4e26-8705-642f33a2fa12:
+          refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-7a798782-4a73-4bbb-8c57-bfd81745b1db-0
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: En Garde
+          timestamp: 1783924626472
+          set: 0/1
+        ca7b8c8a-bfd0-406c-9d75-1a23dfc7714d:
+          refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-527b5778-6d07-4931-9d54-0c946cbf5689-0
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: En Garde
+          timestamp: 1783923231484
+          set: 0/1
+    role: Platoon Harrier
+    initiativeGrouping: 7a798782-4a73-4bbb-8c57-bfd81745b1db
+    inflictedConditions: []
+    opportunityAttack: 3
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      targetType: target
+      strain: []
+      effectImplemented: false
+      description: Slide 3; the ratcrobat can then shift into any of the squares the target left.
+      implementationDetails: Codex does not guide ratcrobat to shift into squares the target left.
+      name: Over Here, Thanks
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 228
+      targetAllegiance: enemy
+      guid: 873b8c51-d47f-4d45-b271-7a4f9ca093f6
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: slide 3
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
           description: ""
-          iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
-          guid: 0fc83a14-9ae7-4997-982d-fc2b00ca92a9
+          numTargets: "1"
+          targetType: self
+          guid: 517835eb-4826-4463-9095-0ec076eb9e03
+          name: Invoked Ability
           abilityType: none
           repeatTargets: false
-          trigger: losehitpoints
-          subjectRange: "1"
-          range: 1
-          name: Ready Rodent
-        behavior: trigger
-      source: Character Feature
+          modifiers: []
+        applyto: caster
+        standardAbilityParams:
+          distance: "3"
+        promptText: The ratcrobat can shift into any of the squares the target left.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        abilityType: standard
+      persistence: []
+      modifiers: []
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      targetFilter: Enemy
+      keywords:
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      flavor: ""
+      objectTarget: false
+      categorization: Signature Ability
+      range: 1
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+    - __typeName: ActivatedAbility
+      targetType: target
+      strain: []
+      description: |
+        The ratcrobat makes a free strike against the target.
       name: Ready Rodent
-    inflictedConditions: []
-    stability: 0
-    opportunityAttack: 3
-    keywords:
-      Radenwight: true
-      Humanoid: true
-    titles: []
-    damage_taken: 0
-    max_hitpoints: 30
+      sourceReference:
+        __typeName: SourceReference
+        page: 228
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      guid: 4d88c951-6410-4d74-8eee-0624eea20a0d
+      range: 1
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Weapon: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+        promptText: "Ready Rodent: Make a Melee Free Strike"
+        abilityType: standard
+        standardAbilityParams:
+          targetid: "<<subject.id>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          targetType: self
+          name: Invoked Ability
+          modifiers: []
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          guid: d70f9ad4-5d81-4afe-8993-eda909dec19c
+      flavor: ""
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      categorization: Trigger
+      numTargets: 1
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+    - __typeName: ActivatedAbility
+      flavor: ""
+      strain: []
+      description: |-
+        The ratcrobat shifts up to 2 squares after striking the first target, then can shift 1 square after striking the second target.
+
+        NB: 1 Power Roll is made after both targets have been selected.
+      modifiers: []
+      name: En Garde
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 228
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          targetType: target
+          strain: []
+          description: ""
+          name: En Garde First Target
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 228
+          guid: 0cbadd6a-7a43-4ea0-a28e-36303196f90b
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: 0
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
+          implementation: 4
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          objectTarget: true
+          modifiers: []
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          actionResourceId: none
+        promptText: Select the ratcrobat's first target of the En Garde ability.
+        applyto: caster
+        abilityType: custom
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        applyto: caster
+        promptText: The ratcrobat may shift up to 2 squares after striking the first target. The power roll will be made after you have selected both targets.
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          targetType: self
+          name: Invoked Ability
+          modifiers: []
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          guid: 9215c372-d977-4b39-b961-9bc98a240c43
+        standardAbilityParams:
+          distance: "2"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          targetType: target
+          strain: []
+          description: ""
+          name: En Garde Second Target
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 228
+          guid: 0cbadd6a-7a43-4ea0-a28e-36303196f90b
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: 0
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
+          implementation: 4
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          objectTarget: true
+          modifiers: []
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          actionResourceId: none
+        applyto: caster
+        abilityType: custom
+        promptText: Select the ratcrobat's second target of the En Garde ability.
+        guid: c12c2883-40a3-4173-8125-11218e4f6e14
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Agility
+        applyto: all_creatures
+        filterTarget: Target.Ongoing Effects has "Invisible Marker"
+        tiers:
+        - 4 damage
+        - 6 damage
+        - 8 damage
+        guid: 8c31a1f6-ef14-4f8b-b57b-7c3b3497e668
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        applyto: caster
+        promptText: The ratcrobat may shift up to 1 squares after striking the second target.
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          targetType: self
+          name: Invoked Ability
+          modifiers: []
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          guid: 9215c372-d977-4b39-b961-9bc98a240c43
+        abilityType: standard
+        standardAbilityParams:
+          distance: "1"
+        guid: d144bc8a-a162-4b4d-b575-204505cfa48f
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
+            mode: effect
+            conditions: []
+            filterTarget: target.Ongoing Effects has "Invisible Marker"
+          range: "4"
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          targetType: all
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          description: ""
+          objectTarget: true
+          strain: []
+          guid: 31cc3d66-6a7b-4e2a-b0de-96ead34bcf2f
+          name: Invoked Ability
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+        applyto: caster
+      guid: 36deb692-9ab2-4f50-9331-e34bd410c9d9
+      range: "4"
+      rangeTextOverride: Melee 1
+      targetType: self
+      implementation: 4
+      iconid: ui-icons/skills/1.png
+      targetFilter: Enemy
+      keywords:
+        Weapon: true
+        Strike: true
+        Melee: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      categorization: Signature Ability
+      objectTarget: true
+      targetTextOverride: Two creatures or objects
+      implementationDetails: 1 Power Roll is made after both targets have been selected.
+      numTargets: "1"
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    savingThrowRatings: []
+    innateAttacks: []
     notes:
     - title: Monster Notes
       text: ""
     skillRatings: []
-    role: Platoon Harrier
-    ev: 6
-    movementSpeeds:
-      climb: 7
-    monster_type: Radenwight Ratcrobat
+    moveDistanceRoundId: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-7a798782-4a73-4bbb-8c57-bfd81745b1db-0
+    creatureSize: 1S
+    skillProficiencies: []
+    stability: 0
+    equipment: []
+    monster_category: Monster
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: 3fd01623-ca6e-455c-a258-114ff6d50c6f-141
+    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
     attributes:
-      inu:
-        id: inu
+      rea:
         baseValue: 0
-      agl:
-        id: agl
-        baseValue: 2
+        id: rea
       dex:
         __typeName: CharacterAttribute
         id: dex
-      prs:
-        id: prs
-        baseValue: 1
-      mgt:
-        id: mgt
-        baseValue: -1
-      rea:
-        id: rea
+      inu:
         baseValue: 0
-    savingThrowRatings: []
+        id: inu
+      agl:
+        baseValue: 2
+        id: agl
+      mgt:
+        baseValue: -1
+        id: mgt
+      prs:
+        baseValue: 1
+        id: prs
+    keywords:
+      Radenwight: true
+      Humanoid: true
     traitNames: []
-    resources: []
-    minion: false
+    max_hitpoints: 30
+    resources:
+      b9bc06dd-80f1-4f33-bc55-25c114e3300c:
+        __typeName: CharacterResource
+        refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1
+        used: 1
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1-7a798782-4a73-4bbb-8c57-bfd81745b1db-0
+        used: 1
     import:
       type: mcdm
-      override: true
       data: |+
         Radenwight Ratcrobat	Level 1 Platoon Harrier
         Humanoid, Radenwight	EV 6
@@ -224,132 +591,19 @@ info:
         <b>Gymratstics</b>
         The ratcrobat has an edge on strikes against larger creatures.
 
-    innateAttacks: []
-    equipment: []
-    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 0
-      strain: []
-      targetType: target
-      behaviors: []
-      categorization: Signature Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      persistence: []
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 873b8c51-d47f-4d45-b271-7a4f9ca093f6
-      flavor: ""
-      keywords:
-        Melee: true
-      description: Slide 3; the ratcrobat can then shift into any of the squares the target left.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Over Here, Thanks
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbilityParams:
-          targetid: "<<subject.id>>"
-        promptText: "Ready Rodent: Make a Melee Free Strike"
-        standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: d70f9ad4-5d81-4afe-8993-eda909dec19c
-          description: ""
-          repeatTargets: false
-          range: 1
-          name: Invoked Ability
-        abilityType: standard
-      categorization: Trigger
-      keywords:
-        Melee: true
-        Weapon: true
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 4d88c951-6410-4d74-8eee-0624eea20a0d
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 228
-      flavor: ""
-      description: |
-        The ratcrobat makes a free strike against the target.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Ready Rodent
-    - __typeName: ActivatedAbility
-      implementation: 2
-      strain: []
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Melee: true
-        Strike: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 36deb692-9ab2-4f50-9331-e34bd410c9d9
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 228
-      repeatTargets: false
-      description: The ratcrobat shifts up to 2 squares after striking the first target, then can shift 1 square after striking the second target.
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 4 damage
-        - 6 damage
-        - 8 damage
-        roll: 2d10 + Agility
-      range: 1
-      name: En Garde
+      override: true
     walkingSpeed: 7
-    creatureSize: 1S
-    max_hitpoints_roll: "30"
-    levelChoices: []
-    monster_category: Monster
-    resistances: []
+    monster_type: Radenwight Ratcrobat
+    cr: 1
+    b9bc06dd-80f1-4f33-bc55-25c114e3300c_history:
+      __typeName: StatHistory
+      entries:
+        9a99e84a-7c45-4916-82dd-baca41c64e4f:
+          refreshid: 53af0c13-b167-4c93-afbf-a603bea48e7e-1
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: Ready Rodent
+          timestamp: 1783923332404
+          set: 0/1
   tokenType: null
   bestiaryId: 3f966d4e-db8b-4a20-b83c-c37acaecb4ec
   summonerid: null
