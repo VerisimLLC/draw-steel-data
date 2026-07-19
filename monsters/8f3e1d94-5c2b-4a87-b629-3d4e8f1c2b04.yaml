@@ -69,94 +69,76 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 9a4f2c95-6d3b-4b87-a528-4e5f8d1c2c15
+  updateid: f6d2f701-3344-4da2-898e-f2ceac209c06
   properties:
     __typeName: AnimalCompanion
-    characterFeatures:
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: 2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82
-      domains:
-        CharacterFeature:2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82: true
-      description: You have 1 stability.
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: forcedmoveresistance
-        value: 1
-        behavior: attribute
-        guid: 3d9f5c84-5c2a-4f87-a428-8d3e1f6c5b73
-        sourceguid: 2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82
-        domains:
-          CharacterFeature:2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82: true
-        description: You have 1 stability.
-        source: Character Feature
-        operation: set
-        name: Attributes
-      source: Character Feature
-      name: Attributes
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: 4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04
-      domains:
-        CharacterFeature:4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04: true
-      description: Whenever the spider makes a strike against a restrained creature, the spider deals extra poison damage equal to twice their Intuition score.
-      modifiers:
-      - __typeName: CharacterModifier
-        modtype: none
-        rollType: ability_power_roll
-        sourceguid: 4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04
-        keywords:
-          Strike: true
-        damageModifier: 2 * Intuition
-        behavior: power
-        guid: 5f2e6c93-5d3b-4a87-b428-1e4f7d8c9b15
-        damageModifierType: poison
-        domains:
-          CharacterFeature:4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04: true
-        description: Strikes against restrained creatures deal extra poison damage equal to twice the spider's Intuition.
-        source: Character Feature
-        activationCondition: Target.Conditions has "Restrained"
-        name: Come Into My Parlor
-      source: Character Feature
-      name: Come Into My Parlor
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: d2adce49-b17f-4fec-a88a-f37dae8fc0d9
-      domains:
-        CharacterFeature:d2adce49-b17f-4fec-a88a-f37dae8fc0d9: true
-      description: Whenever the spider makes a strike while rampaging, the spider can deal extra poison damage equal to their Might score.
-      modifiers:
-      - __typeName: CharacterModifier
-        modtype: none
-        rollType: ability_power_roll
-        applyToFreeStrikes: true
-        keywords:
-          Strike: true
-        sourceguid: d2adce49-b17f-4fec-a88a-f37dae8fc0d9
-        addText: "{Might} poison damage"
-        guid: e3bedf5a-c280-4fed-b9ab-048ebf9d01ea
-        behavior: power
-        domains:
-          CharacterFeature:d2adce49-b17f-4fec-a88a-f37dae8fc0d9: true
-        description: Whenever the spider makes a strike while rampaging, the spider can deal extra poison damage equal to their Might score.
-        source: Character Feature
-        activationCondition: Self.Rampaging and Self.Level >= 3
-        name: Dripping Fangs
-      source: Character Feature
-      name: Dripping Fangs
-    inflictedConditions: []
     walkingSpeed: 5
-    titles: []
-    damage_taken: 0
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      strain: []
+      guid: 6a3f7e94-5c1d-4a87-b528-2d5e8f1c2b15
+      description: |-
+        M < [Average] restrained (EoT).
+
+        **Spend 1 Ferocity:** M < [Strong] restrained (save ends).
+      implementation: 4
+      targetAllegiance: enemy
+      modifiers: []
+      numTargets: "1"
+      repeatTargets: false
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      abilityType: none
+      name: Web Shot
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      modeList:
+      - rules: M < {Average} Restrained (EoT)
+        text: Normal
+      - rules: M < {Strong} Restrained (save ends)
+        condition: Heroic Resources Available to Spend >= 1
+        text: Spend 1 Ferocity
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      flavor: The spider fires a ball of sticky silk.
+      keywords:
+        Companion: true
+        Ranged: true
+        Weapon: true
+      multipleModes: true
+      targetType: target
+      objectTarget: false
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: M<[Average] Restrained (EoT)
+        modesSelected:
+        - 1
+        guid: 7b4f8d95-6e2c-4b97-a519-3f6a8d1e2c26
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: M<[Strong] Restrained (save ends)
+        modesSelected:
+        - 2
+        guid: 8c5a9e84-7f3d-4c87-b619-4e7f9d2c3a37
+      - __typeName: ActivatedAbilityReplenishBehavior
+        modesSelected:
+        - 2
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        mode: expend
+        applyto: caster
+      persistence: []
+      range: 5
     max_hitpoints: 13
-    notes:
-    - text: ""
-      title: Backstory
     initiativeGrouping: f445788e-1c11-4cb2-8d43-57bedfd9ef5a
-    movementSpeeds:
-      climb: 5
-    cr: 1
     attributes:
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
       inu:
         __typeName: CharacterAttribute
         id: inu
@@ -165,100 +147,175 @@ info:
         __typeName: CharacterAttribute
         id: agl
         baseValue: 2
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: 2
-      rea:
-        __typeName: CharacterAttribute
-        id: rea
-        baseValue: -1
       prs:
         __typeName: CharacterAttribute
         id: prs
         baseValue: 1
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
-        used: 1
-    levelChoices: []
-    import: []
-    savingThrowRatings: []
-    classes: []
-    equipment: []
-    skillRatings:
-      ae13b5cf-718a-42a4-ab5e-18d46b289ac6: true
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: false
-      strain: []
-      targetType: target
-      flavor: The spider fires a ball of sticky silk.
-      categorization: Signature Ability
-      multipleModes: true
-      keywords:
-        Weapon: true
-        Ranged: true
-        Companion: true
-      persistence: []
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: "1"
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        guid: 7b4f8d95-6e2c-4b97-a519-3f6a8d1e2c26
-        modesSelected:
-        - 1
-        rule: M<[Average] Restrained (EoT)
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        guid: 8c5a9e84-7f3d-4c87-b619-4e7f9d2c3a37
-        modesSelected:
-        - 2
-        rule: M<[Strong] Restrained (save ends)
-      - __typeName: ActivatedAbilityReplenishBehavior
-        mode: expend
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        applyto: caster
-        modesSelected:
-        - 2
-      iconid: ui-icons/skills/1.png
-      guid: 6a3f7e94-5c1d-4a87-b528-2d5e8f1c2b15
-      modeList:
-      - rules: M < {Average} Restrained (EoT)
-        text: Normal
-      - condition: Heroic Resources Available to Spend >= 1
-        rules: M < {Strong} Restrained (save ends)
-        text: Spend 1 Ferocity
-      targetAllegiance: enemy
-      description: |-
-        M < [Average] restrained (EoT).
-
-        **Spend 1 Ferocity:** M < [Strong] restrained (save ends).
-      repeatTargets: false
-      range: 5
-      name: Web Shot
-    monster_category: Animal
-    skillProficiencies: []
-    max_hitpoints_roll: 2d8+2
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 2
     animations:
       guid: 1b6e3c93-5d7f-4a86-b428-7c2d6e3f5a82
       anim:
       - animType: consumeResource
         resources:
           a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-    monster_type: Spider
     innateAttacks: []
+    movementSpeeds:
+      climb: 5
+    characterFeatures:
+    - __typeName: CharacterFeature
+      guid: 2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82
+      source: Character Feature
+      description: You have 1 stability.
+      implementation: 3
+      name: Attributes
+      domains:
+        CharacterFeature:2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82: true
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 3d9f5c84-5c2a-4f87-a428-8d3e1f6c5b73
+        sourceguid: 2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82
+        value: 1
+        behavior: attribute
+        source: Character Feature
+        operation: set
+        attribute: forcedmoveresistance
+        description: You have 1 stability.
+        domains:
+          CharacterFeature:2c8e4d83-3b6f-4a76-b428-7c1d6e3f5a82: true
+        name: Attributes
+    - __typeName: CharacterFeature
+      guid: 4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04
+      source: Character Feature
+      description: Whenever the spider makes a strike against a restrained creature, the spider deals extra poison damage equal to twice their Intuition score.
+      implementation: 3
+      name: Come Into My Parlor
+      domains:
+        CharacterFeature:4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04: true
+      modifiers:
+      - __typeName: CharacterModifier
+        rollType: ability_power_roll
+        name: Come Into My Parlor
+        keywords:
+          Strike: true
+        guid: 5f2e6c93-5d3b-4a87-b428-1e4f7d8c9b15
+        damageModifierType: poison
+        description: Strikes against restrained creatures deal extra poison damage equal to twice the spider's Intuition.
+        sourceguid: 4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04
+        source: Character Feature
+        behavior: power
+        damageModifier: 2 * Intuition
+        modtype: none
+        domains:
+          CharacterFeature:4e1f3d95-4b2a-4f97-a528-9d2e6f3c8a04: true
+        activationCondition: Target.Conditions has "Restrained"
+    - __typeName: CharacterFeature
+      guid: d2adce49-b17f-4fec-a88a-f37dae8fc0d9
+      source: Character Feature
+      description: Whenever the spider makes a strike while rampaging, the spider can deal extra poison damage equal to their Might score.
+      implementation: 3
+      name: Dripping Fangs
+      domains:
+        CharacterFeature:d2adce49-b17f-4fec-a88a-f37dae8fc0d9: true
+      modifiers:
+      - __typeName: CharacterModifier
+        rollType: ability_power_roll
+        behavior: power
+        keywords:
+          Strike: true
+        addText: "{Might} poison damage"
+        sourceguid: d2adce49-b17f-4fec-a88a-f37dae8fc0d9
+        source: Character Feature
+        name: Dripping Fangs
+        applyToFreeStrikes: true
+        guid: e3bedf5a-c280-4fed-b9ab-048ebf9d01ea
+        description: Whenever the spider makes a strike while rampaging, the spider can deal extra poison damage equal to their Might score.
+        modtype: none
+        domains:
+          CharacterFeature:d2adce49-b17f-4fec-a88a-f37dae8fc0d9: true
+        activationCondition: Self.Rampaging and Self.Level >= 3
+    - __typeName: CharacterFeature
+      guid: 07255379-58fe-4e5a-906f-3873dff0cdc4
+      source: Character Feature
+      name: Web Slinger
+      implementation: 3
+      description: Once on each of your turns while the spider is rampaging, you can shoot a web to a ceiling, wall, or sturdy object above you within 5 squares as a free maneuver. You can then fly in a straight line to any space within 5 squares of that object.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: f9ff1b57-3449-425b-b0f6-550611dfdfb2
+        sourceguid: 07255379-58fe-4e5a-906f-3873dff0cdc4
+        feature:
+          __typeName: CharacterFeature
+          guid: 96cad282-d552-4625-aff1-c58ebed7068c
+          source: Beastheart
+          name: Web Slinger
+          implementation: 3
+          description: Once on each of your turns while the spider is rampaging, you can shoot a web to a ceiling, wall, or sturdy object above you within 5 squares as a free maneuver. You can then fly in a straight line to any space within 5 squares of that object.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 72768aa9-1976-4fd1-a451-abf4b0f30736
+            source: Beastheart
+            behavior: activated
+            activatedAbility:
+              __typeName: ActivatedAbility
+              abilityType: none
+              guid: 6acbb00c-0a2e-45e1-ae9b-0d58d26affb3
+              actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+              description: Once on each of your turns while the spider is rampaging, you can shoot a web to a ceiling, wall, or sturdy object above you within 5 squares as a free maneuver. You can then fly in a straight line to any space within 5 squares of that object.
+              implementation: 1
+              range: 1
+              behaviors: []
+              modifiers: []
+              targetType: self
+              iconid: ui-icons/skills/1.png
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+              name: Web Slinger
+              numTargets: "1"
+              repeatTargets: false
+              usageLimitOptions:
+                charges: "1"
+                resourceid: a863673b-f259-44ab-8b40-c4e58f964fb6
+                resourceRefreshType: turn
+                multicharge: false
+              categorization: Common Ability
+            sourceguid: 96cad282-d552-4625-aff1-c58ebed7068c
+            name: Web Slinger
+            description: You can use the Web Slinger free maneuver.
+        source: Character Feature
+        behavior: modsummoner
+        name: Web Slinger
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        mode: summoner
+        description: While the spider rampages and its beastheart is level 6+, the beastheart gains the Web Slinger free maneuver.
+    titles: []
+    skillProficiencies: []
+    cr: 1
+    inflictedConditions: []
+    notes:
+    - text: ""
+      title: Backstory
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
+    damage_taken: 0
+    max_hitpoints_roll: 2d8+2
+    savingThrowRatings: []
+    levelChoices: []
+    skillRatings:
+      ae13b5cf-718a-42a4-ab5e-18d46b289ac6: true
+    equipment: []
+    monster_type: Spider
+    import: []
+    monster_category: Animal
+    classes: []
   tokenType: null
   bestiaryId: 8f3e1d94-5c2b-4a87-b629-3d4e8f1c2b04
   summonerid: null
@@ -271,6 +328,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 10
 ctime: 1779087601456
-mtime: 1779587355840
+mtime: 1784432087868
 hidden: false
 id: 8f3e1d94-5c2b-4a87-b629-3d4e8f1c2b04
