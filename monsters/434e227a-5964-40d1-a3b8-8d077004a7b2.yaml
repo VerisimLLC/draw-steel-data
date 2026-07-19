@@ -20,22 +20,22 @@ info:
     updateid: 0
     rotation: 0
   appearance:
-    portraitId: null
+    portraitId: 5fe9ec7f-338b-406d-b9dc-457d8607c3cc
     offtokenPortraitId: null
-    portraitFrameId: null
+    portraitFrameId: 5836106c-4ba0-4281-84cf-4ce797113f5e
     portraitRibbon: null
     backgroundId: null
     anthem: null
     anthemVolume: 1
     tokenScaling: 1
-    tokenZoom: 1
+    tokenZoom: 1.161628
     portraitOffset:
-      x: 0
-      y: 0
+      x: 0.08327132
+      y: 0.1092939
     frameHueShift: 0
     frameSaturation: 1
     frameBrightness: 1
-    characterName: Quiet of Snow
+    characterName: ""
     characterNamePrivate: false
     flip: false
     saddlePositions: []
@@ -56,12 +56,17 @@ info:
   updateid: 460f81ad-545d-4338-b6f6-18a96c234704
   properties:
     __typeName: monster
-    minionSquad: Quiet of Snow Squad 1
-    walkingSpeed: 5
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      range: "5"
+      repeatTargets: false
+      keywords:
+        Strike: true
+        Ranged: true
+        Magic: true
       implementation: 2
       name: Freezing Howl
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Summoner.Reason
@@ -70,237 +75,243 @@ info:
         - 6 cold damage; M < Average, slowed (eot)
         - "8 cold damage; #M < Strong, speed is 0 (eot)"
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        filterTarget: not Cast.PassesPotency(target, "M", Caster.Summoner.Strong)
         tiersSelected:
         - 3
-        duration: end_of_next_turn
-        filterTarget: not Cast.PassesPotency(target, "M", Caster.Summoner.Strong)
         ongoingEffectCustom: false
+        duration: end_of_next_turn
         ongoingEffectSource: specific
         ongoingEffect: a41ad86c-64ff-4421-bc55-7e5325dce78a
-      targetType: target
-      objectTarget: true
-      strain: []
-      range: "5"
-      implementationDetails: Ability effect is not implemented
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      description: Frost slows the enemy down, allowing one ally adjacent to each target to shift 2 and either hide or defend.
       abilityType: none
-      guid: 85718523-85f8-42be-bb0b-3469da4d0f55
-      iconid: ui-icons/skills/1.png
       targetTextOverride: One creature or object per minion
-      repeatTargets: false
       modifiers: []
-      keywords:
-        Magic: true
-        Strike: true
-        Ranged: true
+      categorization: Signature Ability
+      numTargets: "1"
       display:
-        brightness: 1
         hueshift: 0
         bgcolor: "#ffffffff"
+        brightness: 1
         saturation: 1
-      description: Frost slows the enemy down, allowing one ally adjacent to each target to shift 2 and either hide or defend.
-      numTargets: "1"
-      categorization: Signature Ability
-    monster_type: Quiet of Snow
-    skillProficiencies: []
-    cr: 2
-    withCaptain: "-"
-    resources: []
-    damage_taken: 6
-    skillRatings: []
-    damage_taken_seq: 1
-    creatureSize: 1S
-    notes:
-    - text: This elemental is a pure-white vulpine with six legs that freely sprints through the air. Their howls are telepathic, washing over the receivers with a strong chill and a wave of goosebumps.
-      title: Monster Notes
-    initiativeGrouping: 0d02ddef-23ce-42a9-8192-17efa732f75d
-    stability: 1
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      strain: []
+      targetType: target
+      implementationDetails: Ability effect is not implemented
+      guid: 85718523-85f8-42be-bb0b-3469da4d0f55
     monster_category: Monster
-    equipment:
-      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
-    notesRevision: b30c30d9-5a20-41ef-bcdd-f2daaa8aa26f
-    savingThrowRatings: []
-    creatureTemplates:
-    - d808c4b7-1e5d-4272-8b84-d91339560dda
-    minion: true
-    movementSpeeds:
-      fly: 5
+    role: Minion Artillery
+    stability: 1
     opportunityAttack: 4
-    levelChoices: []
-    titles: []
-    groupid: b685b1bd-6c99-4dd1-86d8-6694c8e32ef2
     attributes:
       prs:
         __typeName: CharacterAttribute
-        id: prs
         baseValue: 3
-      agl:
-        __typeName: CharacterAttribute
-        id: agl
-        baseValue: 2
-      rea:
-        __typeName: CharacterAttribute
-        id: rea
-        baseValue: 0
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: -1
+        id: prs
       inu:
         __typeName: CharacterAttribute
-        id: inu
         baseValue: 0
-    innateAttacks: []
+        id: inu
+      mgt:
+        __typeName: CharacterAttribute
+        baseValue: -1
+        id: mgt
+      agl:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: agl
+      rea:
+        __typeName: CharacterAttribute
+        baseValue: 0
+        id: rea
+    minion: true
+    notes:
+    - text: This elemental is a pure-white vulpine with six legs that freely sprints through the air. Their howls are telepathic, washing over the receivers with a strong chill and a wave of goosebumps.
+      title: Monster Notes
+    skillProficiencies: []
+    withCaptain: "-"
+    damage_taken_seq: 1
+    minionSquad: Quiet of Snow Squad 1
+    cr: 2
+    skillRatings: []
+    availableTriggers: []
+    damage_taken_minion_count: 4
+    keywords:
+      Rot: true
+      Elemental: true
+      Water: true
+      Summoner: true
+      Air: true
+      Heroic: true
+    creatureSize: 1S
+    creatureTemplates:
+    - d808c4b7-1e5d-4272-8b84-d91339560dda
+    monster_type: Quiet of Snow
     max_hitpoints: 4
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    titles: []
+    innateAttacks: []
+    movementSpeeds:
+      fly: 5
+    damage_taken: 6
+    inflictedConditions: []
+    walkingSpeed: 5
+    savingThrowRatings: []
+    initiativeGrouping: 0d02ddef-23ce-42a9-8192-17efa732f75d
+    resources: []
+    levelChoices: []
+    groupid: b685b1bd-6c99-4dd1-86d8-6694c8e32ef2
     characterFeatures:
     - __typeName: CharacterFeature
       implementation: 4
+      name: Summon Cost
+      source: Character Feature
+      domains:
+        CharacterFeature:83b23bea-e6fe-4e73-8633-e8fed80a69c1: true
+        CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
+        CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+      description: ""
       modifiers:
       - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:83b23bea-e6fe-4e73-8633-e8fed80a69c1: true
+          CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
+          CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+        source: Character Feature
+        behavior: attribute
+        sourceguid: d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce
         attribute: f62f2f5f-d4ea-4cfc-89cd-427aed05db17
-        sourceguid: d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce
-        guid: cb85fdb2-853e-453b-ba74-7f7dca30a9d6
-        source: Character Feature
+        name: Summon Cost
         value: 3
-        name: Summon Cost
         description: ""
-        domains:
-          CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
-          CharacterFeature:83b23bea-e6fe-4e73-8633-e8fed80a69c1: true
-          CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
-        behavior: attribute
+        guid: cb85fdb2-853e-453b-ba74-7f7dca30a9d6
       - __typeName: CharacterModifier
-        attribute: d240ab50-3a4d-4435-b6b3-7c99e0b2fbc7
-        sourceguid: d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce
-        guid: ac04c974-c4c5-44a9-ac1e-3d56576eb5c7
-        source: Character Feature
-        value: 5
-        name: Summon Cost
-        description: ""
         domains:
-          CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
           CharacterFeature:83b23bea-e6fe-4e73-8633-e8fed80a69c1: true
+          CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
           CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
+        source: Character Feature
         behavior: attribute
-      name: Summon Cost
-      description: ""
+        sourceguid: d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce
+        attribute: d240ab50-3a4d-4435-b6b3-7c99e0b2fbc7
+        name: Summon Cost
+        value: 5
+        description: ""
+        guid: ac04c974-c4c5-44a9-ac1e-3d56576eb5c7
       guid: d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce
-      domains:
-        CharacterFeature:d7fdf9f2-f4a7-4b72-87d5-08e8184a09ce: true
-        CharacterFeature:83b23bea-e6fe-4e73-8633-e8fed80a69c1: true
-        CharacterFeature:306473f9-599f-4edf-8dd9-f11eaab7fa81: true
-      source: Character Feature
     - __typeName: CharacterFeature
       implementation: 4
-      modifiers:
-      - __typeName: CharacterModifier
-        resistances:
-        - __typeName: ResistanceEntry
-          dr: Summoner.Reason
-          apply: Damage Reduction
-          damageType: sonic
-        sourceguid: 8e36f968-43d0-48b1-beda-74cbaab965c2
-        behavior: resistance
-        description: ""
-        name: Sonic Immunity
-        guid: eb306c91-ed6b-4d5a-bd37-4fe2822ab169
-        domains:
-          CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
-          CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
-          CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
-        source: Character Feature
       name: Sonic Immunity
-      description: ""
-      guid: 8e36f968-43d0-48b1-beda-74cbaab965c2
+      source: Character Feature
       domains:
+        CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
         CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
         CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
-        CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
-      source: Character Feature
-    - __typeName: CharacterFeature
-      implementation: 4
+      description: ""
       modifiers:
       - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
+          CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
+          CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
+        source: Character Feature
+        behavior: resistance
+        sourceguid: 8e36f968-43d0-48b1-beda-74cbaab965c2
+        name: Sonic Immunity
         resistances:
         - __typeName: ResistanceEntry
+          damageType: sonic
           dr: Summoner.Reason
           apply: Damage Reduction
-          damageType: cold
-        sourceguid: 4b936ec9-c909-4f9f-93c1-f0fe88d22e16
-        behavior: resistance
         description: ""
-        name: Cold Immunity
-        guid: bd133367-e5c9-4a6e-9f5b-35c3de138291
-        domains:
-          CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
-          CharacterFeature:4b936ec9-c909-4f9f-93c1-f0fe88d22e16: true
-          CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
-          CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
-        source: Character Feature
+        guid: eb306c91-ed6b-4d5a-bd37-4fe2822ab169
+      guid: 8e36f968-43d0-48b1-beda-74cbaab965c2
+    - __typeName: CharacterFeature
+      implementation: 4
       name: Cold Immunity
-      description: ""
-      guid: 4b936ec9-c909-4f9f-93c1-f0fe88d22e16
+      source: Character Feature
       domains:
-        CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
+        CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
         CharacterFeature:4b936ec9-c909-4f9f-93c1-f0fe88d22e16: true
         CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
-        CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
-      source: Character Feature
-    - __typeName: CharacterFeature
-      implementation: 4
+        CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
+      description: ""
       modifiers:
       - __typeName: CharacterModifier
-        attribute: fb37652f-d640-4a53-9392-0930dcb30eab
-        sourceguid: dbc79879-5847-47de-80f5-ebd1c2222e45
-        guid: 19d3349a-c6f7-4493-97f3-64e04f74d989
-        source: Character Feature
-        value: 1
-        name: Hover
-        description: ""
         domains:
-          CharacterFeature:dbc79879-5847-47de-80f5-ebd1c2222e45: true
-        behavior: attribute
+          CharacterFeature:c93bb8e2-6b8e-4cca-86eb-b0ac929b904d: true
+          CharacterFeature:4b936ec9-c909-4f9f-93c1-f0fe88d22e16: true
+          CharacterFeature:845f3d02-2c67-48d7-b9d1-bf9f9c4b1c63: true
+          CharacterFeature:8e36f968-43d0-48b1-beda-74cbaab965c2: true
+        source: Character Feature
+        behavior: resistance
+        sourceguid: 4b936ec9-c909-4f9f-93c1-f0fe88d22e16
+        name: Cold Immunity
+        resistances:
+        - __typeName: ResistanceEntry
+          damageType: cold
+          dr: Summoner.Reason
+          apply: Damage Reduction
+        description: ""
+        guid: bd133367-e5c9-4a6e-9f5b-35c3de138291
+      guid: 4b936ec9-c909-4f9f-93c1-f0fe88d22e16
+    - __typeName: CharacterFeature
+      implementation: 4
       name: Hover
-      description: ""
-      guid: dbc79879-5847-47de-80f5-ebd1c2222e45
+      source: Character Feature
       domains:
         CharacterFeature:dbc79879-5847-47de-80f5-ebd1c2222e45: true
-      source: Character Feature
-    - __typeName: CharacterFeature
-      implementation: 4
+      description: ""
       modifiers:
       - __typeName: CharacterModifier
-        behavior: trigger
-        sourceguid: b7b18a50-de1e-464c-a10b-b2e68548daf3
+        domains:
+          CharacterFeature:dbc79879-5847-47de-80f5-ebd1c2222e45: true
+        source: Character Feature
+        behavior: attribute
+        sourceguid: dbc79879-5847-47de-80f5-ebd1c2222e45
+        attribute: fb37652f-d640-4a53-9392-0930dcb30eab
+        name: Hover
+        value: 1
+        description: ""
+        guid: 19d3349a-c6f7-4493-97f3-64e04f74d989
+      guid: dbc79879-5847-47de-80f5-ebd1c2222e45
+    - __typeName: CharacterFeature
+      implementation: 4
+      name: Cold Surge
+      source: Character Feature
+      domains:
+        CharacterFeature:b7b18a50-de1e-464c-a10b-b2e68548daf3: true
+      description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:b7b18a50-de1e-464c-a10b-b2e68548daf3: true
         name: Cold Surge
-        guid: b7ce689b-b99a-4627-88df-b8603497b00a
+        behavior: trigger
+        source: Character Feature
         triggeredAbility:
           __typeName: TriggeredAbility
-          targetType: self
-          triggerPrompt: Launch a blast of air that grants allies a surge
-          mandatory: false
-          name: Cold Surge
-          iconid: ui-icons/skills/1.png
-          abilityType: none
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          repeatTargets: false
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             customAbility:
               __typeName: ActivatedAbility
-              implementation: 3
+              range: "5"
+              repeatTargets: false
+              numTargets: "1"
               name: Cold Surge
-              behaviors:
-              - __typeName: ActivatedAbilityReplenishBehavior
-                resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
-                chatMessage: Cold Surge
-              targetType: cube
               objectTarget: false
               strain: []
-              range: "5"
+              description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
               radius:
                 __typeName: GoblinScriptTable
                 editableField: true
-                id: table
-                field: Size
                 entries:
                 - script: "1"
                   threshold: 1
@@ -312,67 +323,56 @@ info:
                   threshold: 6
                 - script: "5"
                   threshold: 7
+                field: Size
+                id: table
               abilityType: none
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityReplenishBehavior
+                resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+                chatMessage: Cold Surge
+              targetAllegiance: ally
+              iconid: ui-icons/skills/1.png
+              implementation: 3
+              targetType: cube
               display:
-                brightness: 1
                 hueshift: 0
                 bgcolor: "#ffffffff"
+                brightness: 1
                 saturation: 1
-              repeatTargets: false
-              modifiers: []
               guid: c186b772-e49c-4e09-9826-92028d185fe8
-              iconid: ui-icons/skills/1.png
-              description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
-              numTargets: "1"
-              targetAllegiance: ally
           - __typeName: ActivatedAbilityRemoveCreatureBehavior
             runOnDismiss: true
             leavesCorpse: true
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: 1
-          repeatTargets: false
-          modifiers: []
-          trigger: creaturedeath
-          strain: []
-          description: ""
           numTargets: "1"
+          triggerPrompt: Launch a blast of air that grants allies a surge
+          abilityType: none
+          modifiers: []
+          strain: []
+          mandatory: false
+          name: Cold Surge
+          trigger: creaturedeath
+          iconid: ui-icons/skills/1.png
+          range: 1
+          targetType: self
+          description: ""
           guid: d8de5576-18f4-42e6-bf45-a3230d8ee06e
         description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
-        domains:
-          CharacterFeature:b7b18a50-de1e-464c-a10b-b2e68548daf3: true
-        source: Character Feature
-      - __typeName: CharacterModifier
-        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
         sourceguid: b7b18a50-de1e-464c-a10b-b2e68548daf3
-        guid: 14605d37-a4cd-4633-9c0a-0dd1713d6bc6
-        source: Character Feature
-        value: 1
-        name: Cold Surge
-        description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
+        guid: b7ce689b-b99a-4627-88df-b8603497b00a
+      - __typeName: CharacterModifier
         domains:
           CharacterFeature:b7b18a50-de1e-464c-a10b-b2e68548daf3: true
+        source: Character Feature
         behavior: attribute
-      name: Cold Surge
-      description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
+        sourceguid: b7b18a50-de1e-464c-a10b-b2e68548daf3
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        name: Cold Surge
+        value: 1
+        description: When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the affected area gains a surge.
+        guid: 14605d37-a4cd-4633-9c0a-0dd1713d6bc6
       guid: b7b18a50-de1e-464c-a10b-b2e68548daf3
-      domains:
-        CharacterFeature:b7b18a50-de1e-464c-a10b-b2e68548daf3: true
-      source: Character Feature
-    keywords:
-      Heroic: true
-      Elemental: true
-      Water: true
-      Summoner: true
-      Air: true
-      Rot: true
-    role: Minion Artillery
-    inflictedConditions: []
-    availableTriggers: []
-    damage_taken_minion_count: 4
+    notesRevision: b30c30d9-5a20-41ef-bcdd-f2daaa8aa26f
   tokenType: null
   bestiaryId: 434e227a-5964-40d1-a3b8-8d077004a7b2
   summonerid: null
