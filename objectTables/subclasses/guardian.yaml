@@ -7,10 +7,157 @@ isSubclass: true
 levels:
   level-9:
     __typeName: ClassLevel
-    features: []
+    features:
+    - __typeName: CharacterFeatureChoice
+      name: 9th-Level Guardian Abilities
+      classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+      numChoices: 1
+      options:
+      - __typeName: CharacterFeature
+        implementation: 3
+        source: Guardian Class Feature
+        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+        description: Your companion emanates a deadly 3-burst howl (sonic + frightened; frightened creatures take 10 psychic on your turns). Spend 1 Ferocity for a second burst from you.
+        name: Banshee Howl
+        canHavePrerequisites: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Banshee Howl
+          source: Guardian Class Feature
+          activatedAbility:
+            __typeName: ActivatedAbility
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 5 sonic damage; I < weak, banshee howl (save ends)
+              - 10 sonic damage; I < average, banshee howl (save ends)
+              - 15 sonic damage; I < strong, banshee howl (save ends)
+              roll: 2d10 + Intuition
+            - __typeName: ActivatedAbilityReplenishBehavior
+              modesSelected:
+              - 2
+              quantity: "1"
+              applyto: caster
+              chatMessage: Banshee Howl - Spend 1 Ferocity for a second burst from the beastheart.
+              resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              mode: expend
+            flavor: Your companion's howl, screech, roar, or psychic emanation presages death to those who hear it.
+            targetType: all
+            range: 3
+            description: "3 burst; each enemy in the area. Power Roll + Intuition: sonic damage and frightened (save ends). While frightened this way, a creature takes 10 psychic damage at the start of each of your turns. Spend 1 Ferocity: this ability also affects a 3 burst originating from you; an enemy in both areas is only affected once."
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            multipleModes: true
+            iconid: ui-icons/skills/1.png
+            targetFilter: Enemy
+            guid: 2e4d80fe-ba62-4596-8197-5a7292f0a474
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            categorization: Heroic Ability
+            implementation: 3
+            numTargets: "1"
+            rangeTextOverride: 3 burst
+            abilityType: none
+            modifiers: []
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            name: Banshee Howl
+            targetTextOverride: Each enemy in the area
+            resourceNumber: "11"
+            keywords:
+              Area: true
+              Magic: true
+              Companion: true
+            partnerBurst: Mode = 2
+            modeList:
+            - text: Standard
+            - condition: Heroic Resources Available to Spend >= 1
+              rules: Also affects a 3 burst originating from you; an enemy in both areas is only affected once.
+              text: Spend 1 Ferocity
+            repeatTargets: false
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          guid: e843f637-414a-4969-9165-506c78478d33
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          behavior: activated
+          sourceguid: c54e7e7c-b5dc-48db-9e74-64eca08bea83
+          description: Your companion looses a deadly howl.
+        guid: c54e7e7c-b5dc-48db-9e74-64eca08bea83
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      - __typeName: CharacterFeature
+        implementation: 3
+        source: Guardian Class Feature
+        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+        description: Your companion charges a foe (Might strike, taunted save ends); while taunted this way the target deals 10 less damage to anyone but your companion.
+        name: Relentless
+        canHavePrerequisites: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Relentless
+          source: Guardian Class Feature
+          description: Your companion charges and taunts a foe.
+          behavior: activated
+          sourceguid: e3e486d3-9a6e-425b-820e-de9cc4f13113
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          guid: f9bc9534-15c6-48a5-9040-f381b21d9990
+          activatedAbility:
+            __typeName: ActivatedAbility
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 11 + M damage; P < weak, relentless taunt (save ends)
+              - 17 + M damage; P < average, relentless taunt (save ends)
+              - 22 + M damage; P < strong, relentless taunt (save ends)
+              roll: 2d10 + Might
+            flavor: Your companion launches at your foe, shielding allies with their body.
+            targetType: target
+            range: 1
+            description: "Melee 1; one enemy. Power Roll + Might: damage and taunted (save ends). While the target is taunted this way, all creatures except your companion have immunity 10 to damage dealt by the target."
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            iconid: ui-icons/skills/1.png
+            targetAllegiance: enemy
+            guid: 2ca99b2d-b1bb-4879-8a8d-980d29a039fd
+            implementation: 3
+            categorization: Heroic Ability
+            abilityType: none
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            name: Relentless
+            numTargets: "1"
+            repeatTargets: false
+            resourceNumber: "11"
+            modifiers: []
+            keywords:
+              Strike: true
+              Charge: true
+              Weapon: true
+              Melee: true
+              Companion: true
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        guid: e3e486d3-9a6e-425b-820e-de9cc4f13113
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      allowDuplicateChoices: false
+      guid: 93a09469-fd27-4185-99df-ca3a493e1670
+      description: Choose one of the following abilities.
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-8:
     __typeName: ClassLevel
     features:
@@ -29,6 +176,9 @@ levels:
         description: Enables broadened opportunity attacks (shift/teleport/forced).
         name: Reflexes Perfected
         attribute: 081090af-64c9-473d-a3de-d7f3886eebeb
+        domains:
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
         guid: c8439958-b726-4d4f-a682-6525976736f0
         behavior: attribute
         value: "1"
@@ -46,37 +196,41 @@ levels:
           range: 1
           description: ""
           name: Reflexes Perfected
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: 6c4b9973-8695-4bf1-8e4b-cf1297d36c4f
-          repeatTargets: false
-          targetType: self
-          abilityModification: true
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
-            roll: Intuition
             chatMessage: Reflexes Perfected
-        applyToTriggeredAbilities: true
+            roll: Intuition
+          iconid: ui-icons/skills/1.png
+          abilityModification: true
+          modifiers: []
+          targetType: self
+          guid: 6c4b9973-8695-4bf1-8e4b-cf1297d36c4f
+          repeatTargets: false
+        attributes: []
         sourceguid: e8259411-1fc4-4229-b334-7b4123f254f7
         description: Your free strikes deal extra damage equal to your Intuition.
         name: Reflexes Perfected
         filterAbility: Ability.name = "Melee Free Strike" or Ability.name = "Ranged Free Strike"
-        behavior: modifyability
-        modifyDescription: Your free strikes deal extra damage equal to your Intuition score.
+        applyToTriggeredAbilities: true
         guid: c9d77f6a-eba9-48e6-a492-d5091412fd78
-        attributes: []
+        modifyDescription: Your free strikes deal extra damage equal to your Intuition score.
+        behavior: modifyability
+        domains:
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       - __typeName: CharacterModifier
         name: Reflexes Perfected (Companion)
         source: Guardian Class Feature
         domains:
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-        behavior: modcompanion
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
         feature:
           __typeName: CharacterFeature
           name: Reflexes Perfected
           source: Beastheart
-          description: Your companion free strikes deal +your Intuition, and it can make broadened opportunity attacks.
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
           modifiers:
           - __typeName: CharacterModifier
             source: Beastheart
@@ -95,80 +249,467 @@ levels:
             sourceguid: 5171c92a-0c4b-42ab-9fcd-7bdbcb4a58f1
             description: Your companion free strikes deal extra damage equal to your Intuition.
             name: Reflexes Perfected
-            activationCondition: "true"
             behavior: power
+            activationCondition: "true"
             addText: "{Summoner.Intuition} damage"
             guid: 4668159f-cdd4-44c0-9102-11aa6385ae8e
             modtype: none
           implementation: 3
           guid: 5171c92a-0c4b-42ab-9fcd-7bdbcb4a58f1
-          domains:
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          description: Your companion free strikes deal +your Intuition, and it can make broadened opportunity attacks.
         guid: fa45dda6-d816-48cf-a650-5d44eab5ce1d
+        behavior: modcompanion
         sourceguid: e8259411-1fc4-4229-b334-7b4123f254f7
         description: Your companion gains Reflexes Perfected.
       implementationDetails: "Part A: free strikes deal +Intuition (hero via modifyability; companion via applyToFreeStrikes with Summoner.Intuition, verified to resolve to the beastheart Intuition). The engine-invoked opportunity attack uses the standard free-strike path, so confirm in play whether +Intuition rides the OA damage (it does on action-bar/named free strikes). Part B: opportunity attacks now fire on shift, forced movement, and ability-driven teleport, via a core Creature.lua / AbilityRelocateCreature.lua broadening gated by the Opportunity Attack On Any Movement custom attribute (a no-op for any creature without it). Not covered: teleports via non-ability paths (position swaps, a few rule-behavior teleports) and same-column purely-vertical teleports."
       guid: e8259411-1fc4-4229-b334-7b4123f254f7
       domains:
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
         class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   multiclass:
     __typeName: ClassLevel
     features: []
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-4:
-    __typeName: ClassLevel
-    features: []
-    domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-10:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  primary:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-5:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeature
-      name: There For Each Other
-      source: Guardian Class Feature
-      classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-      description: When you or your companion uses your The Pack Defends ability to spend a Recovery, you and the target both regain Stamina.
-      modifiers: []
-      canHavePrerequisites: true
-      guid: 5ea46ffe-6f2c-4097-882e-2377666793e3
-      domains:
-        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
   tutoriallevel-2:
     __typeName: ClassLevel
     features: []
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-10:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  primary:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-7:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-6:
+    __typeName: ClassLevel
+    features:
+    - __typeName: CharacterFeatureChoice
+      name: 6th-Level Wild Nature Ability
+      classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+      numChoices: 1
+      options:
+      - __typeName: CharacterFeature
+        implementation: 3
+        source: Guardian Class Feature
+        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+        description: Your companion rushes forward to protect you from a dangerous foe.
+        name: Sic 'Em!
+        canHavePrerequisites: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Sic 'Em!
+          source: Guardian Class Feature
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          guid: 81f566bd-6baa-43a1-9b3f-ef741d478ecb
+          activatedAbility:
+            __typeName: ActivatedAbility
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 11 + M damage; taunted (save ends); M < Weak prone
+              - 16 + M damage; taunted (save ends); M < Average prone
+              - 21 + M damage; taunted (save ends); M < Strong prone and can't stand (EoT)
+              roll: 2d10 + Might
+            flavor: Your companion rushes forward to protect you from a dangerous foe.
+            targetType: target
+            range: 1
+            description: ""
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            iconid: ui-icons/skills/1.png
+            guid: 3c3fa2ca-57ce-4b2c-bd5e-24f9ea1637cd
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            numTargets: "1"
+            resourceNumber: "9"
+            abilityType: none
+            implementation: 3
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            name: Sic 'Em!
+            objectTarget: false
+            strain: []
+            modifiers: []
+            repeatTargets: false
+            keywords:
+              Strike: true
+              Charge: true
+              Weapon: true
+              Melee: true
+              Companion: true
+            categorization: Heroic Ability
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
+          behavior: activated
+          description: Your companion rushes forward to protect you from a dangerous foe.
+        - __typeName: CharacterModifier
+          name: Sic 'Em! (Triggered)
+          source: Guardian Class Feature
+          description: When an enemy damages you, spend 11 Ferocity to have your companion rush the attacker and use Sic 'Em! as a triggered action.
+          guid: 7d1a4e01-5c02-4b96-9a3f-1e8f0c2b6d01
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              inheritKeywords: true
+              promptText: Your companion strikes the enemy who damaged you.
+              targeting: inherit
+              applyto: caster_companion
+              customAbility:
+                __typeName: ActivatedAbility
+                behaviors:
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  promptText: Your companion rushes forward toward the enemy who damaged you.
+                  rule: shift {Movement Speed}
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  tiers:
+                  - 11 + M damage; taunted (save ends); M < Weak prone
+                  - 16 + M damage; taunted (save ends); M < Average prone
+                  - 21 + M damage; taunted (save ends); M < Strong prone and can't stand (EoT)
+                  roll: 2d10 + Might
+                targetType: target
+                range: "100"
+                iconid: ui-icons/skills/1.png
+                targetAllegiance: enemy
+                guid: 7d1a4e03-5c02-4b96-9a3f-1e8f0c2b6d03
+                display:
+                  saturation: 1
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                categorization: Hidden
+                abilityType: none
+                name: Sic 'Em! (Companion Strike)
+                objectTarget: false
+                repeatTargets: false
+                keywords:
+                  Strike: true
+                  Charge: true
+                  Weapon: true
+                  Melee: true
+                  Companion: true
+                modifiers: []
+                strain: []
+                rangeTextOverride: Melee 1
+                numTargets: "1"
+              abilityType: custom
+            targetType: attacker
+            keywords:
+              Strike: true
+              Charge: true
+              Weapon: true
+              Melee: true
+              Companion: true
+            actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+            persistence: []
+            iconid: ui-icons/skills/1.png
+            guid: 7d1a4e02-5c02-4b96-9a3f-1e8f0c2b6d02
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            mandatory: false
+            range: "100"
+            numTargets: "1"
+            strain: []
+            abilityType: none
+            triggerPrompt: Your companion rushes the enemy who damaged you and strikes with Sic 'Em!.
+            resourceNumber: "11"
+            name: Sic 'Em!
+            trigger: losehitpoints
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            subject: self
+            modifiers: []
+            repeatTargets: false
+            conditionFormula: HasAttacker and (not Friends(Self, Attacker))
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
+          behavior: trigger
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        - __typeName: CharacterModifier
+          name: Sic 'Em! (Triggered)
+          source: Guardian Class Feature
+          ability:
+            __typeName: TriggeredAbilityDisplay
+            flavor: Your companion rushes forward to protect you from a dangerous foe.
+            effect: Your companion rushes the triggering enemy and makes a Sic 'Em! power roll (2d10 + your companion's Might) against it -- 11/16/21 + M damage; taunted (save ends); prone at M < weak/average/strong (and can't stand until end of turn at tier 3).
+            name: Sic 'Em!
+            trigger: An enemy damages you.
+            cost: 11 Ferocity
+            target: The enemy who damaged you
+            keywords:
+              Strike: true
+              Charge: true
+              Weapon: true
+              Melee: true
+              Companion: true
+            guid: 7d1a4e05-5c02-4b96-9a3f-1e8f0c2b6d05
+            distance: Melee 1
+          behavior: triggerdisplay
+          guid: 7d1a4e04-5c02-4b96-9a3f-1e8f0c2b6d04
+          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        guid: 992c1851-c37d-489e-880e-73d42bcbbc73
+        domains:
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterFeature
+        implementation: 3
+        source: Guardian Class Feature
+        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+        description: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
+        name: Stare Down
+        canHavePrerequisites: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Stare Down
+          source: Guardian Class Feature
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          guid: 194a20da-7bb7-4652-ae08-182b668a7a48
+          behavior: activated
+          activatedAbility:
+            __typeName: ActivatedAbility
+            behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
+              applyto: targets
+              ongoingEffectCustom: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
+              duration: end_of_next_turn
+            flavor: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
+            targetType: target
+            keywords:
+              Ranged: true
+              Magic: true
+              Companion: true
+            description: ""
+            actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+            iconid: ui-icons/skills/1.png
+            targetAllegiance: enemy
+            guid: 8f266f26-fea2-41e7-ad74-e9f250cd0a13
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            implementationDetails: The move/maneuver/action trigger launches at the start of the target's turn. The trigger-trigger executes after the target's trigger.
+            numTargets: "1"
+            range: "5"
+            abilityType: none
+            implementation: 3
+            resourceNumber: "9"
+            name: Stare Down
+            strain: []
+            preDescription: The first time the target uses a move action, main action, maneuver, or triggered action before the start of your next turn, your companion makes the following power roll before the target acts. If the target hasn’t acted before the start of your next turn, they are frightened of your companion (save ends).
+            repeatTargets: false
+            modifiers: []
+            categorization: Heroic Ability
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
+          description: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
+        - __typeName: CharacterModifier
+          name: Stare Down (Reaction)
+          source: Guardian Class Feature
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            behaviors:
+            - __typeName: ActivatedAbilityPurgeEffectsBehavior
+              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
+              applyto: targets
+              conditions: []
+              mode: effect
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              promptText: Your companion's Stare Down power roll resolves against the enemy.
+              targeting: inherit
+              applyto: caster_companion
+              customAbility:
+                __typeName: ActivatedAbility
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  tiers:
+                  - 9 + I psychic damage; I < Weak, weakened (save ends)
+                  - 13 + I psychic damage; I < Average, weakened (save ends)
+                  - 18 + I psychic damage; I < Strong, weakened (save ends)
+                  roll: 2d10 + Intuition
+                keywords:
+                  Ranged: true
+                  Magic: true
+                  Companion: true
+                categorization: Hidden
+                targetType: target
+                abilityType: none
+                range: "5"
+                targetAllegiance: enemy
+                name: Stare Down (Companion Roll)
+                strain: []
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                repeatTargets: false
+                display:
+                  saturation: 1
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                guid: 7e514062-5f81-42ca-d3c4-60b192cf5e34
+                numTargets: "1"
+              inheritKeywords: true
+            targetType: subject
+            persistence: []
+            iconid: ui-icons/skills/1.png
+            guid: 6d403f51-4e70-41b9-c2b3-5fa081be4d23
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            mandatory: true
+            numTargets: "1"
+            abilityType: none
+            name: Stare Down
+            trigger: beginturn
+            strain: []
+            subject: enemy
+            modifiers: []
+            repeatTargets: false
+            conditionFormula: Subject.Ongoing Effects has "Stare Down"
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          behavior: trigger
+          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
+          guid: 5c3f2e40-3d6f-40a8-b1a2-4e9f70ad3c12
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        - __typeName: CharacterModifier
+          name: Stare Down (Triggered Action Reaction)
+          source: Guardian Class Feature
+          behavior: trigger
+          guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e01
+          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            behaviors:
+            - __typeName: ActivatedAbilityPurgeEffectsBehavior
+              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
+              applyto: targets
+              conditions: []
+              mode: effect
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              promptText: Your companion's Stare Down power roll resolves against the enemy.
+              targeting: inherit
+              applyto: caster_companion
+              customAbility:
+                __typeName: ActivatedAbility
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  tiers:
+                  - 9 + I psychic damage; I < Weak, weakened (save ends)
+                  - 13 + I psychic damage; I < Average, weakened (save ends)
+                  - 18 + I psychic damage; I < Strong, weakened (save ends)
+                  roll: 2d10 + Intuition
+                keywords:
+                  Ranged: true
+                  Magic: true
+                  Companion: true
+                categorization: Hidden
+                targetType: target
+                abilityType: none
+                range: "5"
+                targetAllegiance: enemy
+                name: Stare Down (Companion Roll)
+                strain: []
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                repeatTargets: false
+                display:
+                  saturation: 1
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e03
+                numTargets: "1"
+              inheritKeywords: true
+            targetType: subject
+            persistence: []
+            iconid: ui-icons/skills/1.png
+            guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e02
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            mandatory: true
+            numTargets: "1"
+            abilityType: none
+            name: Stare Down
+            trigger: usetriggeredaction
+            strain: []
+            subject: enemy
+            modifiers: []
+            repeatTargets: false
+            conditionFormula: Subject.Ongoing Effects has "Stare Down"
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        guid: 63366fa4-764d-408d-9d54-e4984b3d2d42
+        domains:
+          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      allowDuplicateChoices: false
+      guid: 4bff6c3e-49b4-4dd5-a69b-ef40bcb68058
+      description: Choose one of the following abilities.
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-2:
     __typeName: ClassLevel
     features:
     - __typeName: CharacterFeatureChoice
       name: 2nd-Level Wild Nature Ability
-      description: Choose one of the following abilities.
+      domains:
+        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
       numChoices: 1
       options:
@@ -183,9 +724,10 @@ levels:
         - __typeName: CharacterModifier
           name: Fetch!
           source: Guardian Class Feature
-          description: ""
-          behavior: activated
-          sourceguid: e8a3c2d1-9b4f-4e76-a528-1c6d7e2f8a91
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          guid: f9b4d3e2-ac5b-4f87-b639-2d7e8f3a9b02
           activatedAbility:
             __typeName: ActivatedAbility
             behaviors:
@@ -193,8 +735,6 @@ levels:
               autoTarget: false
               standardAbilityParams:
                 range: "5"
-              applyto: caster
-              promptText: Teleport up to 5 squares before the power roll.
               abilityType: standard
               customAbility:
                 __typeName: ActivatedAbility
@@ -205,15 +745,17 @@ levels:
                 description: ""
                 name: Invoked Ability
                 iconid: ui-icons/skills/1.png
-                modifiers: []
-                repeatTargets: false
-                abilityType: none
-                guid: 3e8b2f17-4d96-4a85-b274-1c5d6e9f3a48
                 display:
                   brightness: 1
                   hueshift: 0
                   saturation: 1
                   bgcolor: "#ffffffff"
+                modifiers: []
+                abilityType: none
+                guid: 3e8b2f17-4d96-4a85-b274-1c5d6e9f3a48
+                repeatTargets: false
+              applyto: caster
+              promptText: Teleport up to 5 squares before the power roll.
               standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
               autoTarget: false
@@ -273,15 +815,15 @@ levels:
                   bgcolor: "#ffffffff"
                 numTargets: "1"
                 targetTextOverride: One creature or object
-                name: Fetch! Strike
-                rangeTextOverride: Melee 1
-                objectTarget: true
-                strain: []
-                repeatTargets: false
-                modifiers: []
-                abilityType: none
-                range: 1
                 categorization: Hidden
+                rangeTextOverride: Melee 1
+                strain: []
+                range: 1
+                abilityType: none
+                modifiers: []
+                repeatTargets: false
+                objectTarget: true
+                name: Fetch! Strike
               promptText: Choose the target of the strike.
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
               rule: teleport 5
@@ -306,26 +848,25 @@ levels:
               saturation: 1
               bgcolor: "#ffffffff"
             range: 1
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            categorization: Heroic Ability
-            rangeTextOverride: Melee 1
-            abilityType: none
-            repeatTargets: false
-            resourceNumber: 5
-            name: Fetch!
-            strain: []
-            objectTarget: true
-            targetTextOverride: One creature or object
-            modifiers: []
-            implementation: 3
             numTargets: "1"
+            categorization: Heroic Ability
+            implementation: 3
+            abilityType: none
+            modifiers: []
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            rangeTextOverride: Melee 1
+            strain: []
+            targetTextOverride: One creature or object
+            objectTarget: true
+            repeatTargets: false
+            name: Fetch!
+            resourceNumber: 5
             domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          guid: f9b4d3e2-ac5b-4f87-b639-2d7e8f3a9b02
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          sourceguid: e8a3c2d1-9b4f-4e76-a528-1c6d7e2f8a91
+          behavior: activated
+          description: ""
         guid: e8a3c2d1-9b4f-4e76-a528-1c6d7e2f8a91
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
@@ -341,9 +882,10 @@ levels:
         - __typeName: CharacterModifier
           name: Omnomnom
           source: Guardian Class Feature
-          description: ""
-          behavior: activated
-          sourceguid: a12d4864-f702-412c-815d-5ac08a48d9b8
+          domains:
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          guid: 9ad3fe78-1257-4048-9566-6cb63c0d58f1
           activatedAbility:
             __typeName: ActivatedAbility
             behaviors:
@@ -364,15 +906,11 @@ levels:
             persistence: []
             iconid: ui-icons/skills/1.png
             guid: 06dd65cc-477e-4a1a-a902-07f575de8610
-            display:
-              brightness: 1
-              hueshift: 0
-              saturation: 1
-              bgcolor: "#ffffffff"
+            implementation: 2
             implementationDetails: Swallowed sub-state (shared space, restricted LoE, recurring acid damage, regurgitation on escape) is narrative -- only the grabbed condition is mechanically applied.
             numTargets: "1"
             categorization: Heroic Ability
-            implementation: 2
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             abilityType: none
             reasonedFilters:
             - reason: This ability can only target grabbed creatures.
@@ -382,31 +920,32 @@ levels:
             resourceNumber: 5
             name: Omnomnom
             strain: []
-            objectTarget: false
-            repeatTargets: false
-            modifiers: []
             keywords:
               Strike: true
               Melee: true
-              Weapon: true
               Companion: true
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              Weapon: true
+            modifiers: []
+            repeatTargets: false
+            objectTarget: false
+            display:
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+              bgcolor: "#ffffffff"
             domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          guid: 9ad3fe78-1257-4048-9566-6cb63c0d58f1
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+          sourceguid: a12d4864-f702-412c-815d-5ac08a48d9b8
+          behavior: activated
+          description: ""
         guid: a12d4864-f702-412c-815d-5ac08a48d9b8
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       allowDuplicateChoices: false
       guid: 867efe9a-d243-4cf7-be3d-8bc1f469fe55
-      domains:
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      description: Choose one of the following abilities.
     - __typeName: CharacterFeature
       implementation: 4
       source: Guardian Class Feature
@@ -423,8 +962,8 @@ levels:
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        behavior: conditionimmunity
         guid: 88144ef4-2441-411a-9ffb-a9b311beab37
+        behavior: conditionimmunity
         sourceguid: fb6e3760-ea07-4898-81d1-96a2a57e843d
         description: You and your companion can’t be surprised.
       guid: fb6e3760-ea07-4898-81d1-96a2a57e843d
@@ -432,8 +971,26 @@ levels:
         class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
         class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-3:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-1:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  tutoriallevel-3:
+    __typeName: ClassLevel
+    features: []
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   tutoriallevel-1:
     __typeName: ClassLevel
     features:
@@ -441,9 +998,7 @@ levels:
       name: Wild Nature
       source: Guardian Class Feature
       classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-      domains:
-        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      description: A fearless defender of the pack. You have the Read Person skill.
       modifiers:
       - __typeName: CharacterModifier
         proficiency: proficient
@@ -455,21 +1010,21 @@ levels:
           30a30090-3699-48f1-b252-ce7d0445abee: true
         equate: false
         subtype: skill
-        behavior: proficiency
         guid: 2c8f4e91-5b7d-4a36-c128-9e3d6c1f5a84
+        behavior: proficiency
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       implementation: 3
       guid: 5e1c4b83-7a2f-4d96-b418-9c5d3e8a7f62
-      description: A fearless defender of the pack. You have the Read Person skill.
+      domains:
+        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     - __typeName: CharacterFeature
       name: Feral Strike
       source: Guardian Class Feature
       classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-      domains:
-        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      description: Your companion can use the following signature ability.
       modifiers:
       - __typeName: CharacterModifier
         name: Ability
@@ -485,7 +1040,7 @@ levels:
             - 3 + M damage; taunted (EoT)
             - 4 + M damage; taunted (EoT)
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: custom
+            promptText: Move up to your Intuition in a straight line toward the closest enemy.
             applyto: caster
             customAbility:
               __typeName: ActivatedAbility
@@ -495,22 +1050,26 @@ levels:
                 saturation: 1
                 bgcolor: "#ffffffff"
               numTargets: "1"
-              behaviors:
-              - __typeName: ActivatedAbilityRelocateCreatureBehavior
-                movementType: move
+              categorization: Hidden
               abilityType: none
               range: Intuition
               description: ""
               name: Feral Strike Approach
-              guid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a83
+              targeting: straightpath
               iconid: ui-icons/skills/1.png
+              targetType: emptyspace
               repeatTargets: false
               modifiers: []
-              targetType: emptyspace
-              targeting: straightpath
-              categorization: Hidden
-            promptText: Move up to your Intuition in a straight line toward the closest enemy.
+              guid: 6e2c8d41-3b7f-4a96-b528-1c5d6e3f7a83
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: move
+            abilityType: custom
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            abilityType: custom
+            inheritKeywords: true
+            promptText: Resolve the burst against each enemy in the area.
             customAbility:
               __typeName: ActivatedAbility
               behaviors:
@@ -520,34 +1079,30 @@ levels:
                 - 3 + M damage; taunted (EoT)
                 - 4 + M damage; taunted (EoT)
                 roll: 2d10 + Might
+              categorization: Hidden
+              abilityType: none
+              numTargets: "1"
+              range: 1
+              targetType: all
+              keywords:
+                Strike: true
+                Melee: true
+                Area: true
+                Weapon: true
+                Companion: true
+              description: ""
+              name: Feral Strike Burst
+              modifiers: []
+              iconid: ui-icons/skills/1.png
+              targetTextOverride: Each creature in the area
+              repeatTargets: false
+              rangeTextOverride: 1 burst
+              guid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a83
               display:
                 brightness: 1
                 hueshift: 0
                 saturation: 1
                 bgcolor: "#ffffffff"
-              abilityType: none
-              numTargets: "1"
-              name: Feral Strike Burst
-              targetType: all
-              keywords:
-                Strike: true
-                Melee: true
-                Weapon: true
-                Area: true
-                Companion: true
-              description: ""
-              rangeTextOverride: 1 burst
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              targetTextOverride: Each creature in the area
-              modifiers: []
-              range: 1
-              guid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a83
-              categorization: Hidden
-            applyto: caster
-            inheritKeywords: true
-            promptText: Resolve the burst against each enemy in the area.
-            abilityType: custom
           flavor: Your companion lunges into the fray, attacking wildly with teeth, claws, or other weapons.
           targetType: self
           range: 1
@@ -565,42 +1120,42 @@ levels:
             hueshift: 0
             saturation: 1
             bgcolor: "#ffffffff"
-          categorization: Signature Ability
-          targetTextOverride: Each creature in the area
           numTargets: "1"
           abilityType: none
+          targetTextOverride: Each creature in the area
+          implementation: 3
           rangeTextOverride: 1 burst
           strain: []
+          name: Feral Strike
+          modifiers: []
+          repeatTargets: false
           keywords:
             Strike: true
             Melee: true
-            Weapon: true
             Area: true
+            Weapon: true
             Companion: true
-          repeatTargets: false
-          modifiers: []
-          name: Feral Strike
-          implementation: 3
+          categorization: Signature Ability
           domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
         guid: f8c4e9d1-7b2a-4f96-b138-2c5d6e8a4f73
+        behavior: activated
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        behavior: activated
         sourceguid: 7e2c4d83-5b1f-4a96-b248-9c1d3e6f5a72
         description: Your companion can use the following signature ability.
       implementation: 3
       guid: 7e2c4d83-5b1f-4a96-b248-9c1d3e6f5a72
-      description: Your companion can use the following signature ability.
+      domains:
+        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     - __typeName: CharacterFeature
       name: Living Arrow
       source: Guardian Class Feature
       classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-      domains:
-        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      description: You point, and your companion appears.
       modifiers:
       - __typeName: CharacterModifier
         name: Ability
@@ -609,10 +1164,6 @@ levels:
           __typeName: ActivatedAbility
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            targeting: inherit
-            applyto: caster_companion
-            abilityType: custom
-            promptText: Companion teleports to the chosen empty space.
             customAbility:
               __typeName: ActivatedAbility
               display:
@@ -621,19 +1172,23 @@ levels:
                 saturation: 1
                 bgcolor: "#ffffffff"
               numTargets: "1"
-              targetType: emptyspace
+              abilityType: none
               range: 1
               description: ""
               name: Living Arrow Teleport
-              abilityType: none
+              categorization: Hidden
               iconid: ui-icons/skills/1.png
-              repeatTargets: false
               modifiers: []
+              repeatTargets: false
               behaviors:
               - __typeName: ActivatedAbilityRelocateCreatureBehavior
                 movementType: teleport
               guid: 2e7f5a91-4c8b-4d63-9e21-7a3f5c8d2b08
-              categorization: Hidden
+              targetType: emptyspace
+            abilityType: custom
+            applyto: caster_companion
+            promptText: Companion teleports to the chosen empty space.
+            targeting: inherit
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             customAbility:
               __typeName: ActivatedAbility
@@ -644,25 +1199,25 @@ levels:
               description: ""
               name: Invoked Ability
               iconid: ui-icons/skills/1.png
-              modifiers: []
-              repeatTargets: false
-              abilityType: none
-              guid: 3a8c1e93-5b6d-4f48-b219-8e3c5d1f7a93
               display:
                 brightness: 1
                 hueshift: 0
                 saturation: 1
                 bgcolor: "#ffffffff"
-            abilityType: standard
+              modifiers: []
+              abilityType: none
+              guid: 3a8c1e93-5b6d-4f48-b219-8e3c5d1f7a93
+              repeatTargets: false
             applyto: caster_companion
+            abilityType: standard
             promptText: Companion makes a melee free strike.
             standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
           - __typeName: ActivatedAbilityReplenishBehavior
             modesSelected:
             - 2
             quantity: "1"
-            applyto: caster
             chatMessage: Living Arrow - Spend 1 Ferocity for extended range
+            applyto: caster
             resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             mode: expend
           flavor: You point, and your companion appears.
@@ -670,51 +1225,53 @@ levels:
           range: 10 when Mode = 1 else 15
           description: Pick an empty space within range. If your companion is within range and can fit into the space, they teleport there and make a melee free strike. Spend 1 Ferocity to extend the range to 15.
           actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          persistence: []
+          multipleModes: true
           iconid: ui-icons/skills/1.png
           guid: 5d3c8e91-2b1f-4a87-c528-8d1e7f3c5a82
           implementation: 3
           numTargets: "1"
-          multipleModes: true
+          categorization: Ability
           abilityType: none
-          keywords:
-            Ranged: true
-            Magic: true
-            Beastheart: true
-          abilityFilters:
-          - reason: You need a summoned companion to use Living Arrow.
-            formula: Self.Companion
-          - reason: Your companion must be within Ranged 10 of you (or Ranged 15 if you spend 1 Ferocity for the extended-range mode) to use Living Arrow.
-            formula: Self.Companion.Distance(Self) <= (15 when Heroic Resources Available to Spend >= 1 else 10)
+          persistence: []
+          modeList:
+          - rules: Ranged 10. Companion teleports to the empty space and makes a melee free strike.
+            text: Normal
+          - condition: Heroic Resources Available to Spend >= 1
+            rules: Ranged 15 (spend 1 Ferocity). Companion teleports to the empty space and makes a melee free strike.
+            text: Spend Ferocity
           name: Living Arrow
           strain: []
-          modifiers: []
+          repeatTargets: false
           display:
             brightness: 1
             hueshift: 0
             saturation: 1
             bgcolor: "#ffffffff"
-          repeatTargets: false
-          modeList:
-          - text: Normal
-            rules: Ranged 10. Companion teleports to the empty space and makes a melee free strike.
-          - condition: Heroic Resources Available to Spend >= 1
-            rules: Ranged 15 (spend 1 Ferocity). Companion teleports to the empty space and makes a melee free strike.
-            text: Spend Ferocity
-          categorization: Ability
+          modifiers: []
+          abilityFilters:
+          - reason: You need a summoned companion to use Living Arrow.
+            formula: Self.Companion
+          - reason: Your companion must be within Ranged 10 of you (or Ranged 15 if you spend 1 Ferocity for the extended-range mode) to use Living Arrow.
+            formula: Self.Companion.Distance(Self) <= (15 when Heroic Resources Available to Spend >= 1 else 10)
+          keywords:
+            Ranged: true
+            Magic: true
+            Beastheart: true
           domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
         guid: 6e1d4c83-5b7f-4f96-b428-1c2d8e5a4f73
+        behavior: activated
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        behavior: activated
         sourceguid: 7c5d2e83-3b1f-4a96-c428-9d1e7f3c5a82
         description: You point, and your companion appears.
       implementation: 3
       guid: 7c5d2e83-3b1f-4a96-c428-9d1e7f3c5a82
-      description: You point, and your companion appears.
+      domains:
+        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     - __typeName: CharacterFeature
       implementation: 3
       source: Guardian Class Feature
@@ -731,11 +1288,11 @@ levels:
           rollType: ability_power_roll
           keywords: []
           name: The Pack Defends
-          activationCondition: false
-          behavior: power
           damageMultiplier: half
-          rules: ""
           guid: 5f020003-0002-4096-bcde-7d8e9f0a1b2c
+          activationCondition: false
+          rules: ""
+          behavior: power
           modtype: none
         additionalCostModifiers:
         - __typeName: CharacterModifier
@@ -749,10 +1306,25 @@ levels:
               hueshift: 0
               saturation: 1
               bgcolor: "#ffffffff"
-            trigger: d20roll
+            behaviors:
+            - __typeName: ActivatedAbilityReplenishBehavior
+              quantity: "1"
+              chatMessage: Spent Recovery (no Stamina gained)
+              applyto: caster
+              resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+              mode: expend
+            - __typeName: ActivatedAbilityHealBehavior
+              roll: Subject.Recovery Value
+              chatMessage: Healed by Pack Defends Recovery Value
+              applyto: targets
+            - __typeName: ActivatedAbilityHealBehavior
+              filterTarget: Subject.Level >= 5
+              chatMessage: There For Each Other - you regain Stamina
+              applyto: caster
+              roll: Subject.Recovery Value
             abilityType: none
             numTargets: "1"
-            persistence: []
+            repeatTargets: false
             targetType: target
             range: 1
             description: ""
@@ -761,33 +1333,18 @@ levels:
             iconid: ui-icons/skills/1.png
             castImmediately: true
             modifiers: []
-            repeatTargets: false
+            persistence: []
             guid: 5f020006-0002-4096-bcde-7d8e9f0a1b2c
-            behaviors:
-            - __typeName: ActivatedAbilityReplenishBehavior
-              quantity: "1"
-              applyto: caster
-              chatMessage: Spent Recovery (no Stamina gained)
-              resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
-              mode: expend
-            - __typeName: ActivatedAbilityHealBehavior
-              chatMessage: Healed by Pack Defends Recovery Value
-              applyto: targets
-              roll: Subject.Recovery Value
-            - __typeName: ActivatedAbilityHealBehavior
-              filterTarget: Subject.Level >= 5
-              chatMessage: There For Each Other - you regain Stamina
-              roll: Subject.Recovery Value
-              applyto: caster
-          rollType: ability_power_roll
+            trigger: d20roll
+          hasCustomTrigger: true
           keywords: []
           name: The Pack Defends +1 Ferocity
-          hasCustomTrigger: true
-          guid: 5f020005-0002-4096-bcde-7d8e9f0a1b2c
-          rules: ""
-          activationCondition: false
-          resourceCostType: cost
+          rollType: ability_power_roll
           behavior: power
+          resourceCostType: cost
+          activationCondition: false
+          rules: ""
+          guid: 5f020005-0002-4096-bcde-7d8e9f0a1b2c
           modtype: none
         targetType: ally
         range: 1
@@ -795,10 +1352,10 @@ levels:
         name: The Pack Defends
         trigger: takedamage
         type: trigger
-        behavior: powertabletrigger
+        guid: 5f020002-0002-4096-bcde-7d8e9f0a1b2c
         sourceguid: 5f020001-0002-4096-bcde-7d8e9f0a1b2c
         rules: The target takes half the damage.
-        guid: 5f020002-0002-4096-bcde-7d8e9f0a1b2c
+        behavior: powertabletrigger
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
@@ -809,17 +1366,17 @@ levels:
           __typeName: TriggeredAbilityDisplay
           name: The Pack Defends
           trigger: The target takes damage.
+          target: One ally
+          flavor: You siphon away the pain and endure it yourself.
+          guid: 5f020009-0002-4096-bcde-7d8e9f0a1b2c
+          keywords: []
           effect: |-
             The target takes half the damage.
             <b>Spend 1 Ferocity:</b> You spend a Recovery without regaining Stamina, and the target regains Stamina equal to your recovery value.
-          flavor: You siphon away the pain and endure it yourself.
-          guid: 5f020009-0002-4096-bcde-7d8e9f0a1b2c
           distance: Melee 1
-          keywords: []
-          target: One ally
+        sourceguid: 5f020001-0002-4096-bcde-7d8e9f0a1b2c
         guid: 5f020008-0002-4096-bcde-7d8e9f0a1b2c
         behavior: triggerdisplay
-        sourceguid: 5f020001-0002-4096-bcde-7d8e9f0a1b2c
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
@@ -829,7 +1386,6 @@ levels:
         domains:
           class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        guid: 5f02000a-0002-4096-bcde-7d8e9f0a1b2c
         behavior: modcompanion
         feature:
           __typeName: CharacterFeature
@@ -850,10 +1406,25 @@ levels:
                   hueshift: 0
                   saturation: 1
                   bgcolor: "#ffffffff"
-                trigger: d20roll
+                behaviors:
+                - __typeName: ActivatedAbilityReplenishBehavior
+                  quantity: "1"
+                  chatMessage: Spent Recovery (no Stamina gained)
+                  applyto: caster
+                  resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+                  mode: expend
+                - __typeName: ActivatedAbilityHealBehavior
+                  roll: Subject.Recovery Value
+                  chatMessage: Healed by Pack Defends Recovery Value
+                  applyto: targets
+                - __typeName: ActivatedAbilityHealBehavior
+                  filterTarget: Subject.Level >= 5
+                  chatMessage: There For Each Other - you regain Stamina
+                  applyto: caster
+                  roll: Subject.Recovery Value
                 abilityType: none
                 numTargets: "1"
-                persistence: []
+                repeatTargets: false
                 targetType: target
                 range: 1
                 description: ""
@@ -862,56 +1433,42 @@ levels:
                 iconid: ui-icons/skills/1.png
                 castImmediately: true
                 modifiers: []
-                repeatTargets: false
+                persistence: []
                 guid: 5f020010-0002-4096-bcde-7d8e9f0a1b2c
-                behaviors:
-                - __typeName: ActivatedAbilityReplenishBehavior
-                  quantity: "1"
-                  applyto: caster
-                  chatMessage: Spent Recovery (no Stamina gained)
-                  resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
-                  mode: expend
-                - __typeName: ActivatedAbilityHealBehavior
-                  chatMessage: Healed by Pack Defends Recovery Value
-                  applyto: targets
-                  roll: Subject.Recovery Value
-                - __typeName: ActivatedAbilityHealBehavior
-                  filterTarget: Subject.Level >= 5
-                  chatMessage: There For Each Other - you regain Stamina
-                  roll: Subject.Recovery Value
-                  applyto: caster
-              rollType: ability_power_roll
+                trigger: d20roll
+              hasCustomTrigger: true
               keywords: []
               name: The Pack Defends +1 Ferocity
-              hasCustomTrigger: true
-              guid: 5f02000f-0002-4096-bcde-7d8e9f0a1b2c
-              rules: ""
-              activationCondition: false
-              resourceCostType: cost
+              rollType: ability_power_roll
               behavior: power
+              resourceCostType: cost
+              activationCondition: false
+              rules: ""
+              guid: 5f02000f-0002-4096-bcde-7d8e9f0a1b2c
               modtype: none
             targetType: ally
             range: 1
             name: The Pack Defends
             trigger: takedamage
             type: trigger
+            guid: 5f02000c-0002-4096-bcde-7d8e9f0a1b2c
+            rules: The target takes half the damage.
+            behavior: powertabletrigger
             powerRollModifier:
               __typeName: CharacterModifier
               source: Trigger
               rollType: ability_power_roll
               keywords: []
               name: The Pack Defends
-              activationCondition: false
-              behavior: power
               damageMultiplier: half
-              rules: ""
               guid: 5f02000d-0002-4096-bcde-7d8e9f0a1b2c
+              activationCondition: false
+              rules: ""
+              behavior: power
               modtype: none
-            rules: The target takes half the damage.
-            behavior: powertabletrigger
-            guid: 5f02000c-0002-4096-bcde-7d8e9f0a1b2c
           guid: 5f02000b-0002-4096-bcde-7d8e9f0a1b2c
           description: ""
+        guid: 5f02000a-0002-4096-bcde-7d8e9f0a1b2c
         sourceguid: 5f020001-0002-4096-bcde-7d8e9f0a1b2c
         description: Companion can use the Pack Defends triggered action.
       guid: 5f020001-0002-4096-bcde-7d8e9f0a1b2c
@@ -919,440 +1476,36 @@ levels:
         class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
         class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-1:
-    __typeName: ClassLevel
-    features: []
-    domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  tutoriallevel-3:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-3:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
   tutoriallevel-4:
     __typeName: ClassLevel
     features: []
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-7:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-5:
+    __typeName: ClassLevel
+    features:
+    - __typeName: CharacterFeature
+      name: There For Each Other
+      source: Guardian Class Feature
+      classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
+      domains:
+        class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      modifiers: []
+      canHavePrerequisites: true
+      guid: 5ea46ffe-6f2c-4097-882e-2377666793e3
+      description: When you or your companion uses your The Pack Defends ability to spend a Recovery, you and the target both regain Stamina.
+    domains:
+      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-4:
     __typeName: ClassLevel
     features: []
     domains:
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-  level-6:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeatureChoice
-      name: 6th-Level Wild Nature Ability
-      classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-      numChoices: 1
-      options:
-      - __typeName: CharacterFeature
-        implementation: 3
-        source: Guardian Class Feature
-        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-        description: Your companion rushes forward to protect you from a dangerous foe.
-        name: Sic 'Em!
-        canHavePrerequisites: true
-        modifiers:
-        - __typeName: CharacterModifier
-          name: Sic 'Em!
-          source: Guardian Class Feature
-          description: Your companion rushes forward to protect you from a dangerous foe.
-          behavior: activated
-          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
-          activatedAbility:
-            __typeName: ActivatedAbility
-            behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              tiers:
-              - 11 + M damage; taunted (save ends); M < Weak prone
-              - 16 + M damage; taunted (save ends); M < Average prone
-              - 21 + M damage; taunted (save ends); M < Strong prone and can't stand (EoT)
-              roll: 2d10 + Might
-            flavor: Your companion rushes forward to protect you from a dangerous foe.
-            targetType: target
-            range: 1
-            description: ""
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            iconid: ui-icons/skills/1.png
-            guid: 3c3fa2ca-57ce-4b2c-bd5e-24f9ea1637cd
-            display:
-              saturation: 1
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-            categorization: Heroic Ability
-            resourceNumber: "9"
-            abilityType: none
-            numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            name: Sic 'Em!
-            objectTarget: false
-            keywords:
-              Strike: true
-              Charge: true
-              Weapon: true
-              Melee: true
-              Companion: true
-            repeatTargets: false
-            modifiers: []
-            strain: []
-            implementation: 3
-            domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          guid: 81f566bd-6baa-43a1-9b3f-ef741d478ecb
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        - __typeName: CharacterModifier
-          name: Sic 'Em! (Triggered)
-          source: Guardian Class Feature
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          behavior: trigger
-          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
-          triggeredAbility:
-            __typeName: TriggeredAbility
-            behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: custom
-              customAbility:
-                __typeName: ActivatedAbility
-                behaviors:
-                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                  promptText: Your companion rushes forward toward the enemy who damaged you.
-                  rule: shift {Movement Speed}
-                - __typeName: ActivatedAbilityPowerRollBehavior
-                  tiers:
-                  - 11 + M damage; taunted (save ends); M < Weak prone
-                  - 16 + M damage; taunted (save ends); M < Average prone
-                  - 21 + M damage; taunted (save ends); M < Strong prone and can't stand (EoT)
-                  roll: 2d10 + Might
-                targetType: target
-                range: "100"
-                iconid: ui-icons/skills/1.png
-                targetAllegiance: enemy
-                guid: 7d1a4e03-5c02-4b96-9a3f-1e8f0c2b6d03
-                display:
-                  saturation: 1
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                categorization: Hidden
-                abilityType: none
-                rangeTextOverride: Melee 1
-                strain: []
-                numTargets: "1"
-                repeatTargets: false
-                modifiers: []
-                objectTarget: false
-                name: Sic 'Em! (Companion Strike)
-                keywords:
-                  Strike: true
-                  Charge: true
-                  Weapon: true
-                  Melee: true
-                  Companion: true
-              targeting: inherit
-              applyto: caster_companion
-              promptText: Your companion strikes the enemy who damaged you.
-              inheritKeywords: true
-            targetType: attacker
-            keywords:
-              Strike: true
-              Charge: true
-              Weapon: true
-              Melee: true
-              Companion: true
-            actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-            persistence: []
-            iconid: ui-icons/skills/1.png
-            guid: 7d1a4e02-5c02-4b96-9a3f-1e8f0c2b6d02
-            display:
-              saturation: 1
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-            mandatory: false
-            range: "100"
-            numTargets: "1"
-            trigger: losehitpoints
-            abilityType: none
-            triggerPrompt: Your companion rushes the enemy who damaged you and strikes with Sic 'Em!.
-            resourceNumber: "11"
-            name: Sic 'Em!
-            strain: []
-            modifiers: []
-            subject: self
-            repeatTargets: false
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            conditionFormula: HasAttacker and (not Friends(Self, Attacker))
-            domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          guid: 7d1a4e01-5c02-4b96-9a3f-1e8f0c2b6d01
-          description: When an enemy damages you, spend 11 Ferocity to have your companion rush the attacker and use Sic 'Em! as a triggered action.
-        - __typeName: CharacterModifier
-          name: Sic 'Em! (Triggered)
-          source: Guardian Class Feature
-          ability:
-            __typeName: TriggeredAbilityDisplay
-            flavor: Your companion rushes forward to protect you from a dangerous foe.
-            effect: Your companion rushes the triggering enemy and makes a Sic 'Em! power roll (2d10 + your companion's Might) against it -- 11/16/21 + M damage; taunted (save ends); prone at M < weak/average/strong (and can't stand until end of turn at tier 3).
-            name: Sic 'Em!
-            trigger: An enemy damages you.
-            cost: 11 Ferocity
-            distance: Melee 1
-            target: The enemy who damaged you
-            guid: 7d1a4e05-5c02-4b96-9a3f-1e8f0c2b6d05
-            keywords:
-              Strike: true
-              Charge: true
-              Weapon: true
-              Melee: true
-              Companion: true
-          guid: 7d1a4e04-5c02-4b96-9a3f-1e8f0c2b6d04
-          sourceguid: 992c1851-c37d-489e-880e-73d42bcbbc73
-          behavior: triggerdisplay
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        guid: 992c1851-c37d-489e-880e-73d42bcbbc73
-        domains:
-          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      - __typeName: CharacterFeature
-        implementation: 3
-        source: Guardian Class Feature
-        classid: 6ebd1424-e99c-4656-a58f-f0e3e2850dee
-        description: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
-        name: Stare Down
-        canHavePrerequisites: true
-        modifiers:
-        - __typeName: CharacterModifier
-          name: Stare Down
-          source: Guardian Class Feature
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          guid: 194a20da-7bb7-4652-ae08-182b668a7a48
-          behavior: activated
-          activatedAbility:
-            __typeName: ActivatedAbility
-            behaviors:
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
-              applyto: targets
-              duration: end_of_next_turn
-              ongoingEffectCustom: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
-            flavor: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
-            targetType: target
-            keywords:
-              Ranged: true
-              Magic: true
-              Companion: true
-            description: ""
-            actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-            iconid: ui-icons/skills/1.png
-            targetAllegiance: enemy
-            guid: 8f266f26-fea2-41e7-ad74-e9f250cd0a13
-            display:
-              saturation: 1
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-            implementationDetails: The move/maneuver/action trigger launches at the start of the target's turn. The trigger-trigger executes after the target's trigger.
-            numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            abilityType: none
-            range: "5"
-            resourceNumber: "9"
-            name: Stare Down
-            strain: []
-            categorization: Heroic Ability
-            modifiers: []
-            repeatTargets: false
-            preDescription: The first time the target uses a move action, main action, maneuver, or triggered action before the start of your next turn, your companion makes the following power roll before the target acts. If the target hasn’t acted before the start of your next turn, they are frightened of your companion (save ends).
-            implementation: 3
-            domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
-          description: Your companion locks eyes with an enemy, imposing their will upon the enemy and daring them to move a muscle.
-        - __typeName: CharacterModifier
-          name: Stare Down (Reaction)
-          source: Guardian Class Feature
-          behavior: trigger
-          triggeredAbility:
-            __typeName: TriggeredAbility
-            behaviors:
-            - __typeName: ActivatedAbilityPurgeEffectsBehavior
-              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
-              applyto: targets
-              conditions: []
-              mode: effect
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              inheritKeywords: true
-              customAbility:
-                __typeName: ActivatedAbility
-                behaviors:
-                - __typeName: ActivatedAbilityPowerRollBehavior
-                  tiers:
-                  - 9 + I psychic damage; I < Weak, weakened (save ends)
-                  - 13 + I psychic damage; I < Average, weakened (save ends)
-                  - 18 + I psychic damage; I < Strong, weakened (save ends)
-                  roll: 2d10 + Intuition
-                display:
-                  saturation: 1
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                categorization: Hidden
-                targetType: target
-                abilityType: none
-                range: "5"
-                numTargets: "1"
-                name: Stare Down (Companion Roll)
-                strain: []
-                iconid: ui-icons/skills/1.png
-                repeatTargets: false
-                modifiers: []
-                targetAllegiance: enemy
-                guid: 7e514062-5f81-42ca-d3c4-60b192cf5e34
-                keywords:
-                  Ranged: true
-                  Magic: true
-                  Companion: true
-              targeting: inherit
-              applyto: caster_companion
-              promptText: Your companion's Stare Down power roll resolves against the enemy.
-              abilityType: custom
-            targetType: subject
-            persistence: []
-            iconid: ui-icons/skills/1.png
-            guid: 6d403f51-4e70-41b9-c2b3-5fa081be4d23
-            display:
-              saturation: 1
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-            mandatory: true
-            numTargets: "1"
-            abilityType: none
-            name: Stare Down
-            trigger: beginturn
-            strain: []
-            subject: enemy
-            repeatTargets: false
-            modifiers: []
-            conditionFormula: Subject.Ongoing Effects has "Stare Down"
-            domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
-          guid: 5c3f2e40-3d6f-40a8-b1a2-4e9f70ad3c12
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        - __typeName: CharacterModifier
-          name: Stare Down (Triggered Action Reaction)
-          source: Guardian Class Feature
-          guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e01
-          triggeredAbility:
-            __typeName: TriggeredAbility
-            behaviors:
-            - __typeName: ActivatedAbilityPurgeEffectsBehavior
-              ongoingEffect: 4b2e1d3f-2c5e-4f7b-a091-3d8e6f9c2b01
-              applyto: targets
-              conditions: []
-              mode: effect
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              inheritKeywords: true
-              customAbility:
-                __typeName: ActivatedAbility
-                behaviors:
-                - __typeName: ActivatedAbilityPowerRollBehavior
-                  tiers:
-                  - 9 + I psychic damage; I < Weak, weakened (save ends)
-                  - 13 + I psychic damage; I < Average, weakened (save ends)
-                  - 18 + I psychic damage; I < Strong, weakened (save ends)
-                  roll: 2d10 + Intuition
-                display:
-                  saturation: 1
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                categorization: Hidden
-                targetType: target
-                abilityType: none
-                range: "5"
-                numTargets: "1"
-                name: Stare Down (Companion Roll)
-                strain: []
-                iconid: ui-icons/skills/1.png
-                repeatTargets: false
-                modifiers: []
-                targetAllegiance: enemy
-                guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e03
-                keywords:
-                  Ranged: true
-                  Magic: true
-                  Companion: true
-              targeting: inherit
-              applyto: caster_companion
-              promptText: Your companion's Stare Down power roll resolves against the enemy.
-              abilityType: custom
-            targetType: subject
-            persistence: []
-            iconid: ui-icons/skills/1.png
-            guid: 9f8e7d61-1a2b-4c3d-8e4f-0a1b2c3d4e02
-            display:
-              saturation: 1
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-            mandatory: true
-            numTargets: "1"
-            abilityType: none
-            name: Stare Down
-            trigger: usetriggeredaction
-            strain: []
-            subject: enemy
-            repeatTargets: false
-            modifiers: []
-            conditionFormula: Subject.Ongoing Effects has "Stare Down"
-            domains:
-              class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          sourceguid: 63366fa4-764d-408d-9d54-e4984b3d2d42
-          behavior: trigger
-          domains:
-            class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        guid: 63366fa4-764d-408d-9d54-e4984b3d2d42
-        domains:
-          class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      allowDuplicateChoices: false
-      guid: 4bff6c3e-49b4-4dd5-a69b-ef40bcb68058
-      description: Choose one of the following abilities.
-    domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      class:6ebd1424-e99c-4656-a58f-f0e3e2850dee: true
 details: A fearless defender of the pack. You have the Read Person skill.
 _table: subclasses
