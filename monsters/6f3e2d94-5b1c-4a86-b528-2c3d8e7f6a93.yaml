@@ -342,6 +342,139 @@ info:
         filterCondition: Self.Rampaging and Summoner.Level >= 6
         mode: summoner
         description: While the hellhound rampages and its beastheart is level 6+, the beastheart deals extra acid damage equal to their Might on strikes.
+    - __typeName: CharacterFeature
+      iconid: ui-icons/skills/1.png
+      name: Wreathed in Flames
+      source: Character Feature
+      implementation: 3
+      guid: 6f3e2d94-0000-4e10-8c01-000000000001
+      domains:
+        CharacterFeature:6f3e2d94-0000-4e10-8c01-000000000001: true
+      description: While the hellhound is rampaging, you and the hellhound are surrounded by an aura of flames, and each enemy who starts their turn adjacent to you or the hellhound takes fire damage equal to the hellhound's Might score.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 6f3e2d94-0000-4e10-8c01-000000000008
+        behavior: aura
+        radius: "1"
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: 6f3e2d94-0000-4e10-8c01-000000000001
+        name: Wreathed in Flames
+        source: Character Feature
+        description: Enemies who start their turn adjacent to the hellhound take fire damage equal to its Might.
+        aura:
+          __typeName: Aura
+          guid: 6f3e2d94-0000-4e10-8c01-000000000009
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          creatureFilter: ""
+          triggers: []
+          applyto: enemies
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 6f3e2d94-0000-4e10-8c01-00000000000a
+            name: Wreathed in Flames
+            sourceguid: 6f3e2d94-0000-4e10-8c01-000000000009
+            source: Aura
+            description: ""
+            behavior: trigger
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              guid: 6f3e2d94-0000-4e10-8c01-00000000000b
+              name: Wreathed in Flames
+              trigger: beginturn
+              targetType: self
+              castImmediately: true
+              numTargets: "1"
+              repeatTargets: false
+              abilityType: none
+              range: 1
+              strain: []
+              modifiers: []
+              persistence: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                damageType: fire
+                applyto: targets
+                roll: Might
+      - __typeName: CharacterModifier
+        guid: 6f3e2d94-0000-4e10-8c01-000000000002
+        behavior: modsummoner
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: 6f3e2d94-0000-4e10-8c01-000000000001
+        name: Wreathed in Flames
+        source: Character Feature
+        description: While rampaging (L10+), you are wreathed in flames too.
+        feature:
+          __typeName: CharacterFeature
+          guid: 6f3e2d94-0000-4e10-8c01-000000000003
+          name: Wreathed in Flames
+          source: Beastheart
+          implementation: 3
+          iconid: ui-icons/skills/1.png
+          description: Enemies who start their turn adjacent to you take fire damage equal to the hellhound's Might.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 6f3e2d94-0000-4e10-8c01-000000000004
+            behavior: aura
+            radius: "1"
+            sourceguid: 6f3e2d94-0000-4e10-8c01-000000000003
+            name: Wreathed in Flames
+            source: Beastheart
+            description: Enemies who start their turn adjacent to you take fire damage.
+            aura:
+              __typeName: Aura
+              guid: 6f3e2d94-0000-4e10-8c01-000000000005
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              creatureFilter: ""
+              triggers: []
+              applyto: enemies
+              iconid: ui-icons/skills/1.png
+              modifiers:
+              - __typeName: CharacterModifier
+                guid: 6f3e2d94-0000-4e10-8c01-000000000006
+                name: Wreathed in Flames
+                sourceguid: 6f3e2d94-0000-4e10-8c01-000000000005
+                source: Aura
+                description: ""
+                behavior: trigger
+                triggeredAbility:
+                  __typeName: TriggeredAbility
+                  guid: 6f3e2d94-0000-4e10-8c01-000000000007
+                  name: Wreathed in Flames
+                  trigger: beginturn
+                  targetType: self
+                  castImmediately: true
+                  numTargets: "1"
+                  repeatTargets: false
+                  abilityType: none
+                  range: 1
+                  strain: []
+                  modifiers: []
+                  persistence: []
+                  display:
+                    bgcolor: "#ffffffff"
+                    hueshift: 0
+                    brightness: 1
+                    saturation: 1
+                  behaviors:
+                  - __typeName: ActivatedAbilityDamageBehavior
+                    damageType: fire
+                    applyto: targets
+                    roll: Might
     titles: []
     skillProficiencies: []
     cr: 1

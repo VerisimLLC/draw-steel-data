@@ -308,6 +308,113 @@ info:
         filterCondition: Self.Rampaging and Summoner.Level >= 6
         attribute: e354ecc7-888f-48fc-a248-7a277252675e
         description: Creatures within 5 squares cannot have concealment from the wolf.
+    - __typeName: CharacterFeature
+      iconid: ui-icons/skills/1.png
+      name: Dire Wolf
+      source: Character Feature
+      implementation: 3
+      guid: d1e2c3f4-0000-4a10-9101-000000000001
+      domains:
+        CharacterFeature:d1e2c3f4-0000-4a10-9101-000000000001: true
+      description: While the wolf is rampaging, you and the wolf are surrounded by an aura of dread; enemies who start their turn adjacent to you or the wolf with P < Strong are frightened until the end of their next turn.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: d1e2c3f4-0000-4a10-9101-000000000008
+        behavior: trigger
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: d1e2c3f4-0000-4a10-9101-000000000001
+        name: Dire Wolf
+        source: Character Feature
+        description: Enemies who start their turn adjacent to the wolf with P < Strong are frightened.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: d1e2c3f4-0000-4a10-9101-000000000009
+          iconid: ui-icons/skills/1.png
+          name: Dire Wolf
+          trigger: beginturn
+          subject: enemy
+          subjectRange: "1"
+          targetType: subject
+          whenActive: combat
+          castImmediately: true
+          numTargets: "1"
+          repeatTargets: false
+          abilityType: none
+          range: 1
+          strain: []
+          modifiers: []
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            guid: d1e2c3f4-0000-4a10-9101-00000000000a
+            ongoingEffect: 3cc61ad4-03d5-4db9-af58-bf59318c9d5a
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: end_of_next_turn_from_turnstart
+            applyto: targets
+            filterTarget: 'not Cast.PassesPotency(Target, "P", "Strong")'
+      - __typeName: CharacterModifier
+        guid: d1e2c3f4-0000-4a10-9101-000000000002
+        behavior: modsummoner
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: d1e2c3f4-0000-4a10-9101-000000000001
+        name: Dire Wolf
+        source: Character Feature
+        description: While rampaging (L10+), enemies who start their turn adjacent to you with P < Strong are frightened too.
+        feature:
+          __typeName: CharacterFeature
+          guid: d1e2c3f4-0000-4a10-9101-000000000003
+          name: Dire Wolf
+          source: Beastheart
+          implementation: 3
+          iconid: ui-icons/skills/1.png
+          description: Enemies who start their turn adjacent to you with P < Strong are frightened.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: d1e2c3f4-0000-4a10-9101-000000000004
+            behavior: trigger
+            sourceguid: d1e2c3f4-0000-4a10-9101-000000000003
+            name: Dire Wolf
+            source: Beastheart
+            description: Enemies who start their turn adjacent to you with P < Strong are frightened.
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              guid: d1e2c3f4-0000-4a10-9101-000000000005
+              iconid: ui-icons/skills/1.png
+              name: Dire Wolf
+              trigger: beginturn
+              subject: enemy
+              subjectRange: "1"
+              targetType: subject
+              whenActive: combat
+              castImmediately: true
+              numTargets: "1"
+              repeatTargets: false
+              abilityType: none
+              range: 1
+              strain: []
+              modifiers: []
+              persistence: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                guid: d1e2c3f4-0000-4a10-9101-000000000006
+                ongoingEffect: 3cc61ad4-03d5-4db9-af58-bf59318c9d5a
+                ongoingEffectCustom: false
+                ongoingEffectSource: specific
+                duration: end_of_next_turn_from_turnstart
+                applyto: targets
+                filterTarget: 'not Cast.PassesPotency(Target, "P", "Strong")'
     titles: []
     cr: 1
     inflictedConditions: []

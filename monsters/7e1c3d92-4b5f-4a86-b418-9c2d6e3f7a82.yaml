@@ -72,248 +72,293 @@ info:
   updateid: f6364964-4e0d-4555-a853-aed5cd3f1687
   properties:
     __typeName: AnimalCompanion
-    animations:
-      guid: 9e2c1d83-4b5f-4a76-b428-7c1d6e3f5a82
-      anim:
-      - resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-        animType: consumeResource
-    attributes:
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: 2
-      agl:
-        __typeName: CharacterAttribute
-        id: agl
-        baseValue: 1
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      rea:
-        __typeName: CharacterAttribute
-        id: rea
-        baseValue: -1
-      prs:
-        __typeName: CharacterAttribute
-        id: prs
-        baseValue: 1
-      inu:
-        __typeName: CharacterAttribute
-        id: inu
-        baseValue: 2
-    savingThrowRatings: []
-    inflictedConditions: []
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72: true
-      description: You have 0 stability.
-      source: Character Feature
-      guid: 1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72
-      implementation: 3
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72: true
-        sourceguid: 1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72
-        behavior: attribute
-        value: 0
-        description: You have 0 stability.
-        attribute: forcedmoveresistance
-        guid: 2b4e3d82-5b6f-4a96-b318-8c2d6e1f7a92
-        source: Character Feature
-        operation: set
-        name: Attributes
-      name: Attributes
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82: true
-      description: While the condor is flying and has a speed greater than 0, ranged strikes against them take a bane.
-      source: Character Feature
-      guid: 3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82
-      implementation: 3
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82: true
-        sourceguid: 3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82
-        behavior: power
-        rollType: enemy_ability_power_roll
-        modtype: bane
-        description: While the condor is flying and has a speed greater than 0, ranged strikes against the condor take a bane.
-        name: Moving Target
-        keywords:
-          Ranged: true
-          Strike: true
-        activationCondition: Self.Movement Type = "fly" and Self.Movement Speed > 0
-        guid: 4d6e2c93-5b1a-4f87-a528-1d3e6f7c8a04
-        source: Character Feature
-      name: Moving Target
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95: true
-      description: Whenever the condor makes a strike while rampaging, they deal extra damage equal to the number of squares they've moved on their turn (max 5).
-      source: Character Feature
-      guid: 5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95
-      implementation: 3
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95: true
-        sourceguid: 5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95
-        addText: "{min(Moved This Turn, 5)} damage"
-        rollType: ability_power_roll
-        name: Dive Bomb
-        behavior: power
-        modtype: none
-        description: Whenever the condor makes a strike while rampaging, they deal extra damage equal to the number of squares they've moved on their turn (max 5).
-        activationCondition: Self.Rampaging and Self.Moved This Turn > 0 and Self.Level >= 3
-        keywords:
-          Strike: true
-        guid: 6f9a3eb4-7d5c-4f98-c429-8e3f7a2d9ca6
-        applyToFreeStrikes: true
-        source: Character Feature
-      name: Dive Bomb
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:4c69b05d-6280-47ce-bf97-e3b156de8192: true
-      description: While the condor is rampaging, you gain wings and can fly; while flying you gain +2 speed.
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:4c69b05d-6280-47ce-bf97-e3b156de8192: true
-        sourceguid: 4c69b05d-6280-47ce-bf97-e3b156de8192
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
-        feature:
-          __typeName: CharacterFeature
-          description: Flight and +2 speed granted by the condor.
-          modifiers:
-          - __typeName: CharacterModifier
-            operation: set
-            sourceguid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
-            behavior: attribute
-            value: Walking Speed
-            description: You gain wings and can fly.
-            attribute: fly
-            guid: 13e5bd45-38dc-4797-874f-720aafde21f1
-            source: Beastheart
-            name: Borne Aloft
-          - __typeName: CharacterModifier
-            operation: add
-            sourceguid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
-            behavior: attribute
-            value: "2"
-            description: +2 bonus to speed while flying.
-            attribute: speed
-            guid: b8e13b0c-b2f1-4912-8b1c-1a3be264e9ca
-            source: Beastheart
-            name: Borne Aloft
-          implementation: 3
-          source: Beastheart
-          guid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
-          name: Borne Aloft
-        description: While the condor is rampaging, its beastheart gains wings (fly at walking speed) and +2 speed.
-        mode: summoner
-        guid: b278b33d-bae4-4e30-b0b6-757ff5fb1d4f
-        name: Borne Aloft
-        behavior: modsummoner
-        source: Character Feature
-      guid: 4c69b05d-6280-47ce-bf97-e3b156de8192
-      implementation: 3
-      source: Character Feature
-      name: Borne Aloft
-    monster_category: Animal
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      abilityType: none
-      implementation: 4
-      numTargets: "1"
       modifiers: []
-      display:
-        saturation: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        brightness: 1
-      strain: []
       categorization: Signature Ability
-      repeatTargets: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      persistence: []
       behaviors:
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         guid: 6f8c4e93-5b2d-4a97-a528-3e5f1d6c7b04
         rule: 3 + M damage
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: end_of_next_turn
-        modesSelected:
-        - 1
-        guid: 7e1d3c92-4b5f-4a86-b418-9c2d6e3f7a93
         applyto: caster
         ongoingEffect: 8c2d1e93-4b6f-4a76-b428-7c1d3e5f6a82
         ongoingEffectCustom: false
+        guid: 7e1d3c92-4b5f-4a86-b418-9c2d6e3f7a93
+        modesSelected:
+        - 1
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: end_of_next_turn
-        modesSelected:
-        - 2
-        guid: 8f2e4d93-5c6a-4b97-b528-1e3f7d8c9a05
         applyto: caster
         ongoingEffect: 3c6f2d94-5b1a-4e87-b328-2d3e1f7c8a94
         ongoingEffectCustom: false
+        guid: 8f2e4d93-5c6a-4b97-b528-1e3f7d8c9a05
+        modesSelected:
+        - 2
       - __typeName: ActivatedAbilityReplenishBehavior
         modesSelected:
         - 2
         applyto: caster
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
         mode: expend
-      objectTarget: true
-      multipleModes: true
-      iconid: ui-icons/skills/1.png
-      description: |-
-        Target takes {3 + Might} damage. Each enemy adjacent to the condor is weakened until the end of your next turn.
-
-        **Spend 1 Ferocity:** Enemies are taunted by the condor instead of weakened.
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
       guid: 5e7f3d92-4b1c-4a86-b328-2d4e6f8c9b15
-      targetType: target
-      range: 1
+      iconid: ui-icons/skills/1.png
+      strain: []
+      numTargets: "1"
+      multipleModes: true
       keywords:
         Weapon: true
         Companion: true
         Melee: true
+      targetType: target
+      flavor: I can't draw a bead on them with that infernal bird flapping in my face!
+      repeatTargets: false
+      implementation: 4
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      name: Flurry of Wings
+      abilityType: none
+      description: |-
+        Target takes {3 + Might} damage. Each enemy adjacent to the condor is weakened until the end of your next turn.
+
+        **Spend 1 Ferocity:** Enemies are taunted by the condor instead of weakened.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
       modeList:
       - text: Normal
         rules: "{3 + Might} damage; enemies adjacent to condor weakened (EoT)"
-      - condition: Heroic Resources Available to Spend >= 1
-        text: Spend 1 Ferocity
+      - text: Spend 1 Ferocity
         rules: "{3 + Might} damage; enemies adjacent to condor taunted (EoT)"
-      flavor: I can't draw a bead on them with that infernal bird flapping in my face!
-      name: Flurry of Wings
-    skillProficiencies: []
-    max_hitpoints: 13
-    movementSpeeds:
-      fly: 7
+        condition: Heroic Resources Available to Spend >= 1
+      range: 1
+      objectTarget: true
+      persistence: []
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 1
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 1
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 2
+    characterFeatures:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        value: 0
+        source: Character Feature
+        attribute: forcedmoveresistance
+        guid: 2b4e3d82-5b6f-4a96-b318-8c2d6e1f7a92
+        name: Attributes
+        sourceguid: 1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72
+        operation: set
+        behavior: attribute
+        description: You have 0 stability.
+        domains:
+          CharacterFeature:1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72: true
+      source: Character Feature
+      domains:
+        CharacterFeature:1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72: true
+      guid: 1a3f2c91-3b6d-4a86-b218-7c1d8e3f5a72
+      description: You have 0 stability.
+      implementation: 3
+      name: Attributes
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: power
+        source: Character Feature
+        guid: 4d6e2c93-5b1a-4f87-a528-1d3e6f7c8a04
+        name: Moving Target
+        keywords:
+          Ranged: true
+          Strike: true
+        sourceguid: 3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82
+        activationCondition: Self.Movement Type = "fly" and Self.Movement Speed > 0
+        modtype: bane
+        description: While the condor is flying and has a speed greater than 0, ranged strikes against the condor take a bane.
+        rollType: enemy_ability_power_roll
+        domains:
+          CharacterFeature:3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82: true
+      source: Character Feature
+      domains:
+        CharacterFeature:3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82: true
+      guid: 3c5d1e84-4b6f-4a76-a428-9c1d2e7f3a82
+      description: While the condor is flying and has a speed greater than 0, ranged strikes against them take a bane.
+      implementation: 3
+      name: Moving Target
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: power
+        source: Character Feature
+        domains:
+          CharacterFeature:5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95: true
+        guid: 6f9a3eb4-7d5c-4f98-c429-8e3f7a2d9ca6
+        name: Dive Bomb
+        addText: "{min(Moved This Turn, 5)} damage"
+        description: Whenever the condor makes a strike while rampaging, they deal extra damage equal to the number of squares they've moved on their turn (max 5).
+        sourceguid: 5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95
+        activationCondition: Self.Rampaging and Self.Moved This Turn > 0 and Self.Level >= 3
+        modtype: none
+        applyToFreeStrikes: true
+        rollType: ability_power_roll
+        keywords:
+          Strike: true
+      source: Character Feature
+      domains:
+        CharacterFeature:5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95: true
+      guid: 5e8f2d93-6c4b-4a87-b318-7d2e6f1c8b95
+      description: Whenever the condor makes a strike while rampaging, they deal extra damage equal to the number of squares they've moved on their turn (max 5).
+      implementation: 3
+      name: Dive Bomb
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: modsummoner
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        guid: b278b33d-bae4-4e30-b0b6-757ff5fb1d4f
+        name: Borne Aloft
+        description: While the condor is rampaging, its beastheart gains wings (fly at walking speed) and +2 speed.
+        sourceguid: 4c69b05d-6280-47ce-bf97-e3b156de8192
+        mode: summoner
+        feature:
+          __typeName: CharacterFeature
+          modifiers:
+          - __typeName: CharacterModifier
+            value: Walking Speed
+            source: Beastheart
+            attribute: fly
+            guid: 13e5bd45-38dc-4797-874f-720aafde21f1
+            name: Borne Aloft
+            sourceguid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
+            operation: set
+            description: You gain wings and can fly.
+            behavior: attribute
+          - __typeName: CharacterModifier
+            value: "2"
+            source: Beastheart
+            attribute: speed
+            guid: b8e13b0c-b2f1-4912-8b1c-1a3be264e9ca
+            name: Borne Aloft
+            sourceguid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
+            operation: add
+            description: +2 bonus to speed while flying.
+            behavior: attribute
+          source: Beastheart
+          description: Flight and +2 speed granted by the condor.
+          implementation: 3
+          guid: 84b0be42-bc4f-46bd-a83a-ba4a2cec2451
+          name: Borne Aloft
+        domains:
+          CharacterFeature:4c69b05d-6280-47ce-bf97-e3b156de8192: true
+      description: While the condor is rampaging, you gain wings and can fly; while flying you gain +2 speed.
+      domains:
+        CharacterFeature:4c69b05d-6280-47ce-bf97-e3b156de8192: true
+      guid: 4c69b05d-6280-47ce-bf97-e3b156de8192
+      source: Character Feature
+      implementation: 3
+      name: Borne Aloft
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: modsummoner
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        guid: a8c1f4e9-2d37-415a-ad5b-4f9b2c7d0e61
+        name: Flight of the Condor
+        description: While the condor rampages and its beastheart is level 10+, the beastheart gains +5 speed.
+        feature:
+          __typeName: CharacterFeature
+          modifiers:
+          - __typeName: CharacterModifier
+            description: +5 bonus to speed.
+            behavior: attribute
+            source: Beastheart
+            value: "5"
+            attribute: speed
+            operation: add
+            guid: c0e3b6a1-4f59-437c-cf7d-6b1d4e9f2083
+            name: Flight of the Condor
+          source: Beastheart
+          description: +5 speed while your condor is rampaging.
+          guid: b9d2a5f0-3e48-426b-be6c-5a0c3d8e1f72
+          name: Flight of the Condor
+        mode: summoner
+        sourceguid: f7b0e3d8-1c26-4049-9c4a-3e8a1b6c9d50
+      - __typeName: CharacterModifier
+        behavior: attribute
+        source: Character Feature
+        attribute: speed
+        guid: d1f4c7b2-5a60-448d-d08e-7c2e5f0a3194
+        name: Flight of the Condor
+        sourceguid: f7b0e3d8-1c26-4049-9c4a-3e8a1b6c9d50
+        operation: add
+        value: "5"
+        description: +5 bonus to speed.
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+      description: While the condor is rampaging, you and the condor gain a +5 bonus to speed.
+      name: Flight of the Condor
+      guid: f7b0e3d8-1c26-4049-9c4a-3e8a1b6c9d50
+      source: Character Feature
+      implementation: 3
+      domains:
+        CharacterFeature:f7b0e3d8-1c26-4049-9c4a-3e8a1b6c9d50: true
+    max_hitpoints_roll: 2d8+2
     cr: 1
-    damage_taken: 0
-    classes: []
-    titles: []
-    innateAttacks: []
+    monster_category: Animal
+    notes:
+    - text: ""
+      title: Backstory
+    skillProficiencies: []
+    inflictedConditions: []
+    max_hitpoints: 13
+    skillRatings:
+      db532974-aa0a-41a9-aacf-4adc1e6121d3: true
+    walkingSpeed: 7
+    equipment: []
     resources:
       a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
         __typeName: CharacterResource
         refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
         used: 1
-    monster_type: Condor
-    max_hitpoints_roll: 2d8+2
-    notes:
-    - title: Backstory
-      text: ""
-    levelChoices: []
-    skillRatings:
-      db532974-aa0a-41a9-aacf-4adc1e6121d3: true
-    import: []
-    equipment: []
+    titles: []
+    damage_taken: 0
+    movementSpeeds:
+      fly: 7
+    classes: []
     initiativeGrouping: e38ddea1-8649-41d6-90d3-7f2884ce6622
-    walkingSpeed: 7
+    innateAttacks: []
+    monster_type: Condor
+    levelChoices: []
+    import: []
+    animations:
+      guid: 9e2c1d83-4b5f-4a76-b428-7c1d6e3f5a82
+      anim:
+      - resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+        animType: consumeResource
+    savingThrowRatings: []
   tokenType: null
   bestiaryId: 7e1c3d92-4b5f-4a86-b418-9c2d6e3f7a82
   summonerid: null
@@ -326,6 +371,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 4
 ctime: 1779087601456
-mtime: 1784417063611
+mtime: 1784515322555
 hidden: false
 id: 7e1c3d92-4b5f-4a86-b418-9c2d6e3f7a82
