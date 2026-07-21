@@ -3657,6 +3657,144 @@ levels:
       guid: 20d8cd7b-8575-498b-b14c-b16dc7fd7ada
       description: You gain one skill of your choice.
       source: Beastheart Class Feature
+    - __typeName: CharacterFeature
+      description: |-
+        You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
+        Additionally, you can spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+        Ferox remains until you spend it.
+      source: Beastheart Class Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: resource
+        source: Beastheart Class Feature
+        name: Ferox
+        resourceType: e7b04a7e-61fc-4e17-b999-d95d7e751abb
+        num: 0
+        guid: 12ceda01-0252-4500-b487-58a118d4b5da
+        sourceguid: 975c6612-106e-4528-afe2-494278913c57
+        description: |-
+          You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
+          Additionally, you can spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+          Ferox remains until you spend it.
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterModifier
+        guid: aeacce58-1e09-4ac1-a4cf-96e6e5182da3
+        behavior: trigger
+        source: Beastheart Class Feature
+        description: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain.
+        sourceguid: 975c6612-106e-4528-afe2-494278913c57
+        name: Ferox
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          abilityType: none
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityReplenishBehavior
+            quantity: XP Gained
+            resourceid: e7b04a7e-61fc-4e17-b999-d95d7e751abb
+            chatMessage: Ferox Gained
+          modifiers: []
+          name: Ferox
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          strain: []
+          guid: 812a2114-2056-41de-ac2e-df9828dc5ce4
+          iconid: ui-icons/skills/1.png
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          persistence: []
+          trigger: endrespite
+          repeatTargets: false
+          description: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain.
+          numTargets: "1"
+      - __typeName: CharacterModifier
+        guid: d8f484d5-6577-4949-88f4-13febfd2ef56
+        behavior: triggerdisplay
+        source: Beastheart Class Feature
+        description: |-
+          You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
+          Additionally, you can spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+          Ferox remains until you spend it.
+        sourceguid: 975c6612-106e-4528-afe2-494278913c57
+        name: Ferox
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: e7f712a5-14d5-4b97-8895-a2972066103b
+          type: passive
+          target: ""
+          distance: ""
+          effect: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
+          name: Ferox
+          keywords: []
+      - __typeName: CharacterModifier
+        guid: 2ac1ed54-13e4-4f46-ac3c-6e685e66a517
+        behavior: activated
+        source: Beastheart Class Feature
+        activatedAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          abilityType: none
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityReplenishBehavior
+            resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            applyto: caster
+            chatMessage: "Ferox: +1 main action"
+          - __typeName: ActivatedAbilityReplenishBehavior
+            mode: expend
+            resourceid: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+            applyto: caster
+            filterTarget: resources.Maneuver > 0
+            chatMessage: "Ferox: maneuver spent"
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: fc2971b0-6787-4096-b0a4-49e87f6bf26f
+            ongoingEffectCustom: fc2971b0-6787-4096-b0a4-49e87f6bf26f
+            duration: 0
+            applyto: caster
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          strain: []
+          iconid: 0e377747-2985-47cb-87aa-52e6563a1230
+          repeatTargets: false
+          resourceCost: e7b04a7e-61fc-4e17-b999-d95d7e751abb
+          resourceNumber: "1"
+          description: |-
+            Spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+          name: Ferox
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          guid: 170f7e20-a752-4f30-8610-1dd0dc76c0ec
+          modifiers: []
+          actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+          persistence: []
+          categorization: Ability
+          implementation: 4
+          numTargets: "1"
+        sourceguid: 975c6612-106e-4528-afe2-494278913c57
+        name: Ferox
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        description: |-
+          Spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+      name: Ferox
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      guid: 975c6612-106e-4528-afe2-494278913c57
+      canHavePrerequisites: true
+      implementation: 4
     domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-1:
@@ -3706,6 +3844,7 @@ heroicResourceIcon: drawsteel/HeroicResources/T_UI_ICON_FLAT_HR_FEROCITY.png
 name: Beastheart
 isSubclass: false
 heroicResourceName: Ferocity
+epicResourceName: Ferox
 details: |-
   A beastheart travels with a ferocious beast companion -- not a trained pet, but an untamed creature bound by a primordial connection. As battle rages, the companion may succumb to a blood-soaked rampage, lashing out at enemies and allies alike.
 

@@ -293,6 +293,102 @@ info:
         filterCondition: Self.Rampaging and Summoner.Level >= 6
         mode: summoner
         description: While the spider rampages and its beastheart is level 6+, the beastheart gains the Web Slinger free maneuver.
+    - __typeName: CharacterFeature
+      iconid: ui-icons/skills/1.png
+      name: Life Drinker
+      source: Character Feature
+      implementation: 3
+      guid: 8f3e1d94-0000-4a10-8f01-000000000001
+      domains:
+        CharacterFeature:8f3e1d94-0000-4a10-8f01-000000000001: true
+      description: Whenever you or the spider deals damage with a maneuver while the spider is rampaging, the attacker regains Stamina equal to the damage dealt.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 8f3e1d94-0000-4a10-8f01-000000000007
+        behavior: trigger
+        sourceguid: 8f3e1d94-0000-4a10-8f01-000000000001
+        name: Life Drinker
+        source: Character Feature
+        description: When the spider deals maneuver damage while rampaging, it regains Stamina equal to the damage.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: 8f3e1d94-0000-4a10-8f01-000000000008
+          name: Life Drinker
+          trigger: dealdamage
+          subject: self
+          targetType: self
+          conditionFormula: HasAbility and Ability.Maneuver and Self.Rampaging and Self.Level >= 10
+          mandatory: true
+          castImmediately: true
+          abilityType: none
+          numTargets: "1"
+          repeatTargets: false
+          range: 1
+          strain: []
+          persistence: []
+          modifiers: []
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            guid: 8f3e1d94-0000-4a10-8f01-000000000009
+            roll: Damage
+            applyto: caster
+      - __typeName: CharacterModifier
+        guid: 8f3e1d94-0000-4a10-8f01-000000000002
+        behavior: modsummoner
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: 8f3e1d94-0000-4a10-8f01-000000000001
+        name: Life Drinker
+        source: Character Feature
+        description: While rampaging (L10+), your maneuver damage heals you too.
+        feature:
+          __typeName: CharacterFeature
+          guid: 8f3e1d94-0000-4a10-8f01-000000000003
+          name: Life Drinker
+          source: Beastheart
+          implementation: 3
+          iconid: ui-icons/skills/1.png
+          description: When you deal maneuver damage while your spider rampages, you regain Stamina equal to the damage.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 8f3e1d94-0000-4a10-8f01-000000000004
+            behavior: trigger
+            sourceguid: 8f3e1d94-0000-4a10-8f01-000000000003
+            name: Life Drinker
+            source: Beastheart
+            description: When you deal maneuver damage while your spider rampages, you regain Stamina equal to the damage.
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              guid: 8f3e1d94-0000-4a10-8f01-000000000005
+              name: Life Drinker
+              trigger: dealdamage
+              subject: self
+              targetType: self
+              conditionFormula: HasAbility and Ability.Maneuver and Self.CompanionRampaging and Self.Level >= 10
+              mandatory: true
+              castImmediately: true
+              abilityType: none
+              numTargets: "1"
+              repeatTargets: false
+              range: 1
+              strain: []
+              persistence: []
+              modifiers: []
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityHealBehavior
+                guid: 8f3e1d94-0000-4a10-8f01-000000000006
+                roll: Damage
+                applyto: caster
     titles: []
     skillProficiencies: []
     cr: 1

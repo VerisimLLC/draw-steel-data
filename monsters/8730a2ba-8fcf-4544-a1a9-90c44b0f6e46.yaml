@@ -69,38 +69,50 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 1e333e2f-bef7-4b4b-acf6-c9a1edd49be8
+  updateid: f10ce321-b771-441f-a264-c771f23ae784
   properties:
     __typeName: AnimalCompanion
-    walkingSpeed: 5
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
-      guid: bec9c494-379a-475c-be54-a92b395c49d9
+      rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
+      abilityType: none
+      repeatTargets: false
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      multipleModes: true
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        guid: 11615f43-1525-4795-9456-979c3150c6cb
+        applyto: targets
+        rule: "{Caster.Might + (2 when Caster.Level >= 3)} acid damage"
+      - __typeName: ActivatedAbilityReplenishBehavior
+        guid: a0467eb8-db28-427b-a686-e831162f024a
+        applyto: caster
+        quantity: "1"
+        modesSelected:
+        - 3
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        mode: expend
+      - __typeName: ActivatedAbilityReplenishBehavior
+        guid: 8ef88c0a-6d86-430c-9c74-d1fd55b06089
+        applyto: caster
+        quantity: "2"
+        modesSelected:
+        - 4
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        mode: expend
+      modifiers: []
       description: |-
         Each creature in the area takes acid damage equal to the drake's Might score.
 
         **Spend 1 Ferocity:** The ability affects a 3 cube within 1.
 
         **Spend 2 Ferocity:** The ability affects a 4 cube within 1.
+      iconid: ui-icons/skills/1.png
       keywords:
         Area: true
-        Magic: true
         Companion: true
-      range: 1
-      modifiers: []
-      numTargets: "1"
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      multipleModes: true
-      name: Drake Breath
-      strain: []
-      targetType: cube
+        Magic: true
+      flavor: The drake exhales a blast of flesh-melting energy.
       modeList:
       - rules: 1 cube within 1
         text: 1 Cube
@@ -112,180 +124,182 @@ info:
       - rules: "Spend 2 Ferocity: 4 cube within 1"
         condition: Heroic Resources Available to Spend >= 2
         text: 4 Cube
-      flavor: The drake exhales a blast of flesh-melting energy.
-      rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
-      targetTextOverride: Each creature in the area
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      abilityType: none
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
+      strain: []
+      targetType: cube
+      guid: bec9c494-379a-475c-be54-a92b395c49d9
+      name: Drake Breath
       categorization: Signature Ability
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: "{Caster.Might + (2 when Caster.Level >= 3)} acid damage"
-        guid: 11615f43-1525-4795-9456-979c3150c6cb
-        applyto: targets
-      - __typeName: ActivatedAbilityReplenishBehavior
-        quantity: "1"
-        modesSelected:
-        - 3
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        guid: a0467eb8-db28-427b-a686-e831162f024a
-        mode: expend
-        applyto: caster
-      - __typeName: ActivatedAbilityReplenishBehavior
-        quantity: "2"
-        modesSelected:
-        - 4
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        guid: 8ef88c0a-6d86-430c-9c74-d1fd55b06089
-        mode: expend
-        applyto: caster
-      persistence: []
+      numTargets: "1"
+      targetTextOverride: Each creature in the area
       implementation: 4
-    max_hitpoints: 13
+      persistence: []
+      range: 1
     animations:
+      guid: 30203717-35c4-4af3-ba91-169a8d218a93
       anim:
       - animType: consumeResource
         resources:
           a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-      guid: 30203717-35c4-4af3-ba91-169a8d218a93
+    titles: []
+    innateAttacks: []
+    initiativeGrouping: 285766d0-9225-4a4f-ab7f-f4a6f5edfc9f
+    skillProficiencies: []
     characterFeatures:
     - __typeName: CharacterFeature
-      description: You have 1 stability.
       guid: 4b8e22a4-035f-49b0-aaa3-4bd3ea16d700
-      source: Character Feature
       name: Attributes
+      source: Character Feature
       implementation: 3
       domains:
         CharacterFeature:4b8e22a4-035f-49b0-aaa3-4bd3ea16d700: true
       modifiers:
       - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:4b8e22a4-035f-49b0-aaa3-4bd3ea16d700: true
+        attribute: forcedmoveresistance
         guid: f14c3c9d-6700-41ea-b852-cc0d6dda20d2
         name: Attributes
         value: 1
+        operation: set
         sourceguid: 4b8e22a4-035f-49b0-aaa3-4bd3ea16d700
         source: Character Feature
-        operation: set
-        attribute: forcedmoveresistance
         behavior: attribute
-        domains:
-          CharacterFeature:4b8e22a4-035f-49b0-aaa3-4bd3ea16d700: true
         description: You have 1 stability.
+      description: You have 1 stability.
     - __typeName: CharacterFeature
-      description: When you gain this companion, choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. This drake is attuned to acid. The drake has acid immunity 3, and its Drake Breath deals acid damage.
       guid: 68bcc074-8862-417c-9be1-dc12340c9dcb
-      source: Character Feature
       name: Elementally Attuned
+      source: Character Feature
       implementation: 3
       domains:
         CharacterFeature:68bcc074-8862-417c-9be1-dc12340c9dcb: true
       modifiers: []
+      description: When you gain this companion, choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. This drake is attuned to acid. The drake has acid immunity 3, and its Drake Breath deals acid damage.
     - __typeName: CharacterFeature
-      description: You have immunity 3 to the drake's attuned damage type (acid).
       guid: 60ec23bd-34f0-4a63-8317-480cb33b3c12
-      source: Character Feature
       name: Shared Scales
+      source: Character Feature
       implementation: 3
       domains:
         CharacterFeature:60ec23bd-34f0-4a63-8317-480cb33b3c12: true
       modifiers:
       - __typeName: CharacterModifier
-        sourceguid: 60ec23bd-34f0-4a63-8317-480cb33b3c12
         guid: 79d23d72-bc2c-4f86-a5c8-2922fd3798ba
-        source: Character Feature
         name: Shared Scales
-        behavior: modsummoner
         description: The beastheart has acid immunity 3 from the drake's attuned damage type.
+        sourceguid: 60ec23bd-34f0-4a63-8317-480cb33b3c12
         domains:
           CharacterFeature:60ec23bd-34f0-4a63-8317-480cb33b3c12: true
+        behavior: modsummoner
         feature:
           __typeName: CharacterFeature
           guid: d17c6203-3c4f-46df-a06d-5bd1ce990d2b
-          source: Beastheart
           name: Shared Scales
-          description: Acid immunity 3 granted by the acid drake companion.
+          source: Beastheart
           modifiers:
           - __typeName: CharacterModifier
             guid: 7b26666b-6563-4b14-86ce-1fd09db837e6
+            name: Shared Scales
             resistances:
             - __typeName: ResistanceEntry
-              apply: Damage Reduction
               dr: 3
+              apply: Damage Reduction
               damageType: acid
-            description: Acid immunity 3 from the acid drake's Shared Scales.
-            name: Shared Scales
             sourceguid: d17c6203-3c4f-46df-a06d-5bd1ce990d2b
-            behavior: resistance
             source: Beastheart
+            behavior: resistance
+            description: Acid immunity 3 from the acid drake's Shared Scales.
+          description: Acid immunity 3 granted by the acid drake companion.
+        source: Character Feature
+      description: You have immunity 3 to the drake's attuned damage type (acid).
     - __typeName: CharacterFeature
-      description: The drake's Drake Breath maneuver deals an extra 2 damage. Active at level 3 or higher.
       guid: a1d3e5f7-2b4c-4a86-b318-1c2d3e4f5a01
-      source: Character Feature
       name: Endless Breath
+      source: Character Feature
       implementation: 3
       domains:
         CharacterFeature:a1d3e5f7-2b4c-4a86-b318-1c2d3e4f5a01: true
       modifiers: []
+      description: The drake's Drake Breath maneuver deals an extra 2 damage. Active at level 3 or higher.
     - __typeName: CharacterFeature
-      description: While the drake is rampaging, you gain wings and can fly, and can use the drake Drake Breath maneuver.
       guid: 768e21a4-7cb4-4dc2-bb22-cc80952b79c8
-      source: Character Feature
       name: A Burning Inside Me
+      source: Character Feature
       implementation: 3
       domains:
         CharacterFeature:768e21a4-7cb4-4dc2-bb22-cc80952b79c8: true
       modifiers:
       - __typeName: CharacterModifier
-        guid: 53aff824-38ba-4499-865f-9be797b47171
-        sourceguid: 768e21a4-7cb4-4dc2-bb22-cc80952b79c8
+        domains:
+          CharacterFeature:768e21a4-7cb4-4dc2-bb22-cc80952b79c8: true
         feature:
           __typeName: CharacterFeature
           guid: 8dd30b77-42d6-4355-95df-92a3b763c94f
-          source: Beastheart
-          description: Flight and Drake Breath from the drake.
-          implementation: 3
           name: A Burning Inside Me
+          source: Beastheart
+          implementation: 3
           modifiers:
           - __typeName: CharacterModifier
+            attribute: fly
             guid: 897c691b-8a5e-4543-912e-82d2d392f52d
+            name: A Burning Inside Me
+            source: Beastheart
             sourceguid: 8dd30b77-42d6-4355-95df-92a3b763c94f
             value: Walking Speed
-            source: Beastheart
-            operation: set
-            attribute: fly
-            description: You gain draconic wings and can fly.
-            name: A Burning Inside Me
             behavior: attribute
+            operation: set
+            description: You gain draconic wings and can fly.
           - __typeName: CharacterModifier
             guid: 5ccd48b4-8453-429a-9a07-c876e52ad593
-            source: Beastheart
-            behavior: activated
+            name: Drake Breath
+            sourceguid: 8dd30b77-42d6-4355-95df-92a3b763c94f
+            description: You can use the drake Drake Breath maneuver.
             activatedAbility:
               __typeName: ActivatedAbility
-              radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
-              guid: bec9c494-379a-475c-be54-a92b395c49d9
+              rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
+              abilityType: none
+              repeatTargets: false
+              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+              multipleModes: true
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                guid: 11615f43-1525-4795-9456-979c3150c6cb
+                applyto: targets
+                rule: "{Caster.Might + (2 when Caster.Level >= 3)} acid damage"
+              - __typeName: ActivatedAbilityReplenishBehavior
+                guid: a0467eb8-db28-427b-a686-e831162f024a
+                applyto: caster
+                quantity: "1"
+                modesSelected:
+                - 3
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                mode: expend
+              - __typeName: ActivatedAbilityReplenishBehavior
+                guid: 8ef88c0a-6d86-430c-9c74-d1fd55b06089
+                applyto: caster
+                quantity: "2"
+                modesSelected:
+                - 4
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                mode: expend
+              range: 1
               description: |-
                 Each creature in the area takes acid damage equal to the drake's Might score.
 
                 **Spend 1 Ferocity:** The ability affects a 3 cube within 1.
 
                 **Spend 2 Ferocity:** The ability affects a 4 cube within 1.
+              iconid: ui-icons/skills/1.png
               keywords:
                 Area: true
                 Magic: true
-              range: 1
-              modifiers: []
-              numTargets: "1"
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              targetType: cube
-              multipleModes: true
-              name: Drake Breath
-              implementation: 4
-              display:
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-                brightness: 1
+              flavor: The drake exhales a blast of flesh-melting energy.
               modeList:
               - rules: 1 cube within 1
                 text: 1 Cube
@@ -297,76 +311,253 @@ info:
               - rules: "Spend 2 Ferocity: 4 cube within 1"
                 condition: Heroic Resources Available to Spend >= 2
                 text: 4 Cube
-              rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
-              flavor: The drake exhales a blast of flesh-melting energy.
-              targetTextOverride: Each creature in the area
-              categorization: Signature Ability
-              abilityType: none
-              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-              behaviors:
-              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                rule: "{Caster.Might + (2 when Caster.Level >= 3)} acid damage"
-                guid: 11615f43-1525-4795-9456-979c3150c6cb
-                applyto: targets
-              - __typeName: ActivatedAbilityReplenishBehavior
-                quantity: "1"
-                modesSelected:
-                - 3
-                guid: a0467eb8-db28-427b-a686-e831162f024a
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                mode: expend
-                applyto: caster
-              - __typeName: ActivatedAbilityReplenishBehavior
-                quantity: "2"
-                modesSelected:
-                - 4
-                guid: 8ef88c0a-6d86-430c-9c74-d1fd55b06089
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                mode: expend
-                applyto: caster
-              persistence: []
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+              modifiers: []
               strain: []
-            sourceguid: 8dd30b77-42d6-4355-95df-92a3b763c94f
-            name: Drake Breath
-            description: You can use the drake Drake Breath maneuver.
-        domains:
-          CharacterFeature:768e21a4-7cb4-4dc2-bb22-cc80952b79c8: true
-        source: Character Feature
+              categorization: Signature Ability
+              guid: bec9c494-379a-475c-be54-a92b395c49d9
+              name: Drake Breath
+              targetType: cube
+              numTargets: "1"
+              targetTextOverride: Each creature in the area
+              implementation: 4
+              persistence: []
+              radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
+            behavior: activated
+            source: Beastheart
+          description: Flight and Drake Breath from the drake.
+        guid: 53aff824-38ba-4499-865f-9be797b47171
         behavior: modsummoner
-        name: A Burning Inside Me
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
         mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        source: Character Feature
+        sourceguid: 768e21a4-7cb4-4dc2-bb22-cc80952b79c8
+        name: A Burning Inside Me
         description: While the drake rampages and its beastheart is level 6+, the beastheart gains flight and the Drake Breath maneuver.
-    titles: []
+      description: While the drake is rampaging, you gain wings and can fly, and can use the drake Drake Breath maneuver.
+    - __typeName: CharacterFeature
+      iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+      name: Elemental Avatar
+      source: Character Feature
+      implementation: 3
+      guid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+      domains:
+        CharacterFeature:e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08: true
+      modifiers:
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          guid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
+          name: Elemental Avatar
+          source: Beastheart
+          implementation: 3
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: b7d0e3a8-9c14-4f6f-d081-2d0e4f7c9a3b
+            behavior: resistance
+            resistances:
+            - __typeName: ResistanceEntry
+              dr: "100"
+              apply: Damage Reduction
+              damageType: acid
+            sourceguid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
+            source: Beastheart
+            name: Elemental Avatar
+            description: Acid immunity all.
+          description: Acid immunity all while your drake is rampaging.
+        guid: f5b8c1e6-7a92-4d4d-be6f-0b8c2d5a7e19
+        name: Elemental Avatar
+        mode: summoner
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: modsummoner
+        description: While rampaging (L10+), the beastheart gains acid immunity all.
+      - __typeName: CharacterModifier
+        guid: c8e1f4b9-0d25-407a-e192-3e1f5a8d0b4c
+        behavior: resistance
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: "100"
+          apply: Damage Reduction
+          damageType: acid
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        description: Acid immunity all.
+        name: Elemental Avatar
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        source: Character Feature
+      - __typeName: CharacterModifier
+        keywords:
+          Strike: true
+        addText: the target is dragonsealed by acid (save ends)
+        activationCondition: Self.Rampaging and Self.Level >= 10
+        armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+        modtype: none
+        applyToFreeStrikes: true
+        guid: d9f2a5c0-1e36-418b-f2a3-4f2a6b9e1c5d
+        behavior: power
+        rollType: ability_power_roll
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        name: Dragonseal (Acid)
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        description: Toggle on to dragonseal the struck target on this strike (weakness 10 acid, save ends).
+      - __typeName: CharacterModifier
+        guid: b3d6e9c4-5f80-4a2b-9c4d-7e6f0a3b8c5d
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          abilityType: none
+          repeatTargets: false
+          subject: self
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: targets
+            stacks: "1"
+            duration: save_ends
+            ongoingEffect: b1d4e7a2-3c58-4f09-9a2b-6d4e8f1c3a75
+            ongoingEffectCustom: b1d4e7a2-3c58-4f09-9a2b-6d4e8f1c3a75
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            applyto: caster
+            mode: effect
+            ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+          description: ""
+          mandatory: true
+          trigger: dealdamage
+          strain: []
+          guid: c4e7f0d5-6a91-4b3c-ad5e-8f7a1b4c9d6e
+          name: Dragonseal (Acid)
+          targetType: target
+          numTargets: "1"
+          modifiers: []
+          conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.Rampaging and Self.Level >= 10
+          persistence: []
+          castImmediately: true
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        name: Elemental Avatar
+        behavior: trigger
+        description: While rampaging (L10+) and armed, the drake's strike dragonseals the target.
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          guid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+          name: Elemental Avatar
+          source: Beastheart
+          implementation: 3
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+          modifiers:
+          - __typeName: CharacterModifier
+            keywords:
+              Strike: true
+            addText: the target is dragonsealed by acid (save ends)
+            activationCondition: "1"
+            modtype: none
+            applyToFreeStrikes: true
+            guid: f7b0c3a8-9d24-4e6f-d081-1c0d4e7f2a91
+            behavior: power
+            armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+            rollType: ability_power_roll
+            name: Dragonseal (Acid)
+            description: Toggle on to dragonseal the struck target on this strike (weakness 10 acid, save ends).
+            source: Beastheart
+          - __typeName: CharacterModifier
+            guid: a8c1d4b9-0e35-4f70-e192-2d1e5f8a3b02
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              range: 1
+              abilityType: none
+              repeatTargets: false
+              subject: self
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                applyto: targets
+                stacks: "1"
+                duration: save_ends
+                ongoingEffect: b1d4e7a2-3c58-4f09-9a2b-6d4e8f1c3a75
+                ongoingEffectCustom: b1d4e7a2-3c58-4f09-9a2b-6d4e8f1c3a75
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                applyto: caster
+                mode: effect
+                ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+              description: ""
+              mandatory: true
+              trigger: dealdamage
+              strain: []
+              guid: b9d2e5c0-1f46-4081-f2a3-3e2f6a9b4c13
+              name: Dragonseal (Acid)
+              targetType: target
+              numTargets: "1"
+              modifiers: []
+              conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.CompanionRampaging and Self.Level >= 10
+              persistence: []
+              castImmediately: true
+            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+            source: Beastheart
+            name: Elemental Avatar
+            behavior: trigger
+            description: While armed, your strike dragonseals the struck target.
+          description: Your strikes may dragonseal the struck target while your drake is rampaging.
+        guid: d5f8a1e6-7b02-4c4d-be6f-9a8b2c5d0e7f
+        name: Elemental Avatar
+        mode: summoner
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: modsummoner
+        description: While rampaging (L10+), your strikes may dragonseal the struck target.
+      description: While the drake is rampaging, you and the drake have immunity all to acid, and on each strike you may dragonseal the target by acid (save ends) -- a dragonsealed creature has weakness 10 to acid.
+    movementSpeeds:
+      fly: 5
     cr: 1
     notes:
     - text: ""
       title: Backstory
-    max_hitpoints_roll: 2d8+2
+    inflictedConditions: []
+    max_hitpoints: 13
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 3
+      apply: Damage Reduction
+      damageType: acid
+    savingThrowRatings: []
+    monster_category: Dragon
+    monster_type: Acid Drake
     skillRatings:
       cb214a42-7f8c-4d02-b6ac-1399724a8b5f: true
     equipment: []
-    monster_category: Dragon
     classes: []
-    damage_taken: 0
-    import: []
-    initiativeGrouping: 285766d0-9225-4a4f-ab7f-f4a6f5edfc9f
+    levelChoices: []
+    max_hitpoints_roll: 2d8+2
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
+        used: 1
+    walkingSpeed: 5
     attributes:
       rea:
         __typeName: CharacterAttribute
         baseValue: -1
         id: rea
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        __typeName: CharacterAttribute
-        baseValue: 2
-        id: inu
-      agl:
-        __typeName: CharacterAttribute
-        baseValue: 1
-        id: agl
       prs:
         __typeName: CharacterAttribute
         baseValue: 2
@@ -375,24 +566,19 @@ info:
         __typeName: CharacterAttribute
         baseValue: 2
         id: mgt
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      dr: 3
-      damageType: acid
-    innateAttacks: []
-    skillProficiencies: []
-    levelChoices: []
-    savingThrowRatings: []
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
-    monster_type: Acid Drake
-    inflictedConditions: []
-    movementSpeeds:
-      fly: 5
+      agl:
+        __typeName: CharacterAttribute
+        baseValue: 1
+        id: agl
+      inu:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: inu
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+    damage_taken: 0
+    import: []
   tokenType: null
   bestiaryId: 8730a2ba-8fcf-4544-a1a9-90c44b0f6e46
   summonerid: null
@@ -405,6 +591,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 11
 ctime: 1779168301669
-mtime: 1784429491525
+mtime: 1784569368277
 hidden: false
 id: 8730a2ba-8fcf-4544-a1a9-90c44b0f6e46

@@ -190,6 +190,70 @@ info:
         filterCondition: Self.Rampaging and Summoner.Level >= 6
         mode: summoner
         description: While the ball rampages and its beastheart is level 6+, the beastheart gains +2 speed and +2 melee distance.
+    - __typeName: CharacterFeature
+      iconid: ui-icons/skills/1.png
+      name: Runaway Expansion
+      source: Character Feature
+      implementation: 3
+      guid: 5e2f1d83-0000-4a10-8b01-000000000001
+      domains:
+        CharacterFeature:5e2f1d83-0000-4a10-8b01-000000000001: true
+      description: While the ball is rampaging, you and the ball have acid immunity 10, and whenever a creature is reduced to 0 Stamina while inside the ball, the ball's size increases by 1 (to a maximum of 5). The ball's size can't increase this way more than once a turn, and the ball shrinks back to their original size when their rampage ends.
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 5e2f1d83-0000-4a10-8b01-000000000002
+        behavior: modsummoner
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        name: Runaway Expansion
+        source: Character Feature
+        sourceguid: 5e2f1d83-0000-4a10-8b01-000000000001
+        description: While rampaging (L10+), the beastheart gains acid immunity 10.
+        feature:
+          __typeName: CharacterFeature
+          guid: 5e2f1d83-0000-4a10-8b01-000000000003
+          name: Runaway Expansion
+          source: Beastheart
+          implementation: 3
+          iconid: ui-icons/skills/1.png
+          description: Acid immunity 10 while your ball is rampaging.
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 5e2f1d83-0000-4a10-8b01-000000000004
+            behavior: resistance
+            resistances:
+            - __typeName: ResistanceEntry
+              dr: "10"
+              apply: Damage Reduction
+              damageType: acid
+            sourceguid: 5e2f1d83-0000-4a10-8b01-000000000003
+            source: Beastheart
+            name: Runaway Expansion
+            description: Acid immunity 10.
+      - __typeName: CharacterModifier
+        guid: 5e2f1d83-0000-4a10-8b01-000000000005
+        behavior: resistance
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: "10"
+          apply: Damage Reduction
+          damageType: acid
+        sourceguid: 5e2f1d83-0000-4a10-8b01-000000000001
+        name: Runaway Expansion
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        description: Acid immunity 10.
+      - __typeName: CharacterModifier
+        guid: 5e2f1d83-0000-4a10-8b01-000000000006
+        behavior: attribute
+        attribute: b2a7c1d4-0000-4c10-9d01-000000000001
+        operation: set
+        value: "1"
+        filterCondition: Self.Rampaging
+        sourceguid: 5e2f1d83-0000-4a10-8b01-000000000001
+        name: Runaway Expansion
+        source: Character Feature
+        description: Flag for the Runaway Expansion hook (1 while the ball rampages).
     titles: []
     skillProficiencies: []
     levelChoices: []

@@ -72,68 +72,42 @@ info:
   updateid: f573e262-0988-4642-b426-8e483ad450ef
   properties:
     __typeName: AnimalCompanion
-    attributes:
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: 2
-      agl:
-        __typeName: CharacterAttribute
-        id: agl
-        baseValue: 1
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      rea:
-        __typeName: CharacterAttribute
-        id: rea
-        baseValue: -1
-      prs:
-        __typeName: CharacterAttribute
-        id: prs
-        baseValue: 2
-      inu:
-        __typeName: CharacterAttribute
-        id: inu
-        baseValue: 2
-    savingThrowRatings: []
-    inflictedConditions: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      abilityType: none
-      implementation: 4
-      numTargets: "1"
       modifiers: []
-      display:
-        saturation: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        brightness: 1
-      strain: []
       categorization: Signature Ability
-      repeatTargets: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      targeting: straightpath
+      guid: 5e9f2c83-4b1d-4a96-b328-6c2d7e1f3a72
+      name: Gore
+      strain: []
+      targetTextOverride: One creature or object
+      numTargets: "1"
+      multipleModes: true
       rangeTextOverride: Melee 1
+      keywords:
+        Weapon: true
+        Companion: true
+        Charge: true
+        Melee: true
       persistence: []
+      flavor: With an enraged snort, the boar lunges forward to rip open foes with their tusks.
+      repeatTargets: false
+      implementation: 4
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      range: "5"
+      targetType: emptyspace
       modeList:
       - text: Normal
         rules: "{3 + Might} damage; +{Might} damage if boar moved"
-      - condition: Heroic Resources Available to Spend >= 1
-        text: Spend 1 Ferocity
+      - text: Spend 1 Ferocity
         rules: "{3 + Might} damage; +{Might} damage if boar moved; bleeding (EoT)"
-      targeting: straightpath
-      targetTextOverride: One creature or object
-      multipleModes: true
-      iconid: ui-icons/skills/1.png
-      keywords:
-        Companion: true
-        Melee: true
-        Charge: true
-        Weapon: true
-      flavor: With an enraged snort, the boar lunges forward to rip open foes with their tusks.
-      range: "5"
-      targetType: emptyspace
-      guid: 5e9f2c83-4b1d-4a96-b328-6c2d7e1f3a72
+        condition: Heroic Resources Available to Spend >= 1
       description: |-
         The boar moves up to 5 squares in a straight line. When this movement ends, deal {3 + Might} damage to an adjacent target. If the boar moved closer to the target as part of this movement, deal an extra {Might} damage.
 
@@ -151,50 +125,45 @@ info:
         guid: 6d4f2c91-3b7e-4a86-b318-7c1d5e2f6a73
         movementType: move
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Choose an adjacent target.
-        abilityType: custom
-        inheritKeywords: true
-        applyto: caster
-        modesSelected:
-        - 1
         customAbility:
           __typeName: ActivatedAbility
-          iconid: ui-icons/skills/1.png
-          abilityType: none
+          modifiers: []
+          targetType: target
+          categorization: Hidden
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             guid: 8f6e4d93-5c2a-4b87-a528-9d1e2f6c7b04
             rule: "{3 + Might + Max(0, Min(1, Max(Max(Cast.Memory(\"StartX\") - Target.X, Target.X - Cast.Memory(\"StartX\")), Max(Cast.Memory(\"StartY\") - Target.Y, Target.Y - Cast.Memory(\"StartY\"))) - Self.Distance(Target))) * Might} damage"
+          repeatTargets: false
+          guid: 7e5d3c82-4b1f-4a87-b428-8c2d1e6f5a93
+          iconid: ui-icons/skills/1.png
+          name: Gore Strike
+          abilityType: none
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          range: 1
+          objectTarget: true
           keywords:
             Weapon: true
             Companion: true
             Melee: true
-          objectTarget: true
-          numTargets: "1"
-          modifiers: []
-          display:
-            saturation: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-          description: ""
-          targetType: target
-          categorization: Hidden
-          guid: 7e5d3c82-4b1f-4a87-b428-8c2d1e6f5a93
-          range: 1
-          repeatTargets: false
-          name: Gore Strike
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        inheritKeywords: true
         promptText: Choose an adjacent target.
         abilityType: custom
-        inheritKeywords: true
-        applyto: caster
         modesSelected:
-        - 2
+        - 1
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
-          iconid: ui-icons/skills/1.png
-          abilityType: none
+          modifiers: []
+          targetType: target
+          categorization: Hidden
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             guid: 3d1e8f94-5c2a-4b87-a528-9e2d6f3c7a05
@@ -202,187 +171,184 @@ info:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             guid: 1b8c6f95-7e4a-4d98-b738-2d3e4f6c8a26
             rule: Bleeding (EoT)
+          repeatTargets: false
+          guid: 2c9d7e83-4b1f-4a87-b428-8d3e1f6c5a94
+          iconid: ui-icons/skills/1.png
+          name: Gore Strike (Ferocity)
+          abilityType: none
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          range: 1
+          objectTarget: true
           keywords:
             Weapon: true
             Companion: true
             Melee: true
-          objectTarget: true
-          numTargets: "1"
-          modifiers: []
-          display:
-            saturation: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-          description: ""
-          targetType: target
-          categorization: Hidden
-          guid: 2c9d7e83-4b1f-4a87-b428-8d3e1f6c5a94
-          range: 1
-          repeatTargets: false
-          name: Gore Strike (Ferocity)
+        applyto: caster
+        inheritKeywords: true
+        promptText: Choose an adjacent target.
+        abilityType: custom
+        modesSelected:
+        - 2
       - __typeName: ActivatedAbilityReplenishBehavior
         modesSelected:
         - 2
         applyto: caster
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
         mode: expend
-      name: Gore
-    skillRatings:
-      7f6d9375-0ab0-415c-8196-4d99e98aa12b: true
-    max_hitpoints: 13
-    damage_taken: 0
-    titles: []
-    monster_type: Boar
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+      iconid: ui-icons/skills/1.png
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 2
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 1
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 2
+    classes: []
+    max_hitpoints_roll: 2d8+2
+    cr: 1
     notes:
-    - title: Backstory
-      text: ""
-    walkingSpeed: 5
-    animations:
-      guid: 7d3e1c92-4b5f-4a86-b218-6c1d8e3f5a72
-      anim:
-      - resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-        animType: consumeResource
+    - text: ""
+      title: Backstory
+    skillProficiencies: []
+    inflictedConditions: []
     characterFeatures:
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92: true
-      description: You have 2 stability.
-      source: Character Feature
-      guid: 8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92: true
-        sourceguid: 8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92
-        behavior: attribute
-        operation: set
         value: 2
-        description: You have 2 stability.
+        source: Character Feature
         attribute: forcedmoveresistance
         guid: 9d3f2c84-5b1e-4a96-b318-8c2d6e1f7a92
-        source: Character Feature
         name: Attributes
+        sourceguid: 8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92
+        operation: set
+        behavior: attribute
+        description: You have 2 stability.
+        domains:
+          CharacterFeature:8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92: true
+      source: Character Feature
+      domains:
+        CharacterFeature:8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92: true
+      guid: 8c2f1e93-4b6d-4a86-b218-7c1d3e5f6a92
+      description: You have 2 stability.
+      implementation: 3
       name: Attributes
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64: true
-      description: While the boar is winded, they have damage immunity equal to their Might score and ignore the effects of bleeding.
-      source: Character Feature
-      guid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64: true
-        sourceguid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
-        filterCondition: Winded
         behavior: resistance
-        description: While winded, the boar has damage immunity equal to their Might score.
         source: Character Feature
-        guid: 3c2d5e94-4b1a-4f76-a528-8c1d6e2f7b53
         resistances:
         - __typeName: ResistanceEntry
           apply: Damage Reduction
           damageType: all
           dr: Might
+        filterCondition: Winded
+        guid: 3c2d5e94-4b1a-4f76-a528-8c1d6e2f7b53
         name: Spiteful Endurance - Damage Immunity
-      - __typeName: CharacterModifier
+        sourceguid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
+        description: While winded, the boar has damage immunity equal to their Might score.
         domains:
           CharacterFeature:2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64: true
-        sourceguid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
+      - __typeName: CharacterModifier
         behavior: attribute
-        filterCondition: Winded
-        value: 1
-        description: While winded, the boar ignores the effects of bleeding.
+        source: Character Feature
         attribute: 27e8b635-34a0-46ac-a8d2-2f105bf20703
         guid: 4d3e6c92-5b2a-4f87-a428-7c1d6e3f8b42
-        source: Character Feature
         name: Spiteful Endurance - Ignore Bleeding
+        description: While winded, the boar ignores the effects of bleeding.
+        value: 1
+        filterCondition: Winded
+        sourceguid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
+        domains:
+          CharacterFeature:2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64: true
+      source: Character Feature
+      domains:
+        CharacterFeature:2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64: true
+      guid: 2b1c4d83-3a5f-4e76-b418-9c2d1e7f3a64
+      description: While the boar is winded, they have damage immunity equal to their Might score and ignore the effects of bleeding.
+      implementation: 3
       name: Spiteful Endurance
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05: true
-      description: While rampaging, the boar has a +2 bonus to speed and a double edge on the Escape Grab maneuver.
-      source: Character Feature
-      guid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05: true
-        sourceguid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
-        filterCondition: Self.Rampaging and Self.Level >= 3
         behavior: attribute
-        value: 2
-        description: While rampaging, the boar has a +2 bonus to speed.
+        source: Character Feature
         attribute: speed
         guid: 8c4d6fa5-7e5a-4b98-c539-9e3f7a2d0c16
-        source: Character Feature
         name: Greased Pig
-      - __typeName: CharacterModifier
+        description: While rampaging, the boar has a +2 bonus to speed.
+        value: 2
+        filterCondition: Self.Rampaging and Self.Level >= 3
+        sourceguid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
         domains:
           CharacterFeature:7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05: true
-        sourceguid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
+      - __typeName: CharacterModifier
         behavior: power
-        activationCondition: Self.Rampaging and Ability.Name = "Escape Grab" and Self.Level >= 3
         source: Character Feature
+        domains:
+          CharacterFeature:7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05: true
+        guid: 9d5e7ab6-8f6b-4ca9-d64a-af4a8b3e1d27
+        name: Greased Pig
         activationAfterRoll: false
-        modtype: double_edge
+        sourceguid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
         description: While rampaging, the boar has a double edge on the Escape Grab maneuver.
+        displayCondition: Self.Rampaging and Ability.Name = "Escape Grab" and Self.Level >= 3
+        modtype: double_edge
+        activationCondition: Self.Rampaging and Ability.Name = "Escape Grab" and Self.Level >= 3
         rollType: ability_power_roll
         keywords: []
-        guid: 9d5e7ab6-8f6b-4ca9-d64a-af4a8b3e1d27
-        displayCondition: Self.Rampaging and Ability.Name = "Escape Grab" and Self.Level >= 3
-        name: Greased Pig
+      source: Character Feature
+      domains:
+        CharacterFeature:7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05: true
+      guid: 7b3c5e94-6d4f-4a87-b428-8d2e6f1c9b05
+      description: While rampaging, the boar has a +2 bonus to speed and a double edge on the Escape Grab maneuver.
+      implementation: 3
       name: Greased Pig
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:daff560f-bce3-4d75-960e-f501a5627f19: true
-      description: While the boar is rampaging, you can use its Gore maneuver.
       modifiers:
       - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:daff560f-bce3-4d75-960e-f501a5627f19: true
-        sourceguid: daff560f-bce3-4d75-960e-f501a5627f19
         behavior: modsummoner
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        guid: 993527ba-923c-48c2-bee7-d18567c4220e
+        name: Wild Rush
+        description: While the boar is rampaging, its beastheart can use the Gore maneuver.
+        sourceguid: daff560f-bce3-4d75-960e-f501a5627f19
+        mode: summoner
         feature:
           __typeName: CharacterFeature
-          description: Use the boar Gore maneuver.
-          implementation: 3
-          guid: 7f023836-4eec-43a7-9f98-168ed403d69e
-          name: Wild Rush
           modifiers:
           - __typeName: CharacterModifier
-            sourceguid: 7f023836-4eec-43a7-9f98-168ed403d69e
             behavior: activated
             source: Beastheart
             activatedAbility:
               __typeName: ActivatedAbility
-              iconid: ui-icons/skills/1.png
-              implementation: 4
-              targetTextOverride: One creature or object
               modifiers: []
-              display:
-                saturation: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                brightness: 1
-              strain: []
               categorization: Signature Ability
-              repeatTargets: false
-              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-              rangeTextOverride: Melee 1
-              persistence: []
-              modeList:
-              - rules: "{3 + Might} damage; +{Might} damage if boar moved"
-                text: Normal
-              - rules: "{3 + Might} damage; +{Might} damage if boar moved; bleeding (EoT)"
-                condition: Heroic Resources Available to Spend >= 1
-                text: Spend 1 Ferocity
-              abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityRememberBehavior
                 guid: 4a1b8c92-5d6f-4e87-b239-8c3d1f6a7b54
@@ -396,46 +362,45 @@ info:
                 guid: 6d4f2c91-3b7e-4a86-b318-7c1d5e2f6a73
                 movementType: move
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                promptText: Choose an adjacent target.
-                abilityType: custom
-                inheritKeywords: true
-                applyto: caster
                 customAbility:
                   __typeName: ActivatedAbility
+                  modifiers: []
+                  targetType: target
+                  categorization: Hidden
                   behaviors:
                   - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                     guid: 8f6e4d93-5c2a-4b87-a528-9d1e2f6c7b04
                     rule: "{3 + Might + Max(0, Min(1, Max(Max(Cast.Memory(\"StartX\") - Target.X, Target.X - Cast.Memory(\"StartX\")), Max(Cast.Memory(\"StartY\") - Target.Y, Target.Y - Cast.Memory(\"StartY\"))) - Self.Distance(Target))) * Might} damage"
-                  iconid: ui-icons/skills/1.png
                   repeatTargets: false
-                  range: 1
                   guid: 7e5d3c82-4b1f-4a87-b428-8c2d1e6f5a93
-                  numTargets: "1"
-                  modifiers: []
+                  iconid: ui-icons/skills/1.png
+                  name: Gore Strike
+                  abilityType: none
+                  range: 1
                   display:
-                    saturation: 1
-                    hueshift: 0
                     bgcolor: "#ffffffff"
+                    hueshift: 0
                     brightness: 1
-                  targetType: target
+                    saturation: 1
                   description: ""
-                  categorization: Hidden
+                  numTargets: "1"
+                  objectTarget: true
                   keywords:
                     Weapon: true
                     Companion: true
                     Melee: true
-                  objectTarget: true
-                  abilityType: none
-                  name: Gore Strike
+                applyto: caster
+                inheritKeywords: true
+                promptText: Choose an adjacent target.
+                abilityType: custom
                 modesSelected:
                 - 1
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                promptText: Choose an adjacent target.
-                abilityType: custom
-                inheritKeywords: true
-                applyto: caster
                 customAbility:
                   __typeName: ActivatedAbility
+                  modifiers: []
+                  targetType: target
+                  categorization: Hidden
                   behaviors:
                   - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                     guid: 3d1e8f94-5c2a-4b87-a528-9e2d6f3c7a05
@@ -443,27 +408,28 @@ info:
                   - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                     guid: 1b8c6f95-7e4a-4d98-b738-2d3e4f6c8a26
                     rule: Bleeding (EoT)
-                  iconid: ui-icons/skills/1.png
                   repeatTargets: false
-                  range: 1
                   guid: 2c9d7e83-4b1f-4a87-b428-8d3e1f6c5a94
-                  numTargets: "1"
-                  modifiers: []
+                  iconid: ui-icons/skills/1.png
+                  name: Gore Strike (Ferocity)
+                  abilityType: none
+                  range: 1
                   display:
-                    saturation: 1
-                    hueshift: 0
                     bgcolor: "#ffffffff"
+                    hueshift: 0
                     brightness: 1
-                  targetType: target
+                    saturation: 1
                   description: ""
-                  categorization: Hidden
+                  numTargets: "1"
+                  objectTarget: true
                   keywords:
                     Weapon: true
                     Companion: true
                     Melee: true
-                  objectTarget: true
-                  abilityType: none
-                  name: Gore Strike (Ferocity)
+                applyto: caster
+                inheritKeywords: true
+                promptText: Choose an adjacent target.
+                abilityType: custom
                 modesSelected:
                 - 2
               - __typeName: ActivatedAbilityReplenishBehavior
@@ -472,51 +438,182 @@ info:
                 applyto: caster
                 mode: expend
                 resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              guid: 5e9f2c83-4b1d-4a96-b328-6c2d7e1f3a72
+              name: Gore
+              strain: []
+              targetTextOverride: One creature or object
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
               multipleModes: true
+              rangeTextOverride: Melee 1
+              keywords:
+                Weapon: true
+                Charge: true
+                Melee: true
+              persistence: []
+              flavor: With an enraged snort, the boar lunges forward to rip open foes with their tusks.
+              repeatTargets: false
+              implementation: 4
+              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+              targetType: emptyspace
+              abilityType: none
               description: |-
                 The boar moves up to 5 squares in a straight line. When this movement ends, deal {3 + Might} damage to an adjacent target. If the boar moved closer to the target as part of this movement, deal an extra {Might} damage.
 
                 **Spend 1 Ferocity:** The target is bleeding (EoT).
-              guid: 5e9f2c83-4b1d-4a96-b328-6c2d7e1f3a72
-              targetType: emptyspace
               range: "5"
-              flavor: With an enraged snort, the boar lunges forward to rip open foes with their tusks.
-              keywords:
-                Melee: true
-                Charge: true
-                Weapon: true
+              modeList:
+              - rules: "{3 + Might} damage; +{Might} damage if boar moved"
+                text: Normal
+              - rules: "{3 + Might} damage; +{Might} damage if boar moved; bleeding (EoT)"
+                text: Spend 1 Ferocity
+                condition: Heroic Resources Available to Spend >= 1
               targeting: straightpath
               numTargets: "1"
-              name: Gore
+              iconid: ui-icons/skills/1.png
+            sourceguid: 7f023836-4eec-43a7-9f98-168ed403d69e
             description: You can use the boar Gore maneuver.
             guid: 9a060cb3-a451-4d6f-ab7a-f5be22a2bfcf
             name: Gore
+          description: Use the boar Gore maneuver.
           source: Beastheart
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
-        description: While the boar is rampaging, its beastheart can use the Gore maneuver.
-        mode: summoner
-        guid: 993527ba-923c-48c2-bee7-d18567c4220e
-        name: Wild Rush
-        source: Character Feature
+          implementation: 3
+          guid: 7f023836-4eec-43a7-9f98-168ed403d69e
+          name: Wild Rush
+        domains:
+          CharacterFeature:daff560f-bce3-4d75-960e-f501a5627f19: true
+      description: While the boar is rampaging, you can use its Gore maneuver.
+      domains:
+        CharacterFeature:daff560f-bce3-4d75-960e-f501a5627f19: true
       guid: daff560f-bce3-4d75-960e-f501a5627f19
-      implementation: 3
       source: Character Feature
+      implementation: 3
       name: Wild Rush
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        description: While rampaging, when the boar deals damage its beastheart gains 10 temporary Stamina.
+        sourceguid: e6a9d2c7-0b15-4f38-9c4a-2d7f0a5b8c3e
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          modifiers: []
+          mandatory: true
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            hasTemporaryHitpoints: true
+            applyto: caster_summoner
+            temporaryHitpoints: "10"
+            ongoingEffect: 0a778b7d-d28c-4006-93e8-65924673dfb5
+            duration: eoe
+          guid: a8c1f4e9-2d37-415a-be6c-4f9b2c7d0e50
+          name: Immortal Rage
+          strain: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          castImmediately: true
+          targetType: self
+          repeatTargets: false
+          trigger: dealdamage
+          abilityType: none
+          range: 1
+          description: ""
+          numTargets: "1"
+          persistence: []
+          conditionFormula: Self.Rampaging and Summoner.Level >= 10
+        source: Character Feature
+        guid: f7b0e3d8-1c26-4049-ad5b-3e8a1b6c9d4f
+        name: Immortal Rage
+      - __typeName: CharacterModifier
+        behavior: modsummoner
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        guid: b9d2a5f0-3e48-426b-cf7d-5a0c3d8e1f61
+        name: Immortal Rage
+        description: While the boar rampages (L10+), the beastheart gains 10 temp Stamina whenever the beastheart deals damage.
+        feature:
+          __typeName: CharacterFeature
+          modifiers:
+          - __typeName: CharacterModifier
+            behavior: trigger
+            description: When you deal damage, gain 10 temporary Stamina.
+            sourceguid: c0e3b6a1-4f59-437c-d08e-6b1d4e9f2072
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              modifiers: []
+              mandatory: true
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                hasTemporaryHitpoints: true
+                applyto: caster
+                temporaryHitpoints: "10"
+                ongoingEffect: 0a778b7d-d28c-4006-93e8-65924673dfb5
+                duration: eoe
+              guid: e2a5d8c3-6b71-459e-f2a0-8d3f6a1b4294
+              name: Immortal Rage
+              strain: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              castImmediately: true
+              targetType: self
+              repeatTargets: false
+              trigger: dealdamage
+              abilityType: none
+              range: 1
+              description: ""
+              numTargets: "1"
+              persistence: []
+              conditionFormula: Self.CompanionRampaging and Self.Level >= 10
+            source: Beastheart
+            guid: d1f4c7b2-5a60-448d-e19f-7c2e5f0a3183
+            name: Immortal Rage
+          source: Beastheart
+          description: When you deal damage while your boar rampages, gain 10 temporary Stamina.
+          guid: c0e3b6a1-4f59-437c-d08e-6b1d4e9f2072
+          name: Immortal Rage
+        mode: summoner
+        sourceguid: e6a9d2c7-0b15-4f38-9c4a-2d7f0a5b8c3e
+      description: Whenever you or the boar use an ability that deals damage while the boar is rampaging, you gain 10 temporary Stamina.
+      name: Immortal Rage
+      guid: e6a9d2c7-0b15-4f38-9c4a-2d7f0a5b8c3e
+      source: Character Feature
+      implementation: 3
+      domains:
+        CharacterFeature:e6a9d2c7-0b15-4f38-9c4a-2d7f0a5b8c3e: true
     monster_category: Animal
-    skillProficiencies: []
-    import: []
-    classes: []
-    innateAttacks: []
-    max_hitpoints_roll: 2d8+2
-    levelChoices: []
-    initiativeGrouping: 5065e710-4b9c-45f6-a97e-fb17bc926e9a
+    titles: []
+    equipment: []
     resources:
       a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
         __typeName: CharacterResource
         refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
         used: 1
-    equipment: []
-    cr: 1
+    walkingSpeed: 5
+    monster_type: Boar
+    animations:
+      guid: 7d3e1c92-4b5f-4a86-b218-6c1d8e3f5a72
+      anim:
+      - resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+        animType: consumeResource
+    max_hitpoints: 13
+    initiativeGrouping: 5065e710-4b9c-45f6-a97e-fb17bc926e9a
+    innateAttacks: []
+    levelChoices: []
+    skillRatings:
+      7f6d9375-0ab0-415c-8196-4d99e98aa12b: true
+    import: []
+    damage_taken: 0
+    savingThrowRatings: []
   tokenType: null
   bestiaryId: 4d8e2c91-7b3f-4a56-b318-9c1d6e3f7a82
   summonerid: null
@@ -529,6 +626,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 3
 ctime: 1779087601456
-mtime: 1784416975304
+mtime: 1784515135985
 hidden: false
 id: 4d8e2c91-7b3f-4a56-b318-9c1d6e3f7a82
