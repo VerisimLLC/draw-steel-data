@@ -75,15 +75,201 @@ info:
   updateid: 3f0f7dee-8d0a-459b-b1dd-4242f0e6e867
   properties:
     __typeName: AnimalCompanion
+    savingThrowRatings: []
+    notes:
+    - title: Backstory
+      text: ""
+    titles: []
+    animations:
+      anim:
+      - resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+        animType: consumeResource
+      guid: 2c6e4d92-5b7f-4a86-b528-8d2e6f3a7b94
+    equipment: []
+    skillProficiencies: []
+    max_hitpoints: 13
+    characterFeatures:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        operation: set
+        domains:
+          CharacterFeature:4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5: true
+        source: Character Feature
+        behavior: attribute
+        name: Attributes
+        guid: 5b7eaf14-906c-4da9-e74a-f85bf7c9dae6
+        description: You have 2 stability.
+        attribute: forcedmoveresistance
+        value: 2
+        sourceguid: 4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5
+      name: Attributes
+      guid: 4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5
+      description: You have 2 stability.
+      domains:
+        CharacterFeature:4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5: true
+      implementation: 3
+      source: Character Feature
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 6c8fb025-a17d-4eba-f85b-096cf8dae0f7
+        behavior: resistance
+        name: Poison Immunity
+        guid: 7d90c136-b28e-4fcb-0a6c-1a7d09ebf108
+        description: You have poison immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          damageType: poison
+          dr: "3"
+          apply: Damage Reduction
+        source: Character Feature
+        domains:
+          CharacterFeature:6c8fb025-a17d-4eba-f85b-096cf8dae0f7: true
+      name: Poison Immunity
+      guid: 6c8fb025-a17d-4eba-f85b-096cf8dae0f7
+      description: You have poison immunity 3.
+      domains:
+        CharacterFeature:6c8fb025-a17d-4eba-f85b-096cf8dae0f7: true
+      implementation: 3
+      source: Character Feature
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        keywords:
+          Strike: true
+        activationCondition: Self.Rampaging and Self.Level >= 3
+        sourceguid: 5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73
+        domains:
+          CharacterFeature:5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73: true
+        modtype: none
+        rollType: ability_power_roll
+        behavior: power
+        name: Foes Forever Frozen
+        guid: 6e9f2da3-8b4a-4b98-c539-ad3e7f2a6b84
+        applyToFreeStrikes: true
+        addText: Stoned (save ends)
+        description: Whenever the basilisk makes a strike while rampaging, the target is stoned (save ends).
+        source: Character Feature
+      name: Foes Forever Frozen
+      guid: 5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73
+      description: Whenever the basilisk makes a strike while rampaging, the target is stoned (save ends).
+      domains:
+        CharacterFeature:5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73: true
+      implementation: 3
+      source: Character Feature
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        mode: summoner
+        domains:
+          CharacterFeature:38aa0bbf-dccd-4531-85bc-046688910e1c: true
+        behavior: modsummoner
+        name: Rock Smasher
+        guid: 2bcd90e7-cfb5-4d09-874e-c3123e416b87
+        description: Basilisk rampaging + beastheart level 6+ => +2x Might vs stoned.
+        sourceguid: 38aa0bbf-dccd-4531-85bc-046688910e1c
+        feature:
+          __typeName: CharacterFeature
+          modifiers:
+          - __typeName: CharacterModifier
+            damageModifier: 2 * Caster.Might
+            damageModifierType: none
+            activationCondition: Target.Conditions has "stoned"
+            modtype: none
+            rollType: ability_power_roll
+            behavior: power
+            name: Rock Smasher
+            guid: a9aa53e3-5a9b-418a-97b8-0434f4403347
+            description: Extra damage = twice your Might vs stoned creatures.
+            sourceguid: eca49145-c390-44c0-9ad9-6fe6ba4762be
+            keywords: []
+            source: Beastheart
+          name: Rock Smasher
+          guid: eca49145-c390-44c0-9ad9-6fe6ba4762be
+          description: Extra damage vs stoned, from the basilisk.
+          implementation: 3
+          source: Beastheart
+        source: Character Feature
+      name: Rock Smasher
+      guid: 38aa0bbf-dccd-4531-85bc-046688910e1c
+      description: Rock Smasher pushed to beastheart.
+      domains:
+        CharacterFeature:38aa0bbf-dccd-4531-85bc-046688910e1c: true
+      implementation: 3
+      source: Character Feature
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        mode: summoner
+        behavior: modsummoner
+        name: Heart of Stone
+        guid: c4f7d0b5-8a93-4e16-8b39-9f3c7e0a5b18
+        description: While the basilisk rampages and its beastheart is level 10+, the beastheart gains damage immunity 10.
+        sourceguid: b3e6c9a4-7f82-4d05-9a28-8e2b6d9f4a07
+        feature:
+          __typeName: CharacterFeature
+          modifiers:
+          - __typeName: CharacterModifier
+            behavior: resistance
+            name: Heart of Stone
+            guid: e6b9f2d7-0c15-4038-ad5b-1b5e9a2c7d3a
+            description: Damage immunity 10.
+            source: Beastheart
+            resistances:
+            - __typeName: ResistanceEntry
+              damageType: all
+              apply: Damage Reduction
+              dr: "10"
+          name: Heart of Stone
+          guid: d5a8e1c6-9b04-4f27-9c4a-0a4d8f1b6c29
+          implementation: 3
+          description: Damage immunity 10 while your basilisk is rampaging.
+          source: Beastheart
+        source: Character Feature
+      - __typeName: CharacterModifier
+        sourceguid: b3e6c9a4-7f82-4d05-9a28-8e2b6d9f4a07
+        behavior: resistance
+        name: Heart of Stone
+        guid: f7c0a3e8-1d26-4149-be6c-2c6f0b3d8e4b
+        description: Damage immunity 10 while rampaging.
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        resistances:
+        - __typeName: ResistanceEntry
+          damageType: all
+          apply: Damage Reduction
+          dr: "10"
+      name: Heart of Stone
+      guid: b3e6c9a4-7f82-4d05-9a28-8e2b6d9f4a07
+      implementation: 3
+      source: Character Feature
+      description: While the basilisk is rampaging, you and the basilisk have damage immunity 10 as you become nearly impervious living statues.
+      domains:
+        CharacterFeature:b3e6c9a4-7f82-4d05-9a28-8e2b6d9f4a07: true
+    classes: []
+    max_hitpoints_roll: 2d8+2
+    innateAttacks: []
+    levelChoices: []
+    walkingSpeed: 5
+    import: []
+    cr: 1
     attributes:
-      mgt:
-        __typeName: CharacterAttribute
-        baseValue: 2
-        id: mgt
       agl:
         __typeName: CharacterAttribute
         baseValue: 1
         id: agl
+      prs:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: prs
+      mgt:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: mgt
       dex:
         __typeName: CharacterAttribute
         id: dex
@@ -91,32 +277,34 @@ info:
         __typeName: CharacterAttribute
         baseValue: -1
         id: rea
-      prs:
-        __typeName: CharacterAttribute
-        baseValue: 2
-        id: prs
       inu:
         __typeName: CharacterAttribute
         baseValue: 2
         id: inu
-    savingThrowRatings: []
+    skillRatings:
+      db532974-aa0a-41a9-aacf-4adc1e6121d3: true
+    monster_category: Beast
     inflictedConditions: []
+    monster_type: Basilisk
+    damage_taken: 0
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
       iconid: ui-icons/skills/1.png
-      implementation: 4
-      targetAllegiance: enemy
+      modeList:
+      - text: Normal
+        rules: "{3 + Might} corruption damage; Stoned (save ends)"
+      - condition: Heroic Resources Available to Spend >= 1
+        text: Spend 1 Ferocity
+        rules: "{3 + Might} corruption damage; Stoned (save ends); Slowed (save ends)"
+      multipleModes: true
+      objectTarget: false
       modifiers: []
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        hueshift: 0
-        brightness: 1
-      strain: []
-      categorization: Signature Ability
-      repeatTargets: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      rangeTextOverride: Melee 1 or Ranged 5
+      name: Petrify
       persistence: []
       behaviors:
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
@@ -129,179 +317,41 @@ info:
         rule: 3 + M corruption damage; Stoned (save ends); Slowed (save ends)
         guid: 9fb2e358-d4a0-4fed-2c8e-3c9f2bfd132a
       - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        mode: expend
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
         modesSelected:
         - 2
-        applyto: caster
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        mode: expend
+      implementation: 4
       numTargets: "1"
-      objectTarget: false
-      modeList:
-      - text: Normal
-        rules: "{3 + Might} corruption damage; Stoned (save ends)"
-      - text: Spend 1 Ferocity
-        rules: "{3 + Might} corruption damage; Stoned (save ends); Slowed (save ends)"
-        condition: Heroic Resources Available to Spend >= 1
-      multipleModes: true
+      strain: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      abilityType: none
+      flavor: Transfixed by the basilisk's magical gaze or struck by their poisoned claws, the foe's body begins to calcify.
+      implementationDetails: "Approximation: the Spend 1 Ferocity rider applies Slowed (save ends) as an independent save-ends effect. RAW couples Slowed to Stoned's duration (\"While stoned this way, target is also slowed\"); a save can end one without the other."
       keywords:
+        Companion: true
+        Melee: true
+        Magic: true
         Ranged: true
         Weapon: true
-        Melee: true
-        Companion: true
-        Magic: true
+      targetAllegiance: enemy
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+      repeatTargets: false
+      targetType: target
+      guid: 8ea1d247-c39f-4fdc-1b7d-2b8e1afc0219
       description: |-
         {3 + Might} corruption damage; Stoned (save ends).
 
         **Spend 1 Ferocity:** While stoned this way, target is also slowed.
       range: 5
-      targetType: target
-      abilityType: none
-      implementationDetails: "Approximation: the Spend 1 Ferocity rider applies Slowed (save ends) as an independent save-ends effect. RAW couples Slowed to Stoned's duration (\"While stoned this way, target is also slowed\"); a save can end one without the other."
-      guid: 8ea1d247-c39f-4fdc-1b7d-2b8e1afc0219
-      flavor: Transfixed by the basilisk's magical gaze or struck by their poisoned claws, the foe's body begins to calcify.
-      name: Petrify
-    skillRatings:
-      db532974-aa0a-41a9-aacf-4adc1e6121d3: true
-    max_hitpoints: 13
-    damage_taken: 0
-    titles: []
-    monster_type: Basilisk
-    notes:
-    - title: Backstory
-      text: ""
-    walkingSpeed: 5
-    animations:
-      guid: 2c6e4d92-5b7f-4a86-b528-8d2e6f3a7b94
-      anim:
-      - resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-        animType: consumeResource
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5: true
-      description: You have 2 stability.
-      name: Attributes
-      implementation: 3
-      guid: 4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5
-      modifiers:
-      - __typeName: CharacterModifier
-        operation: set
-        sourceguid: 4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5
-        behavior: attribute
-        domains:
-          CharacterFeature:4a6d9e03-8f5b-4c98-d639-e74af6b8c9d5: true
-        value: 2
-        description: You have 2 stability.
-        attribute: forcedmoveresistance
-        guid: 5b7eaf14-906c-4da9-e74a-f85bf7c9dae6
-        name: Attributes
-        source: Character Feature
-      source: Character Feature
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:6c8fb025-a17d-4eba-f85b-096cf8dae0f7: true
-      description: You have poison immunity 3.
-      name: Poison Immunity
-      implementation: 3
-      guid: 6c8fb025-a17d-4eba-f85b-096cf8dae0f7
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:6c8fb025-a17d-4eba-f85b-096cf8dae0f7: true
-        sourceguid: 6c8fb025-a17d-4eba-f85b-096cf8dae0f7
-        behavior: resistance
-        description: You have poison immunity 3.
-        source: Character Feature
-        guid: 7d90c136-b28e-4fcb-0a6c-1a7d09ebf108
-        resistances:
-        - __typeName: ResistanceEntry
-          apply: Damage Reduction
-          damageType: poison
-          dr: "3"
-        name: Poison Immunity
-      source: Character Feature
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73: true
-      description: Whenever the basilisk makes a strike while rampaging, the target is stoned (save ends).
-      name: Foes Forever Frozen
-      implementation: 3
-      guid: 5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73: true
-        sourceguid: 5d8e1c92-7a3f-4a87-b428-9c2d6e1f5a73
-        addText: Stoned (save ends)
-        rollType: ability_power_roll
-        name: Foes Forever Frozen
-        behavior: power
-        modtype: none
-        description: Whenever the basilisk makes a strike while rampaging, the target is stoned (save ends).
-        activationCondition: Self.Rampaging and Self.Level >= 3
-        guid: 6e9f2da3-8b4a-4b98-c539-ad3e7f2a6b84
-        keywords:
-          Strike: true
-        applyToFreeStrikes: true
-        source: Character Feature
-      source: Character Feature
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:38aa0bbf-dccd-4531-85bc-046688910e1c: true
-      description: Rock Smasher pushed to beastheart.
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:38aa0bbf-dccd-4531-85bc-046688910e1c: true
-        sourceguid: 38aa0bbf-dccd-4531-85bc-046688910e1c
-        behavior: modsummoner
-        feature:
-          __typeName: CharacterFeature
-          description: Extra damage vs stoned, from the basilisk.
-          implementation: 3
-          guid: eca49145-c390-44c0-9ad9-6fe6ba4762be
-          source: Beastheart
-          name: Rock Smasher
-          modifiers:
-          - __typeName: CharacterModifier
-            sourceguid: eca49145-c390-44c0-9ad9-6fe6ba4762be
-            behavior: power
-            activationCondition: Target.Conditions has "stoned"
-            source: Beastheart
-            damageModifierType: none
-            modtype: none
-            description: Extra damage = twice your Might vs stoned creatures.
-            damageModifier: 2 * Caster.Might
-            keywords: []
-            guid: a9aa53e3-5a9b-418a-97b8-0434f4403347
-            rollType: ability_power_roll
-            name: Rock Smasher
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
-        description: Basilisk rampaging + beastheart level 6+ => +2x Might vs stoned.
-        mode: summoner
-        guid: 2bcd90e7-cfb5-4d09-874e-c3123e416b87
-        name: Rock Smasher
-        source: Character Feature
-      guid: 38aa0bbf-dccd-4531-85bc-046688910e1c
-      implementation: 3
-      name: Rock Smasher
-      source: Character Feature
-    monster_category: Beast
-    skillProficiencies: []
-    import: []
+      rangeTextOverride: Melee 1 or Ranged 5
+      categorization: Signature Ability
     initiativeGrouping: 4ed7b1fc-e3d5-4433-84c7-40184bbb53cf
-    innateAttacks: []
-    max_hitpoints_roll: 2d8+2
-    levelChoices: []
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
-    classes: []
-    equipment: []
-    cr: 1
   tokenType: null
   bestiaryId: 3f5c8d92-7e4a-4b87-c528-d639f6a7b8c4
   summonerid: null
@@ -314,6 +364,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 6
 ctime: 1779587355840
-mtime: 1784411678876
+mtime: 1784511788753
 hidden: false
 id: 3f5c8d92-7e4a-4b87-c528-d639f6a7b8c4

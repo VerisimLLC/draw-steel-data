@@ -365,6 +365,192 @@ info:
         filterCondition: Self.Rampaging and Summoner.Level >= 6
         mode: summoner
         sourceguid: 5693816c-712d-4773-989e-c2b4b70ab992
+    - __typeName: CharacterFeature
+      iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+      name: Elemental Avatar
+      source: Character Feature
+      implementation: 3
+      guid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+      domains:
+        CharacterFeature:e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08: true
+      modifiers:
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          guid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
+          name: Elemental Avatar
+          source: Beastheart
+          implementation: 3
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: b7d0e3a8-9c14-4f6f-d081-2d0e4f7c9a3b
+            behavior: resistance
+            resistances:
+            - __typeName: ResistanceEntry
+              dr: "100"
+              apply: Damage Reduction
+              damageType: corruption
+            sourceguid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
+            source: Beastheart
+            name: Elemental Avatar
+            description: Corruption immunity all.
+          description: Corruption immunity all while your drake is rampaging.
+        guid: f5b8c1e6-7a92-4d4d-be6f-0b8c2d5a7e19
+        name: Elemental Avatar
+        mode: summoner
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: modsummoner
+        description: While rampaging (L10+), the beastheart gains corruption immunity all.
+      - __typeName: CharacterModifier
+        guid: c8e1f4b9-0d25-407a-e192-3e1f5a8d0b4c
+        behavior: resistance
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: "100"
+          apply: Damage Reduction
+          damageType: corruption
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        description: Corruption immunity all.
+        name: Elemental Avatar
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        source: Character Feature
+      - __typeName: CharacterModifier
+        keywords:
+          Strike: true
+        addText: the target is dragonsealed by corruption (save ends)
+        activationCondition: Self.Rampaging and Self.Level >= 10
+        armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+        modtype: none
+        applyToFreeStrikes: true
+        guid: d9f2a5c0-1e36-418b-f2a3-4f2a6b9e1c5d
+        behavior: power
+        rollType: ability_power_roll
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        name: Dragonseal (Corruption)
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        description: Toggle on to dragonseal the struck target on this strike (weakness 10 corruption, save ends).
+      - __typeName: CharacterModifier
+        guid: b3d6e9c4-5f80-4a2b-9c4d-7e6f0a3b8c5d
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          abilityType: none
+          repeatTargets: false
+          subject: self
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: targets
+            stacks: "1"
+            duration: save_ends
+            ongoingEffect: e1f00006-0000-4000-8000-000000000006
+            ongoingEffectCustom: e1f00006-0000-4000-8000-000000000006
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            applyto: caster
+            mode: effect
+            ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+          description: ""
+          mandatory: true
+          trigger: dealdamage
+          strain: []
+          guid: c4e7f0d5-6a91-4b3c-ad5e-8f7a1b4c9d6e
+          name: Dragonseal (Corruption)
+          targetType: target
+          numTargets: "1"
+          modifiers: []
+          conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.Rampaging and Self.Level >= 10
+          persistence: []
+          castImmediately: true
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        name: Elemental Avatar
+        behavior: trigger
+        description: While rampaging (L10+) and armed, the drake's strike dragonseals the target.
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          guid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+          name: Elemental Avatar
+          source: Beastheart
+          implementation: 3
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
+          modifiers:
+          - __typeName: CharacterModifier
+            keywords:
+              Strike: true
+            addText: the target is dragonsealed by corruption (save ends)
+            activationCondition: "1"
+            modtype: none
+            applyToFreeStrikes: true
+            guid: f7b0c3a8-9d24-4e6f-d081-1c0d4e7f2a91
+            behavior: power
+            armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+            rollType: ability_power_roll
+            name: Dragonseal (Corruption)
+            description: Toggle on to dragonseal the struck target on this strike (weakness 10 corruption, save ends).
+            source: Beastheart
+          - __typeName: CharacterModifier
+            guid: a8c1d4b9-0e35-4f70-e192-2d1e5f8a3b02
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              range: 1
+              abilityType: none
+              repeatTargets: false
+              subject: self
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                applyto: targets
+                stacks: "1"
+                duration: save_ends
+                ongoingEffect: e1f00006-0000-4000-8000-000000000006
+                ongoingEffectCustom: e1f00006-0000-4000-8000-000000000006
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                applyto: caster
+                mode: effect
+                ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+              description: ""
+              mandatory: true
+              trigger: dealdamage
+              strain: []
+              guid: b9d2e5c0-1f46-4081-f2a3-3e2f6a9b4c13
+              name: Dragonseal (Corruption)
+              targetType: target
+              numTargets: "1"
+              modifiers: []
+              conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.CompanionRampaging and Self.Level >= 10
+              persistence: []
+              castImmediately: true
+            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+            source: Beastheart
+            name: Elemental Avatar
+            behavior: trigger
+            description: While armed, your strike dragonseals the struck target.
+          description: Your strikes may dragonseal the struck target while your drake is rampaging.
+        guid: d5f8a1e6-7b02-4c4d-be6f-9a8b2c5d0e7f
+        name: Elemental Avatar
+        mode: summoner
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: modsummoner
+        description: While rampaging (L10+), your strikes may dragonseal the struck target.
+      description: While the drake is rampaging, you and the drake have immunity all to corruption, and on each strike you may dragonseal the target by corruption (save ends) -- a dragonsealed creature has weakness 10 to corruption.
     movementSpeeds:
       fly: 5
     skillProficiencies: []

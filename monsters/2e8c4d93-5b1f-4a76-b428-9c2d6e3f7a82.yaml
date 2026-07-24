@@ -69,363 +69,468 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 2e70b8ee-62fb-4887-9e11-c34daa374e48
+  updateid: d7e170b7-80fb-4f1f-a5d0-2f44c1c5bffd
   properties:
     __typeName: AnimalCompanion
-    walkingSpeed: 7
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      strain: []
-      guid: 1b8c4d92-5e2f-4a86-b318-3d4e6f8c9b15
+      range: 5 when Mode = 2 else 1
+      abilityType: none
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        guid: 2c9d5e93-6f3a-4b87-a428-4e5f7d8c9b26
+        rule: 2 + M lightning damage
+      - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        mode: expend
+        modesSelected:
+        - 2
       description: |-
         Target takes {2 + Might} lightning damage.
 
         **Spend 1 Ferocity:** Distance becomes Melee 5.
       implementation: 4
-      range: 5 when Mode = 2 else 1
-      modifiers: []
-      numTargets: "1"
-      repeatTargets: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      targetType: target
-      abilityType: none
-      name: Static Shock
+      keywords:
+        Melee: true
+        Companion: true
+        Magic: true
+      flavor: An arc of lightning crackles from the spark.
       modeList:
       - rules: "{2 + Might} lightning damage; Melee 1"
         text: Normal
       - rules: "{2 + Might} lightning damage; Melee 5"
         condition: Heroic Resources Available to Spend >= 1
         text: Spend 1 Ferocity
-      keywords:
-        Melee: true
-        Magic: true
-        Companion: true
-      flavor: An arc of lightning crackles from the spark.
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      categorization: Signature Ability
-      objectTarget: true
-      multipleModes: true
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: 2 + M lightning damage
-        guid: 2c9d5e93-6f3a-4b87-a428-4e5f7d8c9b26
-      - __typeName: ActivatedAbilityReplenishBehavior
-        modesSelected:
-        - 2
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        mode: expend
-        applyto: caster
-      persistence: []
       iconid: ui-icons/skills/1.png
-    max_hitpoints: 13
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-      guid: 4b6e2c93-5d1f-4a86-b328-7c2d6e1f3a72
+      strain: []
+      categorization: Signature Ability
+      guid: 1b8c4d92-5e2f-4a86-b318-3d4e6f8c9b15
+      name: Static Shock
+      targetType: target
+      numTargets: "1"
+      multipleModes: true
+      objectTarget: true
+      persistence: []
+      repeatTargets: false
+    walkingSpeed: 7
+    titles: []
+    innateAttacks: []
     characterFeatures:
     - __typeName: CharacterFeature
-      name: Attributes
       guid: 5c7f2d94-4b6a-4f87-a528-1d3e6f7c8a04
+      name: Attributes
       source: Character Feature
-      description: You have 1 stability.
-      implementation: 3
       domains:
         CharacterFeature:5c7f2d94-4b6a-4f87-a528-1d3e6f7c8a04: true
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        guid: 6d1e3f95-5c2b-4a97-b418-2e4f7d8c9b15
-        description: You have 1 stability.
-        value: 1
-        name: Attributes
-        source: Character Feature
-        operation: set
-        attribute: forcedmoveresistance
-        sourceguid: 5c7f2d94-4b6a-4f87-a528-1d3e6f7c8a04
         domains:
           CharacterFeature:5c7f2d94-4b6a-4f87-a528-1d3e6f7c8a04: true
+        attribute: forcedmoveresistance
+        guid: 6d1e3f95-5c2b-4a97-b418-2e4f7d8c9b15
+        name: Attributes
         behavior: attribute
+        sourceguid: 5c7f2d94-4b6a-4f87-a528-1d3e6f7c8a04
+        value: 1
+        description: You have 1 stability.
+        operation: set
+        source: Character Feature
+      description: You have 1 stability.
     - __typeName: CharacterFeature
-      name: Electric Surge
       guid: 7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15
+      name: Electric Surge
       source: Character Feature
-      description: The first time on a turn that you or the spark deal lightning damage, you gain 1 surge.
-      implementation: 3
       domains:
         CharacterFeature:7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15: true
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        behavior: trigger
         guid: 8f3d5e94-6c2a-4b97-a418-4e5f7d8c9b26
-        source: Character Feature
-        name: Electric Surge (Spark)
+        behavior: trigger
+        description: When the spark deals lightning damage, gain 1 surge (shared once-per-turn limit with the beastheart).
         sourceguid: 7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15
+        domains:
+          CharacterFeature:7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15: true
         triggeredAbility:
           __typeName: TriggeredAbility
-          strain: []
-          guid: 9a4e6f95-7d3b-4c97-b528-5d6e8f1c2a04
-          description: ""
           range: 1
-          castImmediately: true
-          modifiers: []
-          mandatory: true
-          numTargets: "1"
+          abilityType: none
           repeatTargets: false
-          usageLimitOptions:
-            resourceRefreshType: turn
-            resourceid: 1c8e3d92-4b5f-4a76-b428-7c1d3e6f5a82
-            charges: "1"
           display:
             hueshift: 0
             bgcolor: "#ffffffff"
-            saturation: 1
             brightness: 1
-          abilityType: none
-          name: Electric Surge
-          trigger: dealdamage
-          iconid: ui-icons/skills/1.png
-          targetType: self
+            saturation: 1
           behaviors:
           - __typeName: ActivatedAbilityReplenishBehavior
             quantity: "1"
             resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
             applyto: caster
             chatMessage: Electric Surge
-          persistence: []
+          description: ""
+          mandatory: true
+          usageLimitOptions:
+            resourceid: 1c8e3d92-4b5f-4a76-b428-7c1d3e6f5a82
+            charges: "1"
+            resourceRefreshType: turn
+          trigger: dealdamage
+          strain: []
           conditionFormula: Damage Type has "Lightning"
-        domains:
-          CharacterFeature:7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15: true
-        description: When the spark deals lightning damage, gain 1 surge (shared once-per-turn limit with the beastheart).
-      - __typeName: CharacterModifier
-        sourceguid: 7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15
-        guid: ab5f7e96-8e4c-4d97-b619-6f7a8b3c4d17
+          guid: 9a4e6f95-7d3b-4c97-b528-5d6e8f1c2a04
+          name: Electric Surge
+          targetType: self
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          persistence: []
+          castImmediately: true
+        name: Electric Surge (Spark)
         source: Character Feature
+      - __typeName: CharacterModifier
+        guid: ab5f7e96-8e4c-4d97-b619-6f7a8b3c4d17
         name: Electric Surge (Beastheart)
-        behavior: modsummoner
-        description: When the beastheart deals lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
-        domains:
-          CharacterFeature:7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15: true
         feature:
           __typeName: CharacterFeature
           guid: bc6f8d97-9f5b-4e98-a719-7d8e9c1a2b03
-          source: Beastheart
-          description: When you deal lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
           name: Electric Surge
+          source: Beastheart
           modifiers:
           - __typeName: CharacterModifier
             guid: cd7a9e84-1e3a-4f87-b418-8e9d1c2b3a04
-            source: Beastheart
             name: Electric Surge
-            description: When the beastheart deals lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
+            sourceguid: bc6f8d97-9f5b-4e98-a719-7d8e9c1a2b03
+            behavior: trigger
             triggeredAbility:
               __typeName: TriggeredAbility
-              strain: []
-              guid: de8b1f95-2f4b-4a87-b529-9c1e2d3a4b15
-              description: ""
               range: 1
-              castImmediately: true
-              modifiers: []
-              mandatory: true
-              numTargets: "1"
+              abilityType: none
               repeatTargets: false
-              usageLimitOptions:
-                resourceRefreshType: turn
-                resourceid: 1c8e3d92-4b5f-4a76-b428-7c1d3e6f5a82
-                charges: "1"
               display:
                 hueshift: 0
                 bgcolor: "#ffffffff"
-                saturation: 1
                 brightness: 1
-              abilityType: none
-              name: Electric Surge
-              trigger: dealdamage
-              iconid: ui-icons/skills/1.png
-              targetType: self
+                saturation: 1
               behaviors:
               - __typeName: ActivatedAbilityReplenishBehavior
                 quantity: "1"
                 resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
                 applyto: caster
                 chatMessage: Electric Surge
-              persistence: []
+              description: ""
+              mandatory: true
+              usageLimitOptions:
+                resourceid: 1c8e3d92-4b5f-4a76-b428-7c1d3e6f5a82
+                charges: "1"
+                resourceRefreshType: turn
+              trigger: dealdamage
+              strain: []
               conditionFormula: Damage Type has "Lightning"
-            behavior: trigger
-            sourceguid: bc6f8d97-9f5b-4e98-a719-7d8e9c1a2b03
+              guid: de8b1f95-2f4b-4a87-b529-9c1e2d3a4b15
+              name: Electric Surge
+              targetType: self
+              numTargets: "1"
+              modifiers: []
+              iconid: ui-icons/skills/1.png
+              persistence: []
+              castImmediately: true
+            source: Beastheart
+            description: When the beastheart deals lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
+          description: When you deal lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
+        sourceguid: 7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15
+        domains:
+          CharacterFeature:7e2f4d83-5b1c-4a86-b328-3d4e6f8c9b15: true
+        description: When the beastheart deals lightning damage, gain 1 surge (shared once-per-turn limit with the spark).
+        behavior: modsummoner
+        source: Character Feature
+      description: The first time on a turn that you or the spark deal lightning damage, you gain 1 surge.
     - __typeName: CharacterFeature
-      name: Electroshock
       guid: 7c4d6e83-5b1f-4a86-b328-9c1d4e2f6a73
+      name: Electroshock
       source: Character Feature
-      description: Whenever the spark makes a strike while rampaging, they can cause a target who has M < Average to be dazed until the end of the target's next turn.
-      implementation: 3
       domains:
         CharacterFeature:7c4d6e83-5b1f-4a86-b328-9c1d4e2f6a73: true
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        behavior: trigger
         guid: 8d5e7f94-6c2a-4b97-b438-ae2e5f3a7b84
-        source: Character Feature
-        name: Electroshock
+        behavior: trigger
+        description: Whenever the spark makes a strike while rampaging, they can cause a target who has M < Average to be dazed until the end of the target's next turn.
         sourceguid: 7c4d6e83-5b1f-4a86-b328-9c1d4e2f6a73
+        domains:
+          CharacterFeature:7c4d6e83-5b1f-4a86-b328-9c1d4e2f6a73: true
         triggeredAbility:
           __typeName: TriggeredAbility
+          range: 1
           abilityType: none
+          mandatory: false
+          iconid: ui-icons/skills/1.png
+          strain: []
+          trigger: finishability
+          modifiers: []
+          conditionFormula: Self.Rampaging and Self.Level >= 3 and (Used Ability.Keywords has "Strike")
           guid: 9e6fa125-7d5b-4ca8-c539-be3e7f2a8c95
+          name: Electroshock
+          targetType: casttargets
+          numTargets: "1"
           display:
             hueshift: 0
             bgcolor: "#ffffffff"
-            saturation: 1
             brightness: 1
-          description: ""
-          name: Electroshock
-          range: 1
-          repeatTargets: false
-          modifiers: []
-          strain: []
-          conditionFormula: Self.Rampaging and Self.Level >= 3 and (Used Ability.Keywords has "Strike")
-          trigger: finishability
-          mandatory: false
-          numTargets: "1"
+            saturation: 1
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: custom
             guid: af7ab236-8e6c-4db9-d64a-cf4f8a3b9da6
-            targeting: prompt_inherit
-            invokeOnCaster: true
-            targetingFormula: not (Target.PassesPotency("M", Caster.Average))
-            promptText: The spark dazes a creature with M < Average.
+            abilityType: custom
+            applyto: caster
             customAbility:
               __typeName: ActivatedAbility
+              range: 10
               abilityType: none
+              categorization: Hidden
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              repeatTargets: false
+              strain: []
               guid: b08bc347-9f7d-4eca-e75b-d05a9b4c0eb7
               name: Electroshock
+              targetType: target
+              numTargets: "1"
               display:
                 hueshift: 0
                 bgcolor: "#ffffffff"
-                saturation: 1
                 brightness: 1
-              range: 10
-              persistence: []
-              modifiers: []
-              repeatTargets: false
-              description: ""
-              targetType: target
-              strain: []
-              numTargets: "1"
+                saturation: 1
               behaviors:
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                rule: Dazed (EoT)
                 guid: c19cd458-a08e-4fdb-f86c-e16bac5d1fc8
                 applyto: targets
-              iconid: ui-icons/skills/1.png
-              categorization: Hidden
-            applyto: caster
-          iconid: ui-icons/skills/1.png
-          targetType: casttargets
-        domains:
-          CharacterFeature:7c4d6e83-5b1f-4a86-b328-9c1d4e2f6a73: true
-        description: Whenever the spark makes a strike while rampaging, they can cause a target who has M < Average to be dazed until the end of the target's next turn.
+                rule: Dazed (EoT)
+              persistence: []
+              description: ""
+            promptText: The spark dazes a creature with M < Average.
+            targeting: prompt_inherit
+            invokeOnCaster: true
+            targetingFormula: not (Target.PassesPotency("M", Caster.Average))
+          repeatTargets: false
+          description: ""
+        name: Electroshock
+        source: Character Feature
+      description: Whenever the spark makes a strike while rampaging, they can cause a target who has M < Average to be dazed until the end of the target's next turn.
     - __typeName: CharacterFeature
-      description: While the spark is rampaging, your strikes deal extra lightning damage equal to your Might.
       guid: 9f429c33-66b2-4cdd-9a2d-36a879b2174f
-      source: Character Feature
       name: Conductive
-      implementation: 3
+      description: While the spark is rampaging, your strikes deal extra lightning damage equal to your Might.
       domains:
         CharacterFeature:9f429c33-66b2-4cdd-9a2d-36a879b2174f: true
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        guid: 50a7fa44-51bc-49b4-bade-b67b9444d219
-        behavior: modsummoner
+        domains:
+          CharacterFeature:9f429c33-66b2-4cdd-9a2d-36a879b2174f: true
         feature:
           __typeName: CharacterFeature
           guid: 09b26dab-8b4e-4be4-81f2-0eafe87f39be
-          source: Beastheart
           name: Conductive
           implementation: 3
           description: Extra lightning damage on strikes, from the spark.
           modifiers:
           - __typeName: CharacterModifier
-            rollType: ability_power_roll
-            description: Your strikes deal extra lightning damage equal to your Might.
             keywords:
               Strike: true
-            damageModifierType: lightning
-            behavior: power
             activationCondition: "1"
-            source: Beastheart
-            guid: bf6ec38e-126e-4185-92b3-d1fcde584a94
             damageModifier: Caster.Might
             modtype: none
-            sourceguid: 09b26dab-8b4e-4be4-81f2-0eafe87f39be
+            guid: bf6ec38e-126e-4185-92b3-d1fcde584a94
+            behavior: power
+            damageModifierType: lightning
+            rollType: ability_power_roll
             name: Conductive
-        domains:
-          CharacterFeature:9f429c33-66b2-4cdd-9a2d-36a879b2174f: true
-        source: Character Feature
-        description: While the spark rampages and its beastheart is level 6+, the beastheart deals extra lightning damage equal to their Might on strikes.
-        name: Conductive
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
+            sourceguid: 09b26dab-8b4e-4be4-81f2-0eafe87f39be
+            description: Your strikes deal extra lightning damage equal to your Might.
+            source: Beastheart
+          source: Beastheart
+        guid: 50a7fa44-51bc-49b4-bade-b67b9444d219
+        behavior: modsummoner
         mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
         sourceguid: 9f429c33-66b2-4cdd-9a2d-36a879b2174f
-    titles: []
-    cr: 1
-    notes:
-    - title: Backstory
-      text: ""
-    max_hitpoints_roll: 2d8+2
-    skillRatings:
-      57101165-410a-4734-98ee-d4e5b656d3df: true
-    equipment: []
-    monster_category: Elemental
-    classes: []
-    damage_taken: 0
-    import: []
-    initiativeGrouping: c8a962c5-580d-47ac-af71-a873486fbd9f
+        source: Character Feature
+        name: Conductive
+        description: While the spark rampages and its beastheart is level 6+, the beastheart deals extra lightning damage equal to their Might on strikes.
+      source: Character Feature
+    - __typeName: CharacterFeature
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 1a5f9c3d-0000-4b10-8a01-000000000002
+        name: Lightning Speed
+        source: Character Feature
+        sourceguid: 1a5f9c3d-0000-4b10-8a01-000000000001
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        activatedAbility:
+          __typeName: ActivatedAbility
+          range: Movement Speed
+          abilityType: none
+          targeting: pathfind
+          modifiers: []
+          actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+            guid: 1a5f9c3d-0000-4b10-8a01-000000000004
+            movementType: shift
+          description: Shift up to your speed.
+          iconid: ui-icons/skills/1.png
+          usageLimitOptions:
+            charges: "1"
+            resourceid: 1a5f9c3d-0000-4b10-8a01-00000000000a
+            resourceRefreshType: turn
+          strain: []
+          guid: 1a5f9c3d-0000-4b10-8a01-000000000003
+          name: Lightning Speed
+          targetType: emptyspace
+          numTargets: "1"
+          implementation: 3
+          repeatTargets: false
+          persistence: []
+          flavor: A crackle of lightning, and the spark is somewhere else.
+        behavior: activated
+        description: The spark can shift up to its speed as a free maneuver once per turn.
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          guid: 1a5f9c3d-0000-4b10-8a01-000000000006
+          name: Lightning Speed
+          implementation: 3
+          description: You can shift up to your speed as a free maneuver once per turn.
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 1a5f9c3d-0000-4b10-8a01-000000000007
+            name: Lightning Speed
+            sourceguid: 1a5f9c3d-0000-4b10-8a01-000000000006
+            description: You can shift up to your speed as a free maneuver once per turn.
+            activatedAbility:
+              __typeName: ActivatedAbility
+              range: Movement Speed
+              abilityType: none
+              targeting: pathfind
+              modifiers: []
+              actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                guid: 1a5f9c3d-0000-4b10-8a01-000000000009
+                movementType: shift
+              description: Shift up to your speed.
+              iconid: ui-icons/skills/1.png
+              usageLimitOptions:
+                charges: "1"
+                resourceid: 1a5f9c3d-0000-4b10-8a01-00000000000a
+                resourceRefreshType: turn
+              strain: []
+              guid: 1a5f9c3d-0000-4b10-8a01-000000000008
+              name: Lightning Speed
+              targetType: emptyspace
+              numTargets: "1"
+              implementation: 3
+              repeatTargets: false
+              persistence: []
+              flavor: A crackle of lightning, and you are somewhere else.
+            behavior: activated
+            source: Beastheart
+          source: Beastheart
+        guid: 1a5f9c3d-0000-4b10-8a01-000000000005
+        behavior: modsummoner
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        source: Character Feature
+        name: Lightning Speed
+        sourceguid: 1a5f9c3d-0000-4b10-8a01-000000000001
+        description: While rampaging (L10+), you can shift up to your speed as a free maneuver once per turn.
+      guid: 1a5f9c3d-0000-4b10-8a01-000000000001
+      name: Lightning Speed
+      source: Character Feature
+      domains:
+        CharacterFeature:1a5f9c3d-0000-4b10-8a01-000000000001: true
+      implementation: 3
+      description: While the spark is rampaging, you and the spark can shift up to your speed as a free maneuver once on each of your turns.
+    inflictedConditions: []
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
+        used: 1
     attributes:
       rea:
         __typeName: CharacterAttribute
         baseValue: -1
         id: rea
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        __typeName: CharacterAttribute
-        baseValue: 2
-        id: inu
       prs:
         __typeName: CharacterAttribute
         baseValue: 1
         id: prs
-      agl:
-        __typeName: CharacterAttribute
-        baseValue: 2
-        id: agl
       mgt:
         __typeName: CharacterAttribute
         baseValue: 2
         id: mgt
+      agl:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: agl
+      inu:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: inu
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+    damage_taken: 0
+    initiativeGrouping: c8a962c5-580d-47ac-af71-a873486fbd9f
+    skillProficiencies: []
+    cr: 1
+    notes:
+    - text: ""
+      title: Backstory
+    equipment: []
+    max_hitpoints: 13
     resistances:
     - __typeName: ResistanceEntry
+      dr: 3
       apply: Damage Reduction
       damageType: lightning
-      dr: 3
-    innateAttacks: []
-    skillProficiencies: []
-    levelChoices: []
     savingThrowRatings: []
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
-    inflictedConditions: []
+    classes: []
     monster_type: Elemental Spark
+    skillRatings:
+      57101165-410a-4734-98ee-d4e5b656d3df: true
+    levelChoices: []
+    max_hitpoints_roll: 2d8+2
+    animations:
+      guid: 4b6e2c93-5d1f-4a86-b328-7c2d6e1f3a72
+      anim:
+      - resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+        animType: consumeResource
+    monster_category: Elemental
+    import: []
   tokenType: null
   bestiaryId: 2e8c4d93-5b1f-4a76-b428-9c2d6e3f7a82
   summonerid: null
