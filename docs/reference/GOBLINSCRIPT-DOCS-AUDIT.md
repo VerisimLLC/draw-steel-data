@@ -12,7 +12,7 @@ Files audited:
 - `GoblinScript_Guide.md` (top-level)
 
 Cross-checked against:
-- `D:/dev/dmhub/Assets/Scripts/GoblinScript.cs` (the C# parser)
+- `C:/dev/dmhub/Assets/Scripts/GoblinScript.cs` (the C# parser)
 - `DMHub Utils/GoblinScript.lua` (Lua wrapper)
 - All `RegisterSymbol`, `RegisterGoblinScriptField`, `RegisterGoblinScriptSymbol`,
   `helpSymbols`, `lookupSymbols` definitions in `DMHub Game Rules/`,

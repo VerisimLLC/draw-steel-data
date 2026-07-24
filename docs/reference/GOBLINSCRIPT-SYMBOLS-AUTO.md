@@ -10,7 +10,7 @@ tokens; lookup normalizes to `tolower()` + remove spaces).
 When a symbol returns a function, calling it is `Subject.SymbolName(args)`.
 
 The C# parser file `Goblinscript.cs` (asked for) was at
-`D:/dev/dmhub/Assets/Scripts/GoblinScript.cs`.
+`C:/dev/dmhub/Assets/Scripts/GoblinScript.cs`.
 
 ---
 
