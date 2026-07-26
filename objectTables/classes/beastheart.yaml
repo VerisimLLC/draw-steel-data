@@ -2870,7 +2870,345 @@ levels:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-5:
     __typeName: ClassLevel
-    features: []
+    features:
+    - __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
+      description: Choose one heroic ability from the following options, each of which costs 9 ferocity to use.
+      options:
+      - __typeName: CharacterFeature
+        classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+        guid: 1f2b643e-f7bf-45ce-8e5c-faff640af9a9
+        description: You channel your companion’s feral senses to take the perfect shot.
+        source: Beastheart Class Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          source: Beastheart Class Feature
+          description: You channel your companion’s feral senses to take the perfect shot.
+          sourceguid: 1f2b643e-f7bf-45ce-8e5c-faff640af9a9
+          name: Deadshot
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          behavior: activated
+          activatedAbility:
+            __typeName: ActivatedAbility
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
+            range: "15"
+            strain: []
+            targetType: target
+            keywords:
+              Beastheart: true
+              Ranged: true
+              Weapon: true
+              Strike: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 12 + I Damage
+              - 18 + I Damage
+              - 30 + I Damage
+              roll: 2d10 + Intuition
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            categorization: Heroic Ability
+            implementation: 4
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            flavor: You channel your companion’s feral senses to take the perfect shot.
+            repeatTargets: false
+            name: Deadshot
+            iconid: ui-icons/skills/1.png
+            properties:
+              remainhidden: true
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            guid: 4d4d4412-612e-43cb-b1a3-d43a20443bc0
+            display:
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+              bgcolor: "#ffffffff"
+            description: If you are hidden, you remain hidden after the strike.
+            objectTarget: true
+            implementationDetails: ""
+            abilityType: none
+            resourceNumber: "9"
+            numTargets: "1"
+            modifiers: []
+          guid: b57036d0-c66a-4522-81d8-dca3db14d3a7
+        canHavePrerequisites: true
+        implementation: 4
+        name: Deadshot
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterFeature
+        classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+        guid: 9fea4338-575b-46f5-bc19-1d1d2fe73e69
+        description: You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.
+        source: Beastheart Class Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.
+          sourceguid: 9fea4338-575b-46f5-bc19-1d1d2fe73e69
+          name: Dogpile
+          guid: c847e3a7-c045-4128-aa3c-97c4118f12d6
+          behavior: activated
+          activatedAbility:
+            __typeName: ActivatedAbility
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
+            repeatTargets: false
+            strain: []
+            targetType: target
+            keywords:
+              Beastheart: true
+              Strike: true
+              Weapon: true
+              Melee: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 10 + M damage; M < Weak grabbed and prone
+              - 15 + M damage; M < Average grabbed and prone
+              - 20 + M damage; M < Strong grabbed and prone
+              roll: 2d10 + Might
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              filterTarget: Friends(Target, Caster) and not (Target.id = Caster.id)
+              autoTarget: true
+              applyto: proximity_only
+              target_proximity_range: "1"
+              customAbility:
+                __typeName: ActivatedAbility
+                repeatTargets: false
+                range: 1
+                name: Dogpile Pile-On
+                strain: []
+                targetType: target
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityDamageBehavior
+                  damageType: ""
+                  chatMessage: Dogpile - adjacent ally piles on
+                  applyto: targets
+                  roll: Highest Characteristic
+                numTargets: "1"
+                description: ""
+                modifiers: []
+                guid: 8d2f1a63-4c07-4e95-b128-6a3f9c0e7d54
+                persistence: []
+                display:
+                  hueshift: 0
+                  saturation: 1
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                iconid: ui-icons/skills/1.png
+                objectTarget: false
+              invokeOnCaster: false
+              abilityType: custom
+              targeting: inherit
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            categorization: Heroic Ability
+            implementation: 3
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            flavor: You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.
+            modifiers: []
+            range: 1
+            objectTarget: false
+            iconid: ui-icons/skills/1.png
+            guid: 26be91b7-1743-477d-b9b2-cae6e6feb7ae
+            display:
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+              bgcolor: "#ffffffff"
+            description: Each ally adjacent to the target can use a free triggered action to deal damage to the target equal to their highest characteristic score.
+            implementationDetails: Allies adjacent ALWAYS pile on damage rather than it being a choice.
+            numTargets: "1"
+            abilityType: none
+            resourceNumber: "9"
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            name: Dogpile
+          source: Beastheart Class Feature
+        canHavePrerequisites: true
+        implementation: 3
+        name: Dogpile
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterFeature
+        classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+        guid: 0a78fc08-6658-4352-b5de-a6ebbef5dd69
+        description: Harnessing your companion’s strength, you send your foe flying.
+        source: Beastheart Class Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: Harnessing your companion’s strength, you send your foe flying.
+          sourceguid: 0a78fc08-6658-4352-b5de-a6ebbef5dd69
+          activatedAbility:
+            __typeName: ActivatedAbility
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
+            range: 1
+            preDescription: If your companion is adjacent to the target, this forced movement can ignore the target’s stability.
+            strain: []
+            targetType: target
+            keywords:
+              Beastheart: true
+              Strike: true
+              Weapon: true
+              Melee: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 10 + M damage; vertical push 4 ignoring stability if companion is adjacent; prone
+              - 15 + M damage; vertical push 6 ignoring stability if companion is adjacent; prone
+              - 20 + M damage; vertical push 8 ignoring stability if companion is adjacent; prone
+              roll: 2d10 + Might
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            categorization: Heroic Ability
+            implementation: 4
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            flavor: Harnessing your companion’s strength, you send your foe flying.
+            name: One, Two, Three, Heave
+            implementationDetails: ""
+            objectTarget: false
+            iconid: ui-icons/skills/1.png
+            guid: 11d51725-45d9-4cd6-9abc-81b7e6739dd4
+            display:
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+              bgcolor: "#ffffffff"
+            description: ""
+            abilityType: none
+            numTargets: "1"
+            repeatTargets: false
+            resourceNumber: "9"
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            modifiers: []
+          name: One, Two, Three, Heave
+          behavior: activated
+          guid: 5b845c0b-d169-4bf3-9dcb-0d4b07706792
+          source: Beastheart Class Feature
+        canHavePrerequisites: true
+        implementation: 4
+        name: One, Two, Three, Heave
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterFeature
+        name: Rip Them Apart!
+        guid: a4f05c7f-6acb-4f80-8eb7-d37c25b2fd08
+        description: In a gruesome display, you and your companion rip off a pinned enemy’s limb or other body part and toss it away.
+        source: Beastheart Class Feature
+        classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+        canHavePrerequisites: true
+        implementation: 4
+        modifiers:
+        - __typeName: CharacterModifier
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: In a gruesome display, you and your companion rip off a pinned enemy’s limb or other body part and toss it away.
+          sourceguid: a4f05c7f-6acb-4f80-8eb7-d37c25b2fd08
+          activatedAbility:
+            __typeName: ActivatedAbility
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
+            repeatTargets: false
+            strain: []
+            targetType: target
+            keywords:
+              Melee: true
+              Weapon: true
+              Strike: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              tiers:
+              - 11 + M damage; M < Weak bleeding (save ends)
+              - 17 + M damage; M < Average bleeding (save ends)
+              - 22 + M damage; M < Strong bleeding (save ends)
+              roll: 2d10 + Might
+            - __typeName: ActivatedAbilityDamageBehavior
+              filterTarget: Caster.CompanionIsGrabbing(Target)
+              applyto: targets
+              damageType: ""
+              guid: 66589579-b8b4-4072-b2ae-ee499f92fee2
+              chatMessage: Ripped apart while grabbed by your partner
+              roll: Might + Caster.Companion.Might
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              filterTarget: Target.Stamina <= 0
+              autoTarget: true
+              applyto: targets
+              promptText: ""
+              customAbility:
+                __typeName: ActivatedAbility
+                range: 1
+                display:
+                  hueshift: 0
+                  saturation: 1
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                targetType: target
+                abilityType: none
+                guid: b3f1a8d0-6c24-4e79-9f52-1a7c3e8b0d46
+                description: ""
+                repeatTargets: false
+                iconid: ui-icons/skills/1.png
+                behaviors:
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  filterTarget: not Friends(Target, Caster) and Target.Stamina > 0
+                  target_proximity_range: "2"
+                  applyto: proximity_only
+                  rule: P < average, frightened (save ends)
+                name: Rip Them Apart! (Frighten)
+                numTargets: "1"
+                modifiers: []
+              invokeOnCaster: true
+              abilityType: custom
+              targeting: inherit
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            categorization: Heroic Ability
+            implementation: 4
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            flavor: In a gruesome display, you and your companion rip off a pinned enemy’s limb or other body part and toss it away.
+            modifiers: []
+            range: 1
+            objectTarget: false
+            iconid: ui-icons/skills/1.png
+            guid: 444b777e-bb58-4f7e-9faf-e48b988c972c
+            display:
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+              bgcolor: "#ffffffff"
+            description: If the target is grabbed by your partner, the target takes extra damage equal to your Might score plus your partner’s Might score. If the target is reduced to 0 Stamina by this ability, each enemy within 2 squares who has p<Average is frightened (save ends).
+            implementationDetails: ""
+            numTargets: "1"
+            abilityType: none
+            resourceNumber: "9"
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            name: Rip Them Apart!
+          name: Rip Them Apart!
+          behavior: activated
+          guid: fec7d814-fc42-4a9e-a64a-3e468f9b62c1
+          source: Beastheart Class Feature
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      numChoices: 1
+      name: 9-Ferocity Ability
+      guid: 8b133c5a-4f3b-4ff3-9c56-37365e35f0b0
     domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-3:
@@ -3430,7 +3768,86 @@ levels:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-4:
     __typeName: ClassLevel
-    features: []
+    features:
+    - __typeName: CharacterFeature
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      prefab: 7f0cc0ef-f118-4d7a-b8d1-902d49821f55
+      guid: 3c66c59a-eb82-47ed-a0bc-72746e4c7e0d
+      description: Your and your companion’s Might and Intuition scores increase to 3.
+      source: Beastheart Class Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Characteristic Increase
+        value: 1
+        guid: 533eae82-769a-4411-9ef4-acbe1e53b588
+        description: Your and your companion’s Might and Intuition scores increase to 3.
+        sourceguid: 7f0cc0ef-f118-4d7a-b8d1-902d49821f55
+        source: Beastheart Class Feature
+        behavior: attribute
+        attribute: mgt
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterModifier
+        name: Characteristic Increase
+        value: 1
+        guid: e0cb4c41-d2f3-4d60-9cfe-10e789c09957
+        description: Your and your companion’s Might and Intuition scores increase to 3.
+        sourceguid: 7f0cc0ef-f118-4d7a-b8d1-902d49821f55
+        source: Beastheart Class Feature
+        behavior: attribute
+        attribute: inu
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - __typeName: CharacterModifier
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        description: Your and your companion’s Might and Intuition scores increase to 3.
+        sourceguid: 3c66c59a-eb82-47ed-a0bc-72746e4c7e0d
+        name: Characteristic Increase
+        feature:
+          __typeName: CharacterFeature
+          description: Modify the beastheart's companion
+          name: Companion
+          guid: 768ce91e-b867-4705-b1a8-f5725c292edc
+          implementation: 4
+          modifiers:
+          - __typeName: CharacterModifier
+            guid: 15a5d861-f6b6-4477-aa33-a0c5cce927c9
+            description: Modify the beastheart's companion
+            sourceguid: 768ce91e-b867-4705-b1a8-f5725c292edc
+            name: Companion
+            value: 1
+            behavior: attribute
+            attribute: mgt
+            source: Beastheart
+          - __typeName: CharacterModifier
+            guid: 41dbac36-f77f-4c6a-9672-a1595d200f17
+            description: Modify the beastheart's companion
+            sourceguid: 768ce91e-b867-4705-b1a8-f5725c292edc
+            name: Companion
+            value: 1
+            behavior: attribute
+            attribute: inu
+            source: Beastheart
+          source: Beastheart
+        behavior: modcompanion
+        guid: 95ca8a6e-c3d2-4d2b-9e32-bdc28875a5d5
+        source: Beastheart Class Feature
+      implementation: 4
+      name: Characteristic Increase
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+    - __typeName: CharacterFeatChoice
+      description: You gain one perk of your choice.
+      tag: ""
+      name: Perk
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      guid: 375a58f9-0045-4c85-bac7-f71a7b6ec98a
+    - __typeName: CharacterSkillChoice
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      description: You gain one skill of your choice.
+      source: Beastheart Class Feature
+      guid: be173d76-e6d4-40a7-b3d4-8eab5e654260
     domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
   level-7:
