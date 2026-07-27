@@ -50,112 +50,263 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: null
+  updateid: 5977610f-01f2-4126-a7d1-ce112c0bde33
   properties:
     __typeName: monster
-    characterFeatures: []
-    walkingSpeed: 5
-    opportunityAttack: 3
-    damage_taken: 0
-    max_hitpoints: 50
-    skillRatings: []
-    role: Horde Brute
-    ev: 6
-    movementSpeeds: []
-    cr: 4
-    attributes:
-      inu:
-        id: inu
-        baseValue: 3
-      agl:
-        id: agl
-        baseValue: -1
-      prs:
-        id: prs
-        baseValue: 0
-      mgt:
-        id: mgt
-        baseValue: 3
-      rea:
-        id: rea
-        baseValue: 1
-    savingThrowRatings: []
-    traitNames: []
     keywords:
       Mummy: true
       Undead: true
+    skillRatings: []
     stability: 2
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: poison
-      dr: 4
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: corruption
-      dr: 4
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: fire
-      dr: -5
-    innateLanguages: []
+    max_hitpoints_roll: "50"
+    cr: 4
+    role: Horde Brute
     equipment:
       mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    titles: []
+    ev: 6
+    inflictedConditions: []
+    max_hitpoints: 50
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 4
+      apply: Damage Reduction
+      damageType: poison
+    - __typeName: ResistanceEntry
+      dr: 4
+      apply: Damage Reduction
+      damageType: corruption
+    - __typeName: ResistanceEntry
+      dr: -5
+      apply: Damage Reduction
+      damageType: fire
+    name: Mummy
     innateAttacks: []
+    monster_type: Mummy
+    attributes:
+      agl:
+        id: agl
+        baseValue: -1
+      mgt:
+        id: mgt
+        baseValue: 3
+      prs:
+        id: prs
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 1
+      inu:
+        id: inu
+        baseValue: 3
+    levelChoices: []
+    damage_taken: 0
+    innateLanguages: []
+    walkingSpeed: 5
+    traitNames: []
+    monster_category: Undead
+    savingThrowRatings: []
+    opportunityAttack: 3
+    characterFeatures:
+    - __typeName: CharacterFeature
+      guid: 8264ddea-8723-4d7a-9582-99caf437a1ea
+      description: |-
+        **Trigger: The mummy comes within distance of a restrained creature or starts their turn within distance of one.
+
+        **Effect:** The target takes 8 poison damage
+      name: Blast of Mummy Dust
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        name: Blast of Mummy Dust
+        guid: 3fb3577f-d4cb-4f17-a3b1-96beeac82b63
+        sourceguid: 8264ddea-8723-4d7a-9582-99caf437a1ea
+        source: Trait
+        domains:
+          CharacterFeature:8264ddea-8723-4d7a-9582-99caf437a1ea: true
+        description: |-
+          Trigger: The mummy comes within distance of a restrained creature.
+
+          Effect: The target takes 8 poison damage.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Blast of Mummy Dust
+          guid: e5f7eb42-a26b-4d69-8d4b-157e33bcf359
+          trigger: finishmove
+          subject: self
+          mandatory: false
+          conditionFormula: CountNearbyCreatures(1, "restrained") >= 1
+          triggerPrompt: The mummy can spend 1 malice to blast a restrained creature within 1 square with mummy dust, dealing 8 poison damage.
+          targetType: target
+          numTargets: "1"
+          range: 1
+          keywords:
+            Area: true
+          categorization: Trigger
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          reasonedFilters:
+          - reason: Blast of Mummy Dust can only target a restrained creature.
+            formula: Conditions has "restrained"
+          repeatTargets: false
+          abilityType: none
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          description: ""
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: "8"
+            damageType: poison
+      - __typeName: CharacterModifier
+        behavior: trigger
+        name: Blast of Mummy Dust
+        guid: cefe382f-f76e-477a-ad43-7f412e862892
+        sourceguid: 8264ddea-8723-4d7a-9582-99caf437a1ea
+        source: Trait
+        domains:
+          CharacterFeature:8264ddea-8723-4d7a-9582-99caf437a1ea: true
+        description: |-
+          Trigger: The mummy starts their turn within distance of a restrained creature.
+
+          Effect: The target takes 8 poison damage.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Blast of Mummy Dust
+          guid: dd09e367-df50-4bdb-8378-5efdd9f5dc20
+          trigger: beginturn
+          subject: self
+          mandatory: false
+          conditionFormula: CountNearbyCreatures(1, "restrained") >= 1
+          triggerPrompt: The mummy can spend 1 malice to blast a restrained creature within 1 square with mummy dust, dealing 8 poison damage.
+          targetType: target
+          numTargets: "1"
+          range: 1
+          keywords:
+            Area: true
+          categorization: Trigger
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          reasonedFilters:
+          - reason: Blast of Mummy Dust can only target a restrained creature.
+            formula: Conditions has "restrained"
+          repeatTargets: false
+          abilityType: none
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          description: ""
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: "8"
+            damageType: poison
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        name: Blast of Mummy Dust
+        guid: 407273f4-062f-4643-ad59-9afe6de1bccf
+        sourceguid: 8264ddea-8723-4d7a-9582-99caf437a1ea
+        source: Trait
+        domains:
+          CharacterFeature:8264ddea-8723-4d7a-9582-99caf437a1ea: true
+        description: |-
+          Trigger: The mummy comes within distance of a restrained creature or starts their turn within distance of one.
+
+          Effect: The target takes 8 poison damage.
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 3c144a4e-58aa-4c82-92fd-1b9b2d57f20d
+          distance: 1 burst
+          trigger: The mummy comes within distance of a restrained creature or starts their turn within distance of one.
+          keywords:
+            Area: true
+          effect: The target takes 8 poison damage.
+      domains:
+        CharacterFeature:8264ddea-8723-4d7a-9582-99caf437a1ea: true
+    movementSpeeds: []
+    creatureSize: 1M
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
+      guid: 8204e4ef-b926-428a-9d03-ff827d38ee8f
+      iconid: ui-icons/skills/1.png
       targetType: target
-      flavor: ""
-      categorization: Signature Ability
       keywords:
+        Weapon: true
         Strike: true
         Melee: true
-        Weapon: true
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 266
+      name: Accursed Bindings
+      numTargets: 1
+      flavor: ""
+      categorization: Signature Ability
       display:
+        saturation: 1
+        brightness: 1
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
+      range: 3
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 8204e4ef-b926-428a-9d03-ff827d38ee8f
-      repeatTargets: false
       description: The next ability the mummy uses against the target has any potency increased by 1 for the target.
+      strain: []
+      abilityType: none
+      repeatTargets: false
+      modifiers: []
+      implementation: 3
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 6 corruption damage; pull 1
         - 8 corruption damage; pull 2
-        - 10 corruption damage; M<3 restrained (save ends); pull 2
-      range: 3
-      name: Accursed Bindings
+        - 10 corruption damage; pull 2; M<3 restrained (save ends)
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        ongoingEffectid: 4d46668f-c2c8-4749-84b5-06e66c8cc7d6
+        applyto: targets
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        ongoingEffect: 4d46668f-c2c8-4749-84b5-06e66c8cc7d6
+        tiersSelected:
+        - 1
+        - 2
+        - 3
     - __typeName: ActivatedAbility
-      implementation: 3
+      guid: d9f6efb5-7e38-4994-aaae-7e39be241efa
+      iconid: ui-icons/skills/1.png
       targetType: target
-      flavor: ""
-      categorization: Ability
       keywords:
         Magic: true
         Ranged: true
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 266
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      name: Eldritch Curse
+      numTargets: 1
+      flavor: ""
       resourceNumber: 3
+      categorization: Ability
       display:
+        saturation: 1
+        brightness: 1
         bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      iconid: ui-icons/skills/1.png
-      guid: d9f6efb5-7e38-4994-aaae-7e39be241efa
-      repeatTargets: false
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -164,51 +315,33 @@ info:
         - 5 corruption damage; I<2 cursed (save ends)
         - 7 corruption damage; I<3 cursed (save ends)
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: save_ends
-        potencyAttr: inu
-        ongoingEffectCustom: false
-        ongoingEffect: fac31191-86fe-49c2-a772-681eb03745d0
         tiersSelected:
         - 1
+        duration: save_ends
+        ongoingEffect: fac31191-86fe-49c2-a772-681eb03745d0
+        filterTarget: (Intuition Potency Resistance < 1) or (Stacks("Accursed Bindings") > 0 and Intuition Potency Resistance < 2)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        tiersSelected:
         - 2
+        duration: save_ends
+        ongoingEffect: fac31191-86fe-49c2-a772-681eb03745d0
+        filterTarget: (Intuition Potency Resistance < 2) or (Stacks("Accursed Bindings") > 0 and Intuition Potency Resistance < 3)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        tiersSelected:
         - 3
+        duration: save_ends
+        ongoingEffect: fac31191-86fe-49c2-a772-681eb03745d0
+        filterTarget: (Intuition Potency Resistance < 3) or (Stacks("Accursed Bindings") > 0 and Intuition Potency Resistance < 4)
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        ongoingEffectid: 4d46668f-c2c8-4749-84b5-06e66c8cc7d6
+        applyto: targets
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       description: A cursed target is bleeding and weakened, and allies gain an edge on strikes made against them.
-      targetAllegiance: enemy
-      range: 10
-      name: Eldritch Curse
-    - __typeName: ActivatedAbility
-      implementation: 2
-      targetType: all
-      flavor: ""
-      categorization: Trigger
-      keywords:
-        Area: true
-      resourceNumber: 1
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
       abilityType: none
-      numTargets: 1
+      range: 10
       modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 8e47f8c4-c6f2-448c-b98e-909c3e09c954
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 3
       repeatTargets: false
-      description: |
-        Trigger: The mummy comes within distance of a restrained creature or starts their turn within distance of one.
-        The target takes 8 poison damage.
-      behaviors: []
-      range: 1
-      name: Blast of Mummy Dust
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    monster_category: Undead
-    max_hitpoints_roll: "50"
-    creatureSize: 1M
-    monster_type: Mummy
-    name: Mummy
   tokenType: null
   bestiaryId: f68006d8-d40b-46d4-9a32-b154b9efc6de
   summonerid: null

@@ -50,35 +50,22 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: d6a04678-826d-4483-b9e9-14634a0006c6
+  updateid: dcfe9754-0131-4fd1-84b7-ef075a9a84ef
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 678cbac7-5a75-47b2-872d-c38df2bfc732
-      domains:
-        CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
-      description: Whenever an enemy makes physical contact with the shambler or uses a melee ability against the shambler, they take 2 damage.
-      modifiers: []
-      source: Trait
-      name: Fleshfused Spines
-    inflictedConditions: []
-    stability: 0
-    opportunityAttack: 3
-    cr: 4
+    walkingSpeed: 5
     withCaptain: Strike damage +2
-    damage_taken: 0
-    max_hitpoints: 9
-    keywords:
-      Undead: true
-    skillRatings: []
-    role: Minion Brute
-    ev: 6
-    movementSpeeds: []
-    monster_type: Fleshflayed Shambler
+    innateAttacks: []
+    stability: 0
+    max_hitpoints_roll: "9"
+    creatureSize: 1M
+    equipment: []
     attributes:
       inu:
         id: inu
+        baseValue: 0
+      rea:
+        id: rea
         baseValue: 0
       agl:
         id: agl
@@ -89,21 +76,40 @@ info:
       mgt:
         id: mgt
         baseValue: 3
-      rea:
-        id: rea
-        baseValue: 0
-    resources: []
-    traitNames: []
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    minion: true
-    innateAttacks: []
-    savingThrowRatings: []
-    equipment: []
-    walkingSpeed: 5
+    keywords:
+      Undead: true
+      Soulless: true
+    levelChoices: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      range: 1
+      sourceReference:
+        __typeName: SourceReference
+        page: 265
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      modifiers: []
+      numTargets: 1
+      iconid: ui-icons/skills/1.png
       targetType: target
+      categorization: Signature Ability
+      implementation: 4
+      description: If this ability gains an edge or has a double edge, the target is bleeding (save ends).
+      guid: d548823c-40ab-43e2-87b8-d2213d854b36
+      abilityType: none
+      name: 'Bone Carvers '
+      flavor: ""
+      keywords:
+        Melee: true
+        Weapon: true
+        Strike: true
+      strain: []
+      repeatTargets: false
+      effectImplemented: false
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 3
@@ -111,28 +117,37 @@ info:
         - 3 damage
         - 5 damage
         - 7 damage
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 08d6e8e7-5209-43e9-9eba-cd124aa81d51
+        summary: Bleeding on edge
+        filterTarget: Cast.Boons > Cast.Banes
+        applyto: targets
+        duration: save_ends
+        guid: c4c5fb60-c5b3-4dc0-b0f1-fa2ca6aa19a5
+        stacks: "1"
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: d548823c-40ab-43e2-87b8-d2213d854b36
-      flavor: ""
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      description: The target is bleeding (save ends) if the shambler has an edge on this ability.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: 'Bone Carvers '
+    resources: []
+    skillRatings: []
+    monster_category: Monster
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: corruption
+      dr: 4
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: poison
+      dr: 4
+    traitNames: []
+    damage_taken: 0
+    inflictedConditions: []
+    opportunityAttack: 3
+    role: Minion Brute
+    cr: 4
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    movementSpeeds: []
+    savingThrowRatings: []
+    ev: 6
     import:
       type: mcdm
       data: |+
@@ -153,19 +168,104 @@ info:
         <b>Fleshfused Spines</b>
         Whenever an enemy makes physical contact with the shambler or uses a melee ability against the shambler, they take 2 damage.
 
-    levelChoices: []
-    max_hitpoints_roll: "9"
-    creatureSize: 1M
-    monster_category: Monster
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: corruption
-      dr: 4
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: poison
-      dr: 4
+    titles: []
+    max_hitpoints: 9
+    monster_type: Fleshflayed Shambler Zombie
+    notes:
+    - text: ""
+      title: Monster Notes
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      domains:
+        CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          domains:
+            CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
+          modifiers: []
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          subject: enemy
+          conditionFormula: target = self and (UsedAbility.Keywords has "Melee")
+          description: ""
+          guid: ab06050d-eb07-46a3-bca4-6b5678f7e565
+          abilityType: none
+          mandatory: true
+          persistence: []
+          trigger: targetwithability
+          strain: []
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: untyped
+            roll: "2"
+            titleText: Fleshfused Spines
+            guid: b2cee4a6-1716-43b9-a10d-206ce3edba5c
+            chatMessage: Used a melee ability against the fleshflayed shambler
+          targetType: subject
+          display:
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+            bgcolor: "#ffffffff"
+          repeatTargets: false
+          name: Fleshfused Spines
+        name: Fleshfused Spines
+        source: Trait
+        domains:
+          CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
+        sourceguid: 678cbac7-5a75-47b2-872d-c38df2bfc732
+        description: Any adjacent enemy who uses a melee ability against the fleshflayed shambler takes 2 damage.
+        guid: e71c3770-9cfb-40e5-94ea-ed88052a0da7
+        behavior: trigger
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          domains:
+            CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
+          modifiers: []
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          targetType: attacker
+          conditionFormula: condition = "Grabbed" and (HasAttacker)
+          description: ""
+          guid: a00a3a5b-41e9-4707-8a94-f63e76d54e6e
+          abilityType: none
+          mandatory: true
+          persistence: []
+          trigger: inflictcondition
+          strain: []
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: untyped
+            roll: "2"
+            titleText: Fleshfused Spines
+            guid: 9cd83b87-5727-4646-aedd-7fed1f2e0e45
+            chatMessage: Grabbed the fleshfused shambler
+          display:
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+            bgcolor: "#ffffffff"
+          name: Fleshfused Spines
+          repeatTargets: false
+        name: Fleshfused Spines
+        source: Trait
+        domains:
+          CharacterFeature:678cbac7-5a75-47b2-872d-c38df2bfc732: true
+        sourceguid: 678cbac7-5a75-47b2-872d-c38df2bfc732
+        description: Any adjacent enemy who grabs the fleshflayed shambler takes 2 damage.
+        guid: 8b7f6c4a-7fb8-40ff-8a41-e7c74e112f5a
+        behavior: trigger
+      description: Any adjacent enemy who grabs the fleshflayed shambler or uses a melee ability against them takes 2 damage.
+      guid: 678cbac7-5a75-47b2-872d-c38df2bfc732
+      name: Fleshfused Spines
+    minion: true
   tokenType: null
   bestiaryId: 0ba16222-c665-41bf-a10a-fef5cc2afc37
   summonerid: null
