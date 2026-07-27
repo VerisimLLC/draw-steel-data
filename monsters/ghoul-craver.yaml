@@ -50,53 +50,115 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 91335eba-e7c4-40a5-9fef-08e4edc3895f
+  updateid: 8dfacc7e-a055-4af8-90d1-11fb7f1aab61
   properties:
     __typeName: monster
-    keywords:
-      Undead: true
-    skillRatings: []
-    stability: 0
-    ev: 6
-    cr: 4
-    role: Minion Harrier
-    equipment: []
-    traitNames: []
     titles: []
-    walkingSpeed: 7
-    withCaptain: +2 damage bonus to strikes
-    max_hitpoints: 8
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
     resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      dr: 4
-      apply: Damage Reduction
-      damageType: corruption
-    - __typeName: ResistanceEntry
-      dr: 4
-      apply: Damage Reduction
-      damageType: poison
-    innateAttacks: []
-    monster_type: Ghoul Craver
-    attributes:
-      rea:
-        id: rea
-        baseValue: 0
-      mgt:
-        id: mgt
-        baseValue: 3
-      prs:
-        id: prs
-        baseValue: 0
-      inu:
-        id: inu
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 2
-    levelChoices: []
-    savingThrowRatings: []
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: Any enemy adjacent to three or more ghoul cravers can't shift.
+      domains:
+        CharacterFeature:5fdc8543-acbd-468a-8181-5bff7d3dffd0: true
+      guid: 5fdc8543-acbd-468a-8181-5bff7d3dffd0
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        description: Any enemy adjacent to three or more ghoul cravers can't shift.
+        sourceguid: 5fdc8543-acbd-468a-8181-5bff7d3dffd0
+        aura:
+          __typeName: Aura
+          description: Any enemy adjacent to three or more ghoul cravers can't shift.
+          implementation: 4
+          guid: 343cd67f-dfc6-4f0b-85f5-0b7075194558
+          display:
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+            bgcolor: "#ffffffff"
+          modifiers:
+          - __typeName: CharacterModifier
+            description: While adjacent to three or more ghoul cravers, this creature can't shift.
+            sourceguid: 343cd67f-dfc6-4f0b-85f5-0b7075194558
+            filterCondition: CountNearbyEnemies(1, "Ghoul Craver") >= 3
+            behavior: attribute
+            attribute: 42d3d3ec-da00-4338-a97a-fa5ea9d62472
+            value: 1
+            guid: 4cce0708-ebe1-4069-9b4b-82c1ec5ced16
+            name: Ever So Hungry
+            source: Aura
+          name: Ever So Hungry
+          applyto: enemies
+        domains:
+          CharacterFeature:5fdc8543-acbd-468a-8181-5bff7d3dffd0: true
+        radius: "1"
+        behavior: aura
+        guid: d6db0721-9e3b-4682-84f8-e52a773081ce
+        name: Ever So Hungry
+        source: Trait
+      name: Ever So Hungry
+      source: Trait
+    - __typeName: CharacterFeature
+      description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
+      domains:
+        CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
+      guid: 6fe5117e-c23d-43fd-b671-52d81555887a
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          trigger: custom
+          targetType: self
+          persistence: []
+          name: Hunger
+          iconid: ui-icons/skills/1.png
+          description: ""
+          castImmediately: true
+          guid: a2563a13-46e4-4d06-b169-f00ff0c2d525
+          abilityType: none
+          modifiers: []
+          conditionFormula: Trigger Name = "BeginCharge"
+          numTargets: "1"
+          display:
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+            bgcolor: "#ffffffff"
+          behaviors:
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            color: "#ffffffff"
+            text: Hunger...
+            filterTarget: ""
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: 0
+            ongoingEffectCustom: false
+            ongoingEffect: 41e79778-7267-4947-b05a-824b0600c681
+            applyto: caster
+          range: 1
+          strain: []
+        guid: a78814ed-4e53-402d-8e1e-94e3a5f54dee
+        sourceguid: 6fe5117e-c23d-43fd-b671-52d81555887a
+        domains:
+          CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
+        name: Hunger
+        source: Trait
+      - __typeName: CharacterModifier
+        description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
+        sourceguid: 6fe5117e-c23d-43fd-b671-52d81555887a
+        domains:
+          CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
+        behavior: attribute
+        attribute: 6707d8ac-4323-47bc-9593-e36fd1ac146e
+        value: 2
+        guid: bd8b4ac4-1072-411f-b2d1-f91f1cad8df6
+        name: Hunger
+        source: Trait
+      name: Hunger
+      source: Trait
     import:
       data: |+
         Ghoul Craver	Level 4 Minion Harrier
@@ -120,151 +182,57 @@ info:
         The ghoul craver's speed increases by 2 while charging, until the end of their turn.
 
       type: mcdm
-    minion: true
-    max_hitpoints_roll: "8"
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 5fdc8543-acbd-468a-8181-5bff7d3dffd0
-      description: Any enemy adjacent to three or more ghoul cravers can't shift.
-      name: Ever So Hungry
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: d6db0721-9e3b-4682-84f8-e52a773081ce
-        aura:
-          __typeName: Aura
-          guid: 343cd67f-dfc6-4f0b-85f5-0b7075194558
-          description: Any enemy adjacent to three or more ghoul cravers can't shift.
-          name: Ever So Hungry
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          applyto: enemies
-          modifiers:
-          - __typeName: CharacterModifier
-            guid: 4cce0708-ebe1-4069-9b4b-82c1ec5ced16
-            value: 1
-            filterCondition: CountNearbyEnemies(1, "Ghoul Craver") >= 3
-            description: While adjacent to three or more ghoul cravers, this creature can't shift.
-            name: Ever So Hungry
-            attribute: 42d3d3ec-da00-4338-a97a-fa5ea9d62472
-            source: Aura
-            sourceguid: 343cd67f-dfc6-4f0b-85f5-0b7075194558
-            behavior: attribute
-          implementation: 4
-        description: Any enemy adjacent to three or more ghoul cravers can't shift.
-        name: Ever So Hungry
-        sourceguid: 5fdc8543-acbd-468a-8181-5bff7d3dffd0
-        source: Trait
-        domains:
-          CharacterFeature:5fdc8543-acbd-468a-8181-5bff7d3dffd0: true
-        radius: "1"
-        behavior: aura
-      implementation: 4
-      domains:
-        CharacterFeature:5fdc8543-acbd-468a-8181-5bff7d3dffd0: true
-    - __typeName: CharacterFeature
-      guid: 6fe5117e-c23d-43fd-b671-52d81555887a
-      description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
-      name: Hunger
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: a78814ed-4e53-402d-8e1e-94e3a5f54dee
-        description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
-        name: Hunger
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          guid: a2563a13-46e4-4d06-b169-f00ff0c2d525
-          iconid: ui-icons/skills/1.png
-          targetType: self
-          trigger: custom
-          castImmediately: true
-          repeatTargets: false
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          range: 1
-          name: Hunger
-          strain: []
-          description: ""
-          persistence: []
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          conditionFormula: Trigger Name = "BeginCharge"
-          behaviors:
-          - __typeName: ActivatedAbilityFloatTextBehavior
-            text: Hunger...
-            color: "#ffffffff"
-            filterTarget: ""
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            applyto: caster
-            ongoingEffectCustom: false
-            ongoingEffect: 41e79778-7267-4947-b05a-824b0600c681
-            duration: 0
-        source: Trait
-        domains:
-          CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
-        sourceguid: 6fe5117e-c23d-43fd-b671-52d81555887a
-        behavior: trigger
-      - __typeName: CharacterModifier
-        guid: bd8b4ac4-1072-411f-b2d1-f91f1cad8df6
-        value: 2
-        description: When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.
-        sourceguid: 6fe5117e-c23d-43fd-b671-52d81555887a
-        name: Hunger
-        attribute: 6707d8ac-4323-47bc-9593-e36fd1ac146e
-        domains:
-          CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
-        source: Trait
-        behavior: attribute
-      implementation: 4
-      domains:
-        CharacterFeature:6fe5117e-c23d-43fd-b671-52d81555887a: true
-    monster_category: Monster
+    role: Minion Harrier
+    notes:
+    - title: Monster Notes
+      text: ""
+    max_hitpoints: 8
+    opportunityAttack: 2
+    savingThrowRatings: []
     movementSpeeds:
       climb: 7
-    damage_taken: 0
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 4
+      damageType: corruption
+      apply: Damage Reduction
+    - __typeName: ResistanceEntry
+      dr: 4
+      damageType: poison
+      apply: Damage Reduction
+    traitNames: []
     inflictedConditions: []
-    opportunityAttack: 2
-    creatureSize: 1M
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      guid: a23c0e8a-c4b8-4958-94e6-91613e5a9b17
-      iconid: ui-icons/skills/1.png
+      effectImplemented: false
+      strain: []
+      implementation: 4
       targetType: target
-      keywords:
-        Charge: true
-        Strike: true
-        Weapon: true
-        Melee: true
+      flavor: ""
+      range: 1
+      iconid: ui-icons/skills/1.png
+      description: The ghoul craver has a double edge on this ability when targeting bleeding creatures.
+      guid: a23c0e8a-c4b8-4958-94e6-91613e5a9b17
+      abilityType: none
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 265
-      name: Taste
+      keywords:
+        Melee: true
+        Strike: true
+        Charge: true
+        Weapon: true
+      modifiers: []
       numTargets: 1
-      flavor: ""
-      categorization: Signature Ability
+      name: Taste
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       display:
-        hueshift: 0
         brightness: 1
+        hueshift: 0
         saturation: 1
         bgcolor: "#ffffffff"
-      range: 1
-      repeatTargets: false
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: The ghoul craver has a double edge on this ability when targeting bleeding creatures.
-      strain: []
-      abilityType: none
-      implementation: 4
-      modifiers: []
-      effectImplemented: false
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         tiers:
@@ -273,20 +241,55 @@ info:
         - 6 damage
         roll: 2d10 + Might
       - __typeName: ActivatedAbilityModifyPowerRollBehavior
-        guid: 886af79f-a964-442a-a484-3255af8c3483
         modifier:
           __typeName: CharacterModifier
-          guid: 6d27c21d-1a52-4111-998b-dcad075ba95b
           displayCondition: Target.Conditions has "Bleeding"
+          sourceguid: 886af79f-a964-442a-a484-3255af8c3483
+          domains: []
+          behavior: power
+          guid: 6d27c21d-1a52-4111-998b-dcad075ba95b
+          activationCondition: Target.Conditions has "Bleeding"
+          description: The ghoul craver has a double edge on the 'Taste' ability when targeting bleeding creatures.
           keywords: []
           rollType: ability_power_roll
-          activationCondition: Target.Conditions has "Bleeding"
-          description: The ghoul craver has a double edge on this ability when targeting bleeding creatures.
-          sourceguid: 886af79f-a964-442a-a484-3255af8c3483
-          modtype: double_edge
-          domains: []
           name: Double Edge vs Bleeding
-          behavior: power
+          modtype: double_edge
+        guid: 886af79f-a964-442a-a484-3255af8c3483
+      repeatTargets: false
+      categorization: Signature Ability
+    walkingSpeed: 7
+    stability: 0
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    attributes:
+      prs:
+        baseValue: 0
+        id: prs
+      rea:
+        baseValue: 0
+        id: rea
+      inu:
+        baseValue: 0
+        id: inu
+      agl:
+        baseValue: 2
+        id: agl
+      mgt:
+        baseValue: 3
+        id: mgt
+    monster_category: Monster
+    creatureSize: 1M
+    levelChoices: []
+    skillRatings: []
+    minion: true
+    equipment: []
+    max_hitpoints_roll: "8"
+    damage_taken: 0
+    monster_type: Ghoul Craver
+    keywords:
+      Undead: true
+    ev: 6
+    withCaptain: +2 damage bonus to strikes
+    cr: 4
   tokenType: null
   bestiaryId: 321d1ae5-dc14-4737-887f-dd74a0343395
   summonerid: null
