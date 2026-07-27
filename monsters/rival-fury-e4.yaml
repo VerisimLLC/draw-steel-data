@@ -53,183 +53,189 @@ info:
   updateid: c4b56df6-6378-4d61-8b8e-0c8019181e10
   properties:
     __typeName: monster
-    walkingSpeed: 5
-    creatureTemplates:
-    - 3702e79c-fe95-4f22-8e46-fc449120ffe4
-    innateAttacks: []
-    stability: 3
-    max_hitpoints_roll: "260"
-    creatureSize: 1M
-    equipment: []
-    damage_taken: 0
-    max_hitpoints: 260
+    notes:
+    - title: Monster Notes
+      text: ""
+    skillRatings: []
+    groupid: 5163b6cd-991f-4277-b81c-8e42a53d328e
+    resources: []
     xp: 0
-    skillProficiencies: []
+    import:
+      data: |+
+        Rival Fury	Level 10 Elite Brute
+        Humanoid, Rival	EV 48
+        <b>Stamina</b> 260
+        <b>Speed</b> 5	<b>Size</b> 1M / <b>Stability</b> 3
+        <b>Free Strike</b> 10
+        Might +5	Agility +4	Reason +0	Intuition +2	Presence +3
+
+      type: mcdm
+    monster_category: Monster
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      objectTarget: true
+      iconid: d15fe212-5892-433b-869f-4778a5a9604d
+      implementation: 4
+      multipleModes: false
       sourceReference:
         __typeName: SourceReference
         page: 244
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      modifiers: []
+      guid: 9c23cf89-2c61-45eb-8e8c-e3c2b3a54e31
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 15 damage; push 4
         - 21 damage; push 5
         - 25 damage; push 6
         promptWhenResolvingText: Select which target to push in your preferred order.
-        roll: 2d10 + Highest Characteristic
         promptWhenResolving: false
         attrid: mgt
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: "2  Malice: Each target who has M<4 is bleeding and slowed (save ends)"
+        applyto: caster
+        guid: d8c4af93-0d02-4893-bb8b-923d3424ab79
+        autoTarget: false
         customAbility:
           __typeName: ActivatedAbility
-          objectTarget: false
+          targetType: target
+          implementation: 4
           sourceReference:
             __typeName: SourceReference
             page: 244
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
-          modifiers: []
-          numTargets: "2"
-          repeatTargets: false
-          targetType: target
-          implementation: 4
-          description: ""
           guid: e4969ba9-208f-459d-921f-315b1b44d1dc
-          abilityType: none
-          name: Inflict Bleeding & Slowed
-          preDescription: The Director can spend 2 Malice and each target who has M<2 is slowed (save ends).
-          strain: []
           actionResourceId: none
-          iconid: ui-icons/skills/1.png
-          range: 10
-          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          strain: []
+          objectTarget: false
+          name: Inflict Bleeding & Slowed
+          numTargets: "2"
           display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
             saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          iconid: ui-icons/skills/1.png
           resourceNumber: "2"
+          abilityType: none
+          repeatTargets: false
+          description: ""
+          range: 10
+          modifiers: []
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            filterTarget: target.might < 4
             guid: 05c22b55-d7f2-44b7-91e8-58c9d0d09112
+            filterTarget: target.might < 4
             rule: bleeding (save ends)
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             filterTarget: target.might < 4
             rule: slowed (save ends)
-        targeting: prompt_inherit
-        guid: d8c4af93-0d02-4893-bb8b-923d3424ab79
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          preDescription: The Director can spend 2 Malice and each target who has M<2 is slowed (save ends).
         invokeOnCaster: true
-        applyto: caster
+        targeting: inherit
         filterTarget: caster.Heroic Resources Available to Spend >=2
-        autoTarget: false
-      repeatTargets: false
-      targetType: target
+        promptText: "2  Malice: Each target who has M<4 is bleeding and slowed (save ends)"
       categorization: Signature Ability
-      implementation: 4
-      description: "**2 Malice:** Each target who has M<4 is bleeding and slowed (save ends)."
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      multipleModes: false
-      abilityType: none
+      modifiers: []
+      strain: []
+      objectTarget: true
       name: Seismic Crush
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       persistence: []
-      range: 1
-      guid: 9c23cf89-2c61-45eb-8e8c-e3c2b3a54e31
       resourceNumber: ""
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
       keywords:
         Melee: true
         Weapon: true
         Strike: true
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      numTargets: "2"
+      repeatTargets: false
       meleeRange: 1
-      strain: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
+      description: "**2 Malice:** Each target who has M<4 is bleeding and slowed (save ends)."
+      range: 1
+      numTargets: "2"
+      abilityType: none
       modeList:
       - text: Normal
         condition: ""
-      iconid: d15fe212-5892-433b-869f-4778a5a9604d
+      targetType: target
     - __typeName: ActivatedAbility
-      range: 1
+      targetType: target
+      implementation: 4
       sourceReference:
         __typeName: SourceReference
         page: 244
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      modifiers: []
-      numTargets: "1"
-      repeatTargets: false
-      targetFilter: Target.Size <= Caster.Size
-      categorization: Malice
-      implementation: 4
-      description: The target must be the fury's size or smaller. While the target is grabbed this way, the fury and their allies have a double edge on strikes against them.
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      abilityType: none
-      name: Death Grip
-      persistence: []
-      objectTarget: false
-      strain: []
       guid: d99fc9c6-5417-4edf-8261-c7fd8ba0eb48
-      keywords:
-        Melee: true
-        Weapon: true
-        Strike: true
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      resourceNumber: "4"
-      targetType: target
-      iconid: d15fe212-5892-433b-869f-4778a5a9604d
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      meleeRange: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        attrid: mgt
         tiers:
         - 17 damage; M<3 grabbed
         - 24 damage; M<4 grabbed
         - 30 damage; M<5 grabbed
+        attrid: mgt
+        roll: 2d10 + Might
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: Death Grip
-        filterTarget: Target.Might < 3 and Target.Size <= Caster.Size
         guid: d361d668-fe1c-4de8-a134-02932173ea27
+        rule: Death Grip
         tiersSelected:
         - 1
+        filterTarget: Target.Might < 3 and Target.Size <= Caster.Size
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: Death Grip
-        filterTarget: Target.Might < 4 and Target.Size <= Caster.Size
         guid: a20b71bc-f6cf-48c7-ad69-ebe717886ab2
+        rule: Death Grip
         tiersSelected:
         - 2
+        filterTarget: Target.Might < 4 and Target.Size <= Caster.Size
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: Death Grip
-        filterTarget: Target.Might < 5 and Target.Size <= Caster.Size
         guid: 64dba378-869d-440f-b9d1-62185acaba10
+        rule: Death Grip
         tiersSelected:
         - 3
-    skillRatings: []
-    monster_category: Monster
+        filterTarget: Target.Might < 5 and Target.Size <= Caster.Size
+      categorization: Malice
+      persistence: []
+      strain: []
+      objectTarget: false
+      name: Death Grip
+      iconid: d15fe212-5892-433b-869f-4778a5a9604d
+      numTargets: "1"
+      abilityType: none
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      modifiers: []
+      keywords:
+        Melee: true
+        Weapon: true
+        Strike: true
+      repeatTargets: false
+      meleeRange: 1
+      description: The target must be the fury's size or smaller. While the target is grabbed this way, the fury and their allies have a double edge on strikes against them.
+      range: 1
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      targetFilter: Target.Size <= Caster.Size
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: "4"
     resistances: []
     traitNames: []
-    ongoingEffects: []
+    stamina_history:
+      __typeName: StatHistory
+      entries: []
+    creatureSize: 1M
+    max_hitpoints_roll: "260"
     deathSavingThrowSuccesses: 0
-    resources: []
-    inflictedConditions: []
     attributes:
-      inu:
+      prs:
         __typeName: CharacterAttribute
-        id: inu
-        baseValue: 2
+        id: prs
+        baseValue: 3
       rea:
         __typeName: CharacterAttribute
         id: rea
@@ -242,344 +248,338 @@ info:
         __typeName: CharacterAttribute
         id: mgt
         baseValue: 5
-      prs:
+      inu:
         __typeName: CharacterAttribute
-        id: prs
-        baseValue: 3
-    cr: 10
-    role: Elite Brute
-    monster_type: Rival Fury E4
-    groupid: 5163b6cd-991f-4277-b81c-8e42a53d328e
-    movementSpeeds: []
-    savingThrowRatings: []
-    ev: 48
+        id: inu
+        baseValue: 2
     levelChoices: []
     titles: []
-    deathSavingThrowFailures: 0
+    skillProficiencies: []
+    stability: 3
+    monster_type: Rival Fury E4
+    damage_taken: 0
+    movementSpeeds: []
     keywords:
       Humanoid: true
       Rival: true
-    notes:
-    - text: ""
-      title: Monster Notes
-    import:
-      type: mcdm
-      data: |+
-        Rival Fury	Level 10 Elite Brute
-        Humanoid, Rival	EV 48
-        <b>Stamina</b> 260
-        <b>Speed</b> 5	<b>Size</b> 1M / <b>Stability</b> 3
-        <b>Free Strike</b> 10
-        Might +5	Agility +4	Reason +0	Intuition +2	Presence +3
-
+    ongoingEffects: []
+    role: Elite Brute
     characterFeatures:
     - __typeName: CharacterFeature
+      guid: 41fe934b-a135-49c8-a6cc-9f6a89fabee2
+      description: The fury selects one creature within line of effect at the start of an encounter. Both the fury and the creature can add a 1d3 to all power rolls made against each other.
       modifiers:
       - __typeName: CharacterModifier
-        source: Trait
+        guid: 9ca80970-bde8-4be7-b990-06f7cff474d6
         name: Rivalry
-        sourceguid: 243736e1-ed5e-4635-9b0e-54f5cd15b0e9
-        domains:
-          CharacterFeature:41fe934b-a135-49c8-a6cc-9f6a89fabee2: true
-          CharacterFeature:243736e1-ed5e-4635-9b0e-54f5cd15b0e9: true
+        description: The fury selects one creature within line of effect at the start of an encounter. Both the fury and the creature can add a 1d3 to all power rolls made against each other.
         triggeredAbility:
           __typeName: TriggeredAbility
-          range: 1
-          domains:
-            CharacterFeature:41fe934b-a135-49c8-a6cc-9f6a89fabee2: true
-            CharacterFeature:243736e1-ed5e-4635-9b0e-54f5cd15b0e9: true
-          modifiers: []
-          numTargets: "1"
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-          targetType: self
           abilityFilters: []
-          hasManualVersion: false
-          abilityType: none
-          name: Rivalry
-          persistence: []
-          trigger: rollinitiative
-          strain: []
-          repeatTargets: false
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
           guid: 2ef7d07e-60f2-4ac9-957d-2516afa20913
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: Choose a player Hero as the target for your Rivalry.
-            abilityType: custom
-            invokeOnCaster: false
             applyto: caster
+            promptText: Choose a player Hero as the target for your Rivalry.
+            invokeOnCaster: false
+            autoTarget: false
             customAbility:
               __typeName: ActivatedAbility
-              range: "50"
+              iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+              implementation: 3
               sourceReference:
                 __typeName: SourceReference
                 page: 240
                 docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-              modifiers: []
+              guid: 7bfe403e-6843-4de3-a1e4-80a22bc069a5
               behaviors:
               - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
                 ongoingEffect: e349e64f-4422-4fa9-995b-130c492a473a
                 duration: eoe
                 ongoingEffectCustom: e349e64f-4422-4fa9-995b-130c492a473a
-              repeatTargets: false
-              targetType: target
-              targetAllegiance: enemy
-              implementation: 3
-              description: ""
-              guid: 7bfe403e-6843-4de3-a1e4-80a22bc069a5
-              abilityType: none
-              name: Invoked Ability
-              persistence: []
-              targetTextOverride: Choose a creature as the target for your Rivalry
-              strain: []
-              iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              numTargets: "1"
+              modifiers: []
               objectTarget: false
-            autoTarget: false
+              name: Invoked Ability
+              targetAllegiance: enemy
+              persistence: []
+              display:
+                saturation: 1
+                hueshift: 0
+                brightness: 1
+                bgcolor: "#ffffffff"
+              targetType: target
+              repeatTargets: false
+              description: ""
+              range: "50"
+              strain: []
+              abilityType: none
+              targetTextOverride: Choose a creature as the target for your Rivalry
+              numTargets: "1"
+            abilityType: custom
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             applyto: caster
             duration: eoe
             ongoingEffect: e349e64f-4422-4fa9-995b-130c492a473a
             ongoingEffectCustom: false
-        description: The fury selects one creature within line of effect at the start of an encounter. Both the fury and the creature can add a 1d3 to all power rolls made against each other.
-        guid: 9ca80970-bde8-4be7-b990-06f7cff474d6
+          domains:
+            CharacterFeature:41fe934b-a135-49c8-a6cc-9f6a89fabee2: true
+            CharacterFeature:243736e1-ed5e-4635-9b0e-54f5cd15b0e9: true
+          modifiers: []
+          name: Rivalry
+          persistence: []
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          hasManualVersion: false
+          strain: []
+          repeatTargets: false
+          description: ""
+          range: 1
+          abilityType: none
+          targetType: self
+          numTargets: "1"
+          trigger: rollinitiative
+        sourceguid: 243736e1-ed5e-4635-9b0e-54f5cd15b0e9
+        domains:
+          CharacterFeature:41fe934b-a135-49c8-a6cc-9f6a89fabee2: true
+          CharacterFeature:243736e1-ed5e-4635-9b0e-54f5cd15b0e9: true
         behavior: trigger
-      source: Trait
+        source: Trait
+      implementation: 3
+      name: Rivalry
       domains:
         CharacterFeature:41fe934b-a135-49c8-a6cc-9f6a89fabee2: true
         CharacterFeature:243736e1-ed5e-4635-9b0e-54f5cd15b0e9: true
-      implementation: 3
-      description: The fury selects one creature within line of effect at the start of an encounter. Both the fury and the creature can add a 1d3 to all power rolls made against each other.
-      guid: 41fe934b-a135-49c8-a6cc-9f6a89fabee2
-      name: Rivalry
+      source: Trait
     - __typeName: CharacterFeature
+      guid: 96d78e6c-448f-4d67-bfb1-424dc6f2aab3
+      description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
       modifiers:
       - __typeName: CharacterModifier
         name: Devastate
-        sourceguid: 96d78e6c-448f-4d67-bfb1-424dc6f2aab3
-        domains:
-          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
-          CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
-          CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
-          CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
-        resourceRefreshType: turn
-        source: Trait
         triggeredAbility:
           __typeName: TriggeredAbility
-          range: "6"
+          iconid: ui-icons/skills/1.png
+          guid: 2346eddc-ccf9-455d-ac5c-549a76f4ae10
+          whenActive: combat
           domains:
-            CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-            CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
             CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
             CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
             CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
+            CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+            CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
+          abilityType: none
+          name: Overwhelm
+          subject: self
+          numTargets: "1"
+          strain: []
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
           subjectRange: "1"
+          conditionFormula: Cast.Forced Movement Creature Count >= 1 and not Used Ability.Free Strike and not self.ongoing effects has "Invisible Marker"
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: f8a4c2e1-5b7d-4a93-8e6f-3d9c1b2a7f5e
-            ongoingEffectCustom: false
             applyto: caster
-            ongoingEffectSource: specific
+            ongoingEffectCustom: false
+            ongoingEffect: f8a4c2e1-5b7d-4a93-8e6f-3d9c1b2a7f5e
             duration: 0
+            ongoingEffectSource: specific
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
-            standardAbilityParams:
-              targetid: ""
+            applyto: caster
             standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
             targeting: prompt_inherit
             promptText: When the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
+            standardAbilityParams:
+              targetid: ""
             invokeOnCaster: true
-            applyto: caster
+            autoTarget: false
             customAbility:
               __typeName: ActivatedAbility
-              range: 1
               name: Invoked Ability
-              modifiers: []
-              behaviors: []
-              repeatTargets: false
-              targetType: self
-              numTargets: "1"
               iconid: ui-icons/skills/1.png
+              numTargets: "1"
               display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
                 saturation: 1
+                hueshift: 0
+                brightness: 1
+                bgcolor: "#ffffffff"
+              modifiers: []
+              repeatTargets: false
+              behaviors: []
+              range: 1
+              targetType: self
               description: ""
               guid: 6d7554d6-399a-40b9-b6d0-49cac6851ab0
               abilityType: none
-            autoTarget: false
+            abilityType: standard
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
-            ongoingEffectCustom: false
             applyto: caster
+            ongoingEffectCustom: false
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
             duration: 0
             ongoingEffectSource: specific
           repeatTargets: false
-          targetType: casttargets
-          conditionFormula: Cast.Forced Movement Creature Count >= 1 and not Used Ability.Free Strike and not self.ongoing effects has "Invisible Marker"
           description: ""
-          guid: 2346eddc-ccf9-455d-ac5c-549a76f4ae10
-          abilityType: none
-          name: Overwhelm
-          usageLimitOptions:
-            resourceid: e92eeb3b-8d68-4ead-a59f-1139fc678052
-            resourceRefreshType: turn
-            charges: "1"
-          trigger: finishability
-          strain: []
-          whenActive: combat
+          range: "6"
           modifiers: []
-          subject: self
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          iconid: ui-icons/skills/1.png
-          numTargets: "1"
-        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
-        guid: e92eeb3b-8d68-4ead-a59f-1139fc678052
+          usageLimitOptions:
+            resourceRefreshType: turn
+            resourceid: e92eeb3b-8d68-4ead-a59f-1139fc678052
+            charges: "1"
+          targetType: casttargets
+          trigger: finishability
+        sourceguid: 96d78e6c-448f-4d67-bfb1-424dc6f2aab3
+        resourceRefreshType: turn
         behavior: trigger
+        guid: e92eeb3b-8d68-4ead-a59f-1139fc678052
+        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
+        domains:
+          CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
+          CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
+          CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
+          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
+        source: Trait
       - __typeName: CharacterModifier
         name: Devastate
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: self
+          abilityFilters: []
+          guid: f8d835a8-7930-4afe-8d7a-177e97405194
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            guid: 37ed1f0f-c6be-4ff1-9623-281ef6d5b43e
+            ongoingEffectCustom: false
+            ongoingEffect: f8a4c2e1-5b7d-4a93-8e6f-3d9c1b2a7f5e
+            duration: 0
+            ongoingEffectSource: specific
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
+            promptText: When the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
+            autoTarget: false
+            customAbility:
+              __typeName: ActivatedAbility
+              name: Invoked Ability
+              iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              display:
+                saturation: 1
+                hueshift: 0
+                brightness: 1
+                bgcolor: "#ffffffff"
+              modifiers: []
+              repeatTargets: false
+              behaviors: []
+              range: 1
+              targetType: self
+              description: ""
+              guid: f5d730fd-96cb-4677-9e49-744e6e4aa468
+              abilityType: none
+            filterTarget: ""
+            abilityType: standard
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            guid: e29d9061-1b6c-4203-8627-692881b93538
+            ongoingEffectCustom: false
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
+            duration: 0
+            ongoingEffectSource: specific
+          domains:
+            CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
+            CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
+            CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
+            CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+            CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
+          modifiers: []
+          name: Overwhelm
+          hasManualVersion: false
+          persistence: []
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          iconid: ui-icons/skills/1.png
+          conditionFormula: Path.Shift and not Path.Forced and Self.Count Nearby Enemies(1) >= 1
+          strain: []
+          repeatTargets: false
+          description: ""
+          range: 1
+          abilityType: none
+          usageLimitOptions:
+            resourceRefreshType: turn
+            resourceid: 9af5ec73-39ec-42bb-86e8-f52b33535095
+            charges: "1"
+          numTargets: "1"
+          trigger: finishmove
         sourceguid: dbd5f64b-b44f-4071-8447-46a0ed319aeb
+        resourceRefreshType: turn
+        behavior: trigger
+        guid: 9af5ec73-39ec-42bb-86e8-f52b33535095
+        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
         usageLimitOptions:
           __typeName: UsageLimitOptions
           refreshPeriod: turn
           maxCharges: 1
         domains:
-          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
           CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
           CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
           CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
-        resourceRefreshType: turn
+          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
         source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          range: 1
-          domains:
-            CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-            CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
-            CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
-            CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
-            CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
-          modifiers: []
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: f8a4c2e1-5b7d-4a93-8e6f-3d9c1b2a7f5e
-            ongoingEffectCustom: false
-            applyto: caster
-            ongoingEffectSource: specific
-            guid: 37ed1f0f-c6be-4ff1-9623-281ef6d5b43e
-            duration: 0
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: When the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
-            abilityType: standard
-            filterTarget: ""
-            standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
-            customAbility:
-              __typeName: ActivatedAbility
-              range: 1
-              name: Invoked Ability
-              modifiers: []
-              behaviors: []
-              repeatTargets: false
-              targetType: self
-              numTargets: "1"
-              iconid: ui-icons/skills/1.png
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              description: ""
-              guid: f5d730fd-96cb-4677-9e49-744e6e4aa468
-              abilityType: none
-            autoTarget: false
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
-            ongoingEffectCustom: false
-            applyto: caster
-            ongoingEffectSource: specific
-            guid: e29d9061-1b6c-4203-8627-692881b93538
-            duration: 0
-          iconid: ui-icons/skills/1.png
-          targetType: self
-          conditionFormula: Path.Shift and not Path.Forced and Self.Count Nearby Enemies(1) >= 1
-          description: ""
-          guid: f8d835a8-7930-4afe-8d7a-177e97405194
-          abilityType: none
-          name: Overwhelm
-          persistence: []
-          usageLimitOptions:
-            resourceid: 9af5ec73-39ec-42bb-86e8-f52b33535095
-            resourceRefreshType: turn
-            charges: "1"
-          trigger: finishmove
-          strain: []
-          repeatTargets: false
-          hasManualVersion: false
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          numTargets: "1"
-          abilityFilters: []
-        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
-        guid: 9af5ec73-39ec-42bb-86e8-f52b33535095
-        behavior: trigger
       - __typeName: CharacterModifier
-        source: Trait
-        name: Devastate
         ability:
           __typeName: TriggeredAbilityDisplay
           keywords: []
-          distance: Ranged 1
-          effect: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
           name: Devastate
           type: passive
+          distance: Ranged 1
           guid: f120eb03-4bcf-43d9-9662-d5dac5a61c75
+          effect: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
           trigger: When the Fury force moves a creature, or shifts adjacent to a creature or object.
+        guid: ec192a9a-98e4-4734-93ec-809c9b5ea4e0
+        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
         domains:
-          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
           CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
           CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
           CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
+          CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+          CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
         sourceguid: 96d78e6c-448f-4d67-bfb1-424dc6f2aab3
-        description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
-        guid: ec192a9a-98e4-4734-93ec-809c9b5ea4e0
+        name: Devastate
         behavior: triggerdisplay
-      source: Trait
+        source: Trait
+      implementation: 4
+      name: Devastate
       domains:
-        CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
-        CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
         CharacterFeature:dbd5f64b-b44f-4071-8447-46a0ed319aeb: true
         CharacterFeature:b6114682-4443-449c-8408-373e56114645: true
         CharacterFeature:c371c7ea-4fbc-4907-a305-6f02c88d8c97: true
-      implementation: 4
-      description: Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability against that creature or object that has a double edge.
-      guid: 96d78e6c-448f-4d67-bfb1-424dc6f2aab3
-      name: Devastate
+        CharacterFeature:96d78e6c-448f-4d67-bfb1-424dc6f2aab3: true
+        CharacterFeature:bf231a9a-7999-4cf5-9d73-fdd9ab58af2b: true
+      source: Trait
+    equipment: []
+    savingThrowRatings: []
+    innateAttacks: []
+    ev: 48
+    inflictedConditions: []
+    deathSavingThrowFailures: 0
+    cr: 10
+    walkingSpeed: 5
+    max_hitpoints: 260
     minion: false
-    stamina_history:
-      __typeName: StatHistory
-      entries: []
     opportunityAttack: 10
+    creatureTemplates:
+    - 3702e79c-fe95-4f22-8e46-fc449120ffe4
   tokenType: null
   bestiaryId: 9e2896e3-41b6-46ac-a960-1efb21dd27a4
   summonerid: null
@@ -592,6 +592,6 @@ parentFolder: 2b68351f-81e3-46de-8ef3-ddd1b6564327
 artist: null
 ord: 0
 ctime: 0
-mtime: 1785142218459
+mtime: 1785178879530
 hidden: false
 id: 9e2896e3-41b6-46ac-a960-1efb21dd27a4
