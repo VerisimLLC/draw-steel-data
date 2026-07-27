@@ -1,86 +1,267 @@
 __typeName: MonsterGroup
-id: 67902c1a-5307-415e-8495-52212b0c0def
-mtime: 1762960888057
+name: Troll
 traits: []
-ctime: 1758524949404
+attacks: []
+id: 67902c1a-5307-415e-8495-52212b0c0def
 maliceAbilities:
 - __typeName: MaliceAbility
-  strain: []
-  targetType: line
-  behaviors:
-  - __typeName: ActivatedAbilityPowerRollBehavior
-    isTest: true
-    roll: 2d10 + Might
-    attrid: mgt
-    resistanceRoll: false
-    tiers:
-    - 12 acid damage; dazed (EoT)
-    - 10 acid damage; weakened (EoT)
-    - 6 acid damage
-  radius: "1"
-  persistence: []
-  resourceNumber: "3"
-  display:
-    bgcolor: "#ffffffff"
-    hueshift: 0
-    brightness: 1
-    saturation: 1
-  abilityType: none
-  numTargets: "1"
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
-  guid: f32ad9cb-0a4c-470a-83f7-5a7542975e68
   description: |
     One troll acting this turn spews out a half-digested meal in a 5 x 1 line within 1 square of them. Each troll in the area regains 3 Stamina. Each enemy in the area makes a Might test.
     - Tier 1 (<=11): 12 acid damage; dazed (EoT)
     - Tier 2 (12-16): 10 acid damage; weakened (EoT)
     - Tier 3 (17+): 6 acid damage
-  repeatTargets: false
+  persistence: []
   range: "5"
-  name: Foul Spew
-- __typeName: MaliceAbility
+  numTargets: "1"
+  abilityType: none
+  implementation: 3
+  strain: []
+  modifiers: []
+  keywords:
+    Area: true
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 254
+  guid: f32ad9cb-0a4c-470a-83f7-5a7542975e68
+  repeatTargets: false
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
     brightness: 1
     saturation: 1
-  abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
+  resourceNumber: "3"
+  name: Foul Spew
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "5"
-  iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
-  guid: 7b94cc27-57ed-49f3-82db-9820f718a298
-  behaviors: []
-  repeatTargets: false
+  radius: "1"
+  targetType: line
+  behaviors:
+  - __typeName: ActivatedAbilityHealBehavior
+    filterTarget: Keywords has "Troll"
+    roll: "3"
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    attrid: mgt
+    filterTarget: Enemy
+    tiers:
+    - 12 acid damage; dazed (EoT)
+    - 10 acid damage; weakened (EoT)
+    - 6 acid damage
+    resistanceRoll: true
+    resistanceAttr: mgt
+    isTest: true
+    roll: 2d10 + Might
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  hasCustomIcon: true
+- __typeName: MaliceAbility
   description: Each troll in the encounter can make a free strike against a creature adjacent to them, and regains Stamina equal to the damage dealt.
   persistence: []
   range: 1
-  name: Emergency Meal
-- __typeName: MaliceAbility
+  numTargets: "1"
+  targetType: map
+  targetFilter: (not enemy) and Target.Keywords has "Troll"
+  implementation: 3
+  strain: []
+  modifiers: []
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 261
+  guid: 7b94cc27-57ed-49f3-82db-9820f718a298
+  repeatTargets: false
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
     brightness: 1
     saturation: 1
+  resourceNumber: "5"
+  name: Emergency Meal
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    targeting: inherit
+    promptText: ""
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      strain: []
+      targetType: self
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityRememberBehavior
+        memoryName: emergencymealdamage
+        calculation: Cast.Damage Dealt
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptText: Make a free strike against a creature adjacent to you. You regain Stamina equal to the damage dealt.
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: ffb6f9a0-da6c-424b-85b2-50179432817c
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+      - __typeName: ActivatedAbilityHealBehavior
+        applyto: caster
+        filterTarget: Cast.Damage Dealt > Cast.Memory("emergencymealdamage")
+        roll: Cast.Damage Dealt - Cast.Memory("emergencymealdamage")
+      categorization: Hidden
+      iconid: ui-icons/skills/1.png
+      guid: 22d54a38-276c-46f8-9586-7e86c392fbdd
+      repeatTargets: false
+      description: ""
+      persistence: []
+      range: 1
+      name: Emergency Meal
   abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
+  iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "7"
-  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
-  guid: 8fd52f71-a992-4585-9eb3-92a391cb12a4
-  behaviors: []
-  repeatTargets: false
+- __typeName: MaliceAbility
   description: Each winded troll in the encounter disgorges the contents of their stomach onto the ground around them, creating a 1 burst of foul vomitus that lasts until the end of the encounter. Each non-troll who enters this area for the first time in a round or starts their turn there takes 5 acid damage. Each troll in the area has a double edge on power rolls.
   persistence: []
   range: 1
+  numTargets: "1"
+  targetType: map
+  targetFilter: (not enemy) and Target.Keywords has "Troll" and Target.Winded
+  implementation: 3
+  strain: []
+  modifiers: []
+  sourceReference:
+    __typeName: SourceReference
+    docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    page: 254
+  guid: 8fd52f71-a992-4585-9eb3-92a391cb12a4
+  repeatTargets: false
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    brightness: 1
+    saturation: 1
+  resourceNumber: "7"
   name: Bloody Banquet
-attacks: []
-name: Troll
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    promptText: ""
+    customAbility:
+      __typeName: ActivatedAbility
+      castImmediately: true
+      objectTarget: true
+      strain: []
+      targetType: all
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: eoe
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          implementation: 3
+          name: Foul Vomitus
+          guid: 258728c7-90d9-4821-a2ff-1fb373b9f2d2
+          source: Bloody Banquet
+          description: Each non-troll who enters this area for the first time in a round or starts their turn there takes 5 acid damage.
+          objectid: 64ba3b69-3e4c-4273-9148-902b006051ae
+          applyto: all
+          creatureFilter: Keywords has not "Troll"
+          modifiers: []
+          triggers:
+          - trigger: onenter
+            ability:
+              __typeName: TriggeredAbility
+              castImmediately: true
+              strain: []
+              targetType: self
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                roll: "5"
+                damageType: acid
+              radius: 0
+              silent: true
+              persistence: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              abilityType: none
+              numTargets: "1"
+              modifiers: []
+              iconid: ui-icons/skills/1.png
+              guid: ef498572-7670-455e-b6cc-a0ad2ea16c84
+              description: ""
+              trigger: onenter
+              repeatTargets: false
+              range: 1
+              name: Foul Vomitus Acid Damage
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: eoe
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          implementation: 3
+          name: Bloody Banquet
+          guid: 609359be-c027-4c9c-a9bd-465c6e4f7594
+          source: Bloody Banquet
+          description: Each troll in the area has a double edge on power rolls.
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          applyto: all
+          creatureFilter: Keywords has "Troll"
+          modifiers:
+          - __typeName: CharacterModifier
+            sourceguid: 609359be-c027-4c9c-a9bd-465c6e4f7594
+            name: Bloody Banquet
+            behavior: power
+            modtype: double_edge
+            rollType: all
+            guid: c37f357f-f7a5-49ad-b5d9-48c13c2789c8
+            description: Each troll in the area has a double edge on power rolls.
+            domains: []
+            keywords: []
+            activationCondition: true
+            source: Aura
+          triggers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      categorization: Hidden
+      iconid: ui-icons/skills/1.png
+      guid: 4a83423a-114d-4a4a-9c43-346d73cad618
+      repeatTargets: false
+      description: ""
+      range: 1
+      name: Bloody Banquet Vomitus
+  abilityType: none
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
 _table: MonsterGroup
