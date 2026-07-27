@@ -55,13 +55,181 @@ info:
     __typeName: monster
     characterFeatures:
     - __typeName: CharacterFeature
+      implementation: 3
       guid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
       domains:
         CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
-      description: The wraith can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 5 corruption damage and has a bane on their next attack. The wraith doesn't take damage from being force moved into objects.
-      modifiers: []
+      description: The wraith can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the wraith moves through a creature, that creature takes 5 corruption damage and takes a bane on their next strike. The wraith doesn't take damage from being force moved into objects.
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+        value: 1
+        guid: cc9f71f3-48e0-47ca-b1d2-1f97e8e8a61a
+        sourceguid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
+        domains:
+          CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+        description: The wraith can move through creatures and objects at their usual speed.
+        source: Trait
+        name: Agonizing Phasing
+        behavior: attribute
+      - __typeName: CharacterModifier
+        attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
+        value: 1
+        guid: c9ed4e6e-8dd5-409f-b22e-ba81467692a4
+        sourceguid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
+        domains:
+          CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+        description: The wraith can move through creatures and objects at their usual speed.
+        source: Trait
+        name: Agonizing Phasing
+        behavior: attribute
+      - __typeName: CharacterModifier
+        attribute: 9148519f-9fb4-4b2b-9d3e-98f88c56bab8
+        value: 1
+        guid: b39399a7-6297-4805-9b7c-69d811a6e1a4
+        sourceguid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
+        domains:
+          CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+        description: The wraith doesn't take damage from being force moved into objects.
+        source: Trait
+        name: Agonizing Phasing
+        behavior: attribute
+      - __typeName: CharacterModifier
+        color: green
+        guid: eecbdfdb-a98c-4544-b5f7-12c31c1856da
+        sourceguid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
+        domains:
+          CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+        description: The wraith can move through creatures and objects at their usual speed.
+        source: Trait
+        name: Agonizing Phasing
+        behavior: movementtext
+        text: This creature can move through walls and objects.
+      - __typeName: CharacterModifier
+        resourceRefreshType: round
+        guid: 0b193e96-f076-4819-b99c-1735f199d302
+        sourceguid: 2b18d5a9-f09f-46fe-8617-db9b61d6c94c
+        behavior: trigger
+        domains:
+          CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+        description: The first time in a round that the wraith moves through a creature, that creature takes 5 corruption damage and takes a bane on their next strike.
+        source: Trait
+        name: Agonizing Phasing
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          objectTarget: false
+          strain: []
+          targetType: target
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: corruption
+            titleText: Agonizing Phasing
+            roll: "5"
+            chatMessage: Agonizing Phasing
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 08c87dfe-4f31-4ccb-8ba4-4d7024da9619
+            ongoingEffectCustom: false
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          description: ""
+          iconid: ui-icons/skills/1.png
+          guid: 312cae63-3621-4734-b54b-8797b2462bf1
+          usageLimitOptions:
+            resourceid: 0b193e96-f076-4819-b99c-1735f199d302
+            charges: "1"
+            resourceRefreshType: round
+          domains:
+            CharacterFeature:2b18d5a9-f09f-46fe-8617-db9b61d6c94c: true
+          trigger: movethrough
+          repeatTargets: false
+          range: 1
+          name: Agonizing Phasing
       source: Trait
       name: Agonizing Phasing
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: d6426535-9705-437c-a278-5b2eab75c269
+      domains:
+        CharacterFeature:d6426535-9705-437c-a278-5b2eab75c269: true
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Stolen Vitality
+        guid: 006971be-ea24-4b77-a040-b48699faf4dd
+        sourceguid: d6426535-9705-437c-a278-5b2eab75c269
+        domains:
+          CharacterFeature:d6426535-9705-437c-a278-5b2eab75c269: true
+        description: ""
+        source: Trait
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Ranged 5
+          guid: 7a18b117-c517-4ccf-a108-b1757ee768d7
+          cost: 1 Malice
+          effect: The target regains only half the Stamina, and the wraith regains the remaining Stamina.
+          keywords: []
+          trigger: An enemy within distance regains Stamina.
+          type: free
+          target: The triggering creature
+          name: Stolen Vitality
+        behavior: triggerdisplay
+      - __typeName: CharacterModifier
+        name: Stolen Vitality
+        guid: 0de54e64-3416-4573-ac3a-831085fff542
+        sourceguid: d6426535-9705-437c-a278-5b2eab75c269
+        domains:
+          CharacterFeature:d6426535-9705-437c-a278-5b2eab75c269: true
+        description: ""
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          castImmediately: true
+          triggerPrompt: An enemy within distance regains Stamina. They regain only half, and the wraith steals the remainder.
+          strain: []
+          subject: enemy
+          subjectRange: "5"
+          targetType: subject
+          conditionFormula: (Malice > 0) and (Healed >= 2)
+          behaviors:
+          - __typeName: ActivatedAbilityLeechDamageBehavior
+            damageType: untyped
+            roll: Healed / 2
+          - __typeName: ActivatedAbilityReplenishBehavior
+            mode: expend
+            resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+            chatMessage: Stolen Vitality
+          persistence: []
+          resourceNumber: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          keywords:
+            Magic: true
+            Ranged: true
+          numTargets: "1"
+          modifiers: []
+          resourceCost: none
+          iconid: ui-icons/skills/1.png
+          guid: 82b6a414-88fd-4902-b6c5-ab5557a28f56
+          description: The target regains only half the Stamina, and the wraith regains the remaining Stamina.
+          trigger: regainhitpoints
+          repeatTargets: false
+          range: 5
+          name: Stolen Vitality (1 Malice)
+        behavior: trigger
+      source: Trait
+      name: Stolen Vitality
     inflictedConditions: []
     walkingSpeed: 8
     opportunityAttack: 2
@@ -142,7 +310,8 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 2
+      objectTarget: true
       targetType: target
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
@@ -152,7 +321,6 @@ info:
         - 7 cold damage; P<2 slowed (save ends)
         - 9 cold damage; P<3 slowed (save ends)
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -166,7 +334,7 @@ info:
         Magic: true
         Melee: true
         Weapon: true
-      description: Living creatures killed by this ability return as a ghoul craver the next round, under the Director's control.
+      description: Any living creature who dies from this damage rises at the start of the next round as a ghoul craver under the Director's control.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -175,11 +343,47 @@ info:
       range: 1
       name: Chilling Gravetouch
     - __typeName: ActivatedAbility
-      implementation: 0
+      implementation: 3
+      castImmediately: true
+      strain: []
       targetType: self
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+        standardAbilityParams:
+          distance: "<<movement speed>>"
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 4088ad76-752c-482f-abf4-864a2a1ead4b
+          repeatTargets: false
+          description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
+        invokeOnCaster: true
+      - __typeName: ActivatedAbilityDelayBehavior
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+        mode: effect
       categorization: Signature Ability
-      effectImplemented: false
+      persistence: []
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -189,7 +393,7 @@ info:
       guid: 0c7c9145-85ec-4376-a2f8-ea48818643c0
       flavor: ""
       keywords: []
-      description: The specter turns invisible, moves up to their speed, and becomes visible again.
+      description: The wraith turns invisible, moves up to their speed, and is visible again.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -197,34 +401,6 @@ info:
         saturation: 1
       range: 1
       name: Hidden Movement
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      resourceNumber: 1
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
-      keywords:
-        Magic: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: 6f6a632e-dfd6-4f5f-979d-45333fd334a9
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      flavor: ""
-      description: The target only regains half the Stamina they would normally. The wraith regains the remaining Stamina.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 5
-      name: Stolen Vitality
     creatureSize: 1M
     traitNames: []
     max_hitpoints_roll: "25"
