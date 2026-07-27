@@ -1,0 +1,76 @@
+__typeName: CharacterOngoingEffect
+name: Food Frenzy
+association: []
+source: Ongoing Effect
+iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+buffType: buff
+implementation: 3
+id: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+description: The glutton has a double edge on strikes, and strikes made against them gain an edge, until the start of their next turn.
+modifiers:
+- __typeName: CharacterModifier
+  name: Food Frenzy
+  activationCondition: true
+  source: Ongoing Effect
+  rollType: ability_power_roll
+  behavior: power
+  sourceguid: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+  description: This creature has a double edge on strikes.
+  modtype: double_edge
+  keywords:
+    Strike: true
+  guid: e09dc14c-e883-4234-ac0e-37ecbde4d166
+- __typeName: CharacterModifier
+  name: "{#Food Frenzy}"
+  activationCondition: true
+  source: Ongoing Effect
+  rollType: enemy_ability_power_roll
+  behavior: power
+  sourceguid: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+  description: Strikes made against this creature gain an edge.
+  modtype: edge
+  keywords:
+    Attack: true
+  guid: 0329544b-c99c-4250-ba52-17648f448eab
+- __typeName: CharacterModifier
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Food Frenzy Ends
+    range: 1
+    repeatTargets: false
+    numTargets: "1"
+    abilityType: none
+    guid: eeaf30dc-8f40-4e86-80ce-dc16c628ef68
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    strain: []
+    iconid: ui-icons/skills/1.png
+    targetType: self
+    modifiers: []
+    description: ""
+    mandatory: true
+    trigger: beginturn
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      ongoingEffect: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+      chatMessage: Start of Turn; end of Food Frenzy
+      conditions: []
+      mode: effect
+      applyto: caster
+  name: Food Frenzy
+  sourceguid: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+  description: The effect ends at the start of this creature's next turn.
+  source: Ongoing Effect
+  behavior: trigger
+  guid: f4952de8-a2c4-4245-bbad-b0d572ecb196
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+hiddenFromEnemies: true
+guid: 6b5f51bb-8937-415e-b57f-6d717d6f73a1
+_table: characterOngoingEffects
