@@ -50,68 +50,93 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: fbd10a93-61bc-428a-98f2-7cdcef932784
+  updateid: a865b76d-298e-410d-9187-d7c6cd98fd01
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 8d3d9988-a061-4c3b-a69e-dd050e64e157
-      domains:
-        CharacterFeature:8d3d9988-a061-4c3b-a69e-dd050e64e157: true
-      description: The mournling's shape can't change via any external effects.
-      modifiers: []
-      source: Trait
-      name: Immutable Form
-    - __typeName: CharacterFeature
-      guid: ae1b6aec-e1f9-4b01-9352-f9507c16a951
-      domains:
-        CharacterFeature:ae1b6aec-e1f9-4b01-9352-f9507c16a951: true
-      description: The first time in an encounter that the mournling is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
-      modifiers: []
-      source: Trait
-      name: Arise
-    inflictedConditions: []
-    walkingSpeed: 6
-    opportunityAttack: 2
-    cr: 4
-    damage_taken: 0
-    max_hitpoints: 35
+    notes:
+    - text: ""
+      title: Monster Notes
     keywords:
       Undead: true
     skillRatings: []
-    role: Horde Defender
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:8d3d9988-a061-4c3b-a69e-dd050e64e157: true
+      description: The mournling's shape can't change via any external effects.
+      name: Immutable Form
+      source: Trait
+      modifiers: []
+      implementation: 2
+      guid: 8d3d9988-a061-4c3b-a69e-dd050e64e157
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:ae1b6aec-e1f9-4b01-9352-f9507c16a951: true
+      description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 10 Stamina and fall prone.
+      name: Arise
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: fe34ed70-ee1d-4bc6-9db4-98545e59972c
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: dc685180-1598-47c0-aa63-38ee825b8921
+          iconid: ui-icons/skills/1.png
+          targetType: self
+          trigger: zerohitpoints
+          usageLimitOptions:
+            resourceid: fe34ed70-ee1d-4bc6-9db4-98545e59972c
+            resourceRefreshType: encounter
+            charges: "1"
+          numTargets: "1"
+          repeatTargets: false
+          display:
+            saturation: 1
+            brightness: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            roll: (-Stamina) + 10
+            applyto: caster
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            applyto: caster
+            color: "#ffffffff"
+            text: Arise!
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: prone
+          - __typeName: ActivatedAbilityRaiseCorpseBehavior
+            applyto: caster
+            restoreStamina: false
+          name: Arise
+          range: 1
+          description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 10 Stamina and fall prone.
+          persistence: []
+          abilityType: none
+          strain: []
+          modifiers: []
+          conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
+          domains:
+            CharacterFeature:ae1b6aec-e1f9-4b01-9352-f9507c16a951: true
+        description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 10 Stamina and fall prone.
+        sourceguid: ae1b6aec-e1f9-4b01-9352-f9507c16a951
+        behavior: trigger
+        source: Trait
+        name: Arise
+        domains:
+          CharacterFeature:ae1b6aec-e1f9-4b01-9352-f9507c16a951: true
+        resourceRefreshType: encounter
+      implementation: 4
+      guid: ae1b6aec-e1f9-4b01-9352-f9507c16a951
     ev: 6
-    movementSpeeds: []
-    monster_type: Flesh Mournling
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: corruption
-      dr: 4
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: poison
-      dr: 4
-    attributes:
-      inu:
-        id: inu
-        baseValue: 2
-      agl:
-        id: agl
-        baseValue: 1
-      prs:
-        id: prs
-        baseValue: -1
-      mgt:
-        id: mgt
-        baseValue: 3
-      rea:
-        id: rea
-        baseValue: 0
+    cr: 4
+    role: Horde Defender
+    equipment: []
+    traitNames: []
+    titles: []
+    max_hitpoints: 35
     import:
-      type: mcdm
       data: |+
         Flesh Mournling	Level 4 Horde Defender
         Undead	EV 6
@@ -142,80 +167,138 @@ info:
         <b>Arise</b>
         The first time in an encounter that the mournling is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
 
-    minion: false
+      type: mcdm
+    movementSpeeds: []
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 4
+      apply: Damage Reduction
+      damageType: corruption
+    - __typeName: ResistanceEntry
+      dr: 4
+      apply: Damage Reduction
+      damageType: poison
     innateAttacks: []
-    equipment: []
+    monster_type: Flesh Mournling
+    attributes:
+      rea:
+        id: rea
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: -1
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 3
+    levelChoices: []
+    opportunityAttack: 2
+    minion: false
+    walkingSpeed: 6
+    damage_taken: 0
+    monster_category: Monster
+    stability: 2
     savingThrowRatings: []
+    max_hitpoints_roll: "35"
+    inflictedConditions: []
+    creatureSize: "2"
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      guid: 9111d72e-0371-4dfd-918b-e451aec6c7d0
+      iconid: ui-icons/skills/1.png
       targetType: target
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 266
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      name: Multiarm Strike
+      numTargets: 2 when mode = 2 else 1
+      flavor: ""
+      resourceNumber: 1 when mode = 2 else 0
+      repeatTargets: false
+      multipleModes: true
+      objectTarget: true
+      implementation: 4
+      description: The target can't shift until the end of their next turn.
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 5 damage
         - 7 damage
         - 9 damage
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 7d43f8e4-05e9-4795-bd63-ffe5e2fd5015
+        duration: end_of_next_turn
+      range: 2
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 9111d72e-0371-4dfd-918b-e451aec6c7d0
-      flavor: ""
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      description: The target can't shift away from the mournling until the end of their turn.
+      strain: []
+      modeList:
+      - text: 1 Target
+      - rules: Spend 1 Malice; the mournling targets one additional creature or object.
+        text: 1 Malice
+      abilityType: none
+      categorization: Signature Ability
+      modifiers: []
+      effectImplemented: false
       display:
         bgcolor: "#ffffffff"
-        hueshift: 0
         brightness: 1
         saturation: 1
-      range: 2
-      name: Multiarm Strike
+        hueshift: 0
     - __typeName: ActivatedAbility
+      guid: 2f92d873-14e0-4023-9c29-3a5596e4a465
+      iconid: ui-icons/skills/1.png
+      targetType: all
+      keywords:
+        Magic: true
+        Area: true
+      targetAllegiance: enemy
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 266
+      name: Horrid Wail
+      numTargets: 1
+      flavor: ""
+      repeatTargets: false
+      targetTextOverride: Each enemy in the area
+      objectTarget: false
+      strain: []
       implementation: 3
-      targetType: self
+      range: 5
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      description: If a target is still frightened by this ability at the end of the encounter, they cannot take a respite activity during their next respite.
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 2 psychic damage
         - 3 psychic damage; I<2 frightened (save ends)
         - 4 psychic damage; I<3 frightened (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
+        roll: 2d10 + Might
       abilityType: none
-      numTargets: 1
+      categorization: Ability
       modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 2f92d873-14e0-4023-9c29-3a5596e4a465
-      flavor: ""
-      keywords:
-        Area: true
-        Magic: true
-      description: If a target is still frightened by this ability at the end of the encounter, they cannot take a respite activity during their next respite.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Horrid Wail
-    creatureSize: "2"
-    traitNames: []
-    max_hitpoints_roll: "35"
-    levelChoices: []
-    monster_category: Monster
-    stability: 2
+      effectImplemented: false
+      targetFilter: Enemy
   tokenType: null
   bestiaryId: 543293bb-470f-4587-8ae4-9f6cb4ae14fe
   summonerid: null

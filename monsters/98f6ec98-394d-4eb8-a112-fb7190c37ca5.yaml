@@ -1,0 +1,395 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: f30a779f-6fb7-4f03-bf77-b10c3e633a8d
+    offtokenPortraitId: null
+    portraitFrameId: 9f13cbbb-ffc7-4325-ba9b-daf5d0b1d9e3
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 0.7876113
+    portraitOffset:
+      x: 0.06633657
+      y: 0.1991153
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: e3ed71da-2c4e-4970-9e2d-15aad94159f2
+  properties:
+    __typeName: monster
+    keywords:
+      Giant: true
+      Troll: true
+    stability: 2
+    attributes:
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 4
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 1
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: 0
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 2
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 1
+    equipment: []
+    ev: 11
+    minion: true
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: The ravager dies only if their squad's Stamina pool is reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina in their squad's Stamina pool, or if they take acid or fire damage while their squad's Stamina pool is at 0 Stamina.
+      implementation: 4
+      guid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+      domains:
+        CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+      name: Group Appetite
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+            bgcolor: "#ffffffff"
+          description: The squad's Stamina pool was reduced to 0 by acid or fire damage, killing every ravager in the squad.
+          modifiers: []
+          persistence: []
+          subject: self
+          abilityType: none
+          mandatory: true
+          strain: []
+          guid: abde5cc8-f9a9-4d11-8963-9e6c7066eaad
+          range: 1
+          name: Group Appetite
+          trigger: losehitpoints
+          whenActive: combat
+          conditionFormula: Stamina <= 0 and (Stamina + Damage) > 0 and (Damage Type is acid or Damage Type is fire)
+          domains:
+            CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+          behaviors:
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            dropsLoot: false
+            leavesCorpse: true
+            applyto: caster_including_squad
+          targetType: self
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: e013e8a2-fcac-4331-bccf-ba9c799fdff5
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        behavior: trigger
+        name: Group Appetite
+        source: Trait
+        description: The squad dies if its Stamina pool is reduced to 0 by acid or fire damage.
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+            bgcolor: "#ffffffff"
+          description: The ravager took acid or fire damage while their squad's Stamina pool was at 0.
+          modifiers: []
+          persistence: []
+          subject: self
+          abilityType: none
+          mandatory: true
+          strain: []
+          guid: c1f6a69d-5c05-413d-9257-a4f8807d3c6a
+          range: 1
+          name: Group Appetite
+          trigger: losehitpoints
+          whenActive: combat
+          conditionFormula: (Stamina + Damage) <= 0 and (Damage Type is acid or Damage Type is fire)
+          domains:
+            CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+          behaviors:
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            dropsLoot: false
+            leavesCorpse: true
+          targetType: self
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: 6bb6d795-ccef-46d1-b1c5-e67df2c0cfba
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        behavior: trigger
+        name: Group Appetite
+        source: Trait
+        description: The ravager dies if they take acid or fire damage while their squad's Stamina pool is at 0.
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+            bgcolor: "#ffffffff"
+          description: The ravager ended their turn with 0 Stamina in their squad's Stamina pool.
+          modifiers: []
+          persistence: []
+          subject: self
+          abilityType: none
+          mandatory: true
+          strain: []
+          guid: 2f92e943-6584-4cba-a83e-cbd8453c018a
+          range: 1
+          name: Group Appetite
+          trigger: endturn
+          whenActive: combat
+          conditionFormula: Stamina <= 0
+          domains:
+            CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+          behaviors:
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            dropsLoot: false
+            leavesCorpse: true
+          targetType: self
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: 96901eb7-2f1c-4eed-9e0d-2cd5a3d4bbca
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        behavior: trigger
+        name: Group Appetite
+        source: Trait
+        description: The ravager dies if they end their turn with 0 Stamina in their squad's Stamina pool.
+      - __typeName: CharacterModifier
+        description: Shows a Group Appetite Trait notice when the trait prevents a minion death, so players do not mistake it for a bug.
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: 9cae9949-ce72-4675-87e4-038dd03c47ce
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+          description: The ravager's Group Appetite trait prevented a minion death.
+          modifiers: []
+          persistence: []
+          subject: self
+          abilityType: none
+          mandatory: true
+          strain: []
+          guid: 98fd5b2f-c182-4d93-9ffb-3e28bcc9143d
+          range: 1
+          targetType: self
+          silent: true
+          trigger: losehitpoints
+          name: Group Appetite
+          conditionFormula: (Stamina + Damage) > 0 and floor((Stamina + Damage + 14) / 15) > floor((Stamina + 14) / 15) and (Stamina > 0 or (Damage Type is not acid and Damage Type is not fire))
+          domains:
+            CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+          behaviors:
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            applyto: caster
+            color: "#ffffffff"
+            text: Group Appetite Trait
+          whenActive: combat
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+        name: Group Appetite
+        source: Trait
+        behavior: trigger
+      - __typeName: CharacterModifier
+        description: Shows a Group Appetite Trait notice when a ravager survives damage while the squad's Stamina pool is at 0.
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: cf20d0d1-db7c-41a2-92e5-3d879662be1a
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+          description: The ravager's Group Appetite trait let them shrug off damage while their squad's Stamina pool was at 0.
+          modifiers: []
+          persistence: []
+          subject: self
+          abilityType: none
+          mandatory: true
+          strain: []
+          guid: 59aeb9c4-dc33-4865-babb-8eb1cd5c715d
+          range: 1
+          targetType: self
+          silent: true
+          trigger: losehitpoints
+          name: Group Appetite
+          conditionFormula: (Stamina + Damage) <= 0 and (Damage Type is not acid and Damage Type is not fire)
+          domains:
+            CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+          behaviors:
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            applyto: caster
+            color: "#ffffffff"
+            text: Group Appetite Trait
+          whenActive: combat
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+        name: Group Appetite
+        source: Trait
+        behavior: trigger
+      - __typeName: CharacterModifier
+        sourceguid: 61c047e6-7db0-4ffd-993d-82f2339280c1
+        guid: 14e169c7-4e14-43c3-b538-ac5304f77e2b
+        name: Group Appetite
+        source: Trait
+        description: Hides the minion death-confirmation skull unless the squad's Stamina pool is at 0.
+        behavior: attribute
+        domains:
+          CharacterFeature:61c047e6-7db0-4ffd-993d-82f2339280c1: true
+        attribute: 9c3d19af-17a9-4828-8fec-40f376639db8
+        value: 1
+    traitNames: []
+    skillRatings: []
+    notes:
+    - text: ""
+      title: Monster Notes
+    role: Minion Harrier
+    max_hitpoints: 15
+    savingThrowRatings: []
+    monster_type: Troll Ravager
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: -5
+      damageType: acid
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: -5
+      damageType: fire
+    opportunityAttack: 4
+    creatureSize: "2"
+    max_hitpoints_roll: "15"
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      implementation: 4
+      repeatTargets: false
+      display:
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+        bgcolor: "#ffffffff"
+      description: The ravager's squad's Stamina pool regains Stamina equal to half the damage dealt.
+      modifiers: []
+      abilityType: none
+      strain: []
+      guid: 9decfbb0-db49-4f00-8997-7e23df75e2e0
+      name: Dine and Dash
+      range: 1
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      objectTarget: true
+      sourceReference:
+        __typeName: SourceReference
+        page: 257
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Signature Ability
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      flavor: ""
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 4 damage; the ravager can shift 1 square
+        - 6 damage; the ravager shifts up to 2 squares
+        - 8 damage; the ravager shifts up to 3 squares
+        attrid: mgt
+        roll: 2d10 + 4
+      - __typeName: ActivatedAbilityHealBehavior
+        applyto: caster
+        roll: floor(Cast.DamageDealt / 2)
+        chatMessage: The squad's Stamina pool regains <<total>> Stamina.
+      targetType: target
+      numTargets: 1
+      iconid: ui-icons/skills/1.png
+    groupid: 67902c1a-5307-415e-8495-52212b0c0def
+    innateAttacks: []
+    cr: 9
+    movementSpeeds: []
+    damage_taken: 0
+    withCaptain: +2 bonus to speed
+    levelChoices: []
+    walkingSpeed: 8
+    titles: []
+    inflictedConditions: []
+    monster_category: Monster
+    resources: []
+  tokenType: null
+  bestiaryId: 98f6ec98-394d-4eb8-a112-fb7190c37ca5
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1784553449189
+description: null
+parentFolder: f10d63e4-32ef-4b09-8bed-6007e0c43454
+artist: null
+ord: 0
+ctime: 1784553449189
+mtime: 1784553449189
+hidden: false
+id: 98f6ec98-394d-4eb8-a112-fb7190c37ca5

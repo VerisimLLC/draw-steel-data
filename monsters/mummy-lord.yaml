@@ -59,12 +59,12 @@ info:
       guid: bf740b12-f295-411f-847f-67afe31060f7
       domains:
         CharacterFeature:bf740b12-f295-411f-847f-67afe31060f7: true
-      description: At the end of each of their turns, the mummy lord can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.The effect that is ended is transferred to another creature within 10 squares.
+      description: "At the end of each of their turns, the mummy lord can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. 5 Malice: The effect that is ended is transferred to another creature within 10 squares."
       modifiers:
       - __typeName: CharacterModifier
         guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        name: End Effect
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        name: Cursed Transference
+        sourceguid: bf740b12-f295-411f-847f-67afe31060f7
         description: ""
         source: Trait
         triggeredAbility:
@@ -98,8 +98,152 @@ info:
           range: 1
           name: End Effect
         behavior: trigger
+      - __typeName: CharacterModifier
+        guid: 08e2ec3f-98f9-4e91-a47b-cdacc0ac82cb
+        name: Cursed Transference
+        sourceguid: bf740b12-f295-411f-847f-67afe31060f7
+        description: ""
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          castImmediately: true
+          triggerPrompt: "End effect for 10 and transfer it to a creature within 10 squares (5 Malice)"
+          strain: []
+          targetType: self
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 5
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            damageToSelf: "10"
+            targetDuration: save
+            conditions: []
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            color: "#ffffffff"
+            text: Transfer the ended effect to a creature within 10 squares (apply manually)
+            applyto: caster
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          whenActive: combat
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 8059e2a0-2aa5-4854-95d3-ac33c760c300
+          description: ""
+          repeatTargets: false
+          trigger: endturn
+          numTargets: "1"
+          range: 1
+          name: End Effect and Transfer
+        behavior: trigger
       source: Trait
       name: Cursed Transference
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: e384c1ba-cdac-4d3d-b1fa-fda83d56673c
+      domains:
+        CharacterFeature:e384c1ba-cdac-4d3d-b1fa-fda83d56673c: true
+      description: |-
+        **Trigger:** The mummy lord is made winded for the first time in the encounter.
+
+        **Effect:** One mummy or four ghoul cravers appear within distance.
+      source: Trait
+      name: Summon My Guard
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: 4b85eed1-45a1-405d-b023-b5f0033ded6d
+        name: Summon My Guard
+        sourceguid: e384c1ba-cdac-4d3d-b1fa-fda83d56673c
+        source: Trait
+        domains:
+          CharacterFeature:e384c1ba-cdac-4d3d-b1fa-fda83d56673c: true
+        description: |-
+          Trigger: The mummy lord is made winded for the first time in the encounter.
+
+          Effect: One mummy or four ghoul cravers appear within distance.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Summon My Guard
+          guid: 445171b5-e9e7-4a07-a113-68302510d046
+          trigger: winded
+          subject: self
+          mandatory: false
+          triggerPrompt: "The mummy lord can spend 2 Malice to summon their guard: one mummy or four ghoul cravers appear within 10 squares."
+          targetType: self
+          numTargets: "1"
+          range: 10
+          keywords:
+            Ranged: true
+          categorization: Trigger
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 2
+          usageLimitOptions:
+            multicharge: false
+            resourceid: 50b27885-b3fe-4573-89b4-5e724b18ee5b
+            charges: "1"
+            resourceRefreshType: encounter
+          multipleModes: true
+          modeList:
+          - text: One Mummy
+          - text: Four Ghoul Cravers
+          repeatTargets: false
+          abilityType: none
+          strain: []
+          persistence: []
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          description: One mummy or four ghoul cravers appear within distance.
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            modesSelected:
+            - 1
+            monsterType: f68006d8-d40b-46d4-9a32-b154b9efc6de
+            numSummons: "1"
+            choosePlacement: true
+            summonRange: "10"
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: true
+          - __typeName: ActivatedAbilitySummonBehavior
+            modesSelected:
+            - 2
+            monsterType: 321d1ae5-dc14-4737-887f-dd74a0343395
+            numSummons: "4"
+            choosePlacement: true
+            summonRange: "10"
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: true
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: c2619a89-be45-4d58-8191-0d1a328c3c50
+        name: Summon My Guard
+        sourceguid: e384c1ba-cdac-4d3d-b1fa-fda83d56673c
+        source: Trait
+        domains:
+          CharacterFeature:e384c1ba-cdac-4d3d-b1fa-fda83d56673c: true
+        description: |-
+          Trigger: The mummy lord is made winded for the first time in the encounter.
+
+          Effect: One mummy or four ghoul cravers appear within distance.
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 906fb461-40fd-4c92-875a-c195454929d6
+          distance: Ranged 10
+          trigger: The mummy lord is made winded for the first time in the encounter.
+          keywords:
+            Ranged: true
+          effect: One mummy or four ghoul cravers appear within distance. (2 Malice)
     inflictedConditions: []
     walkingSpeed: 6
     opportunityAttack: 6
@@ -222,6 +366,7 @@ info:
     - __typeName: ActivatedAbility
       implementation: 3
       targetType: target
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -229,8 +374,10 @@ info:
         - 10 corruption damage; I<2 bleeding (save ends)
         - 14 corruption damage; I<3 bleeding (save ends)
         - 17 corruption damage; I<4 bleeding (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+        riderid: a0c032ad-ec29-47f6-b49c-b69bdfb2ba5c
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
       numTargets: 2
@@ -243,7 +390,7 @@ info:
         Strike: true
         Melee: true
         Weapon: true
-      description: The potency of abilities used against a target bleeding from this ability increase by 1.
+      description: While the target is bleeding this way, the potency of any ability used against them increases by 1 for the target.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -255,14 +402,16 @@ info:
       implementation: 3
       targetType: target
       flavor: ""
-      categorization: Heroic Ability
+      categorization: Ability
       keywords:
         Magic: true
         Ranged: true
       resourceNumber: 1
       repeatTargets: false
       abilityType: none
-      numTargets: 1
+      numTargets: 1 + Charges
+      channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      channelIncrement: 2
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
@@ -275,7 +424,7 @@ info:
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       description: |-
         While frightened this way, a target takes 4 psychic damage whenever they use a move action.
-        **Spend Malice**: This ability targets one additional target for each 2 Malice spent.
+        **2+ Malice**: This ability targets one additional target for each 2 Malice spent.
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -283,33 +432,11 @@ info:
         - 7 corruption damage; I<2 frightened (save ends)
         - 12 corruption damage; I<3 frightened (save ends)
         - 16 corruption damage; I<4 frightened (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 1211270f-bfce-45a6-b937-d72f0e8a06a8
+        riderid: 9a6c3a84-1663-4a6e-9488-ad41598f0976
       range: 20
       name: Binding Curse
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: "1"
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords: []
-      iconid: ui-icons/skills/1.png
-      guid: a8540339-c764-4974-bfc3-1fc2f1aac424
-      behaviors: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      description: Two mummies and 4 ghoul carvers appear within distance.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Summon my Guard!
     - __typeName: ActivatedAbility
       implementation: 3
       targetType: all
@@ -320,9 +447,12 @@ info:
         - 5 poison damage
         - 8 poison damage
         - 10 poison damage
-      categorization: Heroic Ability
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 08c87dfe-4f31-4ccb-8ba4-4d7024da9619
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      categorization: Villain Action
       targetFilter: Enemy
-      effectImplemented: false
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -330,7 +460,11 @@ info:
         saturation: 1
       villainAction: Villain Action 1
       numTargets: 1
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '9e9faf2c-1bc4-4c50-850"
+      usageLimitOptions:
+        multicharge: false
+        resourceid: cc164f9d-fe12-4a14-81ba-85927ec09191
+        charges: "1"
+        resourceRefreshType: encounter
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       keywords:
@@ -345,11 +479,20 @@ info:
       range: 5
       name: Plague of Flies
     - __typeName: ActivatedAbility
-      implementation: 0
+      implementation: 2
       targetType: self
-      behaviors: []
-      categorization: Heroic Ability
-      effectImplemented: false
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        ongoingEffect: 01122841-ff7c-45c5-b2c7-566275bdf64f
+        ongoingEffectCustom: false
+        duration: eoe
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: Dig
+        applyto: caster
+        value: ""
+      - __typeName: ActivatedAbilityDigVerticalBehavior
+      categorization: Villain Action
       repeatTargets: false
       villainAction: Villain Action 2
       numTargets: 1
@@ -360,20 +503,24 @@ info:
       iconid: ui-icons/skills/1.png
       guid: c2bacf51-1b8a-48ea-a7be-f2171c25395b
       abilityType: none
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '0ddb55f9-a0c0-4039-871"
-      description: The mummy lord's speed increases by 2 and adds the burrow keyword to their movement. The mummy lord burrows up to their speed. Each enemy within 2 squares of the mummy lord's movement must make an Agility test.
+      usageLimitOptions:
+        multicharge: false
+        resourceid: 67635654-c8a9-4db0-bb5c-fd04d84c203f
+        charges: "1"
+        resourceRefreshType: encounter
+      description: "The mummy lord gains a +2 bonus to speed and can automatically burrow at full speed while moving. They can then use the Dig maneuver. The next time the mummy lord breaches the surface, each enemy within 2 squares of the mummy lord makes an Agility test (use the granted Breach the Surface ability)."
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
       range: 1
-      name: "Land's Guardian "
+      name: Land's Guardian
     - __typeName: ActivatedAbility
-      implementation: 4
+      implementation: 3
       targetType: all
       flavor: ""
-      categorization: Heroic Ability
+      categorization: Villain Action
       targetFilter: Enemy
       keywords:
         Area: true
@@ -396,42 +543,16 @@ info:
         - 10 corruption damage; I<4 frightened and restrained (save ends)
       iconid: ui-icons/skills/1.png
       guid: 50929622-1481-48fa-9bb0-f823dce815bb
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'bd8379ce-a643-471e-aa2"
+      usageLimitOptions:
+        multicharge: false
+        resourceid: 13fa84cf-3728-457d-8fa8-e189e455da62
+        charges: "1"
+        resourceRefreshType: encounter
       abilityType: none
       description: ""
       repeatTargets: false
       range: 5
       name: Unbound Horrors
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      flavor: ""
-      categorization: Trigger
-      keywords:
-        Ranged: true
-      resourceNumber: 2
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 107aad8c-3be7-4704-9824-62da9e4e451d
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 268
-      behaviors: []
-      description: |
-        One Mummy or four Ghoul Cravers appear within distance.
-      repeatTargets: false
-      range: 10
-      name: Summon My Guard
     creatureSize: 1M
     traitNames: []
     max_hitpoints_roll: "155"
