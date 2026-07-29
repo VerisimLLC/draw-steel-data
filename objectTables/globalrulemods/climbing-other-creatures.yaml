@@ -1,0 +1,217 @@
+__typeName: GlobalRuleMod
+id: c4e28f31-6b0a-49d7-8e5c-2a91d7f4b806
+name: Climbing Other Creatures
+_migrated_apply: true
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeature
+    implementation: 4
+    description: |-
+      You can attempt to climb a creature whose size is greater than yours. If the creature is willing, you can climb them without any trouble. If the creature is unwilling, you make a Might or Agility test.
+
+      While you climb or ride a creature, you gain an edge on melee abilities used against them. The creature can use a maneuver to attempt to knock you off.
+
+      If you are knocked prone while climbing or riding a creature, you fall and land prone in an adjacent space of your choice, taking damage as usual from the fall.
+    modifiers:
+    - __typeName: CharacterModifier
+      activatedAbility:
+        __typeName: ActivatedAbility
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          filterTarget: not Friends(Caster, Target)
+          roll: 2d10 + Might or Agility
+          tiers:
+          - You fail to climb the creature, and they can make a free strike against you.
+          - You fail to climb the creature.
+          - You climb the creature.
+          guid: a8d5c260-3f71-4b96-8e02-d19c74f5a3b8
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          autoTarget: false
+          promptText: Free Strike against the creature trying to climb you
+          abilityType: standard
+          tiersSelected:
+          - 1
+          standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+          filterTarget: not Friends(Caster, Target)
+          runOnController: true
+          customAbility:
+            __typeName: ActivatedAbility
+            iconid: ui-icons/skills/1.png
+            targetType: self
+            guid: e0f37c94-1a6d-4b52-83e9-c5748ba20d16
+            range: 1
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+            repeatTargets: false
+            description: ""
+            abilityType: none
+            name: Invoked Ability
+            modifiers: []
+            numTargets: "1"
+          standardAbilityParams:
+            targetid: "<<self.id>>"
+          guid: 4c9e07a3-b258-4d61-95f7-3e8ab6042d19
+        - __typeName: ActivatedAbilityClimbCreatureBehavior
+          operation: climb
+          guid: 1f6a8c05-947b-4e23-a0d8-b7e5c9420d63
+          tiersSelected:
+          - 3
+          filterTarget: not Friends(Caster, Target)
+        - __typeName: ActivatedAbilityClimbCreatureBehavior
+          operation: climb
+          guid: 8b04f2e7-6c19-4a53-9de0-25f7c1a83b64
+          filterTarget: Friends(Caster, Target)
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        reasonedFilters:
+        - formula: Target.Size > Caster.Size
+          reason: You can only climb a creature whose size is greater than yours.
+        - formula: not (Caster.Mounted and Caster.Mount.id = Target.id)
+          reason: You are already climbing this creature.
+        repeatTargets: false
+        name: Climb Creature
+        domains: []
+        numTargets: "1"
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        strain: []
+        categorization: Common Ability
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 271
+        abilityType: none
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          saturation: 1
+          brightness: 1
+        targetFilter: ""
+        persistence: []
+        description: |-
+          You can attempt to climb a creature whose size is greater than yours. If the creature is willing, you can climb them without any trouble. If the creature is unwilling, you make the test.
+
+          While you climb or ride a creature, you gain an edge on melee abilities used against them.
+        range: 1
+        keywords:
+          Melee: true
+        modifiers: []
+        guid: 9d3e61b8-04af-4c27-b5d1-6e8073f2a95c
+      behavior: activated
+      description: You can attempt to climb a creature whose size is greater than yours.
+      guid: 6e1b93c7-5a02-4f88-9d34-7c58b0e2a961
+      name: Climb Creature
+      source: Climbing Other Creatures Global Rule Mod Feature
+      sourceguid: 2b7f4d16-8c3a-4e59-b1d7-05a9e6c83f42
+    name: Climb Creature
+    source: Climbing Other Creatures Global Rule Mod Feature
+    guid: 2b7f4d16-8c3a-4e59-b1d7-05a9e6c83f42
+  - __typeName: CharacterFeature
+    implementation: 4
+    description: The creature can use a maneuver to attempt to knock a creature climbing them off.
+    modifiers:
+    - __typeName: CharacterModifier
+      activatedAbility:
+        __typeName: ActivatedAbility
+        targetType: target
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          standardAbility: 3d5b1f6a-9c2e-4a17-b0d4-1f8e5c73a942
+          guid: 3e8b16d0-5c72-4f94-a1e6-97d0b4a25c38
+          promptText: Hold on to the creature you are climbing
+          customAbility:
+            __typeName: ActivatedAbility
+            iconid: ui-icons/skills/1.png
+            targetType: self
+            guid: c2a7f403-8e15-49d6-b073-1fa5e846097d
+            range: 1
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              saturation: 1
+              brightness: 1
+            repeatTargets: false
+            description: ""
+            abilityType: none
+            name: Invoked Ability
+            modifiers: []
+            numTargets: "1"
+          runOnController: true
+          autoTarget: false
+          abilityType: standard
+        targetFilter: ""
+        reasonedFilters:
+        - formula: Target.Mounted and Target.Mount.id = Caster.id
+          reason: That creature is not climbing you.
+        repeatTargets: false
+        name: Shake Off
+        domains: []
+        numTargets: "1"
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        strain: []
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 271
+        abilityType: none
+        categorization: Common Ability
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        persistence: []
+        description: |-
+          You attempt to knock a creature that is climbing or riding you off. They make a Might or Agility test:
+
+          A tier 1 result means they fall off you into an unoccupied adjacent space, taking falling damage and landing prone as usual. A tier 2 result means they slide down you into an unoccupied adjacent space and don't land prone. On a tier 3 result they continue to hold on.
+        range: 1
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          saturation: 1
+          brightness: 1
+        modifiers: []
+        guid: b5192e7c-6034-4a8d-9f21-38c7e0d4a6b9
+      behavior: activated
+      sourceguid: 7c05e9b2-3d84-41f6-a927-58be0d1c6437
+      filterCondition: Climbers != 0
+      description: While a creature is climbing or riding you, you can use a maneuver to attempt to knock them off.
+      name: Shake Off
+      source: Climbing Other Creatures Global Rule Mod Feature
+      guid: 0a4d78e6-9b13-4527-8c60-f2e91b8d4a07
+    - __typeName: CharacterModifier
+      sourceguid: 7c05e9b2-3d84-41f6-a927-58be0d1c6437
+      behavior: suppressabilities
+      explanation: No creature is climbing you.
+      description: While a creature is climbing or riding you, you can use a maneuver to attempt to knock them off.
+      filterCondition: Climbers = 0
+      name: Shake Off
+      source: Climbing Other Creatures Global Rule Mod Feature
+      guid: f7301b58-2a9c-4e64-b8d5-06e3924fa71c
+    name: Shake Off
+    source: Climbing Other Creatures Global Rule Mod Feature
+    guid: 7c05e9b2-3d84-41f6-a927-58be0d1c6437
+  - __typeName: CharacterFeature
+    implementation: 4
+    description: While you climb or ride a creature, you gain an edge on melee abilities used against them.
+    modifiers:
+    - __typeName: CharacterModifier
+      rollType: ability_power_roll
+      behavior: power
+      activationCondition: Mounted and Mount.id = Target.id
+      modtype: edge
+      guid: d6b47e29-0f81-4c35-97a2-e5308bc1746f
+      description: While you climb or ride a creature, you gain an edge on melee abilities used against them.
+      name: Climbing
+      keywords:
+        Melee: true
+      source: Climbing Other Creatures Global Rule Mod Feature
+      sourceguid: 5a8c30f4-71e2-4b96-8d07-c94b1e6f2038
+    name: Climbing
+    source: Climbing Other Creatures Global Rule Mod Feature
+    guid: 5a8c30f4-71e2-4b96-8d07-c94b1e6f2038
+_table: globalRuleMods
