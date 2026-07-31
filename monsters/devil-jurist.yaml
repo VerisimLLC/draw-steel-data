@@ -366,32 +366,6 @@ info:
       modifiers: []
       repeatTargets: false
       range: 12
-    - __typeName: ActivatedAbility
-      name: Devilish Charm
-      implementation: 0
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      abilityType: none
-      targetType: self
-      behaviors: []
-      iconid: ui-icons/skills/1.png
-      categorization: Heroic Ability
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      guid: 2d11d306-0c61-447f-aad0-6bb28e0c7d02
-      description: The target makes a Presence test.
-      numTargets: 1
-      flavor: ""
-      keywords:
-        Magic: true
-      effectImplemented: false
-      repeatTargets: false
-      modifiers: []
-      resourceNumber: 2
-      range: 1
     levelChoices: []
     innateAttacks: []
     characterFeatures:
@@ -449,20 +423,247 @@ info:
         filterCondition: Monster Mode = 1
         behavior: resistance
         sourceguid: 2132ee52-3855-471e-830b-23ab30153567
-      - __typeName: CharacterModifier
-        name: True Name
-        description: The jurist loses Devilish Charm while their true name has been spoken.
-        sourceguid: 2132ee52-3855-471e-830b-23ab30153567
-        abilityFilter: not (Ability.Name = "Devilish Charm")
-        domains:
-          CharacterFeature:2132ee52-3855-471e-830b-23ab30153567: true
-        guid: 989e9e8c-dc00-4725-a37d-615645f07998
-        filterCondition: Monster Mode = 2
-        explanation: The jurist's true name has been spoken.
-        behavior: suppressabilities
-        source: Trait
       domains:
         CharacterFeature:2132ee52-3855-471e-830b-23ab30153567: true
+    - __typeName: CharacterFeature
+      guid: 86f3e052-8414-4257-aee1-4d7948f8fdd0
+      name: Devilish Charm
+      description: |-
+        Trigger: A creature targets the jurist with a strike.
+
+        Effect: The target makes a Presence test. Tier 1: The jurist chooses a new target for the strike. Tier 2: The jurist halves the triggering damage. Tier 3: The target takes a bane on the strike.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        source: Trait
+        sourceguid: 86f3e052-8414-4257-aee1-4d7948f8fdd0
+        guid: cee7edbd-811a-424c-9da8-e22495e1faa7
+        behavior: triggerdisplay
+        filterCondition: Monster Mode = 1
+        domains:
+          CharacterFeature:86f3e052-8414-4257-aee1-4d7948f8fdd0: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 68aff7b4-6bd0-47cc-8983-88a3188f1be1
+          name: Devilish Charm
+          cost: 2 Malice
+          keywords:
+            Magic: true
+            Ranged: true
+          distance: Ranged 5
+          target: The triggering creature
+          trigger: A creature targets the jurist with a strike.
+          effect: "The target makes a Presence test. Tier 1 (11 or lower): The jurist chooses a new target for the strike. Tier 2 (12-16): The jurist halves the triggering damage. Tier 3 (17+): The target takes a bane on the strike."
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        rules: "**Trigger:** A creature targets the jurist with a strike. **Effect:** The target makes a Presence test to determine the outcome."
+        source: Trait
+        sourceguid: 86f3e052-8414-4257-aee1-4d7948f8fdd0
+        guid: 593613ab-7547-4957-81fb-16e2c33e062e
+        behavior: powertabletrigger
+        filterCondition: Monster Mode = 1
+        type: trigger
+        trigger: strike
+        targetType: self
+        hideEnhancementOptions: true
+        range: 5
+        abilityFilter: Distance(Caster) <= 5
+        domains:
+          CharacterFeature:86f3e052-8414-4257-aee1-4d7948f8fdd0: true
+        powerRollModifier:
+          __typeName: CharacterModifier
+          behavior: power
+          name: Devilish Charm
+          guid: 33c7b594-df7d-4ebd-8cce-b0d8eb99471e
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          activationCondition: false
+          rules: ""
+          keywords:
+            Strike: true
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          changeTarget: true
+          changeTargetRange: ability
+          changeTargetFilter: not (Target = Current)
+          hasTriggerBefore: true
+          triggerBefore:
+            __typeName: TriggeredAbility
+            guid: 3e5f60b1-7b1f-48c8-bc54-80e37e24c2cb
+            name: Devilish Charm
+            description: ""
+            iconid: ui-icons/skills/1.png
+            abilityType: none
+            trigger: d20roll
+            targetType: self
+            numTargets: "1"
+            range: 1
+            strain: []
+            persistence: []
+            modifiers: []
+            repeatTargets: false
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            behaviors:
+            - __typeName: ActivatedAbilityScriptBehavior
+              name: DevilishCharm
+              code: |
+                -- Devilish Charm: the triggering creature makes a Presence
+                -- test; the outcome is dispatched onto the pending trigger so
+                -- the attacker's open roll dialog applies it. Tier 1 = the
+                -- jurist chooses a new target (triggerBeforeRetarget flag ->
+                -- the trigger panel opens the retarget picker), tier 2 =
+                -- halve damage (augmentation 1), tier 3 = bane (augmentation 2).
+                local CHARM_MODIFIER_GUID = "593613ab-7547-4957-81fb-16e2c33e062e"
+
+                local trig = nil
+                local bestTime = nil
+                for _,t in pairs(casterToken.properties:GetAvailableTriggers() or {}) do
+                    local prm = t.powerRollModifier
+                    if prm and prm.guid == CHARM_MODIFIER_GUID and t.triggered and (not t:try_get("charmResolved", false)) then
+                        local ts = tonumber(t.timestamp) or 0
+                        if bestTime == nil or ts > bestTime then
+                            bestTime = ts
+                            trig = t
+                        end
+                    end
+                end
+
+                if trig == nil then
+                    print("DevilishCharm:: no pending activated trigger found")
+                    return
+                end
+
+                local attackerToken = nil
+                if trig.casterid then
+                    attackerToken = dmhub.GetTokenById(trig.casterid)
+                end
+                if attackerToken == nil or (not attackerToken.valid) then
+                    print("DevilishCharm:: attacker token not found")
+                    return
+                end
+
+                local tierTexts = {
+                    "The jurist chooses a new target for the strike.",
+                    "The jurist halves the triggering damage.",
+                    "The target takes a bane on the strike.",
+                }
+
+                -- Send the Presence test as a roll request to the attacker's
+                -- controller (the same cross-client prompt machinery that
+                -- resistance rolls use), then wait for completion in this
+                -- coroutine. parallelWithRollDialog lets the prompt surface
+                -- while the triggering strike's roll dialog is still open.
+                -- AwaitRequestedActionCoroutine auto-resolves when the roll
+                -- lands (or after its own timeout), so this cannot hang.
+                local check = RollCheck.new{
+                    type = "resistance_power_roll",
+                    id = "resistance_power_roll",
+                    text = "Resistance",
+                    explanation = "Presence test vs Devilish Charm",
+                    consequences = "",
+                    silent = false,
+                    info = {
+                        attrid = "prs",
+                        tiers = tierTexts,
+                    },
+                    options = {
+                        casterid = casterToken.id,
+                        parallelWithRollDialog = true,
+                    },
+                }
+
+                local actionid = dmhub.SendActionRequest(RollRequest.new{
+                    checks = {check},
+                    tokens = { [attackerToken.charid] = {} },
+                })
+
+                local dcresult = AwaitRequestedActionCoroutine(actionid, {})
+
+                local tier = nil
+                if dcresult.result and dcresult.action ~= nil then
+                    local dcinfo = dcresult.action.info.tokens[attackerToken.charid]
+                    if dcinfo ~= nil and dcinfo.status == "complete" then
+                        tier = RollUtils.DiceResultToTier{
+                            total = dcinfo.result,
+                            boons = dcinfo.boons,
+                            banes = dcinfo.banes,
+                        }
+                    end
+                end
+
+                if tier == nil then
+                    print("DevilishCharm:: Presence test canceled; trigger left as plain activation")
+                    return
+                end
+
+                print("DevilishCharm:: Presence test tier", tier)
+
+                if not casterToken.valid then
+                    return
+                end
+
+                local trigid = trig.id
+                casterToken:ModifyProperties{
+                    undoable = false,
+                    description = "Devilish Charm outcome",
+                    execute = function()
+                        local live = casterToken.properties:GetAvailableTriggers() or {}
+                        local t = live[trigid]
+                        if t == nil then
+                            return
+                        end
+                        t.charmResolved = true
+                        if tier == 2 then
+                            t.triggered = 1
+                        elseif tier == 3 then
+                            t.triggered = 2
+                        else
+                            -- Tier 1: the jurist chooses a new target for the
+                            -- strike. The trigger panel's complete callback
+                            -- sees this flag and opens the retarget picker.
+                            t.triggerBeforeRetarget = true
+                        end
+                        casterToken.properties:DispatchAvailableTrigger(t)
+                    end,
+                }
+        additionalCostModifiers:
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Halve Damage
+          rulesText: The jurist halves the triggering damage.
+          guid: 1d3e5312-274c-4302-8e12-ca000cd2bba6
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          damageMultiplier: half
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Bane
+          rulesText: The target takes a bane on the strike.
+          guid: ec6fa231-1bbd-4c5b-a682-12e7f88018c7
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: bane
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+      domains:
+        CharacterFeature:86f3e052-8414-4257-aee1-4d7948f8fdd0: true
     equipmentMeta:
       offhand1: []
     damage_taken: 0
