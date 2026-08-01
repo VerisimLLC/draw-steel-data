@@ -17,7 +17,8 @@ and triggered reactions. Every pattern listed here has working examples in the c
 8. [Faction-Wide Buffs and Actions](#faction-wide-buffs-and-actions)
 9. [Power Roll Tier Text Auto-Parsing](#power-roll-tier-text-auto-parsing)
 10. [Solo Monster Patterns](#solo-monster-patterns)
-11. [Genuinely Novel Mechanics (Lua Required)](#genuinely-novel-mechanics)
+11. [Monster Modes (True Name)](#monster-modes-true-name)
+12. [Genuinely Novel Mechanics (Lua Required)](#genuinely-novel-mechanics)
 
 ---
 
@@ -946,6 +947,91 @@ See [Recurring Per-Turn Effects > End-of-turn self-damage](#end-of-turn-self-dam
 Standard damage values by tier: 5 (level 1-3), 10 (level 4-6), 15 (level 7-9), 20 (level 10+).
 
 ---
+
+## Monster Modes (True Name)
+
+A monster with multiple states -- the Devil band's True Name trait (before/after
+the devil's true name is spoken), tactical stances, forms -- uses the
+**monstermodes** system. Pilot implementation: `data/monsters/devil-jurist.yaml`
+(True Name feature).
+
+The pieces, all pure data:
+
+1. **Declare the modes** with a `monstermodes` modifier on the granting trait's
+   CharacterFeature. Its `name` becomes the character panel section header, so
+   name it after the trait ("True Name"). The Director switches modes there;
+   the current mode is `Monster Mode` in GoblinScript (1 = default).
+
+```yaml
+- __typeName: CharacterModifier
+  behavior: monstermodes
+  name: True Name
+  source: Trait
+  guid: <uuid>
+  sourceguid: <feature-guid>
+  domains: { "CharacterFeature:<feature-guid>": true }
+  modes:
+  - name: Normal
+  - name: True Name Spoken
+    description: The jurist has lost their fire immunity, any nondamaging effects of their signature ability, and their Devilish Charm ability until the end of the encounter.
+```
+
+2. **Mode-gated immunity**: move the static `resistances:` entry into a
+   `behavior: resistance` modifier with `filterCondition: Monster Mode = 1`.
+   (Any modifier can be mode-gated the same way -- `filterCondition` is
+   evaluated per-creature against the bearer.)
+
+3. **Losing an ability entirely** (Devilish Charm): a `suppressabilities`
+   modifier gated to the lost mode. The ability shows greyed out with the
+   explanation rather than silently vanishing.
+
+```yaml
+- __typeName: CharacterModifier
+  behavior: suppressabilities
+  name: True Name
+  filterCondition: Monster Mode = 2
+  abilityFilter: not (Ability.Name = 'Devilish Charm')
+  explanation: The jurist's true name has been spoken.
+```
+
+4. **Swapping a signature ability's effects** (losing nondamaging riders):
+   do NOT suppress-and-regrant -- the signature must stay in
+   `innateActivatedAbilities` because `monster:GetSignatureAbility()` and free
+   strikes read that list directly. Instead make the one ability multi-mode
+   with per-mode `condition`s; the unavailable mode is hidden from the cast
+   bar, which auto-selects the available one.
+
+   `multipleModes` takes THREE values, and the editor UI keys off which one:
+   `false` (no modes), `true` ("Multiple Modes" -- one ability, behaviors
+   gated per-mode via `modesSelected`), or `"variations"` ("Ability
+   Variations" -- a mode carries a complete alternate ability in
+   `variation`, and the editor shows its Has Ability / Edit Ability
+   controls). A mode-swapped signature uses a full variation, so it MUST be
+   `multipleModes: variations` -- with `true` the runtime still works (any
+   truthy value casts the same) but the variation is invisible and
+   uneditable in the ability editor:
+
+```yaml
+multipleModes: variations
+modeList:
+- text: Normal
+  condition: Monster Mode = 1
+- text: True Name Spoken
+  condition: Monster Mode = 2
+  rules: "The jurist's true name has been spoken: the signature ability loses its nondamaging effects."
+  hasAbility: true
+  variation:
+    __typeName: ActivatedAbility     # full stripped copy: plain tiers, no
+    ...                              # rider behaviors, trimmed description
+```
+
+Known cosmetic limitation: after the cast bar auto-switches modes, the
+pre-cast ability card can still show the base mode's text (tooltip refresh on
+mode switch is a TODO in DrawSteelActionBar.lua); the roll dialog and
+execution use the correct variation.
+
+Limitation by design: one mode dimension per monster (first active
+monstermodes modifier wins).
 
 ## Genuinely Novel Mechanics (Lua Required)
 

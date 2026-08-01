@@ -51,6 +51,7 @@
 | Solo | boolean | Is this creature a solo? | MCDMCreature.lua |
 | Leader | boolean | Is this creature a leader? | MCDMCreature.lua |
 | Retainer | boolean | True if this creature is a retainer. | MCDMCreature.lua |
+| Monster Mode | number | The monster's current mode (1-based; 1 is the default) as chosen in the character panel's mode section. Only meaningful for monsters with a `monstermodes` modifier; always 1 otherwise. Distinct from an ability's `Mode` (an ability's multi-mode selection). | MCDMCreature.lua |
 
 ---
 

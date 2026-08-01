@@ -1539,6 +1539,27 @@ abilityFilter: ""           # GoblinScript filter
 explanation: ""
 ```
 
+### behavior: "monstermodes"
+Declare that the monster has multiple modes (e.g. a devil before/after its True
+Name is spoken, or a stance monster's stances). The Director switches the
+current mode from a section on the character panel; the section's header takes
+this modifier's `name` (so name it after the granting trait, e.g. "True Name").
+The current mode is exposed to GoblinScript as `Monster Mode` (1-based,
+defaults to 1), so other modifiers gate on it via `filterCondition` and
+ability modes gate on it via `modeList[].condition`.
+```yaml
+behavior: monstermodes
+name: True Name             # doubles as the character panel section header
+modes:
+- name: Normal
+- name: True Name Spoken
+  description: ""           # optional; hover tooltip on the mode's chip
+```
+One mode dimension per monster: the first active monstermodes modifier wins.
+Do not put a `filterCondition` referencing `Monster Mode` on this modifier
+itself (the mode picker must exist in every mode). See MONSTER_PATTERNS.md
+"Monster Modes (True Name)" for the full True Name pattern.
+
 ### behavior: "icon"
 Show a status icon on the token.
 ```yaml

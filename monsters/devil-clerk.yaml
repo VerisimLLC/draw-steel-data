@@ -4,8 +4,11 @@ info:
     mountedOnObject: null
     mountedSaddle: 0
     floor: null
-    map: null
-    loc: []
+    map: 97f55a4d-7059-40ce-8b68-2901615d5f15
+    loc:
+    - 2
+    - 0
+    - 1
     pos:
       x: 0
       y: 0
@@ -14,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -73,103 +77,155 @@ info:
   updateid: 8158d54a-b8ff-4526-991b-0c6bc8e72541
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 018163da-f429-426c-81f2-0eec89c730c7
-      domains:
-        CharacterFeature:018163da-f429-426c-81f2-0eec89c730c7: true
-      description: If a creature within 10 squares speaks the clerk's true name, the clerk loses their fire immunity and any nondamaging effects of their signature ability until the end of the encounter.
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: 6c047d23-3490-4db5-8a14-2a0f0207b964
-        resistances:
-        - __typeName: ResistanceEntry
-          apply: Damage Reduction
-          damageType: fire
-          dr: "5"
-        name: Fire Immunity
-        description: ""
-        source: Trait
-        sourceguid: 38864cdb-b509-4f1b-a1d7-8da114911a67
-        behavior: resistance
-      source: Trait
-      name: True Name
-    inflictedConditions: []
-    walkingSpeed: 6
-    opportunityAttack: 3
-    minionSquad: Devil Clerk Squad 2
-    damage_taken: 0
-    max_hitpoints: 10
-    initiativeGrouping: c1c2c77b-bc35-4bd3-adac-54fc5948cd72
-    groupid: 2c4ebcaf-087b-4f0d-a94a-61e9b67fb70f
-    resources: []
-    traitNames: []
-    minion: true
-    equipment: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 3 damage; push 1
-        - 6 damage; push 2
-        - 7 damage; push 3
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: c3895999-a404-4b78-b9c2-32bca288074a
-      flavor: ""
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      description: A target adjacent to 2 or more clerks is taunted (EoT).
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Quill Pushing
-    skillProficiencies: []
-    max_hitpoints_roll: "10"
-    levelChoices: []
-    monster_type: Devil Clerk
-    stability: 0
-    withCaptain: +2 damage bonus to strikes
-    role: Minion Brute
-    ev: 7
-    movementSpeeds: []
     attributes:
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      rea:
+        id: rea
+        baseValue: 1
+      wis:
+        __typeName: CharacterAttribute
+        id: wis
+      mgt:
+        id: mgt
+        baseValue: 3
       inu:
         id: inu
         baseValue: 1
+      str:
+        __typeName: CharacterAttribute
+        id: str
+      con:
+        __typeName: CharacterAttribute
+        id: con
+      int:
+        __typeName: CharacterAttribute
+        id: int
       agl:
         id: agl
         baseValue: 0
       prs:
         id: prs
         baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 3
-      rea:
-        id: rea
-        baseValue: 1
+      cha:
+        __typeName: CharacterAttribute
+        id: cha
+    initiativeGrouping: 00207fad-d95b-4a10-ab2a-9b8b5e03d78e
+    monster_type: Devil Clerk
+    walkingSpeed: 6
+    titles: []
+    resources: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      name: Quill Pushing
+      implementation: 4
+      multipleModes: variations
+      objectTarget: true
+      modeList:
+      - condition: Monster Mode = 1
+        text: Normal
+      - variation:
+          __typeName: ActivatedAbility
+          name: Quill Pushing
+          implementation: 4
+          display:
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+            bgcolor: "#ffffffff"
+          abilityType: none
+          targetType: target
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 3 damage
+            - 6 damage
+            - 7 damage
+            roll: 2d10 + Might
+          iconid: ui-icons/skills/1.png
+          categorization: Signature Ability
+          description: ""
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          flavor: ""
+          strain: []
+          guid: ccf42ce7-6c87-498a-bec4-62c7adc33f63
+          keywords:
+            Strike: true
+            Weapon: true
+            Melee: true
+          repeatTargets: false
+          numTargets: 1
+          modifiers: []
+          objectTarget: true
+          range: 1
+        text: True Name Spoken
+        rules: "The clerk's true name has been spoken: the signature ability loses its nondamaging effects."
+        condition: Monster Mode = 2
+        hasAbility: true
+      abilityType: none
+      targetType: target
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 3 damage; push 1
+        - 6 damage; push 2
+        - 7 damage; push 3
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: taunted (EoT)
+        filterTarget: Count Nearby Enemies(1, "Devil Clerk") >=2
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      display:
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+        bgcolor: "#ffffffff"
+      description: Any target adjacent to two or more clerks is taunted until the end of their next turn.
+      flavor: ""
+      strain: []
+      guid: c3895999-a404-4b78-b9c2-32bca288074a
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+      effectImplemented: false
+      numTargets: 1
+      modifiers: []
+      sourceReference:
+        __typeName: SourceReference
+        page: 77
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      range: 1
+    resistances: []
     innateAttacks: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: fire
-      dr: 5
+    opportunityAttack: 3
+    equipmentMeta:
+      offhand0: []
+    damage_taken: 0
+    withCaptain: +2 damage bonus to strikes
+    inflictedConditions: []
+    monsterMode: 1
+    stability: 0
+    notes:
+    - title: Monster Notes
+      text: ""
+    groupid: 2c4ebcaf-087b-4f0d-a94a-61e9b67fb70f
+    minionSquad: Devil Clerk Squad 1
+    role: Minion Brute
+    skillProficiencies: []
+    creatureSize: 1M
+    max_hitpoints_roll: "10"
+    equipment: []
+    cr: 5
+    ev: 7
+    movementSpeeds: []
+    monster_category: Monster
+    savingThrowRatings: []
+    levelChoices: []
     availableTriggers: []
     import:
       type: mcdm
@@ -191,14 +247,51 @@ info:
         <b>True Name</b>
         If a creature within 10 squares of the clerk speaks the clerk's true name aloud, the clerk loses their fire immunity and the additional effects on their signature action.
 
-    savingThrowRatings: []
     keywords:
-      Devil: true
       Infernal: true
-    cr: 5
-    creatureSize: 1M
-    monster_category: Monster
+      Devil: true
     skillRatings: []
+    minion: true
+    max_hitpoints: 10
+    characterFeatures:
+    - __typeName: CharacterFeature
+      guid: 018163da-f429-426c-81f2-0eec89c730c7
+      name: True Name
+      description: If a creature within 10 squares speaks the clerk's true name, the clerk loses their fire immunity and any nondamaging effects of their signature ability until the end of the encounter.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 018163da-f429-426c-81f2-0eec89c730c7
+        guid: 195c942e-1a6d-47e7-bf69-22f7c58f3489
+        name: True Name
+        modes:
+        - name: Normal
+        - name: True Name Spoken
+          description: The clerk has lost their fire immunity and any nondamaging effects of their signature ability until the end of the encounter.
+        source: Trait
+        description: The clerk is in one of two modes, switched from the TRUE NAME section of the character panel.
+        behavior: monstermodes
+        domains:
+          CharacterFeature:018163da-f429-426c-81f2-0eec89c730c7: true
+      - __typeName: CharacterModifier
+        name: True Name
+        description: Fire Immunity 5, lost while the clerk's true name has been spoken.
+        source: Trait
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: 5
+          damageType: fire
+          apply: Damage Reduction
+        domains:
+          CharacterFeature:018163da-f429-426c-81f2-0eec89c730c7: true
+        guid: a3b4eea3-5536-49e6-93cb-12197936a135
+        filterCondition: Monster Mode = 1
+        behavior: resistance
+        sourceguid: 018163da-f429-426c-81f2-0eec89c730c7
+      implementation: 4
+      domains:
+        CharacterFeature:018163da-f429-426c-81f2-0eec89c730c7: true
+    traitNames: []
   tokenType: null
   bestiaryId: e3607679-322e-46a5-9531-1e253e692572
   summonerid: null
@@ -211,6 +304,6 @@ parentFolder: f202e578-675b-4891-ad36-09c24f35518b
 artist: null
 ord: 0
 ctime: 1741590320485
-mtime: 1775375067022
+mtime: 1785457575215
 hidden: false
 id: e3607679-322e-46a5-9531-1e253e692572
