@@ -184,7 +184,7 @@ info:
       source: Trait
       modifiers:
       - __typeName: CharacterModifier
-        filterCondition: Count Nearby Friends(10, "Devil Magistrate") + Count Nearby Friends(10, "Devil Adjudicator") + Count Nearby Friends(10, "Devil High Judge") >= 1
+        filterCondition: ((Count Nearby Friends(10, "Devil Magistrate") + Count Nearby Friends(10, "Devil Adjudicator") + Count Nearby Friends(10, "Devil High Judge")) >= 1) and (Monster Mode = 1)
         source: Trait
         name: Hellish Bailiff
         behavior: resistance
@@ -203,12 +203,279 @@ info:
         CharacterFeature:d44c7128-f8f7-4697-8e2e-df370366d078: true
     - __typeName: CharacterFeature
       guid: d8555a39-5339-4df8-b79d-7ed64709a7b7
-      description: If a creature within 10 squares of the legate speaks the legate's true name aloud, the legate loses their immunities, the additional effects on their signature action, and their Devilish Charm ability.
+      description: If a creature within 10 squares of the legate speaks the legate's true name aloud, the legate loses their damage immunities, the additional effects on their signature action, and their Devilish Charm ability.
       source: Trait
-      modifiers: []
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        guid: 0395067b-baf7-4000-982a-bbbb10b0b3c9
+        name: True Name
+        modes:
+        - name: Normal
+        - name: True Name Spoken
+          description: The legate has lost their damage immunities (fire immunity and Hellish Bailiff), any nondamaging effects of their signature ability, and their Devilish Charm ability until the end of the encounter.
+        sourceguid: d8555a39-5339-4df8-b79d-7ed64709a7b7
+        description: The legate is in one of two modes, switched from the TRUE NAME section of the character panel.
+        behavior: monstermodes
+        domains:
+          CharacterFeature:d8555a39-5339-4df8-b79d-7ed64709a7b7: true
+      - __typeName: CharacterModifier
+        name: True Name
+        description: Fire Immunity 5, lost while the legate's true name has been spoken.
+        source: Trait
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: 5
+          damageType: fire
+          apply: Damage Reduction
+        domains:
+          CharacterFeature:d8555a39-5339-4df8-b79d-7ed64709a7b7: true
+        guid: 748558bc-e0da-4c5d-9fe7-08cabae3489b
+        filterCondition: Monster Mode = 1
+        behavior: resistance
+        sourceguid: d8555a39-5339-4df8-b79d-7ed64709a7b7
       name: True Name
       domains:
         CharacterFeature:d8555a39-5339-4df8-b79d-7ed64709a7b7: true
+    - __typeName: CharacterFeature
+      guid: 7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0
+      name: Devilish Charm
+      description: |-
+        Trigger: A creature targets the legate with a strike.
+
+        Effect: The target makes a Presence test. Tier 1: The legate chooses a new target for the strike. Tier 2: The legate halves the triggering damage. Tier 3: The target takes a bane on the strike.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        source: Trait
+        sourceguid: 7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0
+        guid: f4f72ea1-7125-4256-9557-236200ec0c86
+        behavior: triggerdisplay
+        filterCondition: Monster Mode = 1
+        domains:
+          CharacterFeature:7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: aa85dff2-ef84-407e-b2d1-52bee8416f77
+          name: Devilish Charm
+          cost: 2 Malice
+          keywords:
+            Magic: true
+            Ranged: true
+          distance: Ranged 5
+          target: The triggering creature
+          trigger: A creature targets the legate with a strike.
+          effect: "The target makes a Presence test. Tier 1 (11 or lower): The legate chooses a new target for the strike. Tier 2 (12-16): The legate halves the triggering damage. Tier 3 (17+): The target takes a bane on the strike."
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        rules: "**Trigger:** A creature targets the legate with a strike. **Effect:** The target makes a Presence test to determine the outcome."
+        source: Trait
+        sourceguid: 7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0
+        guid: 61ff95a2-baeb-4399-8e13-db0411c997b9
+        behavior: powertabletrigger
+        filterCondition: Monster Mode = 1
+        type: trigger
+        trigger: strike
+        targetType: self
+        hideEnhancementOptions: true
+        range: 5
+        abilityFilter: Distance(Caster) <= 5
+        domains:
+          CharacterFeature:7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0: true
+        powerRollModifier:
+          __typeName: CharacterModifier
+          behavior: power
+          name: Devilish Charm
+          guid: 2d85b41f-eb2b-4c0b-b2ec-e353a230154a
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          activationCondition: false
+          rules: ""
+          keywords:
+            Strike: true
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          changeTarget: true
+          changeTargetRange: ability
+          changeTargetFilter: not (Target = Current)
+          hasTriggerBefore: true
+          triggerBefore:
+            __typeName: TriggeredAbility
+            guid: 44a9762c-4a81-4b2e-9dfa-ca2182740650
+            name: Devilish Charm
+            description: ""
+            iconid: ui-icons/skills/1.png
+            abilityType: none
+            trigger: d20roll
+            targetType: self
+            numTargets: "1"
+            range: 1
+            strain: []
+            persistence: []
+            modifiers: []
+            repeatTargets: false
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            behaviors:
+            - __typeName: ActivatedAbilityScriptBehavior
+              name: DevilishCharm
+              code: |
+                -- Devilish Charm: the triggering creature makes a Presence
+                -- test; the outcome is dispatched onto the pending trigger so
+                -- the attacker's open roll dialog applies it. Tier 1 = the
+                -- legate chooses a new target (triggerBeforeRetarget flag ->
+                -- the trigger panel opens the retarget picker), tier 2 =
+                -- halve damage (augmentation 1), tier 3 = bane (augmentation 2).
+                local CHARM_MODIFIER_GUID = "61ff95a2-baeb-4399-8e13-db0411c997b9"
+
+                local trig = nil
+                local bestTime = nil
+                for _,t in pairs(casterToken.properties:GetAvailableTriggers() or {}) do
+                    local prm = t.powerRollModifier
+                    if prm and prm.guid == CHARM_MODIFIER_GUID and t.triggered and (not t:try_get("charmResolved", false)) then
+                        local ts = tonumber(t.timestamp) or 0
+                        if bestTime == nil or ts > bestTime then
+                            bestTime = ts
+                            trig = t
+                        end
+                    end
+                end
+
+                if trig == nil then
+                    print("DevilishCharm:: no pending activated trigger found")
+                    return
+                end
+
+                local attackerToken = nil
+                if trig.casterid then
+                    attackerToken = dmhub.GetTokenById(trig.casterid)
+                end
+                if attackerToken == nil or (not attackerToken.valid) then
+                    print("DevilishCharm:: attacker token not found")
+                    return
+                end
+
+                local tierTexts = {
+                    "The legate chooses a new target for the strike.",
+                    "The legate halves the triggering damage.",
+                    "The target takes a bane on the strike.",
+                }
+
+                -- Send the Presence test as a roll request to the attacker's
+                -- controller (the same cross-client prompt machinery that
+                -- resistance rolls use), then wait for completion in this
+                -- coroutine. parallelWithRollDialog lets the prompt surface
+                -- while the triggering strike's roll dialog is still open.
+                -- AwaitRequestedActionCoroutine auto-resolves when the roll
+                -- lands (or after its own timeout), so this cannot hang.
+                local check = RollCheck.new{
+                    type = "resistance_power_roll",
+                    id = "resistance_power_roll",
+                    text = "Resistance",
+                    explanation = "Presence test vs Devilish Charm",
+                    consequences = "",
+                    silent = false,
+                    info = {
+                        attrid = "prs",
+                        tiers = tierTexts,
+                    },
+                    options = {
+                        casterid = casterToken.id,
+                        parallelWithRollDialog = true,
+                    },
+                }
+
+                local actionid = dmhub.SendActionRequest(RollRequest.new{
+                    checks = {check},
+                    tokens = { [attackerToken.charid] = {} },
+                })
+
+                local dcresult = AwaitRequestedActionCoroutine(actionid, {})
+
+                local tier = nil
+                if dcresult.result and dcresult.action ~= nil then
+                    local dcinfo = dcresult.action.info.tokens[attackerToken.charid]
+                    if dcinfo ~= nil and dcinfo.status == "complete" then
+                        tier = RollUtils.DiceResultToTier{
+                            total = dcinfo.result,
+                            boons = dcinfo.boons,
+                            banes = dcinfo.banes,
+                        }
+                    end
+                end
+
+                if tier == nil then
+                    print("DevilishCharm:: Presence test canceled; trigger left as plain activation")
+                    return
+                end
+
+                print("DevilishCharm:: Presence test tier", tier)
+
+                if not casterToken.valid then
+                    return
+                end
+
+                local trigid = trig.id
+                casterToken:ModifyProperties{
+                    undoable = false,
+                    description = "Devilish Charm outcome",
+                    execute = function()
+                        local live = casterToken.properties:GetAvailableTriggers() or {}
+                        local t = live[trigid]
+                        if t == nil then
+                            return
+                        end
+                        t.charmResolved = true
+                        if tier == 2 then
+                            t.triggered = 1
+                        elseif tier == 3 then
+                            t.triggered = 2
+                        else
+                            -- Tier 1: the legate chooses a new target for the
+                            -- strike. The trigger panel's complete callback
+                            -- sees this flag and opens the retarget picker.
+                            t.triggerBeforeRetarget = true
+                        end
+                        casterToken.properties:DispatchAvailableTrigger(t)
+                    end,
+                }
+        additionalCostModifiers:
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Halve Damage
+          rulesText: The legate halves the triggering damage.
+          guid: cf092fa2-fb9f-4672-99ca-cbc2cb602d5f
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          damageMultiplier: half
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Bane
+          rulesText: The target takes a bane on the strike.
+          guid: 9a3d67d0-6a24-4087-a5a8-9013ac84e234
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: bane
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+      domains:
+        CharacterFeature:7d8ca46d-e943-47a6-8cbd-0ee39f5d1de0: true
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
       keywords:
@@ -260,6 +527,64 @@ info:
       strain: []
       guid: fc79f0c4-d178-4823-8977-9b3c12d0929d
       name: Infernal Pike
+      multipleModes: variations
+      modeList:
+      - condition: Monster Mode = 1
+        text: Normal
+      - variation:
+          __typeName: ActivatedAbility
+          name: Infernal Pike
+          implementation: 3
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          categorization: Signature Ability
+          repeatTargets: false
+          behaviors:
+          - __typeName: ActivatedAbilityModifyPowerRollBehavior
+            modifier:
+              __typeName: CharacterModifier
+              displayCondition: Cast.TargetCount = 2 and Cast.TargetsAdjacent
+              name: Targets adjacent to each other
+              activationCondition: "1"
+              behavior: power
+              sourceguid: 8605c73b-6714-4d93-a635-eef49ad25ef1
+              domains: []
+              description: If the targets are adjacent to each other, this ability deals an extra 3 damage.
+              rollType: ability_power_roll
+              damageModifier: "3"
+              guid: 40decd24-5617-4be1-b6a2-23c8f870c34d
+              keywords: []
+              modtype: none
+            guid: 8605c73b-6714-4d93-a635-eef49ad25ef1
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Might
+            tiers:
+            - 9 damage
+            - 14 damage
+            - 17 damage
+          targetType: target
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          description: If the targets are adjacent to each other, this ability deals an additional 3 damage.
+          numTargets: 2
+          flavor: ""
+          range: 2
+          objectTarget: true
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          modifiers: []
+          strain: []
+          guid: 1d642aff-fdac-408a-8a3d-885891449593
+        text: True Name Spoken
+        rules: "The legate's true name has been spoken: the signature ability loses its nondamaging effects."
+        condition: Monster Mode = 2
+        hasAbility: true
     - __typeName: ActivatedAbility
       keywords:
         Melee: true
@@ -537,11 +862,7 @@ info:
 
     groupid: 2c4ebcaf-087b-4f0d-a94a-61e9b67fb70f
     walkingSpeed: 6
-    resistances:
-    - __typeName: ResistanceEntry
-      damageType: fire
-      dr: 5
-      apply: Damage Reduction
+    resistances: []
     attributes:
       con:
         __typeName: CharacterAttribute

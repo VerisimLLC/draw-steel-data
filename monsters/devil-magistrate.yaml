@@ -79,7 +79,18 @@ info:
       domains:
         CharacterFeature:d3e55a7d-642b-4456-8534-c65fca7a018c: true
       description: If the magistrate moves away from an enemy who is adjacent to one of the magistrate's allies, the movement is considered shifting.
-      modifiers: []
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: movementtext
+        name: Leading
+        guid: e70a559a-5275-47ef-af20-1020590e77e9
+        sourceguid: d3e55a7d-642b-4456-8534-c65fca7a018c
+        source: Trait
+        text: "Leading: if the magistrate moves away from an enemy who is adjacent to one of the magistrate's allies, that movement is considered shifting."
+        color: green
+        description: If the magistrate moves away from an enemy who is adjacent to one of the magistrate's allies, the movement is considered shifting.
+        domains:
+          CharacterFeature:d3e55a7d-642b-4456-8534-c65fca7a018c: true
       source: Trait
       name: Leading
     - __typeName: CharacterFeature
@@ -87,9 +98,276 @@ info:
       domains:
         CharacterFeature:f3b123de-eef3-4d53-b8c0-a4b974d7b6a3: true
       description: If a creature within 10 squares of the magistrate speaks the magistrate's true name aloud, the magistrate loses their immunities, the additional effects on their signature action, and their Devilish Charm ability.
-      modifiers: []
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        guid: f2b183f9-5636-4210-86c7-2925cd6643ea
+        name: True Name
+        modes:
+        - name: Normal
+        - name: True Name Spoken
+          description: The magistrate has lost their fire immunity, any nondamaging effects of their signature ability, and their Devilish Charm ability until the end of the encounter.
+        sourceguid: f3b123de-eef3-4d53-b8c0-a4b974d7b6a3
+        description: The magistrate is in one of two modes, switched from the TRUE NAME section of the character panel.
+        behavior: monstermodes
+        domains:
+          CharacterFeature:f3b123de-eef3-4d53-b8c0-a4b974d7b6a3: true
+      - __typeName: CharacterModifier
+        name: True Name
+        description: Fire Immunity 5, lost while the magistrate's true name has been spoken.
+        source: Trait
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: 5
+          damageType: fire
+          apply: Damage Reduction
+        domains:
+          CharacterFeature:f3b123de-eef3-4d53-b8c0-a4b974d7b6a3: true
+        guid: b53651d0-96d3-4960-903b-961b81393313
+        filterCondition: Monster Mode = 1
+        behavior: resistance
+        sourceguid: f3b123de-eef3-4d53-b8c0-a4b974d7b6a3
       source: Trait
       name: True Name
+    - __typeName: CharacterFeature
+      guid: 39b6151f-1303-4273-80e6-2925ef0fb9a5
+      name: Devilish Charm
+      description: |-
+        Trigger: A creature targets the magistrate with a strike.
+
+        Effect: The target makes a Presence test. Tier 1: The magistrate chooses a new target for the strike. Tier 2: The magistrate halves the triggering damage. Tier 3: The target takes a bane on the strike.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        source: Trait
+        sourceguid: 39b6151f-1303-4273-80e6-2925ef0fb9a5
+        guid: c0003440-06b3-4529-b579-98a34e4057bb
+        behavior: triggerdisplay
+        filterCondition: Monster Mode = 1
+        domains:
+          CharacterFeature:39b6151f-1303-4273-80e6-2925ef0fb9a5: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: c78a9abc-bb5b-46ba-97e5-7d4664984028
+          name: Devilish Charm
+          cost: 2 Malice
+          keywords:
+            Magic: true
+            Ranged: true
+          distance: Ranged 5
+          target: The triggering creature
+          trigger: A creature targets the magistrate with a strike.
+          effect: "The target makes a Presence test. Tier 1 (11 or lower): The magistrate chooses a new target for the strike. Tier 2 (12-16): The magistrate halves the triggering damage. Tier 3 (17+): The target takes a bane on the strike."
+      - __typeName: CharacterModifier
+        name: Devilish Charm
+        description: ""
+        rules: "**Trigger:** A creature targets the magistrate with a strike. **Effect:** The target makes a Presence test to determine the outcome."
+        source: Trait
+        sourceguid: 39b6151f-1303-4273-80e6-2925ef0fb9a5
+        guid: 1c28b996-c469-4338-be85-048bec0c93f5
+        behavior: powertabletrigger
+        filterCondition: Monster Mode = 1
+        type: trigger
+        trigger: strike
+        targetType: self
+        hideEnhancementOptions: true
+        range: 5
+        abilityFilter: Distance(Caster) <= 5
+        domains:
+          CharacterFeature:39b6151f-1303-4273-80e6-2925ef0fb9a5: true
+        powerRollModifier:
+          __typeName: CharacterModifier
+          behavior: power
+          name: Devilish Charm
+          guid: 064ac89f-9f2a-4805-b0c0-6c8f52475ba5
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          activationCondition: false
+          rules: ""
+          keywords:
+            Strike: true
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          changeTarget: true
+          changeTargetRange: ability
+          changeTargetFilter: not (Target = Current)
+          hasTriggerBefore: true
+          triggerBefore:
+            __typeName: TriggeredAbility
+            guid: 1452902c-5c5c-4e98-b173-9bc4bcfc0f65
+            name: Devilish Charm
+            description: ""
+            iconid: ui-icons/skills/1.png
+            abilityType: none
+            trigger: d20roll
+            targetType: self
+            numTargets: "1"
+            range: 1
+            strain: []
+            persistence: []
+            modifiers: []
+            repeatTargets: false
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            behaviors:
+            - __typeName: ActivatedAbilityScriptBehavior
+              name: DevilishCharm
+              code: |
+                -- Devilish Charm: the triggering creature makes a Presence
+                -- test; the outcome is dispatched onto the pending trigger so
+                -- the attacker's open roll dialog applies it. Tier 1 = the
+                -- magistrate chooses a new target (triggerBeforeRetarget flag ->
+                -- the trigger panel opens the retarget picker), tier 2 =
+                -- halve damage (augmentation 1), tier 3 = bane (augmentation 2).
+                local CHARM_MODIFIER_GUID = "1c28b996-c469-4338-be85-048bec0c93f5"
+
+                local trig = nil
+                local bestTime = nil
+                for _,t in pairs(casterToken.properties:GetAvailableTriggers() or {}) do
+                    local prm = t.powerRollModifier
+                    if prm and prm.guid == CHARM_MODIFIER_GUID and t.triggered and (not t:try_get("charmResolved", false)) then
+                        local ts = tonumber(t.timestamp) or 0
+                        if bestTime == nil or ts > bestTime then
+                            bestTime = ts
+                            trig = t
+                        end
+                    end
+                end
+
+                if trig == nil then
+                    print("DevilishCharm:: no pending activated trigger found")
+                    return
+                end
+
+                local attackerToken = nil
+                if trig.casterid then
+                    attackerToken = dmhub.GetTokenById(trig.casterid)
+                end
+                if attackerToken == nil or (not attackerToken.valid) then
+                    print("DevilishCharm:: attacker token not found")
+                    return
+                end
+
+                local tierTexts = {
+                    "The magistrate chooses a new target for the strike.",
+                    "The magistrate halves the triggering damage.",
+                    "The target takes a bane on the strike.",
+                }
+
+                -- Send the Presence test as a roll request to the attacker's
+                -- controller (the same cross-client prompt machinery that
+                -- resistance rolls use), then wait for completion in this
+                -- coroutine. parallelWithRollDialog lets the prompt surface
+                -- while the triggering strike's roll dialog is still open.
+                -- AwaitRequestedActionCoroutine auto-resolves when the roll
+                -- lands (or after its own timeout), so this cannot hang.
+                local check = RollCheck.new{
+                    type = "resistance_power_roll",
+                    id = "resistance_power_roll",
+                    text = "Resistance",
+                    explanation = "Presence test vs Devilish Charm",
+                    consequences = "",
+                    silent = false,
+                    info = {
+                        attrid = "prs",
+                        tiers = tierTexts,
+                    },
+                    options = {
+                        casterid = casterToken.id,
+                        parallelWithRollDialog = true,
+                    },
+                }
+
+                local actionid = dmhub.SendActionRequest(RollRequest.new{
+                    checks = {check},
+                    tokens = { [attackerToken.charid] = {} },
+                })
+
+                local dcresult = AwaitRequestedActionCoroutine(actionid, {})
+
+                local tier = nil
+                if dcresult.result and dcresult.action ~= nil then
+                    local dcinfo = dcresult.action.info.tokens[attackerToken.charid]
+                    if dcinfo ~= nil and dcinfo.status == "complete" then
+                        tier = RollUtils.DiceResultToTier{
+                            total = dcinfo.result,
+                            boons = dcinfo.boons,
+                            banes = dcinfo.banes,
+                        }
+                    end
+                end
+
+                if tier == nil then
+                    print("DevilishCharm:: Presence test canceled; trigger left as plain activation")
+                    return
+                end
+
+                print("DevilishCharm:: Presence test tier", tier)
+
+                if not casterToken.valid then
+                    return
+                end
+
+                local trigid = trig.id
+                casterToken:ModifyProperties{
+                    undoable = false,
+                    description = "Devilish Charm outcome",
+                    execute = function()
+                        local live = casterToken.properties:GetAvailableTriggers() or {}
+                        local t = live[trigid]
+                        if t == nil then
+                            return
+                        end
+                        t.charmResolved = true
+                        if tier == 2 then
+                            t.triggered = 1
+                        elseif tier == 3 then
+                            t.triggered = 2
+                        else
+                            -- Tier 1: the magistrate chooses a new target for
+                            -- the strike. The trigger panel's complete callback
+                            -- sees this flag and opens the retarget picker.
+                            t.triggerBeforeRetarget = true
+                        end
+                        casterToken.properties:DispatchAvailableTrigger(t)
+                    end,
+                }
+        additionalCostModifiers:
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Halve Damage
+          rulesText: The magistrate halves the triggering damage.
+          guid: 419cb1c5-02eb-40be-998b-f7553017343d
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: none
+          damageMultiplier: half
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+        - __typeName: CharacterModifier
+          behavior: power
+          name: Bane
+          rulesText: The target takes a bane on the strike.
+          guid: c9be41d1-3925-4546-820e-bc6dda88cf10
+          source: Trigger
+          rollType: enemy_ability_power_roll
+          modtype: bane
+          activationCondition: false
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          keywords:
+            Strike: true
+      domains:
+        CharacterFeature:39b6151f-1303-4273-80e6-2925ef0fb9a5: true
     inflictedConditions: []
     walkingSpeed: 7
     opportunityAttack: 7
@@ -106,12 +384,68 @@ info:
       implementation: 3
       targetType: target
       behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        promptText: The magistrate may shift up to 3 squares before striking.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: "3"
+        applyto: caster
+        invokeOnCaster: true
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: e26adbf7-fe84-42a8-8a76-e4b84e781190
+          description: ""
+          repeatTargets: false
+          range: 1
+          name: Invoked Ability
+        modesSelected:
+        - 1
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
         tiers:
         - 10 damage
         - 15 damage
         - 18 fire damage; R<3 dazed (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        promptText: The magistrate may shift up to 3 squares.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: "3"
+        applyto: caster
+        invokeOnCaster: true
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 3d045bc4-846d-46b4-98c7-56debcee14c1
+          description: ""
+          repeatTargets: false
+          range: 1
+          name: Invoked Ability
+        modesSelected:
+        - 2
       categorization: Signature Ability
       effectImplemented: false
       repeatTargets: false
@@ -134,10 +468,83 @@ info:
         saturation: 1
       range: 1
       name: Edge of the Law
+      multipleModes: variations
+      modeList:
+      - condition: Monster Mode = 1
+        text: Shift before
+        rules: The magistrate shifts up to 3 squares before striking.
+      - condition: Monster Mode = 1
+        text: Shift after
+        rules: The magistrate shifts up to 3 squares after striking.
+      - variation:
+          __typeName: ActivatedAbility
+          name: Edge of the Law
+          implementation: 3
+          targetType: target
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Agility
+            tiers:
+            - 10 damage
+            - 15 damage
+            - 18 fire damage
+          categorization: Signature Ability
+          repeatTargets: false
+          abilityType: none
+          numTargets: 2
+          modifiers: []
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          iconid: ui-icons/skills/1.png
+          guid: 4732e000-34f0-4782-9180-ef5ee1c769e0
+          flavor: ""
+          keywords:
+            Strike: true
+            Melee: true
+            Weapon: true
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+        text: True Name Spoken
+        rules: "The magistrate's true name has been spoken: the signature ability loses its nondamaging effects."
+        condition: Monster Mode = 2
+        hasAbility: true
     - __typeName: ActivatedAbility
       implementation: 3
       targetType: target
       behaviors:
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 2255caf2-a80a-440a-a88f-51c247004057
+        modifier:
+          __typeName: CharacterModifier
+          name: Hidden from the target
+          behavior: power
+          rollType: ability_power_roll
+          modtype: double_edge
+          activationCondition: Self.Hidden This Turn
+          description: This ability has a double edge if the magistrate was hidden from the target.
+          guid: 9fd7e72f-8545-4f0d-8634-6f91df9603bb
+          sourceguid: 2255caf2-a80a-440a-a88f-51c247004057
+          domains: []
+          keywords: []
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 6faf2412-33b3-4e9b-9c4d-36b8ecf53716
+        modifier:
+          __typeName: CharacterModifier
+          name: Target is dazed
+          behavior: power
+          rollType: ability_power_roll
+          modtype: none
+          damageModifier: "5"
+          activationCondition: Target.Conditions has "Dazed"
+          description: This ability deals an extra 5 damage if the target is dazed.
+          guid: 159b14be-171b-44c8-91d6-ee6b4b236a41
+          sourceguid: 6faf2412-33b3-4e9b-9c4d-36b8ecf53716
+          domains: []
+          keywords: []
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
         tiers:
@@ -167,9 +574,42 @@ info:
       range: 1
       name: Verdict
     - __typeName: ActivatedAbility
-      implementation: 0
+      implementation: 3
       targetType: self
-      behaviors: []
+      castImmediately: true
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+        ongoingEffectCustom: false
+        applyto: caster
+        duration: 1
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        promptText: The magistrate may attempt to hide as a free maneuver.
+        applyto: caster
+        invokeOnCaster: true
+        customAbility:
+          __typeName: ActivatedAbility
+          name: Hide
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          categorization: Hidden
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: hidden (eoe)
+          iconid: ui-icons/skills/1.png
+          guid: 032dd826-d068-4066-8647-02f3dd1c4ae7
+          description: ""
+          repeatTargets: false
+          range: 1
       categorization: Signature Ability
       effectImplemented: false
       repeatTargets: false
@@ -181,7 +621,7 @@ info:
       guid: 01312739-dd6b-4daf-8cfa-015082638a23
       flavor: ""
       keywords: []
-      description: The magistrate becomes hidden, even if they are being observed.
+      description: The magistrate turns invisible until the start of their next turn, and can attempt to hide as a free maneuver before the end of the current turn.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -189,32 +629,6 @@ info:
         saturation: 1
       range: 1
       name: Justice Turns Its Gaze
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Magic: true
-      iconid: ui-icons/skills/1.png
-      guid: 5624855c-58e4-4fb4-8372-8b6b7732ba4d
-      behaviors: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      description: The target makes a Presence test.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Devilish Charm
     skillProficiencies: []
     max_hitpoints_roll: "160"
     levelChoices: []
@@ -242,11 +656,7 @@ info:
         id: rea
         baseValue: 0
     innateAttacks: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: fire
-      dr: 5
+    resistances: []
     availableTriggers: []
     stability: 0
     initiativeGrouping: 170fd424-f615-42b4-bf92-0bd3de47e56d
