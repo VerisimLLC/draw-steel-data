@@ -59,14 +59,27 @@ info:
       domains:
         CharacterFeature:7b4e608c-9e9b-443b-a423-db7e26a57476: true
       description: The sand stone giant ignores difficult terrain.
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        value: 1
+        guid: dcf7acb8-17a0-486e-bd3f-284a2ec66c28
+        sourceguid: 7b4e608c-9e9b-443b-a423-db7e26a57476
+        domains:
+          CharacterFeature:7b4e608c-9e9b-443b-a423-db7e26a57476: true
+        description: The sand stone giant ignores difficult terrain.
+        source: Trait
+        name: Stone Steps
       source: Trait
       name: Stone Steps
     - __typeName: CharacterFeature
       guid: 6c89fc07-b7d4-45b7-b160-4c9587aa5225
       domains:
         CharacterFeature:6c89fc07-b7d4-45b7-b160-4c9587aa5225: true
-      description: Whenever an enemy gets a tier 1 result on a melee strike against the sand stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+      description: Whenever an enemy obtains a tier 1 outcome on a melee ability used against the sand stone giant, they take a bane on that ability until the end of the encounter.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stonebreaker Flesh
@@ -75,6 +88,7 @@ info:
       domains:
         CharacterFeature:df4c30c3-42c1-4958-ab1d-fe6f01744ba8: true
       description: The sand stone giant can burrow through stone, but can't drag other creatures underground when they do so.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stone Swim
@@ -141,6 +155,7 @@ info:
     - __typeName: ActivatedAbility
       implementation: 4
       targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Signature Ability
       keywords:
@@ -163,10 +178,11 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
         - 3 damage; slide 2
-        - 6 damage; A<3 restrained (save ends); slide 3
-        - 8 damage; A<4 restrained (save ends); slide 4
+        - 6 damage; slide 3; A<{Average} restrained (save ends)
+        - 8 damage; slide 4; A<{Strong} restrained (save ends)
       range: 3
       name: Buried in Sand
     creatureSize: "4"

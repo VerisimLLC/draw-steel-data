@@ -59,14 +59,27 @@ info:
       domains:
         CharacterFeature:ecf00279-c2f6-4461-85ed-f3db6becb0f6: true
       description: The marble stone giant ignores difficult terrain.
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        value: 1
+        guid: b66f4fd8-c768-4d52-b3bd-4fa9ecd711b7
+        sourceguid: ecf00279-c2f6-4461-85ed-f3db6becb0f6
+        domains:
+          CharacterFeature:ecf00279-c2f6-4461-85ed-f3db6becb0f6: true
+        description: The marble stone giant ignores difficult terrain.
+        source: Trait
+        name: Stone Steps
       source: Trait
       name: Stone Steps
     - __typeName: CharacterFeature
       guid: 395f1f79-f58f-4904-b583-f381c0837f35
       domains:
         CharacterFeature:395f1f79-f58f-4904-b583-f381c0837f35: true
-      description: Whenever an enemy gets a tier 1 result on a melee strike against the marble stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+      description: Whenever an enemy obtains a tier 1 outcome on a melee ability used against the marble stone giant, they take a bane on that ability until the end of the encounter.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stonebreaker Flesh
@@ -75,9 +88,93 @@ info:
       domains:
         CharacterFeature:77c3b3c1-24f6-4c28-b92d-531ad89593cf: true
       description: The marble stone giant can burrow through stone, but can't drag other creatures underground when they do so.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stone Swim
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 23dad3a7-df60-4bb1-80fb-b1b4635edf14
+      domains:
+        CharacterFeature:23dad3a7-df60-4bb1-80fb-b1b4635edf14: true
+      description: ""
+      source: Character Feature
+      name: Break Armor
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: 6dd57583-3ea9-41a3-a6c3-18f6355bf456
+        sourceguid: 23dad3a7-df60-4bb1-80fb-b1b4635edf14
+        domains:
+          CharacterFeature:23dad3a7-df60-4bb1-80fb-b1b4635edf14: true
+        description: ""
+        source: Character Feature
+        name: Break Armor
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: c1f06786-8012-49d7-98c8-b8b47b566443
+          keywords: []
+          trigger: The marble stone giant takes damage.
+          effect: "1 Malice: The marble stone giant halves the damage, and has damage weakness 3 and a +3 bonus to speed until the end of the encounter. The damage weakness increases by 3 each time the marble stone giant uses this ability in the same encounter."
+      - __typeName: CharacterModifier
+        behavior: powertabletrigger
+        guid: a696c4b0-a1ab-4982-87fc-9b705cd8b565
+        sourceguid: 23dad3a7-df60-4bb1-80fb-b1b4635edf14
+        domains:
+          CharacterFeature:23dad3a7-df60-4bb1-80fb-b1b4635edf14: true
+        description: ""
+        source: Character Feature
+        name: Break Armor
+        type: trigger
+        trigger: takedamage
+        targetType: self
+        range: 1
+        rules: The marble stone giant takes damage.
+        additionalCostModifiers: []
+        powerRollModifier:
+          __typeName: CharacterModifier
+          behavior: power
+          modtype: none
+          rollType: ability_power_roll
+          damageMultiplier: half
+          resourceCostType: cost
+          resourceCostAmount: "1"
+          activationCondition: false
+          keywords: []
+          rules: ""
+          name: Break Armor
+          guid: f2ca4cf6-4eca-4708-9ae5-f5e821996ebb
+          source: Trigger
+          description: The marble stone giant halves the damage, and has damage weakness 3 and a +3 bonus to speed until the end of the encounter. The damage weakness increases by 3 each time the marble stone giant uses this ability in the same encounter.
+          hasCustomTrigger: true
+          customTrigger:
+            __typeName: TriggeredAbility
+            name: Break Armor
+            guid: d9f5d135-bf80-43fe-a93a-8d2d7c1e7ec7
+            trigger: d20roll
+            castImmediately: true
+            targetType: self
+            numTargets: "1"
+            range: 1
+            abilityType: none
+            repeatTargets: false
+            description: ""
+            modifiers: []
+            persistence: []
+            strain: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              ongoingEffect: 6ab5d7a5-28ee-48a3-a078-9566b5049bad
+              ongoingEffectCustom: false
+              duration: eoe
+              stacks: "1"
+              applyto: caster
     inflictedConditions: []
     walkingSpeed: 6
     opportunityAttack: 8
@@ -160,20 +257,27 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: self
+      implementation: 4
+      targetType: cube
+      objectTarget: true
+      targetFilter: Enemy
       behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: c885a4ba-bb51-4676-977d-95df9aa19d85
+        ongoingEffectCustom: false
+        filterTarget: Target.SaveEndsEffects or Target.EoTEffects
+        applyto: targets
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
-        - 6 damage; I<2 dazed (save ends)
-        - 10 damage; I<3 dazed (save ends)
-        - 14 damage; I<4 dazed (save ends)
+        - 6 damage; I<{Weak} dazed (save ends)
+        - 10 damage; I<{Average} dazed (save ends)
+        - 14 damage; I<{Strong} dazed (save ends)
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
@@ -183,25 +287,36 @@ info:
         Weapon: true
         Area: true
         Ranged: true
-      description: This ability knocks the target prone if they are already affected by an EoT or a Save Ends effect.
+      description: If the target has any effect on them that can be ended by a saving throw or that ends at the end of their turn, they are also knocked prone.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
-      name: Marble From A Great Sling
+      radius: 3
+      range: 15
+      name: Marble From a Great Sling
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Heroic Ability
-      effectImplemented: false
       resourceNumber: 3
       repeatTargets: false
       abilityType: none
-      numTargets: 1
-      modifiers: []
+      numTargets: "1"
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: power
+        modtype: double_edge
+        rollType: ability_power_roll
+        activationCondition: Target.Conditions has "Prone" or Target.Conditions has "Grabbed"
+        name: Far Flung
+        guid: 1cfaf6e4-a98e-470e-850b-c89e697939f5
+        sourceguid: eda9ac3a-4c86-4023-935b-03bd4a0e3a6f
+        source: Ability
+        description: Against a target who is prone or grabbed, this ability has a double edge.
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       keywords:
         Melee: true
@@ -211,12 +326,13 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
         - vertical push 7
         - vertical push 10
         - vertical push 12
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: The target is catapulted sky high. This ability has a double edge against prone or grabbed targets.
+      description: Against a target who is prone or grabbed, this ability has a double edge.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -225,53 +341,108 @@ info:
       range: 1
       name: Far Flung
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
+      implementation: 4
+      targetType: line
+      categorization: Ability
       repeatTargets: false
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       iconid: ui-icons/skills/1.png
       guid: 36e4a64d-587f-42bc-a381-ad4b73897bff
       flavor: ""
-      keywords: []
-      description: The affected area becomes slick and glossy. Non-giants that start or end their turn on the ground in the affected area are knocked prone and slide 2.
+      keywords:
+        Area: true
+      description: The ground in the area becomes slick and glossy. Any non-giant who starts or ends their turn in the area is knocked prone and slides 2 squares.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: eoe
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          name: Polish Stone Shape
+          guid: 07660893-0f7d-44c2-a30a-49b2196b23f3
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          source: Polish Stone Shape
+          description: Any non-giant who starts or ends their turn in the area is knocked prone and slides 2 squares.
+          applyto: all
+          creatureFilter: not (Keywords has "Giant")
+          triggers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          modifiers:
+          - __typeName: CharacterModifier
+            behavior: trigger
+            name: Polish Stone Shape
+            guid: 266fb061-5831-426b-bdd6-1c6fb5081a7a
+            sourceguid: 07660893-0f7d-44c2-a30a-49b2196b23f3
+            description: ""
+            source: Aura
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              name: Polish Stone Shape
+              guid: 21c47c88-5249-43fc-8e4d-2f14f79b54fa
+              trigger: beginturn
+              targetType: self
+              numTargets: "1"
+              range: 1
+              abilityType: none
+              repeatTargets: false
+              description: ""
+              modifiers: []
+              persistence: []
+              strain: []
+              iconid: ui-icons/skills/1.png
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: prone; slide 2
+          - __typeName: CharacterModifier
+            behavior: trigger
+            name: Polish Stone Shape
+            guid: 1e3e117e-f377-4e24-b7ba-e06ccbe25009
+            sourceguid: 07660893-0f7d-44c2-a30a-49b2196b23f3
+            description: ""
+            source: Aura
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              name: Polish Stone Shape
+              guid: 7b08fdf9-57d6-4a4e-a732-56d284f90269
+              trigger: endturn
+              targetType: self
+              numTargets: "1"
+              range: 1
+              abilityType: none
+              repeatTargets: false
+              description: ""
+              modifiers: []
+              persistence: []
+              strain: []
+              iconid: ui-icons/skills/1.png
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: prone; slide 2
+      radius: 2
+      range: 10
       name: Polish Stone Shape
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 1
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords: []
-      iconid: ui-icons/skills/1.png
-      guid: e04afe2e-25d6-486c-b018-0aeadbdae742
-      behaviors: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      description: The marble stone giant halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the marble stone giant uses this ability in an encounter.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Break Armor
     creatureSize: "4"
     traitNames: []
     max_hitpoints_roll: "207"

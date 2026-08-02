@@ -59,14 +59,27 @@ info:
       domains:
         CharacterFeature:36132a27-c374-4656-af2c-3969b74aae35: true
       description: The basalt stone giant ignores difficult terrain.
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        value: 1
+        guid: 43674bb7-631c-4da3-b535-36902e210e77
+        sourceguid: 36132a27-c374-4656-af2c-3969b74aae35
+        domains:
+          CharacterFeature:36132a27-c374-4656-af2c-3969b74aae35: true
+        description: The basalt stone giant ignores difficult terrain.
+        source: Trait
+        name: Stone Steps
       source: Trait
       name: Stone Steps
     - __typeName: CharacterFeature
       guid: e65d818a-0db0-400b-acaf-a7fa68f6e8ce
       domains:
         CharacterFeature:e65d818a-0db0-400b-acaf-a7fa68f6e8ce: true
-      description: Whenever an enemy gets a tier 1 result on a melee strike against the basalt stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+      description: Whenever an enemy obtains a tier 1 outcome on a melee ability used against the basalt stone giant, they take a bane on that ability until the end of the encounter.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stonebreaker Flesh
@@ -75,6 +88,7 @@ info:
       domains:
         CharacterFeature:09327ae9-0bb1-4f07-96e3-2a5de65a5cd3: true
       description: The basalt stone giant can burrow through stone, but can't drag other creatures underground when they do so.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stone Swim
@@ -98,9 +112,11 @@ info:
           __typeName: TriggeredAbilityDisplay
           guid: fab85cd5-c1ca-4654-837c-063bca7273af
           implementationNotes: Gold implementation
-          keywords: []
+          keywords:
+          - Area
+          - Magic
           trigger: The basalt stone giant takes damage.
-          effect: The target is pushed up to 3 sqiuares, or if they have A<3 they are pushed up to 6 squares and knocked prone.
+          effect: The target is pushed up to 3 squares, or if they have A<3, they are pushed up to 6 squares and knocked prone.
       - __typeName: CharacterModifier
         triggeredAbility:
           __typeName: TriggeredAbility
@@ -109,59 +125,14 @@ info:
           strain: []
           targetType: all
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            filterTarget: Target.Agility < 3
-            abilityType: standard
-            promptText: If target has agility A<3, they are pushed up to 6 squares and knocked prone.
-            standardAbilityParams:
-              range: "6"
-            autoTarget: false
-            customAbility:
-              __typeName: ActivatedAbility
-              display:
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                brightness: 1
-                saturation: 1
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
-              behaviors: []
-              iconid: ui-icons/skills/1.png
-              guid: f84d26c6-d322-4619-8a1a-49657724001d
-              description: ""
-              repeatTargets: false
-              range: 1
-              name: Invoked Ability
-            standardAbility: 8acf7d21-2e06-4439-bff0-bfaf72c24514
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            filterTarget: Target.Agility < 3
-            ongoingEffectSource: specific
-            ongoingEffect: c885a4ba-bb51-4676-977d-95df9aa19d85
-            ongoingEffectCustom: false
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: push 3
+            applyto: targets
             filterTarget: Target.Agility >= 3
-            autoTarget: false
-            customAbility:
-              __typeName: ActivatedAbility
-              display:
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                brightness: 1
-                saturation: 1
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
-              behaviors: []
-              iconid: ui-icons/skills/1.png
-              guid: 4ccfca69-cf56-4ce0-aa0f-3cbec54b1d0f
-              description: ""
-              repeatTargets: false
-              range: 1
-              name: Invoked Ability
-            promptText: If target has agility A<3, they are pushed up to 6 squares and knocked prone.
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: push 6; prone
+            applyto: targets
+            filterTarget: Target.Agility < 3
           persistence: []
           display:
             bgcolor: "#ffffffff"
@@ -177,7 +148,11 @@ info:
           guid: e9586fa4-9319-40f0-a3e2-c864deafab0e
           trigger: losehitpoints
           targetAllegiance: enemy
-          description: ""
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          keywords:
+            Area: true
+            Magic: true
+          description: The target is pushed up to 3 squares, or if they have A<3, they are pushed up to 6 squares and knocked prone.
           repeatTargets: false
           range: "2"
           name: Resonate Rune
@@ -276,44 +251,11 @@ info:
 
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 2
       targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 4
-        tiers:
-        - 12 damage; M<2 slowed (save ends)
-        - 17 damage; M<3 slowed (save ends)
-        - 21 damage; M<4 slowed (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 5e698a77-9ef7-4e14-88cc-8a4e7c3823b6
-      flavor: ""
-      keywords:
-        Strike: true
-        Magic: true
-        Melee: true
-        Weapon: true
-      description: This ability reduces a target's speed to 0 (EoT) if they were already slowed.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 3
-      name: Rune Signed Blade
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Heroic Ability
-      effectImplemented: false
       resourceNumber: 3
       repeatTargets: false
       abilityType: none
@@ -330,12 +272,13 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
-        - 10 damage; A<2 restrained (save ends)
-        - 16 damage; A<3 restrained (save ends)
-        - 20 damage; prone; A<4 restrained (save ends)
+        - 10 damage; A<{Weak} restrained (save ends)
+        - 16 damage; A<{Average} restrained (save ends)
+        - 20 damage; prone; A<{Strong} restrained (save ends)
       range: 12
-      description: The knife lands in the target's square. The knife has 30 Stamina and damage immunity 5. Whenever the knife takes damage, the knife vibrates and deals 4 sonic damage to each enemy within 3 squares.
+      description: "The knife lands in the target's square, and has 30 Stamina and damage immunity 5. Whenever the knife takes damage, it deals 4 sonic damage to each enemy within 3 squares. The knife lasts until the end of the encounter, and can't be picked up or manipulated. (Director: place and track the knife manually.)"
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -344,64 +287,9 @@ info:
       meleeRange: 3
       name: Forked Knife
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: "1"
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 9ad85d27-7654-45c2-a818-25ab62ed66c5
-      flavor: ""
-      keywords: []
-      description: The basalt stone giant moves up to their speed. Each square that they leave during this movement is considered difficult terrain for enemies. Giants can move through 2 affected squares for the normal cost of 1 speed.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Cobble Stone Shape
-    - __typeName: ActivatedAbility
-      implementation: 0
-      strain: []
-      targetType: all
-      behaviors: []
-      categorization: Signature Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      persistence: []
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      flavor: ""
-      iconid: ui-icons/skills/1.png
-      guid: d5b62576-71ae-452e-a795-9e73fc7bcef0
-      keywords:
-        Melee: true
-        Magic: true
-        Area: true
-      repeatTargets: false
-      description: Push 3 or A<3 push 6 and knocked prone.
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 146
-      range: 2
-      name: Resonate Rune
-    - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Signature Ability
       keywords:
@@ -427,28 +315,34 @@ info:
       repeatTargets: false
       description: If a target was already slowed, that condition continues but their speed is 0 until the end of their next turn.
       behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: a41ad86c-64ff-4421-bc55-7e5325dce78a
+        ongoingEffectCustom: false
+        duration: end_of_next_turn
+        filterTarget: Target.Conditions has "Slowed"
+        applyto: targets
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
-        - 12 damage; M<2 slowed (save ends)
-        - 17 damage; M<3 slowed (save ends)
-        - 21 damage; M<4 slowed (save ends)
+        - 12 damage; M<{Weak} slowed (save ends)
+        - 17 damage; M<{Average} slowed (save ends)
+        - 21 damage; M<{Strong} slowed (save ends)
       range: 3
       name: Rune-Signed Blade
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
+      implementation: 4
+      targetType: self
       flavor: ""
       categorization: Ability
-      keywords:
-        "-": true
+      keywords: []
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       iconid: ui-icons/skills/1.png
@@ -458,8 +352,79 @@ info:
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 146
       repeatTargets: false
-      description: The basalt stone giant moves up to their speed. Each square that they leave during this move is difficult terrain for enemies Giants ignore this difficult terrain.
-      behaviors: []
+      description: The basalt stone giant moves up to their speed. Each square that they leave during this move is difficult terrain for enemies. Giants ignore this difficult terrain.
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+        namedAbility: Move Speed
+        promptText: The basalt stone giant moves up to their speed.
+        applyto: caster
+        targeting: self
+        customAbility:
+          __typeName: ActivatedAbility
+          name: Invoked Ability
+          guid: 7ecff26e-9e25-4f69-b19f-920c302342be
+          targetType: self
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          description: ""
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: none
+        promptText: Select the squares you left during this move to become difficult terrain.
+        standardAbilityParams:
+          spacesmoved: "<<Cast.Spaces Moved>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          name: Cobblestone Shape
+          guid: 9bff2b0d-09cb-4606-97b2-2ef089810c54
+          categorization: Hidden
+          targetType: anyspace
+          numTargets: "<<spacesmoved>>"
+          range: "<<spacesmoved>>"
+          abilityType: none
+          repeatTargets: false
+          description: Each square that the basalt stone giant left during this move is difficult terrain for enemies.
+          modifiers: []
+          persistence: []
+          strain: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityAuraBehavior
+            duration: eoe
+            aliveafterdeath: true
+            aura:
+              __typeName: Aura
+              name: Cobblestone Shape
+              guid: ec150fbc-9225-4825-8d24-49168d288c94
+              objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+              source: Cobblestone Shape
+              description: This area is difficult terrain for enemies of the basalt stone giant.
+              difficult_terrain: true
+              applyto: enemies
+              modifiers: []
+              triggers: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
       range: 1
       name: Cobblestone Shape
     walkingSpeed: 7
