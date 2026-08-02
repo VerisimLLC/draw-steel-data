@@ -1,73 +1,241 @@
 __typeName: MonsterGroup
-id: 2c4ebcaf-087b-4f0d-a94a-61e9b67fb70f
-mtime: 1762942345877
-traits: []
-ctime: 1758524612606
+name: Devil
+attacks: []
 maliceAbilities:
 - __typeName: MaliceAbility
-  display:
-    bgcolor: "#ffffffff"
-    hueshift: 0
-    brightness: 1
-    saturation: 1
-  abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "3"
-  iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
-  guid: 1238a779-5027-4882-bbf7-e4cc0e28c4d1
-  behaviors: []
-  repeatTargets: false
-  description: One devil acting this turn uses a signature ability against an adjacent creature. On a tier 3 outcome, the target of the ability has a double bane on strikes (save ends).
   persistence: []
+  modifiers: []
+  targetType: self
   range: 1
-  name: Bureaucratic Tape
-- __typeName: MaliceAbility
+  guid: 1238a779-5027-4882-bbf7-e4cc0e28c4d1
+  description: One devil acting this turn uses a signature ability against an adjacent creature. On a tier 3 outcome, the target of the ability has a double bane on strikes (save ends).
+  objectTarget: false
+  behaviors:
+  - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+    modifier:
+      __typeName: CharacterModifier
+      behavior: modifyability
+      guid: e7fa0512-8140-411f-905f-08d02944c174
+      description: ""
+      name: Bureaucratic Tape
+      attributes: []
+      cannotModifyAction: true
+      filterAbility: ability.Categorization = "Signature Ability"
+      modifyDescription: The ability must be used against an adjacent creature. On a tier 3 outcome, the target has a double bane on strikes (save ends).
+      source: Malice
+      ability:
+        __typeName: ActivatedAbility
+        repeatTargets: false
+        strain: []
+        targetType: self
+        range: 1
+        guid: 7d6c4a58-955c-45d1-bf64-1f1f4c1d3393
+        description: ""
+        name: Bureaucratic Tape
+        abilityModification: true
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          saturation: 1
+          brightness: 1
+        modifiers: []
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: save_ends
+          ongoingEffectCustom: false
+          ongoingEffect: a868eeb1-640f-4160-8e6e-b592c7b9a89e
+          tiersSelected:
+          - 3
+        iconid: ui-icons/skills/1.png
+        abilityType: none
+        numTargets: "1"
+    filterAbilityTargets: ""
+  iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+  numTargets: "1"
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
-    brightness: 1
     saturation: 1
-  abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
+    brightness: 1
+  implementation: 4
+  resourceNumber: "3"
+  name: Bureaucratic Tape
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "5"
-  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-  guid: 2c758597-b616-483f-888d-88d74eb74c5c
-  behaviors: []
   repeatTargets: false
+  abilityType: none
+  strain: []
+- __typeName: MaliceAbility
+  persistence: []
+  modifiers: []
+  targetFilter: Target.Keywords has "Devil"
+  targetType: target
+  range: "99"
+  strain: []
   description: |
     One or two devils can teleport to a space adjacent to one or more creatures who aren't hidden and make a free strike. For each 2 additional Malice spent on this feature, one additional devil can teleport.
-  persistence: []
-  range: 1
   name: Underhanded Tactics
-- __typeName: MaliceAbility
+  selfTarget: true
+  channelIncrement: 2
+  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+  numTargets: 2 + Charges
   display:
     bgcolor: "#ffffffff"
     hueshift: 0
-    brightness: 1
     saturation: 1
+    brightness: 1
+  implementation: 4
+  objectTarget: false
   abilityType: none
-  numTargets: "1"
-  strain: []
-  targetType: self
-  modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  resourceNumber: "7"
-  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
-  guid: 71bc7172-1e67-406d-92d5-11c91d7e9a20
-  behaviors: []
+  resourceNumber: "5"
   repeatTargets: false
-  description: Each enemy in the encounter is subject to a bad deal proposed by the devils. An enemy must choose between having damage weakness 5 or taking a bane on power rolls. The bad deal lasts until the end of the encounter.
+  channelDescription: For each 2 additional Malice spent on this feature, one additional devil can teleport.
+  guid: 2c758597-b616-483f-888d-88d74eb74c5c
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    promptWhenResolving: true
+    promptWhenResolvingText: Select the devils in the order they should teleport and free strike.
+    customAbility:
+      __typeName: ActivatedAbility
+      persistence: []
+      repeatTargets: false
+      targetType: self
+      range: 1
+      strain: []
+      description: ""
+      name: Invoked Ability
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      guid: 3ee60091-084b-4d5a-b18b-554042debbb7
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          targetType: self
+          range: 1
+          guid: 03b0ae3f-f7d9-4eb4-b16f-8d844145511d
+          description: ""
+          name: Invoked Ability
+          repeatTargets: false
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          numTargets: "1"
+        applyto: caster
+        promptText: Teleport to a space adjacent to one or more creatures who aren't hidden.
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+        standardAbilityParams:
+          range: "99"
+        abilityType: standard
+        invokeOnCaster: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          modifiers: []
+          targetType: target
+          range: 1
+          guid: b408984a-28f2-41bb-904a-8f5a2acd6bd8
+          description: ""
+          objectTarget: true
+          name: Free Strike
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          keywords:
+            Melee: true
+            Strike: true
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: Free Strike Damage
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          numTargets: "1"
+      iconid: ui-icons/skills/1.png
+      abilityType: none
+      numTargets: "1"
+  channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  maxChannel: "99"
+- __typeName: MaliceAbility
   persistence: []
-  range: 1
+  modifiers: []
+  targetFilter: Enemy
+  targetType: map
+  range: "99"
+  guid: 71bc7172-1e67-406d-92d5-11c91d7e9a20
+  description: Each enemy in the encounter is subject to a bad deal proposed by the devils. An enemy must choose between having damage weakness 5 or taking a bane on power rolls. The bad deal lasts until the end of the encounter.
   name: Read the Small Print
-attacks: []
-name: Devil
+  rangeTextOverride: All Enemies
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    customAbility:
+      __typeName: ActivatedAbility
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      persistence: []
+      repeatTargets: false
+      description: The devils propose a bad deal. Choose between having damage weakness 5 or taking a bane on power rolls. The bad deal lasts until the end of the encounter.
+      targetType: self
+      range: 1
+      strain: []
+      modeList:
+      - text: Damage weakness 5
+      - text: Bane on power rolls
+      name: Bad Deal
+      guid: f3abe04c-d421-463b-93c8-8f5724ba6236
+      multipleModes: true
+      modifiers: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        stacks: "5"
+        ongoingEffectCustom: false
+        applyto: caster
+        ongoingEffect: a5feff79-ba94-487f-be63-0db2898d05a2
+        duration: eoe
+        modesSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 54455d3b-5abe-46a3-90db-20ada18c4e95
+        applyto: caster
+        duration: eoe
+        modesSelected:
+        - 2
+      iconid: ui-icons/skills/1.png
+      abilityType: none
+      numTargets: "1"
+    runOnController: true
+  iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  numTargets: "1"
+  repeatTargets: false
+  implementation: 4
+  resourceNumber: "7"
+  display:
+    bgcolor: "#ffffffff"
+    hueshift: 0
+    saturation: 1
+    brightness: 1
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  abilityType: none
+  strain: []
+traits: []
+ctime: 1758524612606
+id: 2c4ebcaf-087b-4f0d-a94a-61e9b67fb70f
+mtime: 1785561278229
 _table: MonsterGroup

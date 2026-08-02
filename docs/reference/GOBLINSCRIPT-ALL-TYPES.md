@@ -690,6 +690,7 @@ Same symbols as Winded.
 | Field | Type | Description |
 |-------|------|-------------|
 | Target | creature | The creature being moved through. |
+| First | boolean | True if this is the first creature moved through during this move action. |
 
 ### Creature Moved Away From (`leaveadjacent`)
 | Field | Type | Description |
