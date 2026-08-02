@@ -189,7 +189,7 @@ ExecuteGoblinScript(self.conditionFormula, creature:LookupSymbol(symbols), ...)
 | `dying` (Become Dying) | Damage (number), Damage Type (text), Keywords (set), Attacker (creature) |
 | `rollpower` (Roll Power) | Natural Roll (number), High Roll (number), Low Roll (number), Surges (number), Tier One (boolean), Tier Two (boolean), Tier Three (boolean), Ability (ability) |
 | `inflictcondition` (Condition Applied) | Condition (string), Attacker (creature), Has Attacker (boolean) |
-| `movethrough` (Move Through Creature) | Target (creature) |
+| `movethrough` (Move Through Creature) | Target (creature), First (boolean) |
 | `leaveadjacent` (Creature Moved Away From) | Moving Creature (creature) |
 | `targetwithability` (Target With Ability) | Used Ability (ability), Target (creature) |
 | `useresource` (Use Resource) | Resource (string), Quantity (number) |
