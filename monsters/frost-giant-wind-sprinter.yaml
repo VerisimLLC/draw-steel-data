@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,44 +54,15 @@ info:
   updateid: 968066b2-8f3e-4ebf-8a09-97a80d566748
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: fd5e47d1-eeb4-4a65-8fb4-9f6c812106d3
-      domains:
-        CharacterFeature:fd5e47d1-eeb4-4a65-8fb4-9f6c812106d3: true
-      description: The wind sprinter can move through enemies and objects at normal speed. A creature can choose to fall prone or take 8 damage the first time the wind sprinter passes through their space on a turn.
-      modifiers: []
-      source: Trait
-      name: Crush Underfoot
-    - __typeName: CharacterFeature
-      guid: 61f8eaac-9596-4368-bedc-3bfab9568d3e
-      domains:
-        CharacterFeature:61f8eaac-9596-4368-bedc-3bfab9568d3e: true
-      description: The wind sprinter is surrounded by a snowstorm. An enemy that starts their turn within 2 squares of the wind sprinter can't shift.
-      modifiers: []
-      source: Trait
-      name: Kingdom of Isolation
-    stability: 5
     opportunityAttack: 8
-    cr: 8
-    damage_taken: 0
-    max_hitpoints: 200
     keywords:
       Frost Giant: true
       Giant: true
-    skillRatings: []
-    role: Elite Harrier
-    ev: 40
-    movementSpeeds: []
-    monster_type: Frost Giant Wind Sprinter
-    groupid: c65d0a89-5546-48aa-a79e-9838030eef8d
-    savingThrowRatings: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: cold
-      dr: 8
+    max_hitpoints: 200
+    walkingSpeed: 10
     creatureSize: "4"
+    max_hitpoints_roll: "200"
+    innateAttacks: []
     import:
       type: mcdm
       data: |+
@@ -132,139 +104,210 @@ info:
 
 
 
-    resources: []
-    innateAttacks: []
-    equipment: []
     attributes:
-      inu:
-        id: inu
-        baseValue: 0
       agl:
         id: agl
         baseValue: 4
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      prs:
-        id: prs
-        baseValue: 0
       mgt:
         id: mgt
         baseValue: 4
+      prs:
+        id: prs
+        baseValue: 0
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      inu:
+        id: inu
+        baseValue: 0
       rea:
         id: rea
         baseValue: -1
+    skillRatings: []
+    traitNames: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      keywords:
+        Strike: true
+        Weapon: true
+        Melee: true
+        Charge: true
+      categorization: Signature Ability
+      modifiers: []
+      description: This ability deals an additional 1d6 cold damage if the target is already bleeding.
+      effectImplemented: false
+      range: 3
       implementation: 3
-      targetType: target
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 12 damage
         - 17 damage; A<3 bleeding (save ends)
         - 21 damage; A<4 bleeding (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
+        roll: 2d10 + Might
       repeatTargets: false
-      abilityType: none
       numTargets: 2
-      modifiers: []
+      name: Cold Axe
+      targetType: target
+      abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
       guid: 91fdc1fd-6ce9-49ca-a63a-90b22958e515
+    - __typeName: ActivatedAbility
+      keywords: []
+      categorization: Signature Ability
+      modifiers: []
+      description: The wind sprinter shifts up to their speed and uses their Cold Axe against each enemy who comes within 2 squares of them during the move. The wind sprinter makes one power roll against all targets.
+      effectImplemented: false
+      range: 1
+      implementation: 0
       flavor: ""
-      keywords:
-        Strike: true
-        Charge: true
-        Melee: true
-        Weapon: true
-      description: This ability deals an additional 1d6 cold damage if the target is already bleeding.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 3
-      name: Cold Axe
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
       behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
-      abilityType: none
       numTargets: 1
-      modifiers: []
+      name: Blizzard Surge
+      targetType: self
+      abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
       guid: b37dc78c-ec0b-4050-8162-fa1b65bbdb7d
-      flavor: ""
-      keywords: []
-      description: The wind sprinter shifts up to their speed and uses their Cold Axe against each enemy who comes within 2 squares of them during the move. The wind sprinter makes one power roll against all targets.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Blizzard Surge
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 91c37815-37af-41a8-be45-0d10d2ad039b
-      flavor: ""
       keywords:
         Melee: true
         Strike: true
+      categorization: Signature Ability
+      modifiers: []
       description: Both giants shift 6, staying adjacent to each other. The wind sprinter allows the target to jump 5 and make a free strike.
+      effectImplemented: false
+      range: 1
+      implementation: 0
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
-      name: Ice Dance
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
       behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
-      abilityType: none
       numTargets: 1
+      name: Ice Dance
+      targetType: self
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 91c37815-37af-41a8-be45-0d10d2ad039b
+    - __typeName: ActivatedAbility
+      keywords: []
+      categorization: Signature Ability
       modifiers: []
+      description: The wind sprinter moves up to their speed and uses their Cold Axe on a single target.
+      effectImplemented: false
+      range: 1
+      implementation: 0
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors: []
+      repeatTargets: false
+      numTargets: 1
+      name: Begone, Smallfolk!
+      targetType: self
+      abilityType: none
       actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
       iconid: ui-icons/skills/1.png
       guid: 57f96644-1522-440a-8f06-06cadfa8c829
-      flavor: ""
-      keywords: []
-      description: The wind sprinter moves up to their speed and uses their Cold Axe on a single target.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Begone, Smallfolk!
-    minion: false
-    traitNames: []
-    max_hitpoints_roll: "200"
-    levelChoices: []
     monster_category: Monster
-    walkingSpeed: 10
+    equipment: []
+    movementSpeeds: []
+    damage_taken: 0
+    groupid: c65d0a89-5546-48aa-a79e-9838030eef8d
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: cold
+      dr: 8
+      apply: Damage Reduction
+    levelChoices: []
+    role: Elite Harrier
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:fd5e47d1-eeb4-4a65-8fb4-9f6c812106d3: true
+      source: Trait
+      guid: fd5e47d1-eeb4-4a65-8fb4-9f6c812106d3
+      name: Crush Underfoot
+      modifiers: []
+      description: The wind sprinter can move through enemies and objects at normal speed. A creature can choose to fall prone or take 8 damage the first time the wind sprinter passes through their space on a turn.
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:61f8eaac-9596-4368-bedc-3bfab9568d3e: true
+      implementation: 4
+      guid: 61f8eaac-9596-4368-bedc-3bfab9568d3e
+      name: Kingdom of Isolation
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:61f8eaac-9596-4368-bedc-3bfab9568d3e: true
+        behavior: trigger
+        name: Kingdom of Isolation
+        guid: 799e78e9-ea85-4fd7-a49f-13432544b7eb
+        description: The snowblaster is surrounded by a snowstorm. Any enemy who starts their turn within 2 squares of the snowblaster can't shift.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: subject
+          subject: enemy
+          repeatTargets: false
+          modifiers: []
+          description: ""
+          whenActive: combat
+          range: 1
+          persistence: []
+          strain: []
+          conditionFormula: Distance(Subject) <= 2
+          numTargets: "1"
+          triggerPrompt: The snowblaster is surrounded by a snowstorm. Any enemy who starts their turn within 2 squares of the snowblaster can't shift.
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 7d43f8e4-05e9-4795-bd63-ffe5e2fd5015
+            duration: 0
+            applyto: targets
+            ongoingEffectCustom: false
+          name: Kingdom of Isolation
+          subjectRange: "2"
+          trigger: beginturn
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+          abilityType: none
+          mandatory: true
+          iconid: ui-icons/skills/1.png
+          guid: 66734272-297e-49ab-91e6-a95669661793
+        sourceguid: 61f8eaac-9596-4368-bedc-3bfab9568d3e
+      description: The wind sprinter is surrounded by a snowstorm. An enemy that starts their turn within 2 squares of the wind sprinter can't shift.
+    monster_type: Frost Giant Wind Sprinter
+    savingThrowRatings: []
+    stability: 5
+    ev: 40
+    cr: 8
+    minion: false
   tokenType: null
   bestiaryId: 9da6b164-f9ee-4c5d-9316-c93a41c31558
   summonerid: null
@@ -277,6 +320,6 @@ parentFolder: df6abed8-c255-4902-a351-776e8730267f
 artist: null
 ord: 0
 ctime: 1741590287782
-mtime: 1775375113084
+mtime: 1785702734234
 hidden: false
 id: 9da6b164-f9ee-4c5d-9316-c93a41c31558

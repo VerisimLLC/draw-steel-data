@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,52 +54,16 @@ info:
   updateid: 75105a6c-7041-4be9-bc8a-5f915ef722ad
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 9f31b95a-4217-454c-8052-0a0e15516c2a
-      domains:
-        CharacterFeature:9f31b95a-4217-454c-8052-0a0e15516c2a: true
-      description: The sleeter is surrounded by a snowstorm. An enemy that starts their turn within 2 squares of the sleeter can't shift.
-      modifiers: []
-      source: Trait
-      name: Kingdom of Isolation
-    inflictedConditions: []
-    walkingSpeed: 7
     opportunityAttack: 5
-    cr: 8
-    damage_taken: 0
-    max_hitpoints: 14
     keywords:
       Frost: true
       Giant: true
-    skillRatings: []
-    role: Artillery Minion
     ev: 13
-    movementSpeeds: []
-    monster_type: Frost Giant Sleeter
-    groupid: c65d0a89-5546-48aa-a79e-9838030eef8d
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: cold
-      dr: 8
-    attributes:
-      inu:
-        id: inu
-        baseValue: 4
-      agl:
-        id: agl
-        baseValue: -1
-      prs:
-        id: prs
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 3
-      rea:
-        id: rea
-        baseValue: -1
+    minion: true
+    innateAttacks: []
+    creatureSize: "4"
+    max_hitpoints_roll: "14"
+    levelChoices: []
     import:
       type: mcdm
       data: |+
@@ -118,49 +83,127 @@ info:
         <b>Kingdom of Isolation</b>
         The sleeter is surrounded by a snowstorm. An enemy that starts their turn within 2 squares of the sleeter can't shift.
 
-    minion: true
-    innateAttacks: []
+    attributes:
+      agl:
+        id: agl
+        baseValue: -1
+      mgt:
+        id: mgt
+        baseValue: 3
+      prs:
+        id: prs
+        baseValue: 2
+      inu:
+        id: inu
+        baseValue: 4
+      rea:
+        id: rea
+        baseValue: -1
+    skillRatings: []
+    traitNames:
+    - With Captain Strike damage +4
+    stability: 5
     equipment: []
-    savingThrowRatings: []
+    inflictedConditions: []
+    monster_category: Monster
+    walkingSpeed: 7
+    groupid: c65d0a89-5546-48aa-a79e-9838030eef8d
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: cold
+      dr: 8
+      apply: Damage Reduction
+    movementSpeeds: []
+    role: Artillery Minion
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:9f31b95a-4217-454c-8052-0a0e15516c2a: true
+      implementation: 4
+      guid: 9f31b95a-4217-454c-8052-0a0e15516c2a
+      name: Kingdom of Isolation
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:9f31b95a-4217-454c-8052-0a0e15516c2a: true
+        behavior: trigger
+        name: Kingdom of Isolation
+        guid: 58f13e33-1d6c-4dc9-b2fb-d231854fc873
+        description: The snowblaster is surrounded by a snowstorm. Any enemy who starts their turn within 2 squares of the snowblaster can't shift.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: subject
+          subject: enemy
+          repeatTargets: false
+          modifiers: []
+          description: ""
+          whenActive: combat
+          range: 1
+          persistence: []
+          strain: []
+          conditionFormula: Distance(Subject) <= 2
+          numTargets: "1"
+          triggerPrompt: The snowblaster is surrounded by a snowstorm. Any enemy who starts their turn within 2 squares of the snowblaster can't shift.
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 7d43f8e4-05e9-4795-bd63-ffe5e2fd5015
+            duration: 0
+            applyto: targets
+            ongoingEffectCustom: false
+          name: Kingdom of Isolation
+          subjectRange: "2"
+          trigger: beginturn
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+          abilityType: none
+          mandatory: true
+          iconid: ui-icons/skills/1.png
+          guid: 6c2f5fd0-d06f-4a1f-be5b-ee9ea89b0d32
+        sourceguid: 9f31b95a-4217-454c-8052-0a0e15516c2a
+      description: The sleeter is surrounded by a snowstorm. An enemy that starts their turn within 2 squares of the sleeter can't shift.
+    monster_type: Frost Giant Sleeter
+    max_hitpoints: 14
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
       keywords:
-        Strike: true
         Magic: true
         Ranged: true
+        Strike: true
+      repeatTargets: false
+      modifiers: []
+      description: ""
+      range: 12
+      implementation: 4
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: e6c2e67f-fd4f-4443-ba13-22024e90ddfe
-      repeatTargets: false
-      description: ""
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 4
         tiers:
         - 5 cold damage
         - 8 cold damage
         - 11 cold damage; prone
-      range: 12
+        roll: 2d10 + 4
+      targetType: target
+      categorization: Signature Ability
       name: Slushfall
-    creatureSize: "4"
-    traitNames:
-    - With Captain Strike damage +4
-    max_hitpoints_roll: "14"
-    levelChoices: []
-    monster_category: Monster
-    stability: 5
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      abilityType: none
+      numTargets: 1
+      iconid: ui-icons/skills/1.png
+      guid: e6c2e67f-fd4f-4443-ba13-22024e90ddfe
+    savingThrowRatings: []
+    cr: 8
+    damage_taken: 0
   tokenType: null
   bestiaryId: 82ecfdd4-6bd7-4f4a-a1b9-5d9bd8e87e55
   summonerid: null
@@ -173,6 +216,6 @@ parentFolder: df6abed8-c255-4902-a351-776e8730267f
 artist: null
 ord: 0
 ctime: 1741590273769
-mtime: 1775375107748
+mtime: 1785702732001
 hidden: false
 id: 82ecfdd4-6bd7-4f4a-a1b9-5d9bd8e87e55

@@ -17,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -56,42 +57,12 @@ info:
   updateid: e4865de2-15b8-486f-95d1-aa8e2aae2ef0
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: cf374a4b-3bba-4a85-8e3e-9fed1aa9185a
-      domains:
-        CharacterFeature:cf374a4b-3bba-4a85-8e3e-9fed1aa9185a: true
-      description: Two of the beast's size 1 allies can occupy the same space while riding the beast.
-      source: Trait
-      modifiers: []
-      name: Beast of Burden
-    - __typeName: CharacterFeature
-      guid: 193c9e17-fe3f-4c6f-96b4-e40eab2a5473
-      domains:
-        CharacterFeature:193c9e17-fe3f-4c6f-96b4-e40eab2a5473: true
-      description: The beast ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
-      source: Trait
-      modifiers: []
-      name: Nature Calls
-    - __typeName: CharacterFeature
-      guid: 56ab05e5-c371-43b5-b7c9-082418691e61
-      domains:
-        CharacterFeature:56ab05e5-c371-43b5-b7c9-082418691e61: true
-      description: While outdoors or in a natural environment, the animal can negate a bane on their abilities or turn a double bane into a bane.
-      source: Trait
-      modifiers: []
-      name: Nature's Spirit
-    inflictedConditions: []
-    walkingSpeed: 6
     opportunityAttack: 5
-    creatureTemplates:
-    - 2df4ef87-0990-4758-90e0-8ecc874d482e
-    damage_taken: 0
-    max_hitpoints: 80
-    skillRatings: []
-    groupid: a68c91b6-55f3-4c16-82d9-e0da68078b49
-    resources: []
-    traitNames: []
+    keywords:
+      Animal: true
+    savingThrowRatings: []
+    creatureSize: "3"
+    skillProficiencies: []
     import:
       type: mcdm
       data: |+
@@ -126,28 +97,102 @@ info:
         The beast ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
 
 
+    attributes:
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 1
+      rea:
+        id: rea
+        baseValue: -1
+    skillRatings: []
     equipment: []
+    role: Elite Mount
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:cf374a4b-3bba-4a85-8e3e-9fed1aa9185a: true
+      name: Beast of Burden
+      description: Two of the beast's size 1 allies can occupy the same space while riding the beast.
+      source: Trait
+      modifiers: []
+      guid: cf374a4b-3bba-4a85-8e3e-9fed1aa9185a
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:193c9e17-fe3f-4c6f-96b4-e40eab2a5473: true
+      name: Nature Calls
+      description: The beast ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
+      source: Trait
+      modifiers: []
+      guid: 193c9e17-fe3f-4c6f-96b4-e40eab2a5473
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:56ab05e5-c371-43b5-b7c9-082418691e61: true
+      implementation: 3
+      description: While outdoors or in a natural environment, the animal can negate a bane on their abilities or turn a double bane into a bane.
+      source: Trait
+      name: Nature's Spirit
+      modifiers:
+      - __typeName: CharacterModifier
+        rollType: ability_power_roll
+        keywords: []
+        rollRequirement: bane
+        activationCondition: true
+        domains:
+          CharacterFeature:56ab05e5-c371-43b5-b7c9-082418691e61: true
+        source: Trait
+        behavior: power
+        name: Nature's Spirit
+        description: While outdoors or in a natural environment, the animal can negate a bane on their abilities or turn a double bane into a bane.
+        activationAfterRoll: false
+        guid: aa960230-16da-4cbd-bec8-1c08978bbbb1
+        sourceguid: 56ab05e5-c371-43b5-b7c9-082418691e61
+        modtype: remove_bane
+      - __typeName: CharacterModifier
+        rollType: ability_power_roll
+        keywords: []
+        rollRequirement: doublebane
+        sourceguid: 56ab05e5-c371-43b5-b7c9-082418691e61
+        name: Nature's Spirit
+        behavior: power
+        source: Trait
+        activationCondition: false
+        modtype: remove_bane
+        description: While outdoors or in a natural environment, the animal can negate a bane on their abilities or turn a double bane into a bane.
+        domains:
+          CharacterFeature:56ab05e5-c371-43b5-b7c9-082418691e61: true
+        guid: c5399d84-9ca9-4edb-9410-ae9f17654625
+      guid: 56ab05e5-c371-43b5-b7c9-082418691e61
+    titles: []
+    innateAttacks: []
+    walkingSpeed: 6
+    levelChoices: []
+    max_hitpoints: 80
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
       keywords:
         Melee: true
-        Strike: true
         Weapon: true
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
+        Strike: true
       numTargets: 2
       modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 7b1fde3b-7d89-430a-b032-9804e478abe8
+      description: ""
+      range: 2
+      implementation: 4
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+        hueshift: 0
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -155,91 +200,128 @@ info:
         - 7 damage
         - 10 damage; push 1
         - 13 damage; push 2
-      description: ""
-      repeatTargets: false
-      range: 2
-      name: Natural Weapon
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
       categorization: Signature Ability
-      keywords: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
+      targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Natural Weapon
       abilityType: none
+      repeatTargets: false
+      iconid: ui-icons/skills/1.png
+      guid: 7b1fde3b-7d89-430a-b032-9804e478abe8
+    - __typeName: ActivatedAbility
+      keywords: []
       numTargets: 1
       modifiers: []
+      description: The beast moves up to their speed. The beast can make a free strike on each creature that makes an opportunity attack against them during this movement.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+        hueshift: 0
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: true
+        standardAbilityParams:
+          distance: walking speed
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors: []
+          description: ""
+          modifiers: []
+          name: Invoked Ability
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          guid: cc9ba916-6f7b-47e9-a382-cc8b0a1fb27f
+        promptText: The deathrex moves up to their speed, then make a free strike against each creture who makes an opportunity attack against them during this movement.
+        abilityType: standard
+        applyto: caster
+        standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        invokeOnCaster: true
+        autoTarget: false
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors: []
+          description: ""
+          modifiers: []
+          name: Invoked Ability
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          guid: 94982bd9-0b5f-4d08-9302-13159fa48b8c
+        promptText: the deathrex now makes a free strike against each creature who made an opportunity attack agains them. (Director adjudication of targets  required)
+      categorization: Signature Ability
+      repeatTargets: false
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      targetType: self
+      abilityType: none
+      name: Trundle
       iconid: ui-icons/skills/1.png
       guid: f8a40f5d-bf99-4c6d-ac9e-573240d8f5b1
-      behaviors: []
-      effectImplemented: false
-      description: The beast moves up to their speed. The beast can make a free strike on each creature that makes an opportunity attack against them during this movement.
-      repeatTargets: false
-      range: 1
-      name: Trundle
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Signature Ability
       keywords: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
       numTargets: 1
       modifiers: []
+      description: The beast moves up to their speed. If they end their turn adjacent to the triggering ally, they can pick the ally up and allow them to climb on top of the beast.
+      effectImplemented: false
+      range: 1
+      implementation: 0
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+        hueshift: 0
+      behaviors: []
+      categorization: Signature Ability
+      repeatTargets: false
       actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      targetType: self
+      abilityType: none
+      name: Animal Rally
       iconid: ui-icons/skills/1.png
       guid: adfb46de-2041-4d47-aea2-8a0d91ae9aeb
-      behaviors: []
-      effectImplemented: false
-      description: The beast moves up to their speed. If they end their turn adjacent to the triggering ally, they can pick the ally up and allow them to climb on top of the beast.
-      repeatTargets: false
-      range: 1
-      name: Animal Rally
-    skillProficiencies: []
-    max_hitpoints_roll: "80"
-    levelChoices: []
-    monster_type: Big Animal B
-    cr: 2
-    titles: []
-    keywords:
-      Animal: true
-    ev: 16
+    creatureTemplates:
+    - 2df4ef87-0990-4758-90e0-8ecc874d482e
+    traitNames: []
     movementSpeeds: []
-    attributes:
-      inu:
-        baseValue: 1
-        id: inu
-      agl:
-        baseValue: 1
-        id: agl
-      mgt:
-        baseValue: 2
-        id: mgt
-      rea:
-        baseValue: -1
-        id: rea
-      prs:
-        baseValue: 0
-        id: prs
-    innateAttacks: []
-    resistances: []
-    stability: 3
-    role: Elite Mount
-    initiativeGrouping: 28522140-925f-4fe3-bd07-133416804bdd
     minion: false
-    creatureSize: "3"
+    groupid: a68c91b6-55f3-4c16-82d9-e0da68078b49
+    resources: []
+    resistances: []
+    ev: 16
+    max_hitpoints_roll: "80"
+    inflictedConditions: []
+    monster_type: Big Animal B
     monster_category: Monster
-    savingThrowRatings: []
+    stability: 3
+    initiativeGrouping: 28522140-925f-4fe3-bd07-133416804bdd
+    cr: 2
+    damage_taken: 0
   tokenType: null
   bestiaryId: cfc085f3-efce-4e0d-a8ad-b8f99da99b24
   summonerid: null
@@ -252,6 +334,6 @@ parentFolder: 4b3931af-633a-4d06-a87c-a4139290d258
 artist: null
 ord: 5
 ctime: 1741590309095
-mtime: 1779156364602
+mtime: 1785703326434
 hidden: false
 id: cfc085f3-efce-4e0d-a8ad-b8f99da99b24

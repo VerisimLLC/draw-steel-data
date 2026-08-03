@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,51 +54,19 @@ info:
   updateid: 15185bd0-f12c-47bd-b436-6d322c7f736c
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 3ce916a4-10d3-47f4-bcb9-5fa19916cce1
-      domains:
-        CharacterFeature:3ce916a4-10d3-47f4-bcb9-5fa19916cce1: true
-      description: At the start of their turn, the scribe can turn the duration of one save ends effect they suffer from into EoT.
-      modifiers: []
-      source: Trait
-      name: Otherworldly Grace
-    inflictedConditions: []
-    walkingSpeed: 5
     opportunityAttack: 2
-    cr: 1
-    damage_taken: 0
-    max_hitpoints: 5
     keywords:
-      Fey: true
       High Elf: true
-      Elf: true
       High: true
+      Fey: true
       Humanoid: true
-    skillRatings: []
-    role: Controller Minion
-    ev: 1
-    movementSpeeds: []
-    monster_type: High Elf Scribe
-    groupid: 09e8c417-bda6-4d95-bd57-2d87b97c6d11
-    resources: []
-    resistances: []
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 0
-      prs:
-        id: prs
-        baseValue: 1
-      mgt:
-        id: mgt
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: 1
+      Elf: true
+    savingThrowRatings: []
+    walkingSpeed: 5
+    inflictedConditions: []
+    creatureSize: 1M
+    max_hitpoints_roll: "5"
+    max_hitpoints: 5
     import:
       type: mcdm
       data: |+
@@ -119,14 +88,51 @@ info:
         At the start of their turn, the scribe can turn the duration of one save ends effect they suffer from into EoT.
 
 
-    minion: true
-    innateAttacks: []
-    equipment: []
-    savingThrowRatings: []
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 1
+      inu:
+        id: inu
+        baseValue: 1
+      rea:
+        id: rea
+        baseValue: 1
+    skillRatings: []
+    traitNames:
+    - With Captain Ranged distance +5
+    cr: 1
+    damage_taken: 0
+    ev: 1
+    monster_category: Monster
+    movementSpeeds: []
+    groupid: 09e8c417-bda6-4d95-bd57-2d87b97c6d11
+    resources: []
+    resistances: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      keywords:
+        Magic: true
+        Strike: true
+        Ranged: true
+      numTargets: 1
+      modifiers: []
+      description: The target can't hide until the start of the scribe's next turn.
+      effectImplemented: false
+      range: 5
       implementation: 3
-      targetType: target
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 2
@@ -134,35 +140,70 @@ info:
         - 2 corruption damage
         - 3 corruption damage
         - 4 corruption damage
-      categorization: Signature Ability
-      effectImplemented: false
+      targetType: target
       repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Inkshot
+      abilityType: none
+      categorization: Signature Ability
       iconid: ui-icons/skills/1.png
       guid: 6470e40c-d16c-4ceb-b894-ff450a9dc488
-      flavor: ""
-      keywords:
-        Strike: true
-        Magic: true
-        Ranged: true
-      description: The target can't hide until the start of the scribe's next turn.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 5
-      name: Inkshot
-    creatureSize: 1M
-    traitNames:
-    - With Captain Ranged distance +5
-    max_hitpoints_roll: "5"
-    levelChoices: []
-    monster_category: Monster
+    role: Controller Minion
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:3ce916a4-10d3-47f4-bcb9-5fa19916cce1: true
+      name: Otherworldly Grace
+      description: At the start of their turn, the scribe can turn the duration of one save ends effect they suffer from into EoT.
+      implementation: 3
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:3ce916a4-10d3-47f4-bcb9-5fa19916cce1: true
+        behavior: trigger
+        name: Otherworldly Grace
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: self
+          repeatTargets: false
+          modifiers: []
+          description: ""
+          whenActive: combat
+          range: 1
+          strain: []
+          persistence: []
+          hasManualVersion: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            mode: conditions
+            purgeType: one
+            targetDuration: save
+          trigger: beginturn
+          numTargets: "1"
+          name: Otherworldly Grace
+          mandatory: false
+          abilityType: none
+          reasonedFilters: []
+          iconid: ui-icons/skills/1.png
+          guid: 655932a5-f609-4528-b893-2d0ea9c59b8b
+        source: Trait
+        description: At the start of each of their turns, the weatherwise can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
+        guid: 895ca0f9-52c1-444d-a702-7f7b6e0059c4
+        sourceguid: 3ce916a4-10d3-47f4-bcb9-5fa19916cce1
+      guid: 3ce916a4-10d3-47f4-bcb9-5fa19916cce1
+    monster_type: High Elf Scribe
+    equipment: []
     stability: 0
+    levelChoices: []
+    innateAttacks: []
+    minion: true
   tokenType: null
   bestiaryId: ca7ba8d6-835d-480a-b120-786bd53023e6
   summonerid: null
@@ -175,6 +216,6 @@ parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d
 artist: null
 ord: 0
 ctime: 1741590307467
-mtime: 1775375119624
+mtime: 1785704021239
 hidden: false
 id: ca7ba8d6-835d-480a-b120-786bd53023e6

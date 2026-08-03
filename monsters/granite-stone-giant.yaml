@@ -59,14 +59,27 @@ info:
       domains:
         CharacterFeature:88ed4a8f-9bb8-499c-ad1f-63dcbdc2e74b: true
       description: The granite stone giant ignores difficult terrain.
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        value: 1
+        guid: 1094992a-d771-414d-9d94-6761870f84e0
+        sourceguid: 88ed4a8f-9bb8-499c-ad1f-63dcbdc2e74b
+        domains:
+          CharacterFeature:88ed4a8f-9bb8-499c-ad1f-63dcbdc2e74b: true
+        description: The granite stone giant ignores difficult terrain.
+        source: Trait
+        name: Stone Steps
       source: Trait
       name: Stone Steps
     - __typeName: CharacterFeature
       guid: ea7670bd-1984-436b-8d0b-b07d3b544365
       domains:
         CharacterFeature:ea7670bd-1984-436b-8d0b-b07d3b544365: true
-      description: Whenever an enemy gets a tier 1 result on a melee strike against the granite stone giant, they have a bane on all subsequent uses of that ability until the end of the encounter.
+      description: Whenever an enemy obtains a tier 1 outcome on a melee ability used against the granite stone giant, they take a bane on that ability until the end of the encounter.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stonebreaker Flesh
@@ -75,9 +88,82 @@ info:
       domains:
         CharacterFeature:693ce15b-22b8-4873-b617-6942883a5dc2: true
       description: The granite stone giant can burrow through stone, but can't drag other creatures underground when they do so.
+      implementation: 0
       modifiers: []
       source: Trait
       name: Stone Swim
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 85313dac-ce65-4fcd-beea-7d31fe06d625
+      domains:
+        CharacterFeature:85313dac-ce65-4fcd-beea-7d31fe06d625: true
+      description: ""
+      source: Character Feature
+      name: Pillar
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: e9b7c3aa-22a1-4e4a-a9b5-dece312b06ca
+        sourceguid: 85313dac-ce65-4fcd-beea-7d31fe06d625
+        domains:
+          CharacterFeature:85313dac-ce65-4fcd-beea-7d31fe06d625: true
+        description: ""
+        source: Character Feature
+        name: Pillar
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 30d263f1-a0bf-466b-9fd3-882b936cea1f
+          keywords:
+          - Melee
+          trigger: A creature or object within distance moves or shifts away from the granite stone giant.
+          effect: A 1-square pillar of stone rises 5 squares out of the ground beneath the target, who moves with the ground to its new elevation, then is vertical pushed 5 squares.
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: 0f484f39-c4b1-44fd-abaa-41a9f1731c80
+        sourceguid: 85313dac-ce65-4fcd-beea-7d31fe06d625
+        domains:
+          CharacterFeature:85313dac-ce65-4fcd-beea-7d31fe06d625: true
+        description: ""
+        source: Character Feature
+        name: Pillar
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: 6ee2a49b-9f1a-4136-bbf3-a5a354d6016a
+          name: Pillar
+          trigger: leaveadjacentorshift
+          mandatory: false
+          whenActive: combat
+          triggerPrompt: A creature or object within distance moves or shifts away from the granite stone giant.
+          targetType: all
+          targetFilter: Target = MovingCreature
+          objectTarget: true
+          numTargets: "1"
+          range: "100"
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          keywords:
+            Melee: true
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          persistence: []
+          strain: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: A 1-square pillar of stone rises 5 squares out of the ground beneath the target, who moves with the ground to its new elevation, then is vertical pushed 5 squares.
+          behaviors:
+          - __typeName: ActivatedAbilityChangeElevationBehavior
+            height: "5"
+            shape: square
+          - __typeName: ActivatedAbilityChangeTerrainBehavior
+            tileid: "-MBVQqKrE73ix3K9-MjS"
+            shape: square
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: vertical push 5
+            applyto: targets
     inflictedConditions: []
     stability: 10
     opportunityAttack: 8
@@ -163,7 +249,7 @@ info:
 
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       objectTarget: true
       strain: []
       targetType: all
@@ -176,6 +262,53 @@ info:
         promptWhenResolving: true
         promptWhenResolvingText: Select targets to push in your preferred order.
         roll: 2d10 + Might
+        attrid: mgt
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: eoe
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          name: Crag Burst
+          guid: 523c7f7c-ff47-4bd4-9b06-78fcd00db9b7
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          description: The area is difficult terrain. Whenever a creature enters a square in the area, they take 3 damage.
+          source: Crag Burst
+          difficult_terrain: true
+          applyto: all
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          triggers:
+          - trigger: onenter
+            destroyaura: false
+            ability:
+              __typeName: TriggeredAbility
+              name: Crag Burst
+              guid: 022ebfa7-81e0-4a5e-82b7-64549859add3
+              trigger: onenter
+              targetType: self
+              silent: true
+              numTargets: "1"
+              range: 1
+              radius: 0
+              abilityType: none
+              repeatTargets: false
+              description: ""
+              modifiers: []
+              persistence: []
+              strain: []
+              iconid: ui-icons/skills/1.png
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: 3 damage
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
@@ -200,18 +333,15 @@ info:
       iconid: ui-icons/skills/1.png
       guid: 3dd406c8-50a7-4762-b8a8-2e5c136c1ec1
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      effectImplemented: false
-      description: The affected area becomes difficult terrain. A creature takes 3 damage whenever they enter an affected square.
+      description: The area is difficult terrain. Whenever a creature enters a square in the area, they take 3 damage.
       categorization: Heroic Ability
       range: "2"
       name: Crag Burst
     - __typeName: ActivatedAbility
-      implementation: 0
+      implementation: 4
       strain: []
       targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
+      categorization: Ability
       persistence: []
       display:
         bgcolor: "#ffffffff"
@@ -219,7 +349,7 @@ info:
         brightness: 1
         saturation: 1
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       flavor: ""
@@ -230,44 +360,86 @@ info:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 149
-      description: The granite stone giant moves up to their speed and creates a 14 wall of stone. Each segment must include one of the squares the granite stone giant touched.
+      description: The granite stone giant moves up to their speed and creates a 14 wall of stone in squares adjacent to the path of their movement.
       keywords: []
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+        namedAbility: Move Speed
+        promptText: The granite stone giant moves up to their speed.
+        applyto: caster
+        targeting: self
+        customAbility:
+          __typeName: ActivatedAbility
+          name: Invoked Ability
+          guid: 974f060e-f0f2-45df-b35b-68dcadd5d7c5
+          targetType: self
+          range: 1
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          description: ""
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: none
+        promptText: Create a 14 wall of stone in squares adjacent to the path of your movement.
+        standardAbilityParams:
+          spacesmoved: "<<Cast.Spaces Moved>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          name: Castle Stone Shape
+          guid: 1ef67e89-db84-482d-98ef-aab613e564d5
+          categorization: Hidden
+          targetType: emptyspace
+          targeting: contiguous_wall
+          wallStacking: true
+          numTargets: "14"
+          range: "<<spacesmoved>>"
+          abilityType: none
+          repeatTargets: false
+          description: Create a 14 wall of stone in squares adjacent to the path of your movement.
+          modifiers: []
+          persistence: []
+          strain: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityBuildWallBehavior
+            objectid: 5dffb1f7-c558-40ab-a159-7743d2d788ce
       range: 1
       name: Castle Stone Shape
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 0067eeec-0abf-4d8f-933c-561568b185e7
-      keywords: []
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      description: A 1 square wide pillar of stone juts 5 squares out of the ground beneath the target, raising them and then vertically pushing them 5. The forced movement is entirely straight up.
-      behaviors: []
-      range: 3
-      name: Pillar
-    - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       strain: []
       targetType: target
+      objectTarget: true
       behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 08d6e8e7-5209-43e9-9eba-cd124aa81d51
+        ongoingEffectCustom: false
+        duration: save_ends
+        filterTarget: Target.Conditions has "Weakened"
+        applyto: targets
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
+        attrid: mgt
         tiers:
         - 12 damage
-        - 17 damage; R<3 weakened (save ends)
-        - 21 damage; R<4 weakened (save ends)
+        - 17 damage; R<{Average} weakened (save ends)
+        - 21 damage; R<{Strong} weakened (save ends)
       categorization: Signature Ability
       keywords:
         Melee: true

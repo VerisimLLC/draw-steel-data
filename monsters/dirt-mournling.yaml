@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,73 +54,15 @@ info:
   updateid: 9d2373fe-37b8-48c2-9ae3-e3b08dd80e6e
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: ece43820-8cf6-4b28-a14c-4df8168285f1
-      domains:
-        CharacterFeature:ece43820-8cf6-4b28-a14c-4df8168285f1: true
-      description: The mournling's shape can't change via any external effects.
-      modifiers: []
-      source: Trait
-      name: Immutable Form
-    - __typeName: CharacterFeature
-      guid: f53e39f4-1adc-4ad6-9eb2-c87ef1ffa642
-      domains:
-        CharacterFeature:f53e39f4-1adc-4ad6-9eb2-c87ef1ffa642: true
-      description: The first time the mournling burrows out of the ground on their turn, they make a free strike against each adjacent enemy.
-      modifiers: []
-      source: Trait
-      name: Rupture
-    - __typeName: CharacterFeature
-      guid: 085c64bc-f763-4376-9a10-4095fba6fbad
-      domains:
-        CharacterFeature:085c64bc-f763-4376-9a10-4095fba6fbad: true
-      description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 15 Stamina and fall prone.
-      modifiers: []
-      source: Trait
-      name: Arise
-    inflictedConditions: []
-    walkingSpeed: 6
     opportunityAttack: 3
-    cr: 7
-    damage_taken: 0
-    max_hitpoints: 64
     keywords:
       Undead: true
-    skillRatings: []
-    role: Horde Controller
-    ev: 9
-    movementSpeeds:
-      burrow: 6
-      climb: 6
-    monster_type: Dirt Mournling
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: corruption
-      dr: 7
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: poison
-      dr: 7
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 1
-      prs:
-        id: prs
-        baseValue: -3
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: -2
+    savingThrowRatings: []
+    walkingSpeed: 6
+    inflictedConditions: []
+    creatureSize: "3"
+    max_hitpoints_roll: "64"
+    max_hitpoints: 64
     import:
       type: mcdm
       data: |+
@@ -153,14 +96,60 @@ info:
 
 
 
-    minion: false
-    innateAttacks: []
-    equipment: []
-    savingThrowRatings: []
+    attributes:
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 4
+      prs:
+        id: prs
+        baseValue: -3
+      inu:
+        id: inu
+        baseValue: 1
+      rea:
+        id: rea
+        baseValue: -2
+    skillRatings: []
+    traitNames: []
+    cr: 7
+    damage_taken: 0
+    ev: 9
+    monster_category: Monster
+    movementSpeeds:
+      burrow: 6
+      climb: 6
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: corruption
+      dr: 7
+      apply: Damage Reduction
+    - __typeName: ResistanceEntry
+      damageType: poison
+      dr: 7
+      apply: Damage Reduction
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      keywords:
+        Melee: true
+        Weapon: true
+        Strike: true
+      numTargets: 1
+      modifiers: []
+      description: A 3 cube area of the ground centered on the target is considered difficult terrain for enemies.
+      effectImplemented: false
+      range: 2
       implementation: 3
-      targetType: target
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -168,31 +157,32 @@ info:
         - 7 damage; M<3 grabbed
         - 10 damage; M<4 grabbed
         - 11 damage; grabbed
-      categorization: Signature Ability
-      effectImplemented: false
+      targetType: target
       repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Mudslide
+      abilityType: none
+      categorization: Signature Ability
       iconid: ui-icons/skills/1.png
       guid: cf24b364-d71c-4771-8200-f92a9f37cfca
-      flavor: ""
+    - __typeName: ActivatedAbility
+      resourceNumber: 3
+      targetType: all
+      numTargets: 1
+      modifiers: []
+      description: A target frightened this way is frightened of all undead. This effect ends early if the mournling is destroyed
+      targetFilter: Enemy
+      range: 3
+      implementation: 3
       keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      description: A 3 cube area of the ground centered on the target is considered difficult terrain for enemies.
+        Area: true
+        Magic: true
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
-        hueshift: 0
         brightness: 1
         saturation: 1
-      range: 2
-      name: Mudslide
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: all
+        hueshift: 0
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
@@ -201,34 +191,92 @@ info:
         - 6 corruption damage; I<3 frightened (save ends)
         - 7 corruption damage; I<4 frightened (save ends)
       categorization: Heroic Ability
-      targetFilter: Enemy
-      keywords:
-        Area: true
-        Magic: true
-      resourceNumber: 3
       repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Mourning Cry
+      abilityType: none
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       iconid: ui-icons/skills/1.png
       guid: 7e7cf786-1742-4ec4-a9f3-84f0c494cc6d
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      flavor: ""
-      description: A target frightened this way is frightened of all undead. This effect ends early if the mournling is destroyed
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      range: 3
-      name: Mourning Cry
-    creatureSize: "3"
-    traitNames: []
-    max_hitpoints_roll: "64"
-    levelChoices: []
-    monster_category: Monster
+    role: Horde Controller
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:ece43820-8cf6-4b28-a14c-4df8168285f1: true
+      name: Immutable Form
+      description: The mournling's shape can't change via any external effects.
+      source: Trait
+      modifiers: []
+      guid: ece43820-8cf6-4b28-a14c-4df8168285f1
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f53e39f4-1adc-4ad6-9eb2-c87ef1ffa642: true
+      name: Rupture
+      description: The first time the mournling burrows out of the ground on their turn, they make a free strike against each adjacent enemy.
+      source: Trait
+      modifiers: []
+      guid: f53e39f4-1adc-4ad6-9eb2-c87ef1ffa642
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:085c64bc-f763-4376-9a10-4095fba6fbad: true
+      name: Arise
+      description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 15 Stamina and fall prone.
+      implementation: 3
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        resourceRefreshType: encounter
+        sourceguid: 085c64bc-f763-4376-9a10-4095fba6fbad
+        behavior: trigger
+        source: Trait
+        description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: self
+          repeatTargets: false
+          modifiers: []
+          description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+          range: 1
+          strain: []
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            roll: (-Stamina) + 15
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            color: "#ffffffff"
+            applyto: caster
+            text: Arise!
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: prone
+          name: Arise
+          numTargets: "1"
+          trigger: zerohitpoints
+          conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
+          abilityType: none
+          usageLimitOptions:
+            resourceRefreshType: encounter
+            charges: "1"
+            resourceid: f7f65245-2933-4a45-adf9-8cfb0f6093a5
+          iconid: ui-icons/skills/1.png
+          guid: 158789ed-ad7e-4be3-b2a6-314020c59cd7
+        domains:
+          CharacterFeature:085c64bc-f763-4376-9a10-4095fba6fbad: true
+        name: Arise
+        guid: 158bf343-3375-4ddb-8a59-540a57e808ac
+      guid: 085c64bc-f763-4376-9a10-4095fba6fbad
+    monster_type: Dirt Mournling
+    equipment: []
     stability: 3
+    levelChoices: []
+    innateAttacks: []
+    minion: false
   tokenType: null
   bestiaryId: 7971d9a9-0e4b-4fcd-a264-8d3ca81082d9
   summonerid: null
@@ -241,6 +289,6 @@ parentFolder: fc9b27fb-58bf-4b65-9400-d025e2de9480
 artist: null
 ord: 2
 ctime: 1741590269403
-mtime: 1775375105808
+mtime: 1785703867536
 hidden: false
 id: 7971d9a9-0e4b-4fcd-a264-8d3ca81082d9
