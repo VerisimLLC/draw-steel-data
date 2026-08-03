@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -72,89 +73,20 @@ info:
   updateid: 39c49a1e-a940-434e-b7b1-7b33296f2164
   properties:
     __typeName: AnimalCompanion
-    walkingSpeed: 5
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      strain: []
-      guid: 284ba675-6bca-4cab-8fea-d2cef680bc3f
-      description: |-
-        Each creature in the area takes sonic damage equal to the drake's Might score.
-
-        **Spend 1 Ferocity:** The ability affects a 3 cube within 1.
-
-        **Spend 2 Ferocity:** The ability affects a 4 cube within 1.
-      keywords:
-        Area: true
-        Magic: true
-        Companion: true
-      range: 1
-      modifiers: []
-      numTargets: "1"
-      repeatTargets: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      abilityType: none
-      name: Drake Breath
-      radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
-      iconid: ui-icons/skills/1.png
-      modeList:
-      - rules: 1 cube within 1
-        text: 1 Cube
-      - rules: 2 cube within 1
-        text: 2 Cube
-      - rules: "Spend 1 Ferocity: 3 cube within 1"
-        condition: Heroic Resources Available to Spend >= 1
-        text: 3 Cube
-      - rules: "Spend 2 Ferocity: 4 cube within 1"
-        condition: Heroic Resources Available to Spend >= 2
-        text: 4 Cube
-      rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
-      flavor: The drake exhales a blast of flesh-melting energy.
-      targetTextOverride: Each creature in the area
-      categorization: Signature Ability
-      targetType: cube
-      multipleModes: true
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: "{Caster.Might + (2 when Caster.Level >= 3)} sonic damage"
-        guid: 70fbe2b1-fb4f-442a-8e3c-b264b8ac7b59
-        applyto: targets
-      - __typeName: ActivatedAbilityReplenishBehavior
-        quantity: "1"
-        guid: baf3afb6-42dd-4176-9756-5248baba167e
-        modesSelected:
-        - 3
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        mode: expend
-        applyto: caster
-      - __typeName: ActivatedAbilityReplenishBehavior
-        quantity: "2"
-        guid: 85b9911b-e04b-47cc-94a1-ba9e7b927172
-        modesSelected:
-        - 4
-        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-        mode: expend
-        applyto: caster
-      persistence: []
-      implementation: 4
+    levelChoices: []
     max_hitpoints: 13
+    damage_taken: 0
+    skillProficiencies: []
+    innateAttacks: []
     initiativeGrouping: 5a4540ea-427a-4f24-a752-dd580943299b
     attributes:
-      inu:
-        __typeName: CharacterAttribute
-        id: inu
-        baseValue: 2
       dex:
         __typeName: CharacterAttribute
         id: dex
-      rea:
+      mgt:
         __typeName: CharacterAttribute
-        id: rea
-        baseValue: -1
+        id: mgt
+        baseValue: 2
       prs:
         __typeName: CharacterAttribute
         id: prs
@@ -163,418 +95,487 @@ info:
         __typeName: CharacterAttribute
         id: agl
         baseValue: 1
-      mgt:
+      inu:
         __typeName: CharacterAttribute
-        id: mgt
+        id: inu
         baseValue: 2
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+    skillRatings:
+      cb214a42-7f8c-4d02-b6ac-1399724a8b5f: true
+    equipment: []
+    inflictedConditions: []
+    classes: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
+      radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
+      targetType: cube
+      categorization: Signature Ability
+      persistence: []
+      repeatTargets: false
+      modifiers: []
+      description: |-
+        Each creature in the area takes sonic damage equal to the drake's Might score.
+
+        **Spend 1 Ferocity:** The ability affects a 3 cube within 1.
+
+        **Spend 2 Ferocity:** The ability affects a 4 cube within 1.
+      keywords:
+        Magic: true
+        Companion: true
+        Area: true
+      range: 1
+      implementation: 4
+      strain: []
+      multipleModes: true
+      flavor: The drake exhales a blast of flesh-melting energy.
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: "{Caster.Might + (2 when Caster.Level >= 3)} sonic damage"
+        applyto: targets
+        guid: 70fbe2b1-fb4f-442a-8e3c-b264b8ac7b59
+      - __typeName: ActivatedAbilityReplenishBehavior
+        quantity: "1"
+        mode: expend
+        applyto: caster
+        modesSelected:
+        - 3
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        guid: baf3afb6-42dd-4176-9756-5248baba167e
+      - __typeName: ActivatedAbilityReplenishBehavior
+        quantity: "2"
+        mode: expend
+        applyto: caster
+        modesSelected:
+        - 4
+        resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+        guid: 85b9911b-e04b-47cc-94a1-ba9e7b927172
+      numTargets: "1"
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      name: Drake Breath
+      targetTextOverride: Each creature in the area
+      abilityType: none
+      modeList:
+      - text: 1 Cube
+        rules: 1 cube within 1
+      - text: 2 Cube
+        rules: 2 cube within 1
+      - condition: Heroic Resources Available to Spend >= 1
+        rules: "Spend 1 Ferocity: 3 cube within 1"
+        text: 3 Cube
+      - condition: Heroic Resources Available to Spend >= 2
+        rules: "Spend 2 Ferocity: 4 cube within 1"
+        text: 4 Cube
+      iconid: ui-icons/skills/1.png
+      guid: 284ba675-6bca-4cab-8fea-d2cef680bc3f
+    movementSpeeds:
+      fly: 5
+    notes:
+    - text: ""
+      title: Backstory
+    import: []
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
     resistances:
     - __typeName: ResistanceEntry
-      apply: Damage Reduction
       damageType: sonic
       dr: 3
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-      guid: 1420b358-1d59-4efe-a790-2969f5c0a026
-    innateAttacks: []
-    classes: []
+      apply: Damage Reduction
+    titles: []
+    savingThrowRatings: []
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: 6e2d0e98-49d9-456a-8a07-525b2d4b3f48
-      source: Character Feature
-      description: You have 1 stability.
-      implementation: 3
-      name: Attributes
       domains:
         CharacterFeature:6e2d0e98-49d9-456a-8a07-525b2d4b3f48: true
+      implementation: 3
+      guid: 6e2d0e98-49d9-456a-8a07-525b2d4b3f48
+      name: Attributes
+      source: Character Feature
       modifiers:
       - __typeName: CharacterModifier
-        guid: 6a089788-1475-4034-bdba-f7dbfd2cdb53
-        description: You have 1 stability.
-        value: 1
-        name: Attributes
-        source: Character Feature
-        operation: set
         attribute: forcedmoveresistance
+        operation: set
+        guid: 6a089788-1475-4034-bdba-f7dbfd2cdb53
+        behavior: attribute
+        source: Character Feature
+        value: 1
         sourceguid: 6e2d0e98-49d9-456a-8a07-525b2d4b3f48
         domains:
           CharacterFeature:6e2d0e98-49d9-456a-8a07-525b2d4b3f48: true
-        behavior: attribute
+        name: Attributes
+        description: You have 1 stability.
+      description: You have 1 stability.
     - __typeName: CharacterFeature
-      guid: 33be3574-3ae2-41a8-8d86-44d8dbd3d977
-      source: Character Feature
-      description: When you gain this companion, choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. This drake is attuned to sonic. The drake has sonic immunity 3, and its Drake Breath deals sonic damage.
-      implementation: 3
-      name: Elementally Attuned
       domains:
         CharacterFeature:33be3574-3ae2-41a8-8d86-44d8dbd3d977: true
-      modifiers: []
-    - __typeName: CharacterFeature
-      guid: df2780b8-3eec-444d-b985-2fbbb9b508f7
+      implementation: 1
+      guid: 33be3574-3ae2-41a8-8d86-44d8dbd3d977
+      name: Elementally Attuned
       source: Character Feature
-      description: You have immunity 3 to the drake's attuned damage type (sonic).
-      implementation: 3
-      name: Shared Scales
+      modifiers: []
+      description: When you gain this companion, choose their attuned damage type from acid, cold, corruption, fire, lightning, poison, or sonic. This drake is attuned to sonic. The drake has sonic immunity 3, and its Drake Breath deals sonic damage.
+    - __typeName: CharacterFeature
       domains:
         CharacterFeature:df2780b8-3eec-444d-b985-2fbbb9b508f7: true
+      implementation: 3
+      guid: df2780b8-3eec-444d-b985-2fbbb9b508f7
+      name: Shared Scales
+      source: Character Feature
       modifiers:
       - __typeName: CharacterModifier
-        sourceguid: df2780b8-3eec-444d-b985-2fbbb9b508f7
-        guid: b187c71c-f332-429b-ae0d-29c4d164e6d0
-        source: Character Feature
-        name: Shared Scales
-        behavior: modsummoner
-        description: The beastheart has sonic immunity 3 from the drake's attuned damage type.
         domains:
           CharacterFeature:df2780b8-3eec-444d-b985-2fbbb9b508f7: true
+        behavior: modsummoner
+        name: Shared Scales
         feature:
           __typeName: CharacterFeature
-          guid: b32ac070-d06f-404c-93ed-0b994c21ebca
-          source: Beastheart
-          description: Sonic immunity 3 granted by the sonic drake companion.
           name: Shared Scales
+          description: Sonic immunity 3 granted by the sonic drake companion.
+          source: Beastheart
           modifiers:
           - __typeName: CharacterModifier
+            behavior: resistance
+            source: Beastheart
             guid: 7686d063-0fb0-445a-a240-370942dd055d
+            name: Shared Scales
+            description: Sonic immunity 3 from the sonic drake's Shared Scales.
             resistances:
             - __typeName: ResistanceEntry
-              apply: Damage Reduction
               damageType: sonic
               dr: 3
-            behavior: resistance
-            description: Sonic immunity 3 from the sonic drake's Shared Scales.
-            name: Shared Scales
-            source: Beastheart
+              apply: Damage Reduction
             sourceguid: b32ac070-d06f-404c-93ed-0b994c21ebca
+          guid: b32ac070-d06f-404c-93ed-0b994c21ebca
+        guid: b187c71c-f332-429b-ae0d-29c4d164e6d0
+        description: The beastheart has sonic immunity 3 from the drake's attuned damage type.
+        source: Character Feature
+        sourceguid: df2780b8-3eec-444d-b985-2fbbb9b508f7
+      description: You have immunity 3 to the drake's attuned damage type (sonic).
     - __typeName: CharacterFeature
-      guid: a7d9ebfd-8bac-4aec-197e-7c8d9e0f1a07
-      source: Character Feature
-      description: The drake's Drake Breath maneuver deals an extra 2 damage. Active at level 3 or higher.
-      implementation: 3
-      name: Endless Breath
       domains:
         CharacterFeature:a7d9ebfd-8bac-4aec-197e-7c8d9e0f1a07: true
-      modifiers: []
-    - __typeName: CharacterFeature
-      guid: 4a4952e4-42ca-431b-af86-489121e12bd1
+      implementation: 1
+      guid: a7d9ebfd-8bac-4aec-197e-7c8d9e0f1a07
+      name: Endless Breath
       source: Character Feature
+      modifiers: []
+      description: The drake's Drake Breath maneuver deals an extra 2 damage. Active at level 3 or higher.
+    - __typeName: CharacterFeature
       name: A Burning Inside Me
-      implementation: 3
       description: While the drake is rampaging, you gain wings and can fly, and can use the drake Drake Breath maneuver.
+      source: Character Feature
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        guid: 1a9f454c-0176-4e35-9c7d-2659b12e4384
-        behavior: modsummoner
+        mode: summoner
         feature:
           __typeName: CharacterFeature
-          guid: 4f2d05c0-a124-4f10-b7d1-45859bd1e89c
-          source: Beastheart
           name: A Burning Inside Me
-          implementation: 3
           description: Flight and Drake Breath from the drake.
+          source: Beastheart
+          implementation: 3
           modifiers:
           - __typeName: CharacterModifier
-            guid: 4c27344a-5198-44ac-b5c3-a0c9fb204dfc
-            name: A Burning Inside Me
-            value: Walking Speed
-            source: Beastheart
+            attribute: fly
             operation: set
             behavior: attribute
-            attribute: fly
-            description: You gain draconic wings and can fly.
-            sourceguid: 4f2d05c0-a124-4f10-b7d1-45859bd1e89c
-          - __typeName: CharacterModifier
-            guid: b7e1c249-4997-4fcd-a0fd-e8e2380c004f
             source: Beastheart
+            guid: 4c27344a-5198-44ac-b5c3-a0c9fb204dfc
+            sourceguid: 4f2d05c0-a124-4f10-b7d1-45859bd1e89c
+            description: You gain draconic wings and can fly.
+            name: A Burning Inside Me
+            value: Walking Speed
+          - __typeName: CharacterModifier
             behavior: activated
+            name: Drake Breath
+            guid: b7e1c249-4997-4fcd-a0fd-e8e2380c004f
             activatedAbility:
               __typeName: ActivatedAbility
-              strain: []
-              guid: 284ba675-6bca-4cab-8fea-d2cef680bc3f
+              rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
+              radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
+              targetType: cube
+              categorization: Signature Ability
+              persistence: []
+              keywords:
+                Magic: true
+                Area: true
+              multipleModes: true
               description: |-
                 Each creature in the area takes sonic damage equal to the drake's Might score.
 
                 **Spend 1 Ferocity:** The ability affects a 3 cube within 1.
 
                 **Spend 2 Ferocity:** The ability affects a 4 cube within 1.
-              keywords:
-                Area: true
-                Magic: true
-              range: 1
               modifiers: []
-              numTargets: "1"
+              range: 1
+              implementation: 4
+              strain: []
               repeatTargets: false
-              iconid: ui-icons/skills/1.png
+              flavor: The drake exhales a blast of flesh-melting energy.
               display:
-                hueshift: 0
                 bgcolor: "#ffffffff"
+                hueshift: 0
                 saturation: 1
                 brightness: 1
-              abilityType: none
-              name: Drake Breath
-              implementation: 4
-              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-              modeList:
-              - rules: 1 cube within 1
-                text: 1 Cube
-              - rules: 2 cube within 1
-                text: 2 Cube
-              - rules: "Spend 1 Ferocity: 3 cube within 1"
-                condition: Heroic Resources Available to Spend >= 1
-                text: 3 Cube
-              - rules: "Spend 2 Ferocity: 4 cube within 1"
-                condition: Heroic Resources Available to Spend >= 2
-                text: 4 Cube
-              flavor: The drake exhales a blast of flesh-melting energy.
-              rangeTextOverride: "{1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4} cube within 1"
-              targetTextOverride: Each creature in the area
-              multipleModes: true
-              targetType: cube
-              categorization: Signature Ability
               behaviors:
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                 rule: "{Caster.Might + (2 when Caster.Level >= 3)} sonic damage"
-                guid: 70fbe2b1-fb4f-442a-8e3c-b264b8ac7b59
                 applyto: targets
+                guid: 70fbe2b1-fb4f-442a-8e3c-b264b8ac7b59
               - __typeName: ActivatedAbilityReplenishBehavior
                 quantity: "1"
-                guid: baf3afb6-42dd-4176-9756-5248baba167e
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                mode: expend
+                applyto: caster
                 modesSelected:
                 - 3
-                mode: expend
-                applyto: caster
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                guid: baf3afb6-42dd-4176-9756-5248baba167e
               - __typeName: ActivatedAbilityReplenishBehavior
                 quantity: "2"
-                guid: 85b9911b-e04b-47cc-94a1-ba9e7b927172
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                modesSelected:
-                - 4
                 mode: expend
                 applyto: caster
-              persistence: []
-              radius: 1 when Mode = 1 else 2 when Mode = 2 else 3 when Mode = 3 else 4
+                modesSelected:
+                - 4
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                guid: 85b9911b-e04b-47cc-94a1-ba9e7b927172
+              numTargets: "1"
+              name: Drake Breath
+              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+              targetTextOverride: Each creature in the area
+              abilityType: none
+              modeList:
+              - text: 1 Cube
+                rules: 1 cube within 1
+              - text: 2 Cube
+                rules: 2 cube within 1
+              - condition: Heroic Resources Available to Spend >= 1
+                rules: "Spend 1 Ferocity: 3 cube within 1"
+                text: 3 Cube
+              - condition: Heroic Resources Available to Spend >= 2
+                rules: "Spend 2 Ferocity: 4 cube within 1"
+                text: 4 Cube
+              iconid: ui-icons/skills/1.png
+              guid: 284ba675-6bca-4cab-8fea-d2cef680bc3f
             description: You can use the drake Drake Breath maneuver.
-            name: Drake Breath
+            source: Beastheart
             sourceguid: 4f2d05c0-a124-4f10-b7d1-45859bd1e89c
+          guid: 4f2d05c0-a124-4f10-b7d1-45859bd1e89c
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        behavior: modsummoner
+        name: A Burning Inside Me
+        guid: 1a9f454c-0176-4e35-9c7d-2659b12e4384
+        sourceguid: 4a4952e4-42ca-431b-af86-489121e12bd1
         source: Character Feature
         description: While the drake rampages and its beastheart is level 6+, the beastheart gains flight and the Drake Breath maneuver.
-        name: A Burning Inside Me
-        filterCondition: Self.Rampaging and Summoner.Level >= 6
-        mode: summoner
-        sourceguid: 4a4952e4-42ca-431b-af86-489121e12bd1
+      guid: 4a4952e4-42ca-431b-af86-489121e12bd1
     - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08: true
+      description: While the drake is rampaging, you and the drake have immunity all to sonic, and on each strike you may dragonseal the target by sonic (save ends) -- a dragonsealed creature has weakness 10 to sonic.
+      implementation: 3
       iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
       name: Elemental Avatar
       source: Character Feature
-      implementation: 3
-      guid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
-      domains:
-        CharacterFeature:e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08: true
       modifiers:
       - __typeName: CharacterModifier
+        mode: summoner
         feature:
           __typeName: CharacterFeature
           guid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
-          name: Elemental Avatar
           source: Beastheart
-          implementation: 3
-          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
           modifiers:
           - __typeName: CharacterModifier
-            guid: b7d0e3a8-9c14-4f6f-d081-2d0e4f7c9a3b
             behavior: resistance
-            resistances:
-            - __typeName: ResistanceEntry
-              dr: "100"
-              apply: Damage Reduction
-              damageType: sonic
-            sourceguid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
             source: Beastheart
+            guid: b7d0e3a8-9c14-4f6f-d081-2d0e4f7c9a3b
             name: Elemental Avatar
             description: Sonic immunity all.
+            resistances:
+            - __typeName: ResistanceEntry
+              damageType: sonic
+              dr: "100"
+              apply: Damage Reduction
+            sourceguid: a6c9d2f7-8b03-4e5e-cf70-1c9d3e6b8f2a
+          implementation: 3
+          name: Elemental Avatar
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
           description: Sonic immunity all while your drake is rampaging.
-        guid: f5b8c1e6-7a92-4d4d-be6f-0b8c2d5a7e19
-        name: Elemental Avatar
-        mode: summoner
-        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
-        source: Character Feature
         filterCondition: Self.Rampaging and Summoner.Level >= 10
         behavior: modsummoner
+        name: Elemental Avatar
+        guid: f5b8c1e6-7a92-4d4d-be6f-0b8c2d5a7e19
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
         description: While rampaging (L10+), the beastheart gains sonic immunity all.
       - __typeName: CharacterModifier
-        guid: c8e1f4b9-0d25-407a-e192-3e1f5a8d0b4c
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
         behavior: resistance
+        name: Elemental Avatar
+        guid: c8e1f4b9-0d25-407a-e192-3e1f5a8d0b4c
+        source: Character Feature
+        description: Sonic immunity all.
         resistances:
         - __typeName: ResistanceEntry
+          damageType: sonic
           dr: "100"
           apply: Damage Reduction
-          damageType: sonic
         sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
-        description: Sonic immunity all.
-        name: Elemental Avatar
-        filterCondition: Self.Rampaging and Summoner.Level >= 10
-        source: Character Feature
       - __typeName: CharacterModifier
+        rollType: ability_power_roll
         keywords:
           Strike: true
-        addText: the target is dragonsealed by sonic (save ends)
-        activationCondition: Self.Rampaging and Self.Level >= 10
         armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
         modtype: none
+        description: Toggle on to dragonseal the struck target on this strike (weakness 10 sonic, save ends).
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: power
+        source: Character Feature
+        activationCondition: Self.Rampaging and Self.Level >= 10
+        name: Dragonseal (Sonic)
+        addText: the target is dragonsealed by sonic (save ends)
         applyToFreeStrikes: true
         guid: d9f2a5c0-1e36-418b-f2a3-4f2a6b9e1c5d
-        behavior: power
-        rollType: ability_power_roll
-        filterCondition: Self.Rampaging and Summoner.Level >= 10
-        name: Dragonseal (Sonic)
-        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
-        source: Character Feature
-        description: Toggle on to dragonseal the struck target on this strike (weakness 10 sonic, save ends).
       - __typeName: CharacterModifier
+        behavior: trigger
+        name: Elemental Avatar
         guid: b3d6e9c4-5f80-4a2b-9c4d-7e6f0a3b8c5d
         triggeredAbility:
           __typeName: TriggeredAbility
-          range: 1
-          abilityType: none
-          repeatTargets: false
-          subject: self
-          display:
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            applyto: targets
-            stacks: "1"
-            duration: save_ends
-            ongoingEffect: e1f00005-0000-4000-8000-000000000005
-            ongoingEffectCustom: e1f00005-0000-4000-8000-000000000005
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            applyto: caster
-            mode: effect
-            ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
-          description: ""
-          mandatory: true
-          trigger: dealdamage
-          strain: []
-          guid: c4e7f0d5-6a91-4b3c-ad5e-8f7a1b4c9d6e
-          name: Dragonseal (Sonic)
           targetType: target
+          subject: self
           numTargets: "1"
           modifiers: []
-          conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.Rampaging and Self.Level >= 10
+          description: ""
+          range: 1
+          strain: []
           persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: e1f00005-0000-4000-8000-000000000005
+            duration: save_ends
+            ongoingEffect: e1f00005-0000-4000-8000-000000000005
+            applyto: targets
+            stacks: "1"
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+            mode: effect
+            applyto: caster
+            conditions: []
+          mandatory: true
+          trigger: dealdamage
+          name: Dragonseal (Sonic)
           castImmediately: true
-        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+          abilityType: none
+          repeatTargets: false
+          conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.Rampaging and Self.Level >= 10
+          guid: c4e7f0d5-6a91-4b3c-ad5e-8f7a1b4c9d6e
         source: Character Feature
-        name: Elemental Avatar
-        behavior: trigger
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
         description: While rampaging (L10+) and armed, the drake's strike dragonseals the target.
       - __typeName: CharacterModifier
+        mode: summoner
         feature:
           __typeName: CharacterFeature
           guid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
-          name: Elemental Avatar
           source: Beastheart
-          implementation: 3
-          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
           modifiers:
           - __typeName: CharacterModifier
+            rollType: ability_power_roll
             keywords:
               Strike: true
-            addText: the target is dragonsealed by sonic (save ends)
+            armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
             activationCondition: "1"
             modtype: none
-            applyToFreeStrikes: true
-            guid: f7b0c3a8-9d24-4e6f-d081-1c0d4e7f2a91
-            behavior: power
-            armEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
             sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
-            rollType: ability_power_roll
+            behavior: power
+            source: Beastheart
             name: Dragonseal (Sonic)
             description: Toggle on to dragonseal the struck target on this strike (weakness 10 sonic, save ends).
-            source: Beastheart
+            addText: the target is dragonsealed by sonic (save ends)
+            applyToFreeStrikes: true
+            guid: f7b0c3a8-9d24-4e6f-d081-1c0d4e7f2a91
           - __typeName: CharacterModifier
+            behavior: trigger
+            name: Elemental Avatar
             guid: a8c1d4b9-0e35-4f70-e192-2d1e5f8a3b02
             triggeredAbility:
               __typeName: TriggeredAbility
-              range: 1
-              abilityType: none
-              repeatTargets: false
-              subject: self
-              display:
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-              behaviors:
-              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                applyto: targets
-                stacks: "1"
-                duration: save_ends
-                ongoingEffect: e1f00005-0000-4000-8000-000000000005
-                ongoingEffectCustom: e1f00005-0000-4000-8000-000000000005
-              - __typeName: ActivatedAbilityPurgeEffectsBehavior
-                conditions: []
-                applyto: caster
-                mode: effect
-                ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
-              description: ""
-              mandatory: true
-              trigger: dealdamage
-              strain: []
-              guid: b9d2e5c0-1f46-4081-f2a3-3e2f6a9b4c13
-              name: Dragonseal (Sonic)
               targetType: target
+              subject: self
               numTargets: "1"
               modifiers: []
-              conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.CompanionRampaging and Self.Level >= 10
+              description: ""
+              range: 1
+              strain: []
               persistence: []
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                saturation: 1
+                brightness: 1
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                ongoingEffectCustom: e1f00005-0000-4000-8000-000000000005
+                duration: save_ends
+                ongoingEffect: e1f00005-0000-4000-8000-000000000005
+                applyto: targets
+                stacks: "1"
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                ongoingEffect: b8f3c1e6-2d74-4a95-8b1c-6e4f9a2d7c05
+                mode: effect
+                applyto: caster
+                conditions: []
+              mandatory: true
+              trigger: dealdamage
+              name: Dragonseal (Sonic)
               castImmediately: true
-            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
+              abilityType: none
+              repeatTargets: false
+              conditionFormula: Keywords has "Strike" and Self.DragonsealArmed > 0 and Self.CompanionRampaging and Self.Level >= 10
+              guid: b9d2e5c0-1f46-4081-f2a3-3e2f6a9b4c13
             source: Beastheart
-            name: Elemental Avatar
-            behavior: trigger
+            sourceguid: e6a9b2f7-8c13-4d5e-cf70-0b9c3d6e1f80
             description: While armed, your strike dragonseals the struck target.
+          implementation: 3
+          name: Elemental Avatar
+          iconid: d55a0ed1-c2c8-4a7c-8f24-8db4136ae90c
           description: Your strikes may dragonseal the struck target while your drake is rampaging.
-        guid: d5f8a1e6-7b02-4c4d-be6f-9a8b2c5d0e7f
-        name: Elemental Avatar
-        mode: summoner
-        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
-        source: Character Feature
         filterCondition: Self.Rampaging and Summoner.Level >= 10
         behavior: modsummoner
+        name: Elemental Avatar
+        guid: d5f8a1e6-7b02-4c4d-be6f-9a8b2c5d0e7f
+        sourceguid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
+        source: Character Feature
         description: While rampaging (L10+), your strikes may dragonseal the struck target.
-      description: While the drake is rampaging, you and the drake have immunity all to sonic, and on each strike you may dragonseal the target by sonic (save ends) -- a dragonsealed creature has weakness 10 to sonic.
-    titles: []
-    skillProficiencies: []
-    cr: 1
-    damage_taken: 0
-    notes:
-    - title: Backstory
-      text: ""
-    import: []
-    levelChoices: []
-    max_hitpoints_roll: 2d8+2
-    savingThrowRatings: []
-    skillRatings:
-      cb214a42-7f8c-4d02-b6ac-1399724a8b5f: true
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
-    equipment: []
+      guid: e4a7b0d5-6f81-4c3c-ad5e-9a7b1c4f6d08
     monster_type: Sonic Drake
-    movementSpeeds:
-      fly: 5
     monster_category: Dragon
-    inflictedConditions: []
+    max_hitpoints_roll: 2d8+2
+    animations:
+      anim:
+      - resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+        animType: consumeResource
+      guid: 1420b358-1d59-4efe-a790-2969f5c0a026
+    cr: 1
+    walkingSpeed: 5
   tokenType: null
   bestiaryId: 7e28806b-712d-465e-b001-bd7ef0dd2e6c
   summonerid: null
@@ -587,6 +588,6 @@ parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
 artist: null
 ord: 16
 ctime: 1779168301669
-mtime: 1784429860658
+mtime: 1785706932397
 hidden: false
 id: 7e28806b-712d-465e-b001-bd7ef0dd2e6c

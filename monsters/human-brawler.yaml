@@ -56,12 +56,50 @@ info:
     __typeName: monster
     characterFeatures:
     - __typeName: CharacterFeature
-      implementation: 2
+      implementation: 3
       guid: bafe3792-6342-4e7d-9c93-7612e4de3e3b
       domains:
         CharacterFeature:bafe3792-6342-4e7d-9c93-7612e4de3e3b: true
-      description: The brawler takes half damage from strikes if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the other half of the damage.
+      description: |-
+        The brawler takes half damage from strikes if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the other half of the damage.
+
+        {Implementation Status: the halving and the redirect to the grabbed creature are automated; the size 1S-or-larger gate on the grabbed creature is not checked.}
       modifiers:
+      - __typeName: CharacterModifier
+        guid: 629dc9ee-a885-4489-b81e-7af4ce8e5377
+        name: Shoot the Hostage
+        sourceguid: bafe3792-6342-4e7d-9c93-7612e4de3e3b
+        domains:
+          CharacterFeature:bafe3792-6342-4e7d-9c93-7612e4de3e3b: true
+        description: When the brawler takes strike damage while grabbing a creature or object, the grabbed creature or object takes the same amount.
+        source: Trait
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: all
+          modifiers: []
+          conditionFormula: Number of Creatures Grabbed > 0 and Keywords has "Strike"
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: Damage
+          targetFilter: Target.ConditionCaster("Grabbed") = Caster
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          mandatory: true
+          description: The grabbed creature or object takes the other half of the strike damage.
+          iconid: ui-icons/skills/1.png
+          guid: 046fa13c-73d3-4fcb-a162-883769ff1862
+          trigger: losehitpoints
+          range: 1
+          name: Shoot the Hostage
       - __typeName: CharacterModifier
         description: The brawler takes half damage from strikes if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the other half of the damage.
         range: 10

@@ -55,11 +55,28 @@ info:
     __typeName: monster
     characterFeatures:
     - __typeName: CharacterFeature
+      implementation: 3
       guid: 490e80be-72a8-4eb3-854e-66eacfb197f8
       domains:
         CharacterFeature:490e80be-72a8-4eb3-854e-66eacfb197f8: true
-      description: The Reconstitute Malice effect costs 1 malice fewer. Each ally may treat the war doc as a source of corpses for the purposes of using Reconstitute.
-      modifiers: []
+      description: |-
+        The Reconstitute Malice effect costs 1 malice fewer. Each ally may treat the war doc as a source of corpses for the purposes of using Reconstitute.
+
+        {Implementation Status: the cost reduction is automated; allies treating the living war doc as a corpse is adjudicated at the table.}
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: c1324048-b4da-4892-99ad-77540be096e9
+        name: Body Bank Branch Manager
+        sourceguid: 490e80be-72a8-4eb3-854e-66eacfb197f8
+        description: The Reconstitute Malice effect costs 1 malice fewer.
+        source: Trait
+        behavior: modifyability
+        filterAbility: Ability.Name is "Reconstitute"
+        modifyDescription: Costs 1 Malice fewer for the war doc (Body Bank Branch Manager).
+        attributes:
+        - id: cost
+          operation: Add
+          value: "-1"
       source: Trait
       name: Body Bank Branch Manager
     inflictedConditions: []

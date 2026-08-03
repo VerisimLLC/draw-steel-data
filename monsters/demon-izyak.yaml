@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,61 +54,16 @@ info:
   updateid: 2e2f803f-2271-44f6-a12c-db7d6b22186a
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 4b0ac896-45cb-4217-a567-0b41f5ece931
-      domains:
-        CharacterFeature:4b0ac896-45cb-4217-a567-0b41f5ece931: true
-      description: While winded, the izyak has an edge on strikes, and strikes have an edge against them.
-      modifiers: []
-      source: Trait
-      name: Lethe
-    - __typeName: CharacterFeature
-      guid: 973e78fe-0105-46ec-861e-e6a26b7ca87d
-      domains:
-        CharacterFeature:973e78fe-0105-46ec-861e-e6a26b7ca87d: true
-      description: Each creature within 2 of the izyak can't be hidden from them.
-      modifiers: []
-      source: Trait
-      name: Soulsight
-    inflictedConditions: []
-    walkingSpeed: 6
     opportunityAttack: 4
-    cr: 10
-    damage_taken: 0
-    max_hitpoints: 55
     keywords:
       Abyssal: true
       Demon: true
-    skillRatings: []
-    role: Horde Controller
     ev: 12
-    movementSpeeds:
-      teleport: 6
-    monster_type: Demon Izyak
-    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      damageType: holy
-      dr: -5
-    attributes:
-      inu:
-        id: inu
-        baseValue: 2
-      agl:
-        id: agl
-        baseValue: 0
-      prs:
-        id: prs
-        baseValue: 4
-      mgt:
-        id: mgt
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: 5
+    damage_taken: 0
+    cr: 10
+    creatureSize: "2"
+    max_hitpoints_roll: "55"
+    savingThrowRatings: []
     import:
       type: mcdm
       data: |+
@@ -141,33 +97,41 @@ info:
         <b>Soulsight</b>
         Each creature within 2 of the izyak can't be hidden from them.
 
-    minion: false
-    innateAttacks: []
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 4
+      inu:
+        id: inu
+        baseValue: 2
+      rea:
+        id: rea
+        baseValue: 5
+    stability: 0
     equipment: []
-    savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
       keywords:
+        Ranged: true
         Strike: true
         Psionic: true
-        Ranged: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
       numTargets: 1
       modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 40bb4634-0e15-4df0-bfa9-6b98b208c488
-      repeatTargets: false
       description: ""
+      range: 10
+      implementation: 4
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 5
@@ -175,26 +139,33 @@ info:
         - 9 psychic damage; R<3 restrained (save ends)
         - 12 psychic damage; R<4 restrained (save ends)
         - 14 psychic damage; R<5 restrained (save ends)
-      range: 10
+      categorization: Signature Ability
+      targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       name: Nostalgic Wanderlust
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 3
-      repeatTargets: false
       abilityType: none
+      repeatTargets: false
+      iconid: ui-icons/skills/1.png
+      guid: 40bb4634-0e15-4df0-bfa9-6b98b208c488
+    - __typeName: ActivatedAbility
+      resourceNumber: 3
+      targetType: self
       numTargets: "1"
       modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      description: A dazed target must move their speed toward the izyak on their turn.
+      effectImplemented: false
+      range: 1
+      implementation: 3
       keywords:
+        Ranged: true
         Psionic: true
         Area: true
-        Ranged: true
-      iconid: ui-icons/skills/1.png
-      guid: d5f457ae-32ab-453e-95ca-9f3a207ef36f
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 5
@@ -202,21 +173,90 @@ info:
         - 4 psychic damage; I<3 dazed (save ends)
         - 7 psychic damage; I<4 dazed (save ends)
         - 9 psychic damage; I<5 dazed (save ends)
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: A dazed target must move their speed toward the izyak on their turn.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
+      repeatTargets: false
+      categorization: Heroic Ability
       name: 'Ruinous Temptation '
-    creatureSize: "2"
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      abilityType: none
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      iconid: ui-icons/skills/1.png
+      guid: d5f457ae-32ab-453e-95ca-9f3a207ef36f
+    max_hitpoints: 55
     traitNames: []
-    max_hitpoints_roll: "55"
-    levelChoices: []
+    movementSpeeds:
+      teleport: 6
     monster_category: Monster
-    stability: 0
+    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: holy
+      dr: -5
+      apply: Damage Reduction
+    walkingSpeed: 6
+    role: Horde Controller
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:4b0ac896-45cb-4217-a567-0b41f5ece931: true
+      name: Lethe
+      description: While winded, the izyak has an edge on strikes, and strikes have an edge against them.
+      implementation: 4
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        rollType: ability_power_roll
+        keywords: []
+        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
+        source: Trait
+        behavior: power
+        name: Lethe
+        modtype: edge
+        guid: 03f66c92-bf32-4e1d-b5e3-255140748c5e
+        activationCondition: self.Winded = 1
+        domains:
+          CharacterFeature:4b0ac896-45cb-4217-a567-0b41f5ece931: true
+        sourceguid: 4b0ac896-45cb-4217-a567-0b41f5ece931
+      - __typeName: CharacterModifier
+        rollType: enemy_ability_power_roll
+        keywords: []
+        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
+        source: Trait
+        behavior: power
+        name: Lethe
+        modtype: edge
+        guid: 3e64c26d-8e02-46cd-94fe-6accb0359746
+        activationCondition: Target.Winded = 1
+        domains:
+          CharacterFeature:4b0ac896-45cb-4217-a567-0b41f5ece931: true
+        sourceguid: 4b0ac896-45cb-4217-a567-0b41f5ece931
+      guid: 4b0ac896-45cb-4217-a567-0b41f5ece931
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:973e78fe-0105-46ec-861e-e6a26b7ca87d: true
+      name: Soulsight
+      description: Each creature within 2 of the izyak can't be hidden from them.
+      implementation: 4
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        sourceguid: 973e78fe-0105-46ec-861e-e6a26b7ca87d
+        behavior: attribute
+        name: Soulsight
+        guid: 547e07ec-2566-47b3-869b-62412eb1707c
+        value: 2
+        source: Trait
+        domains:
+          CharacterFeature:973e78fe-0105-46ec-861e-e6a26b7ca87d: true
+        description: Each creature within 2 of the izyak can't be hidden from them.
+      guid: 973e78fe-0105-46ec-861e-e6a26b7ca87d
+    monster_type: Demon Izyak
+    innateAttacks: []
+    skillRatings: []
+    levelChoices: []
+    inflictedConditions: []
+    minion: false
   tokenType: null
   bestiaryId: 21964938-c492-4405-aade-317bc6aa2413
   summonerid: null
@@ -229,6 +269,6 @@ parentFolder: 481cfcf5-4411-44af-8316-d740deca8552
 artist: null
 ord: 4
 ctime: 1741590229570
-mtime: 1775374994966
+mtime: 1785702742750
 hidden: false
 id: 21964938-c492-4405-aade-317bc6aa2413

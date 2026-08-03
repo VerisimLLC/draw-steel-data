@@ -17,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -56,34 +57,125 @@ info:
   updateid: 80ddda13-dfb9-476e-b6f8-534596d6f4a4
   properties:
     __typeName: monster
+    opportunityAttack: 4
+    keywords:
+      Animal: true
+      Swarm: true
+    ev: 16
+    creatureSize: "2"
+    skillProficiencies: []
+    initiativeGrouping: b771adcc-cbbb-4969-b64c-bc59d47b3bf3
+    attributes:
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: -2
+      prs:
+        id: prs
+        baseValue: -3
+      inu:
+        id: inu
+        baseValue: 2
+      rea:
+        id: rea
+        baseValue: -3
+    stability: 1
+    equipment: []
+    role: Elite Hexer
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: 69b8be5b-e99a-4321-a3e1-82a9c4c70ac5
       domains:
         CharacterFeature:69b8be5b-e99a-4321-a3e1-82a9c4c70ac5: true
-      description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
       source: Trait
-      modifiers: []
+      guid: 69b8be5b-e99a-4321-a3e1-82a9c4c70ac5
       name: Swarm
+      modifiers: []
+      description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
     - __typeName: CharacterFeature
-      guid: 3b7f1d2c-eeb5-4085-9f0d-45e8384b022b
       domains:
         CharacterFeature:3b7f1d2c-eeb5-4085-9f0d-45e8384b022b: true
-      description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
       source: Trait
-      modifiers: []
+      guid: 3b7f1d2c-eeb5-4085-9f0d-45e8384b022b
       name: Nature Calls
-    inflictedConditions: []
+      modifiers: []
+      description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
+    titles: []
+    innateAttacks: []
     walkingSpeed: 5
-    opportunityAttack: 4
+    levelChoices: []
+    max_hitpoints: 40
+    max_hitpoints_roll: "40"
     creatureTemplates:
     - 2df4ef87-0990-4758-90e0-8ecc874d482e
+    traitNames: []
+    monster_category: Monster
     damage_taken: 0
-    max_hitpoints: 40
-    skillRatings: []
     groupid: a68c91b6-55f3-4c16-82d9-e0da68078b49
     resources: []
-    traitNames: []
+    resistances: []
+    savingThrowRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      keywords:
+        Weapon: true
+        Melee: true
+        Strike: true
+      repeatTargets: false
+      modifiers: []
+      description: The target can be pulled into the swarm without inflicting damage.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 6 damage
+        - 9 damage; pull 1
+        - 12 damage; pull 2
+        roll: 2d10 + 2
+      targetType: target
+      numTargets: 2
+      name: Flurry
+      categorization: Signature Ability
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      guid: c1ae3154-eae3-4360-98d2-51a92ae0191e
+    - __typeName: ActivatedAbility
+      keywords: []
+      repeatTargets: false
+      modifiers: []
+      description: The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm's next turn.
+      effectImplemented: false
+      range: 1
+      implementation: 0
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      behaviors: []
+      targetType: self
+      numTargets: "1"
+      name: Impede
+      categorization: Signature Ability
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 8e2d6e85-a214-4ae1-b8fa-a19eeffb4398
+    inflictedConditions: []
+    monster_type: Swarm
+    movementSpeeds: []
+    skillRatings: []
     import:
       type: mcdm
       data: |+
@@ -112,99 +204,8 @@ info:
         <b>Nature Calls</b>
         The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
 
-    equipment: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Melee: true
-        Strike: true
-        Weapon: true
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: c1ae3154-eae3-4360-98d2-51a92ae0191e
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
-        tiers:
-        - 6 damage
-        - 9 damage; pull 1
-        - 12 damage; pull 2
-      effectImplemented: false
-      description: The target can be pulled into the swarm without inflicting damage.
-      repeatTargets: false
-      range: 1
-      name: Flurry
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      flavor: ""
-      categorization: Signature Ability
-      keywords: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: "1"
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 8e2d6e85-a214-4ae1-b8fa-a19eeffb4398
-      behaviors: []
-      effectImplemented: false
-      description: The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm's next turn.
-      repeatTargets: false
-      range: 1
-      name: Impede
-    skillProficiencies: []
-    max_hitpoints_roll: "40"
-    levelChoices: []
-    monster_type: Swarm
     cr: 1
-    titles: []
-    keywords:
-      Swarm: true
-      Animal: true
-    ev: 16
-    movementSpeeds: []
-    attributes:
-      inu:
-        baseValue: 2
-        id: inu
-      agl:
-        baseValue: 1
-        id: agl
-      mgt:
-        baseValue: -2
-        id: mgt
-      rea:
-        baseValue: -3
-        id: rea
-      prs:
-        baseValue: -3
-        id: prs
-    innateAttacks: []
-    resistances: []
-    stability: 1
-    role: Elite Hexer
-    initiativeGrouping: b771adcc-cbbb-4969-b64c-bc59d47b3bf3
     minion: false
-    creatureSize: "2"
-    monster_category: Monster
-    savingThrowRatings: []
   tokenType: null
   bestiaryId: 160777f0-0ca0-44d7-bab0-0ec9a581c834
   summonerid: null
@@ -217,6 +218,6 @@ parentFolder: 4b3931af-633a-4d06-a87c-a4139290d258
 artist: null
 ord: 3
 ctime: 1741590222154
-mtime: 1779156451424
+mtime: 1785702744827
 hidden: false
 id: 160777f0-0ca0-44d7-bab0-0ec9a581c834
