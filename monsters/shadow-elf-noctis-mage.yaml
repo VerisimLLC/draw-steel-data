@@ -56,10 +56,53 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: 30bd1638-f6dd-4066-bae2-c57e0dcc2a23
+      implementation: 4
       domains:
         CharacterFeature:30bd1638-f6dd-4066-bae2-c57e0dcc2a23: true
-      description: The noctis mage ignores concealment granted by darkness. While the noctis mage is in direct sunlight, they have damage weakness 3. While the noctis mage is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The noctis mage ignores concealment created by darkness. While the noctis mage is in direct sunlight, they have damage weakness 3. While the noctis mage has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: 00b0ba62-9efa-41c6-b30e-1a0723b31a9e
+        sourceguid: 30bd1638-f6dd-4066-bae2-c57e0dcc2a23
+        source: Trait
+        domains:
+          CharacterFeature:30bd1638-f6dd-4066-bae2-c57e0dcc2a23: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 8b63f948-85e1-454a-b256-6597eac4cb19
+        sourceguid: 30bd1638-f6dd-4066-bae2-c57e0dcc2a23
+        source: Trait
+        domains:
+          CharacterFeature:30bd1638-f6dd-4066-bae2-c57e0dcc2a23: true
+        description: While the noctis mage has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 0a510314-1c5a-4b45-a955-0e3b3e70c443
+        sourceguid: 30bd1638-f6dd-4066-bae2-c57e0dcc2a23
+        source: Trait
+        domains:
+          CharacterFeature:30bd1638-f6dd-4066-bae2-c57e0dcc2a23: true
+        description: While the noctis mage is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
     inflictedConditions: []
@@ -131,8 +174,9 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Signature Ability
       keywords:
@@ -145,7 +189,7 @@ info:
         brightness: 1
         saturation: 1
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
@@ -161,28 +205,258 @@ info:
         - 9 damage
         - 14 damage
         - 17 damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 08c87dfe-4f31-4ccb-8ba4-4d7024da9619
+        ongoingEffectCustom: false
+        duration: eoe
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        targeting: prompt
+        applyto: caster
+        autoTarget: false
+        abilityType: custom
+        filterTarget: (not Cast.PrimaryTarget.Object) and Caster.Heroic Resources Available to Spend >= 3
+        promptText: "Spend 3 Malice: The target instead has a double bane on the next ability they use. Select skip if you do not want to spend 3 Malice."
+        standardAbilityParams:
+          strucktarget: "<<cast.PrimaryTarget.id>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: all
+          targetFilter: "<<strucktarget>> = Target.ID"
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "3"
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: effect
+            ongoingEffect: 08c87dfe-4f31-4ccb-8ba4-4d7024da9619
+            conditions: []
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: cc6a14a8-decc-4ab9-b5d4-eb124a5de1bc
+            ongoingEffectCustom: false
+            duration: eoe
+          iconid: ui-icons/skills/1.png
+          guid: f5ce595c-113f-4186-bdc6-c57bb505d194
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "1"
+          range: "100"
+          name: Blotting Bolt Double Bane
       range: 5
       name: Blotting Bolt
     - __typeName: ActivatedAbility
       implementation: 4
       targetType: target
+      targetAllegiance: enemy
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Reason
         tiers:
         - 8 damage; R<1 the target makes a free strike against one enemy of the noctis mage's choice
         - 10 damage; R<2 the target makes a free strike against one enemy of the noctis mage's choice
-        - 13 damage; R<3 the target uses a signature ability against one enemy of the noctis mage's choice.
-      categorization: Heroic Ability
-      targetFilter: Enemy
+        - 13 damage; R<3 the target uses a signature ability against one enemy of the noctis mage's choice
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: targets
+        tiersSelected:
+        - 1
+        filterTarget: not Cast.PassesPotency(Target,"R",1)
+        abilityType: custom
+        promptWhenResolving: true
+        promptWhenResolvingText: Choose which target makes their forced free strike next.
+        promptText: The target makes a free strike against one enemy of the noctis mage's choice.
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: self
+          castImmediately: true
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+            filterAbilityTargets: not enemy
+            modifier:
+              __typeName: CharacterModifier
+              attributes: []
+              cannotModifyAction: true
+              name: Modify Attack
+              behavior: modifyability
+              guid: 011ca474-262a-4e1b-8910-7094d31662ed
+              modifyDescription: ""
+              description: ""
+              source: ""
+              filterAbility: ability.Free Strike
+              ability:
+                __typeName: ActivatedAbility
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+                abilityType: none
+                numTargets: "1"
+                targetType: self
+                modifiers: []
+                behaviors: []
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: 7d4b73f4-658f-4477-9fdd-d68ee5af8576
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
+          iconid: ui-icons/skills/1.png
+          guid: ac0786de-defb-4504-8f49-5c5897b010bb
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "1"
+          range: 1
+          name: Forced Free Strike
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: targets
+        tiersSelected:
+        - 2
+        filterTarget: not Cast.PassesPotency(Target,"R",2)
+        abilityType: custom
+        promptWhenResolving: true
+        promptWhenResolvingText: Choose which target makes their forced free strike next.
+        promptText: The target makes a free strike against one enemy of the noctis mage's choice.
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: self
+          castImmediately: true
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+            filterAbilityTargets: not enemy
+            modifier:
+              __typeName: CharacterModifier
+              attributes: []
+              cannotModifyAction: true
+              name: Modify Attack
+              behavior: modifyability
+              guid: 3bd9ca7f-fd41-4b2b-be36-fa62b31079a9
+              modifyDescription: ""
+              description: ""
+              source: ""
+              filterAbility: ability.Free Strike
+              ability:
+                __typeName: ActivatedAbility
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+                abilityType: none
+                numTargets: "1"
+                targetType: self
+                modifiers: []
+                behaviors: []
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: 965c2367-c4a6-4752-96b5-b7fa916896d0
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
+          iconid: ui-icons/skills/1.png
+          guid: d841b77d-2ca3-4b10-b5dc-4392dd6e24b4
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "1"
+          range: 1
+          name: Forced Free Strike
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: targets
+        tiersSelected:
+        - 3
+        filterTarget: not Cast.PassesPotency(Target,"R",3)
+        abilityType: custom
+        promptWhenResolving: true
+        promptWhenResolvingText: Choose which target must use a signature ability next.
+        promptText: The target uses a signature ability against one enemy of the noctis mage's choice.
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: self
+          castImmediately: true
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+            filterAbilityTargets: not enemy
+            modifier:
+              __typeName: CharacterModifier
+              attributes: []
+              cannotModifyAction: true
+              name: Modify Attack
+              behavior: modifyability
+              guid: 7e75b946-72ab-4a64-8042-7e858e51d895
+              modifyDescription: ""
+              description: ""
+              source: ""
+              filterAbility: Ability.Usable as Signature Ability
+              ability:
+                __typeName: ActivatedAbility
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+                abilityType: none
+                numTargets: "1"
+                targetType: self
+                modifiers: []
+                behaviors: []
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: 1db1730b-040e-453e-bbfa-0bb3483d8aa5
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
+          iconid: ui-icons/skills/1.png
+          guid: 3d159af8-3254-4c9c-8e43-defb7dbff5eb
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "1"
+          range: 1
+          name: Forced Signature Ability
+      categorization: Malice
       keywords:
         Strike: true
         Magic: true
         Ranged: true
-      resourceNumber: 3
+      resourceNumber: "3"
       repeatTargets: false
       abilityType: none
-      numTargets: 2
+      numTargets: "2"
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
@@ -215,6 +489,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590287007
-mtime: 1775375112660
+mtime: 1785488350749
 hidden: false
 id: 9b3bdb16-7c34-441c-875c-2204532e7ce9

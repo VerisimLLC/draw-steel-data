@@ -56,12 +56,101 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: 59a47fad-a5f9-45db-8659-78818f3608e3
+      implementation: 4
       domains:
         CharacterFeature:59a47fad-a5f9-45db-8659-78818f3608e3: true
-      description: The mournblade ignores concealment granted by darkness. While the mournblade is in direct sunlight, they have damage weakness 3. While the mournblade is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The mournblade ignores concealment created by darkness. While the mournblade is in direct sunlight, they have damage weakness 3. While the mournblade has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: a087ff1d-d5f7-40f3-80c9-00f5706234e5
+        sourceguid: 59a47fad-a5f9-45db-8659-78818f3608e3
+        source: Trait
+        domains:
+          CharacterFeature:59a47fad-a5f9-45db-8659-78818f3608e3: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 208aad15-eab0-4668-8aa9-903a193ef9c8
+        sourceguid: 59a47fad-a5f9-45db-8659-78818f3608e3
+        source: Trait
+        domains:
+          CharacterFeature:59a47fad-a5f9-45db-8659-78818f3608e3: true
+        description: While the mournblade has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 21919cea-28f5-4f97-97bf-35f8d96b2e97
+        sourceguid: 59a47fad-a5f9-45db-8659-78818f3608e3
+        source: Trait
+        domains:
+          CharacterFeature:59a47fad-a5f9-45db-8659-78818f3608e3: true
+        description: While the mournblade is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
+    - __typeName: CharacterFeature
+      guid: 2752d53a-aab3-40a8-a809-1254c3e0587b
+      name: Knife in the Dark Cleanup
+      source: Trait
+      domains:
+        CharacterFeature:2752d53a-aab3-40a8-a809-1254c3e0587b: true
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: be892518-ebb4-4e1b-a25b-2a3e46cf27bd
+        name: Knife in the Dark Cleanup
+        behavior: trigger
+        sourceguid: 2752d53a-aab3-40a8-a809-1254c3e0587b
+        domains:
+          CharacterFeature:2752d53a-aab3-40a8-a809-1254c3e0587b: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          abilityType: none
+          conditionFormula: Self.Conditions has "Invisible From"
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: conditions
+            conditions:
+            - 9d4f1c95-5c2b-4a76-b428-3e4f1d2c8a05
+          description: ""
+          mandatory: true
+          trigger: beginturn
+          strain: []
+          modifiers: []
+          guid: 4a847c9b-7e9a-481b-a6a4-a58d4065e7d1
+          name: Knife in the Dark Cleanup
+          targetType: self
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          persistence: []
+          castImmediately: true
+        description: At the start of the mournblade's turn, end the Invisible From condition on the mournblade.
+        source: Trait
+      description: At the start of the mournblade's turn, the Invisible From condition caused by Knife in the Dark ends.
     inflictedConditions: []
     walkingSpeed: 5
     opportunityAttack: 7
@@ -132,6 +221,7 @@ info:
     - __typeName: ActivatedAbility
       implementation: 3
       targetType: target
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -139,8 +229,11 @@ info:
         - 10 damage
         - 15 damage
         - 18 damage
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        guid: 2041a4c1-1e91-4ff5-bc2e-8e528cf093f7
+        filterTarget: not Target.Object
+        rule: become invisible from target (eoe)
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -153,7 +246,7 @@ info:
         Strike: true
         Melee: true
         Weapon: true
-      description: The mournblade is invisible to the target until the start of their next turn.
+      description: The mournblade is invisible to the target until the start of the mournblade's next turn.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -162,11 +255,16 @@ info:
       range: 1
       name: Knife in the Dark
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
+      implementation: 4
+      targetType: emptyspace
+      targetFilter: target.Environment has "Darkness"
+      abilityFilters:
+      - reason: The mournblade can only use Shadow Step while they have concealment.
+        formula: Concealed
+      behaviors:
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: teleport
+      categorization: Ability
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -175,14 +273,15 @@ info:
       iconid: ui-icons/skills/1.png
       guid: d9e12e53-1626-406e-881f-fdfc3465feb2
       flavor: ""
-      keywords: []
-      description: If the mournblade is concealed, they can teleport to another square in concealment granted by darkness within 10.
+      keywords:
+        Magic: true
+      description: If the mournblade has concealment, they can teleport up to 10 squares to a space with concealment created by darkness.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
+      range: "10"
       name: Shadow Step
     creatureSize: 1M
     traitNames: []
@@ -202,6 +301,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590294117
-mtime: 1775375046057
+mtime: 1785488197627
 hidden: false
 id: aafb31ac-a276-4d92-a5c0-853fd81cff74

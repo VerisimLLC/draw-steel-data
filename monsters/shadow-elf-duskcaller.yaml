@@ -56,10 +56,53 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: 0bb4eb2d-190a-4837-b8b0-33d189f7c3ee
+      implementation: 4
       domains:
         CharacterFeature:0bb4eb2d-190a-4837-b8b0-33d189f7c3ee: true
-      description: The duskcaller ignores concealment granted by darkness. While the duskcaller is in direct sunlight, they have damage weakness 3. While the duskcaller is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The duskcaller ignores concealment created by darkness. While the duskcaller is in direct sunlight, they have damage weakness 3. While the duskcaller has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: bd20697c-ce5b-4702-b833-1fe09ed83c45
+        sourceguid: 0bb4eb2d-190a-4837-b8b0-33d189f7c3ee
+        source: Trait
+        domains:
+          CharacterFeature:0bb4eb2d-190a-4837-b8b0-33d189f7c3ee: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 6b604011-3e8a-4f36-a8d7-95005af20ef7
+        sourceguid: 0bb4eb2d-190a-4837-b8b0-33d189f7c3ee
+        source: Trait
+        domains:
+          CharacterFeature:0bb4eb2d-190a-4837-b8b0-33d189f7c3ee: true
+        description: While the duskcaller has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 79217c28-cfe8-4779-8747-5c799cdc14fd
+        sourceguid: 0bb4eb2d-190a-4837-b8b0-33d189f7c3ee
+        source: Trait
+        domains:
+          CharacterFeature:0bb4eb2d-190a-4837-b8b0-33d189f7c3ee: true
+        description: While the duskcaller is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
     inflictedConditions: []
@@ -130,8 +173,9 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -140,10 +184,9 @@ info:
         - 13 damage
         - 16 damage
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
-      numTargets: 1
+      numTargets: 2 when Concealed else 1
       modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
@@ -153,7 +196,7 @@ info:
         Strike: true
         Melee: true
         Weapon: true
-      description: The duskcaller can target an additional creature or object while concealed.
+      description: If the duskcaller has concealment, they can target one additional creature or object.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -162,34 +205,8 @@ info:
       range: 1
       name: Night Knife
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: "1"
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      guid: 0885d0c0-cdc8-42d4-b050-8e9a14d2a2c8
-      flavor: ""
-      keywords:
-        Magic: true
-        Area: true
-        Ranged: true
-      description: The affected area is covered in darkness and is considered concealment until the start of the duskcaller's next turn.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Shadesong
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
+      implementation: 4
+      targetType: cube
       flavor: ""
       categorization: Ability
       multipleModes: true
@@ -215,7 +232,29 @@ info:
       iconid: ui-icons/skills/1.png
       guid: 394eb882-cc7d-4b2d-9e4b-2c7d6a3b81c2
       repeatTargets: false
-      behaviors: []
+      radius: 2 when Mode = 1 else 5
+      rangeTextOverride: "{2 when Mode = 1 else 5} cube within 3"
+      targetTextOverride: Special
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        guid: 4259f276-f234-4c60-afed-0234f4b1ebfe
+        duration: nextturn
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          name: Darkness
+          guid: d14734bd-f273-44df-8a19-f166d14a5061
+          description: This area is filled with darkness. It grants concealment.
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          environmentalKeywordId: 02fad7cc-5a65-48da-ba14-59a7c745fa61
+          applyto: all
+          modifiers: []
+          triggers: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
       description: |-
         Until the start of the duskcaller's next turn, the area is filled with darkness.
 
@@ -226,7 +265,7 @@ info:
       - condition: ""
         rules: The size of the cube increases by 3.
         text: Malice
-      range: 2
+      range: 3
       name: The Lay of Cor'thoroth
     creatureSize: 1M
     traitNames: []
@@ -246,6 +285,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590292014
-mtime: 1775375115270
+mtime: 1785487622186
 hidden: false
 id: a5fba8d2-080e-4015-9b4a-347dfee49f3b

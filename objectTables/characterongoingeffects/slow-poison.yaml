@@ -1,0 +1,58 @@
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+id: 958ea9d6-1730-45b8-acf9-13a428cc6011
+guid: 958ea9d6-1730-45b8-acf9-13a428cc6011
+name: Slow Poison
+description: The slow-poison needle is initially painless. At the start of this creature's next turn, they take poison damage equal to the stacks of this effect and are weakened (save ends).
+iconid: ui-icons/skills/1.png
+display:
+  saturation: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+  brightness: 1
+source: Ongoing Effect
+buffType: debuff
+stackable: true
+clearStacksWhenApplying: true
+hiddenFromEnemies: true
+custom: true
+modifiers:
+- __typeName: CharacterModifier
+  behavior: trigger
+  name: Slow Poison
+  guid: 2a4967d7-9e6a-4e72-9320-a9755a0e5659
+  sourceguid: 958ea9d6-1730-45b8-acf9-13a428cc6011
+  source: Ongoing Effect
+  domains: {}
+  description: At the start of this creature's next turn, they take the delayed poison damage and are weakened (save ends).
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Slow-Poison Needle
+    guid: c1be9270-a992-4aca-8715-851b8cbdca08
+    trigger: beginturn
+    targetType: self
+    mandatory: true
+    whenActive: combat
+    numTargets: "1"
+    repeatTargets: false
+    abilityType: none
+    modifiers: []
+    persistence: []
+    strain: []
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: '{Stacks("Slow Poison")} poison damage; weakened (save ends)'
+      applyto: targets
+    - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+      ongoingEffectid: 958ea9d6-1730-45b8-acf9-13a428cc6011
+      applyto: targets
+    description: The delayed poison takes effect.
+    iconid: ui-icons/skills/1.png
+    display:
+      saturation: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      brightness: 1
+    range: 1
+ctime: 1785487929895
+mtime: 1785487929895

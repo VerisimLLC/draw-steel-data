@@ -56,10 +56,53 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: f59d862f-969f-4981-b5ce-13308979989e
+      implementation: 4
       domains:
         CharacterFeature:f59d862f-969f-4981-b5ce-13308979989e: true
-      description: The sniper ignores concealment granted by darkness. While the sniper is in direct sunlight, they have damage weakness 3. While the sniper is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The sniper ignores concealment created by darkness. While the sniper is in direct sunlight, they have damage weakness 3. While the sniper has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: 179a7698-2908-4bd4-9a30-2a16c4d8f7fc
+        sourceguid: f59d862f-969f-4981-b5ce-13308979989e
+        source: Trait
+        domains:
+          CharacterFeature:f59d862f-969f-4981-b5ce-13308979989e: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 6f45a17f-b0ac-41f1-8e5a-be85263d1f97
+        sourceguid: f59d862f-969f-4981-b5ce-13308979989e
+        source: Trait
+        domains:
+          CharacterFeature:f59d862f-969f-4981-b5ce-13308979989e: true
+        description: While the sniper has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 2ace8481-0692-4f44-9d7b-0d7b9c5b4cd3
+        sourceguid: f59d862f-969f-4981-b5ce-13308979989e
+        source: Trait
+        domains:
+          CharacterFeature:f59d862f-969f-4981-b5ce-13308979989e: true
+        description: While the sniper is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
     inflictedConditions: []
@@ -105,39 +148,8 @@ info:
     walkingSpeed: 5
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 3 damage
-        - 5 damage
-        - 7 damage
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: a9f416ac-6d72-42c2-b20d-ece8c0cf14eb
-      flavor: ""
-      keywords:
-        Strike: true
-        Weapon: true
-        Ranged: true
-      description: The next strike made against the target has an edge.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 7
-      name: Neon Arrow
-    - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
+      objectTarget: true
       targetType: target
       flavor: ""
       categorization: Signature Ability
@@ -169,6 +181,9 @@ info:
         - 3 damage
         - 5 damage
         - 7 damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 529b5f9b-c443-40ae-aff3-9102eb3ac2df
+        ongoingEffectCustom: false
       range: 7
       name: Lumina Arrow
     import:
@@ -208,6 +223,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590295786
-mtime: 1775375046697
+mtime: 1785487649022
 hidden: false
 id: afcbfa17-27f8-4dd4-b7bd-d10a0eedd378

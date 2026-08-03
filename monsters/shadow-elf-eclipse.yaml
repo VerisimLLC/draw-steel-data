@@ -4,8 +4,11 @@ info:
     mountedOnObject: null
     mountedSaddle: 0
     floor: null
-    map: null
-    loc: []
+    map: 05ac910d-c832-46cc-8ca6-449bde0d4969
+    loc:
+    - -8
+    - 11
+    - 2
     pos:
       x: 0
       y: 0
@@ -14,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,117 +57,650 @@ info:
   updateid: ede7bb3a-494a-4611-9a2c-80e90e80e30b
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: c85cc4c1-136c-45e3-b1af-4db113e37085
-      domains:
-        CharacterFeature:c85cc4c1-136c-45e3-b1af-4db113e37085: true
-      description: At the end of each of their turns, the eclipse can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        name: End Effect
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
-        description: ""
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          mandatory: false
-          castImmediately: true
-          triggerPrompt: End effect for 10
-          strain: []
-          targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            purgeType: one
-            damageToSelf: "10"
-            targetDuration: save
-            conditions: []
-          persistence: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
-          whenActive: combat
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          description: ""
-          repeatTargets: false
-          trigger: endturn
-          numTargets: "1"
-          range: 1
-          name: End Effect
-        behavior: trigger
-      source: Trait
-      name: End Effect
-    - __typeName: CharacterFeature
-      guid: 76c2f62e-0c94-4058-9b87-c741af1f7780
-      domains:
-        CharacterFeature:76c2f62e-0c94-4058-9b87-c741af1f7780: true
-      description: The eclipse ignores concealment granted by darkness. While the eclipse is in direct sunlight, they have damage weakness 3. While the eclipse is concealed, they have damage immunity 3.
-      modifiers: []
-      source: Trait
-      name: Of the Umbra
-    - __typeName: CharacterFeature
-      guid: 3e7556c6-c205-402d-847d-b050fe3a02ae
-      domains:
-        CharacterFeature:3e7556c6-c205-402d-847d-b050fe3a02ae: true
-      description: The brush stalker sheds darkness like other creatures would shed light. Each square within 2 of the brush stalker is devoid of light and provides concealment.
-      modifiers: []
-      source: Trait
-      name: Suneater
-    - __typeName: CharacterFeature
-      guid: 770cc96f-0cac-4313-b298-e40e607fb492
-      domains:
-        CharacterFeature:770cc96f-0cac-4313-b298-e40e607fb492: true
-      description: Each non-brush stalker creature with the Animal keyword is frightened while they have line of effect to the brush stalker.
-      modifiers: []
-      source: Trait
-      name: Wyrd Dyr
-    inflictedConditions: []
-    stability: 1
-    opportunityAttack: 7
-    cr: 6
-    titles: []
-    damage_taken: 0
-    max_hitpoints: 180
+    walkingSpeed: 6
+    monster_category: Monster
+    savingThrowRatings: []
+    max_hitpoints_roll: "180"
     keywords:
       Fey: true
       Shadow Elf: true
       Humanoid: true
-    skillRatings: []
-    role: Leader
+    stability: 1
+    minion: false
+    resistances: []
     ev: 32
+    monster_type: Shadow Elf Eclipse
+    resources: []
+    cr: 6
+    max_hitpoints: 180
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: At the end of each of their turns, the eclipse can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+      guid: c85cc4c1-136c-45e3-b1af-4db113e37085
+      domains:
+        CharacterFeature:c85cc4c1-136c-45e3-b1af-4db113e37085: true
+      name: End Effect
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: endturn
+          repeatTargets: false
+          description: ""
+          conditionFormula: Save Ends Effects
+          numTargets: "1"
+          persistence: []
+          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
+          range: 1
+          name: End Effect
+          whenActive: combat
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          triggerPrompt: Take 10 damage to end one save-ending effect. This damage can't be reduced in any way.
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          castImmediately: true
+          strain: []
+          targetType: self
+          mandatory: false
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            damageToSelf: "10"
+            purgeType: one
+            conditions: []
+            targetDuration: save
+            mode: conditions_and_effects
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
+        name: End Effect
+        sourceguid: c85cc4c1-136c-45e3-b1af-4db113e37085
+        source: Trait
+        behavior: trigger
+      implementation: 4
+    - __typeName: CharacterFeature
+      description: The eclipse ignores concealment created by darkness. While the eclipse is in direct sunlight, they have damage weakness 3. While the eclipse has concealment, they have damage immunity 3.
+      guid: 76c2f62e-0c94-4058-9b87-c741af1f7780
+      domains:
+        CharacterFeature:76c2f62e-0c94-4058-9b87-c741af1f7780: true
+      name: Of the Umbra
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:76c2f62e-0c94-4058-9b87-c741af1f7780: true
+        guid: ff43bf9c-bc7a-4613-ae78-5f7501d086d2
+        name: Of the Umbra
+        source: Trait
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        behavior: attribute
+        sourceguid: 76c2f62e-0c94-4058-9b87-c741af1f7780
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:76c2f62e-0c94-4058-9b87-c741af1f7780: true
+        guid: 6e3475b4-4512-4c5f-927e-a0125325aed8
+        name: Of the Umbra
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: "3"
+          damageType: all
+          apply: Damage Reduction
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+        description: While the eclipse has concealment, they have damage immunity 3.
+        behavior: resistance
+        sourceguid: 76c2f62e-0c94-4058-9b87-c741af1f7780
+        source: Trait
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:76c2f62e-0c94-4058-9b87-c741af1f7780: true
+        guid: f839898d-625e-4fc8-865b-3db02a10e4f5
+        name: Of the Umbra
+        resistances:
+        - __typeName: ResistanceEntry
+          dr: "-3"
+          damageType: all
+          apply: Damage Reduction
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
+        description: While the eclipse is in direct sunlight, they have damage weakness 3.
+        behavior: resistance
+        sourceguid: 76c2f62e-0c94-4058-9b87-c741af1f7780
+        source: Trait
+      implementation: 4
+    - __typeName: CharacterFeature
+      description: |-
+        Trigger: An enemy within distance uses an ability that emits light, including abilities that deal fire or lightning damage.
+
+        Effect: The target has a double bane on the ability.
+      guid: 2ba40a46-d498-4a3e-93f2-4014dcd31dc8
+      domains:
+        CharacterFeature:2ba40a46-d498-4a3e-93f2-4014dcd31dc8: true
+      name: Put It Out!
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:2ba40a46-d498-4a3e-93f2-4014dcd31dc8: true
+        description: |-
+          Trigger: An enemy within distance uses an ability that emits light, including abilities that deal fire or lightning damage.
+
+          Effect: The target has a double bane on the ability.
+        guid: 2710a131-f43e-4cfc-9770-fe339724bb6a
+        sourceguid: 2ba40a46-d498-4a3e-93f2-4014dcd31dc8
+        name: Put It Out!
+        source: Trait
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          effect: The target has a double bane on the ability.
+          trigger: An enemy within distance uses an ability that emits light, including abilities that deal fire or lightning damage.
+          guid: 13408a7d-95c0-420e-9a83-2e01e7fbc110
+          distance: Ranged 10
+          name: Put It Out!
+          target: The triggering enemy
+          type: trigger
+          keywords:
+            Ranged: true
+        behavior: triggerdisplay
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:2ba40a46-d498-4a3e-93f2-4014dcd31dc8: true
+        trigger: powerroll
+        guid: fa2dc42b-a374-4716-9063-4459883d7406
+        range: "10"
+        powerRollModifier:
+          __typeName: CharacterModifier
+          guid: 83939814-e0fa-491a-8dbb-68920d336a72
+          name: Put It Out!
+          source: Trigger
+          rollType: ability_power_roll
+          description: "Put It Out!: The eclipse uses a triggered action to impose a double bane on this ability."
+          modtype: double_bane
+          behavior: power
+          rules: ""
+          activationCondition: true
+          keywords: []
+        abilityFilter: (Ability.Keywords has "Fire") or (Ability.Keywords has "Light") or (Ability.Keywords has "Lightning") or (Ability.DamageTypes has "Fire") or (Ability.DamageTypes has "Lightning")
+        name: Put It Out!
+        description: |-
+          Trigger: An enemy within distance uses an ability that emits light, including abilities that deal fire or lightning damage.
+
+          Effect: The target has a double bane on the ability.
+        targetType: enemy
+        source: Trait
+        behavior: powertabletrigger
+        rules: When an enemy within 10 squares uses an ability that emits light, including abilities that deal fire or lightning damage, the eclipse can use a triggered action to give the ability a double bane.
+        sourceguid: 2ba40a46-d498-4a3e-93f2-4014dcd31dc8
+        type: trigger
+        multitarget: all
+      implementation: 4
+    inflictedConditions: []
+    stamina_history:
+      __typeName: StatHistory
+      entries:
+        af4f934e-ec46-4e8b-8129-360c25de7f7d:
+          note: 2 Damage
+          userid: 4V4KWXdW7ScFIiEyuknO4bqmQSc2
+          timestamp: 1785636751846
+          set: 178
+          disposition: bad
+        23d53494-2391-4c20-aabf-1ca701163efb:
+          note: 2 Healing
+          userid: 4V4KWXdW7ScFIiEyuknO4bqmQSc2
+          timestamp: 1785636753939
+          set: 180
+          disposition: good
+    equipment: []
+    levelChoices: []
+    damageEntries:
+      d4b4a8e7-927e-4618-b32b-daeab9163d6b:
+        heal: 2
+        timestamp: 1785636753939
+        seq: 2
+        id: d4b4a8e7-927e-4618-b32b-daeab9163d6b
+      0fbe8caf-4674-4742-b094-0c79b705d600:
+        damage: 2
+        timestamp: 1785636751846
+        seq: 1
+        id: 0fbe8caf-4674-4742-b094-0c79b705d600
+    traitNames: []
+    titles: []
+    attributes:
+      mgt:
+        baseValue: 4
+        id: mgt
+      rea:
+        baseValue: 2
+        id: rea
+      prs:
+        baseValue: 2
+        id: prs
+      inu:
+        baseValue: 1
+        id: inu
+      agl:
+        baseValue: 3
+        id: agl
+    creatureSize: 1M
     movementSpeeds:
       climb: 6
-    monster_type: Shadow Elf Eclipse
+    deathSavingThrowSuccesses: 0
+    deathSavingThrowFailures: 0
     groupid: 902aceda-da84-457b-957f-074bb7169e1c
-    resources: []
-    traitNames: []
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 3
-      prs:
-        id: prs
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: 2
-    minion: false
+    damage_taken: 0
+    opportunityAttack: 7
+    skillRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      description: |2-
+
+        **2 Malice**: The potency increases by 1.
+      numTargets: 2
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      iconid: ui-icons/skills/1.png
+      guid: 7a8a168e-5d95-4441-8331-1129f92661e1
+      range: 1
+      implementation: 4
+      objectTarget: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      flavor: ""
+      abilityType: none
+      targetType: target
+      name: Manifold Blade
+      categorization: Signature Ability
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 132
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: mgt
+        roll: 2d10 + Might
+        tiers:
+        - 11 damage; I<2 bleeding (save ends)
+        - 16 damage; I<3 bleeding (save ends)
+        - 19 damage; I<4 bleeding (save ends)
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: aea679d1-a56a-470c-9981-9401b6cfa5dc
+        modifier:
+          __typeName: CharacterModifier
+          domains: []
+          guid: ed0bffa9-1261-4a8b-a6d2-e22313d7b80a
+          name: Manifold Blade - 2 Malice
+          activationCondition: false
+          rollType: ability_power_roll
+          description: "2 Malice: The potency increases by 1."
+          resourceCostType: cost
+          resourceCostAmount: "2"
+          modtype: none
+          behavior: power
+          sourceguid: 7a8a168e-5d95-4441-8331-1129f92661e1
+          potencymod: "1"
+          keywords: []
+    - __typeName: ActivatedAbility
+      repeatTargets: false
+      description: ""
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      reasonedFilters:
+      - formula: not (Environment has "Darkness")
+        reason: Grasping Shadow can only target creatures or objects casting a shadow.
+      numTargets: 3
+      targetTextOverride: Three creatures or objects casting a shadow
+      persistence: []
+      keywords:
+        Ranged: true
+        Magic: true
+      guid: 3b774f22-c716-4691-bdd1-be439c3a23da
+      range: 5
+      name: Grasping Shadow
+      objectTarget: true
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      flavor: ""
+      abilityType: none
+      targetType: target
+      strain: []
+      categorization: Ability
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 132
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: mgt
+        roll: 2d10 + Might
+        promptWhenResolvingText: Select targets to pull in your preferred order.
+        promptWhenResolving: true
+        tiers:
+        - pull 5; I<2 slowed (save ends)
+        - pull 7; I<3 slowed (save ends)
+        - pull 10; I<4 slowed (save ends)
+    - __typeName: ActivatedAbility
+      usageLimitOptions:
+        resourceid: e8c2ed64-823c-4eb6-b8f8-d9bc1ae57b70
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+      repeatTargets: false
+      castImmediately: true
+      iconid: ui-icons/skills/1.png
+      numTargets: 1
+      keywords:
+        Ranged: true
+      implementation: 4
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      guid: e969c031-72d0-4cbe-be52-87d97504bf57
+      range: 5
+      name: From the Shadows
+      targetTextOverride: Special
+      modifiers: []
+      flavor: ""
+      abilityType: none
+      targetType: self
+      villainAction: Villain Action 1
+      categorization: Villain Action
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 132
+      description: The eclipse calls forth one brush stalker into an unoccupied space within distance. Each ally within distance can then shift up to their speed and make a free strike.
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      behaviors:
+      - __typeName: ActivatedAbilitySummonBehavior
+        applyto: caster
+        groupInitiativeWithCaster: true
+        casterChoosesCreatures: false
+        allCreaturesTheSame: true
+        monsterType: 37c22321-5670-4b07-8b90-f7357dd04b21
+        summonRange: "5"
+        choosePlacement: true
+        guid: 933845a7-d35f-43e2-8a3f-f2cbc742a752
+        numSummons: "1"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          iconid: ui-icons/skills/1.png
+          guid: 9b1a1dd3-0baa-45f1-89c2-de07a87f1046
+          range: 5
+          name: From the Shadows - Allies Advance
+          targetAllegiance: ally
+          modifiers: []
+          repeatTargets: false
+          castImmediately: true
+          targetType: all
+          abilityType: none
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          implementation: 4
+          description: ""
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            customAbility:
+              __typeName: ActivatedAbility
+              guid: 9675bcd2-5c55-43b3-8ae5-0554bfe19949
+              range: 1
+              implementation: 4
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              repeatTargets: false
+              castImmediately: true
+              targetType: self
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                saturation: 1
+                brightness: 1
+              name: From the Shadows - Shift and Strike
+              abilityType: none
+              description: ""
+              numTargets: "1"
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                abilityType: standard
+                standardAbilityParams:
+                  distance: movement speed
+                promptText: Shift up to your speed.
+                standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                abilityType: standard
+                standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+                promptText: Make a free strike.
+            guid: 2b841bb7-ecc4-4c44-8444-8c4ccc82edae
+            promptWhenResolvingText: Choose an ally to shift and make a free strike.
+            promptWhenResolving: true
+            applyto: targets
+        guid: e7d8929a-ab33-4903-a952-8e2e143e97a2
+        autoTarget: false
+        invokeOnCaster: false
+        abilityType: custom
+    - __typeName: ActivatedAbility
+      usageLimitOptions:
+        resourceid: e0a61f23-bc1b-4ab0-8e3b-2fc35e17e9fa
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+      repeatTargets: false
+      description: Each target loses all their surges. Additionally, until the end of the round, allies ignore edges and double edges on any targets' abilities, and ignore any nondamaging effects of any target's damage-dealing abilities.
+      numTargets: 1
+      keywords:
+        Area: true
+        Magic: true
+      iconid: ui-icons/skills/1.png
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      guid: 3279ce83-364f-4e6d-9586-fb3c0be1d31d
+      range: 3
+      name: Cast Away All Hope
+      targetType: all
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      flavor: ""
+      abilityType: none
+      villainAction: Villain Action 2
+      modifiers: []
+      categorization: Villain Action
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 132
+      implementation: 3
+      targetAllegiance: enemy
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: lose all surges
+        applyto: targets
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          iconid: ui-icons/skills/1.png
+          guid: bb34a690-4802-42e5-be4b-52b47634409a
+          range: 999
+          name: Cast Away All Hope - Allies
+          targetAllegiance: ally
+          modifiers: []
+          repeatTargets: false
+          castImmediately: true
+          targetType: all
+          abilityType: none
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          implementation: 4
+          description: ""
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            duration: endround
+            ongoingEffect: af55bfbb-1fec-4bc2-8a31-45c5c3731117
+        invokeOnCaster: false
+        abilityType: custom
+        autoTarget: false
+    - __typeName: ActivatedAbility
+      usageLimitOptions:
+        resourceid: 055cf7a5-66a6-4a46-9710-2a54814ec778
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+      repeatTargets: false
+      description: The area is shrouded in darkness that creates concealment until the end of the encounter. Any enemy who starts their turn in the area takes 5 corruption damage.
+      radius: "3"
+      iconid: ui-icons/skills/1.png
+      numTargets: "1"
+      keywords:
+        Area: true
+        Magic: true
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      modifiers: []
+      guid: 4dce7297-4ce9-4855-944f-8c22fd1e3c3b
+      range: 5
+      implementation: 4
+      rangeTextOverride: 3 cube within 5
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      flavor: ""
+      abilityType: none
+      targetType: cube
+      villainAction: Villain Action 3
+      categorization: Villain Action
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 132
+      name: Umbral Hunger
+      targetAllegiance: enemy
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: mgt
+        roll: 2d10 + Might
+        tiers:
+        - 7 corruption damage; R<2 the target has speed 0 (save ends)
+        - 12 corruption damage; R<3 the target has speed 0 (save ends)
+        - 15 corruption damage; R<4 the target has speed 0 (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 1
+        duration: save_ends
+        ongoingEffect: a41ad86c-64ff-4421-bc55-7e5325dce78a
+        filterTarget: Reason Potency Resistance < 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+        duration: save_ends
+        ongoingEffect: a41ad86c-64ff-4421-bc55-7e5325dce78a
+        filterTarget: Reason Potency Resistance < 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
+        duration: save_ends
+        ongoingEffect: a41ad86c-64ff-4421-bc55-7e5325dce78a
+        filterTarget: Reason Potency Resistance < 4
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        duration: eoe
+        aura:
+          __typeName: Aura
+          triggers: []
+          guid: df2126eb-36d7-40b0-90b9-e7ba7aeb2209
+          name: Darkness
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          description: The area is shrouded in darkness that creates concealment until the end of the encounter. Any enemy who starts their turn in the area takes 5 corruption damage.
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          environmentalKeywordId: 02fad7cc-5a65-48da-ba14-59a7c745fa61
+          applyto: all
+          modifiers: []
+          subauras:
+          - __typeName: Aura
+            applyto: enemies
+            guid: 428a3251-b489-4b82-b6ec-88353941c902
+            description: Any enemy who starts their turn in the area takes 5 corruption damage.
+            name: Umbral Hunger
+            modifiers:
+            - __typeName: CharacterModifier
+              guid: 4f45bfdb-6625-41a8-ac0c-2be162afa670
+              name: Umbral Hunger
+              sourceguid: 428a3251-b489-4b82-b6ec-88353941c902
+              description: Any enemy who starts their turn in the area takes 5 corruption damage.
+              source: Aura
+              behavior: trigger
+              triggeredAbility:
+                __typeName: TriggeredAbility
+                trigger: beginturn
+                mandatory: true
+                silent: true
+                repeatTargets: false
+                description: ""
+                numTargets: "1"
+                persistence: []
+                guid: 185bbda0-8ee5-4ffd-9ff6-c0a2dadc7533
+                range: 1
+                name: Umbral Hunger Darkness
+                modifiers: []
+                abilityType: none
+                targetType: self
+                behaviors:
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  rule: 5 corruption damage
+                strain: []
+                display:
+                  hueshift: 0
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  saturation: 1
+                iconid: ui-icons/skills/1.png
+            display:
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+              bgcolor: "#ffffffff"
+            triggers: []
     innateAttacks: []
-    savingThrowRatings: []
-    equipment: []
     import:
       type: mcdm
       data: |
@@ -218,268 +755,21 @@ info:
         %E2%98%85	<b>12-16</b>	12 corruption damage
         %E2%9C%B8	<b>17</b>	15 corruption damage
         <b>EffectR<3</b> speed becomes zero (save ends). The affected area is shrouded in darkness and becomes concealment. When an enemy starts their turn in an affected square, they take 5 corruption damage.
-        Brush Stalker	Level 4 Platoon Mount
-        Animal, Fey	EV 12
-        <b>Stamina</b> 60
-        <b>Speed</b> 8	<b>Size</b> 2 /<b> Stability</b> 3
-        <b>Free Strike</b> 5
-        Might +3	Agility +2	Reason -1	Intuition +0	Presence +1
-        <b>Gore</b> (Action) %E2%97%86 2d10 + 3%E2%97%86 Signature
-        <b>Keywords</b> Charge, Melee, Strike, Weapon
-        <b>Distance</b> Melee 2<b>	Target</b> Two creatures or objects
-        %E2%9C%A6	<b>%E2%89%A411</b>	7 damage
-        %E2%98%85	<b>12-16</b>	10 damage
-        %E2%9C%B8	<b>17</b>	13 damage
-
-        <b>Reclamation</b> (Action) %E2%97%86 2d10 + 3 %E2%97%86 2 Malice
-        <b>Keywords</b> Area, Magic, Melee
-        <b>Distance</b> 2 burst<b>	Target</b> All enemies in the burst
-        %E2%9C%A6	<b>%E2%89%A411</b>	4 corruption damage; M<1 weakened (save ends)
-        %E2%98%85	<b>12-16</b>	7 corruption damage; M<2 weakened (save ends)
-        %E2%9C%B8	<b>17</b>	10 corruption damage; M<3 weakened (save ends)
-
-        <b>Suneater</b>
-        The brush stalker sheds darkness like other creatures would shed light. Each square within 2 of the brush stalker is devoid of light and provides concealment.
-
-        <b>Wyrd Dyr</b>
-        Each non-brush stalker creature with the Animal keyword is frightened while they have line of effect to the brush stalker.
-
-
-        Retainer
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 7a8a168e-5d95-4441-8331-1129f92661e1
-      repeatTargets: false
-      description: |2-
-
-        **2 Malice**: The potency increases by 1.
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 11 damage; I<2 bleeding (save ends)
-        - 16 damage; I<3 bleeding (save ends)
-        - 19 damage; I<4 bleeding (save ends)
-      range: 1
-      name: Manifold Blade
-    - __typeName: ActivatedAbility
-      implementation: 4
-      strain: []
-      targetType: target
-      flavor: ""
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 132
-      effectImplemented: false
-      persistence: []
-      resourceNumber: 5
-      repeatTargets: false
-      abilityType: none
-      numTargets: 3
-      keywords:
-        Magic: true
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      iconid: ui-icons/skills/1.png
-      guid: 3b774f22-c716-4691-bdd1-be439c3a23da
-      categorization: Heroic Ability
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - I<2 slowed (save ends); pull 5
-        - I<3 slowed (save ends); pull 7
-        - I<4 slowed (save ends); pull 10
-        promptWhenResolving: true
-        promptWhenResolvingText: Select targets to pull in your preferred order.
-        roll: 2d10 + Might
-      description: The eclipse makes a free strike against each target pulled into an adjacent square.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 5
-      name: Grasping Shadow
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: bc868c94-a704-47a8-a2df-c1c2a45bddf4
-      flavor: ""
-      keywords: []
-      description: The enemy has a double bane on the ability.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: PUT IT OUT!
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: not Enemy
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      villainAction: Villain Action 1
-      numTargets: 1
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'e0081f91-451e-472a-adc"
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords: []
-      iconid: ui-icons/skills/1.png
-      guid: e969c031-72d0-4cbe-be52-87d97504bf57
-      abilityType: none
-      repeatTargets: false
-      description: The eclipse calls forth one brush stalker that appears within distance. Each target then shifts up to their speed and makes a free strike.
-      flavor: ""
-      range: 1
-      name: From the Shadows
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: all
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      villainAction: Villain Action 2
-      numTargets: 1
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '3aeaf0ae-6313-4d01-9bc"
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Magic: true
-      iconid: ui-icons/skills/1.png
-      guid: 3279ce83-364f-4e6d-9586-fb3c0be1d31d
-      abilityType: none
-      repeatTargets: false
-      description: The eclipse dispels their enemies' hard-earned advantages, removing each target's surges. Each ally ignores edges and additional effects of each target's damaging abilities until the end of the round.
-      flavor: ""
-      range: 3
-      name: 'Cast Away All Hope '
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      flavor: ""
-      categorization: Heroic Ability
-      keywords:
-        Area: true
-        Magic: true
-      repeatTargets: false
-      villainAction: Villain Action 3
-      numTargets: 2
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      iconid: ui-icons/skills/1.png
-      guid: 4dce7297-4ce9-4855-944f-8c22fd1e3c3b
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '35875506-3319-40fb-a1c"
-      abilityType: none
-      description: The area is shrouded in darkness that creates concealment until the end of the encounter. Any enemy who starts their turn in the area takes 5 corruption damage.
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 7 corruption damage; R<2 the target has speed 0 (save ends)
-        - 12 corruption damage; R<3 the target has speed 0 (save ends)
-        - 15 corruption damage; R<4 the target has speed 0 (save ends)
-      range: 2
-      name: Umbral Hunger
-    - __typeName: ActivatedAbility
-      implementation: 4
-      targetType: all
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 4 corruption damage; M<1 weakened (save ends)
-        - 7 corruption damage; M<2 weakened (save ends)
-        - 10 corruption damage; M<3 weakened (save ends)
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      keywords:
-        Melee: true
-        Magic: true
-        Area: true
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 7b451bed-321b-4bbe-bb05-b38c0fa7732f
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      flavor: ""
-      description: ""
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      range: 2
-      name: Reclamation
-    walkingSpeed: 6
-    creatureSize: 1M
-    max_hitpoints_roll: "180"
-    levelChoices: []
-    monster_category: Monster
-    resistances: []
+    role: Leader
+    skillProficiencies: []
+    initiativeGrouping: c3962a2f-ec17-4900-94ea-57829770493a
   tokenType: null
   bestiaryId: c86c6bb1-1886-48b0-91c5-80500629c009
   summonerid: null
-  ownerId: null
+  ownerId: ""
   partyid: null
-  size: -1
+  size: 2
   createdTimestamp: 1738222235594
 description: Shadow Elf Eclipse
 parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590306711
-mtime: 1775375056513
+mtime: 1785636757244
 hidden: false
 id: c86c6bb1-1886-48b0-91c5-80500629c009

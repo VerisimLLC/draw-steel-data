@@ -56,12 +56,145 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: 9c6617d9-a117-4b98-a886-393990c31663
+      implementation: 4
       domains:
         CharacterFeature:9c6617d9-a117-4b98-a886-393990c31663: true
-      description: The moondancer ignores concealment granted by darkness. While the moondancer is in direct sunlight, they have damage weakness 3. While the moondancer is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The moondancer ignores concealment created by darkness. While the moondancer is in direct sunlight, they have damage weakness 3. While the moondancer has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: ab30961f-19a7-4e48-857a-4c7bbeb5e2fd
+        sourceguid: 9c6617d9-a117-4b98-a886-393990c31663
+        source: Trait
+        domains:
+          CharacterFeature:9c6617d9-a117-4b98-a886-393990c31663: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 3617fd9f-d9ff-4956-aec9-a8ff74eab74b
+        sourceguid: 9c6617d9-a117-4b98-a886-393990c31663
+        source: Trait
+        domains:
+          CharacterFeature:9c6617d9-a117-4b98-a886-393990c31663: true
+        description: While the moondancer has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: d4778ca8-80b9-492b-b3c9-90a1a146aee1
+        sourceguid: 9c6617d9-a117-4b98-a886-393990c31663
+        source: Trait
+        domains:
+          CharacterFeature:9c6617d9-a117-4b98-a886-393990c31663: true
+        description: While the moondancer is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
+    - __typeName: CharacterFeature
+      guid: 8ac464be-f75f-4ab6-865c-cf9dfb414f2d
+      implementation: 4
+      domains:
+        CharacterFeature:8ac464be-f75f-4ab6-865c-cf9dfb414f2d: true
+      description: 'Trigger: The moondancer takes damage from a strike. Effect: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.'
+      source: Character Feature
+      name: Dissolve
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Dissolve
+        guid: eba1369c-37d3-4a18-88d7-c86618d71fcc
+        sourceguid: 8ac464be-f75f-4ab6-865c-cf9dfb414f2d
+        source: Character Feature
+        domains:
+          CharacterFeature:8ac464be-f75f-4ab6-865c-cf9dfb414f2d: true
+        description: ""
+        behavior: triggerdisplay
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 0e61b70e-acbc-48c5-96eb-dbb0a2d2bd0f
+          name: Dissolve
+          type: trigger
+          keywords:
+            Magic: true
+          distance: Self
+          target: Self
+          trigger: The moondancer takes damage from a strike.
+          effect: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.
+      - __typeName: CharacterModifier
+        name: Dissolve
+        guid: 523d4c7b-880e-4e16-a7e5-da9d0aa95d5a
+        sourceguid: 8ac464be-f75f-4ab6-865c-cf9dfb414f2d
+        source: Character Feature
+        domains:
+          CharacterFeature:8ac464be-f75f-4ab6-865c-cf9dfb414f2d: true
+        description: ""
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: e96013c1-cc90-439d-9503-a7cbf16be31c
+          name: Dissolve
+          mandatory: false
+          castImmediately: true
+          trigger: losehitpoints
+          conditionFormula: Ability.Keywords has "Strike"
+          triggerPrompt: 'The moondancer takes damage from a strike. Effect: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.'
+          targetType: self
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          strain: []
+          persistence: []
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          domains:
+            CharacterFeature:8ac464be-f75f-4ab6-865c-cf9dfb414f2d: true
+          description: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.
+          range: 1
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: named
+            namedAbility: Dissolve
+            promptText: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.
+            applyto: caster
+            invokeOnCaster: true
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: 0263be85-8e4b-4235-9c5c-7e9cca11aec5
+              description: ""
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              range: 1
+              name: Invoked Ability
     inflictedConditions: []
     walkingSpeed: 7
     opportunityAttack: 6
@@ -129,8 +262,9 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -138,8 +272,12 @@ info:
         - 9 damage
         - 13 damage
         - 16 damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: 0
+        ongoingEffect: ff45adde-aca1-4b4f-93b2-b3d3493f9108
+        ongoingEffectCustom: false
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -153,7 +291,7 @@ info:
         Charge: true
         Melee: true
         Weapon: true
-      description: The moondancer ignores opportunity attacks from the target until the end of their turn.
+      description: Until the end of the current turn, the moondancer ignores opportunity attacks from the target.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -162,11 +300,13 @@ info:
       range: 1
       name: Crescent Sweep
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: self
-      behaviors: []
-      categorization: Signature Ability
-      effectImplemented: false
+      implementation: 4
+      targetType: emptyspace
+      targetFilter: target.Environment has "Darkness"
+      behaviors:
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: teleport
+      categorization: Trigger
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -175,14 +315,15 @@ info:
       iconid: ui-icons/skills/1.png
       guid: 8e89294c-f29d-460e-b5cc-44ab38caef09
       flavor: ""
-      keywords: []
-      description: The moondancer teleports to a square in concealment granted by darkness within 10.
+      keywords:
+        Magic: true
+      description: 'Trigger: The moondancer takes damage from a strike. Effect: The moondancer can teleport up to 10 squares to a space with concealment created by darkness.'
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
+      range: "10"
       name: Dissolve
     creatureSize: 1M
     traitNames: []
@@ -202,6 +343,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590240871
-mtime: 1775375001503
+mtime: 1785488197627
 hidden: false
 id: 3d8be1be-611c-44b8-a2b5-66d832e4a880

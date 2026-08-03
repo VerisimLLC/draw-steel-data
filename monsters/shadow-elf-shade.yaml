@@ -50,32 +50,270 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 1f33e86e-7c5c-4146-9204-637f1fa4b070
+  updateid: 891e73f4-9da4-4ec5-9e97-2a5c2c704f3e
   properties:
     __typeName: monster
     characterFeatures:
     - __typeName: CharacterFeature
       guid: d7c316c3-47b7-4467-8f2c-d85fe1f88ddc
+      implementation: 4
       domains:
         CharacterFeature:d7c316c3-47b7-4467-8f2c-d85fe1f88ddc: true
-      description: The shade ignores concealment granted by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The shade ignores concealment created by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: b66c038a-6f2f-4af1-83ca-4abe3ed0a012
+        sourceguid: d7c316c3-47b7-4467-8f2c-d85fe1f88ddc
+        source: Trait
+        domains:
+          CharacterFeature:d7c316c3-47b7-4467-8f2c-d85fe1f88ddc: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 4b2e1470-54eb-4d47-990c-1aa9f30753d8
+        sourceguid: d7c316c3-47b7-4467-8f2c-d85fe1f88ddc
+        source: Trait
+        domains:
+          CharacterFeature:d7c316c3-47b7-4467-8f2c-d85fe1f88ddc: true
+        description: While the shade has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: a754b278-c980-46fd-8265-aeda8011f38c
+        sourceguid: d7c316c3-47b7-4467-8f2c-d85fe1f88ddc
+        source: Trait
+        domains:
+          CharacterFeature:d7c316c3-47b7-4467-8f2c-d85fe1f88ddc: true
+        description: While the shade is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
+    - __typeName: CharacterFeature
+      guid: e40bae69-c391-4d49-8830-594c4af41b3f
+      implementation: 3
+      domains:
+        CharacterFeature:e40bae69-c391-4d49-8830-594c4af41b3f: true
+      description: Whenever the shade starts their turn with concealment from the target, they gain 1 surge.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        name: Gloom Dagger
+        guid: 16dea7dc-7382-417f-9bd4-480b1725e7e1
+        sourceguid: e40bae69-c391-4d49-8830-594c4af41b3f
+        source: Trait
+        domains:
+          CharacterFeature:e40bae69-c391-4d49-8830-594c4af41b3f: true
+        description: Whenever the shade starts their turn with concealment, they gain 1 surge.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Gloom Dagger Surge
+          guid: fbf71a4f-862d-4579-a651-2865bbc4df38
+          trigger: beginturn
+          targetType: self
+          mandatory: true
+          whenActive: combat
+          conditionFormula: Concealed
+          numTargets: "1"
+          repeatTargets: false
+          abilityType: none
+          modifiers: []
+          persistence: []
+          strain: []
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: target gains 1 surge
+            applyto: targets
+          description: The shade starts their turn with concealment and gains 1 surge.
+          iconid: ui-icons/skills/1.png
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+          range: 1
+      source: Trait
+      name: Gloom Dagger
+    - __typeName: CharacterFeature
+      guid: 09b2a19b-844c-40b9-9571-73c3733864d3
+      implementation: 4
+      domains:
+        CharacterFeature:09b2a19b-844c-40b9-9571-73c3733864d3: true
+      description: "Level 7 Retainer Advancement Ability: Slow-Poison Needle."
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: activated
+        name: Slow-Poison Needle
+        guid: 0dbb8175-f331-4105-8172-6429adf0f010
+        sourceguid: 09b2a19b-844c-40b9-9571-73c3733864d3
+        source: Trait
+        domains:
+          CharacterFeature:09b2a19b-844c-40b9-9571-73c3733864d3: true
+        description: "Level 7 Retainer Advancement Ability: Slow-Poison Needle."
+        filterCondition: Level >= 7
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 4
+          name: Slow-Poison Needle
+          guid: 1934829d-7322-42ee-a958-5eae33ce3874
+          targetType: target
+          targeting: direct
+          numTargets: "1"
+          range: 5
+          keywords:
+            Ranged: true
+            Strike: true
+            Weapon: true
+          categorization: Ability
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          usageLimitOptions:
+            resourceid: 017fa869-84d5-478d-a85d-1e7a631a96f5
+            charges: "1"
+            resourceRefreshType: encounter
+          properties:
+            remainhidden: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 362
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - at the start of the target's next turn, they take 8 poison damage and are weakened (save ends)
+            - at the start of the target's next turn, they take 12 poison damage and are weakened (save ends)
+            - at the start of the target's next turn, they take 16 poison damage and are weakened (save ends)
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 958ea9d6-1730-45b8-acf9-13a428cc6011
+            ongoingEffectCustom: false
+            duration: eoe
+            stacks: "8"
+            tiersSelected:
+            - 1
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 958ea9d6-1730-45b8-acf9-13a428cc6011
+            ongoingEffectCustom: false
+            duration: eoe
+            stacks: "12"
+            tiersSelected:
+            - 2
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 958ea9d6-1730-45b8-acf9-13a428cc6011
+            ongoingEffectCustom: false
+            duration: eoe
+            stacks: "16"
+            tiersSelected:
+            - 3
+          description: The slow-poison needle is initially painless, with the damage and effect delayed until the start of the target's next turn. If the shade is hidden, using this ability doesn't cause them to be revealed.
+          flavor: ""
+          repeatTargets: false
+          abilityType: none
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+      source: Trait
+      name: Slow-Poison Needle
+    - __typeName: CharacterFeature
+      guid: c41ddf15-5a60-465e-9399-b446885694bb
+      implementation: 3
+      domains:
+        CharacterFeature:c41ddf15-5a60-465e-9399-b446885694bb: true
+      description: "Level 10 Retainer Advancement Ability: Shadow Dagger."
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: activated
+        name: Shadow Dagger
+        guid: c8d72480-d82d-474c-ac9a-e84da4523b16
+        sourceguid: c41ddf15-5a60-465e-9399-b446885694bb
+        source: Trait
+        domains:
+          CharacterFeature:c41ddf15-5a60-465e-9399-b446885694bb: true
+        description: "Level 10 Retainer Advancement Ability: Shadow Dagger."
+        filterCondition: Level >= 10
+        activatedAbility:
+          __typeName: ActivatedAbility
+          implementation: 3
+          name: Shadow Dagger
+          guid: 8a22ba84-e183-4523-91a2-85cae3bd60de
+          targetType: target
+          targeting: direct
+          numTargets: "1"
+          range: 1
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          categorization: Ability
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          usageLimitOptions:
+            resourceid: a5104891-d70a-4d4f-8d88-e85af3d038bb
+            charges: "1"
+            resourceRefreshType: encounter
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 362
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 12 poison damage; the target has shadowed vision (save ends)
+            - 17 poison damage; the target has shadowed vision (save ends)
+            - 23 poison damage; the target has shadowed vision (save ends)
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: ea4341aa-b5bd-4dc8-af1a-1f0525540a51
+            ongoingEffectCustom: false
+            duration: save_ends
+            tiersSelected:
+            - 1
+            - 2
+            - 3
+          description: While a creature has shadowed vision, all creatures have concealment from them.
+          flavor: ""
+          repeatTargets: false
+          abilityType: none
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+      source: Trait
+      name: Shadow Dagger
     inflictedConditions: []
     walkingSpeed: 5
     opportunityAttack: 5
     cr: 4
     damage_taken: 0
-    max_hitpoints: 60
+    max_hitpoints: 48
     keywords:
-      Shadow: true
-      Shadow Elf: true
-      Elf: true
       Fey: true
       Humanoid: true
+      Shadow Elf: true
     skillRatings: []
     role: Ambusher Retainer
+    retainer: true
     ev: 23
     movementSpeeds:
       climb: 5
@@ -89,7 +327,7 @@ info:
         baseValue: 2
       agl:
         id: agl
-        baseValue: 2
+        baseValue: 3
       prs:
         id: prs
         baseValue: 1
@@ -148,35 +386,103 @@ info:
     savingThrowRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      implementation: 4
       targetType: target
-      behaviors: []
+      objectTarget: true
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 6 damage
+        - 10 damage
+        - 13 damage
       categorization: Signature Ability
-      effectImplemented: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 362
+      repeatTargets: false
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      range: 3
+      meleeRange: 1
+      iconid: ui-icons/skills/1.png
+      guid: caa8bbe2-bb78-4ea4-bfe0-1e83d5f74ad4
+      keywords:
+        Melee: true
+        Ranged: true
+        Strike: true
+        Weapon: true
+      description: Whenever the shade starts their turn with concealment from the target, they gain 1 surge.
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 3
-      iconid: ui-icons/skills/1.png
-      guid: caa8bbe2-bb78-4ea4-bfe0-1e83d5f74ad4
-      keywords:
-        Strike: true
-        Weapon: true
-        Melee: true
-        Ranged: true
+      name: Gloom Dagger
+    - __typeName: ActivatedAbility
+      implementation: 4
+      targetType: cube
+      radius: 3
+      range: 1
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: endnextturn
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          name: Darkness
+          guid: 068e2b29-b8dc-41b9-81cb-78692fdb0560
+          description: The area is filled with darkness that provides concealment until the end of the next turn.
+          environmentalKeywordId: 02fad7cc-5a65-48da-ba14-59a7c745fa61
+          applyto: all
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          modifiers: []
+          triggers: []
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: b7e034db-8371-4492-940c-62844b0a1d68
+        ongoingEffectCustom: false
+        duration: end_of_next_turn
+        applyto: all
+        filterTarget: Self = Caster.Mentor
+      categorization: Ability
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 362
+      usageLimitOptions:
+        resourceid: 97f00362-3abe-4489-8c2b-d1a38d19e9d5
+        charges: "1"
+        resourceRefreshType: encounter
       repeatTargets: false
-      description: When the shade starts their turn concealed from the target, gain a surge.
+      abilityType: none
+      numTargets: "1"
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: 9311d5d3-7a9c-4861-9200-f901ac7efee2
+      keywords:
+        Area: true
+        Magic: true
+      description: Until the end of the next turn, the area is filled with darkness. The shade's mentor ignores concealment created by this darkness.
       flavor: ""
-      meleeRange: 1
-      name: Shadow Dagger
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      name: Duskfall
     creatureSize: 1M
     traitNames: []
-    max_hitpoints_roll: "60"
+    max_hitpoints_roll: "48"
     levelChoices: []
     monster_category: Monster
     stability: 0
@@ -192,6 +498,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590247898
-mtime: 1775375052868
+mtime: 1785487929895
 hidden: false
 id: 4e5fb8b4-f4e4-4b86-9e5b-524601299baf

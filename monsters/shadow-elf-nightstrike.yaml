@@ -56,10 +56,53 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: e2ec303a-6280-43d9-b227-964cd885f769
+      implementation: 4
       domains:
         CharacterFeature:e2ec303a-6280-43d9-b227-964cd885f769: true
-      description: The nightstrike ignores concealment granted by darkness. While the nightstrike is in direct sunlight, they have damage weakness 3. While the nightstrike is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The nightstrike ignores concealment created by darkness. While the nightstrike is in direct sunlight, they have damage weakness 3. While the nightstrike has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: 56e01fb0-4cab-4110-8e81-8fbf3a9cc152
+        sourceguid: e2ec303a-6280-43d9-b227-964cd885f769
+        source: Trait
+        domains:
+          CharacterFeature:e2ec303a-6280-43d9-b227-964cd885f769: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 1bd3b01b-fd28-459a-b5db-106caa1e315e
+        sourceguid: e2ec303a-6280-43d9-b227-964cd885f769
+        source: Trait
+        domains:
+          CharacterFeature:e2ec303a-6280-43d9-b227-964cd885f769: true
+        description: While the nightstrike has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 7bb9dc00-07e7-4080-872a-55343a93fca2
+        sourceguid: e2ec303a-6280-43d9-b227-964cd885f769
+        source: Trait
+        domains:
+          CharacterFeature:e2ec303a-6280-43d9-b227-964cd885f769: true
+        description: While the nightstrike is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
     inflictedConditions: []
@@ -105,7 +148,8 @@ info:
     walkingSpeed: 5
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
+      objectTarget: true
       targetType: target
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
@@ -114,8 +158,9 @@ info:
         - 3 damage
         - 5 damage
         - 7 damage
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: shift to opposite side of target
       categorization: Signature Ability
-      effectImplemented: false
       repeatTargets: false
       abilityType: none
       numTargets: 1
@@ -123,12 +168,16 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       iconid: ui-icons/skills/1.png
       guid: 934bb9a1-4fd8-45b8-8b37-776dd020ca98
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 128
       flavor: ""
       keywords:
         Strike: true
         Melee: true
         Weapon: true
-      description: The nightstrike leaps over the target, shifting into an unoccupied square adjacent to the target opposite from their starting position.
+      description: The nightstrike shifts to leap over the target and into an unoccupied space adjacent to the target, opposite from the nightstrike's original space.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -173,6 +222,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590269107
-mtime: 1775375105576
+mtime: 1785488048150
 hidden: false
 id: 78f655c0-a60b-43c0-91dd-5db941141778

@@ -56,10 +56,53 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: 28fa9754-efc6-4436-978f-c5ffce6eca69
+      implementation: 4
       domains:
         CharacterFeature:28fa9754-efc6-4436-978f-c5ffce6eca69: true
-      description: The assassin ignores concealment granted by darkness. While the assassin is in direct sunlight, they have damage weakness 3. While the assassin is concealed, they have damage immunity 3.
-      modifiers: []
+      description: The assassin ignores concealment created by darkness. While the assassin is in direct sunlight, they have damage weakness 3. While the assassin has concealment, they have damage immunity 3.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: attribute
+        name: Of the Umbra
+        guid: 4ff32e37-3344-4573-95f1-c4dd4598ce67
+        sourceguid: 28fa9754-efc6-4436-978f-c5ffce6eca69
+        source: Trait
+        domains:
+          CharacterFeature:28fa9754-efc6-4436-978f-c5ffce6eca69: true
+        description: Ignores concealment created by darkness.
+        attribute: 5469cbc4-d251-4601-8ea4-f820d102ad6f
+        value: 1
+        filterCondition: not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: d1cd59be-9d34-46f5-b8c9-787fc82d1b4c
+        sourceguid: 28fa9754-efc6-4436-978f-c5ffce6eca69
+        source: Trait
+        domains:
+          CharacterFeature:28fa9754-efc6-4436-978f-c5ffce6eca69: true
+        description: While the assassin has concealment, they have damage immunity 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "3"
+        filterCondition: Concealed and not (Conditions has "Home Is Where the Hurt Is")
+      - __typeName: CharacterModifier
+        behavior: resistance
+        name: Of the Umbra
+        guid: 1ffa6440-3103-43d6-a89f-99d767c121ee
+        sourceguid: 28fa9754-efc6-4436-978f-c5ffce6eca69
+        source: Trait
+        domains:
+          CharacterFeature:28fa9754-efc6-4436-978f-c5ffce6eca69: true
+        description: While the assassin is in direct sunlight, they have damage weakness 3.
+        resistances:
+        - __typeName: ResistanceEntry
+          apply: Damage Reduction
+          damageType: all
+          dr: "-3"
+        filterCondition: (Environment has "Sunlight") and not (Conditions has "Home Is Where the Hurt Is")
       source: Trait
       name: Of the Umbra
     stability: 0
@@ -102,55 +145,27 @@ info:
     innateAttacks: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 10 damage
-        - 15 damage
-        - 18 damage
-      categorization: Signature Ability
-      effectImplemented: false
+      implementation: 4
+      targetType: line
+      flavor: ""
+      categorization: Malice
+      resourceNumber: "2"
       repeatTargets: false
       abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: a2ea04c6-c7c7-4990-abfa-f3e71ed103ff
-      flavor: ""
-      keywords:
-        Strike: true
-        Weapon: true
-        Ranged: true
-      description: The next ability used against the target has a double edge.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 15
-      name: Neon Assault
-    - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: self
-      flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
+      numTargets: "1"
       modifiers: []
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      targetAllegiance: enemy
       keywords:
         Weapon: true
         Area: true
         Ranged: true
       iconid: ui-icons/skills/1.png
       guid: f8ae7bb9-e67e-4a72-a504-859c4f01d1dd
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 129
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -158,36 +173,40 @@ info:
         - 5 damage; I<1 bleeding (save ends)
         - 10 damage; I<2 bleeding (save ends)
         - 12 damage; I<3 bleeding (save ends)
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: push 4
+        applyto: targets
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: Push 4.
+      description: Each target is pushed up to 4 squares.
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
-      range: 1
+      radius: "1"
+      lineDistance: "10"
+      rangeTextOverride: 4 x 1 line within 10
+      range: "4"
       name: Splitbow
     - __typeName: ActivatedAbility
-      implementation: 3
+      implementation: 4
       targetType: target
+      objectTarget: true
       flavor: ""
       categorization: Signature Ability
-      multipleModes: true
       keywords:
         Strike: true
         Weapon: true
         Ranged: true
-      resourceNumber: 5 when Mode = 2 else 0
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         brightness: 1
         saturation: 1
       abilityType: none
-      numTargets: 1
+      numTargets: "1"
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
@@ -202,15 +221,102 @@ info:
         - 10 damage
         - 15 damage
         - 18 damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: c7727b08-d3e2-4065-85cd-6e85ee5c867d
+        ongoingEffectCustom: false
+        duration: eoe
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        filterTarget: (not Target.Object) and Caster.Heroic Resources Available to Spend >= 5
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          castImmediately: true
+          objectTarget: false
+          strain: []
+          targetType: all
+          targetAllegiance: enemy
+          targetFilter: not Target.Minion
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            ongoingEffect: a03d9297-ff99-4604-b463-a1edb88861e5
+            duration: 0
+          iconid: ui-icons/skills/1.png
+          guid: bc464ead-3bb1-4924-8edd-9c24ebe1f7b2
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "1"
+          range: 3
+          name: Mark Allies Near Target
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        targeting: prompt
+        applyto: caster
+        autoTarget: false
+        abilityType: custom
+        filterTarget: Caster.Heroic Resources Available to Spend >= 5
+        promptText: "Spend 5 Malice: Each non-minion ally within 3 squares of the target can make a free strike against them. Select skip if you do not want to spend 5 Malice."
+        standardAbilityParams:
+          strucktarget: "<<cast.PrimaryTarget.id>>"
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          objectTarget: false
+          strain: []
+          targetType: target
+          targetAllegiance: ally
+          targetFilter: Target.Ongoing Effects has "Invisible Marker"
+          targetTextOverride: Each non-minion ally within 3 squares of the target
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "5"
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            standardAbility: 952ff59e-8467-4141-aae6-d9ce35094c25
+            autoTarget: true
+            standardAbilityParams:
+              targetid: "<<strucktarget>>"
+            customAbility:
+              __typeName: ActivatedAbility
+              repeatTargets: false
+              abilityType: none
+              numTargets: "1"
+              targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: 29453a81-169e-4cff-b102-920ebe981561
+              description: ""
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              range: 1
+              name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          guid: d8b4abd4-b8b3-4ff1-b1ef-8fea8ef89ca9
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          description: ""
+          numTargets: "10"
+          range: "999"
+          name: Allies Free Strike Against Target
       description: |-
         The next ability used against the target has a double edge.
         **5 Malice**: Each non-minion ally within 3 squares of the target can make a free strike against them.
-      modeList:
-      - condition: ""
-        text: Normal
-      - condition: ""
-        rules: Each non-minion ally within 3 squares of the target can make a free strike against them.
-        text: Malice
       range: 15
       name: Lumina Assault
     creatureSize: 1M
@@ -260,6 +366,6 @@ parentFolder: e69fe1fa-2c1b-4f55-b551-8cc2e91e06c6
 artist: null
 ord: 0
 ctime: 1741590299796
-mtime: 1775375117247
+mtime: 1785487840052
 hidden: false
 id: b90b0546-088b-4a13-9fd3-a69eb64b8531

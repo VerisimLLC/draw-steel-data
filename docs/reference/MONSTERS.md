@@ -649,6 +649,8 @@ aura:
 ```
 
 **Aura duration options** (on the behavior, NOT the aura -- code-verified from AuraInstance):
+- `nextturn` -- until the start of the caster's next turn. The aura is removed during
+  `creature:BeginTurn`, after `prestartturn` triggers finish and before `beginturn` processing.
 - `endnextturn` -- until end of caster's next turn (internally converted to `endturn` + durationRound)
 - `eoe` -- end of encounter (never expires during encounter)
 - `endround` -- end of current round

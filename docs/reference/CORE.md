@@ -37,11 +37,14 @@ These errors have been discovered through testing. Read this section BEFORE crea
    ```
 
 6. **Aura durations vs ongoing effect durations are DIFFERENT systems.**
-   - Aura durations: `endnextturn`, `eoe`, `endround`, or a number (rounds).
+   - Aura durations include `nextturn` (until the start of the caster's next turn),
+     `endnextturn` (until the end of the caster's next turn), `eoe`, `endround`, or a
+     number (rounds).
    - Ongoing effect durations (ApplyOngoingEffectBehavior): `end_of_next_turn`, `eoe`,
      `save_ends`, `eoe_or_dying`, `endround`, `endnextround`, `until_rest`, `until_long_rest`,
      `momentary`, or a number (rounds).
-   - Do NOT use `nextturn` for aura durations -- use `endnextturn`.
+   - For an aura that lasts until the **start** of the caster's next turn, use `nextturn`.
+     For one that lasts until the **end** of the caster's next turn, use `endnextturn`.
    - Do NOT use `end_of_next_turn` for aura durations -- that is for ongoing effects.
 
 7. **`reasonedFilters` should be used INSTEAD OF `targetFilter`, not alongside it.**

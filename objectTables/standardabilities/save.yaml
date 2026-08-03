@@ -7,7 +7,12 @@ behaviors:
   roll: 2d10kl1 + Save Bonus
   rollDescription: Saving Throw vs <<condition>>
 - __typeName: ActivatedAbilityRollBehavior
-  filterTarget: not ((Target.Complications has "Coward") and ("<<condition>>" = "Frightened"))
+  filterTarget: (not ((Target.Complications has "Coward") and ("<<condition>>" = "Frightened"))) and ((Target.ConditionCaster("<<condition>>").Conditions) has "Home Is Where the Hurt Is")
+  guid: 2f192500-ab3b-4efa-b97d-e48f8b39b1cf
+  roll: 1d10 + Save Bonus - 2
+  rollDescription: Saving Throw vs <<condition>> (Home Is Where the Hurt Is)
+- __typeName: ActivatedAbilityRollBehavior
+  filterTarget: (not ((Target.Complications has "Coward") and ("<<condition>>" = "Frightened"))) and (not ((Target.ConditionCaster("<<condition>>").Conditions) has "Home Is Where the Hurt Is"))
   guid: 51270f30-8b88-450e-8ddd-11a30a5797d3
   roll: 1d10 + Save Bonus
   rollDescription: Saving Throw vs <<condition>>
@@ -25,7 +30,7 @@ categorization: Hidden
 source: Monster
 id: 3c471682-6ffa-44bc-bdbc-1446b66bf051
 abilityType: none
-mtime: 1772733645373
+mtime: 1785487846845
 modifiers: []
 description: ""
 numTargets: "1"
