@@ -2765,125 +2765,50 @@ levels:
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
-              - The target can shift 1 square and make a free strike.
-              - The target can shift up to 2 squares and make a free strike with an edge.
-              - The target can shift up to 3 squares and make a free strike with and edge, then can spend a Recovery.
+              - "#The target can shift 1 square and make a free strike."
+              - "#The target can shift up to 2 squares and make a free strike with an edge."
+              - "#The target can shift up to 3 squares and make a free strike with an edge, then can spend a Recovery."
               roll: 2d10 + Presence
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
-              promptWhenResolvingText: Choose target to Shift
-              tiersSelected:
-              - 1
-              - 2
-              - 3
-              autoTarget: false
-              runOnController: true
-              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-              promptText: "Dramatic Reversal: Choose where to Shift"
-              standardAbilityParams:
-                distance: "<<Cast.Tier>>"
-              customAbility:
-                __typeName: ActivatedAbility
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                abilityType: none
-                numTargets: "1"
-                targetType: self
-                modifiers: []
-                behaviors: []
-                iconid: ui-icons/skills/1.png
-                guid: e8990103-0297-4cd9-a3e1-e74847cbca33
-                description: ""
-                repeatTargets: false
-                range: 1
-                name: Invoked Ability
-              promptWhenResolving: false
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
-              tiersSelected:
-              - 1
-              customAbility:
-                __typeName: ActivatedAbility
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                abilityType: none
-                numTargets: "1"
-                targetType: self
-                modifiers: []
-                behaviors: []
-                iconid: ui-icons/skills/1.png
-                guid: 85ae9eb3-54f1-4bf5-98ac-2a1ebfb93791
-                description: ""
-                repeatTargets: false
-                range: 1
-                name: Invoked Ability
-              autoTarget: false
-              runOnController: true
-              standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
-              promptText: "Dramatic Reversal: Make a Free Strike with an Edge"
-              tiersSelected:
-              - 2
-              - 3
-              autoTarget: false
-              runOnController: true
-              guid: b0a483ea-82e5-41b1-820a-2c3888b8082c
-              customAbility:
-                __typeName: ActivatedAbility
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                abilityType: none
-                numTargets: "1"
-                targetType: self
-                modifiers: []
-                behaviors: []
-                iconid: ui-icons/skills/1.png
-                guid: b409916c-d7e0-479e-879f-e154b8e17cce
-                description: ""
-                repeatTargets: false
-                range: 1
-                name: Invoked Ability
-              standardAbility: 6b1d83d3-6e25-472e-a6a6-421be6a6db5c
-              promptWhenResolving: false
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              standardAbilityParams:
-                numrecoveries: "1"
-              promptText: ""
-              tiersSelected:
-              - 3
-              promptWhenResolving: false
-              runOnController: true
-              targeting: prompt
-              standardAbility: f57cb6f7-13b9-4ebb-8e88-88ead0a9c203
-              abilityType: standard
-              customAbility:
-                __typeName: ActivatedAbility
-                display:
-                  bgcolor: "#ffffffff"
-                  hueshift: 0
-                  brightness: 1
-                  saturation: 1
-                abilityType: none
-                numTargets: "1"
-                targetType: self
-                modifiers: []
-                behaviors: []
-                iconid: ui-icons/skills/1.png
-                guid: 2d13c405-17cc-484c-a961-45971a45b597
-                description: ""
-                repeatTargets: false
-                range: 1
-                name: Invoked Ability
+            - __typeName: ActivatedAbilityScriptBehavior
+              name: DramaticReversalPrompts
+              code: |-
+                --Offer each target a Dramatic Reversal prompt card. Accepting the
+                --card casts the tier-matched standard ability package (shift, free
+                --strike, and at tier 3 a recovery) on the accepting player's client,
+                --whether the target is controlled locally or remotely. Dismissing
+                --the card declines the offer.
+                local tierAbilities = {
+                    "6b7c412d-2ff8-428f-ab64-57d37c05ce06",
+                    "50f79904-37ad-436f-9073-541b71d39484",
+                    "827bf5ba-e81d-443d-8052-58fd0601dc06",
+                }
+                local tierRules = {
+                    "You can shift 1 square and make a free strike.",
+                    "You can shift up to 2 squares and make a free strike with an edge.",
+                    "You can shift up to 3 squares and make a free strike with an edge, then can spend a Recovery.",
+                }
+                local tier = 0
+                if symbols ~= nil and symbols.cast ~= nil then
+                    tier = symbols.cast:try_get("tier", 0) or 0
+                end
+                if tier < 1 then
+                    return
+                end
+                if tier > 3 then
+                    tier = 3
+                end
+                for _,target in ipairs(targets or {}) do
+                    if target.token ~= nil and target.token.valid then
+                        AbilityInvocation.PromptStandardAbility{
+                            token = target.token,
+                            invoker = casterToken,
+                            standardAbility = tierAbilities[tier],
+                            targeting = "self",
+                            prompt = "Dramatic Reversal",
+                            rules = tierRules[tier],
+                        }
+                    end
+                end
             range: 3
             name: Dramatic Reversal
         importOverride: true
