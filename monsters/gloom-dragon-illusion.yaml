@@ -131,8 +131,79 @@ info:
           range: 1
           name: Illusion
         behavior: trigger
+      - __typeName: CharacterModifier
+        behavior: resource
+        resourceType: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        num: "-1"
+        guid: 434d46fe-613d-41d5-9e28-6e0ea8b57a3d
+        name: Illusion
+        sourceguid: fc196c6f-0871-4bcd-8deb-d2275be6f9fc
+        source: Trait
+        description: An illusion can take only move actions, so it has no main action.
+        domains:
+          CharacterFeature:fc196c6f-0871-4bcd-8deb-d2275be6f9fc: true
+      - __typeName: CharacterModifier
+        behavior: resource
+        resourceType: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        num: "-1"
+        guid: 492758fd-6d9e-484d-a3cc-0c6888ade445
+        name: Illusion
+        sourceguid: fc196c6f-0871-4bcd-8deb-d2275be6f9fc
+        source: Trait
+        description: An illusion can take only move actions, so it has no maneuver.
+        domains:
+          CharacterFeature:fc196c6f-0871-4bcd-8deb-d2275be6f9fc: true
       source: Trait
       name: Illusion
+    - __typeName: CharacterFeature
+      source: Trait
+      guid: a8443b6c-d887-4f05-9883-c844f6ba1fc5
+      name: Gloaming Wyrmscale Aura
+      description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
+      domains:
+        CharacterFeature:a8443b6c-d887-4f05-9883-c844f6ba1fc5: true
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: aura
+        description: ""
+        sourceguid: a8443b6c-d887-4f05-9883-c844f6ba1fc5
+        source: Trait
+        radius: "3"
+        aura:
+          __typeName: Aura
+          applyto: enemies
+          subauras:
+          - __typeName: Aura
+            applyto: sametype
+            guid: a72c73ca-40bb-4aff-9684-0b1f32918ae3
+            name: Sub-Aura
+            concealment: true
+            display:
+              saturation: 1
+              hueshift: 0
+              bgcolor: "#ffffffff"
+              brightness: 1
+            modifiers: []
+            creatureFilter: Self
+          description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#5a4a7aff"
+            brightness: 1
+          triggers: []
+          source: Gloaming Wyrmscale Aura
+          guid: 67d676bd-2323-47be-acf0-343a2e0b77a8
+          modifiers: []
+          movedamage: none
+          name: Gloaming Wyrmscale Aura
+          implementation: 3
+          creatureFilter: ""
+        name: Gloaming Wyrmscale Aura
+        domains:
+          CharacterFeature:a8443b6c-d887-4f05-9883-c844f6ba1fc5: true
+        guid: 12ad243d-1a9c-41ba-9117-38c642cad0c5
     inflictedConditions: []
     stability: 0
     opportunityAttack: 0
@@ -241,6 +312,11 @@ info:
         hueshift: 0
         brightness: 1
         saturation: 1
+      usageLimitOptions:
+        multicharge: false
+        resourceRefreshType: encounter
+        charges: "1"
+        resourceid: c20409c5-a50d-4d8c-ae38-717a2cc29310
       name: Breath of Brume
     walkingSpeed: 8
     creatureSize: "4"
