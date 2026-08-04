@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -55,310 +56,140 @@ info:
   updateid: c851fc60-4e97-4d04-9239-6ada81f396a9
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      implementation: 2
-      guid: d74e7b71-6f16-410f-b5d8-0c0998739c5e
-      domains:
-        CharacterFeature:d74e7b71-6f16-410f-b5d8-0c0998739c5e: true
-      description: |-
-        Three of the war walker's size 1 allies can occupy the same space while riding the war walker. Riders have cover against attacks that target them.
-
-        {Implementation Status: Three size 1 allies occupy same space is not supported by Codex}
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: d74e7b71-6f16-410f-b5d8-0c0998739c5e
-        guid: 06e6ca0f-3d74-49db-8f73-2f61badf3142
-        feature:
-          __typeName: CharacterFeature
-          implementation: 4
-          guid: 31bac044-c5a2-4cc8-9ffd-0a5c42726111
-          description: Creatures riding the war walker have cover.
-          modifiers:
-          - __typeName: CharacterModifier
-            description: Creatures riding the war walker have cover.
-            guid: 287c66a9-67b4-4a8a-8db1-45d39b704def
-            name: Cupola
-            value: 1
-            attribute: eb16736e-b50b-4dcd-8966-c28ce9c33d7e
-            source: Mount
-            sourceguid: 31bac044-c5a2-4cc8-9ffd-0a5c42726111
-            behavior: attribute
-          source: Mount
-          name: Cupola
-        domains:
-          CharacterFeature:d74e7b71-6f16-410f-b5d8-0c0998739c5e: true
-        description: |-
-          Three of the war walker's size 1 allies can occupy the same space while riding the war walker. Riders have cover against attacks that target them.
-
-          {Implementation Status: Three size 1 allies occupy same space is not supported by Codex}
-        source: Trait
-        name: Cupola
-        behavior: modrider
-      source: Trait
-      name: Cupola
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
-      domains:
-        CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
-      description: |-
-        Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
-
-        A creature restrained this way moves with the war walker.
-      modifiers:
-      - __typeName: CharacterModifier
-        name: Mobile Prison Harness
-        guid: 3f01c892-7980-422d-917d-e1b54cd73a88
-        sourceguid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
-        domains:
-          CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
-        description: |-
-          Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
-
-          A creature restrained this way moves with the war walker.
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          objectTarget: false
-          strain: []
-          targetType: all
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: save_ends
-            ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
-            ongoingEffectCustom: false
-          targetFilter: target.Conditions has "Restrained" or target.conditions has "Slowed"
-          persistence: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          subject: any
-          whenActive: combat
-          modifiers: []
-          description: ""
-          iconid: ui-icons/skills/1.png
-          guid: e5e80edd-0a5d-4f1b-ab05-9bd2646ca5b1
-          repeatTargets: false
-          numTargets: "1"
-          trigger: finishmove
-          abilityType: none
-          range: 1
-          name: Mobile Prison Harness
-        behavior: trigger
-      - __typeName: CharacterModifier
-        seq: 8d852d73-7119-4708-9bc7-53cea128add7
-        sourceguid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
-        radius: "1"
-        guid: 1c822ce8-aa00-47fb-9acb-9600995f63d3
-        aura:
-          __typeName: Aura
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          guid: b9a3cd21-0c7d-4a90-a2b0-b2f4c4140121
-          modifiers:
-          - __typeName: CharacterModifier
-            modtype: bane
-            rollType: ability_power_roll
-            sourceguid: b9a3cd21-0c7d-4a90-a2b0-b2f4c4140121
-            guid: 4753deb2-89cc-4fdd-b22d-86f386161659
-            behavior: power
-            keywords: []
-            description: Any restrained or slowed creature who comes adjacent to the war walker takes a bane on power rolls.
-            source: Aura
-            activationCondition: Count Nearby Enemies(1, "Servitor War Walker") >= 1 and Self.Conditions has "Restrained" or self.Conditions has "Slowed"
-            name: Mobile Prison Harness Aura
-          name: Mobile Prison Harness Aura
-        domains:
-          CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
-        description: |-
-          Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
-
-          A creature restrained this way moves with the war walker.
-        source: Trait
-        behavior: aura
-        name: Mobile Prison Harness
-      source: Trait
-      name: Mobile Prison Harness
-    inflictedConditions: []
-    walkingSpeed: 8
-    opportunityAttack: 4
-    damage_taken: 0
-    max_hitpoints: 60
-    initiativeGrouping: 45ef2e63-6381-43da-bca8-db797ee5ab91
-    groupid: c3b6ed9f-70ee-469d-9415-190e1a920421
-    resources: []
-    traitNames: []
-    minion: false
-    equipment: []
+    resistances: []
+    role: Elite Mount
+    skillRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 4
-      strain: []
-      targetType: target
-      flavor: ""
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 111
-      effectImplemented: false
-      persistence: []
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      abilityType: none
-      numTargets: 2
-      modifiers: []
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
-        tiers:
-        - 6 damage
-        - 9 damage
-        - 12 damage; M<2 restrained (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        filterTarget: Target.Conditions has "Restrained"
-        abilityType: standard
-        promptText: The War Walker pulls a restrained target up to 3 squares.
-        standardAbilityParams:
-          range: "3"
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: 560c0eec-5aef-465f-9510-79cd7e8ffd46
-          description: ""
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          range: 1
-          name: Invoked Ability
-        standardAbility: 3ecc4aca-2df1-42d0-b535-8a943fa5f0e9
-      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       guid: 0645cd35-b639-4d3f-9a10-10f3f6348ef8
+      abilityType: none
       keywords:
         Strike: true
         Charge: true
         Melee: true
         Weapon: true
-      repeatTargets: false
-      description: |-
-        A target already restrained or restrained by this ability is pulled up to 3 squares.
-
-        A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.
-      categorization: Signature Ability
-      range: 2
-      name: Grasping Claws
-    - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: false
-      strain: []
-      targetType: all
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 3 lightning damage; A<0 slowed (save ends)
-        - 6 lightning damage; A<1 slowed (save ends)
-        - 7 lightning damage; A<2 slowed (save ends)
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      keywords:
-        Area: true
-        Weapon: true
-      persistence: []
-      resourceNumber: 3
-      targetAllegiance: enemy
-      abilityType: none
-      numTargets: 1
-      hasCustomIcon: true
-      repeatTargets: false
+      effectImplemented: false
       modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      flavor: ""
-      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
-      guid: 44258e87-4363-4b01-909b-7829f5b8f49c
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 111
-      description: ""
+      targetType: target
+      name: Grasping Claws
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 6 damage
+        - 9 damage
+        - 12 damage; M<2 restrained (save ends)
+        roll: 2d10 + 2
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          description: ""
+          behaviors: []
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          guid: 560c0eec-5aef-465f-9510-79cd7e8ffd46
+          name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          targetType: self
+        filterTarget: Target.Conditions has "Restrained"
+        standardAbility: 3ecc4aca-2df1-42d0-b535-8a943fa5f0e9
+        promptText: The War Walker pulls a restrained target up to 3 squares.
+        standardAbilityParams:
+          range: "3"
+        abilityType: standard
+      repeatTargets: false
+      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      categorization: Signature Ability
+      flavor: ""
       display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
         brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
         saturation: 1
-      range: 3
+      implementation: 4
+      persistence: []
+      numTargets: 2
+      range: 2
+      strain: []
+      description: |-
+        A target already restrained or restrained by this ability is pulled up to 3 squares.
+
+        A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.
+    - __typeName: ActivatedAbility
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      categorization: Heroic Ability
+      abilityType: none
+      keywords:
+        Area: true
+        Weapon: true
+      objectTarget: false
+      targetAllegiance: enemy
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      modifiers: []
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 111
+      numTargets: 1
+      resourceNumber: 3
+      hasCustomIcon: true
+      targetType: all
       name: Stunning Blast
-    equipmentMeta:
-      offhand0: []
-    skillProficiencies: []
-    max_hitpoints_roll: "60"
-    levelChoices: []
-    monster_type: Servitor War Walker
-    stability: 2
-    titles: []
-    notes:
-    - title: Monster Notes
-      text: ""
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 3 lightning damage; A<0 slowed (save ends)
+        - 6 lightning damage; A<1 slowed (save ends)
+        - 7 lightning damage; A<2 slowed (save ends)
+        roll: 2d10 + Might
+      repeatTargets: false
+      persistence: []
+      guid: 44258e87-4363-4b01-909b-7829f5b8f49c
+      flavor: ""
+      range: 3
+      implementation: 4
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      targetFilter: Enemy
+      strain: []
+      description: ""
     keywords:
       Dwarf: true
       Construct: true
-    ev: 12
+    inflictedConditions: []
+    stability: 2
+    notes:
+    - title: Monster Notes
+      text: ""
+    traitNames: []
+    equipment: []
+    savingThrowRatings: []
+    titles: []
+    equipmentMeta:
+      offhand0: []
     movementSpeeds:
       climb: 8
-    attributes:
-      int:
-        __typeName: CharacterAttribute
-        id: int
-      cha:
-        __typeName: CharacterAttribute
-        id: cha
-      con:
-        __typeName: CharacterAttribute
-        id: con
-      prs:
-        id: prs
-        baseValue: -2
-      inu:
-        id: inu
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 0
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      wis:
-        __typeName: CharacterAttribute
-        id: wis
-      str:
-        __typeName: CharacterAttribute
-        id: str
-      mgt:
-        id: mgt
-        baseValue: 2
-      rea:
-        id: rea
-        baseValue: -2
-    innateAttacks: []
-    resistances: []
+    monster_category: Monster
+    groupid: c3b6ed9f-70ee-469d-9415-190e1a920421
+    levelChoices: []
+    resources: []
+    creatureSize: "3"
     import:
       type: mcdm
       data: |
@@ -391,12 +222,182 @@ info:
 
 
         Retainer
-    savingThrowRatings: []
-    role: Elite Mount
+    skillProficiencies: []
+    opportunityAttack: 4
+    minion: false
+    initiativeGrouping: 45ef2e63-6381-43da-bca8-db797ee5ab91
+    walkingSpeed: 8
+    innateAttacks: []
+    max_hitpoints_roll: "60"
+    max_hitpoints: 60
+    damage_taken: 0
+    characterFeatures:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        feature:
+          __typeName: CharacterFeature
+          implementation: 4
+          name: Cupola
+          guid: 31bac044-c5a2-4cc8-9ffd-0a5c42726111
+          modifiers:
+          - __typeName: CharacterModifier
+            description: Creatures riding the war walker have cover.
+            behavior: attribute
+            source: Mount
+            name: Cupola
+            attribute: eb16736e-b50b-4dcd-8966-c28ce9c33d7e
+            sourceguid: 31bac044-c5a2-4cc8-9ffd-0a5c42726111
+            value: 1
+            guid: 287c66a9-67b4-4a8a-8db1-45d39b704def
+          source: Mount
+          description: Creatures riding the war walker have cover.
+        behavior: modrider
+        source: Trait
+        description: |-
+          Three of the war walker's size 1 allies can occupy the same space while riding the war walker. Riders have cover against attacks that target them.
+
+          {Implementation Status: Three size 1 allies occupy same space is not supported by Codex}
+        domains:
+          CharacterFeature:d74e7b71-6f16-410f-b5d8-0c0998739c5e: true
+        guid: 06e6ca0f-3d74-49db-8f73-2f61badf3142
+        sourceguid: d74e7b71-6f16-410f-b5d8-0c0998739c5e
+        name: Cupola
+      implementation: 2
+      description: |-
+        Three of the war walker's size 1 allies can occupy the same space while riding the war walker. Riders have cover against attacks that target them.
+
+        {Implementation Status: Three size 1 allies occupy same space is not supported by Codex}
+      domains:
+        CharacterFeature:d74e7b71-6f16-410f-b5d8-0c0998739c5e: true
+      guid: d74e7b71-6f16-410f-b5d8-0c0998739c5e
+      source: Trait
+      name: Cupola
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
+        behavior: trigger
+        source: Trait
+        name: Mobile Prison Harness
+        domains:
+          CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
+        guid: 3f01c892-7980-422d-917d-e1b54cd73a88
+        description: |-
+          Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
+
+          A creature restrained this way moves with the war walker.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          guid: e5e80edd-0a5d-4f1b-ab05-9bd2646ca5b1
+          abilityType: none
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          subject: any
+          whenActive: combat
+          targetType: all
+          description: ""
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
+            duration: save_ends
+            ongoingEffectCustom: false
+          repeatTargets: false
+          persistence: []
+          trigger: finishmove
+          range: 1
+          name: Mobile Prison Harness
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          targetFilter: target.Conditions has "Restrained" or target.conditions has "Slowed"
+          strain: []
+          objectTarget: false
+      - __typeName: CharacterModifier
+        description: |-
+          Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
+
+          A creature restrained this way moves with the war walker.
+        domains:
+          CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
+        aura:
+          __typeName: Aura
+          modifiers:
+          - __typeName: CharacterModifier
+            modtype: bane
+            description: Any restrained or slowed creature who comes adjacent to the war walker takes a bane on power rolls.
+            guid: 4753deb2-89cc-4fdd-b22d-86f386161659
+            rollType: ability_power_roll
+            behavior: power
+            source: Aura
+            keywords: []
+            sourceguid: b9a3cd21-0c7d-4a90-a2b0-b2f4c4140121
+            activationCondition: Count Nearby Enemies(1, "Servitor War Walker") >= 1 and Self.Conditions has "Restrained" or self.Conditions has "Slowed"
+            name: Mobile Prison Harness Aura
+          guid: b9a3cd21-0c7d-4a90-a2b0-b2f4c4140121
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          name: Mobile Prison Harness Aura
+        behavior: aura
+        source: Trait
+        radius: "1"
+        seq: 8d852d73-7119-4708-9bc7-53cea128add7
+        sourceguid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
+        name: Mobile Prison Harness
+        guid: 1c822ce8-aa00-47fb-9acb-9600995f63d3
+      source: Trait
+      description: |-
+        Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. 
+
+        A creature restrained this way moves with the war walker.
+      domains:
+        CharacterFeature:ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1: true
+      guid: ecb8272f-5ac8-4eee-9944-9ed6ba05dfa1
+      name: Mobile Prison Harness
+      implementation: 3
+    attributes:
+      cha:
+        __typeName: CharacterAttribute
+        id: cha
+      str:
+        __typeName: CharacterAttribute
+        id: str
+      int:
+        __typeName: CharacterAttribute
+        id: int
+      wis:
+        __typeName: CharacterAttribute
+        id: wis
+      con:
+        __typeName: CharacterAttribute
+        id: con
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      inu:
+        id: inu
+        baseValue: 0
+      agl:
+        id: agl
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: -2
+      mgt:
+        id: mgt
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: -2
+    ev: 12
     cr: 1
-    creatureSize: "3"
-    monster_category: Monster
-    skillRatings: []
+    monster_type: Servitor War Walker
   tokenType: null
   bestiaryId: 801d3352-9fdf-461e-91f7-e27aeb6a5383
   summonerid: null
@@ -409,6 +410,6 @@ parentFolder: 8e456dc2-a795-41ed-85c8-d1219c957c5e
 artist: null
 ord: 0
 ctime: 1741590272059
-mtime: 1775375027006
+mtime: 1785429747346
 hidden: false
 id: 801d3352-9fdf-461e-91f7-e27aeb6a5383

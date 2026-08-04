@@ -57,18 +57,17 @@ info:
   updateid: 80ddda13-dfb9-476e-b6f8-534596d6f4a4
   properties:
     __typeName: monster
-    opportunityAttack: 4
-    keywords:
-      Animal: true
-      Swarm: true
-    ev: 16
-    creatureSize: "2"
-    skillProficiencies: []
-    initiativeGrouping: b771adcc-cbbb-4969-b64c-bc59d47b3bf3
+    monster_type: Swarm
+    inflictedConditions: []
+    titles: []
+    max_hitpoints: 40
     attributes:
       agl:
         id: agl
         baseValue: 1
+      rea:
+        id: rea
+        baseValue: -3
       mgt:
         id: mgt
         baseValue: -2
@@ -78,62 +77,161 @@ info:
       inu:
         id: inu
         baseValue: 2
-      rea:
-        id: rea
-        baseValue: -3
-    stability: 1
-    equipment: []
-    role: Elite Hexer
     characterFeatures:
     - __typeName: CharacterFeature
+      source: Trait
+      name: Swarm
+      description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
       domains:
         CharacterFeature:69b8be5b-e99a-4321-a3e1-82a9c4c70ac5: true
-      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        behavior: attribute
+        domains:
+          CharacterFeature:69b8be5b-e99a-4321-a3e1-82a9c4c70ac5: true
+        description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
+        value: 1
+        attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+        name: Swarm
+        guid: c09e0c90-7151-41ef-bb56-c475a07354b6
+        sourceguid: 69b8be5b-e99a-4321-a3e1-82a9c4c70ac5
+      - __typeName: CharacterModifier
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+          targetAllegiance: enemy
+          repeatTargets: false
+          trigger: beginturn
+          triggerPrompt: The swarm can make a free strike against each creature whose space they share.
+          name: Swarm
+          objectTarget: false
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            abilityType: standard
+            customAbility:
+              __typeName: ActivatedAbility
+              targetType: self
+              numTargets: "1"
+              repeatTargets: false
+              behaviors: []
+              description: ""
+              abilityType: none
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+              modifiers: []
+              name: Invoked Ability
+              iconid: ui-icons/skills/1.png
+              guid: 1378c1f5-eef9-4f72-a7c4-a83fa19d54ba
+              range: 1
+            standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+            promptWhenResolving: true
+            promptText: The swarm can make a free strike against each creature whose space they share.
+            targeting: prompt_inherit
+          modifiers: []
+          targetType: all
+          description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
+          abilityType: none
+          strain: []
+          mandatory: false
+          iconid: ui-icons/skills/1.png
+          guid: e08de0a6-806b-4c3c-8a53-f2c61fb66648
+          range: "0"
+        domains:
+          CharacterFeature:69b8be5b-e99a-4321-a3e1-82a9c4c70ac5: true
+        behavior: trigger
+        name: Swarm
+        description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
+        sourceguid: 69b8be5b-e99a-4321-a3e1-82a9c4c70ac5
+        guid: 7788a95d-972b-4064-8107-d1bc8b81d7b9
       guid: 69b8be5b-e99a-4321-a3e1-82a9c4c70ac5
-      name: Swarm
-      modifiers: []
-      description: The swarm can move through squares as if they were size-1M, and can occupy other creatures' spaces. At the start of the swarm's turn, they can make a free strike against each creature they share a square with.
+      implementation: 3
     - __typeName: CharacterFeature
+      source: Trait
+      name: Nature Calls
+      description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
       domains:
         CharacterFeature:3b7f1d2c-eeb5-4085-9f0d-45e8384b022b: true
-      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: self
+          repeatTargets: false
+          trigger: rollinitiative
+          triggerPrompt: Select confirm if the creature is outside or in a natural environment this encounter, select skip if not.
+          name: Nature Calls
+          numTargets: "1"
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 378bfa2b-8d13-4a0c-b937-462add29020b
+            duration: eoe
+            ongoingEffectCustom: false
+          whenActive: combat
+          description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
+          strain: []
+          modifiers: []
+          abilityType: none
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+          mandatory: false
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          guid: 1d56d92c-53ef-428e-895e-79bdf13eefec
+          range: 1
+        sourceguid: 3b7f1d2c-eeb5-4085-9f0d-45e8384b022b
+        behavior: trigger
+        name: Nature Calls
+        description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
+        guid: 82ba9cfd-c957-4cca-8028-379b572eee5e
+        domains:
+          CharacterFeature:3b7f1d2c-eeb5-4085-9f0d-45e8384b022b: true
       guid: 3b7f1d2c-eeb5-4085-9f0d-45e8384b022b
-      name: Nature Calls
-      modifiers: []
-      description: The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
-    titles: []
-    innateAttacks: []
+      implementation: 3
+    ev: 16
+    stability: 1
     walkingSpeed: 5
-    levelChoices: []
-    max_hitpoints: 40
+    cr: 1
+    initiativeGrouping: b771adcc-cbbb-4969-b64c-bc59d47b3bf3
+    skillRatings: []
+    opportunityAttack: 4
     max_hitpoints_roll: "40"
-    creatureTemplates:
-    - 2df4ef87-0990-4758-90e0-8ecc874d482e
-    traitNames: []
+    levelChoices: []
     monster_category: Monster
-    damage_taken: 0
-    groupid: a68c91b6-55f3-4c16-82d9-e0da68078b49
+    movementSpeeds: []
     resources: []
-    resistances: []
     savingThrowRatings: []
+    minion: false
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
       keywords:
-        Weapon: true
         Melee: true
         Strike: true
-      repeatTargets: false
-      modifiers: []
-      description: The target can be pulled into the swarm without inflicting damage.
-      effectImplemented: false
-      range: 1
-      implementation: 3
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
+        Weapon: true
+      name: Flurry
+      numTargets: 2
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         tiers:
@@ -141,41 +239,41 @@ info:
         - 9 damage; pull 1
         - 12 damage; pull 2
         roll: 2d10 + 2
-      targetType: target
-      numTargets: 2
-      name: Flurry
-      categorization: Signature Ability
-      abilityType: none
+      modifiers: []
+      description: The target can be pulled into the swarm without inflicting damage.
+      flavor: ""
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
+      targetType: target
       guid: c1ae3154-eae3-4360-98d2-51a92ae0191e
+      implementation: 3
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      range: 1
     - __typeName: ActivatedAbility
-      keywords: []
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
       repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      keywords: []
+      name: Impede
+      numTargets: "1"
+      behaviors: []
       modifiers: []
       description: The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm's next turn.
-      effectImplemented: false
-      range: 1
-      implementation: 0
       flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      behaviors: []
-      targetType: self
-      numTargets: "1"
-      name: Impede
-      categorization: Signature Ability
-      abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
+      targetType: self
       guid: 8e2d6e85-a214-4ae1-b8fa-a19eeffb4398
-    inflictedConditions: []
-    monster_type: Swarm
-    movementSpeeds: []
-    skillRatings: []
+      implementation: 0
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      range: 1
+    role: Elite Hexer
+    equipment: []
     import:
       type: mcdm
       data: |+
@@ -204,8 +302,18 @@ info:
         <b>Nature Calls</b>
         The swarm ignores 1 bane on their abilities while in an encounter outside or in a natural environment.
 
-    cr: 1
-    minion: false
+    creatureSize: "2"
+    resistances: []
+    innateAttacks: []
+    creatureTemplates:
+    - 2df4ef87-0990-4758-90e0-8ecc874d482e
+    traitNames: []
+    groupid: a68c91b6-55f3-4c16-82d9-e0da68078b49
+    skillProficiencies: []
+    damage_taken: 0
+    keywords:
+      Animal: true
+      Swarm: true
   tokenType: null
   bestiaryId: 160777f0-0ca0-44d7-bab0-0ec9a581c834
   summonerid: null
@@ -218,6 +326,6 @@ parentFolder: 4b3931af-633a-4d06-a87c-a4139290d258
 artist: null
 ord: 3
 ctime: 1741590222154
-mtime: 1785702744827
+mtime: 1785861442280
 hidden: false
 id: 160777f0-0ca0-44d7-bab0-0ec9a581c834

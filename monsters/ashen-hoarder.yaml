@@ -51,729 +51,1275 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: b751f6af-e332-44f6-b661-b52d198a3bd1
+  updateid: 1887a4e9-3548-4a44-8d28-360159b7480e
   properties:
     __typeName: monster
-    walkingSpeed: 8
-    opportunityAttack: 6
-    levelChoices: []
-    cr: 4
-    max_hitpoints: 350
-    keywords:
-      Undead: true
-      Construct: true
-    ev: 72
     creatureSize: "3"
+    monster_category: Ashen Hoarder
+    attributes:
+      prs:
+        baseValue: -5
+        id: prs
+      mgt:
+        baseValue: 4
+        id: mgt
+      inu:
+        baseValue: 0
+        id: inu
+      agl:
+        baseValue: -2
+        id: agl
+      rea:
+        baseValue: -2
+        id: rea
+    traitNames:
+    - Solo Monster
+    - Bladed Body
+    - Soul Singularity
+    max_hitpoints: 350
+    damage_taken: 0
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      sourceReference:
-        __typeName: SourceReference
-        page: 46
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      categorization: Signature Ability
-      modifiers: []
-      description: The ashen hoarder can have up to two size 1 creatures grabbed at a time.
       range: 2
-      implementation: 3
-      targetType: target
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 10 damage; if one target has M<2 they are bleeding (save ends); if the other target A<2 they are grabbed
-        - 15 damage; if one target has M<3 they are bleeding (save ends); if the other target A<3 they are grabbed
-        - 18 damage; if one target has M<4 they are bleeding (save ends); if the other target A<2 they are grabbed
-      numTargets: 2
-      name: Claw & Blade
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      objectTarget: true
+      repeatTargets: false
       keywords:
-        Melee: true
         Weapon: true
         Strike: true
-      abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
-      guid: f9c70160-8b1a-4fc5-aa41-b0e2a1508bb9
-    - __typeName: ActivatedAbility
-      resourceNumber: 2 when Mode = 2 else 0
-      targetType: target
-      repeatTargets: false
-      keywords:
-        Magic: true
-        Area: true
-        Ranged: true
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      modifiers: []
+        Melee: true
       description: |-
-        3 Malice: The ashen hoarder targets a second 4 cube within distance.
-        **2 Malice**: Any enemy weakened this way is instead slowed and weakened (save ends).
-      targetFilter: Enemy
-      range: 4
-      implementation: 4
-      categorization: Ability
-      sourceReference:
-        __typeName: SourceReference
-        page: 46
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        The ashen hoarder can have up to two size 1 creatures grabbed at a time.
+
+        On tiers 1 and 2, the FIRST target selected risks bleeding and the SECOND target selected risks being grabbed. On tier 3, both riders apply to each target.
+      modifiers: []
       flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
+      implementation: 3
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
+        promptWhenResolving: true
+        attrid: mgt
         tiers:
-        - 4 damage; A<2 weakened (save ends)
-        - 8 damage; A<3 weakened (save ends)
-        - 11 damage; A<4 weakened (save ends)
-      numTargets: 1
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      name: Corpse Bomb
-      multipleModes: true
+        - 10 damage; if one target has M<2 they are bleeding (save ends); if the other target has A<2 they are grabbed
+        - 15 damage; if one target has M<3 they are bleeding (save ends); if the other target has A<3 they are grabbed
+        - 18 damage; M<4 bleeding (save ends); A<2 grabbed
+        roll: 2d10 + Might
+        promptWhenResolvingText: The first target chosen risks bleeding (Might test); the second target chosen risks being grabbed (Agility test).
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: M<2 bleeding (save ends)
+        tiersSelected:
+        - 1
+        applyto: first_target
+        guid: d2d7509a-f360-4844-b967-42abe04f09c2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: M<3 bleeding (save ends)
+        tiersSelected:
+        - 2
+        applyto: first_target
+        guid: 13289b36-0566-4119-8435-3955392965ee
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: A<2 grabbed
+        tiersSelected:
+        - 1
+        applyto: other_than_first_target
+        guid: 4e9b61f2-a3f5-4b7e-9c1d-2f8a6b3c5d70
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: A<3 grabbed
+        tiersSelected:
+        - 2
+        applyto: other_than_first_target
+        guid: 5f1c72e3-b4a6-4c8f-8d2e-3a9b7c4d6e81
+      categorization: Signature Ability
+      targetType: target
+      numTargets: 2
       abilityType: none
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      name: Claw and Blade
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 46
+      guid: f9c70160-8b1a-4fc5-aa41-b0e2a1508bb9
+    - __typeName: ActivatedAbility
+      range: 20
+      iconid: ui-icons/skills/1.png
+      targetFilter: Enemy
+      multipleModes: true
+      targetType: cube
+      numTargets: "1"
       modeList:
       - condition: ""
         text: Normal
       - condition: ""
-        rules: Any enemy weakened this way is instead slowed and weakened (save ends).
-        text: Malice
-      iconid: ui-icons/skills/1.png
-      guid: e93965c5-0f6d-4ca2-b8a3-b79b5037485b
-    - __typeName: ActivatedAbility
-      resourceNumber: 3
-      keywords:
-        Weapon: true
-        Area: true
-      categorization: Heroic Ability
-      modifiers: []
-      description: An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.
-      range: 4
-      implementation: 3
-      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
+        text: 2 Malice
+        rules: "2 Malice: Any enemy weakened this way is instead slowed and weakened (save ends)."
+      description: |-
+        **2 Malice**: Any enemy weakened this way is instead slowed and weakened (save ends).
+        **3 Malice**: The ashen hoarder targets a second 4 cube within distance.
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
+        modesSelected:
+        - 1
+        tiers:
+        - 4 damage; A<2 weakened (save ends)
+        - 8 damage; A<3 weakened (save ends)
+        - 11 damage; A<4 weakened (save ends)
         roll: 2d10 + Might
+        attrid: mgt
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        modesSelected:
+        - 2
+        tiers:
+        - 4 damage; A<2 slowed and weakened (save ends)
+        - 8 damage; A<3 slowed and weakened (save ends)
+        - 11 damage; A<4 slowed and weakened (save ends)
+        roll: 2d10 + Might
+        attrid: mgt
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        filterTarget: Caster.Heroic Resources Available to Spend >= 3
+        promptText: "Spend 3 Malice: The ashen hoarder targets a second 4 cube within distance."
+        invokeOnCaster: true
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 20
+          iconid: ui-icons/skills/1.png
+          targetFilter: Enemy
+          repeatTargets: false
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 4 damage; A<2 weakened (save ends)
+            - 8 damage; A<3 weakened (save ends)
+            - 11 damage; A<4 weakened (save ends)
+            roll: 2d10 + Might
+            attrid: mgt
+          resourceNumber: "3"
+          keywords:
+            Area: true
+            Ranged: true
+            Magic: true
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          description: The ashen hoarder targets a second 4 cube within distance.
+          targetType: cube
+          modifiers: []
+          categorization: Hidden
+          rangeTextOverride: 4 cube within 20
+          targetTextOverride: Each enemy in the area
+          numTargets: "1"
+          abilityType: none
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          name: Corpse Bomb (Second Cube)
+          strain: []
+          radius: "4"
+          guid: 35510d7b-70da-47f9-a26e-363804cacd18
+        applyto: caster
+        abilityType: custom
+      repeatTargets: false
+      resourceNumber: 2 when Mode = 2 else 0
+      keywords:
+        Area: true
+        Ranged: true
+        Magic: true
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 3
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modifiers: []
+      categorization: Ability
+      rangeTextOverride: 4 cube within 20
+      radius: "4"
+      abilityType: none
+      targetTextOverride: Each enemy in the area
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      name: Corpse Bomb
+      flavor: ""
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 46
+      guid: e93965c5-0f6d-4ca2-b8a3-b79b5037485b
+    - __typeName: ActivatedAbility
+      range: "4"
+      iconid: ui-icons/skills/1.png
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      lineDistance: "1"
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
         tiers:
         - 6 corruption damage; M<2 the target is impaled (save ends)
         - 11 corruption damage; M<3 the target is impaled (save ends)
         - 14 corruption damage; M<4 the target is impaled (save ends)
-      numTargets: 1
-      targetType: target
+        roll: 2d10 + Might
+        attrid: mgt
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+        tiersSelected:
+        - 1
+        filterTarget: Might Potency Resistance < 2
+        duration: save_ends
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+        tiersSelected:
+        - 2
+        filterTarget: Might Potency Resistance < 3
+        duration: save_ends
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+        tiersSelected:
+        - 3
+        filterTarget: Might Potency Resistance < 4
+        duration: save_ends
+      description: An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.
+      repeatTargets: false
+      targetType: line
+      resourceNumber: 3
+      keywords:
+        Area: true
+        Weapon: true
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      implementation: 3
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      modifiers: []
+      categorization: Heroic Ability
+      rangeTextOverride: 4 x 1 line within 1
+      numTargets: "1"
+      radius: "1"
+      targetTextOverride: Each creature in the area
+      flavor: ""
       name: Impale
+      abilityType: none
       sourceReference:
         __typeName: SourceReference
-        page: 46
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
+        page: 46
       guid: c2468f9a-bbe0-4111-86b3-aef72a809ab6
     - __typeName: ActivatedAbility
-      sourceReference:
-        __typeName: SourceReference
-        page: 46
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      categorization: Ability
-      modifiers: []
+      range: Movement Speed * 2
+      iconid: ui-icons/skills/1.png
+      repeatTargets: false
+      targeting: straightpath
+      keywords: []
       description: |
         The ashen hoarder moves up to twice their speed in a straight line. Each creature or object in the path of this movement is either pushed into the nearest unoccupied space outside the path, or if they have M<3 is pushed forward until the movement ends. Any creature who is force moved forward into an obstacle is dazed (save ends).
-      range: 1
-      implementation: 1
-      targetType: target
+      modifiers: []
       flavor: ""
+      implementation: 3
+      categorization: Ability
+      behaviors:
+      - __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        lingerTime: 1
+        momentaryEffect:
+          __typeName: CharacterOngoingEffect
+          modifiers:
+          - __typeName: CharacterModifier
+            operation: set
+            value: 1
+            source: Ongoing Effect
+            guid: 7abc527c-0850-461c-829f-02cbf6a85c88
+            attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+            name: Bone Dozing
+            description: The ashen hoarder can move through creatures during this movement.
+            sourceguid: d1d1455c-67ca-4e09-a35a-50089ad1fd60
+            behavior: attribute
+          - __typeName: CharacterModifier
+            triggeredAbility:
+              __typeName: TriggeredAbility
+              trigger: movethrough
+              iconid: ui-icons/skills/1.png
+              objectTarget: true
+              targetType: target
+              persistence: []
+              description: ""
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                filterTarget: Might Potency Resistance >= 3
+                rule: slide 1
+                applyto: targets
+                guid: 25038690-e159-41b3-9552-00df58112089
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                filterTarget: Might Potency Resistance < 3
+                rule: push 8
+                applyto: targets
+                guid: 99342a06-7243-4ba4-a7fe-3489399f6cc1
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                filterTarget: Might Potency Resistance < 3 and Cast.ForcedMovementCollision
+                rule: dazed (save ends)
+                applyto: targets
+                guid: d820b6e4-8fb4-45dd-8bc6-2f3a87267240
+              numTargets: "1"
+              range: 1
+              mandatory: true
+              abilityType: none
+              display:
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+              name: Bone Dozer
+              strain: []
+              repeatTargets: false
+              guid: 9574e84e-2897-422b-b52e-de3e86d3c8a9
+            sourceguid: d1d1455c-67ca-4e09-a35a-50089ad1fd60
+            description: Each creature in the path of this movement is either pushed into the nearest unoccupied space outside the path, or if they have M<3 is pushed forward until the movement ends. Any creature who is force moved forward into an obstacle is dazed (save ends).
+            name: Bone Dozer
+            source: Ongoing Effect
+            behavior: trigger
+            guid: 6977025a-b9f7-4a90-bd45-44e2aad32414
+          iconid: ui-icons/skills/1.png
+          description: The ashen hoarder plows through creatures in a straight line, shoving them aside or carrying them forward.
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+          name: Bone Dozing
+          source: Ongoing Effect
+          id: d1d1455c-67ca-4e09-a35a-50089ad1fd60
+          guid: d1d1455c-67ca-4e09-a35a-50089ad1fd60
+        applyto: caster
+        name: Ability Duration Effect
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: move
+      targetType: emptyspace
+      numTargets: "1"
+      abilityType: none
       display:
-        bgcolor: "#ffffffff"
-        brightness: 1
         saturation: 1
+        bgcolor: "#ffffffff"
         hueshift: 0
-      behaviors: []
-      numTargets: 1
+        brightness: 1
       name: Bone Dozer
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      keywords: []
-      abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 46
       guid: ffd1c901-ee3d-48cd-ad3d-28cf1987daa4
     - __typeName: ActivatedAbility
-      resourceNumber: 2
-      keywords: []
-      categorization: Trigger
-      modifiers: []
-      description: |
-        The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.
-      range: 1
-      implementation: 1
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      numTargets: 1
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors: []
-      sourceReference:
-        __typeName: SourceReference
-        page: 46
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      targetType: target
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      repeatTargets: false
-      abilityType: none
-      name: Armor of Corpses
+      range: "8"
       iconid: ui-icons/skills/1.png
-      guid: 76be8ed6-af83-47e9-8d1c-70a1462d6d30
-    - __typeName: ActivatedAbility
-      villainAction: Villain Action 1
-      keywords:
-        Weapon: true
-        Area: true
-      categorization: Villain Action
-      modifiers: []
-      description: Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).
-      range: 8
-      implementation: 4
-      targetType: target
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
+      objectTarget: true
+      targetType: line
+      targetTextOverride: Each creature and object in the area
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
-        - 6 damage; restrained (save ends); vertical push 2
-        - 11 damage; restrained (save ends); vertical push 2
-        - 14 damage; restrained (save ends); vertical push 3
+        - 6 damage; vertical push 2; restrained (save ends)
+        - 11 damage; vertical push 2; restrained (save ends)
+        - 14 damage; vertical push 3; restrained (save ends)
+        roll: 2d10 + Might
+        attrid: mgt
+      modifiers: []
+      categorization: Villain Action
+      repeatTargets: false
+      keywords:
+        Area: true
+        Weapon: true
+      description: Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).
+      lineDistance: "1"
+      numTargets: "1"
+      usageLimitOptions:
+        charges: "1"
+        resourceid: f20bc6ab-965e-401d-8f0d-32a7c962e13c
+        multicharge: false
+        resourceRefreshType: encounter
+      radius: "3"
+      rangeTextOverride: 8 x 3 line within 1
+      implementation: 3
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+      abilityType: none
+      flavor: ""
+      name: Skeletal Eruption
+      villainAction: Villain Action 1
       sourceReference:
         __typeName: SourceReference
-        page: 46
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      numTargets: 1
-      name: Skeletal Eruption
-      repeatTargets: false
-      abilityType: none
-      usageLimitOptions:
-        resourceRefreshType: encounter
-        charges: "1"
-        multicharge: false
-        resourceid: f20bc6ab-965e-401d-8f0d-32a7c962e13c
-      iconid: ui-icons/skills/1.png
+        page: 46
       guid: e8202660-6fb1-4921-bfcd-77a5ea219a9c
     - __typeName: ActivatedAbility
-      villainAction: Villain Action 2
+      range: 10
+      iconid: ui-icons/skills/1.png
+      repeatTargets: false
+      flavor: ""
       keywords:
         Area: true
         Ranged: true
-      categorization: Villain Action
-      modifiers: []
       description: |
-        The ashen hoarder sprays out six size 1M zombie mines that appear in unoccupied squares within distance. Any enemy who moves adjacent to a zombie mine for the first time in a round or starts their turn there causes the mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. Any other zombie mines adjacent to the exploding mine also explode. At the start of each of the ashen hoarder's turns, each unexploded zombie mine can be moved up to 2 squares.
-      range: 10
-      implementation: 1
+        The ashen hoarder sprays out six size 1M zombie mines that appear in unoccupied squares within distance. Any enemy who moves adjacent to a zombie mine for the first time in a round or starts their turn there causes the mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. Any other zombie mines adjacent to the exploding mine also explode. At the start of each of the ashen hoarder's turns, each unexploded zombie mine can be moved up to 2 squares (move them with the Director during the hoarder's turn).
+      behaviors:
+      - __typeName: ActivatedAbilitySummonBehavior
+        monsterType: dddce728-3421-42f1-a8a6-a7c916dfea77
+        allCreaturesTheSame: true
+        numSummons: "6"
+        hasReplaceCaster: true
+        applyto: caster
+        casterControls: true
+        summonRange: "20"
+        casterChoosesCreatures: false
+        choosePlacement: true
+        replaceCaster: false
+        guid: 087bf3a7-e810-4881-a1e4-eae0ea5abbf9
+        groupInitiativeWithCaster: true
+      numTargets: 1
+      implementation: 2
+      categorization: Villain Action
+      usageLimitOptions:
+        charges: "1"
+        resourceid: 5933702f-abcc-4170-81e1-8f2c95de34e8
+        multicharge: false
+        resourceRefreshType: encounter
       targetType: target
-      flavor: ""
+      modifiers: []
+      abilityType: none
       display:
-        bgcolor: "#ffffffff"
-        brightness: 1
         saturation: 1
+        bgcolor: "#ffffffff"
         hueshift: 0
-      behaviors: []
+        brightness: 1
+      name: Mobile Mine Field
+      villainAction: Villain Action 2
       sourceReference:
         __typeName: SourceReference
-        page: 46
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      numTargets: 1
-      name: Mobile Mine Field
-      repeatTargets: false
-      abilityType: none
-      usageLimitOptions:
-        resourceRefreshType: encounter
-        charges: "1"
-        multicharge: false
-        resourceid: 5933702f-abcc-4170-81e1-8f2c95de34e8
-      iconid: ui-icons/skills/1.png
+        page: 46
       guid: 720fcfd5-1237-4165-8294-218be80243ba
     - __typeName: ActivatedAbility
-      villainAction: Villain Action 3
+      range: 1
+      iconid: ui-icons/skills/1.png
+      repeatTargets: false
+      flavor: ""
       keywords:
-        Melee: true
         Weapon: true
         Strike: true
-      categorization: Villain Action
-      modifiers: []
+        Melee: true
       description: |
         The ashen hoarder moves up to their speed and uses Claw and Blade with a double edge against one target. On a tier 3 outcome, the ashen hoarder can use Impale without spending Malice.
-      range: 1
-      implementation: 1
-      targetType: target
-      flavor: ""
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptText: The ashen hoarder moves up to their speed.
+        promptWhenResolving: true
+        abilityType: standard
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 2
+          iconid: ui-icons/skills/1.png
+          objectTarget: true
+          repeatTargets: false
+          persistence: []
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+          description: The ashen hoarder uses Claw and Blade with a double edge against one target.
+          numTargets: "1"
+          categorization: Hidden
+          behaviors:
+          - __typeName: ActivatedAbilityModifyPowerRollBehavior
+            modifier:
+              __typeName: CharacterModifier
+              guid: ea68e568-a30a-48ca-b7d9-1ab2c25e1d59
+              activationCondition: true
+              description: Claw and Blade is made with a double edge.
+              modtype: double_edge
+              name: Ossuary Assault Double Edge
+              rollType: ability_power_roll
+              behavior: power
+            guid: bf96e544-ca7d-47cd-85f6-0d5baaf17c60
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 10 damage; M<2 bleeding (save ends); A<2 grabbed
+            - 15 damage; M<3 bleeding (save ends); A<3 grabbed
+            - 18 damage; M<4 bleeding (save ends); A<2 grabbed
+            roll: 2d10 + Might
+            attrid: mgt
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            filterTarget: Cast.Tier = 3
+            abilityType: custom
+            invokeOnCaster: true
+            autoTarget: false
+            customAbility:
+              __typeName: ActivatedAbility
+              range: "4"
+              iconid: ui-icons/skills/1.png
+              repeatTargets: false
+              persistence: []
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                tiers:
+                - 6 corruption damage; M<2 the target is impaled (save ends)
+                - 11 corruption damage; M<3 the target is impaled (save ends)
+                - 14 corruption damage; M<4 the target is impaled (save ends)
+                roll: 2d10 + Might
+                attrid: mgt
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                ongoingEffectCustom: false
+                ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+                tiersSelected:
+                - 1
+                filterTarget: Might Potency Resistance < 2
+                duration: save_ends
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                ongoingEffectCustom: false
+                ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+                tiersSelected:
+                - 2
+                filterTarget: Might Potency Resistance < 3
+                duration: save_ends
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                ongoingEffectCustom: false
+                ongoingEffect: 76a1a8c0-b457-429c-95df-bb938447e408
+                tiersSelected:
+                - 3
+                filterTarget: Might Potency Resistance < 4
+                duration: save_ends
+              keywords:
+                Area: true
+                Weapon: true
+              description: An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.
+              display:
+                saturation: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+              numTargets: "1"
+              modifiers: []
+              categorization: Hidden
+              rangeTextOverride: 4 x 1 line within 1
+              targetType: line
+              abilityType: none
+              targetTextOverride: Each creature in the area
+              lineDistance: "1"
+              name: Impale (No Malice)
+              strain: []
+              radius: "1"
+              guid: b429eea0-48e1-4e03-a6cc-165bd53fb4b2
+            applyto: caster
+            promptText: "Tier 3 outcome: The ashen hoarder can use Impale without spending Malice."
+          modifiers: []
+          abilityType: none
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          name: Claw and Blade (Double Edge)
+          strain: []
+          targetType: target
+          guid: ae015d06-98b8-4f48-b104-c2842eb50998
+        abilityType: custom
+        promptText: The ashen hoarder uses Claw and Blade with a double edge against one target.
+      numTargets: "1"
+      implementation: 3
+      categorization: Villain Action
+      usageLimitOptions:
+        charges: "1"
+        resourceid: 4f6ef54a-f747-4273-99f7-70e47b3ca074
+        multicharge: false
+        resourceRefreshType: encounter
+      targetType: self
+      modifiers: []
+      abilityType: none
       display:
-        bgcolor: "#ffffffff"
-        brightness: 1
         saturation: 1
+        bgcolor: "#ffffffff"
         hueshift: 0
-      behaviors: []
+        brightness: 1
+      name: Ossuary Assault
+      villainAction: Villain Action 3
       sourceReference:
         __typeName: SourceReference
-        page: 46
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      numTargets: 1
-      name: Ossuary Assault
-      repeatTargets: false
-      abilityType: none
-      usageLimitOptions:
-        resourceRefreshType: encounter
-        charges: "1"
-        multicharge: false
-        resourceid: 4f6ef54a-f747-4273-99f7-70e47b3ca074
-      iconid: ui-icons/skills/1.png
+        page: 46
       guid: 11b0105d-c70a-4837-b087-e0653da540eb
     innateLanguages: []
+    levelChoices: []
+    role: Solo
+    name: Ashen Hoarder
+    monster_type: Ashen Hoarder
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    stability: 3
+    cr: 4
+    innateAttacks: []
+    savingThrowRatings: []
+    walkingSpeed: 8
+    keywords:
+      Undead: true
+      Construct: true
+    characterFeatures:
+    - __typeName: CharacterFeature
+      name: Solo Monster
+      description: At the end of each of their turns, the ashen hoarder can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.The ashen hoarder can take two turns each round. They can't take turns consecutively.
+      source: Trait
+      domains:
+        CharacterFeature:a82f834e-b09c-44f3-ba96-392dee4fd14b: true
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: endturn
+          iconid: ui-icons/skills/1.png
+          whenActive: combat
+          castImmediately: true
+          targetType: self
+          persistence: []
+          triggerPrompt: End effect for 10
+          description: ""
+          implementation: 3
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            damageToSelf: "10"
+            targetDuration: save
+            purgeType: one
+          modifiers: []
+          range: 1
+          repeatTargets: false
+          abilityType: none
+          mandatory: false
+          name: End Effect
+          strain: []
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          conditionFormula: Save Ends Effects
+          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
+        description: ""
+        behavior: trigger
+        name: End Effect
+        source: Trait
+        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
+      guid: a82f834e-b09c-44f3-ba96-392dee4fd14b
+    - __typeName: CharacterFeature
+      name: Bladed Body
+      description: An adjacent enemy who grabs the ashen hoarder or uses a melee ability against them takes 3 damage.
+      source: Trait
+      domains:
+        CharacterFeature:38d05e7a-bb50-4538-9b51-a969e9416eed: true
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: inflictcondition
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          persistence: []
+          triggerPrompt: An adjacent enemy who grabs the ashen hoarder takes 3 damage.
+          description: ""
+          mandatory: true
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            titleText: Bladed Body
+            roll: "3"
+            chatMessage: Bladed Body deals 3 damage
+          range: 1
+          modifiers: []
+          conditionFormula: Condition = "Grabbed"
+          abilityType: none
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          name: Bladed Body
+          strain: []
+          targetType: attacker
+          guid: 86f51069-d539-4164-a1e8-1150c1d1ffb0
+        name: Bladed Body
+        sourceguid: 38d05e7a-bb50-4538-9b51-a969e9416eed
+        description: An adjacent enemy who grabs the ashen hoarder takes 3 damage.
+        domains:
+          CharacterFeature:38d05e7a-bb50-4538-9b51-a969e9416eed: true
+        source: Trait
+        behavior: trigger
+        guid: 7ce1ded9-ebac-4c14-b14d-8b260b3a18ef
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: useability
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          persistence: []
+          triggerPrompt: An adjacent enemy who uses a melee ability against the ashen hoarder takes 3 damage.
+          subject: enemy
+          description: ""
+          mandatory: true
+          range: 1
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            titleText: Bladed Body
+            roll: "3"
+            chatMessage: Bladed Body deals 3 damage
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          targetType: subject
+          conditionFormula: Used Ability.Keywords has "Melee" and cast.HasTarget(self)
+          abilityType: none
+          subjectRange: "1"
+          name: Bladed Body
+          strain: []
+          modifiers: []
+          guid: 13e12d4a-2b31-46bc-ac1e-7e5c97cb6a67
+        name: Bladed Body
+        sourceguid: 38d05e7a-bb50-4538-9b51-a969e9416eed
+        description: An adjacent enemy who uses a melee ability against the ashen hoarder takes 3 damage.
+        domains:
+          CharacterFeature:38d05e7a-bb50-4538-9b51-a969e9416eed: true
+        source: Trait
+        behavior: trigger
+        guid: e5164a62-b5a0-41f9-a2f3-54ec54b936e5
+      guid: 38d05e7a-bb50-4538-9b51-a969e9416eed
+    - __typeName: CharacterFeature
+      name: Soul Singularity
+      description: When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has M<3 takes 11 corruption damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can't be brought back to life until their soul is recovered.
+      source: Trait
+      domains:
+        CharacterFeature:83fdca88-e68c-499d-b794-5a9302bbddcf: true
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          numTargets: "1"
+          trigger: zerohitpoints
+          description: ""
+          iconid: ui-icons/skills/1.png
+          range: 5
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            filterTarget: Might Potency Resistance < 3
+            titleText: Soul Singularity
+            damageType: corruption
+            roll: "11"
+            chatMessage: Soul Singularity deals 11 corruption damage. A creature killed by this damage has their soul lost in the Abyssal Wasteland and can't be brought back to life until their soul is recovered.
+          repeatTargets: false
+          targetType: all
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          abilityType: none
+          mandatory: true
+          name: Soul Singularity
+          strain: []
+          persistence: []
+          guid: ebfde983-4c37-48f3-8035-347795cdf631
+        behavior: trigger
+        description: ""
+        domains:
+          CharacterFeature:83fdca88-e68c-499d-b794-5a9302bbddcf: true
+        name: Soul Singularity
+        source: Trait
+        sourceguid: 83fdca88-e68c-499d-b794-5a9302bbddcf
+        guid: 8dc09d98-b9fc-4157-8a07-36ba83a58d3f
+      guid: 83fdca88-e68c-499d-b794-5a9302bbddcf
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        name: Armor of Corpses
+        sourceguid: 8b2584ae-9aaf-41fc-bddb-01aabf0f5289
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          effect: The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.
+          keywords: []
+          distance: Self
+          trigger: The ashen hoarder takes damage.
+          name: Armor of Corpses
+          target: Self
+          cost: 2 Malice
+          guid: 8f37fbb7-a77b-4d29-88fc-9fe78d4ec747
+        domains:
+          CharacterFeature:8b2584ae-9aaf-41fc-bddb-01aabf0f5289: true
+        source: Trait
+        description: |-
+          Trigger: The ashen hoarder takes damage.
+
+          Effect (2 Malice): The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost is reduced to 1 and one impaled creature takes the other half of the damage.
+        guid: ab3a2fc8-653d-4ba7-8e96-fef7aecad545
+      - __typeName: CharacterModifier
+        trigger: takedamage
+        description: "2 Malice: The ashen hoarder halves the damage."
+        domains:
+          CharacterFeature:8b2584ae-9aaf-41fc-bddb-01aabf0f5289: true
+        source: Trait
+        behavior: powertabletrigger
+        guid: ac600535-e12a-40b7-966c-87cf270d4cd0
+        targetType: self
+        range: 1
+        additionalCostModifiers: []
+        type: trigger
+        name: Armor of Corpses
+        powerRollModifier:
+          __typeName: CharacterModifier
+          damageMultiplier: half
+          activationCondition: false
+          modtype: none
+          source: Trigger
+          resourceCostAmount: "2"
+          keywords: []
+          resourceCostType: cost
+          behavior: power
+          name: Armor of Corpses
+          guid: 35938281-2fd8-4fcb-bf30-3bb58bb10b94
+          rollType: enemy_ability_power_roll
+          rules: ""
+        sourceguid: 8b2584ae-9aaf-41fc-bddb-01aabf0f5289
+        rules: "**Trigger:** The ashen hoarder takes damage. **Effect (2 Malice):** The ashen hoarder halves the damage."
+      - __typeName: CharacterModifier
+        trigger: takedamage
+        description: "1 Malice (requires an impaled creature): The ashen hoarder halves the damage and one impaled creature takes the other half."
+        domains:
+          CharacterFeature:8b2584ae-9aaf-41fc-bddb-01aabf0f5289: true
+        source: Trait
+        behavior: powertabletrigger
+        guid: 7221d945-6305-4f69-a88c-e66a1dbda097
+        targetType: self
+        range: 1
+        additionalCostModifiers: []
+        type: trigger
+        name: Armor of Corpses (Impale Sacrifice)
+        powerRollModifier:
+          __typeName: CharacterModifier
+          damageMultiplier: half
+          activationCondition: false
+          modtype: none
+          source: Trigger
+          resourceCostAmount: "1"
+          armEffect: 1376e30a-0b01-4122-bfe6-7e3cbfec6780
+          keywords: []
+          resourceCostType: cost
+          behavior: power
+          name: Armor of Corpses (Impale Sacrifice)
+          guid: 6a0d007c-7630-49f9-8ad0-3545e2a200b8
+          rollType: enemy_ability_power_roll
+          rules: ""
+        sourceguid: 8b2584ae-9aaf-41fc-bddb-01aabf0f5289
+        rules: "**Trigger:** The ashen hoarder takes damage. **Effect (1 Malice, requires an impaled creature):** The ashen hoarder halves the damage and one impaled creature takes the other half."
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: losehitpoints
+          iconid: ui-icons/skills/1.png
+          whenActive: combat
+          targetFilter: Ongoing Effects has "Impaled (Ashen Hoarder)"
+          repeatTargets: false
+          persistence: []
+          triggerPrompt: One impaled creature takes the other half of the damage.
+          description: ""
+          modifiers: []
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+          numTargets: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            titleText: Armor of Corpses
+            roll: Damage
+            chatMessage: An impaled creature takes the other half of the damage
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            applyto: caster
+            ongoingEffect: 1376e30a-0b01-4122-bfe6-7e3cbfec6780
+            mode: effect
+            conditions: []
+          range: 5
+          usageLimitOptions:
+            resourceid: d6e6b5fa-7423-4527-92d1-0af78fa6dca4
+            charges: "1"
+            resourceRefreshType: round
+          conditionFormula: Ongoing Effects has "Armor of Corpses Sacrifice"
+          abilityType: none
+          mandatory: true
+          name: Armor of Corpses Sacrifice
+          strain: []
+          targetType: target
+          guid: e74ff09a-4e59-4bfd-99ea-e55e3d2a6df3
+        guid: 7e4a765f-7a56-4473-b5a1-e1b1797fe4d2
+        sourceguid: 8b2584ae-9aaf-41fc-bddb-01aabf0f5289
+        name: Armor of Corpses (Impale Sacrifice)
+        domains:
+          CharacterFeature:8b2584ae-9aaf-41fc-bddb-01aabf0f5289: true
+        source: Trait
+        description: When the sacrifice option is used, one impaled creature takes the other half of the damage.
+        behavior: trigger
+      description: |-
+        Trigger: The ashen hoarder takes damage.
+
+        Effect (2 Malice): The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.
+      name: Armor of Corpses
+      domains:
+        CharacterFeature:8b2584ae-9aaf-41fc-bddb-01aabf0f5289: true
+      implementation: 3
+      source: Trait
+      guid: 8b2584ae-9aaf-41fc-bddb-01aabf0f5289
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        value: 2
+        source: Trait
+        sourceguid: ef24663a-08f4-41b7-b675-8a6f8f50dd09
+        operation: set
+        guid: a5187e2b-1188-47d2-9610-493fad554b81
+        name: Claw and Blade
+        domains:
+          CharacterFeature:ef24663a-08f4-41b7-b675-8a6f8f50dd09: true
+        description: The ashen hoarder can have up to two creatures grabbed at a time.
+        behavior: attribute
+      description: The ashen hoarder can have up to two size 1 creatures grabbed at a time.
+      name: Claw and Blade
+      domains:
+        CharacterFeature:ef24663a-08f4-41b7-b675-8a6f8f50dd09: true
+      implementation: 3
+      source: Trait
+      guid: ef24663a-08f4-41b7-b675-8a6f8f50dd09
+    - __typeName: CharacterFeature
+      name: Solo Turn
+      description: The ashen hoarder can take two turns each round. They can't take turns consecutively.
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 7033b569-fabc-4cab-a057-14a4e0aba2c7
+        value: 1
+        source: Character Feature
+        attribute: extraturns
+        behavior: attribute
+        name: Solo Turn
+        domains:
+          CharacterFeature:7033b569-fabc-4cab-a057-14a4e0aba2c7: true
+          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+        description: The ashen hoarder can take two turns each round. They can't take turns consecutively.
+        guid: a29f8405-b13e-4bc6-b6e7-6e77d7a3fab1
+      domains:
+        CharacterFeature:7033b569-fabc-4cab-a057-14a4e0aba2c7: true
+        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+      implementation: 2
+      source: Character Feature
+      guid: 7033b569-fabc-4cab-a057-14a4e0aba2c7
+    titles: []
+    skillRatings: []
+    max_hitpoints_roll: "350"
+    inflictedConditions: []
+    groupid: ef5afc45-93f8-4b91-8709-f5503bf65386
+    opportunityAttack: 6
+    resources: []
+    movementSpeeds:
+      burrow: 8
+    ev: 72
     import:
-      type: draw-steel-json
       data:
-        img: systems/draw-steel/assets/roles/solo.webp
-        _id: EwN0CLt7UmEzQA0J
-        sort: 0
-        prototypeToken:
-          width: 3
-          light:
-            dim: 0
-            priority: 0
-            animation:
-              speed: 5
-              reverse: false
-              intensity: 5
-            darkness:
-              min: 0
-              max: 1
-            angle: 360
-            negative: false
-            saturation: 0
-            coloration: 1
-            bright: 0
-            luminosity: 0.5
-            contrast: 0
-            alpha: 0.5
-            attenuation: 0.5
-            shadows: 0
-          appendNumber: false
-          texture:
-            rotation: 0
-            offsetX: 0
-            tint: "#ffffff"
-            offsetY: 0
-            src: systems/draw-steel/assets/roles/solo.webp
-            scaleY: 1
-            anchorX: 0.5
-            fit: contain
-            anchorY: 0.5
-            alphaThreshold: 0.75
-            scaleX: 1
-          sight:
-            angle: 360
-            range: 0
-            saturation: 0
-            enabled: false
-            contrast: 0
-            visionMode: basic
-            brightness: 0
-            attenuation: 0.1
-          turnMarker:
-            disposition: false
-            mode: 1
-          bar1:
-            attribute: stamina
-          displayName: 20
-          actorLink: false
-          flags: []
-          occludable:
-            radius: 0
-          bar2:
-            attribute: hero.resources
-          prependAdjective: false
-          alpha: 1
-          rotation: 0
-          displayBars: 20
-          lockRotation: true
-          name: Ashen Hoarder
-          detectionModes: []
-          height: 3
-          randomImg: false
-          disposition: -1
-          ring:
-            effects: 1
-            colors: []
-            subject:
-              scale: 1
-            enabled: false
         _stats:
-          createdTime: 1757726088504
           systemVersion: 0.8.1
-          coreVersion: "13.351"
           systemId: draw-steel
-        system:
-          movement:
-            types:
-            - walk
-            - burrow
-            disengage: 1
-            hover: false
-            value: 8
-          biography:
-            languages: []
-            director: ""
-            value: ""
-          combat:
-            save:
-              bonus: ""
-              threshold: 6
-            stability: 3
-            turns: 2
-            size:
-              letter: M
-              value: 3
-          monster:
-            role: ""
-            freeStrike: 6
-            keywords:
-            - construct
-            - undead
-            level: 4
-            organization: solo
-            ev: 72
-            folder: Ashen Hoarder
-          source:
-            page: "46"
-            book: Monsters
-            license: Draw Steel Creator License
-          damage:
-            immunities:
-              all: 0
-              holy: 0
-              lightning: 0
-              psychic: 0
-              poison: 0
-              corruption: 0
-              cold: 0
-              sonic: 0
-              fire: 0
-              acid: 0
-            weaknesses:
-              all: 0
-              holy: 5
-              lightning: 0
-              psychic: 0
-              poison: 0
-              corruption: 0
-              cold: 0
-              sonic: 0
-              fire: 0
-              acid: 0
-          negotiation:
-            impression: 1
-            motivations: []
-            pitfalls: []
-            interest: 5
-            patience: 5
-          characteristics:
-            agility:
-              value: -2
-            reason:
-              value: -2
-            intuition:
-              value: 0
-            presence:
-              value: -5
-            might:
-              value: 4
-          stamina:
-            max: 350
-            temporary: 0
-            value: 350
-        _key: "!actors!EwN0CLt7UmEzQA0J"
-        effects: []
+          coreVersion: "13.351"
         name: Ashen Hoarder
-        folder: GXX2DnZcth3KWFfL
-        ownership:
-          default: 0
+        flags: []
+        effects: []
         items:
-        - img: icons/creatures/unholy/demon-hairy-winged-pink.webp
-          _id: tc9XGpXdSLlrj7wb
-          effects: []
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Solo Monster
+          flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.tc9XGpXdSLlrj7wb"
+          type: feature
           system:
             advancements: []
-            _dsid: solo-monster
             source:
               page: "46"
-              book: Monsters
               license: Draw Steel Creator License
+              book: Monsters
+            _dsid: solo-monster
             description:
               director: ""
               value: "<p>At the end of each of their turns, the ashen hoarder can take [[/damage 10]] damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.</p><p>The ashen hoarder can take two turns each round. They can't take turns consecutively.</p>"
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.tc9XGpXdSLlrj7wb"
-          name: Solo Monster
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: tc9XGpXdSLlrj7wb
+          img: icons/creatures/unholy/demon-hairy-winged-pink.webp
+          effects: []
           ownership:
             default: 0
-          type: feature
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Bladed Body
           flags: []
-        - img: icons/creatures/unholy/demon-hairy-winged-pink.webp
-          _id: kedDJsO10WudPYqM
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.kedDJsO10WudPYqM"
+          type: feature
           system:
             advancements: []
-            _dsid: bladed-body
             source:
               page: "46"
-              book: Monsters
               license: Draw Steel Creator License
+              book: Monsters
+            _dsid: bladed-body
             description:
               director: ""
               value: "<p>An adjacent enemy who grabs the ashen hoarder or uses a melee ability against them takes [[/damage 3]] damage.</p>"
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.kedDJsO10WudPYqM"
-          name: Bladed Body
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: kedDJsO10WudPYqM
+          img: icons/creatures/unholy/demon-hairy-winged-pink.webp
+          effects: []
           ownership:
             default: 0
-          type: feature
+        - _stats:
+            systemVersion: 0.10.0
+            systemId: draw-steel
+            coreVersion: "13.351"
+          name: Soul Singularity
           flags: []
-        - img: icons/creatures/unholy/demon-hairy-winged-pink.webp
-          _id: 2ULaERjfRJsYXmDJ
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.2ULaERjfRJsYXmDJ"
+          type: feature
           system:
             advancements: []
-            _dsid: soul-singularity
             source:
               page: "46"
-              book: Monsters
               license: Draw Steel Creator License
+              book: Monsters
+            _dsid: soul-singularity
             description:
               director: ""
               value: "<p>When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has [[potency M 3]] takes [[/damage 11 corruption]] damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can't be brought back to life until their soul is recovered.</p>"
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.2ULaERjfRJsYXmDJ"
-          name: Soul Singularity
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.351"
-            systemVersion: 0.10.0
-          sort: 0
+          _id: 2ULaERjfRJsYXmDJ
+          img: icons/creatures/unholy/demon-hairy-winged-pink.webp
+          effects: []
           ownership:
             default: 0
-          type: feature
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Claw and Blade
           flags: []
-        - img: icons/skills/melee/strike-polearm-glowing-white.webp
-          _id: Gmr1fJQOKhwIN4cI
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.Gmr1fJQOKhwIN4cI"
+          type: ability
           system:
+            effect:
+              before: ""
+              after: "<p>The ashen hoarder can have up to two size 1 creatures grabbed at a time.</p>"
+            story: ""
             power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
               effects:
-                9kjvEbXIASNguXcF:
-                  applied:
-                    tier2:
-                      effects:
-                        grabbed:
-                          condition: failure
-                          properties: []
-                          end: ""
-                      display: ""
-                      potency:
-                        characteristic: agility
-                        value: "@potency.average"
-                    tier1:
-                      effects:
-                        grabbed:
-                          condition: failure
-                          properties: []
-                          end: ""
-                      display: if the other target {{potency}} they are grabbed
-                      potency:
-                        characteristic: agility
-                        value: "@potency.weak"
-                    tier3:
-                      effects:
-                        grabbed:
-                          condition: failure
-                          properties: []
-                          end: ""
-                      display: ""
-                      potency:
-                        characteristic: agility
-                        value: "@potency.weak"
-                  type: applied
-                  name: Grabbed
-                  _id: 9kjvEbXIASNguXcF
-                pQgBpr9V87s8iZNk:
-                  name: ""
-                  _id: pQgBpr9V87s8iZNk
-                  type: damage
-                  damage:
-                    tier2:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.average"
-                      value: "15"
-                    tier1:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: none
-                        value: "@potency.weak"
-                      value: "10"
-                    tier3:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                      value: "18"
                 stXJM1Mk1AxiuTna:
+                  _id: stXJM1Mk1AxiuTna
                   applied:
-                    tier2:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: might
                       effects:
                         bleeding:
                           condition: failure
                           properties: []
                           end: save
                       display: ""
+                    tier2:
                       potency:
-                        characteristic: might
                         value: "@potency.average"
+                        characteristic: might
+                      effects:
+                        bleeding:
+                          condition: failure
+                          properties: []
+                          end: save
+                      display: ""
                     tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: might
                       effects:
                         bleeding:
                           condition: failure
                           properties: []
                           end: save
                       display: if one target has {{potency}} they are bleeding (save ends)
-                      potency:
-                        characteristic: might
-                        value: "@potency.weak"
+                  name: Bleeding
+                  type: applied
+                pQgBpr9V87s8iZNk:
+                  _id: pQgBpr9V87s8iZNk
+                  damage:
                     tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
+                      types: []
+                      properties: []
+                      value: "18"
+                    tier2:
+                      potency:
+                        value: "@potency.average"
+                        characteristic: ""
+                      types: []
+                      properties: []
+                      value: "15"
+                    tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: none
+                      types: []
+                      properties: []
+                      value: "10"
+                  name: ""
+                  type: damage
+                9kjvEbXIASNguXcF:
+                  _id: 9kjvEbXIASNguXcF
+                  applied:
+                    tier3:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: agility
                       effects:
-                        bleeding:
+                        grabbed:
                           condition: failure
                           properties: []
-                          end: save
+                          end: ""
                       display: ""
+                    tier2:
                       potency:
-                        characteristic: might
-                        value: "@potency.strong"
+                        value: "@potency.average"
+                        characteristic: agility
+                      effects:
+                        grabbed:
+                          condition: failure
+                          properties: []
+                          end: ""
+                      display: ""
+                    tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: agility
+                      effects:
+                        grabbed:
+                          condition: failure
+                          properties: []
+                          end: ""
+                      display: if the other target {{potency}} they are grabbed
+                  name: Grabbed
                   type: applied
-                  name: Bleeding
-                  _id: stXJM1Mk1AxiuTna
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
             distance:
-              type: melee
               primary: 2
-            target:
-              type: creatureObject
-              value: 2
-            effect:
-              before: ""
-              after: "<p>The ashen hoarder can have up to two size 1 creatures grabbed at a time.</p>"
+              type: melee
             _dsid: claw-and-blade
             damageDisplay: melee
-            category: signature
-            trigger: ""
-            story: ""
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: main
             keywords:
             - melee
             - strike
             - weapon
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: main
-            spend:
-              text: ""
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.Gmr1fJQOKhwIN4cI"
-          name: Claw and Blade
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+            target:
+              value: 2
+              type: creatureObject
+            category: signature
+            trigger: ""
+          _id: Gmr1fJQOKhwIN4cI
+          img: icons/skills/melee/strike-polearm-glowing-white.webp
+          effects: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Corpse Bomb
           flags: []
-        - img: icons/skills/melee/strike-polearm-glowing-white.webp
-          _id: dDvZDYIU3dNme3bU
-          effects:
-          - duration: []
-            _id: JHJutruYIpauxNj7
-            statuses:
-            - slowed
-            - weakened
-            sort: 0
-            system:
-              end:
-                type: ""
-                roll: 1d10 + @combat.save.bonus
-            disabled: false
-            type: base
-            description: ""
-            img: icons/skills/movement/arrow-down-pink.webp
-            _stats:
-              systemId: draw-steel
-              coreVersion: "13.348"
-              systemVersion: 0.8.1
-            changes: []
-            name: Slowed and Weakened
-            transfer: false
-            tint: "#ffffff"
-            origin: Actor.TToAa8EW2JlNFH0C.Item.dDvZDYIU3dNme3bU
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.dDvZDYIU3dNme3bU.JHJutruYIpauxNj7"
-            flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.dDvZDYIU3dNme3bU"
+          type: ability
           system:
+            effect:
+              before: ""
+              after: "<p><strong>3 Malice</strong>: The ashen hoarder targets a second 4 cube within distance.</p>"
+            story: ""
             power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
               effects:
                 kVRIntWLp4evdbZZ:
+                  _id: kVRIntWLp4evdbZZ
                   applied:
-                    tier2:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: agility
                       effects:
                         weakened:
                           condition: failure
                           properties: []
                           end: save
                       display: ""
+                    tier2:
                       potency:
-                        characteristic: agility
                         value: "@potency.average"
+                        characteristic: agility
+                      effects:
+                        weakened:
+                          condition: failure
+                          properties: []
+                          end: save
+                      display: ""
                     tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: agility
                       effects:
                         JHJutruYIpauxNj7:
                           condition: failure
@@ -784,947 +1330,975 @@ info:
                           properties: []
                           end: save
                       display: "{{potency}} weakened (save ends)"
-                      potency:
-                        characteristic: agility
-                        value: "@potency.weak"
-                    tier3:
-                      effects:
-                        weakened:
-                          condition: failure
-                          properties: []
-                          end: save
-                      display: ""
-                      potency:
-                        characteristic: agility
-                        value: "@potency.strong"
-                  type: applied
                   name: Weakened
-                  _id: kVRIntWLp4evdbZZ
+                  type: applied
                 WfBdvTUZBnWvAUqs:
-                  name: ""
                   _id: WfBdvTUZBnWvAUqs
-                  type: damage
                   damage:
-                    tier2:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
                       types: []
                       properties: []
+                      value: "11"
+                    tier2:
                       potency:
-                        characteristic: ""
                         value: "@potency.average"
+                        characteristic: ""
+                      types: []
+                      properties: []
                       value: "8"
                     tier1:
-                      types: []
-                      properties: []
                       potency:
-                        characteristic: none
                         value: "@potency.weak"
-                      value: "4"
-                    tier3:
+                        characteristic: none
                       types: []
                       properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                      value: "11"
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
+                      value: "4"
+                  name: ""
+                  type: damage
             distance:
-              type: cube
-              primary: 4
               secondary: 20
-            target:
-              type: enemy
-            effect:
-              before: ""
-              after: "<p><strong>3 Malice</strong>: The ashen hoarder targets a second 4 cube within distance.</p>"
+              primary: 4
+              type: cube
             _dsid: corpse-bomb
             damageDisplay: melee
-            category: ""
-            trigger: ""
-            story: ""
+            spend:
+              value: 2
+              text: Any enemy weakened this way is instead slowed and weakened (save ends).
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: main
             keywords:
             - area
             - magic
             - ranged
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: main
-            spend:
-              value: 2
-              text: Any enemy weakened this way is instead slowed and weakened (save ends).
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.dDvZDYIU3dNme3bU"
-          name: Corpse Bomb
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
-          ownership:
-            default: 0
-          type: ability
-          flags: []
-        - img: icons/skills/melee/strike-polearm-light-orange.webp
-          _id: Nadm6rJRnHX2nET4
+            target:
+              type: enemy
+            category: ""
+            trigger: ""
+          _id: dDvZDYIU3dNme3bU
+          img: icons/skills/melee/strike-polearm-glowing-white.webp
           effects:
-          - duration: []
-            _id: ox9pBhgG6jaEsZxa
-            statuses:
-            - restrained
-            - bleeding
-            sort: 0
+          - flags: []
+            tint: "#ffffff"
+            origin: Actor.TToAa8EW2JlNFH0C.Item.dDvZDYIU3dNme3bU
             system:
               end:
-                type: ""
                 roll: 1d10 + @combat.save.bonus
-            disabled: false
-            type: base
-            description: "<p>An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.</p>"
-            img: icons/skills/melee/strike-polearm-light-orange.webp
+                type: ""
+            _id: JHJutruYIpauxNj7
             _stats:
-              systemId: draw-steel
-              createdTime: 1758001882732
-              coreVersion: "13.348"
               systemVersion: 0.8.1
-              modifiedTime: 1758001916093
+              systemId: draw-steel
+              coreVersion: "13.348"
+            description: ""
+            statuses:
+            - slowed
+            - weakened
+            img: icons/skills/movement/arrow-down-pink.webp
+            sort: 0
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.dDvZDYIU3dNme3bU.JHJutruYIpauxNj7"
+            disabled: false
             changes: []
-            name: Impaled
+            name: Slowed and Weakened
+            type: base
             transfer: false
-            tint: "#ffffff"
-            origin: Compendium.draw-steel.monsters.Actor.EwN0CLt7UmEzQA0J.Item.Nadm6rJRnHX2nET4
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.Nadm6rJRnHX2nET4.ox9pBhgG6jaEsZxa"
-            flags: []
+            duration: []
+          ownership:
+            default: 0
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Impale
+          flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.Nadm6rJRnHX2nET4"
+          type: ability
           system:
+            trigger: ""
+            story: ""
             power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
               effects:
                 SOSrdEXIo8Hbd4zF:
-                  name: ""
                   _id: SOSrdEXIo8Hbd4zF
-                  type: damage
                   damage:
-                    tier2:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
                       types:
                       - corruption
                       properties: []
+                      value: "14"
+                    tier2:
                       potency:
-                        characteristic: ""
                         value: "@potency.average"
+                        characteristic: ""
+                      types:
+                      - corruption
+                      properties: []
                       value: "11"
                     tier1:
-                      types:
-                      - corruption
-                      properties: []
                       potency:
-                        characteristic: none
                         value: "@potency.weak"
-                      value: "6"
-                    tier3:
+                        characteristic: none
                       types:
                       - corruption
                       properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                      value: "14"
+                      value: "6"
+                  name: ""
+                  type: damage
                 5npn93SY4p2IGhfc:
+                  _id: 5npn93SY4p2IGhfc
                   applied:
-                    tier2:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
                       effects:
                         ox9pBhgG6jaEsZxa:
                           end: save
                           condition: failure
                       display: ""
+                    tier2:
                       potency:
-                        characteristic: ""
                         value: "@potency.average"
+                        characteristic: ""
+                      effects:
+                        ox9pBhgG6jaEsZxa:
+                          end: save
+                          condition: failure
+                      display: ""
                     tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: might
                       effects:
                         ox9pBhgG6jaEsZxa:
                           end: save
                           condition: failure
                       display: "{{potency}} the target is impaled (save ends)"
-                      potency:
-                        characteristic: might
-                        value: "@potency.weak"
-                    tier3:
-                      effects:
-                        ox9pBhgG6jaEsZxa:
-                          end: save
-                          condition: failure
-                      display: ""
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                  type: applied
                   name: Impaled
-                  _id: 5npn93SY4p2IGhfc
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
+                  type: applied
+            distance:
+              primary: 4
+              secondary: 1
+              tertiary: 1
+              type: line
+            _dsid: impale
+            type: main
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords:
+            - area
+            - weapon
             damageDisplay: melee
-            target:
-              type: creature
             effect:
               before: ""
               after: "<p>An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.</p>"
-            _dsid: impale
-            spend:
-              text: ""
+            target:
+              type: creature
             category: heroic
-            distance:
-              tertiary: 1
-              type: line
-              primary: 4
-              secondary: 1
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords:
-            - area
-            - weapon
-            trigger: ""
-            type: main
             resource: 3
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.Nadm6rJRnHX2nET4"
-          name: Impale
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: Nadm6rJRnHX2nET4
+          img: icons/skills/melee/strike-polearm-light-orange.webp
+          effects:
+          - flags: []
+            tint: "#ffffff"
+            origin: Compendium.draw-steel.monsters.Actor.EwN0CLt7UmEzQA0J.Item.Nadm6rJRnHX2nET4
+            system:
+              end:
+                roll: 1d10 + @combat.save.bonus
+                type: ""
+            _id: ox9pBhgG6jaEsZxa
+            _stats:
+              systemVersion: 0.8.1
+              systemId: draw-steel
+              coreVersion: "13.348"
+            description: "<p>An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.</p>"
+            statuses:
+            - restrained
+            - bleeding
+            img: icons/skills/melee/strike-polearm-light-orange.webp
+            sort: 0
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.Nadm6rJRnHX2nET4.ox9pBhgG6jaEsZxa"
+            disabled: false
+            changes: []
+            name: Impaled
+            type: base
+            transfer: false
+            duration: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.10.0
+            systemId: draw-steel
+            coreVersion: "13.351"
+          name: Bone Dozer
           flags: []
-        - img: icons/magic/air/air-pressure-shield-blue.webp
-          _id: qQpLgQkS7Eg8HE2w
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.qQpLgQkS7Eg8HE2w"
+          type: ability
           system:
-            power:
-              effects: []
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
-            distance:
-              type: self
-            target:
-              type: self
             effect:
               before: "<p>The ashen hoarder moves up to twice their speed in a straight line. Each creature or object in the path of this movement is either pushed into the nearest unoccupied space outside the path, or if they have [[potency M 3]] is pushed forward until the movement ends. Any creature who is force moved forward into an obstacle is dazed (save ends).</p>"
               after: ""
-            _dsid: bone-dozer
-            damageDisplay: melee
-            category: ""
-            trigger: ""
             story: ""
-            keywords: []
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: maneuver
-            spend:
-              text: ""
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.qQpLgQkS7Eg8HE2w"
-          name: Bone Dozer
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.351"
-            systemVersion: 0.10.0
-          sort: 0
-          ownership:
-            default: 0
-          type: ability
-          flags: []
-        - img: icons/magic/air/air-wave-gust-blue.webp
-          _id: kfQahPW7AA6DwxiW
-          effects: []
-          system:
             power:
-              effects: []
               roll:
                 characteristics:
                 - might
                 formula: "@chr"
+              effects: []
+            distance:
+              type: self
+            _dsid: bone-dozer
             damageDisplay: melee
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: maneuver
+            keywords: []
             target:
               type: self
+            category: ""
+            trigger: ""
+          _id: qQpLgQkS7Eg8HE2w
+          img: icons/magic/air/air-pressure-shield-blue.webp
+          effects: []
+          ownership:
+            default: 0
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Armor of Corpses
+          flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.kfQahPW7AA6DwxiW"
+          type: ability
+          system:
+            trigger: The ashen hoarder takes damage.
+            story: ""
+            power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
+              effects: []
+            distance:
+              type: self
+            _dsid: armor-of-corpses
+            type: triggered
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords: []
+            damageDisplay: melee
             effect:
               before: "<p>The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.</p>"
               after: ""
-            _dsid: armor-of-corpses
-            spend:
-              text: ""
-            category: heroic
-            distance:
+            target:
               type: self
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords: []
-            trigger: The ashen hoarder takes damage.
-            type: triggered
+            category: heroic
             resource: 2
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.kfQahPW7AA6DwxiW"
-          name: Armor of Corpses
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: kfQahPW7AA6DwxiW
+          img: icons/magic/air/air-wave-gust-blue.webp
+          effects: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Skeletal Eruption
           flags: []
-        - img: icons/magic/death/skull-horned-worn-fire-blue.webp
-          _id: at8zpGISlK4xg0q5
-          effects:
-          - duration: []
-            _id: LMLt6hlEMCRKcle1
-            statuses: []
-            sort: 0
-            system:
-              end:
-                type: ""
-                roll: 1d10 + @combat.save.bonus
-            disabled: false
-            type: base
-            description: ""
-            img: icons/magic/death/skull-horned-worn-fire-blue.webp
-            _stats:
-              systemId: draw-steel
-              coreVersion: "13.348"
-              systemVersion: 0.8.1
-            changes: []
-            name: Active Effect
-            transfer: false
-            tint: "#ffffff"
-            origin: Actor.TToAa8EW2JlNFH0C.Item.at8zpGISlK4xg0q5
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.at8zpGISlK4xg0q5.LMLt6hlEMCRKcle1"
-            flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.at8zpGISlK4xg0q5"
+          type: ability
           system:
-            power:
-              effects:
-                kZLJK9jOM8ANUqgd:
-                  name: ""
-                  _id: kZLJK9jOM8ANUqgd
-                  type: damage
-                  damage:
-                    tier2:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.average"
-                      value: "11"
-                    tier1:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: none
-                        value: "@potency.weak"
-                      value: "6"
-                    tier3:
-                      types: []
-                      properties: []
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                      value: "14"
-                UWLCQJ1kz4R8Lv4L:
-                  type: forced
-                  forced:
-                    tier2:
-                      movement:
-                      - push
-                      potency:
-                        characteristic: ""
-                        value: "@potency.average"
-                      properties:
-                      - vertical
-                      display: "{{forced}}"
-                      distance: "2"
-                    tier1:
-                      movement:
-                      - push
-                      potency:
-                        characteristic: none
-                        value: "@potency.weak"
-                      properties:
-                      - vertical
-                      display: "{{forced}}"
-                      distance: "2"
-                    tier3:
-                      movement:
-                      - push
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                      properties:
-                      - vertical
-                      display: "{{forced}}"
-                      distance: "3"
-                  name: Push
-                  _id: UWLCQJ1kz4R8Lv4L
-                hxbq2DReGMZdXm3l:
-                  applied:
-                    tier2:
-                      effects:
-                        prone:
-                          condition: failure
-                          properties: []
-                          end: ""
-                        restrained:
-                          condition: failure
-                          properties: []
-                          end: save
-                      display: ""
-                      potency:
-                        characteristic: ""
-                        value: "@potency.average"
-                    tier1:
-                      effects:
-                        prone:
-                          condition: failure
-                          properties: []
-                          end: ""
-                        restrained:
-                          condition: failure
-                          properties: []
-                          end: save
-                      display: ""
-                      potency:
-                        characteristic: none
-                        value: "@potency.weak"
-                    tier3:
-                      effects:
-                        prone:
-                          condition: failure
-                          properties: []
-                          end: ""
-                        restrained:
-                          condition: failure
-                          properties: []
-                          end: save
-                      display: ""
-                      potency:
-                        characteristic: ""
-                        value: "@potency.strong"
-                  type: applied
-                  name: Restrained
-                  _id: hxbq2DReGMZdXm3l
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
-            distance:
-              tertiary: 1
-              type: line
-              primary: 8
-              secondary: 3
-            target:
-              type: creatureObject
             effect:
               before: ""
               after: "<p>Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).</p>"
+            story: ""
+            power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
+              effects:
+                UWLCQJ1kz4R8Lv4L:
+                  _id: UWLCQJ1kz4R8Lv4L
+                  forced:
+                    tier3:
+                      movement:
+                      - push
+                      display: "{{forced}}"
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
+                      distance: "3"
+                      properties:
+                      - vertical
+                    tier2:
+                      movement:
+                      - push
+                      display: "{{forced}}"
+                      potency:
+                        value: "@potency.average"
+                        characteristic: ""
+                      distance: "2"
+                      properties:
+                      - vertical
+                    tier1:
+                      movement:
+                      - push
+                      display: "{{forced}}"
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: none
+                      distance: "2"
+                      properties:
+                      - vertical
+                  name: Push
+                  type: forced
+                hxbq2DReGMZdXm3l:
+                  _id: hxbq2DReGMZdXm3l
+                  applied:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
+                      effects:
+                        restrained:
+                          condition: failure
+                          properties: []
+                          end: save
+                        prone:
+                          condition: failure
+                          properties: []
+                          end: ""
+                      display: ""
+                    tier2:
+                      potency:
+                        value: "@potency.average"
+                        characteristic: ""
+                      effects:
+                        restrained:
+                          condition: failure
+                          properties: []
+                          end: save
+                        prone:
+                          condition: failure
+                          properties: []
+                          end: ""
+                      display: ""
+                    tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: none
+                      effects:
+                        restrained:
+                          condition: failure
+                          properties: []
+                          end: save
+                        prone:
+                          condition: failure
+                          properties: []
+                          end: ""
+                      display: ""
+                  name: Restrained
+                  type: applied
+                kZLJK9jOM8ANUqgd:
+                  _id: kZLJK9jOM8ANUqgd
+                  damage:
+                    tier3:
+                      potency:
+                        value: "@potency.strong"
+                        characteristic: ""
+                      types: []
+                      properties: []
+                      value: "14"
+                    tier2:
+                      potency:
+                        value: "@potency.average"
+                        characteristic: ""
+                      types: []
+                      properties: []
+                      value: "11"
+                    tier1:
+                      potency:
+                        value: "@potency.weak"
+                        characteristic: none
+                      types: []
+                      properties: []
+                      value: "6"
+                  name: ""
+                  type: damage
+            distance:
+              primary: 8
+              secondary: 3
+              tertiary: 1
+              type: line
             _dsid: skeletal-eruption
             damageDisplay: melee
-            category: villain
-            trigger: ""
-            story: ""
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: villain
             keywords:
             - area
             - weapon
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: villain
-            spend:
-              text: ""
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.at8zpGISlK4xg0q5"
-          name: Skeletal Eruption
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+            target:
+              type: creatureObject
+            category: villain
+            trigger: ""
+          _id: at8zpGISlK4xg0q5
+          img: icons/magic/death/skull-horned-worn-fire-blue.webp
+          effects:
+          - flags: []
+            tint: "#ffffff"
+            origin: Actor.TToAa8EW2JlNFH0C.Item.at8zpGISlK4xg0q5
+            system:
+              end:
+                roll: 1d10 + @combat.save.bonus
+                type: ""
+            _id: LMLt6hlEMCRKcle1
+            _stats:
+              systemVersion: 0.8.1
+              systemId: draw-steel
+              coreVersion: "13.348"
+            description: ""
+            statuses: []
+            img: icons/magic/death/skull-horned-worn-fire-blue.webp
+            sort: 0
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.at8zpGISlK4xg0q5.LMLt6hlEMCRKcle1"
+            disabled: false
+            changes: []
+            name: Active Effect
+            type: base
+            transfer: false
+            duration: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Mobile Mine Field
           flags: []
-        - img: icons/magic/death/skull-horned-worn-fire-blue.webp
-          _id: OjrKo1PQGMXK702N
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.OjrKo1PQGMXK702N"
+          type: ability
           system:
-            power:
-              effects: []
-              roll:
-                characteristics:
-                - might
-                formula: "@chr"
-            distance:
-              type: cube
-              primary: 10
-              secondary: 20
-            target:
-              type: special
             effect:
               before: "<p>The ashen hoarder sprays out six size 1M zombie mines that appear in unoccupied squares within distance. Any enemy who moves adjacent to a zombie mine for the first time in a round or starts their turn there causes the mine to explode, dealing [[/damage 4 corruption]] damage to each creature adjacent to the mine. Any other zombie mines adjacent to the exploding mine also explode. At the start of each of the ashen hoarder's turns, each unexploded zombie mine can be moved up to 2 squares.</p>"
               after: ""
-            _dsid: mobile-mine-field
-            damageDisplay: melee
-            category: villain
-            trigger: ""
             story: ""
-            keywords:
-            - area
-            - ranged
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: villain
-            spend:
-              text: ""
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.OjrKo1PQGMXK702N"
-          name: Mobile Mine Field
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
-          ownership:
-            default: 0
-          type: ability
-          flags: []
-        - img: icons/magic/death/skull-horned-worn-fire-blue.webp
-          _id: vzzAPKzWjVOhKs7G
-          effects: []
-          system:
             power:
-              effects: []
               roll:
                 characteristics:
                 - might
                 formula: "@chr"
+              effects: []
             distance:
-              type: self
+              secondary: 20
+              primary: 10
+              type: cube
+            _dsid: mobile-mine-field
+            damageDisplay: melee
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: villain
+            keywords:
+            - area
+            - ranged
             target:
-              type: self
+              type: special
+            category: villain
+            trigger: ""
+          _id: OjrKo1PQGMXK702N
+          img: icons/magic/death/skull-horned-worn-fire-blue.webp
+          effects: []
+          ownership:
+            default: 0
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Ossuary Assault
+          flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.vzzAPKzWjVOhKs7G"
+          type: ability
+          system:
             effect:
               before: "<p>The ashen hoarder moves up to their speed and uses Claw and Blade with a double edge against one target. On a tier 3 outcome, the ashen hoarder can use Impale without spending Malice.</p>"
               after: ""
+            story: ""
+            power:
+              roll:
+                characteristics:
+                - might
+                formula: "@chr"
+              effects: []
+            distance:
+              type: self
             _dsid: ossuary-assault
             damageDisplay: melee
-            category: villain
-            trigger: ""
-            story: ""
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            type: villain
             keywords:
             - melee
             - strike
             - weapon
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            type: villain
-            spend:
-              text: ""
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.vzzAPKzWjVOhKs7G"
-          name: Ossuary Assault
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+            target:
+              type: self
+            category: villain
+            trigger: ""
+          _id: vzzAPKzWjVOhKs7G
+          img: icons/magic/death/skull-horned-worn-fire-blue.webp
+          effects: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Relentless Strikes
           flags: []
-        - img: icons/magic/unholy/silhouette-robe-evil-power.webp
-          _id: wQ1PEgnfO5HCOGRK
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.wQ1PEgnfO5HCOGRK"
+          type: ability
           system:
+            trigger: A ashen starts its turn.
+            story: ""
             power:
-              effects: []
               roll:
                 characteristics: []
                 formula: ""
-            damageDisplay: melee
-            target:
+              effects: []
+            distance:
               type: special
+            _dsid: relentless-strikes
+            type: none
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords: []
+            damageDisplay: melee
             effect:
               before: "<p>The ashen hoarder moves up to their speed and can make a free strike against two targets.</p>"
               after: ""
-            _dsid: relentless-strikes
-            spend:
-              text: ""
-            category: heroic
-            distance:
+            target:
               type: special
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords: []
-            trigger: A ashen starts its turn.
-            type: none
+            category: heroic
             resource: 3
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.wQ1PEgnfO5HCOGRK"
-          name: Relentless Strikes
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: wQ1PEgnfO5HCOGRK
+          img: icons/magic/unholy/silhouette-robe-evil-power.webp
+          effects: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            systemVersion: 0.8.1
+            systemId: draw-steel
+            coreVersion: "13.348"
+          name: Solo Action
           flags: []
-        - img: icons/magic/unholy/silhouette-robe-evil-power.webp
-          _id: qvQskX0aMUg203Pm
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.qvQskX0aMUg203Pm"
+          type: ability
           system:
+            trigger: A ashen starts its turn.
+            story: ""
             power:
-              effects: []
               roll:
                 characteristics: []
                 formula: ""
-            damageDisplay: melee
-            target:
+              effects: []
+            distance:
               type: special
+            _dsid: solo-action
+            type: none
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords: []
+            damageDisplay: melee
             effect:
               before: "<p>The ashen hoarder takes an additional main action on their turn.</p><p>They can use this feature even if they are dazed.</p>"
               after: ""
-            _dsid: solo-action
-            spend:
-              text: ""
-            category: heroic
-            distance:
+            target:
               type: special
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords: []
-            trigger: A ashen starts its turn.
-            type: none
+            category: heroic
             resource: 5
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.qvQskX0aMUg203Pm"
-          name: Solo Action
-          _stats:
-            systemId: draw-steel
-            coreVersion: "13.348"
-            systemVersion: 0.8.1
-          sort: 0
+          _id: qvQskX0aMUg203Pm
+          img: icons/magic/unholy/silhouette-robe-evil-power.webp
+          effects: []
           ownership:
             default: 0
-          type: ability
+        - _stats:
+            compendiumSource: Compendium.draw-steel.monster-features.Item.Q8cXotr2pqF5U53N
+            systemId: draw-steel
+            systemVersion: 0.9.0
+            coreVersion: "13.350"
+          name: Blade Wall
           flags: []
-        - img: icons/magic/unholy/silhouette-robe-evil-power.webp
-          _id: Q8cXotr2pqF5U53N
-          effects: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.Q8cXotr2pqF5U53N"
+          type: ability
           system:
+            trigger: A ashen starts its turn.
+            story: ""
             power:
-              effects: []
               roll:
                 characteristics: []
                 formula: ""
-            damageDisplay: melee
-            target:
+              effects: []
+            distance:
               type: special
-              custom: ""
+            _dsid: blade-wall
+            type: none
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords: []
+            damageDisplay: melee
             effect:
               before: "<p>The ashen hoarder summons a 10 wall of bones and blades into unoccupied squares within 5 squares of them. Each square of the wall has 5 Stamina. An enemy who comes adjacent to the wall for the first time in a round or starts their turn there takes [[/damage 3]] damage.</p>"
               after: ""
-            _dsid: blade-wall
-            spend:
-              text: ""
-            category: heroic
-            distance:
+            target:
+              custom: ""
               type: special
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords: []
-            trigger: A ashen starts its turn.
-            type: none
+            category: heroic
             resource: 5
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.Q8cXotr2pqF5U53N"
-          name: Blade Wall
-          _stats:
-            compendiumSource: Compendium.draw-steel.monster-features.Item.Q8cXotr2pqF5U53N
-            systemId: draw-steel
-            createdTime: 1760847070863
-            systemVersion: 0.9.0
-            coreVersion: "13.350"
-          sort: 0
+          _id: Q8cXotr2pqF5U53N
+          img: icons/magic/unholy/silhouette-robe-evil-power.webp
+          effects: []
           ownership:
             default: 0
             R75FAhxK5fADaoJF: 3
-          type: ability
+        - _stats:
+            compendiumSource: Compendium.draw-steel.monster-features.Item.vIJRyTNiGZGtsXhe
+            systemId: draw-steel
+            systemVersion: 0.9.0
+            coreVersion: "13.351"
+          name: Bone Storm
           flags: []
-        - img: icons/magic/unholy/silhouette-robe-evil-power.webp
-          _id: djBaAT7WIWSws808
-          effects:
-          - flags: []
-            duration: []
-            _id: iKSKZkUWnJLq8yB9
-            statuses:
-            - restrained
-            tint: "#ffffff"
-            sort: 0
-            img: icons/svg/downgrade.svg
-            system:
-              end:
-                type: save
-                roll: 1d10 + @combat.save.bonus
-            changes: []
-            disabled: false
-            name: Restrained
-            transfer: false
-            _stats:
-              systemId: draw-steel
-              coreVersion: "13.351"
-              systemVersion: 0.9.0
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.iKSKZkUWnJLq8yB9"
-            type: base
-            description: ""
-          - flags: []
-            duration:
-              rounds: 1
-            _id: e8jY6RqE90bVzKNF
-            statuses:
-            - bleeding
-            tint: "#ffffff"
-            sort: 0
-            img: icons/svg/downgrade.svg
-            system:
-              end:
-                type: turn
-                roll: ""
-            changes: []
-            disabled: false
-            name: Bleeding
-            transfer: false
-            _stats:
-              systemId: draw-steel
-              coreVersion: "13.351"
-              systemVersion: 0.9.0
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.e8jY6RqE90bVzKNF"
-            type: base
-            description: ""
-          - duration: []
-            _id: eBrxn3KT6rkdyGUS
-            statuses:
-            - restrained
-            - bleeding
-            sort: 0
-            system:
-              end:
-                type: ""
-                roll: 1d10 + @combat.save.bonus
-            disabled: false
-            type: base
-            description: ""
-            img: icons/skills/wounds/injury-pain-impaled-hand-blood.webp
-            _stats:
-              systemId: draw-steel
-              coreVersion: "13.351"
-              systemVersion: 0.9.0
-            changes: []
-            name: Restrained and Bleeding
-            transfer: false
-            tint: "#ffffff"
-            origin: Compendium.draw-steel.monster-features.Item.vIJRyTNiGZGtsXhe
-            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.eBrxn3KT6rkdyGUS"
-            flags: []
+          sort: 0
+          _key: "!actors.items!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808"
+          type: ability
           system:
+            trigger: A ashen starts its turn.
+            story: ""
             power:
-              effects: []
               roll:
                 characteristics: []
                 formula: ""
-            damageDisplay: melee
-            target:
+              effects: []
+            distance:
               type: special
-              custom: ""
+            _dsid: bone-storm
+            type: none
+            spend:
+              text: ""
+            source:
+              page: "46"
+              license: Draw Steel Creator License
+              book: Monsters
+            keywords: []
+            damageDisplay: melee
             effect:
               before: "<p>The ashen hoarder launches bone lances into the air, raining them down on enemies and impaling those unlucky enough to be on the receiving end. Each enemy within 20 squares of the ashen hoarder makes an <strong>Agility test</strong>.</p><dl class=\"power-roll-display\"><dt class=\"tier1\"><p>!</p></dt><dd><p>[[/damage 14]] damage; [[/apply eBrxn3KT6rkdyGUS save]]</p></dd><dt class=\"tier2\"><p>@</p></dt><dd><p>[[/damage 11]] damage; [[/apply bleeding turn]]</p></dd><dt class=\"tier3\"><p>#</p></dt><dd><p>[[/damage 6]] damag</p></dd></dl>"
               after: ""
-            _dsid: bone-storm
-            spend:
-              text: ""
-            category: heroic
-            distance:
+            target:
+              custom: ""
               type: special
-            source:
-              page: "46"
-              book: Monsters
-              license: Draw Steel Creator License
-            story: ""
-            keywords: []
-            trigger: A ashen starts its turn.
-            type: none
+            category: heroic
             resource: 7
-          _key: "!actors.items!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808"
-          name: Bone Storm
-          _stats:
-            compendiumSource: Compendium.draw-steel.monster-features.Item.vIJRyTNiGZGtsXhe
-            systemId: draw-steel
-            createdTime: 1763816620856
-            systemVersion: 0.9.0
-            coreVersion: "13.351"
-          sort: 0
+          _id: djBaAT7WIWSws808
+          img: icons/magic/unholy/silhouette-robe-evil-power.webp
+          effects:
+          - name: Restrained
+            disabled: false
+            description: ""
+            tint: "#ffffff"
+            img: icons/svg/downgrade.svg
+            flags: []
+            system:
+              end:
+                roll: 1d10 + @combat.save.bonus
+                type: save
+            sort: 0
+            transfer: false
+            statuses:
+            - restrained
+            _stats:
+              systemVersion: 0.9.0
+              systemId: draw-steel
+              coreVersion: "13.351"
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.iKSKZkUWnJLq8yB9"
+            _id: iKSKZkUWnJLq8yB9
+            changes: []
+            type: base
+            duration: []
+          - name: Bleeding
+            disabled: false
+            description: ""
+            tint: "#ffffff"
+            img: icons/svg/downgrade.svg
+            flags: []
+            system:
+              end:
+                roll: ""
+                type: turn
+            sort: 0
+            transfer: false
+            statuses:
+            - bleeding
+            _stats:
+              systemVersion: 0.9.0
+              systemId: draw-steel
+              coreVersion: "13.351"
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.e8jY6RqE90bVzKNF"
+            _id: e8jY6RqE90bVzKNF
+            changes: []
+            type: base
+            duration:
+              rounds: 1
+          - flags: []
+            tint: "#ffffff"
+            origin: Compendium.draw-steel.monster-features.Item.vIJRyTNiGZGtsXhe
+            system:
+              end:
+                roll: 1d10 + @combat.save.bonus
+                type: ""
+            _id: eBrxn3KT6rkdyGUS
+            _stats:
+              systemVersion: 0.9.0
+              systemId: draw-steel
+              coreVersion: "13.351"
+            description: ""
+            statuses:
+            - restrained
+            - bleeding
+            img: icons/skills/wounds/injury-pain-impaled-hand-blood.webp
+            sort: 0
+            _key: "!actors.items.effects!EwN0CLt7UmEzQA0J.djBaAT7WIWSws808.eBrxn3KT6rkdyGUS"
+            disabled: false
+            changes: []
+            name: Restrained and Bleeding
+            type: base
+            transfer: false
+            duration: []
           ownership:
             default: 0
             CIQwmPP4Pjosq4Yp: 3
-          type: ability
+        prototypeToken:
+          randomImg: false
           flags: []
+          texture:
+            offsetY: 0
+            tint: "#ffffff"
+            src: systems/draw-steel/assets/roles/solo.webp
+            fit: contain
+            offsetX: 0
+            anchorY: 0.5
+            anchorX: 0.5
+            rotation: 0
+            scaleX: 1
+            scaleY: 1
+            alphaThreshold: 0.75
+          bar2:
+            attribute: hero.resources
+          sight:
+            attenuation: 0.1
+            range: 0
+            visionMode: basic
+            enabled: false
+            saturation: 0
+            angle: 360
+            brightness: 0
+            contrast: 0
+          actorLink: false
+          occludable:
+            radius: 0
+          rotation: 0
+          light:
+            attenuation: 0.5
+            priority: 0
+            dim: 0
+            shadows: 0
+            angle: 360
+            saturation: 0
+            contrast: 0
+            animation:
+              reverse: false
+              intensity: 5
+              speed: 5
+            coloration: 1
+            darkness:
+              max: 1
+              min: 0
+            alpha: 0.5
+            luminosity: 0.5
+            bright: 0
+            negative: false
+          lockRotation: true
+          displayName: 20
+          appendNumber: false
+          ring:
+            subject:
+              scale: 1
+            colors: []
+            effects: 1
+            enabled: false
+          name: Ashen Hoarder
+          detectionModes: []
+          displayBars: 20
+          disposition: -1
+          bar1:
+            attribute: stamina
+          alpha: 1
+          turnMarker:
+            mode: 1
+            disposition: false
+          width: 3
+          prependAdjective: false
+          height: 3
+        sort: 0
+        img: systems/draw-steel/assets/roles/solo.webp
         type: npc
-        flags: []
-    attributes:
-      agl:
-        id: agl
-        baseValue: -2
-      mgt:
-        id: mgt
-        baseValue: 4
-      prs:
-        id: prs
-        baseValue: -5
-      inu:
-        id: inu
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: -2
-    skillRatings: []
-    traitNames:
-    - Solo Monster
-    - Bladed Body
-    - Soul Singularity
-    inflictedConditions: []
-    titles: []
-    max_hitpoints_roll: "350"
-    monster_category: Ashen Hoarder
-    movementSpeeds:
-      burrow: 8
-    groupid: ef5afc45-93f8-4b91-8709-f5503bf65386
-    resources: []
+        _key: "!actors!EwN0CLt7UmEzQA0J"
+        _id: EwN0CLt7UmEzQA0J
+        system:
+          movement:
+            disengage: 1
+            types:
+            - walk
+            - burrow
+            hover: false
+            value: 8
+          stamina:
+            value: 350
+            max: 350
+            temporary: 0
+          source:
+            page: "46"
+            license: Draw Steel Creator License
+            book: Monsters
+          characteristics:
+            might:
+              value: 4
+            reason:
+              value: -2
+            presence:
+              value: -5
+            intuition:
+              value: 0
+            agility:
+              value: -2
+          negotiation:
+            interest: 5
+            motivations: []
+            patience: 5
+            pitfalls: []
+            impression: 1
+          combat:
+            stability: 3
+            turns: 2
+            save:
+              bonus: ""
+              threshold: 6
+            size:
+              value: 3
+              letter: M
+          monster:
+            level: 4
+            keywords:
+            - construct
+            - undead
+            organization: solo
+            role: ""
+            ev: 72
+            folder: Ashen Hoarder
+            freeStrike: 6
+          damage:
+            immunities:
+              lightning: 0
+              cold: 0
+              acid: 0
+              fire: 0
+              corruption: 0
+              all: 0
+              poison: 0
+              holy: 0
+              psychic: 0
+              sonic: 0
+            weaknesses:
+              lightning: 0
+              cold: 0
+              acid: 0
+              fire: 0
+              corruption: 0
+              all: 0
+              poison: 0
+              holy: 5
+              psychic: 0
+              sonic: 0
+          biography:
+            director: ""
+            languages: []
+            value: ""
+        folder: GXX2DnZcth3KWFfL
+        ownership:
+          default: 0
+      type: draw-steel-json
     resistances:
     - __typeName: ResistanceEntry
-      damageType: holy
       dr: -5
       apply: Damage Reduction
-    savingThrowRatings: []
-    role: Solo
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:a82f834e-b09c-44f3-ba96-392dee4fd14b: true
-      source: Trait
-      description: At the end of each of their turns, the ashen hoarder can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.The ashen hoarder can take two turns each round. They can't take turns consecutively.
-      name: Solo Monster
-      implementation: 3
-      modifiers:
-      - __typeName: CharacterModifier
-        behavior: trigger
-        name: End Effect
-        description: ""
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          targetType: self
-          castImmediately: true
-          mandatory: false
-          modifiers: []
-          description: ""
-          whenActive: combat
-          range: 1
-          strain: []
-          guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          triggerPrompt: End effect for 10
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            damageToSelf: "10"
-            purgeType: one
-            conditions: []
-            targetDuration: save
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
-          numTargets: "1"
-          name: End Effect
-          repeatTargets: false
-          abilityType: none
-          trigger: endturn
-          iconid: ui-icons/skills/1.png
-          persistence: []
-      guid: a82f834e-b09c-44f3-ba96-392dee4fd14b
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:38d05e7a-bb50-4538-9b51-a969e9416eed: true
-      name: Bladed Body
-      description: An adjacent enemy who grabs the ashen hoarder or uses a melee ability against them takes 3 damage.
-      source: Trait
-      modifiers: []
-      guid: 38d05e7a-bb50-4538-9b51-a969e9416eed
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:83fdca88-e68c-499d-b794-5a9302bbddcf: true
-      name: Soul Singularity
-      description: When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has M<3 takes 11 corruption damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can't be brought back to life until their soul is recovered.
-      source: Trait
-      modifiers: []
-      guid: 83fdca88-e68c-499d-b794-5a9302bbddcf
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:7033b569-fabc-4cab-a057-14a4e0aba2c7: true
-        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-      name: Solo Turn
-      description: The ashen hoarder can take two turns each round. They can’t take turns consecutively.
-      implementation: 2
-      source: Character Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: extraturns
-        value: 1
-        behavior: attribute
-        name: Solo Turn
-        guid: a29f8405-b13e-4bc6-b6e7-6e77d7a3fab1
-        source: Character Feature
-        sourceguid: 7033b569-fabc-4cab-a057-14a4e0aba2c7
-        domains:
-          CharacterFeature:7033b569-fabc-4cab-a057-14a4e0aba2c7: true
-          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-        description: The ashen hoarder can take two turns each round. They can’t take turns consecutively.
-      guid: 7033b569-fabc-4cab-a057-14a4e0aba2c7
-    monster_type: Ashen Hoarder
-    equipment:
-      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
-    name: Ashen Hoarder
-    stability: 3
-    innateAttacks: []
-    damage_taken: 0
+      damageType: holy
   tokenType: null
   bestiaryId: cf2a3688-0ae1-4215-93a3-67c1fd5be3c0
   summonerid: null
@@ -1737,6 +2311,6 @@ parentFolder: 8a34c030-e638-4768-9d5a-0f053333e73f
 artist: null
 ord: 0
 ctime: 1776189141781
-mtime: 1785704793638
+mtime: 1776189141781
 hidden: false
 id: cf2a3688-0ae1-4215-93a3-67c1fd5be3c0

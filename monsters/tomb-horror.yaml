@@ -74,31 +74,186 @@ info:
   updateid: 41827100-bd3b-4071-a7a5-35eaf30eb0b4
   properties:
     __typeName: monster
-    opportunityAttack: 5
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 2
+      apply: Damage Reduction
+      damageType: corruption
+    - __typeName: ResistanceEntry
+      dr: -3
+      apply: Damage Reduction
+      damageType: fire
+    role: Elite Brute
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: 50ccfcc0-6567-4983-b0b1-a2b75fafad43-925
+    skillRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Signature Ability
+      abilityType: none
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      modifiers: []
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor:
+          __usertype: LuaColor
+          h: 0.298749923706055
+          s: 1.00136160850525
+          v: 0.993264019489288
+          a: 1
+        saturation: 1
+      range: "5"
+      description: A target pulled adjacent to the tomb horror who has A<2 is grabbed. The tomb horror can have up to three targets grabbed at once.
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 7 corruption damage; pull 2
+        - 11 corruption damage; pull 4
+        - 14 corruption damage; pull 6
+        roll: 2d10 + 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: (caster.Distance(target) < 2 ) and (not Cast.PassesPotency(target, "A", 2))
+        rule: grabbed
+      repeatTargets: false
+      guid: 079effe6-c191-4582-bfcc-801fee7b97dd
+      persistence: []
+      numTargets: "2"
+      iconid: f181bd02-7f7d-466f-a70b-9d80f67e9df6
+      implementation: 4
+      sourceReference:
+        __typeName: SourceReference
+        docid: none
+      objectTarget: true
+      name: Ruinous Grasp
+      strain: []
+      targetType: target
+    - __typeName: ActivatedAbility
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      guid: c2c95e60-c736-4e76-b88d-6837f64e1ba5
+      abilityType: none
+      keywords:
+        Area: true
+        Weapon: true
+      modifiers: []
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      resourceNumber: "5"
+      range: "3"
+      description: A target restrained this way has damage weakness 2.
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 4 damage; M<0 restrained (save ends)
+        - 7 damage; M<1 restrained (save ends)
+        - 10 damage; M<2 restrained (save ends)
+        roll: 2d10 + Might or Agility
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        riderid: cd28e555-16ea-4bc9-8a1e-46f432ffb799
+        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
+      repeatTargets: false
+      persistence: []
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: "1"
+      implementation: 3
+      targetType: all
+      iconid: 5293ceb6-8d63-46c1-8d8f-26e8f319a41c
+      name: Vine Horror
+      strain: []
+      categorization: Signature Ability
+    - __typeName: ActivatedAbility
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      guid: f5911391-407e-4248-9396-8c51e0ed4bd5
+      abilityType: none
+      modifiers: []
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      targetType: self
+      description: The tomb horror shifts up to their speed and can rise vertically while they do. They must end this shift on a solid surface.
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          description: ""
+          behaviors: []
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          guid: 6ab52e47-44e3-4d91-8c96-1f4097dda08a
+          name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          targetType: self
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        applyto: caster
+        invokeOnCaster: true
+        standardAbilityParams:
+          distance: "<<movement speed>>"
+        abilityType: standard
+      repeatTargets: false
+      categorization: Signature Ability
+      range: 1
+      numTargets: "1"
+      implementation: 3
+      name: Latch Hook
+      castImmediately: true
+      persistence: []
+      strain: []
+      iconid: 8b978d57-497d-4cc8-ac3c-c0fd43756786
     keywords:
-      Plant: true
       Ruinborn: true
       Undead: true
-    ev: 16
-    creatureSize: "2"
-    skillProficiencies: []
-    import: []
+      Plant: true
+    inflictedConditions: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    monster_type: Tomb Horror
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    savingThrowRatings: []
+    titles: []
+    damage_taken: 0
+    movementSpeeds:
+      climb: 5
+    innateAttacks: []
+    groupid: 651b548f-11c4-46ae-b4c6-1a093cf72847
+    levelChoices: []
+    resources:
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        refreshid: 0931fc40-673b-4ef8-893b-0f63b2f08a19
+        used: 1
+    initiativeGrouping: 46030c18-92c2-4b8e-8a09-61a0b6cdda84
     attributes:
-      agl:
-        __typeName: CharacterAttribute
-        id: agl
-        baseValue: -2
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: 2
       prs:
         __typeName: CharacterAttribute
         id: prs
         baseValue: -3
-      dex:
+      agl:
         __typeName: CharacterAttribute
-        id: dex
+        id: agl
+        baseValue: -2
       inu:
         __typeName: CharacterAttribute
         id: inu
@@ -107,150 +262,188 @@ info:
         __typeName: CharacterAttribute
         id: rea
         baseValue: -3
-    skillRatings: []
-    equipment:
-      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
-    role: Elite Brute
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+    skillProficiencies: []
+    opportunityAttack: 5
+    minion: false
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        2ab05c92-cef8-47d7-a7cd-d5d8d2407e1f:
+          refreshid: 3d920b24-a322-4aca-b379-c10814e29b25
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        c983b3bb-5390-4af4-adf3-26f63e4f1dc3:
+          refreshid: 27f909ae-a7d5-4366-9570-1b8cea39d0ea
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        16196673-868d-4819-be51-c6c8deeedca9:
+          refreshid: 19cb5f3b-a76b-4ec3-a923-b4c3aeefb77e
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        0fc44090-2d87-40eb-8dd2-c3a53a360d86:
+          refreshid: b4a459b8-ae46-48b6-9e7b-b77106dbfc0e
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        3a311096-d192-42a9-b23c-22f27833c44c:
+          refreshid: ea1015f6-7403-47fc-8b4b-e23c4456e05a
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        7143afba-b56c-46c5-8529-802b7b3b046a:
+          refreshid: a37ef261-8ca3-4570-8d54-920557fe4128
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        4e73cb5f-ad23-4532-9012-ae634f1294da:
+          refreshid: 3b13ee90-17f2-42e6-95bf-249e9474fba8
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+        308457f4-4aa1-4546-b717-0434bdbc13e5:
+          refreshid: 2e9cf125-014a-43d3-8ac2-d8c9626ad083
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          set: 1/1
+          note: Ruinous Grasp
+    monster_category: Monster
+    cr: 2
+    max_hitpoints: 100
+    import: []
     characterFeatures:
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:3506469f-1972-4b8c-8bbd-7d087cb0b0b8: true
-      name: Ruinous Grasp
-      description: The tomb horror can have up to three targets grabbed at once.
-      implementation: 4
-      source: Character Feature
       modifiers:
       - __typeName: CharacterModifier
-        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
-        description: The tomb horror can have up to three targets grabbed at once.
-        behavior: attribute
         name: Ruinous Grasp
-        sourceguid: 3506469f-1972-4b8c-8bbd-7d087cb0b0b8
-        guid: 9a66001e-2e9d-4c4b-b33a-96dfe61e68ef
-        source: Character Feature
         domains:
           CharacterFeature:3506469f-1972-4b8c-8bbd-7d087cb0b0b8: true
+        guid: 9a66001e-2e9d-4c4b-b33a-96dfe61e68ef
         value: 3
-      guid: 3506469f-1972-4b8c-8bbd-7d087cb0b0b8
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:8ccd6d7e-9586-41cb-9fda-446770c3c18c: true
-      name: Curse for the Defilers
-      description: ""
-      implementation: 3
+        behavior: attribute
+        source: Character Feature
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        sourceguid: 3506469f-1972-4b8c-8bbd-7d087cb0b0b8
+        description: The tomb horror can have up to three targets grabbed at once.
       source: Character Feature
+      description: The tomb horror can have up to three targets grabbed at once.
+      domains:
+        CharacterFeature:3506469f-1972-4b8c-8bbd-7d087cb0b0b8: true
+      guid: 3506469f-1972-4b8c-8bbd-7d087cb0b0b8
+      name: Ruinous Grasp
+      implementation: 4
+    - __typeName: CharacterFeature
       modifiers:
       - __typeName: CharacterModifier
+        sourceguid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
+        behavior: triggerdisplay
+        source: Character Feature
+        name: Curse for the Defilers
         domains:
           CharacterFeature:8ccd6d7e-9586-41cb-9fda-446770c3c18c: true
+        guid: 3eceeca4-a830-4fa5-ac73-f173bde70bb0
+        description: ""
         ability:
           __typeName: TriggeredAbilityDisplay
-          distance: Ranged 5
           trigger: A creature or object deals damage to the tomb horror or a casket or relic within distance that the tomb horror was feeding on.
           keywords: []
-          effect: If the target has P<2 , they are slowed (save ends). The tomb horror then moves up to their speed toward the target.
           name: Curse for the Defilers
           target: Triggering creature or object
           guid: 352733eb-46d3-4b67-ad52-679544a46855
-        name: Curse for the Defilers
-        sourceguid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
-        guid: 3eceeca4-a830-4fa5-ac73-f173bde70bb0
-        behavior: triggerdisplay
-        source: Character Feature
-        description: ""
+          effect: If the target has P<2 , they are slowed (save ends). The tomb horror then moves up to their speed toward the target.
+          distance: Ranged 5
       - __typeName: CharacterModifier
+        sourceguid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
+        behavior: trigger
+        source: Character Feature
+        name: Curse for the Defilers
         domains:
           CharacterFeature:8ccd6d7e-9586-41cb-9fda-446770c3c18c: true
-        behavior: trigger
-        name: Curse for the Defilers
-        sourceguid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
         guid: 6c9f0828-4ebf-4bda-ae82-b84c68d20b21
         description: ""
-        source: Character Feature
         triggeredAbility:
           __typeName: TriggeredAbility
-          targetType: attacker
-          subject: selfandallies
-          repeatTargets: false
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          mandatory: false
           persistence: []
+          abilityType: none
+          triggerPrompt: A creature or object deals damage to the tomb horror or a casket or relic within distance that the tomb horror was feeding on.
           modifiers: []
-          description: If the target has P<2 , they are slowed (save ends). The tomb horror then moves up to their speed toward the target.
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          subject: selfandallies
           whenActive: combat
           range: 1
-          name: Curse for the Defilers
-          strain: []
-          mandatory: false
-          hasManualVersion: true
-          triggerPrompt: A creature or object deals damage to the tomb horror or a casket or relic within distance that the tomb horror was feeding on.
+          description: If the target has P<2 , they are slowed (save ends). The tomb horror then moves up to their speed toward the target.
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: P<2 slowed (save ends)
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-            invokeOnCaster: true
-            runOnController: true
-            abilityType: standard
-            promptText: The tomb horror moves up to their speed toward the target.
             customAbility:
               __typeName: ActivatedAbility
               range: 1
-              targetType: self
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-                hueshift: 0
+              description: ""
               behaviors: []
-              guid: 06b68ae2-d8c5-483f-915a-5d587073a49f
-              iconid: ui-icons/skills/1.png
-              name: Invoked Ability
               repeatTargets: false
               abilityType: none
               numTargets: "1"
+              guid: 06b68ae2-d8c5-483f-915a-5d587073a49f
+              name: Invoked Ability
+              iconid: ui-icons/skills/1.png
               modifiers: []
-              description: ""
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              targetType: self
+            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+            runOnController: true
             applyto: caster
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+            promptText: The tomb horror moves up to their speed toward the target.
+            invokeOnCaster: true
+            abilityType: standard
+          repeatTargets: false
+          hasManualVersion: true
           subjectRange: "5"
-          trigger: losehitpoints
+          targetType: attacker
           numTargets: "1"
-          abilityType: none
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
+          trigger: losehitpoints
           iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
           guid: 210e9b40-d316-4c06-8b90-179badd22914
-      guid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:f7089f53-c29f-4f9e-bd4f-cdb3753a29df: true
-      name: Enervating Horror
-      description: Any creature who starts their turn adjacent to the tomb horror takes 5 corruption damage, and if they have I<1, they are frightened until the end of their next turn.
-      implementation: 4
+          strain: []
+          name: Curse for the Defilers
       source: Character Feature
+      description: ""
+      domains:
+        CharacterFeature:8ccd6d7e-9586-41cb-9fda-446770c3c18c: true
+      guid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
+      name: Curse for the Defilers
+      implementation: 3
+    - __typeName: CharacterFeature
       modifiers:
       - __typeName: CharacterModifier
+        description: Any creature who starts their turn adjacent to the tomb horror takes 5 corruption damage, and if they have I<1, they are frightened until the end of their next turn.
         domains:
           CharacterFeature:f7089f53-c29f-4f9e-bd4f-cdb3753a29df: true
-        seq: 352f9b67-1853-4b87-8d2d-bcc77748696d
-        radius: "1"
-        behavior: aura
-        name: Enervating Horror
-        description: Any creature who starts their turn adjacent to the tomb horror takes 5 corruption damage, and if they have I<1, they are frightened until the end of their next turn.
         aura:
           __typeName: Aura
-          creatureFilter: ""
-          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
           objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
-          triggers: []
           applyto: enemies
+          triggers: []
+          guid: 6c45b0b1-9d81-4ff2-93f1-c061e05085da
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
           modifiers:
           - __typeName: CharacterModifier
             behavior: trigger
@@ -261,252 +454,59 @@ info:
             name: Aura
             triggeredAbility:
               __typeName: TriggeredAbility
-              description: ""
-              range: 1
-              modifiers: []
+              numTargets: "1"
               strain: []
-              targetType: self
-              guid: 668687d4-2581-46ac-9d82-7edeb33a04e8
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-                hueshift: 0
+              range: 1
+              description: ""
               behaviors:
               - __typeName: ActivatedAbilityDamageBehavior
+                applyto: targets
                 damageType: corruption
                 roll: "5"
-                applyto: targets
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                 rule: I<1 frightened (EoT)
               - __typeName: ActivatedAbilityFloatTextBehavior
                 color: "#ffffffff"
                 text: Enervating Horror!
-              repeatTargets: false
-              castImmediately: true
+              persistence: []
               name: Enervating Horror
-              numTargets: "1"
               abilityType: none
               trigger: beginturn
+              castImmediately: true
+              repeatTargets: false
+              guid: 668687d4-2581-46ac-9d82-7edeb33a04e8
               iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-              persistence: []
-          guid: 6c45b0b1-9d81-4ff2-93f1-c061e05085da
-        guid: 7260ed3b-7175-4667-a8f0-89dcb4567031
-        source: Character Feature
-        sourceguid: f7089f53-c29f-4f9e-bd4f-cdb3753a29df
-      guid: f7089f53-c29f-4f9e-bd4f-cdb3753a29df
-    titles: []
-    availableTriggers: []
-    innateAttacks: []
-    walkingSpeed: 5
-    levelChoices: []
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
-      guid: 50ccfcc0-6567-4983-b0b1-a2b75fafad43-925
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      objectTarget: true
-      repeatTargets: false
-      modifiers: []
-      description: A target pulled adjacent to the tomb horror who has A<2 is grabbed. The tomb horror can have up to three targets grabbed at once.
-      guid: 079effe6-c191-4582-bfcc-801fee7b97dd
-      range: "5"
-      implementation: 4
-      strain: []
-      numTargets: "2"
-      targetType: target
-      display:
-        bgcolor:
-          __usertype: LuaColor
-          h: 0.298749923706055
-          s: 1.00136160850525
-          v: 0.993264019489288
-          a: 1
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
-        tiers:
-        - 7 corruption damage; pull 2
-        - 11 corruption damage; pull 4
-        - 14 corruption damage; pull 6
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: grabbed
-        filterTarget: (caster.Distance(target) < 2 ) and (not Cast.PassesPotency(target, "A", 2))
-      sourceReference:
-        __typeName: SourceReference
-        docid: none
-      name: Ruinous Grasp
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Melee: true
-        Weapon: true
-        Strike: true
-      abilityType: none
-      categorization: Signature Ability
-      iconid: f181bd02-7f7d-466f-a70b-9d80f67e9df6
-      persistence: []
-    - __typeName: ActivatedAbility
-      resourceNumber: "5"
-      keywords:
-        Weapon: true
-        Area: true
-      repeatTargets: false
-      modifiers: []
-      description: A target restrained this way has damage weakness 2.
-      range: "3"
-      implementation: 3
-      strain: []
-      guid: c2c95e60-c736-4e76-b88d-6837f64e1ba5
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might or Agility
-        tiers:
-        - 4 damage; M<0 restrained (save ends)
-        - 7 damage; M<1 restrained (save ends)
-        - 10 damage; M<2 restrained (save ends)
-      - __typeName: ActivatedAbilityApplyRidersBehavior
-        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
-        riderid: cd28e555-16ea-4bc9-8a1e-46f432ffb799
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      name: Vine Horror
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      targetType: all
-      abilityType: none
-      numTargets: "1"
-      iconid: 5293ceb6-8d63-46c1-8d8f-26e8f319a41c
-      persistence: []
-    - __typeName: ActivatedAbility
-      targetType: self
-      castImmediately: true
-      repeatTargets: false
-      modifiers: []
-      description: The tomb horror shifts up to their speed and can rise vertically while they do. They must end this shift on a solid surface.
-      range: 1
-      implementation: 3
-      strain: []
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbilityParams:
-          distance: "<<movement speed>>"
-        abilityType: standard
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          targetType: self
+              modifiers: []
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              targetType: self
           display:
-            bgcolor: "#ffffffff"
             brightness: 1
-            saturation: 1
             hueshift: 0
-          behaviors: []
-          guid: 6ab52e47-44e3-4d91-8c96-1f4097dda08a
-          iconid: ui-icons/skills/1.png
-          name: Invoked Ability
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          description: ""
-        applyto: caster
-        invokeOnCaster: true
-      guid: f5911391-407e-4248-9396-8c51e0ed4bd5
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      name: Latch Hook
-      numTargets: "1"
-      abilityType: none
-      categorization: Signature Ability
-      iconid: 8b978d57-497d-4cc8-ac3c-c0fd43756786
-      persistence: []
-    minion: false
-    movementSpeeds:
-      climb: 5
-    notes:
-    - title: Monster Notes
-      text: ""
-    groupid: 651b548f-11c4-46ae-b4c6-1a093cf72847
-    resources:
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 0931fc40-673b-4ef8-893b-0f63b2f08a19
-    resistances:
-    - __typeName: ResistanceEntry
-      damageType: corruption
-      dr: 2
-      apply: Damage Reduction
-    - __typeName: ResistanceEntry
-      damageType: fire
-      dr: -3
-      apply: Damage Reduction
-    max_hitpoints: 100
-    monster_category: Monster
-    savingThrowRatings: []
-    monster_type: Tomb Horror
-    cr: 2
-    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
-      __typeName: StatHistory
-      entries:
-        7143afba-b56c-46c5-8529-802b7b3b046a:
-          note: Ruinous Grasp
-          refreshid: a37ef261-8ca3-4570-8d54-920557fe4128
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        4e73cb5f-ad23-4532-9012-ae634f1294da:
-          note: Ruinous Grasp
-          refreshid: 3b13ee90-17f2-42e6-95bf-249e9474fba8
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        308457f4-4aa1-4546-b717-0434bdbc13e5:
-          note: Ruinous Grasp
-          refreshid: 2e9cf125-014a-43d3-8ac2-d8c9626ad083
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        c983b3bb-5390-4af4-adf3-26f63e4f1dc3:
-          note: Ruinous Grasp
-          refreshid: 27f909ae-a7d5-4366-9570-1b8cea39d0ea
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        0fc44090-2d87-40eb-8dd2-c3a53a360d86:
-          note: Ruinous Grasp
-          refreshid: b4a459b8-ae46-48b6-9e7b-b77106dbfc0e
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        16196673-868d-4819-be51-c6c8deeedca9:
-          note: Ruinous Grasp
-          refreshid: 19cb5f3b-a76b-4ec3-a923-b4c3aeefb77e
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        2ab05c92-cef8-47d7-a7cd-d5d8d2407e1f:
-          note: Ruinous Grasp
-          refreshid: 3d920b24-a322-4aca-b379-c10814e29b25
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-        3a311096-d192-42a9-b23c-22f27833c44c:
-          note: Ruinous Grasp
-          refreshid: ea1015f6-7403-47fc-8b4b-e23c4456e05a
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-    initiativeGrouping: 46030c18-92c2-4b8e-8a09-61a0b6cdda84
-    inflictedConditions: []
-    damage_taken: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          creatureFilter: ""
+        behavior: aura
+        source: Character Feature
+        radius: "1"
+        seq: 352f9b67-1853-4b87-8d2d-bcc77748696d
+        sourceguid: f7089f53-c29f-4f9e-bd4f-cdb3753a29df
+        name: Enervating Horror
+        guid: 7260ed3b-7175-4667-a8f0-89dcb4567031
+      source: Character Feature
+      description: Any creature who starts their turn adjacent to the tomb horror takes 5 corruption damage, and if they have I<1, they are frightened until the end of their next turn.
+      domains:
+        CharacterFeature:f7089f53-c29f-4f9e-bd4f-cdb3753a29df: true
+      guid: f7089f53-c29f-4f9e-bd4f-cdb3753a29df
+      name: Enervating Horror
+      implementation: 3
+    walkingSpeed: 5
+    ev: 16
+    availableTriggers: []
+    creatureSize: "2"
   tokenType: null
   bestiaryId: 9cd9baa6-8399-42a7-9573-b6ebd6369a47
   summonerid: null
@@ -519,6 +519,6 @@ parentFolder: d889803f-b4db-46a1-b41a-58e71bd2b2fb
 artist: null
 ord: 4
 ctime: 1758378363193
-mtime: 1785708284201
+mtime: 1785429747241
 hidden: false
 id: 9cd9baa6-8399-42a7-9573-b6ebd6369a47

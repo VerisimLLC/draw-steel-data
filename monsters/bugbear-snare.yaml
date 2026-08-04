@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -50,95 +51,50 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: 77a5e596-8b80-418b-89ec-45c5ddfb714e
+  updateid: 923b3911-92c3-49cd-8db1-a0c1fb1608c6
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: 7107257c-0c0d-4d78-bca4-22b70dd9bb53
-      domains:
-        CharacterFeature:7107257c-0c0d-4d78-bca4-22b70dd9bb53: true
-      description: This feature determines if the bugbear is hidden at the beginning of the creatures turn, and if yes, applies an ongoing effect which interacts with their Signature ability.
-      source: Character Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        name: Determine if Bugbear hidden
-        guid: 842725f0-9056-4720-8107-b819a4136063
-        sourceguid: 7107257c-0c0d-4d78-bca4-22b70dd9bb53
-        domains:
-          CharacterFeature:7107257c-0c0d-4d78-bca4-22b70dd9bb53: true
-        description: This feature determines if the bugbear is hidden at the beginning of the creatures turn, and if yes, applies an ongoing effect which interacts with their Signature ability.
-        source: Character Feature
-        behavior: trigger
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          strain: []
-          targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: 0
-            ongoingEffect: ed968cd9-4d8a-4916-9ce1-857e58ddfdd8
-            ongoingEffectCustom: ed968cd9-4d8a-4916-9ce1-857e58ddfdd8
-          persistence: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          reasonedFilters: []
-          iconid: ui-icons/skills/1.png
-          guid: b8cc75f3-0931-41b3-96da-971f63af34e5
-          whenActive: combat
-          repeatTargets: false
-          trigger: beginturn
-          description: ""
-          range: 1
-          name: Determines if Bugbear Hidden
-      name: Determine if Bugbear hidden
-    inflictedConditions: []
-    walkingSpeed: 6
-    opportunityAttack: 3
-    damage_taken: 0
-    max_hitpoints: 9
-    skillRatings: []
-    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
-    resources: []
+    levelChoices: []
+    notes:
+    - title: Monster Notes
+      text: ""
+    role: Minion Ambusher
+    titles: []
+    movementSpeeds: []
+    max_hitpoints_roll: "9"
+    monster_category: Monster
     traitNames: []
-    minion: true
-    equipment: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      strain: []
-      targetType: target
-      flavor: ""
-      categorization: Signature Ability
-      keywords:
-        Strike: true
-        Charge: true
-        Melee: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
+      implementation: 4
+      range: 1
       abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
       guid: 44e0b686-a076-41f7-afe5-ca99f217af8e
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Weapon: true
+        Strike: true
+        Melee: true
+        Charge: true
       sourceReference:
         __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 55
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      strain: []
       repeatTargets: false
+      name: Cut 'Em Low!
+      targetType: target
       description: If the snare started their turn hidden from the target, the target is automatically grabbed. A target grabbed this way or already grabbed by the snare can be vertical pushed up to 4 squares.
+      categorization: Signature Ability
+      flavor: ""
+      numTargets: 1
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+        hueshift: 0
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modifiers: []
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -147,73 +103,63 @@ info:
         - 6 damage
         - 7 damage; A<3 slowed (save ends)
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        filterTarget: Caster.Ongoing Effects has "Started their turn Hidden"
-        abilityType: custom
-        namedAbility: grab
         customAbility:
           __typeName: ActivatedAbility
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
           numTargets: "1"
           strain: []
+          repeatTargets: false
+          name: Invoked Ability
           targetType: self
+          description: ""
+          guid: b3adc0b5-3040-4582-a5f0-95a80186a788
+          iconid: ui-icons/skills/1.png
           modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          abilityType: none
+          range: 1
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            filterTarget: caster.Ongoing Effects has "Started their turn Hidden"
-            ongoingEffectSource: specific
             ongoingEffect: db8d0b4f-28e4-456f-bfd2-3198ae3a46eb
+            ongoingEffectSource: specific
+            filterTarget: caster.Ongoing Effects has "Started their turn Hidden"
             ongoingEffectCustom: false
-          iconid: ui-icons/skills/1.png
-          guid: b3adc0b5-3040-4582-a5f0-95a80186a788
-          description: ""
-          repeatTargets: false
-          range: 1
-          name: Invoked Ability
+        filterTarget: Caster.Ongoing Effects has "Started their turn Hidden"
+        abilityType: custom
         applyto: targets
-      range: 1
-      name: Cut 'Em Low!
-    max_hitpoints_roll: "9"
-    levelChoices: []
-    monster_type: Bugbear Snare
-    stability: 2
-    titles: []
-    notes:
-    - title: Monster Notes
-      text: ""
-    keywords:
-      Fey: true
-      Humanoid: true
-      Goblin: true
-      Bugbear: true
+        namedAbility: grab
+    skillRatings: []
+    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
+    max_hitpoints: 9
+    walkingSpeed: 6
+    cr: 5
     ev: 7
-    movementSpeeds: []
+    withCaptain: +3 bonus to speed
+    opportunityAttack: 3
+    stability: 2
+    inflictedConditions: []
+    equipment: []
+    damage_taken: 0
     attributes:
-      inu:
-        id: inu
+      rea:
+        id: rea
         baseValue: 0
       agl:
         id: agl
         baseValue: 3
-      prs:
-        id: prs
-        baseValue: 1
       mgt:
         id: mgt
         baseValue: 2
-      rea:
-        id: rea
+      inu:
+        id: inu
         baseValue: 0
-    innateAttacks: []
-    resistances: []
-    withCaptain: +3 bonus to speed
-    role: Minion Ambusher
+      prs:
+        id: prs
+        baseValue: 1
     import:
-      type: mcdm
       data: |
         Bugbear Snare	Level 5 Minion Ambusher
         Bugbear, Goblin, Humanoid, Fey	EV 7 for four minions
@@ -230,10 +176,65 @@ info:
         <b>Effect</b> The target is grabbed if the snare started their turn hidden from them. A target grabbed by the snare can be immediately vertically pushed 4.
 
         RETAINER
-    savingThrowRatings: []
+      type: mcdm
+    resources: []
+    minion: true
+    innateAttacks: []
     creatureSize: 1L
-    monster_category: Monster
-    cr: 5
+    savingThrowRatings: []
+    monster_type: Bugbear Snare
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: This feature determines if the bugbear is hidden at the beginning of the creatures turn, and if yes, applies an ongoing effect which interacts with their Signature ability.
+      guid: 7107257c-0c0d-4d78-bca4-22b70dd9bb53
+      domains:
+        CharacterFeature:7107257c-0c0d-4d78-bca4-22b70dd9bb53: true
+      source: Character Feature
+      implementation: 4
+      name: Determine if Bugbear hidden
+      modifiers:
+      - __typeName: CharacterModifier
+        description: This feature determines if the bugbear is hidden at the beginning of the creatures turn, and if yes, applies an ongoing effect which interacts with their Signature ability.
+        guid: 842725f0-9056-4720-8107-b819a4136063
+        sourceguid: 7107257c-0c0d-4d78-bca4-22b70dd9bb53
+        domains:
+          CharacterFeature:7107257c-0c0d-4d78-bca4-22b70dd9bb53: true
+        source: Character Feature
+        behavior: trigger
+        name: Determine if Bugbear hidden
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          numTargets: "1"
+          range: 1
+          abilityType: none
+          guid: b8cc75f3-0931-41b3-96da-971f63af34e5
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          reasonedFilters: []
+          whenActive: combat
+          repeatTargets: false
+          name: Determines if Bugbear Hidden
+          targetType: self
+          description: ""
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: ed968cd9-4d8a-4916-9ce1-857e58ddfdd8
+            ongoingEffectCustom: ed968cd9-4d8a-4916-9ce1-857e58ddfdd8
+            duration: 0
+          trigger: beginturn
+          strain: []
+    keywords:
+      Humanoid: true
+      Fey: true
+      Goblin: true
+      Bugbear: true
+    resistances: []
   tokenType: null
   bestiaryId: 28534a67-58de-4df5-8097-1e96e7087b71
   summonerid: null
@@ -246,6 +247,6 @@ parentFolder: 48e8f60e-8ed1-400a-83c2-e4170481f4b4
 artist: null
 ord: 0
 ctime: 1741590233110
-mtime: 1775375090756
+mtime: 1785429746933
 hidden: false
 id: 28534a67-58de-4df5-8097-1e96e7087b71

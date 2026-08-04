@@ -54,118 +54,425 @@ info:
   updateid: 569f12a4-f4bb-480d-b55a-ec032c90df54
   properties:
     __typeName: monster
-    opportunityAttack: 3
-    keywords:
-      Orc: true
-      Humanoid: true
-    damage_taken: 0
-    ev: 6
-    inflictedConditions: []
-    titles: []
-    creatureSize: 1L
+    resistances: []
+    groupid: 0ae58107-0b97-4f12-9234-b35fa95de40b
+    role: Platoon Hexer
+    skillRatings: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      guid: d11b225d-907a-461d-86e0-0b7c3ef5a00c
+      abilityType: none
       keywords:
+        Strike: true
         Melee: true
         Weapon: true
-        Strike: true
-      numTargets: 1
+      effectImplemented: false
+      modifiers: []
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
       persistence: []
+      description: A hooked target can't move more than 3 squares away from the chainlock's original position until the condition ends.
+      targetType: target
+      name: Hook and Chain
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
         tiers:
         - 5 damage; pull 1; M<0 hooked (save ends)
         - 7 damage; pull 2; M<1 hooked (save ends)
         - 9 damage; pull 3; M<2 hooked (save ends)
+        roll: 2d10 + 2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
+        filterTarget: Target.Might < 0
         tiersSelected:
         - 1
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         duration: save_ends
-        filterTarget: Target.Might < 0
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         duration: save_ends
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
+        guid: 475b49be-ef7a-4778-8f1c-148935bb6740
         filterTarget: Target.Might < 1
         tiersSelected:
         - 2
-        guid: 475b49be-ef7a-4778-8f1c-148935bb6740
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         duration: save_ends
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
+        guid: 926b9ee4-8036-4ed7-b6d7-ed4a5ea21d8e
         filterTarget: Target.Might < 2
         tiersSelected:
         - 3
-        guid: 926b9ee4-8036-4ed7-b6d7-ed4a5ea21d8e
       - __typeName: ActivatedAbilityCreateObjectBehavior
-        applyto: caster
         objectid: 758c1148-3030-41df-aa8b-d24b942b395b
-      sourceReference:
-        __typeName: SourceReference
-        page: 217
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      modifiers: []
-      description: A hooked target can't move more than 3 squares away from the chainlock's original position until the condition ends.
-      effectImplemented: false
-      range: 3
-      implementation: 2
-      strain: []
-      targetType: target
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      implementationDetails: Hooked target's movement restriction uses reminder text to prompt the player's movement.
+        applyto: caster
       repeatTargets: false
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      name: Hook and Chain
-      categorization: Signature Ability
-      abilityType: none
       objectTarget: true
       iconid: ui-icons/skills/1.png
-      guid: d11b225d-907a-461d-86e0-0b7c3ef5a00c
-    - __typeName: ActivatedAbility
-      resourceNumber: 3
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      categorization: Heroic Ability
-      modifiers: []
-      description: ""
-      range: 5
-      implementation: 4
+      implementationDetails: Hooked target's movement restriction uses reminder text to prompt the player's movement.
       numTargets: 1
+      implementation: 2
+      range: 3
       flavor: ""
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 217
+      strain: []
+      categorization: Signature Ability
+    - __typeName: ActivatedAbility
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Heroic Ability
+      abilityType: none
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      modifiers: []
       display:
-        bgcolor: "#ffffffff"
         brightness: 1
-        saturation: 1
         hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      resourceNumber: 3
+      range: 5
+      description: ""
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Agility
         tiers:
         - 5 damage; A<0 slowed (save ends)
         - 7 damage; A<1 slowed (save ends)
         - 9 damage; prone; A<2 slowed (save ends)
+        roll: 2d10 + Agility
       repeatTargets: false
-      keywords:
-        Strike: true
-        Weapon: true
-        Ranged: true
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      targetType: target
-      abilityType: none
-      name: Heavy Crossbolt
-      iconid: ui-icons/skills/1.png
       guid: 4841d5c9-907c-404c-9ae1-31a165e2af3b
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Ranged: true
+        Weapon: true
+        Strike: true
+      numTargets: 1
+      targetType: target
+      flavor: ""
+      name: Heavy Crossbolt
+    characterFeatures:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        description: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance towards the chainlock.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          description: ""
+          behaviors: []
+          guid: aa20b0b5-4b2d-4b17-b19a-1427616e3dee
+          numTargets: "1"
+          abilityType: none
+          trigger: forcemove
+          name: Chain Link
+          repeatTargets: false
+          conditionFormula: ""
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          targetType: self
+        source: Trait
+        name: Chain Link
+        domains:
+          CharacterFeature:57d27e3f-af22-4a65-bd90-051389ef815c: true
+        guid: 8d8e12b8-afc1-4737-91e1-e5ce11314261
+        sourceguid: 57d27e3f-af22-4a65-bd90-051389ef815c
+        behavior: trigger
+      source: Trait
+      description: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance towards the chainlock.
+      domains:
+        CharacterFeature:57d27e3f-af22-4a65-bd90-051389ef815c: true
+      guid: 57d27e3f-af22-4a65-bd90-051389ef815c
+      name: Chain Link
+      implementation: 3
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 28bea37b-c3f2-4153-b5c2-ceb5779d112e
+        behavior: trigger
+        source: Trait
+        name: Bloodfire Burn
+        domains:
+          CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
+          CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
+        guid: 2941f416-fd64-49d6-94b6-2ca6cf0a916f
+        description: If the Chainlock's Stamina drops to 0, they can make a free strike before dying.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          strain: []
+          guid: ec4e9bad-c0f4-4d1a-8e6c-e5b45e979402
+          range: 1
+          description: ""
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              targetType: target
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              range: 1
+              description: ""
+              behaviors:
+              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+                modifier:
+                  __typeName: CharacterModifier
+                  name: Modify Attack
+                  guid: 53db4fee-5e88-4994-b3f0-71d57cab304e
+                  filterAbility: Ability.Free Strike
+                  behavior: modifyability
+                  source: ""
+                  cannotModifyAction: true
+                  ability:
+                    __typeName: ActivatedAbility
+                    abilityModification: true
+                    range: 1
+                    description: ""
+                    behaviors: []
+                    guid: 57963f47-3a00-4e23-8172-aeccec133902
+                    abilityType: none
+                    numTargets: "1"
+                    name: New Ability
+                    repeatTargets: false
+                    iconid: ui-icons/skills/1.png
+                    modifiers: []
+                    display:
+                      brightness: 1
+                      hueshift: 0
+                      bgcolor: "#ffffffff"
+                      saturation: 1
+                    targetType: self
+                  description: ""
+                  attributes: []
+              persistence: []
+              name: Invoked Ability
+              abilityType: none
+              numTargets: "1"
+              iconid: ui-icons/skills/1.png
+              guid: 02dc0e9a-8bc2-4526-8f83-3135121810b2
+              repeatTargets: false
+              objectTarget: false
+              modifiers: []
+              strain: []
+              targetTextOverride: ""
+            promptText: select creature to free strike
+            applyto: caster
+            invokeOnCaster: true
+          persistence: []
+          name: Bloodfire Burn
+          abilityType: none
+          trigger: zerohitpoints
+          numTargets: "1"
+          domains:
+            CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
+            CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          targetType: self
+      source: Trait
+      description: If the Chainlock's Stamina drops to 0, they can make a free strike before dying.
+      domains:
+        CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
+        CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
+      guid: 32508bc0-ce34-4557-b069-07e7bb9b0a11
+      name: Bloodfire Burn
+      implementation: 3
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10
+        behavior: trigger
+        source: Trait
+        name: Relentless
+        domains:
+          CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+          CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
+        guid: 3477e750-55d6-4746-9340-39c8c208d184
+        description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          persistence: []
+          abilityType: none
+          modifiers: []
+          display:
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          whenActive: combat
+          range: 1
+          description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              strain: []
+              sourceReference:
+                __typeName: SourceReference
+                docid: cc66844a-04d0-49a0-8687-65ef83b15363
+                page: 218
+              range: 1
+              description: ""
+              behaviors:
+              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+                modifier:
+                  __typeName: CharacterModifier
+                  cannotModifyAction: true
+                  modifyDescription: ""
+                  guid: 979ccd6f-ffff-40a2-8ffc-7683342a6781
+                  filterAbility: Ability.Free Strike
+                  ability:
+                    __typeName: ActivatedAbility
+                    abilityModification: true
+                    range: 1
+                    description: ""
+                    behaviors:
+                    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                      customAbility:
+                        __typeName: ActivatedAbility
+                        iconid: ui-icons/skills/1.png
+                        strain: []
+                        range: 1
+                        description: ""
+                        behaviors:
+                        - __typeName: ActivatedAbilityHealBehavior
+                          roll: "1"
+                          applyto: caster
+                        persistence: []
+                        name: Relentless - Heal if target of free strike dies
+                        abilityType: none
+                        repeatTargets: false
+                        guid: 1834fef4-3a9f-40b5-bda5-97def51739ae
+                        implementation: 3
+                        preDescription: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc lives and drops to 1 stamina instead.
+                        numTargets: "1"
+                        modifiers: []
+                        display:
+                          brightness: 1
+                          hueshift: 0
+                          bgcolor: "#ffffffff"
+                          saturation: 1
+                        targetType: self
+                      filterTarget: target.stamina <= 0
+                      invokeOnCaster: true
+                      abilityType: custom
+                    guid: ea0fc39e-17ed-420d-a171-c9eb95321e09
+                    abilityType: none
+                    strain: []
+                    name: New Ability
+                    repeatTargets: false
+                    numTargets: "1"
+                    iconid: ui-icons/skills/1.png
+                    modifiers: []
+                    display:
+                      brightness: 1
+                      hueshift: 0
+                      bgcolor: "#ffffffff"
+                      saturation: 1
+                    targetType: self
+                  source: ""
+                  attributes: []
+                  description: ""
+                  behavior: modifyability
+                  name: Modify Attack
+              persistence: []
+              name: Relentless Free Strike
+              abilityType: none
+              numTargets: "1"
+              guid: 47559b07-671d-432d-99fe-9ef14eba5b32
+              implementation: 3
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              display:
+                brightness: 1
+                hueshift: 0
+                bgcolor: "#ffffffff"
+                saturation: 1
+              targetType: self
+            promptText: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc  lives and drops to 1 stamina instead.
+            applyto: caster
+            invokeOnCaster: true
+          repeatTargets: false
+          trigger: zerohitpoints
+          targetType: self
+          iconid: ui-icons/skills/1.png
+          domains:
+            CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+            CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
+          numTargets: "1"
+          name: Relentless
+          strain: []
+          guid: 9e4c247e-2572-4e3f-93ac-532b69a3350c
+      implementation: 3
+      description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+      domains:
+        CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+        CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
+      guid: 6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10
+      source: Trait
+      name: Relentless
+    resources: []
+    keywords:
+      Orc: true
+      Humanoid: true
+    inflictedConditions: []
+    innateAttacks: []
+    creatureSize: 1L
+    opportunityAttack: 3
+    minion: false
+    max_hitpoints: 20
+    monster_type: Orc Chainlock
+    equipment: []
+    savingThrowRatings: []
+    titles: []
+    walkingSpeed: 5
+    traitNames: []
+    attributes:
+      prs:
+        id: prs
+        baseValue: 0
+      agl:
+        id: agl
+        baseValue: 2
+      inu:
+        id: inu
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+    cr: 1
+    max_hitpoints_roll: "20"
+    damage_taken: 0
     stability: 2
+    movementSpeeds: []
     import:
-      override: true
       data: |+
         Orc Chainlock	Level 1 Platoon Hexer
         Humanoid, Orc	EV 6
@@ -195,317 +502,10 @@ info:
         If the chainlock's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the chainlock lives and their Stamina is reduced to 1 instead.
 
       type: mcdm
-    attributes:
-      agl:
-        id: agl
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 2
-      prs:
-        id: prs
-        baseValue: 0
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        id: inu
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: 1
-    skillRatings: []
-    equipment: []
-    cr: 1
-    minion: false
-    savingThrowRatings: []
+      override: true
+    ev: 6
     monster_category: Monster
-    movementSpeeds: []
-    groupid: 0ae58107-0b97-4f12-9234-b35fa95de40b
-    resources: []
-    resistances: []
-    max_hitpoints: 20
-    role: Platoon Hexer
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:57d27e3f-af22-4a65-bd90-051389ef815c: true
-      name: Chain Link
-      description: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance towards the chainlock.
-      implementation: 1
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:57d27e3f-af22-4a65-bd90-051389ef815c: true
-        behavior: trigger
-        name: Chain Link
-        guid: 8d8e12b8-afc1-4737-91e1-e5ce11314261
-        description: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance towards the chainlock.
-        source: Trait
-        sourceguid: 57d27e3f-af22-4a65-bd90-051389ef815c
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          range: 1
-          targetType: self
-          guid: aa20b0b5-4b2d-4b17-b19a-1427616e3dee
-          iconid: ui-icons/skills/1.png
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
-          behaviors: []
-          repeatTargets: false
-          numTargets: "1"
-          name: Chain Link
-          modifiers: []
-          abilityType: none
-          trigger: forcemove
-          conditionFormula: ""
-          description: ""
-      guid: 57d27e3f-af22-4a65-bd90-051389ef815c
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
-        CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
-      name: Bloodfire Burn
-      description: If the Chainlock's Stamina drops to 0, they can make a free strike before dying.
-      implementation: 4
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
-          CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
-        behavior: trigger
-        name: Bloodfire Burn
-        sourceguid: 28bea37b-c3f2-4153-b5c2-ceb5779d112e
-        guid: 2941f416-fd64-49d6-94b6-2ca6cf0a916f
-        description: If the Chainlock's Stamina drops to 0, they can make a free strike before dying.
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          domains:
-            CharacterFeature:28bea37b-c3f2-4153-b5c2-ceb5779d112e: true
-            CharacterFeature:32508bc0-ce34-4557-b069-07e7bb9b0a11: true
-          range: 1
-          description: ""
-          targetType: self
-          modifiers: []
-          strain: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: select creature to free strike
-            applyto: caster
-            invokeOnCaster: true
-            customAbility:
-              __typeName: ActivatedAbility
-              guid: 02dc0e9a-8bc2-4526-8f83-3135121810b2
-              range: 1
-              modifiers: []
-              targetType: target
-              strain: []
-              objectTarget: false
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-                hueshift: 0
-              behaviors:
-              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-                modifier:
-                  __typeName: CharacterModifier
-                  filterAbility: Ability.Free Strike
-                  cannotModifyAction: true
-                  behavior: modifyability
-                  source: ""
-                  description: ""
-                  attributes: []
-                  name: Modify Attack
-                  ability:
-                    __typeName: ActivatedAbility
-                    range: 1
-                    abilityModification: true
-                    targetType: self
-                    display:
-                      bgcolor: "#ffffffff"
-                      brightness: 1
-                      saturation: 1
-                      hueshift: 0
-                    behaviors: []
-                    guid: 57963f47-3a00-4e23-8172-aeccec133902
-                    iconid: ui-icons/skills/1.png
-                    numTargets: "1"
-                    name: New Ability
-                    abilityType: none
-                    repeatTargets: false
-                    modifiers: []
-                    description: ""
-                  guid: 53db4fee-5e88-4994-b3f0-71d57cab304e
-              numTargets: "1"
-              repeatTargets: false
-              name: Invoked Ability
-              targetTextOverride: ""
-              abilityType: none
-              persistence: []
-              iconid: ui-icons/skills/1.png
-              description: ""
-          guid: ec4e9bad-c0f4-4d1a-8e6c-e5b45e979402
-          trigger: zerohitpoints
-          name: Bloodfire Burn
-          numTargets: "1"
-          abilityType: none
-          repeatTargets: false
-          iconid: ui-icons/skills/1.png
-          persistence: []
-      guid: 32508bc0-ce34-4557-b069-07e7bb9b0a11
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-        CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
-      source: Trait
-      description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-      name: Relentless
-      implementation: 3
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-          CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
-        behavior: trigger
-        name: Relentless
-        sourceguid: 6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10
-        guid: 3477e750-55d6-4746-9340-39c8c208d184
-        description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          targetType: self
-          repeatTargets: false
-          modifiers: []
-          description: If the dying orc's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-          whenActive: combat
-          range: 1
-          strain: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc  lives and drops to 1 stamina instead.
-            applyto: caster
-            invokeOnCaster: true
-            customAbility:
-              __typeName: ActivatedAbility
-              guid: 47559b07-671d-432d-99fe-9ef14eba5b32
-              range: 1
-              implementation: 3
-              sourceReference:
-                __typeName: SourceReference
-                page: 218
-                docid: cc66844a-04d0-49a0-8687-65ef83b15363
-              modifiers: []
-              targetType: self
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-                hueshift: 0
-              behaviors:
-              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-                modifier:
-                  __typeName: CharacterModifier
-                  filterAbility: Ability.Free Strike
-                  cannotModifyAction: true
-                  description: ""
-                  ability:
-                    __typeName: ActivatedAbility
-                    range: 1
-                    abilityModification: true
-                    targetType: self
-                    guid: ea0fc39e-17ed-420d-a171-c9eb95321e09
-                    display:
-                      bgcolor: "#ffffffff"
-                      brightness: 1
-                      saturation: 1
-                      hueshift: 0
-                    behaviors:
-                    - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                      abilityType: custom
-                      customAbility:
-                        __typeName: ActivatedAbility
-                        guid: 1834fef4-3a9f-40b5-bda5-97def51739ae
-                        range: 1
-                        implementation: 3
-                        strain: []
-                        modifiers: []
-                        targetType: self
-                        display:
-                          bgcolor: "#ffffffff"
-                          brightness: 1
-                          saturation: 1
-                          hueshift: 0
-                        behaviors:
-                        - __typeName: ActivatedAbilityHealBehavior
-                          applyto: caster
-                          roll: "1"
-                        numTargets: "1"
-                        persistence: []
-                        name: Relentless - Heal if target of free strike dies
-                        repeatTargets: false
-                        abilityType: none
-                        preDescription: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc lives and drops to 1 stamina instead.
-                        iconid: ui-icons/skills/1.png
-                        description: ""
-                      invokeOnCaster: true
-                      filterTarget: target.stamina <= 0
-                    modifiers: []
-                    repeatTargets: false
-                    name: New Ability
-                    strain: []
-                    abilityType: none
-                    numTargets: "1"
-                    iconid: ui-icons/skills/1.png
-                    description: ""
-                  source: ""
-                  name: Modify Attack
-                  attributes: []
-                  modifyDescription: ""
-                  behavior: modifyability
-                  guid: 979ccd6f-ffff-40a2-8ffc-7683342a6781
-              strain: []
-              persistence: []
-              name: Relentless Free Strike
-              numTargets: "1"
-              abilityType: none
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              description: ""
-          guid: 9e4c247e-2572-4e3f-93ac-532b69a3350c
-          numTargets: "1"
-          name: Relentless
-          domains:
-            CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-            CharacterFeature:6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10: true
-          abilityType: none
-          trigger: zerohitpoints
-          iconid: ui-icons/skills/1.png
-          persistence: []
-      guid: 6145b71c-ef9e-4dc0-b324-5b0fb7e4bb10
-    monster_type: Orc Chainlock
-    traitNames: []
     levelChoices: []
-    max_hitpoints_roll: "20"
-    innateAttacks: []
-    walkingSpeed: 5
   tokenType: null
   bestiaryId: 83d75a81-ddda-4240-b444-5e92ee6d1b4c
   summonerid: null
@@ -518,6 +518,6 @@ parentFolder: f43667d5-4db9-4db9-8378-2563caa1fbc0
 artist: null
 ord: 0
 ctime: 1741590274059
-mtime: 1785708302960
+mtime: 1785429747252
 hidden: false
 id: 83d75a81-ddda-4240-b444-5e92ee6d1b4c

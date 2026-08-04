@@ -51,71 +51,50 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: c9830ba8-7b3b-45ad-8503-ae40ef3a4e11
+  updateid: da053aa4-e094-4c3d-9341-808339845f66
   properties:
     __typeName: monster
-    damage_taken: 0
-    cr: 1
-    opportunityAttack: 2
-    levelChoices: []
-    skillRatings: []
-    max_hitpoints: 3
-    minionSquad: Radenwight Redeye Squad 1
-    movementSpeeds:
-      climb: 5
     creatureSize: 1S
+    monster_category: Monster
+    attributes:
+      prs:
+        baseValue: 0
+        id: prs
+      mgt:
+        baseValue: 1
+        id: mgt
+      inu:
+        baseValue: 0
+        id: inu
+      rea:
+        baseValue: -1
+        id: rea
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      agl:
+        baseValue: 2
+        id: agl
+    traitNames: []
+    max_hitpoints: 3
+    damage_taken: 0
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      keywords:
-        Strike: true
-        Weapon: true
-        Ranged: true
-      numTargets: 1
-      modifiers: []
-      description: An ally of the redeye within 2 squares of the target can shift up to 2 squares.
-      effectImplemented: false
       range: 10
-      implementation: 3
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
-        tiers:
-        - 2 damage
-        - 4 damage
-        - 5 damage
-      targetType: target
-      repeatTargets: false
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      name: Eyes-On-Me Shot
-      abilityType: none
-      categorization: Signature Ability
       iconid: ui-icons/skills/1.png
-      guid: 46e10612-d82e-4eb7-8b31-7a30aa01037b
-    - __typeName: ActivatedAbility
-      sourceReference:
-        __typeName: SourceReference
-        page: 226
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      categorization: Signature Ability
-      modifiers: []
-      description: One ally of the redeye within 2 squares of the target shifts up to 2 squares.
-      range: 10
-      implementation: 3
+      targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       keywords:
         Strike: true
         Ranged: true
-      flavor: ""
+      description: One ally of the redeye within 2 squares of the target shifts up to 2 squares.
+      repeatTargets: false
       display:
-        bgcolor: "#ffffffff"
         brightness: 1
-        saturation: 1
+        bgcolor: "#ffffffff"
         hueshift: 0
+        saturation: 1
+      numTargets: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -123,66 +102,72 @@ info:
         - 2 damage
         - 4 damage
         - 5 damage
-      numTargets: 1
-      name: Eyes-On-Me-Shot
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      targetType: target
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptWhenResolving: true
+        standardAbilityParams:
+          distance: "2"
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          description: ""
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          behaviors: []
+          targetType: self
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+          name: Invoked Ability
+          modifiers: []
+          repeatTargets: false
+          guid: eead5360-1e25-4e89-9e56-5abce6d1ead4
+        applyto: proximity_only
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        filterTarget: Friends(Target, Caster) and Target != Caster
+        abilityType: standard
+        target_proximity_range: "2"
+        promptWhenResolvingText: Choose ally to shift
+      implementation: 4
+      modifiers: []
+      categorization: Signature Ability
       abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
-      guid: f4e36b92-04ba-45f3-b5f3-91ac8c7654b4
-    - __typeName: ActivatedAbility
+      flavor: ""
+      name: Eyes-On-Me-Shot
+      strain: []
       sourceReference:
         __typeName: SourceReference
         page: 226
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      categorization: Trigger
-      modifiers: []
-      description: |
-        The redeye makes a free strike against the target.
-      range: 1
-      implementation: 3
-      keywords: []
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbilityParams:
-          targetid: "<<subject.id>>"
-        promptText: "Ready Rodent: Make a Melee Free Strike"
-        abilityType: standard
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          targetType: self
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
-          behaviors: []
-          description: ""
-          modifiers: []
-          name: Invoked Ability
-          numTargets: "1"
-          abilityType: none
-          repeatTargets: false
-          iconid: ui-icons/skills/1.png
-          guid: ac2d5ebd-a0c2-497b-8782-5ccea60707df
-        standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
-      numTargets: 1
-      name: Ready Rodent
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      targetType: target
-      abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
-      guid: 5e70a84a-834c-430e-8747-a714d6ffda8d
+      guid: f4e36b92-04ba-45f3-b5f3-91ac8c7654b4
+    levelChoices: []
+    role: Minion Artillery
     monster_type: Radenwight Redeye
+    equipment: []
+    stability: 0
+    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
+    minion: true
+    innateAttacks: []
+    savingThrowRatings: []
+    withCaptain: Gain an edge on strikes
+    walkingSpeed: 5
+    inflictedConditions: []
+    keywords:
+      Humanoid: true
+      Radenwight: true
+    titles: []
+    max_hitpoints_roll: "3"
+    skillRatings: []
+    implementation: 4
+    minionSquad: Radenwight Redeye Squad 1
+    cr: 1
+    opportunityAttack: 2
+    resources: []
+    movementSpeeds:
+      climb: 5
+    ev: 3
     import:
       override: true
       data: |+
@@ -207,149 +192,111 @@ info:
         <b>Effect</b> The redeye makes a free strike against the target.
 
       type: mcdm
-    attributes:
-      agl:
-        id: agl
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 1
-      prs:
-        id: prs
-        baseValue: 0
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        id: inu
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: -1
-    stability: 0
-    equipment: []
-    max_hitpoints_roll: "3"
-    ev: 3
-    inflictedConditions: []
-    monster_category: Monster
-    minion: true
-    groupid: 763027dd-bc4d-485c-9bfc-6888f41a1b35
-    resources: []
     resistances: []
-    traitNames: []
-    role: Minion Artillery
     characterFeatures:
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-        CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-        CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
-        CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
       source: Character Feature
       description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
       name: Ready Rodent
-      implementation: 3
+      domains:
+        CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
+        CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+        CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+        CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+      implementation: 4
       modifiers:
       - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-          CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
-          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+        guid: 574a03f3-1242-4b7b-a47d-88a7dc444176
+        sourceguid: 12cbc050-275a-4182-a66b-134f2a818a73
+        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
         ability:
           __typeName: TriggeredAbilityDisplay
-          distance: Melee 1
           trigger: An ally deals damage to the target.
-          keywords:
-            Melee: true
-            Weapon: true
           effect: The bruxer makes a free strike against the target.
           name: Ready Rodent
+          distance: Melee 1
+          keywords:
+            Weapon: true
+            Melee: true
           guid: 5b00dc17-5c09-4262-9480-3e6b567b8d2c
-        name: Ready Rodent
-        sourceguid: 12cbc050-275a-4182-a66b-134f2a818a73
-        guid: 574a03f3-1242-4b7b-a47d-88a7dc444176
-        behavior: triggerdisplay
-        source: Character Feature
-        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
-      - __typeName: CharacterModifier
         domains:
-          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
           CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
           CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
-        behavior: trigger
-        name: Ready Rodent
-        sourceguid: 12cbc050-275a-4182-a66b-134f2a818a73
-        guid: 41c8bd22-fffd-4732-afc4-72d7e3b8c206
-        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
         source: Character Feature
+        name: Ready Rodent
+        behavior: triggerdisplay
+      - __typeName: CharacterModifier
         triggeredAbility:
           __typeName: TriggeredAbility
-          targetType: self
-          subject: enemy
-          repeatTargets: false
-          persistence: []
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          description: ""
-          whenActive: combat
           range: 1
-          mandatory: false
-          strain: []
-          trigger: losehitpoints
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            saturation: 1
-            hueshift: 0
+          iconid: ui-icons/skills/1.png
+          domains:
+            CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
+            CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+            CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+            CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+          whenActive: combat
+          targetType: self
+          persistence: []
           triggerPrompt: Make a free strike aganst the target.
+          subject: enemy
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          description: ""
+          repeatTargets: false
+          mandatory: false
+          modifiers: []
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
             standardAbilityParams:
               targetid: "<<subject.id>>"
-            autoTarget: true
-            abilityType: standard
             customAbility:
               __typeName: ActivatedAbility
               range: 1
-              targetType: self
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                saturation: 1
-                hueshift: 0
-              behaviors: []
-              guid: 546d1a5f-2f86-4c5d-a307-cb936761b2d1
-              iconid: ui-icons/skills/1.png
-              name: Invoked Ability
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
-              modifiers: []
               description: ""
+              iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              behaviors: []
+              targetType: self
+              abilityType: none
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                saturation: 1
+              name: Invoked Ability
+              modifiers: []
+              repeatTargets: false
+              guid: 546d1a5f-2f86-4c5d-a307-cb936761b2d1
+            autoTarget: true
             standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+          conditionFormula: HasAttacker and Friends(self, Attacker) and Attacker != self
+          abilityType: none
           subjectRange: "1"
           name: Ready Rodent
-          numTargets: "1"
-          abilityType: none
-          domains:
-            CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
-            CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
-            CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
-            CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
-          conditionFormula: HasAttacker and Friends(self, Attacker) and Attacker != self
+          strain: []
+          trigger: losehitpoints
           guid: 8d5c86ba-2216-40eb-9c9e-0021dfbf0c45
+        name: Ready Rodent
+        description: 'An ally deals damage to an adjacent target, the radenwight makes a free strike against the target. '
+        guid: 41c8bd22-fffd-4732-afc4-72d7e3b8c206
+        domains:
+          CharacterFeature:12cbc050-275a-4182-a66b-134f2a818a73: true
+          CharacterFeature:c8f8bea1-a2d8-41f6-ab6e-0d4865ddd674: true
+          CharacterFeature:a1a86407-b328-4c3c-9c3a-8f46cbdedca4: true
+          CharacterFeature:85862380-8332-41d2-a7c3-6471b40e2a79: true
+        source: Character Feature
+        sourceguid: 12cbc050-275a-4182-a66b-134f2a818a73
+        behavior: trigger
       guid: 12cbc050-275a-4182-a66b-134f2a818a73
-    titles: []
-    keywords:
-      Humanoid: true
-      Radenwight: true
-    withCaptain: Gain an edge on strikes
-    savingThrowRatings: []
-    innateAttacks: []
-    walkingSpeed: 5
   tokenType: null
   bestiaryId: 50204b68-5f7e-4caf-a506-2d70830ad7e1
   summonerid: null
@@ -362,6 +309,6 @@ parentFolder: 17706a52-3552-4044-86fe-e77c1e5f00dd
 artist: null
 ord: 0
 ctime: 1741590248618
-mtime: 1785702934185
+mtime: 1775375097262
 hidden: false
 id: 50204b68-5f7e-4caf-a506-2d70830ad7e1

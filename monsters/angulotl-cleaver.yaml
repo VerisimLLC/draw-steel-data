@@ -55,14 +55,74 @@ info:
   updateid: 1bab016c-1c7d-4ea7-9ae0-bbaab03929c5
   properties:
     __typeName: monster
-    opportunityAttack: 2
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 2
+      apply: Damage Reduction
+      damageType: poison
+    role: Minion Ambusher
+    skillRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Signature Ability
+      abilityType: none
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      modifiers: []
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      targetType: target
+      description: The cleaver jumps up to 4 squares before or after making this strike.
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 2 damage
+        - 4 damage
+        - 5 damage
+        roll: 2d10 + Agility
+      repeatTargets: false
+      guid: a31ef1e7-5372-494e-9f36-f8e4da4ed344
+      numTargets: 1
+      implementation: 3
+      sourceReference:
+        __typeName: SourceReference
+        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
+        page: 35
+      iconid: ui-icons/skills/1.png
+      flavor: ""
+      name: Hop & Chop
+      range: 1
     keywords:
       Humanoid: true
       Angulotl: true
-    ev: 3
-    creatureSize: 1S
+    inflictedConditions: []
     innateLanguages:
       e14c1512-fc48-4cb6-945c-18b3eb0b808d: true
+    notes:
+    - title: Monster Notes
+      text: ""
+    traitNames:
+    - Toxiferous
+    - Wet
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    savingThrowRatings: []
+    titles: []
+    damage_taken: 0
+    movementSpeeds:
+      swim: 6
+      climb: 6
+    monster_category: Angulotl
+    groupid: 7202c8eb-5cb6-4adf-8bdc-29d0862fe7a8
+    levelChoices: []
+    resources: []
+    creatureSize: 1S
     import:
       type: draw-steel-json
       data: |
@@ -797,34 +857,32 @@ info:
           },
           "_key": "!actors!G1fUng66ZtDXk6Ts"
         }
+    withCaptain: +1 damage bonus to strikes
+    opportunityAttack: 2
+    minion: true
+    walkingSpeed: 6
     attributes:
+      prs:
+        id: prs
+        baseValue: 0
       agl:
         id: agl
         baseValue: 2
+      rea:
+        id: rea
+        baseValue: 0
       mgt:
         id: mgt
-        baseValue: 0
-      prs:
-        id: prs
         baseValue: 0
       inu:
         id: inu
         baseValue: 1
-      rea:
-        id: rea
-        baseValue: 0
-    skillRatings: []
-    equipment:
-      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
-    role: Minion Ambusher
+    innateAttacks: []
+    cr: 1
+    max_hitpoints: 4
+    stability: 0
     characterFeatures:
     - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:8f55aa1d-e49a-4338-84df-bc79506aef0a: true
-      name: Toxiferous
-      description: Whenever an adjacent enemy grabs the cleaver or uses a melee ability against them, that enemy takes 1 poison damage.
-      implementation: 4
-      source: Trait
       modifiers:
       - __typeName: CharacterModifier
         behavior: trigger
@@ -836,33 +894,33 @@ info:
         triggeredAbility:
           __typeName: TriggeredAbility
           rangeTextOverride: "1"
-          targetType: subject
-          subject: enemy
-          numTargets: "1"
-          modifiers: []
-          description: ""
-          range: 1
-          strain: []
           guid: 0569f005-2683-4adc-92ff-2bc18f9c1c80
+          abilityType: none
+          modifiers: []
           display:
-            bgcolor: "#ffffffff"
             brightness: 1
-            saturation: 1
             hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+          subject: enemy
+          targetType: subject
+          description: ""
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
-            damageType: poison
             titleText: Toxiferous
-            roll: "1"
             chatMessage: Melee Ability Vs. Toxic Creature
-          iconid: ui-icons/skills/1.png
-          name: Toxiferous
-          trigger: targetwithability
-          targetTextOverride: 1 square
-          abilityType: none
+            damageType: poison
+            roll: "1"
           repeatTargets: false
-          conditionFormula: target = self and (Used Ability.Keywords has "Melee")
           persistence: []
+          trigger: targetwithability
+          conditionFormula: target = self and (Used Ability.Keywords has "Melee")
+          name: Toxiferous
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          range: 1
+          strain: []
+          targetTextOverride: 1 square
       - __typeName: CharacterModifier
         behavior: trigger
         source: Trait
@@ -873,119 +931,61 @@ info:
         triggeredAbility:
           __typeName: TriggeredAbility
           rangeTextOverride: "1"
-          targetType: attacker
-          numTargets: "1"
-          modifiers: []
-          description: ""
-          range: 1
-          strain: []
           guid: bd4cc27c-afe1-45e6-9932-edbc03d52580
+          abilityType: none
+          modifiers: []
           display:
-            bgcolor: "#ffffffff"
             brightness: 1
-            saturation: 1
             hueshift: 0
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            damageType: poison
-            titleText: Toxiferous
-            roll: "1    "
-            chatMessage: Grabbed by a Toxiferous Creature
-          iconid: ui-icons/skills/1.png
+            bgcolor: "#ffffffff"
+            saturation: 1
+          targetType: attacker
+          description: ""
+          conditionFormula: Condition = "Grabbed" and (Has Attacker)
+          repeatTargets: false
+          persistence: []
           trigger: inflictcondition
           name: Toxiferous
+          numTargets: "1"
+          range: 1
+          iconid: ui-icons/skills/1.png
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            titleText: Toxiferous
+            chatMessage: Grabbed by a Toxiferous Creature
+            damageType: poison
+            roll: "1    "
+          strain: []
           targetTextOverride: 1 square
-          abilityType: none
-          repeatTargets: false
-          conditionFormula: Condition = "Grabbed" and (Has Attacker)
-          persistence: []
-      guid: 8f55aa1d-e49a-4338-84df-bc79506aef0a
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:c8d7c052-dbc5-4573-937b-e035e95a9f6f: true
       source: Trait
-      description: Angulotls make use of a unique effect called "wet." While wet, an angulotl doesn't provoke opportunity attacks by moving. At the same time, any non-angulotl who is wet and ends their turn with none of their movement remaining slips and falls prone. Several angulotl abilities can impose this effect, but a creature in an encounter featuring angulotls can also become wet by entering water, as the Director determines.
-      name: Wet
+      description: Whenever an adjacent enemy grabs the cleaver or uses a melee ability against them, that enemy takes 1 poison damage.
+      domains:
+        CharacterFeature:8f55aa1d-e49a-4338-84df-bc79506aef0a: true
+      guid: 8f55aa1d-e49a-4338-84df-bc79506aef0a
+      name: Toxiferous
       implementation: 3
+    - __typeName: CharacterFeature
       modifiers:
       - __typeName: CharacterModifier
-        attribute: e2773895-411c-404e-a7f4-1aa50cd87710
+        description: ""
         behavior: attribute
+        source: Trait
         name: Crafty
+        attribute: e2773895-411c-404e-a7f4-1aa50cd87710
+        sourceguid: 37e008e8-005a-433b-b273-eef5f201e287
         value: 1
         guid: 5f6dc5e3-e640-4c30-9948-58d27d598bda
-        description: ""
-        source: Trait
-        sourceguid: 37e008e8-005a-433b-b273-eef5f201e287
-      guid: c8d7c052-dbc5-4573-937b-e035e95a9f6f
-    titles: []
-    withCaptain: +1 damage bonus to strikes
-    innateAttacks: []
-    walkingSpeed: 6
-    levelChoices: []
-    max_hitpoints: 4
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      sourceReference:
-        __typeName: SourceReference
-        page: 35
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-      categorization: Signature Ability
-      modifiers: []
-      description: The cleaver jumps up to 4 squares before or after making this strike.
-      range: 1
       implementation: 3
-      keywords:
-        Melee: true
-        Weapon: true
-        Strike: true
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        saturation: 1
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Agility
-        tiers:
-        - 2 damage
-        - 4 damage
-        - 5 damage
-      numTargets: 1
-      name: Hop & Chop
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      targetType: target
-      abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
-      guid: a31ef1e7-5372-494e-9f36-f8e4da4ed344
-    traitNames:
-    - Toxiferous
-    - Wet
-    minion: true
-    movementSpeeds:
-      climb: 6
-      swim: 6
-    notes:
-    - title: Monster Notes
-      text: ""
-    groupid: 7202c8eb-5cb6-4adf-8bdc-29d0862fe7a8
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      damageType: poison
-      dr: 2
-      apply: Damage Reduction
-    cr: 1
-    name: Angulotl Cleaver
-    monster_category: Angulotl
-    monster_type: Angulotl Cleaver
-    stability: 0
-    savingThrowRatings: []
+      description: Angulotls make use of a unique effect called "wet." While wet, an angulotl doesn't provoke opportunity attacks by moving. At the same time, any non-angulotl who is wet and ends their turn with none of their movement remaining slips and falls prone. Several angulotl abilities can impose this effect, but a creature in an encounter featuring angulotls can also become wet by entering water, as the Director determines.
+      domains:
+        CharacterFeature:c8d7c052-dbc5-4573-937b-e035e95a9f6f: true
+      guid: c8d7c052-dbc5-4573-937b-e035e95a9f6f
+      source: Trait
+      name: Wet
     max_hitpoints_roll: "4"
-    inflictedConditions: []
-    damage_taken: 0
+    ev: 3
+    monster_type: Angulotl Cleaver
+    name: Angulotl Cleaver
   tokenType: null
   bestiaryId: 5e24b500-babc-428b-907f-cd590872a5db
   summonerid: null
@@ -998,6 +998,6 @@ parentFolder: b4d6a13f-3431-4ade-b564-2cc17bcde303
 artist: null
 ord: 0
 ctime: 1741590256651
-mtime: 1785708282959
+mtime: 1785429747515
 hidden: false
 id: 5e24b500-babc-428b-907f-cd590872a5db
