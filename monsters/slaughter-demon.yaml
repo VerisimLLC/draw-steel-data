@@ -14,7 +14,6 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
-    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -54,13 +53,234 @@ info:
   updateid: d4368ede-462d-47c7-82fc-e187876546c9
   properties:
     __typeName: monster
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      dr: 5
-      damageType: fire
-    titles: []
-    ev: 24
+    savingThrowRatings: []
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 799fac7b-3ea1-4357-8aab-a83931cf510e
+      domains:
+        CharacterFeature:799fac7b-3ea1-4357-8aab-a83931cf510e: true
+      description: Each creature within 2 of the slaughter demon can't be hidden from them.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        value: 2
+        guid: 76588c5a-c8b4-4728-b087-6130407efb09
+        name: Soulsight
+        domains:
+          CharacterFeature:799fac7b-3ea1-4357-8aab-a83931cf510e: true
+        description: Each creature within 2 of the slaughter demon can't be hidden from them.
+        source: Trait
+        sourceguid: 799fac7b-3ea1-4357-8aab-a83931cf510e
+        behavior: attribute
+      name: Soulsight
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 1cc1240d-2003-4c95-b864-621c8a1b3075
+      domains:
+        CharacterFeature:1cc1240d-2003-4c95-b864-621c8a1b3075: true
+      description: While the slaughter demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        modtype: edge
+        rollType: ability_power_roll
+        sourceguid: 022981b5-2542-4265-84ad-7884e6d4b2fc
+        description: ""
+        guid: 7d597fb7-e5d7-4b09-8970-f39bab3a58f1
+        behavior: power
+        filterCondition: hitpoints <= Maximum Hitpoints/2
+        keywords:
+          Attack: true
+        source: Trait
+        activationCondition: true
+        name: Lethe
+      - __typeName: CharacterModifier
+        modtype: edge
+        rollType: enemy_ability_power_roll
+        sourceguid: 022981b5-2542-4265-84ad-7884e6d4b2fc
+        description: ""
+        guid: 5291759e-34d8-4db9-a54b-965c5ac91163
+        behavior: power
+        filterCondition: Hitpoints <= Maximum Hitpoints/2
+        keywords:
+          Attack: true
+        source: Trait
+        activationCondition: true
+        name: Lethe
+      name: Lethe
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 12a77e89-c191-42b9-985d-83ba8a263cfb
+      domains:
+        CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
+        CharacterFeature:b0165741-d48f-4b7f-827e-a03018848993: true
+      description: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 535d958b-092f-47ea-9783-b6143a113698
+        name: Drag Below
+        domains:
+          CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            targeting: prompt
+            standardAbility: 9b123334-6d7c-4848-8b17-db3255c4012c
+            abilityType: standard
+          triggerFilter: Trigger Name = "Dig"
+          repeatTargets: false
+          usageLimitOptions:
+            resourceid: dragbelow-freestrike-onceperturn
+            charges: "1"
+            resourceRefreshType: turn
+          numTargets: "1"
+          modifiers: []
+          description: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
+          iconid: ui-icons/skills/1.png
+          guid: 2484483c-99ee-4130-b7e5-4f419e9ad2dd
+          abilityType: none
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          trigger: custom
+          subject: self
+          range: 1
+          name: Drag Below
+        source: Trait
+        sourceguid: 12a77e89-c191-42b9-985d-83ba8a263cfb
+        behavior: trigger
+      - __typeName: CharacterModifier
+        guid: a087f493-9bf0-42b2-9333-54e4fae7c224
+        name: Drag Below
+        domains:
+          CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: true
+          strain: []
+          targetType: target
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            filterTarget: target.Might < 2
+            rule: grabbed
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            filterTarget: target.Might < 2
+            rule: with Bane on Escape Grab
+          triggerFilter: Target.Might < 2
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 3eb55c20-021d-4084-91f0-5635e343c11e
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          trigger: dealdamage
+          description: If the target of the demon's free strike has M<2, it is grabbed.
+          subject: self
+          range: 1
+          name: Drag Below (Grab)
+        source: Trait
+        sourceguid: 12a77e89-c191-42b9-985d-83ba8a263cfb
+        behavior: trigger
+      name: Drag Below
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
+      domains:
+        CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
+      description: |-
+        Trigger: A creature within distance who has a soul dies.
+
+        Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
+      source: Character Feature
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: triggerdisplay
+        guid: eae1e346-8f34-4dc4-b778-e93203ac957e
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: 5 burst
+          guid: 69fb7d8d-f3ad-4013-96e4-8f0b925cc41c
+          keywords:
+            Area: true
+            Magic: true
+          name: Devour Soul
+          trigger: A creature within distance who has a soul dies.
+          effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
+        domains:
+          CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
+        description: |-
+          Trigger: A creature within distance who has a soul dies.
+
+          Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
+        source: Character Feature
+        sourceguid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
+        name: Devour Soul
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: Devour the soul of the nearby creature who died. You gain an edge on power rolls, and they can't be brought back to life.
+          strain: []
+          targetType: subject
+          conditionFormula: not Subject.Keywords has "Soulless"
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectCustom: bdd91b70-36fc-4c95-88f8-8c6e94615475
+            ongoingEffect: bdd91b70-36fc-4c95-88f8-8c6e94615475
+            applyto: caster
+            duration: eoe
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 83d0516b-fb14-4441-9196-0f660e2a3476
+            applyto: targets
+            ongoingEffectCustom: 83d0516b-fb14-4441-9196-0f660e2a3476
+          targetFilter: ""
+          repeatTargets: false
+          subject: other
+          whenActive: always
+          modifiers: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          guid: 3f331af9-91fd-49c0-afeb-3776f982fda1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          description: ""
+          trigger: creaturedeath
+          range: 1
+          name: Devour Soul
+        guid: 9df9fe8f-96b9-4774-ae6f-84501c856d81
+        name: Devour Soul
+        domains:
+          CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
+        description: |-
+          Trigger: A creature within distance who has a soul dies.
+
+          Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
+        source: Character Feature
+        behavior: trigger
+        sourceguid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
+      name: Devour Soul
+    inflictedConditions: []
+    cr: 4
+    opportunityAttack: 6
     import:
       type: mcdm
       data: |+
@@ -108,372 +328,201 @@ info:
 
 
 
-    traitNames: []
-    innateAttacks: []
-    keywords:
-      Hobgoblin: true
-      Abyssal: true
-      Demon: true
+    titles: []
+    damage_taken: 0
+    max_hitpoints: 140
     notes:
     - text: ""
       title: Monster Notes
-    stability: 3
+    skillRatings: []
+    role: Elite Brute
+    ev: 24
     movementSpeeds:
       burrow: 7
-    cr: 4
-    levelChoices: []
-    inflictedConditions: []
     monster_category: Monster
-    savingThrowRatings: []
-    role: Elite Brute
-    monster_type: Slaughter Demon
-    max_hitpoints: 140
-    opportunityAttack: 6
     groupid: 640fe403-2a42-4777-9bf3-2216561dde19
-    damage_taken: 0
-    max_hitpoints_roll: "140"
+    innateAttacks: []
+    traitNames: []
+    levelChoices: []
+    minion: false
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: fire
+      dr: 5
+    keywords:
+      Abyssal: true
+      Hobgoblin: true
+      Demon: true
     equipment: []
     resources: []
-    characterFeatures:
-    - __typeName: CharacterFeature
-      name: Soulsight
-      modifiers:
-      - __typeName: CharacterModifier
-        name: Soulsight
-        source: Trait
-        guid: 76588c5a-c8b4-4728-b087-6130407efb09
-        value: 2
-        sourceguid: 799fac7b-3ea1-4357-8aab-a83931cf510e
-        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
-        domains:
-          CharacterFeature:799fac7b-3ea1-4357-8aab-a83931cf510e: true
-        description: Each creature within 2 of the slaughter demon can't be hidden from them.
-        behavior: attribute
-      implementation: 4
-      guid: 799fac7b-3ea1-4357-8aab-a83931cf510e
-      domains:
-        CharacterFeature:799fac7b-3ea1-4357-8aab-a83931cf510e: true
-      description: Each creature within 2 of the slaughter demon can't be hidden from them.
-      source: Trait
-    - __typeName: CharacterFeature
-      name: Lethe
-      modifiers:
-      - __typeName: CharacterModifier
-        filterCondition: hitpoints <= Maximum Hitpoints/2
-        activationCondition: true
-        keywords:
-          Attack: true
-        behavior: power
-        modtype: edge
-        rollType: ability_power_roll
-        sourceguid: 022981b5-2542-4265-84ad-7884e6d4b2fc
-        name: Lethe
-        source: Trait
-        description: ""
-        guid: 7d597fb7-e5d7-4b09-8970-f39bab3a58f1
-      - __typeName: CharacterModifier
-        filterCondition: Hitpoints <= Maximum Hitpoints/2
-        activationCondition: true
-        keywords:
-          Attack: true
-        behavior: power
-        modtype: edge
-        rollType: enemy_ability_power_roll
-        sourceguid: 022981b5-2542-4265-84ad-7884e6d4b2fc
-        name: Lethe
-        source: Trait
-        description: ""
-        guid: 5291759e-34d8-4db9-a54b-965c5ac91163
-      implementation: 4
-      guid: 1cc1240d-2003-4c95-b864-621c8a1b3075
-      domains:
-        CharacterFeature:1cc1240d-2003-4c95-b864-621c8a1b3075: true
-      description: While the slaughter demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.
-      source: Trait
-    - __typeName: CharacterFeature
-      name: Drag Below
-      modifiers:
-      - __typeName: CharacterModifier
-        name: Drag Below
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            targeting: prompt
-            standardAbility: 9b123334-6d7c-4848-8b17-db3255c4012c
-            abilityType: standard
-          trigger: custom
-          mandatory: false
-          repeatTargets: false
-          triggerPrompt: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
-          display:
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-            bgcolor: "#ffffffff"
-          description: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
-          guid: 2484483c-99ee-4130-b7e5-4f419e9ad2dd
-          name: Drag Below
-          numTargets: "1"
-          usageLimitOptions:
-            resourceRefreshType: turn
-            charges: "1"
-            resourceid: dragbelow-freestrike-onceperturn
-          targetType: self
-          triggerFilter: Trigger Name = "Dig"
-          strain: []
-          abilityType: none
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          subject: self
-          range: 1
-        domains:
-          CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
-        guid: 535d958b-092f-47ea-9783-b6143a113698
-        source: Trait
-        sourceguid: 12a77e89-c191-42b9-985d-83ba8a263cfb
-        behavior: trigger
-      - __typeName: CharacterModifier
-        name: Drag Below
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          behaviors:
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            rule: grabbed
-            filterTarget: target.Might < 2
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            rule: with Bane on Escape Grab
-            filterTarget: target.Might < 2
-          trigger: dealdamage
-          subject: self
-          repeatTargets: false
-          display:
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-            bgcolor: "#ffffffff"
-          description: If the target of the demon's free strike has M<2, it is grabbed.
-          guid: 3eb55c20-021d-4084-91f0-5635e343c11e
-          name: Drag Below (Grab)
-          numTargets: "1"
-          targetType: target
-          triggerFilter: Target.Might < 2
-          strain: []
-          abilityType: none
-          iconid: ui-icons/skills/1.png
-          mandatory: true
-          range: 1
-          modifiers: []
-        domains:
-          CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
-        guid: a087f493-9bf0-42b2-9333-54e4fae7c224
-        source: Trait
-        sourceguid: 12a77e89-c191-42b9-985d-83ba8a263cfb
-        behavior: trigger
-      implementation: 4
-      guid: 12a77e89-c191-42b9-985d-83ba8a263cfb
-      domains:
-        CharacterFeature:b0165741-d48f-4b7f-827e-a03018848993: true
-        CharacterFeature:12a77e89-c191-42b9-985d-83ba8a263cfb: true
-      description: The slaughter demon can make a free strike as part of using the Dig maneuver. If the target of the free strike has M<2, they are grabbed and take a bane on the Escape Grab maneuver.
-      source: Trait
-    - __typeName: CharacterFeature
-      name: Devour Soul
-      modifiers:
-      - __typeName: CharacterModifier
-        name: Devour Soul
-        behavior: triggerdisplay
-        sourceguid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
-        domains:
-          CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
-        ability:
-          __typeName: TriggeredAbilityDisplay
-          distance: 5 burst
-          trigger: A creature within distance who has a soul dies.
-          effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
-          keywords:
-            Area: true
-            Magic: true
-          name: Devour Soul
-          guid: 69fb7d8d-f3ad-4013-96e4-8f0b925cc41c
-        guid: eae1e346-8f34-4dc4-b778-e93203ac957e
-        description: |-
-          Trigger: A creature within distance who has a soul dies.
-
-          Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
-        source: Character Feature
-      - __typeName: CharacterModifier
-        name: Devour Soul
-        guid: 9df9fe8f-96b9-4774-ae6f-84501c856d81
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffectCustom: bdd91b70-36fc-4c95-88f8-8c6e94615475
-            applyto: caster
-            ongoingEffect: bdd91b70-36fc-4c95-88f8-8c6e94615475
-            duration: eoe
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            applyto: targets
-            ongoingEffect: 83d0516b-fb14-4441-9196-0f660e2a3476
-            ongoingEffectCustom: 83d0516b-fb14-4441-9196-0f660e2a3476
-          conditionFormula: not Subject.Keywords has "Soulless"
-          modifiers: []
-          mandatory: false
-          repeatTargets: false
-          triggerPrompt: Devour the soul of the nearby creature who died. You gain an edge on power rolls, and they can't be brought back to life.
-          display:
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-            bgcolor: "#ffffffff"
-          description: ""
-          guid: 3f331af9-91fd-49c0-afeb-3776f982fda1
-          name: Devour Soul
-          numTargets: "1"
-          targetFilter: ""
-          targetType: subject
-          strain: []
-          abilityType: none
-          iconid: ui-icons/skills/1.png
-          whenActive: always
-          subject: other
-          trigger: creaturedeath
-          range: 1
-        domains:
-          CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
-        sourceguid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
-        source: Character Feature
-        description: |-
-          Trigger: A creature within distance who has a soul dies.
-
-          Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
-        behavior: trigger
-      implementation: 4
-      guid: 5dd4fe4a-5efc-4589-bdc1-32f477d5a442
-      domains:
-        CharacterFeature:5dd4fe4a-5efc-4589-bdc1-32f477d5a442: true
-      description: |-
-        Trigger: A creature within distance who has a soul dies.
-
-        Effect: The target can't be brought back to life. Until the ned of the encoutner, the slaughter demon gains an edge on power rolls.
-      source: Character Feature
-    minion: false
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
+      implementation: 2
+      strain: []
+      targetType: target
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 9 damage
         - 14 damage; A<2 bleeding (save ends)
         - 17 damage; A<3 bleeding and restrained (save ends)
+        roll: 2d10 + Might
       categorization: Signature Ability
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       keywords:
-        Weapon: true
         Melee: true
         Strike: true
-      effectImplemented: false
-      display:
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-        bgcolor: "#ffffffff"
-      description: A creature restrained by this attack moves along with the slaughter demon until the condition ends. The slaughter demon can have up to 6 creatures or objects restrained on their weapons.
-      flavor: ""
-      name: Steely Skewer
+        Weapon: true
+      repeatTargets: false
+      abilityType: none
       numTargets: 2
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 179
-      targetType: target
-      repeatTargets: false
-      implementation: 2
-      strain: []
-      abilityType: none
-      range: 3
       modifiers: []
-      implementationDetails: Effect on Restrained creatures is not implemented.
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
       iconid: ui-icons/skills/1.png
       guid: 75a98a0b-7d21-44af-8d76-e5f23e287b1f
+      effectImplemented: false
+      implementationDetails: Effect on Restrained creatures is not implemented.
+      description: A creature restrained by this attack moves along with the slaughter demon until the condition ends. The slaughter demon can have up to 6 creatures or objects restrained on their weapons.
+      flavor: ""
+      range: 3
+      name: Steely Skewer
     - __typeName: ActivatedAbility
+      implementation: 4
+      objectTarget: true
+      strain: []
+      targetType: target
+      flavor: ""
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 179
+      effectImplemented: false
+      resourceNumber: 3
+      repeatTargets: false
+      abilityType: none
+      numTargets: 1
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Heroic Ability
+      iconid: ui-icons/skills/1.png
+      guid: a08691d0-b5af-46b1-be04-7d44ee30e596
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 10 poison damage; M<1 weakened (save ends)
         - 16 poison damage; M<2 weakened (save ends)
         - 20 poison damage; M<3 weakened (save ends)
+        roll: 2d10 + Might
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         filterTarget: target.might M<1
         tiersSelected:
         - 1
         rule: and Damage Weakness 3
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: target.might M<2
+        guid: 207a32f2-d591-4aaf-9c83-e374e976096a
         tiersSelected:
         - 2
-        filterTarget: target.might M<2
         rule: and Damage Weakness 3
-        guid: 207a32f2-d591-4aaf-9c83-e374e976096a
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: target.might M<3
+        guid: 74b7bc64-65c0-4ee6-b913-ae9a7af90af8
         tiersSelected:
         - 3
-        filterTarget: target.might M<3
         rule: and Damage Weakness 3
-        guid: 74b7bc64-65c0-4ee6-b913-ae9a7af90af8
-      categorization: Heroic Ability
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       keywords:
-        Weapon: true
         Melee: true
         Strike: true
-      effectImplemented: false
-      resourceNumber: 3
-      display:
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-        bgcolor: "#ffffffff"
+        Weapon: true
       description: A target weakened by this ability has damage weakness 3 until the condition ends.
-      guid: a08691d0-b5af-46b1-be04-7d44ee30e596
-      name: Tail Stinger
-      numTargets: 1
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 179
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      targetType: target
-      modifiers: []
-      repeatTargets: false
-      strain: []
-      abilityType: none
       range: 5
-      implementation: 4
-      iconid: ui-icons/skills/1.png
+      name: Tail Stinger
+    - __typeName: ActivatedAbility
+      implementation: 0
+      targetType: target
       flavor: ""
-      objectTarget: true
-    skillRatings: []
-    walkingSpeed: 7
-    creatureSize: "3"
+      categorization: Signature Ability
+      effectImplemented: false
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      iconid: ui-icons/skills/1.png
+      guid: ed86052e-1dfc-49b9-ba61-19a533d40459
+      repeatTargets: false
+      behaviors: []
+      description: The slaughter demon makes a free strike against the target and burrows up to their speed. The target is pulled the same number of squares the slaughter demon burrows into, including vertically.
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      range: 3
+      name: Drag Below
+    - __typeName: ActivatedAbility
+      implementation: 0
+      targetType: self
+      flavor: ""
+      categorization: Signature Ability
+      effectImplemented: false
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      iconid: ui-icons/skills/1.png
+      guid: 1c75a78b-b006-47a5-9800-ce707cbad82e
+      repeatTargets: false
+      behaviors: []
+      description: The target can't be brought back to life. The slaughter demon gains an edge on all power rolls for the rest of the encounter.
+      keywords:
+        Magic: true
+      range: 1
+      name: Devour Soul
+    stability: 3
     attributes:
-      mgt:
-        baseValue: 3
-        id: mgt
+      inu:
+        baseValue: 1
+        id: inu
       agl:
         baseValue: 0
         id: agl
+      mgt:
+        baseValue: 3
+        id: mgt
       rea:
         baseValue: -1
         id: rea
       prs:
         baseValue: 0
         id: prs
-      inu:
-        baseValue: 1
-        id: inu
+    max_hitpoints_roll: "140"
+    creatureSize: "3"
+    monster_type: Slaughter Demon
+    walkingSpeed: 7
   tokenType: null
   bestiaryId: 6acc44d5-3fe8-4582-a923-ab5c33377666
   summonerid: null
@@ -486,6 +535,6 @@ parentFolder: ae0ffd42-2d5c-4de1-a94b-282a9cf676f0
 artist: null
 ord: 1
 ctime: 1741590261934
-mtime: 1785883085752
+mtime: 1783434296450
 hidden: false
 id: 6acc44d5-3fe8-4582-a923-ab5c33377666
