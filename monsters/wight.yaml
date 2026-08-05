@@ -55,10 +55,14 @@ info:
   updateid: 95206892-cd41-41bc-bf9f-9c3307f0b371
   properties:
     __typeName: monster
-    monster_type: Wight
-    inflictedConditions: []
-    titles: []
-    max_hitpoints: 12
+    opportunityAttack: 2
+    keywords:
+      Corporeal: true
+      Undead: true
+    ev: 7
+    creatureSize: 1M
+    skillProficiencies: []
+    initiativeGrouping: f037735c-2fe5-4b1f-b48c-eadcfcd5a31f
     attributes:
       agl:
         id: agl
@@ -66,121 +70,163 @@ info:
       mgt:
         id: mgt
         baseValue: 1
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      rea:
-        id: rea
-        baseValue: 0
       prs:
         id: prs
         baseValue: 1
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
       inu:
         id: inu
         baseValue: 0
+      rea:
+        id: rea
+        baseValue: 0
+    stability: 0
+    equipment: []
+    role: Hexer Captain
     characterFeatures:
     - __typeName: CharacterFeature
-      source: Trait
-      modifiers: []
       domains:
         CharacterFeature:c47f55ec-34fe-4239-b2ce-df297fe74138: true
-      description: The first time the wight is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
-      guid: c47f55ec-34fe-4239-b2ce-df297fe74138
       name: Arise
+      description: The first time the wight is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
+      implementation: 3
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        resourceRefreshType: encounter
+        sourceguid: c47f55ec-34fe-4239-b2ce-df297fe74138
+        behavior: trigger
+        source: Trait
+        description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: self
+          repeatTargets: false
+          modifiers: []
+          description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+          range: 1
+          strain: []
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            roll: (-Stamina) + (Maximum Stamina / 2)
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            color: "#ffffffff"
+            applyto: caster
+            text: Arise!
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: prone
+          name: Arise
+          numTargets: "1"
+          trigger: zerohitpoints
+          conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
+          abilityType: none
+          usageLimitOptions:
+            resourceRefreshType: encounter
+            charges: "1"
+            resourceid: f7f65245-2933-4a45-adf9-8cfb0f6093a5
+          iconid: ui-icons/skills/1.png
+          guid: ca65e502-ea72-4e0c-bf46-3184b5da4dfe
+        domains:
+          CharacterFeature:c47f55ec-34fe-4239-b2ce-df297fe74138: true
+        name: Arise
+        guid: 4b683129-e505-405b-89d9-a7b7472fff0f
+      guid: c47f55ec-34fe-4239-b2ce-df297fe74138
+    titles: []
     availableTriggers: []
-    ev: 7
-    stability: 0
+    innateAttacks: []
     walkingSpeed: 5
-    cr: 1
-    initiativeGrouping: f037735c-2fe5-4b1f-b48c-eadcfcd5a31f
-    skillRatings: []
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    max_hitpoints_roll: "12"
     levelChoices: []
-    monster_category: Monster
+    max_hitpoints: 12
+    max_hitpoints_roll: "12"
+    traitNames: []
     movementSpeeds: []
-    keywords:
-      Corporeal: true
-      Undead: true
-    savingThrowRatings: []
-    minion: false
+    damage_taken: 0
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    resources: []
+    resistances:
+    - __typeName: ResistanceEntry
+      damageType: corruption
+      dr: 3
+      apply: Damage Reduction
+    - __typeName: ResistanceEntry
+      damageType: poison
+      dr: 3
+      apply: Damage Reduction
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      repeatTargets: false
-      effectImplemented: false
-      abilityType: none
       keywords:
         Melee: true
-        Strike: true
         Weapon: true
-      name: Lifestealer Longsword
+        Strike: true
       numTargets: 1
+      modifiers: []
+      description: The target rapidly ages each time they take damage from this attack. The target regains their vitality and loses any conditions incurred by this ability when the wight is destroyed.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 1
         tiers:
         - 2 corruption damage
         - 4 corruption damage; slowed (EoT) or weakened (EoT) if already slowed
         - 5 corruption damage; slowed (MGT ends) or weakened (MGT ends) if already slowed
-        roll: 2d10 + 1
-      modifiers: []
-      description: The target rapidly ages each time they take damage from this attack. The target regains their vitality and loses any conditions incurred by this ability when the wight is destroyed.
-      implementation: 3
-      guid: 0025a521-810c-4035-86d6-9320ce2f6b6e
       targetType: target
+      repeatTargets: false
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      flavor: ""
-      iconid: ui-icons/skills/1.png
+      name: Lifestealer Longsword
+      abilityType: none
       categorization: Signature Ability
-      range: 1
+      iconid: ui-icons/skills/1.png
+      guid: 0025a521-810c-4035-86d6-9320ce2f6b6e
     - __typeName: ActivatedAbility
+      resourceNumber: 3
       targetType: self
       repeatTargets: false
+      modifiers: []
+      description: This maneuver can only be used once for each creature the wight attacked with their lifestealer longsword. The target returns to "life" with half their Stamina.
       effectImplemented: false
+      range: 1
+      implementation: 0
+      numTargets: "1"
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      behaviors: []
+      categorization: Heroic Ability
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      name: Raise
       abilityType: none
       keywords:
         Magic: true
         Ranged: true
-      name: Raise
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      numTargets: "1"
-      behaviors: []
-      modifiers: []
-      resourceNumber: 3
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      implementation: 0
-      description: This maneuver can only be used once for each creature the wight attacked with their lifestealer longsword. The target returns to "life" with half their Stamina.
-      flavor: ""
-      guid: b95e040e-c31f-4609-8d4e-85b04836fc12
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
       iconid: ui-icons/skills/1.png
-      categorization: Heroic Ability
-      range: 1
-    role: Hexer Captain
-    resistances:
-    - __typeName: ResistanceEntry
-      dr: 3
-      apply: Damage Reduction
-      damageType: corruption
-    - __typeName: ResistanceEntry
-      dr: 3
-      apply: Damage Reduction
-      damageType: poison
-    damage_taken: 0
-    creatureSize: 1M
-    innateAttacks: []
-    opportunityAttack: 2
-    traitNames: []
-    resources: []
-    skillProficiencies: []
+      guid: b95e040e-c31f-4609-8d4e-85b04836fc12
+    skillRatings: []
+    monster_category: Monster
+    monster_type: Wight
+    savingThrowRatings: []
+    inflictedConditions: []
     import:
       type: mcdm
       data: |+
@@ -206,7 +252,8 @@ info:
         <b>Arise</b>
         The first time the wight is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
 
-    equipment: []
+    cr: 1
+    minion: false
   tokenType: null
   bestiaryId: 9f8395dd-8137-43f3-ba75-14fb1e697856
   summonerid: null
@@ -219,6 +266,6 @@ parentFolder: 3060d052-424f-414c-969f-12c5a80bd2f7
 artist: null
 ord: 12
 ctime: 1741590288333
-mtime: 1785866520846
-hidden: true
+mtime: 1785703869069
+hidden: false
 id: 9f8395dd-8137-43f3-ba75-14fb1e697856

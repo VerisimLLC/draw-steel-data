@@ -54,42 +54,183 @@ info:
   updateid: dd49f3e2-2c30-45bb-a50e-dc16bbe2aa89
   properties:
     __typeName: monster
-    cr: 2
-    ev: 16
-    levelChoices: []
-    stability: 0
-    max_hitpoints_roll: "80"
-    equipment: []
     opportunityAttack: 5
-    titles: []
-    movementSpeeds: []
+    levelChoices: []
+    walkingSpeed: 7
+    savingThrowRatings: []
     inflictedConditions: []
-    keywords:
-      Humanoid: true
-      Fey: true
-      Goblin: true
-      Bugbear: true
-    innateAttacks: []
-    role: Elite Ambusher
-    monster_category: Monster
-    traitNames: []
-    attributes:
-      rea:
-        id: rea
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 2
-      mgt:
-        id: mgt
-        baseValue: 2
-      inu:
-        id: inu
-        baseValue: 0
-      prs:
-        id: prs
-        baseValue: 0
+    titles: []
+    creatureSize: 1L
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      keywords:
+        Strike: true
+        Weapon: true
+        Ranged: true
+      numTargets: 2
+      modifiers: []
+      description: The target can't hide from the sneak or their allies while bleeding from this ability.
+      effectImplemented: false
+      range: 8
+      implementation: 3
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 7 damage; M<0 bleeding (save ends)
+        - 11 damage; M<1 bleeding (save ends)
+        - 14 damage; M<2 bleeding (save ends)
+      targetType: target
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      name: Carving Dagger
+      abilityType: none
+      categorization: Signature Ability
+      iconid: ui-icons/skills/1.png
+      guid: 0812f88d-804e-4ab9-96d0-302c51025f9a
+    - __typeName: ActivatedAbility
+      targetType: target
+      categorization: Ability
+      guid: fe7a140d-9cca-433c-aa95-bc923e65e704
+      modifiers: []
+      description: |-
+        **Special:** The target must be grabbed by you.
+
+        The target is vertical pushed up to 4 squares. An ally doesn't take damage from being force moved this way.
+      targetFilter: Conditions has "grabbed"
+      range: 1
+      implementation: 3
+      strain: []
+      name: Throw
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        duration: 0
+        ongoingEffect: b510f03a-75a6-465a-bbe6-8acb648bb9e5
+        stacks: "3"
+        filterTarget: Friends(caster,Target)
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: vertical push 4
+      effectImplemented: false
+      numTargets: 1
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      repeatTargets: false
+      abilityType: none
+      keywords:
+        Melee: true
+        Strike: true
+      iconid: ui-icons/skills/1.png
+      persistence: []
+    - __typeName: ActivatedAbility
+      sourceReference:
+        __typeName: SourceReference
+        page: 54
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Signature Ability
+      modifiers: []
+      description: The target can't use triggered actions until the start of the next round. Additionally, if the sneak started their turn hidden from the target, this ability deals an extra 4 damage.
+      range: 1
+      implementation: 3
+      keywords:
+        Melee: true
+        Weapon: true
+        Strike: true
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 8 damage; A<1 grabbed
+        - 13 damage; A<2 grabbed
+        - 16 damage; grabbed
+      numTargets: 1
+      name: Sucker Punch
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      targetType: target
+      abilityType: none
+      repeatTargets: false
+      iconid: ui-icons/skills/1.png
+      guid: ca3f085a-ff2e-4ec2-a77e-da3154e2eff7
+    - __typeName: ActivatedAbility
+      resourceNumber: 3
+      sourceReference:
+        __typeName: SourceReference
+        page: 54
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      repeatTargets: false
+      modifiers: []
+      description: The sneak shifts up to their speed and can attempt to hide.
+      range: 2
+      implementation: 4
+      keywords:
+        Area: true
+      targetType: all
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 2 damage; I<0 the sneak has concealment from the target (save ends)
+        - 3 damage; I<1 the sneak has concealment from the target (save ends)
+        - 4 damage; I<2 the sneak has concealment from the target (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbilityParams:
+          distance: movement speed
+        standardAbility: bd9f9431-2ee2-41c1-81cb-c08570144cb9
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+            hueshift: 0
+          behaviors: []
+          guid: e5b8c4a2-7d19-4f30-a1e6-9c04d7b83f52
+          iconid: ui-icons/skills/1.png
+          name: Invoked Ability
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          description: ""
+        promptText: Shift up to your speed and attempt to hide
+      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+      targetAllegiance: enemy
+      name: Shadow Cloak
+      categorization: Heroic Ability
+      abilityType: none
+      numTargets: 1
+      iconid: ui-icons/skills/1.png
+      guid: 85182d97-f405-4d2a-8cfe-be44a3ffee9e
+    ev: 16
     import:
+      type: mcdm
       data: |+
         Bugbear Sneak	Level 2 Ambusher Troop
         Bugbear, Goblin, Humanoid	EV 34
@@ -140,298 +281,156 @@ info:
 
 
 
-      type: mcdm
+    attributes:
+      agl:
+        id: agl
+        baseValue: 2
+      mgt:
+        id: mgt
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 0
     skillRatings: []
-    savingThrowRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      numTargets: 2
-      range: 8
-      abilityType: none
-      guid: 0812f88d-804e-4ab9-96d0-302c51025f9a
-      effectImplemented: false
-      keywords:
-        Ranged: true
-        Strike: true
-        Weapon: true
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      repeatTargets: false
-      name: Carving Dagger
-      targetType: target
-      description: The target can't hide from the sneak or their allies while bleeding from this ability.
-      categorization: Signature Ability
-      flavor: ""
-      implementation: 3
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 7 damage; M<0 bleeding (save ends)
-        - 11 damage; M<1 bleeding (save ends)
-        - 14 damage; M<2 bleeding (save ends)
-    - __typeName: ActivatedAbility
-      targetFilter: Conditions has "grabbed"
-      implementation: 3
-      range: 1
-      abilityType: none
-      guid: fe7a140d-9cca-433c-aa95-bc923e65e704
-      iconid: ui-icons/skills/1.png
-      keywords:
-        Strike: true
-        Melee: true
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      strain: []
-      numTargets: 1
-      repeatTargets: false
-      name: Throw
-      targetType: target
-      description: |-
-        **Special:** The target must be grabbed by you.
-
-        The target is vertical pushed up to 4 squares. An ally doesn't take damage from being force moved this way.
-      persistence: []
-      flavor: ""
-      categorization: Ability
-      effectImplemented: false
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      modifiers: []
-      behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        stacks: "3"
-        filterTarget: Friends(caster,Target)
-        ongoingEffect: b510f03a-75a6-465a-bbe6-8acb648bb9e5
-        duration: 0
-        ongoingEffectCustom: false
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: vertical push 4
-    - __typeName: ActivatedAbility
-      numTargets: 1
-      range: 1
-      abilityType: none
-      guid: ca3f085a-ff2e-4ec2-a77e-da3154e2eff7
-      iconid: ui-icons/skills/1.png
-      modifiers: []
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      repeatTargets: false
-      name: Sucker Punch
-      targetType: target
-      description: The target can't use triggered actions until the start of the next round. Additionally, if the sneak started their turn hidden from the target, this ability deals an extra 4 damage.
-      categorization: Signature Ability
-      flavor: ""
-      implementation: 3
-      keywords:
-        Weapon: true
-        Strike: true
-        Melee: true
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      sourceReference:
-        __typeName: SourceReference
-        page: 54
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 8 damage; A<1 grabbed
-        - 13 damage; A<2 grabbed
-        - 16 damage; grabbed
-    - __typeName: ActivatedAbility
-      implementation: 4
-      range: 2
-      resourceNumber: 3
-      abilityType: none
-      guid: 85182d97-f405-4d2a-8cfe-be44a3ffee9e
-      iconid: ui-icons/skills/1.png
-      modifiers: []
-      sourceReference:
-        __typeName: SourceReference
-        page: 54
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      targetAllegiance: enemy
-      repeatTargets: false
-      name: Shadow Cloak
-      targetType: all
-      description: The sneak shifts up to their speed and can attempt to hide.
-      categorization: Heroic Ability
-      flavor: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 2 damage; I<0 the sneak has concealment from the target (save ends)
-        - 3 damage; I<1 the sneak has concealment from the target (save ends)
-        - 4 damage; I<2 the sneak has concealment from the target (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          numTargets: "1"
-          repeatTargets: false
-          name: Invoked Ability
-          targetType: self
-          description: ""
-          guid: e5b8c4a2-7d19-4f30-a1e6-9c04d7b83f52
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          abilityType: none
-          range: 1
-          behaviors: []
-        promptText: Shift up to your speed and attempt to hide
-        standardAbilityParams:
-          distance: movement speed
-        abilityType: standard
-        applyto: caster
-        standardAbility: bd9f9431-2ee2-41c1-81cb-c08570144cb9
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      keywords:
-        Area: true
-      numTargets: 1
-      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+    traitNames: []
+    cr: 2
+    max_hitpoints: 80
+    keywords:
+      Bugbear: true
+      Fey: true
+      Humanoid: true
+      Goblin: true
+    monster_category: Monster
+    movementSpeeds: []
+    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
     resources: []
-    damage_taken: 0
-    creatureSize: 1L
+    resistances: []
     minion: false
-    monster_type: Bugbear Sneak
+    role: Elite Ambusher
     characterFeatures:
     - __typeName: CharacterFeature
-      description: " "
-      guid: 7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0
-      implementation: 3
       domains:
         CharacterFeature:7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0: true
+      name: Catcher
+      description: " "
+      implementation: 3
       source: Character Feature
       modifiers:
       - __typeName: CharacterModifier
-        behavior: trigger
-        guid: 3b7f12e4-8a65-4c90-9d1f-6e83b5a47f21
-        sourceguid: 7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0
         domains:
           CharacterFeature:7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0: true
-        source: Character Feature
+        behavior: trigger
         name: Catcher
+        sourceguid: 7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0
+        guid: 3b7f12e4-8a65-4c90-9d1f-6e83b5a47f21
+        description: " "
+        source: Character Feature
         triggeredAbility:
           __typeName: TriggeredAbility
-          mandatory: false
-          numTargets: "1"
-          range: 1
-          subjectRange: "20"
-          guid: 4c3d82f5-9b76-4e0a-af28-7d94c6e53b12
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          triggerPrompt: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
-          strain: []
-          abilityType: none
-          repeatTargets: false
-          name: Catcher
           targetType: subject
+          subject: other
+          repeatTargets: false
+          persistence: []
+          modifiers: []
           description: |-
             Trigger: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
             Effect: The target is grabbed by the sneak.
-          persistence: []
-          hasManualVersion: true
-          trigger: finishmove
           whenActive: combat
-          conditionFormula: Subject.Size <= 4 and ((path.Forced and Path.DistanceToCreature(Self) <= 1) or ((not path.Forced) and Friends(self, Subject) and Distance(Subject) <= 1))
-          subject: other
+          range: 1
+          iconid: ui-icons/skills/1.png
+          strain: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+            hueshift: 0
+          hasManualVersion: true
+          triggerPrompt: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
           behaviors:
           - __typeName: ActivatedAbilityRevertLocBehavior
             distance: 1
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: grabbed
-        description: " "
-      name: Catcher
-      implementationDetails: "Silver: verified in-game 2026-08-04 (6/6 cases: willing-approach ally, both forced-move variants, size gate, enemy exclusion, walking-away no-fire). Caveat: force-moved OBJECTS are not automated - adjudicate object catches manually."
+          trigger: finishmove
+          subjectRange: "20"
+          name: Catcher
+          mandatory: false
+          abilityType: none
+          numTargets: "1"
+          conditionFormula: ((Not Friends(self, Subject)) and Path.DistanceToCreature(Self) <= 1 and path.Forced) or (Friends(self, subject) and Path.DistanceToCreature(Self) <= 1)
+          guid: 4c3d82f5-9b76-4e0a-af28-7d94c6e53b12
+      guid: 7a2e91c3-5f84-4d1b-b3e7-8c91d4f2a6e0
     - __typeName: CharacterFeature
-      description: The sneak chooses one enemy within distance of the strike to become the target of the strike.
-      guid: 8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48
       domains:
         CharacterFeature:8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48: true
       source: Character Feature
-      implementation: 3
+      description: The sneak chooses one enemy within distance of the strike to become the target of the strike.
       name: Clever Trick
+      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
         domains:
           CharacterFeature:8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48: true
-        source: Character Feature
-        trigger: strike
-        name: Clever Trick
-        targetType: self
-        behavior: powertabletrigger
-        guid: 9f5c32b8-7d04-4a6e-c9f2-4e83b1a06d59
-        sourceguid: 8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48
         range: 10
         powerRollModifier:
           __typeName: CharacterModifier
+          changeTarget: true
+          resourceNumber: 1
           resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
           modtype: none
-          changeTargetFilter: not friends(target, Current)
-          rollType: ability_power_roll
-          resourceNumber: 1
-          name: Clever Trick
-          activationCondition: false
-          behavior: power
-          guid: a0b6d43c-8e15-4b7f-da03-5f94c2b17e6a
-          source: Trigger
-          changeTargetRange: ability
-          rules: ""
           keywords:
             Strike: true
-          changeTarget: true
+          activationCondition: false
           resourceCostType: cost
-        type: trigger
+          rollType: ability_power_roll
+          behavior: power
+          name: Clever Trick
+          source: Trigger
+          changeTargetFilter: not friends(target, Current)
+          rules: ""
+          changeTargetRange: ability
+          guid: a0b6d43c-8e15-4b7f-da03-5f94c2b17e6a
+        targetType: self
+        guid: 9f5c32b8-7d04-4a6e-c9f2-4e83b1a06d59
+        behavior: powertabletrigger
+        trigger: strike
+        name: Clever Trick
+        source: Character Feature
         description: ""
-      - __typeName: CharacterModifier
-        behavior: triggerdisplay
-        guid: b1c7e54d-9f26-4c80-eb14-6a05d3c28f7b
+        type: trigger
         sourceguid: 8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48
+      - __typeName: CharacterModifier
         domains:
           CharacterFeature:8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48: true
-        source: Character Feature
-        name: Clever Trick
         ability:
           __typeName: TriggeredAbilityDisplay
-          target: One enemy
-          guid: c2d8f65e-0a37-4d91-fc25-7b16e4d39a8c
           cost: 1 Malice
-          keywords: []
           distance: Special
           trigger: The sneak is targeted by a strike.
-          name: Clever Trick
+          keywords: []
           effect: The sneak chooses one enemy within distance of the strike to become the target of the strike.
+          name: Clever Trick
+          target: One enemy
+          guid: c2d8f65e-0a37-4d91-fc25-7b16e4d39a8c
+        name: Clever Trick
+        sourceguid: 8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48
+        guid: b1c7e54d-9f26-4c80-eb14-6a05d3c28f7b
+        behavior: triggerdisplay
+        source: Character Feature
         description: ""
-    resistances: []
-    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
-    max_hitpoints: 80
-    walkingSpeed: 7
+      guid: 8e4b21a7-6c93-4f5d-b8e1-3d72a0f95c48
+    monster_type: Bugbear Sneak
+    equipment: []
+    stability: 0
+    max_hitpoints_roll: "80"
+    innateAttacks: []
+    damage_taken: 0
   tokenType: null
   bestiaryId: 8526c45d-0fe0-4b8e-9d40-c68258d727a2
   summonerid: null
@@ -444,6 +443,6 @@ parentFolder: 48e8f60e-8ed1-400a-83c2-e4170481f4b4
 artist: null
 ord: 0
 ctime: 1741590275799
-mtime: 1785851336664
+mtime: 1785708285141
 hidden: false
 id: 8526c45d-0fe0-4b8e-9d40-c68258d727a2

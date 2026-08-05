@@ -52,7 +52,6 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
-    teleportStyle: ""
     updateid: 1962432
     rotation: 0
   appearance:
@@ -111,143 +110,438 @@ info:
   updateid: 6bb01ea4-3f1e-4196-97d5-7c18aee11a6b
   properties:
     __typeName: monster
-    resistances: []
-    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
-      __typeName: StatHistory
-      entries:
-        3571dd70-4876-4100-abdb-09aa5cd92562:
-          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
-          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-10
-          set: 0/1
-          note: Lockdown
-    role: Leader Controller
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          1b8d768b-32e2-44de-972c-2a73f38bf480: 1
-      guid: 0a3c584b-9732-477d-a3e4-81783cc4abc5-1338
-    skillRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      categorization: Signature Ability
-      numTargets: 2 when Mode >= 2 else 1
-      abilityType: none
-      guid: d493a578-5b67-4c3a-b9bd-ba699c48d564
-      keywords: []
-      name: Go.
-      flavor: ""
-      effectImplemented: false
-      modifiers: []
-      targetAllegiance: ally
-      maxChannel: "1"
-      persistence: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      targetType: target
-      description: The target moves up to their speed and uses an action.
-      channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      repeatTargets: false
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          castImmediately: true
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      guid: b519353d-2c06-49fd-b0e3-b54b8dc31285
+      domains:
+        CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
+      description: |-
+        Trigger: The target obtains a tier 1 outcome on one power roll.
+
+        Effect: The target has a double edge on their next power roll before the end of the encounter.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Courtesy Call
+        guid: be53819e-d92a-43c8-8513-68966cb2ffe3
+        sourceguid: b519353d-2c06-49fd-b0e3-b54b8dc31285
+        domains:
+          CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
+        description: |-
+          Trigger: The target obtains a tier 1 outcome on one power roll.
+
+          Effect: The target has a double edge on their next power roll before the end of the encounter.
+        source: Character Feature
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Ranged 10
+          guid: 11d92d05-58a8-402d-9313-2e0ef6faa966
+          keywords: []
+          trigger: The target obtains a tier 1 outcome on one power roll.
+          target: One Creature
+          effect: The target has a double edge on their next power roll before the end of the encounter.
+        behavior: triggerdisplay
+      - __typeName: CharacterModifier
+        name: Courtesy Call
+        guid: e034d77d-16ba-4538-bfc3-852380b37bf3
+        sourceguid: b519353d-2c06-49fd-b0e3-b54b8dc31285
+        domains:
+          CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
+        description: |-
+          Trigger: The target obtains a tier 1 outcome on one power roll.
+
+          Effect: The target has a double edge on their next power roll before the end of the encounter.
+        source: Character Feature
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          triggerPrompt: After a Tier 1 power roll result, you may apply a double edge to the targets next power roll before the end of the encounter.
+          strain: []
+          targetType: subject
+          conditionFormula: Tier One
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: eoe
+            ongoingEffect: f02a12ec-b938-4798-86b3-ddddd7fe0eb3
+            ongoingEffectCustom: false
+          persistence: []
+          repeatTargets: false
+          subject: selfandallies
+          whenActive: combat
+          modifiers: []
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
+          guid: 4b32ae81-79c5-4f9f-988d-69626fc87307
+          numTargets: "1"
+          abilityType: none
+          trigger: rollpower
+          subjectRange: "10"
+          range: 1
+          name: Courtesy Call
+        behavior: trigger
+      source: Character Feature
+      name: Courtesy Call
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 45790cc3-fa79-4b21-b79c-d06cbe4e116d
+      domains:
+        CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
+        CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
+      description: At the end of their turn, the warleader can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: End Effect
+        guid: 3583826a-b1a4-450f-960a-76cf7f75a595
+        sourceguid: 45790cc3-fa79-4b21-b79c-d06cbe4e116d
+        domains:
+          CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
+          CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
+        description: At the end of their turn, the warleader can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
           targetType: self
-          name: Invoked Ability
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            damageToSelf: "5"
+            targetDuration: save
+            conditions: []
+          iconid: ui-icons/skills/1.png
+          guid: 8dcf1954-5131-4774-9505-1c7a4de901a9
+          description: ""
+          domains:
+            CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
+            CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
+          trigger: endturn
+          repeatTargets: false
+          range: 1
+          name: End Effect
+        behavior: trigger
+      source: Trait
+      name: End Effect
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 918fa0d1-65a8-4c25-b199-bc47e35bf85a
+      domains:
+        CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+        CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
+        CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
+      description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Relentless
+        guid: 9d3be6fc-8b1f-49f9-aac4-1eee6d955d8a
+        sourceguid: 918fa0d1-65a8-4c25-b199-bc47e35bf85a
+        domains:
+          CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+          CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
+          CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
+        description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          strain: []
+          targetType: self
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             customAbility:
               __typeName: ActivatedAbility
-              range: 1
+              implementation: 3
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: self
+              modifiers: []
+              behaviors:
+              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+                modifier:
+                  __typeName: CharacterModifier
+                  attributes: []
+                  cannotModifyAction: true
+                  name: Modify Attack
+                  guid: d7756043-ad36-4401-b384-772a3da2848f
+                  ability:
+                    __typeName: ActivatedAbility
+                    display:
+                      bgcolor: "#ffffffff"
+                      hueshift: 0
+                      brightness: 1
+                      saturation: 1
+                    abilityType: none
+                    numTargets: "1"
+                    strain: []
+                    targetType: self
+                    modifiers: []
+                    behaviors:
+                    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                      filterTarget: target.stamina <= 0
+                      abilityType: custom
+                      customAbility:
+                        __typeName: ActivatedAbility
+                        implementation: 3
+                        abilityType: none
+                        numTargets: "1"
+                        strain: []
+                        targetType: self
+                        modifiers: []
+                        behaviors:
+                        - __typeName: ActivatedAbilityHealBehavior
+                          roll: "1"
+                          applyto: caster
+                        repeatTargets: false
+                        iconid: ui-icons/skills/1.png
+                        guid: 413fcfcd-6212-4eda-8654-433b0550acfa
+                        preDescription: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc lives and drops to 1 stamina instead.
+                        display:
+                          bgcolor: "#ffffffff"
+                          hueshift: 0
+                          brightness: 1
+                          saturation: 1
+                        description: ""
+                        persistence: []
+                        range: 1
+                        name: Relentless - Heal if target of free strike dies
+                      invokeOnCaster: true
+                    abilityModification: true
+                    iconid: ui-icons/skills/1.png
+                    guid: af456cc2-8031-4447-9cdc-e91eaaec0f8b
+                    description: ""
+                    repeatTargets: false
+                    range: 1
+                    name: New Ability
+                  modifyDescription: ""
+                  description: ""
+                  source: ""
+                  filterAbility: Ability.Free Strike
+                  behavior: modifyability
+              sourceReference:
+                __typeName: SourceReference
+                docid: cc66844a-04d0-49a0-8687-65ef83b15363
+                page: 218
+              iconid: ui-icons/skills/1.png
+              guid: 42d346ff-80ab-47c0-8cd1-c451d30626e8
+              repeatTargets: false
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
               description: ""
-              behaviors: []
+              persistence: []
+              range: 1
+              name: Relentless Free Strike
+            promptText: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc  lives and drops to 1 stamina instead.
+            applyto: caster
+            invokeOnCaster: true
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          whenActive: combat
+          modifiers: []
+          description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
+          iconid: ui-icons/skills/1.png
+          guid: 49c4ce94-ad66-477f-aebc-ddfc88d40187
+          repeatTargets: false
+          domains:
+            CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
+            CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
+            CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
+          trigger: zerohitpoints
+          numTargets: "1"
+          range: 1
+          name: Relentless
+        behavior: trigger
+      source: Trait
+      name: Relentless
+    inflictedConditions: []
+    walkingSpeed: 6
+    opportunityAttack: 5
+    ongoingEffects: []
+    damage_taken: 0
+    max_hitpoints: 120
+    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
+      __typeName: StatHistory
+      entries:
+        3571dd70-4876-4100-abdb-09aa5cd92562:
+          timestamp: 1767805631522
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: Lockdown
+          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-10
+          set: 0/1
+    1b8d768b-32e2-44de-972c-2a73f38bf480_history:
+      __typeName: StatHistory
+      entries:
+        41171b6d-f574-411b-965b-2c1fe2a986e3:
+          timestamp: 1770738603188
+          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
+          note: Familial Reinforcements
+          refreshid: 81c11d7e-519d-4e57-a74d-d25b01589efc
+          set: "-1/0"
+        35db5c00-30f7-4502-a8e2-c886e18ffee0:
+          timestamp: 1766408256903
+          userid: steam-76561198767161997
+          note: Familial Reinforcements
+          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa
+          set: "-1/0"
+    groupid: 0ae58107-0b97-4f12-9234-b35fa95de40b
+    resources:
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: d05fa103-d645-4dc4-bce3-58c885832dcd-1
+      e06c377e-0819-4b10-b69e-c8b92b80766b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa
+      1b8d768b-32e2-44de-972c-2a73f38bf480:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 81c11d7e-519d-4e57-a74d-d25b01589efc
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-10
+    traitNames: []
+    minion: false
+    equipment: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      objectTarget: false
+      strain: []
+      channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          castImmediately: true
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            guid: a896a061-45fc-4ec7-b179-19001efabfd6
+            namedAbility: Move Speed
+            customAbility:
+              __typeName: ActivatedAbility
               repeatTargets: false
               abilityType: none
               numTargets: "1"
-              guid: f4fe46ad-aee3-40c7-a070-7af934e44eda
-              name: Invoked Ability
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
               targetType: self
+              modifiers: []
+              behaviors: []
+              iconid: ui-icons/skills/1.png
+              guid: f4fe46ad-aee3-40c7-a070-7af934e44eda
+              description: ""
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              range: 1
+              name: Invoked Ability
             applyto: caster_including_squad
-            namedAbility: Move Speed
-            guid: a896a061-45fc-4ec7-b179-19001efabfd6
             abilityType: named
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: 92dee248-5564-4737-9b76-cab40f18bfb3
+            guid: be734cc5-101f-4457-adbb-65962c310dcd
+            applyto: caster
             customAbility:
               __typeName: ActivatedAbility
-              range: 1
-              description: ""
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              abilityType: none
+              numTargets: "1"
+              strain: []
+              targetType: self
+              modifiers: []
               behaviors:
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                standardAbility: 92dee248-5564-4737-9b76-cab40f18bfb3
                 customAbility:
                   __typeName: ActivatedAbility
-                  range: 1
-                  description: ""
-                  behaviors: []
                   repeatTargets: false
                   abilityType: none
                   numTargets: "1"
-                  guid: e0f9b495-c7d0-4255-a45b-169fd02cb1fd
-                  name: Invoked Ability
-                  iconid: ui-icons/skills/1.png
-                  modifiers: []
-                  display:
-                    brightness: 1
-                    hueshift: 0
-                    bgcolor: "#ffffffff"
-                    saturation: 1
                   targetType: self
-                standardAbility: 92dee248-5564-4737-9b76-cab40f18bfb3
+                  modifiers: []
+                  behaviors: []
+                  iconid: ui-icons/skills/1.png
+                  guid: e0f9b495-c7d0-4255-a45b-169fd02cb1fd
+                  description: ""
+                  display:
+                    bgcolor: "#ffffffff"
+                    hueshift: 0
+                    brightness: 1
+                    saturation: 1
+                  range: 1
+                  name: Invoked Ability
                 abilityType: standard
-              persistence: []
-              numTargets: "1"
-              abilityType: none
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              name: Invoked Ability
-              repeatTargets: false
-              guid: a31506ae-a012-4810-9df7-b45151b2c367
               iconid: ui-icons/skills/1.png
-              modifiers: []
-              strain: []
-              targetType: self
-            applyto: caster
-            guid: be734cc5-101f-4457-adbb-65962c310dcd
-            standardAbility: 92dee248-5564-4737-9b76-cab40f18bfb3
+              guid: a31506ae-a012-4810-9df7-b45151b2c367
+              repeatTargets: false
+              description: ""
+              persistence: []
+              range: 1
+              name: Invoked Ability
             abilityType: standard
-          persistence: []
-          strain: []
-          abilityType: none
-          range: 1
           iconid: ui-icons/skills/1.png
-          repeatTargets: false
           guid: dcb2c44e-598a-44fc-b740-f6db0e10d12a
-          numTargets: "1"
-          modifiers: []
+          abilityType: none
           display:
-            brightness: 1
-            hueshift: 0
             bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
             saturation: 1
           description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 222
+      targetFilter: (not target.minion) or (mode = 3)
+      targetAllegiance: ally
+      effectImplemented: false
+      persistence: []
+      keywords: []
+      guid: d493a578-5b67-4c3a-b9bd-ba699c48d564
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 2 when Mode >= 2 else 1
+      targetType: target
+      flavor: ""
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      repeatTargets: false
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
       modeList:
       - condition: ""
         rules: Target one Ally
@@ -258,428 +552,409 @@ info:
       - condition: Heroic Resources Available to Spend.malice > 3
         rules: Target one Ally and a Minion Squad
         text: 3 Malice
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      implementation: 3
-      range: 10
-      objectTarget: false
-      targetFilter: (not target.minion) or (mode = 3)
-      strain: []
-      multipleModes: true
-    - __typeName: ActivatedAbility
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       categorization: Signature Ability
-      abilityType: none
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      modifiers: []
+      maxChannel: "1"
+      description: The target moves up to their speed and uses an action.
+      multipleModes: true
+      range: 10
+      name: Go.
+    - __typeName: ActivatedAbility
+      implementation: 4
+      objectTarget: false
+      strain: []
+      targetType: target
+      flavor: ""
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 221
+      targetFilter: Enemy
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
       persistence: []
+      targetAllegiance: enemy
+      abilityType: none
+      numTargets: 1
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Signature Ability
+      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       guid: 2759d5fb-a10d-419a-b3f8-7bbbccc9b8b1
-      description: ""
-      range: 1
-      name: Mace Lariat
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         tiers:
         - 7 damage; push 1; M<1 dazed (save ends)
         - 10 damage; push 3; M<2 dazed (save ends)
         - 13 damage; push 5; M<3 dazed (save ends)
-        promptWhenResolvingText: Select targets to push in your preferred order.
         promptWhenResolving: true
+        promptWhenResolvingText: Select targets to push in your preferred order.
         roll: 2d10 + 3
       repeatTargets: false
-      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
-      flavor: ""
-      targetAllegiance: enemy
-      numTargets: 1
-      implementation: 4
-      targetType: target
-      objectTarget: false
-      targetFilter: Enemy
-      strain: []
+      description: ""
       display:
-        brightness: 1
-        hueshift: 0
         bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
         saturation: 1
+      range: 1
+      name: Mace Lariat
     - __typeName: ActivatedAbility
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      persistence: []
-      abilityType: none
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      effectImplemented: false
-      modifiers: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
+      implementation: 3
+      strain: []
+      targetType: target
+      flavor: ""
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 222
+      targetFilter: not Enemy
+      effectImplemented: false
+      persistence: []
       resourceNumber: 3
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      abilityType: none
+      numTargets: 3 and Self
+      repeatTargets: false
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       keywords: []
-      targetType: target
-      name: Lockdown
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
+      guid: 2f2df48b-9e5d-471a-8f0b-e541241d19f5
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: move speed
+        abilityType: named
         customAbility:
           __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
           repeatTargets: false
           abilityType: none
           numTargets: "1"
-          guid: 60f9da24-7391-4a12-9608-687c08981282
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
           targetType: self
-        abilityType: named
-        namedAbility: move speed
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 60f9da24-7391-4a12-9608-687c08981282
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
         autoTarget: false
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          strain: []
           targetType: self
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+            modifier:
+              __typeName: CharacterModifier
+              attributes: []
+              cannotModifyAction: true
+              guid: 3e8892c1-9c84-4348-a80b-baaa19361ed8
+              behavior: modifyability
+              name: Modify Attack
+              description: ""
+              source: ""
+              filterAbility: Ability.name is "grab"
+              ability:
+                __typeName: ActivatedAbility
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
+                abilityType: none
+                numTargets: "1"
+                strain: []
+                targetType: self
+                modifiers: []
+                behaviors:
+                - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                  duration: 0
+                  applyto: caster
+                  ongoingEffect: a9ef06ef-c643-4316-a177-b9f45291461e
+                  ongoingEffectCustom: 64764505-196b-4c16-981e-049676ec2295
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: cc789b59-879f-4cea-9d41-03f6f0b519d9
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
           sourceReference:
             __typeName: SourceReference
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
             page: 222
-          range: 1
-          description: ""
-          behaviors:
-          - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-            modifier:
-              __typeName: CharacterModifier
-              name: Modify Attack
-              guid: 3e8892c1-9c84-4348-a80b-baaa19361ed8
-              filterAbility: Ability.name is "grab"
-              behavior: modifyability
-              source: ""
-              cannotModifyAction: true
-              ability:
-                __typeName: ActivatedAbility
-                abilityModification: true
-                range: 1
-                description: ""
-                behaviors:
-                - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                  ongoingEffect: a9ef06ef-c643-4316-a177-b9f45291461e
-                  applyto: caster
-                  duration: 0
-                  ongoingEffectCustom: 64764505-196b-4c16-981e-049676ec2295
-                guid: cc789b59-879f-4cea-9d41-03f6f0b519d9
-                abilityType: none
-                strain: []
-                name: New Ability
-                repeatTargets: false
-                numTargets: "1"
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                display:
-                  brightness: 1
-                  hueshift: 0
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                targetType: self
-              description: ""
-              attributes: []
-          persistence: []
-          name: Invoked Ability
-          abilityType: none
-          numTargets: "1"
-          strain: []
-          repeatTargets: false
+          iconid: ui-icons/skills/1.png
           guid: 508ae3a1-405b-462d-85cb-fe21b7cb96d7
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
           targetTextOverride: bil
+          repeatTargets: false
+          description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
         abilityType: custom
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: named
+        namedAbility: move speed
         customAbility:
           __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
           repeatTargets: false
           abilityType: none
           numTargets: "1"
-          guid: 0fb3d9dd-da46-46dc-b92a-a500061d90eb
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
           targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 0fb3d9dd-da46-46dc-b92a-a500061d90eb
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
         applyto: caster
-        namedAbility: move speed
         invokeOnCaster: true
-        abilityType: named
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
-          range: 1
-          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          numTargets: "1"
+          strain: []
+          targetType: self
+          modifiers: []
           behaviors:
           - __typeName: ActivatedAbilityAugmentedAbilityBehavior
             modifier:
               __typeName: CharacterModifier
+              attributes: []
               cannotModifyAction: true
-              modifyDescription: ""
+              name: Modify Attack
               guid: 928ff9bf-44d9-4df4-acaa-abdcf6a333ee
-              filterAbility: Ability.name is "grab"
               ability:
                 __typeName: ActivatedAbility
-                abilityModification: true
-                range: 1
-                description: ""
-                behaviors: []
-                guid: ed185ff9-7c3a-4d2a-92a4-de9459a730b2
+                display:
+                  bgcolor: "#ffffffff"
+                  hueshift: 0
+                  brightness: 1
+                  saturation: 1
                 abilityType: none
                 numTargets: "1"
-                name: New Ability
-                repeatTargets: false
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                display:
-                  brightness: 1
-                  hueshift: 0
-                  bgcolor: "#ffffffff"
-                  saturation: 1
                 targetType: self
-              source: ""
-              attributes: []
+                modifiers: []
+                behaviors: []
+                abilityModification: true
+                iconid: ui-icons/skills/1.png
+                guid: ed185ff9-7c3a-4d2a-92a4-de9459a730b2
+                description: ""
+                repeatTargets: false
+                range: 1
+                name: New Ability
+              modifyDescription: ""
               description: ""
+              source: ""
+              filterAbility: Ability.name is "grab"
               behavior: modifyability
-              name: Modify Attack
-          persistence: []
-          numTargets: "1"
-          abilityType: none
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          name: Invoked Ability
-          repeatTargets: false
-          guid: 9359adf1-2f59-4f6e-9a7f-6d612987e1f2
           iconid: ui-icons/skills/1.png
-          modifiers: []
-          strain: []
-          targetType: self
+          guid: 9359adf1-2f59-4f6e-9a7f-6d612987e1f2
+          repeatTargets: false
+          description: ""
+          persistence: []
+          range: 1
+          name: Invoked Ability
+        abilityType: custom
         applyto: caster
         invokeOnCaster: true
-        abilityType: custom
-      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       description: Each target moves up to their speed and uses the Grab maneuver with an edge. The warleader moves up to their speed.
-      numTargets: 3 and Self
-      flavor: ""
-      range: 10
-      implementation: 3
-      guid: 2f2df48b-9e5d-471a-8f0b-e541241d19f5
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      targetFilter: not Enemy
-      strain: []
       categorization: Heroic Ability
-    - __typeName: ActivatedAbility
-      actionResourceId: none
-      rangeTextOverride: 10 burst
-      persistence: []
-      villainAction: Villain Action 1
-      abilityType: none
-      usageLimitOptions:
-        multicharge: false
-        resourceid: e06c377e-0819-4b10-b69e-c8b92b80766b
-        resourceRefreshType: encounter
-        charges: "1"
-      keywords:
-        Area: true
       range: 10
-      effectImplemented: false
-      modifiers: []
-      targetAllegiance: ally
-      name: Close In
+      name: Lockdown
+    - __typeName: ActivatedAbility
+      objectTarget: false
+      strain: []
+      targetType: all
+      flavor: ""
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 222
-      objectTarget: false
-      targetType: all
-      description: Each target moves up to their speed. Each enemy within 1 of a target makes an Intuition test.
+      targetFilter: ""
+      keywords:
+        Area: true
+      effectImplemented: false
+      persistence: []
+      usageLimitOptions:
+        multicharge: false
+        resourceid: e06c377e-0819-4b10-b69e-c8b92b80766b
+        charges: "1"
+        resourceRefreshType: encounter
+      targetTextOverride: Each ally in the area
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      villainAction: Villain Action 1
+      numTargets: 1
+      abilityType: none
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: 132c7bd1-8d44-4dba-91ba-4d5d1e87c491
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
         namedAbility: Move Speed
         abilityType: named
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
-          persistence: []
+          repeatTargets: false
           abilityType: none
+          numTargets: "1"
+          targetType: self
           modifiers: []
-          targetAllegiance: enemy
-          targetType: all
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 132c7bd1-8d44-4dba-91ba-4d5d1e87c491
           description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        filterTarget: ""
+        promptText: Each enemy adjacent to a target after this move makes an <b>Intuition test.</b>
+        customAbility:
+          __typeName: ActivatedAbility
+          objectTarget: false
+          strain: []
+          targetType: all
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: c31547f6-ca7f-49d1-b465-71a18ea4b3e4
             duration: 0
+            ongoingEffect: c31547f6-ca7f-49d1-b465-71a18ea4b3e4
             ongoingEffectCustom: c31547f6-ca7f-49d1-b465-71a18ea4b3e4
-          repeatTargets: false
-          guid: 4d0a2325-c64c-4da0-9faa-ce88f07fe22e
-          name: Close In Intuition Test
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          numTargets: "1"
-          range: 1
           sourceReference:
             __typeName: SourceReference
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
             page: 222
-          iconid: ebc8b529-f450-4bee-9466-86374c26dc13
           targetFilter: ""
-          strain: []
-          objectTarget: false
-        promptText: Each enemy adjacent to a target after this move makes an <b>Intuition test.</b>
-        filterTarget: ""
+          persistence: []
+          targetAllegiance: enemy
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+          guid: 4d0a2325-c64c-4da0-9faa-ce88f07fe22e
+          repeatTargets: false
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Close In Intuition Test
         applyto: targets
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
           __typeName: ActivatedAbility
-          guid: b5715ea2-9837-4eb5-8634-23e5d75f9230
-          abilityType: none
-          modifiers: []
-          targetAllegiance: enemy
-          range: "100"
-          description: ""
+          objectTarget: false
+          strain: []
+          targetType: all
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
+            resistanceRoll: true
+            roll: 2d10 + Might or Agility
+            isTest: false
             tiers:
             - Frightened (Save Ends)
             - Frightened (EoT)
             - No Effect
-            isTest: false
-            resistanceRoll: true
-            roll: 2d10 + Might or Agility
-          repeatTargets: false
-          targetType: all
-          persistence: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          numTargets: "1"
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
           targetFilter: Ongoing Effects has "Closed In"
-          strain: []
-          objectTarget: false
+          persistence: []
+          targetAllegiance: enemy
+          abilityType: none
+          numTargets: "1"
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: b5715ea2-9837-4eb5-8634-23e5d75f9230
+          repeatTargets: false
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: "100"
+          name: Invoked Ability
         applyto: caster
-      repeatTargets: false
-      flavor: ""
-      guid: 33e8dcc6-e8d5-490b-abd6-3b28c65eeba7
-      numTargets: 1
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      implementation: 3
-      categorization: Heroic Ability
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      targetFilter: ""
-      strain: []
-      targetTextOverride: Each ally in the area
-    - __typeName: ActivatedAbility
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      persistence: []
-      villainAction: Villain Action 2
-      abilityType: none
-      usageLimitOptions:
-        multicharge: false
-        resourceid: 1b8d768b-32e2-44de-972c-2a73f38bf480
-        resourceRefreshType: encounter
-        charges: "1"
-      keywords:
-        Area: true
-      effectImplemented: false
       modifiers: []
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 222
-      numTargets: "1"
-      range: "10"
-      name: Familial Reinforcements
+      actionResourceId: none
+      repeatTargets: false
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      guid: 33e8dcc6-e8d5-490b-abd6-3b28c65eeba7
+      rangeTextOverride: 10 burst
+      categorization: Heroic Ability
+      description: Each target moves up to their speed. Each enemy within 1 of a target makes an Intuition test.
+      targetAllegiance: ally
+      range: 10
+      name: Close In
+    - __typeName: ActivatedAbility
+      implementation: 4
+      strain: []
+      targetType: emptyspace
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        runOnController: false
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
         customAbility:
           __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
           repeatTargets: false
           abilityType: none
           numTargets: "1"
-          guid: 7a5f5f70-c783-44d5-9145-ffa2b70f4099
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
           targetType: self
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        abilityType: standard
-        invokeOnCaster: true
-        applyto: caster
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 7a5f5f70-c783-44d5-9145-ffa2b70f4099
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
         standardAbilityParams:
           distance: walking speed
-        runOnController: false
+        applyto: caster
+        invokeOnCaster: true
       - __typeName: ActivatedAbilitySummonBehavior
         monsterType: f9d78af7-f7b6-48a8-bf50-e17ab81fcb25
         numSummons: "1"
@@ -689,228 +964,291 @@ info:
         monsterType: f9d78af7-f7b6-48a8-bf50-e17ab81fcb25
       - __typeName: ActivatedAbilitySummonBehavior
         monsterType: f9d78af7-f7b6-48a8-bf50-e17ab81fcb25
-      repeatTargets: false
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      targetType: emptyspace
-      flavor: ""
       categorization: Villain Action
-      implementation: 4
-      guid: e4bed306-a00e-4d6c-a47b-fe599914d424
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
       targetFilter: not Enemy
-      strain: []
-      description: The warleader shifts up to their speed and 4 orc blitzers appear in unoccupied spaces within distance.
-    - __typeName: ActivatedAbility
-      actionResourceId: none
-      categorization: Villain Action
-      villainAction: Villain Action 3
-      abilityType: none
+      effectImplemented: false
+      persistence: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      villainAction: Villain Action 2
+      numTargets: "1"
+      flavor: ""
       usageLimitOptions:
         multicharge: false
-        resourceid: b56f9bad-a097-4608-ae93-ec07bed84ce7
-        resourceRefreshType: encounter
+        resourceid: 1b8d768b-32e2-44de-972c-2a73f38bf480
         charges: "1"
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
-      effectImplemented: false
+        resourceRefreshType: encounter
       modifiers: []
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      range: 1
-      description: Three times in succession, the warleader shifts up to their speed and can use Mace Lariat
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: 58752188-4480-49f1-bb1c-7bb9d0b8ca37
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        abilityType: standard
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: d0890d79-1856-483c-bf36-7c1e7cdcaa59
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        namedAbility: Mace Lariat
-        abilityType: named
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: a8cae628-8a8f-4886-9f3f-c0e60f07e254
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        abilityType: standard
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: d644dea2-6433-4669-8306-73b1c3668b53
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        namedAbility: Mace Lariat
-        abilityType: named
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: 08f49664-ed13-4541-b256-c1f80c5de403
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        abilityType: standard
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          __typeName: ActivatedAbility
-          range: 1
-          description: ""
-          behaviors: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          guid: fe82198a-a251-4906-8830-d6c6aa01520d
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-        namedAbility: Mace Lariat
-        abilityType: named
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      abilityType: none
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      guid: e4bed306-a00e-4d6c-a47b-fe599914d424
+      keywords:
+        Area: true
       repeatTargets: false
-      flavor: ""
-      name: I'll Do This Myself
-      numTargets: "1"
-      guid: ce0ff705-d389-469d-8fd6-394e38871fe8
+      description: The warleader shifts up to their speed and 4 orc blitzers appear in unoccupied spaces within distance.
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 222
+      range: "10"
+      name: Familial Reinforcements
+    - __typeName: ActivatedAbility
       implementation: 4
+      strain: []
+      targetType: self
+      flavor: ""
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 221
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      targetType: self
-      strain: []
+      effectImplemented: false
       persistence: []
-    keywords:
-      Orc: true
-      Humanoid: true
-    inflictedConditions: []
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      villainAction: Villain Action 3
+      numTargets: "1"
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 58752188-4480-49f1-bb1c-7bb9d0b8ca37
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        abilityType: standard
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: Mace Lariat
+        abilityType: named
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: d0890d79-1856-483c-bf36-7c1e7cdcaa59
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: a8cae628-8a8f-4886-9f3f-c0e60f07e254
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        abilityType: standard
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: Mace Lariat
+        abilityType: named
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: d644dea2-6433-4669-8306-73b1c3668b53
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: 08f49664-ed13-4541-b256-c1f80c5de403
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+        abilityType: standard
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: Mace Lariat
+        abilityType: named
+        customAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          abilityType: none
+          numTargets: "1"
+          targetType: self
+          modifiers: []
+          behaviors: []
+          iconid: ui-icons/skills/1.png
+          guid: fe82198a-a251-4906-8830-d6c6aa01520d
+          description: ""
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          range: 1
+          name: Invoked Ability
+      usageLimitOptions:
+        multicharge: false
+        resourceid: b56f9bad-a097-4608-ae93-ec07bed84ce7
+        charges: "1"
+        resourceRefreshType: encounter
+      modifiers: []
+      actionResourceId: none
+      abilityType: none
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      guid: ce0ff705-d389-469d-8fd6-394e38871fe8
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      repeatTargets: false
+      description: Three times in succession, the warleader shifts up to their speed and can use Mace Lariat
+      categorization: Villain Action
+      range: 1
+      name: I'll Do This Myself
+    equipmentMeta:
+      offhand0: []
+    skillProficiencies: []
+    max_hitpoints_roll: "30"
+    levelChoices: []
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        3d96ea21-eee2-40fc-aa8b-feca730c5076:
+          timestamp: 1766405556299
+          userid: steam-76561198767161997
+          note: Close In
+          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-8
+          set: 0/1
+        f3cceca3-c2d1-4cec-9f67-28ab84be8556:
+          timestamp: 1769855944056
+          userid: 4V4KWXdW7ScFIiEyuknO4bqmQSc2
+          note: Go.
+          refreshid: d05fa103-d645-4dc4-bce3-58c885832dcd-1
+          set: 0/1
     stability: 2
-    availableTriggers: []
-    monster_type: Orc Warleader
-    equipment: []
-    savingThrowRatings: []
     titles: []
-    ongoingEffects: []
-    damage_taken: 0
+    notes:
+    - title: Monster Notes
+      text: ""
+    role: Leader Controller
+    ev: 20
+    movementSpeeds:
+      burrow: 6
     e06c377e-0819-4b10-b69e-c8b92b80766b_history:
       __typeName: StatHistory
       entries:
         48c76248-c25c-44b6-9145-5437b4678a53:
+          timestamp: 1766405556299
           userid: steam-76561198767161997
+          note: Close In
           refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa
           set: "-1/0"
-          note: Close In
-    movementSpeeds:
-      burrow: 6
-    monster_category: Monster
-    groupid: 0ae58107-0b97-4f12-9234-b35fa95de40b
-    levelChoices: []
-    resources:
-      1b8d768b-32e2-44de-972c-2a73f38bf480:
-        __typeName: CharacterResource
-        refreshid: 81c11d7e-519d-4e57-a74d-d25b01589efc
-        used: 1
-      e06c377e-0819-4b10-b69e-c8b92b80766b:
-        __typeName: CharacterResource
-        refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa
-        used: 1
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        refreshid: d05fa103-d645-4dc4-bce3-58c885832dcd-1
-        used: 1
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-10
-        used: 1
-    creatureSize: 1M
+    attributes:
+      int:
+        __typeName: CharacterAttribute
+        id: int
+      cha:
+        __typeName: CharacterAttribute
+        id: cha
+      con:
+        __typeName: CharacterAttribute
+        id: con
+      prs:
+        id: prs
+        baseValue: 2
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 2
+      agl:
+        __typeName: CharacterAttribute
+        id: agl
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      wis:
+        __typeName: CharacterAttribute
+        id: wis
+      str:
+        __typeName: CharacterAttribute
+        id: str
+      mgt:
+        __typeName: CharacterAttribute
+        id: mgt
+        baseValue: 3
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: 0
+    savingThrowRatings: []
+    resistances: []
+    cr: 3
+    monster_type: Orc Warleader
+    availableTriggers: []
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          1b8d768b-32e2-44de-972c-2a73f38bf480: 1
+      guid: 0a3c584b-9732-477d-a3e4-81783cc4abc5-1338
+    innateAttacks: []
+    initiativeGrouping: 0db22589-1213-4534-a449-5b69a9be1f8e
     import:
       type: mcdm
       data: |
@@ -1045,347 +1383,12 @@ info:
         The scyza deals an additional 6 damage on strikes and abilities used against objects.
 
         Retainer
-    skillProficiencies: []
-    opportunityAttack: 5
-    minion: false
-    walkingSpeed: 6
-    traitNames: []
-    equipmentMeta:
-      offhand0: []
-    initiativeGrouping: 0db22589-1213-4534-a449-5b69a9be1f8e
-    innateAttacks: []
-    max_hitpoints_roll: "30"
-    cr: 3
-    max_hitpoints: 120
-    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
-      __typeName: StatHistory
-      entries:
-        f3cceca3-c2d1-4cec-9f67-28ab84be8556:
-          userid: 4V4KWXdW7ScFIiEyuknO4bqmQSc2
-          refreshid: d05fa103-d645-4dc4-bce3-58c885832dcd-1
-          set: 0/1
-          note: Go.
-        3d96ea21-eee2-40fc-aa8b-feca730c5076:
-          userid: steam-76561198767161997
-          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa-8
-          set: 0/1
-          note: Close In
-    characterFeatures:
-    - __typeName: CharacterFeature
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: b519353d-2c06-49fd-b0e3-b54b8dc31285
-        behavior: triggerdisplay
-        source: Character Feature
-        name: Courtesy Call
-        domains:
-          CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
-        guid: be53819e-d92a-43c8-8513-68966cb2ffe3
-        description: |-
-          Trigger: The target obtains a tier 1 outcome on one power roll.
-
-          Effect: The target has a double edge on their next power roll before the end of the encounter.
-        ability:
-          __typeName: TriggeredAbilityDisplay
-          trigger: The target obtains a tier 1 outcome on one power roll.
-          keywords: []
-          target: One Creature
-          guid: 11d92d05-58a8-402d-9313-2e0ef6faa966
-          effect: The target has a double edge on their next power roll before the end of the encounter.
-          distance: Ranged 10
-      - __typeName: CharacterModifier
-        sourceguid: b519353d-2c06-49fd-b0e3-b54b8dc31285
-        behavior: trigger
-        source: Character Feature
-        name: Courtesy Call
-        domains:
-          CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
-        guid: e034d77d-16ba-4538-bfc3-852380b37bf3
-        description: |-
-          Trigger: The target obtains a tier 1 outcome on one power roll.
-
-          Effect: The target has a double edge on their next power roll before the end of the encounter.
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          mandatory: false
-          guid: 4b32ae81-79c5-4f9f-988d-69626fc87307
-          abilityType: none
-          triggerPrompt: After a Tier 1 power roll result, you may apply a double edge to the targets next power roll before the end of the encounter.
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          subject: selfandallies
-          whenActive: combat
-          targetType: subject
-          description: ""
-          conditionFormula: Tier One
-          repeatTargets: false
-          persistence: []
-          subjectRange: "10"
-          trigger: rollpower
-          iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: f02a12ec-b938-4798-86b3-ddddd7fe0eb3
-            duration: eoe
-            ongoingEffectCustom: false
-          numTargets: "1"
-          name: Courtesy Call
-          strain: []
-          range: 1
-      implementation: 4
-      description: |-
-        Trigger: The target obtains a tier 1 outcome on one power roll.
-
-        Effect: The target has a double edge on their next power roll before the end of the encounter.
-      domains:
-        CharacterFeature:b519353d-2c06-49fd-b0e3-b54b8dc31285: true
-      guid: b519353d-2c06-49fd-b0e3-b54b8dc31285
-      source: Character Feature
-      name: Courtesy Call
-    - __typeName: CharacterFeature
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 45790cc3-fa79-4b21-b79c-d06cbe4e116d
-        behavior: trigger
-        source: Trait
-        name: End Effect
-        domains:
-          CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
-          CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
-        guid: 3583826a-b1a4-450f-960a-76cf7f75a595
-        description: At the end of their turn, the warleader can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          range: 1
-          description: ""
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            targetDuration: save
-            purgeType: one
-            damageToSelf: "5"
-            conditions: []
-          guid: 8dcf1954-5131-4774-9505-1c7a4de901a9
-          numTargets: "1"
-          abilityType: none
-          trigger: endturn
-          name: End Effect
-          repeatTargets: false
-          domains:
-            CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
-            CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          targetType: self
-      implementation: 3
-      description: At the end of their turn, the warleader can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
-      domains:
-        CharacterFeature:9fc703ad-c01f-41fc-a8e0-232a8a5294a8: true
-        CharacterFeature:45790cc3-fa79-4b21-b79c-d06cbe4e116d: true
-      guid: 45790cc3-fa79-4b21-b79c-d06cbe4e116d
-      source: Trait
-      name: End Effect
-    - __typeName: CharacterFeature
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 918fa0d1-65a8-4c25-b199-bc47e35bf85a
-        behavior: trigger
-        source: Trait
-        name: Relentless
-        domains:
-          CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
-          CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-          CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
-        guid: 9d3be6fc-8b1f-49f9-aac4-1eee6d955d8a
-        description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          persistence: []
-          abilityType: none
-          modifiers: []
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          whenActive: combat
-          range: 1
-          description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            customAbility:
-              __typeName: ActivatedAbility
-              strain: []
-              sourceReference:
-                __typeName: SourceReference
-                docid: cc66844a-04d0-49a0-8687-65ef83b15363
-                page: 218
-              range: 1
-              description: ""
-              behaviors:
-              - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-                modifier:
-                  __typeName: CharacterModifier
-                  cannotModifyAction: true
-                  modifyDescription: ""
-                  guid: d7756043-ad36-4401-b384-772a3da2848f
-                  filterAbility: Ability.Free Strike
-                  ability:
-                    __typeName: ActivatedAbility
-                    abilityModification: true
-                    range: 1
-                    description: ""
-                    behaviors:
-                    - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                      customAbility:
-                        __typeName: ActivatedAbility
-                        iconid: ui-icons/skills/1.png
-                        strain: []
-                        range: 1
-                        description: ""
-                        behaviors:
-                        - __typeName: ActivatedAbilityHealBehavior
-                          roll: "1"
-                          applyto: caster
-                        persistence: []
-                        name: Relentless - Heal if target of free strike dies
-                        abilityType: none
-                        repeatTargets: false
-                        guid: 413fcfcd-6212-4eda-8654-433b0550acfa
-                        implementation: 3
-                        preDescription: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc lives and drops to 1 stamina instead.
-                        numTargets: "1"
-                        modifiers: []
-                        display:
-                          brightness: 1
-                          hueshift: 0
-                          bgcolor: "#ffffffff"
-                          saturation: 1
-                        targetType: self
-                      filterTarget: target.stamina <= 0
-                      invokeOnCaster: true
-                      abilityType: custom
-                    guid: af456cc2-8031-4447-9cdc-e91eaaec0f8b
-                    abilityType: none
-                    strain: []
-                    name: New Ability
-                    repeatTargets: false
-                    numTargets: "1"
-                    iconid: ui-icons/skills/1.png
-                    modifiers: []
-                    display:
-                      brightness: 1
-                      hueshift: 0
-                      bgcolor: "#ffffffff"
-                      saturation: 1
-                    targetType: self
-                  source: ""
-                  attributes: []
-                  description: ""
-                  behavior: modifyability
-                  name: Modify Attack
-              persistence: []
-              name: Relentless Free Strike
-              abilityType: none
-              numTargets: "1"
-              guid: 42d346ff-80ab-47c0-8cd1-c451d30626e8
-              implementation: 3
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              targetType: self
-            promptText: The dying Orc selects a Creature to Free Strike, if the target is reduce to 0 stamina the orc  lives and drops to 1 stamina instead.
-            applyto: caster
-            invokeOnCaster: true
-          repeatTargets: false
-          trigger: zerohitpoints
-          targetType: self
-          iconid: ui-icons/skills/1.png
-          domains:
-            CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
-            CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-            CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
-          numTargets: "1"
-          name: Relentless
-          strain: []
-          guid: 49c4ce94-ad66-477f-aebc-ddfc88d40187
-      implementation: 3
-      description: If the Orc Warleader's Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the strike, the bloodrunner lives and their Stamina is reduced to 1 instead.
-      domains:
-        CharacterFeature:918fa0d1-65a8-4c25-b199-bc47e35bf85a: true
-        CharacterFeature:3dffdd54-c55d-45d6-a144-712bf63a488a: true
-        CharacterFeature:3fac0992-8147-4855-b5fd-6634567d627f: true
-      guid: 918fa0d1-65a8-4c25-b199-bc47e35bf85a
-      source: Trait
-      name: Relentless
-    1b8d768b-32e2-44de-972c-2a73f38bf480_history:
-      __typeName: StatHistory
-      entries:
-        41171b6d-f574-411b-965b-2c1fe2a986e3:
-          userid: KFXv2v9vvoReDVHlX2qLncupvbN2
-          refreshid: 81c11d7e-519d-4e57-a74d-d25b01589efc
-          set: "-1/0"
-          note: Familial Reinforcements
-        35db5c00-30f7-4502-a8e2-c886e18ffee0:
-          userid: steam-76561198767161997
-          refreshid: 7d81d3d6-f262-4fe8-b304-3c79af609daa
-          set: "-1/0"
-          note: Familial Reinforcements
-    ev: 20
-    attributes:
-      cha:
-        __typeName: CharacterAttribute
-        id: cha
-      str:
-        __typeName: CharacterAttribute
-        id: str
-      int:
-        __typeName: CharacterAttribute
-        id: int
-      wis:
-        __typeName: CharacterAttribute
-        id: wis
-      con:
-        __typeName: CharacterAttribute
-        id: con
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      inu:
-        __typeName: CharacterAttribute
-        id: inu
-        baseValue: 2
-      agl:
-        __typeName: CharacterAttribute
-        id: agl
-        baseValue: 2
-      rea:
-        __typeName: CharacterAttribute
-        id: rea
-        baseValue: 0
-      mgt:
-        __typeName: CharacterAttribute
-        id: mgt
-        baseValue: 3
-      prs:
-        id: prs
-        baseValue: 2
-    notes:
-    - title: Monster Notes
-      text: ""
+    skillRatings: []
+    creatureSize: 1M
+    monster_category: Monster
+    keywords:
+      Orc: true
+      Humanoid: true
   tokenType: null
   bestiaryId: de5149cf-3e0d-4b06-b8bb-143522a904a9
   summonerid: null
@@ -1398,6 +1401,6 @@ parentFolder: f43667d5-4db9-4db9-8378-2563caa1fbc0
 artist: null
 ord: 4
 ctime: 1766409637660
-mtime: 1785429747280
+mtime: 1775375012602
 hidden: false
 id: de5149cf-3e0d-4b06-b8bb-143522a904a9

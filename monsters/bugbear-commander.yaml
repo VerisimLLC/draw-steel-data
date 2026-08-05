@@ -58,409 +58,533 @@ info:
   updateid: e8079fc6-acb7-4cb3-900f-fcf4cbe1f246
   properties:
     __typeName: monster
+    opportunityAttack: 5
+    keywords:
+      Bugbear: true
+      Fey: true
+      Humanoid: true
+      Goblin: true
+    savingThrowRatings: []
+    creatureSize: 1L
+    skillProficiencies: []
+    initiativeGrouping: f06768e5-b71e-4612-9f94-327f5dbed9ba
+    attributes:
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 2
+      prs:
+        id: prs
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 2
+    skillRatings: []
+    equipment: []
+    role: Elite Support
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:a631ddba-35ef-450f-b0da-246cbe695930: true
+      source: Trait
+      description: While an ally has line of effect to the commander, the ally can end one condition afflicting them at the start of their turn.
+      name: The Commander's Watching
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:a631ddba-35ef-450f-b0da-246cbe695930: true
+        behavior: trigger
+        source: Trait
+        sourceguid: a631ddba-35ef-450f-b0da-246cbe695930
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: subject
+          subject: allies
+          numTargets: "1"
+          modifiers: []
+          description: Any ally who has line of effect to the commander can end one condition on themself at the start of each of their turns.
+          whenActive: combat
+          range: 1
+          strain: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            includeProne: true
+            conditions: []
+          guid: 1f97145e-2b15-40e0-9b73-c0b5b21b51f2
+          trigger: beginturn
+          name: The Commander's Watching
+          mandatory: false
+          abilityType: none
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          persistence: []
+        guid: 1bc47b4d-3ebd-47b6-8b48-afc5a776cb75
+        name: The Commander's Watching
+        description: While an ally has line of effect to the commander, the ally can end one condition afflicting them at the start of their turn.
+      guid: a631ddba-35ef-450f-b0da-246cbe695930
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
+        CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
+      source: Character Feature
+      description: " "
+      name: Catcher
+      implementation: 2
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
+          CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
+        behavior: trigger
+        source: Character Feature
+        sourceguid: 46e1891f-8463-4676-978f-4685cb36d5ef
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: subject
+          subject: other
+          repeatTargets: false
+          guid: 2b11cf4f-6079-4cf1-abec-7776c0a0f170
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          description: |-
+            Trigger: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
+            Effect: The target is grabbed by the channeler.
+          whenActive: combat
+          range: 1
+          triggerPrompt: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
+          strain: []
+          mandatory: false
+          hasManualVersion: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors:
+          - __typeName: ActivatedAbilityRevertLocBehavior
+            distance: 1
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: grabbed
+          numTargets: "1"
+          subjectRange: "20"
+          name: Catcher
+          trigger: finishmove
+          abilityType: none
+          domains:
+            CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
+            CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
+          conditionFormula: ((Not Friends(self, Subject)) and Path.DistanceToCreature(Self) <= 1 and path.Forced) or (Friends(self, subject) and Path.DistanceToCreature(Self) <= 1)
+          persistence: []
+        guid: 9fc4bb35-16f5-44ff-bea7-c2c247300f33
+        name: Catcher
+        description: " "
+      guid: 296d82a3-1278-4dc9-851b-a24532eada05
+    titles: []
+    availableTriggers: []
+    innateAttacks: []
+    walkingSpeed: 5
     levelChoices: []
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+      guid: 335b9749-5042-440d-887c-a85a56cdcf7b-408
+    max_hitpoints_roll: "80"
+    damage_taken: 0
+    traitNames: []
+    cr: 2
+    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
+      __typeName: StatHistory
+      entries:
+        10ff5122-4419-4a69-a31c-d7ce7c2a3a36:
+          set: 0/1
+          note: Throw
+          timestamp: 1777386594618
+          refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
+          userid: steam-76561198767161997
+    ev: 16
+    movementSpeeds: []
     notes:
     - title: Monster Notes
       text: ""
-    skillProficiencies: []
-    initiativeGrouping: f06768e5-b71e-4612-9f94-327f5dbed9ba
-    role: Elite Support
-    titles: []
-    movementSpeeds: []
-    innateAttacks: []
+    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
+        used: 1
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
+        used: 1
     resistances: []
-    savingThrowRatings: []
+    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
+      __typeName: StatHistory
+      entries:
+        296fc0af-2601-47d6-b67e-9522b1c4724e:
+          set: 0/1
+          note: Fall Back!
+          timestamp: 1777386578326
+          refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
+          userid: steam-76561198767161997
+    max_hitpoints: 80
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      range: 1
-      abilityType: none
-      guid: 1d13ef1b-d893-434f-a4f2-d67cc5d7986f
-      iconid: ui-icons/skills/1.png
       keywords:
+        Melee: true
         Weapon: true
         Strike: true
-        Melee: true
-      sourceReference:
-        __typeName: SourceReference
-        page: 53
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Signature Ability
+      guid: 1d13ef1b-d893-434f-a4f2-d67cc5d7986f
+      modifiers: []
+      description: 1 ally within 5 of the commander has an edge on their next attack until the start of the commander's next turn.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      strain: []
+      targetType: target
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
         tiers:
         - 7 damage
         - 10 damage
         - 13 damage; one target is grabbed
+        roll: 2d10 + 2
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: true
+        autoTarget: false
+        promptText: On tier 3 outcome; The bugbear may grab one of the original targets of the Inspiring Swordplay ability.
+        applyto: caster
         customAbility:
           __typeName: ActivatedAbility
-          strain: []
-          abilityType: none
           guid: 2043ed16-1091-40ce-822d-b2810be038f5
-          numTargets: "1"
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          repeatTargets: false
-          name: "Inspiring Swordplay Effect: Grab one target"
-          targetType: target
-          description: ""
-          persistence: []
-          iconid: ui-icons/skills/1.png
+          range: 1
           modifiers: []
           sourceReference:
             __typeName: SourceReference
             page: 53
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
-          objectTarget: false
-          range: 1
+          targetType: target
+          numTargets: "1"
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: grabbed
-        autoTarget: false
-        promptText: On tier 3 outcome; The bugbear may grab one of the original targets of the Inspiring Swordplay ability.
+          strain: []
+          repeatTargets: false
+          name: "Inspiring Swordplay Effect: Grab one target"
+          objectTarget: false
+          abilityType: none
+          persistence: []
+          iconid: ui-icons/skills/1.png
+          description: ""
         inheritRange: true
-        applyto: caster
-        invokeOnCaster: true
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        invokeOnCaster: true
         abilityType: custom
-        promptText: Select 1 Ally within 5 squares of the Commander to have  Edge on their next attack until the start of the commander's next turn.
         customAbility:
           __typeName: ActivatedAbility
-          numTargets: "1"
-          range: "5"
-          abilityType: none
-          guid: ab874bef-d1ec-46f9-a422-c7bf5f9b1e74
-          iconid: ui-icons/skills/1.png
+          targetType: target
+          categorization: Hidden
           modifiers: []
+          description: ""
+          range: "5"
+          strain: []
+          guid: ab874bef-d1ec-46f9-a422-c7bf5f9b1e74
           display:
             bgcolor: "#ffffffff"
+            hueshift: 0
             saturation: 1
             brightness: 1
-            hueshift: 0
-          targetAllegiance: ally
-          repeatTargets: false
-          name: Invoked Ability
-          targetType: target
-          description: ""
-          categorization: Hidden
-          strain: []
-          objectTarget: false
-          persistence: []
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: 1
-            ongoingEffect: fab3c9a5-f7c1-488c-98a7-79dc269a5e3b
-            durationUntilEndOfTurn: true
             ongoingEffectCustom: false
+            duration: 1
+            durationUntilEndOfTurn: true
+            ongoingEffect: fab3c9a5-f7c1-488c-98a7-79dc269a5e3b
+          numTargets: "1"
+          objectTarget: false
+          name: Invoked Ability
+          targetAllegiance: ally
+          abilityType: none
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          persistence: []
         applyto: caster
-        invokeOnCaster: true
-      categorization: Signature Ability
-      numTargets: 2
+        promptText: Select 1 Ally within 5 squares of the Commander to have  Edge on their next attack until the start of the commander's next turn.
+      sourceReference:
+        __typeName: SourceReference
+        page: 53
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
       repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      numTargets: 2
+      abilityType: none
       name: Inspiring Swordplay
-      targetType: target
-      description: 1 ally within 5 of the commander has an edge on their next attack until the start of the commander's next turn.
+      iconid: ui-icons/skills/1.png
       persistence: []
-      flavor: ""
-      effectImplemented: false
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
+    - __typeName: ActivatedAbility
+      targetType: target
+      persistence: []
+      targetFilter: ""
+      targetAllegiance: ally
+      categorization: Signature Ability
+      keywords:
+        Ranged: true
+      numTargets: 1
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       modifiers: []
-      strain: []
-    - __typeName: ActivatedAbility
-      targetFilter: ""
-      implementation: 4
+      description: The target moves up to their speed and uses a signature action.
+      effectImplemented: false
       range: 8
-      abilityType: none
-      guid: 12e89a94-efba-4d11-950b-7d037fec57b1
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      modifiers: []
+      implementation: 4
+      strain: []
+      objectTarget: false
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
+        hueshift: 0
         saturation: 1
         brightness: 1
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbilityParams:
+          distance: movement speed
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        abilityType: named
+        runOnController: true
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors: []
+          guid: 93235e4c-4e6b-41b6-ac3b-eb03174223a5
+          iconid: ui-icons/skills/1.png
+          name: Invoked Ability
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          description: ""
+        namedAbility: move speed
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          behaviors: []
+          guid: 9c8299ea-e4d1-4e41-8203-ba5c36549eb4
+          iconid: ui-icons/skills/1.png
+          name: Invoked Ability
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          description: ""
+        runOnController: true
+        standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
+      hasCustomIcon: true
+      sourceReference:
+        __typeName: SourceReference
+        page: 53
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      name: You Next!
+      targetTextOverride: One ally
+      abilityType: none
+      repeatTargets: false
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
+      guid: 12e89a94-efba-4d11-950b-7d037fec57b1
+    - __typeName: ActivatedAbility
+      resourceNumber: 5
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      persistence: []
+      sourceReference:
+        __typeName: SourceReference
+        page: 53
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      repeatTargets: false
+      targetAllegiance: ally
+      numTargets: 1
+      objectTarget: false
+      modifiers: []
+      description: Each target shifts up to their speed, then can use the Throw maneuver.
+      effectImplemented: false
+      range: 5
+      implementation: 3
+      strain: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
         hueshift: 0
+        saturation: 1
+        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        namedAbility: move speed
-        standardAbilityParams:
-          distance: movement speed
-        customAbility:
-          __typeName: ActivatedAbility
-          numTargets: "1"
-          repeatTargets: false
-          name: Invoked Ability
-          targetType: self
-          abilityType: none
-          guid: 93235e4c-4e6b-41b6-ac3b-eb03174223a5
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          range: 1
-          description: ""
-          behaviors: []
-        runOnController: true
-        abilityType: named
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
-        runOnController: true
-        customAbility:
-          __typeName: ActivatedAbility
-          numTargets: "1"
-          repeatTargets: false
-          name: Invoked Ability
-          targetType: self
-          abilityType: none
-          guid: 9c8299ea-e4d1-4e41-8203-ba5c36549eb4
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          range: 1
-          description: ""
-          behaviors: []
-      objectTarget: false
-      effectImplemented: false
-      targetAllegiance: ally
-      sourceReference:
-        __typeName: SourceReference
-        page: 53
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      hasCustomIcon: true
-      targetTextOverride: One ally
-      repeatTargets: false
-      name: You Next!
-      targetType: target
-      description: The target moves up to their speed and uses a signature action.
-      persistence: []
-      flavor: ""
-      categorization: Signature Ability
-      numTargets: 1
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      keywords:
-        Ranged: true
-      strain: []
-    - __typeName: ActivatedAbility
-      implementation: 3
-      range: 5
-      resourceNumber: 5
-      abilityType: none
-      guid: 1f223da7-89f5-42bf-b1db-b20347f34a1b
-      iconid: ui-icons/skills/1.png
-      keywords: []
-      sourceReference:
-        __typeName: SourceReference
-        page: 53
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      numTargets: 1
-      targetAllegiance: ally
-      effectImplemented: false
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        promptWhenResolving: true
-        promptText: Select targets in your preferred order to shift
         standardAbilityParams:
           distance: walking speed
         promptWhenResolvingText: Select targets in your preferred order to shift
+        promptText: Select targets in your preferred order to shift
+        promptWhenResolving: true
         customAbility:
           __typeName: ActivatedAbility
-          numTargets: "1"
-          repeatTargets: false
-          name: Invoked Ability
+          range: 1
           targetType: self
-          abilityType: none
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+            hueshift: 0
+          behaviors: []
           guid: 7b71ca6e-d03b-40ea-843e-f3ea0dcc5c57
           iconid: ui-icons/skills/1.png
+          name: Invoked Ability
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
           modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          range: 1
           description: ""
-          behaviors: []
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        abilityType: standard
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptWhenResolving: true
         abilityType: named
         namedAbility: Throw
-        promptText: Select targets to use the Throw ability.
         customAbility:
           __typeName: ActivatedAbility
-          numTargets: "1"
-          repeatTargets: false
-          name: Invoked Ability
+          range: 1
           targetType: self
-          abilityType: none
-          guid: 4c77abfb-20e4-4d99-9cd2-35e6c47c1e18
-          iconid: ui-icons/skills/1.png
-          modifiers: []
           display:
             bgcolor: "#ffffffff"
-            saturation: 1
             brightness: 1
+            saturation: 1
             hueshift: 0
-          range: 1
-          description: ""
           behaviors: []
-        promptWhenResolving: true
-      targetTextOverride: Each ally in the area
-      repeatTargets: false
-      name: Fall Back!
-      targetType: all
-      description: Each target shifts up to their speed, then can use the Throw maneuver.
-      persistence: []
-      flavor: ""
+          guid: 4c77abfb-20e4-4d99-9cd2-35e6c47c1e18
+          iconid: ui-icons/skills/1.png
+          name: Invoked Ability
+          numTargets: "1"
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          description: ""
+        promptText: Select targets to use the Throw ability.
       categorization: Heroic Ability
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      objectTarget: false
-      strain: []
-    - __typeName: ActivatedAbility
-      numTargets: 1
-      range: 1
-      abilityType: none
-      guid: 32b921f3-f90a-42e8-92d8-f41dc8612d87
-      iconid: ui-icons/skills/1.png
-      modifiers: []
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-      repeatTargets: false
-      name: Catcher
-      targetType: target
-      description: The target is grabbed by the commander.
-      categorization: Signature Ability
-      flavor: ""
-      implementation: 0
       keywords: []
-      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
-      effectImplemented: false
-      behaviors: []
-    - __typeName: ActivatedAbility
-      targetFilter: Conditions has "grabbed"
-      numTargets: 1
-      range: 1
+      name: Fall Back!
+      targetTextOverride: Each ally in the area
       abilityType: none
-      guid: c2236f41-1036-4bac-a7ca-569003d6ad8b
-      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      targetType: all
+      iconid: ui-icons/skills/1.png
+      guid: 1f223da7-89f5-42bf-b1db-b20347f34a1b
+    - __typeName: ActivatedAbility
+      keywords: []
+      numTargets: 1
       modifiers: []
+      description: The target is grabbed by the commander.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      flavor: ""
       display:
         bgcolor: "#ffffffff"
+        hueshift: 0
         saturation: 1
         brightness: 1
-        hueshift: 0
-      strain: []
+      behaviors:
+      - __typeName: ActivatedAbilityRevertLocBehavior
+        distance: 1
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: grabbed
+      categorization: Signature Ability
+      targetType: target
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      name: Catcher
+      abilityType: none
+      repeatTargets: false
+      iconid: ui-icons/skills/1.png
+      guid: 32b921f3-f90a-42e8-92d8-f41dc8612d87
+    - __typeName: ActivatedAbility
       sourceReference:
         __typeName: SourceReference
         page: 53
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      categorization: Signature Ability
+      guid: c2236f41-1036-4bac-a7ca-569003d6ad8b
       effectImplemented: false
-      repeatTargets: false
-      name: Throw
-      targetType: target
+      modifiers: []
       description: |-
         **Special:** The target must be grabbed by you.
 
         The target is vertical pushed up to 4 squares. An ally doesn’t take damage from being force moved this way.
-      categorization: Signature Ability
-      flavor: ""
-      persistence: []
+      targetFilter: Conditions has "grabbed"
+      range: 1
+      implementation: 3
+      strain: []
       keywords:
         Melee: true
         Strike: true
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      implementation: 3
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: false
+        duration: 0
+        ongoingEffect: b510f03a-75a6-465a-bbe6-8acb648bb9e5
         stacks: "3"
         filterTarget: Friends(caster,Target)
-        ongoingEffect: b510f03a-75a6-465a-bbe6-8acb648bb9e5
-        duration: 0
-        ongoingEffectCustom: false
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         rule: vertical push 4
-    resources:
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
-        used: 1
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
-        used: 1
-    groupid: ad734f83-9fbe-4f7d-b0f9-7a6b67917513
-    max_hitpoints: 80
-    walkingSpeed: 5
-    cr: 2
-    ev: 16
-    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
-      __typeName: StatHistory
-      entries:
-        10ff5122-4419-4a69-a31c-d7ce7c2a3a36:
-          refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
-          note: Throw
-          userid: steam-76561198767161997
-          timestamp: 1777386594618
-          set: 0/1
-    equipment: []
-    opportunityAttack: 5
-    inflictedConditions: []
-    availableTriggers: []
-    d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
-      __typeName: StatHistory
-      entries:
-        296fc0af-2601-47d6-b67e-9522b1c4724e:
-          refreshid: d29c0553-8c1a-40e8-9bbc-0f32fad53e50-1-da1b9b17-c07a-42df-b11f-cfb6b705dbd0
-          note: Fall Back!
-          userid: steam-76561198767161997
-          timestamp: 1777386578326
-          set: 0/1
-    damage_taken: 0
-    attributes:
-      rea:
-        baseValue: 2
-        id: rea
-      agl:
-        baseValue: 1
-        id: agl
-      prs:
-        baseValue: 0
-        id: prs
-      inu:
-        baseValue: 0
-        id: inu
-      mgt:
-        baseValue: 2
-        id: mgt
+      targetType: target
+      numTargets: 1
+      name: Throw
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      abilityType: none
+      repeatTargets: false
+      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      persistence: []
+    monster_type: Bugbear Commander
+    monster_category: Monster
     import:
-      type: mcdm
+      override: true
       data: |+
         Bugbear Commander	Level 2 Elite Support
         Bugbear, Goblin, Humanoid, Fey	EV 16
@@ -500,131 +624,10 @@ info:
         <b>The Commander's Watching</b>
         While an ally has line of effect to the commander, the ally can end one condition afflicting them at the start of their turn.
 
-      override: true
-    monster_category: Monster
-    minion: false
-    skillRatings: []
-    creatureSize: 1L
-    traitNames: []
-    monster_type: Bugbear Commander
-    characterFeatures:
-    - __typeName: CharacterFeature
-      description: While an ally has line of effect to the commander, the ally can end one condition afflicting them at the start of their turn.
-      guid: a631ddba-35ef-450f-b0da-246cbe695930
-      domains:
-        CharacterFeature:a631ddba-35ef-450f-b0da-246cbe695930: true
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        description: While an ally has line of effect to the commander, the ally can end one condition afflicting them at the start of their turn.
-        guid: 1bc47b4d-3ebd-47b6-8b48-afc5a776cb75
-        sourceguid: a631ddba-35ef-450f-b0da-246cbe695930
-        domains:
-          CharacterFeature:a631ddba-35ef-450f-b0da-246cbe695930: true
-        source: Trait
-        behavior: trigger
-        name: The Commander's Watching
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          mandatory: false
-          numTargets: "1"
-          range: 1
-          abilityType: none
-          guid: 1f97145e-2b15-40e0-9b73-c0b5b21b51f2
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          whenActive: combat
-          repeatTargets: false
-          name: The Commander's Watching
-          targetType: subject
-          description: Any ally who has line of effect to the commander can end one condition on themself at the start of each of their turns.
-          persistence: []
-          strain: []
-          trigger: beginturn
-          subject: allies
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            includeProne: true
-            conditions: []
-            purgeType: one
-      name: The Commander's Watching
-      implementation: 3
-    - __typeName: CharacterFeature
-      description: " "
-      guid: 296d82a3-1278-4dc9-851b-a24532eada05
-      modifiers:
-      - __typeName: CharacterModifier
-        description: " "
-        guid: 9fc4bb35-16f5-44ff-bea7-c2c247300f33
-        sourceguid: 46e1891f-8463-4676-978f-4685cb36d5ef
-        domains:
-          CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
-          CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
-        source: Character Feature
-        behavior: trigger
-        name: Catcher
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          mandatory: false
-          numTargets: "1"
-          range: 1
-          subject: other
-          guid: 2b11cf4f-6079-4cf1-abec-7776c0a0f170
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-          behaviors:
-          - __typeName: ActivatedAbilityRevertLocBehavior
-            distance: 1
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            rule: grabbed
-          triggerPrompt: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
-          domains:
-            CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
-            CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
-          whenActive: combat
-          repeatTargets: false
-          name: Catcher
-          targetType: subject
-          description: |-
-            Trigger: A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.
-            Effect: The target is grabbed by the channeler.
-          persistence: []
-          hasManualVersion: true
-          subjectRange: "20"
-          trigger: finishmove
-          conditionFormula: Subject.Size <= 4 and ((path.Forced and Path.DistanceToCreature(Self) <= 1) or ((not path.Forced) and Friends(self, Subject) and Distance(Subject) <= 1))
-          abilityType: none
-          strain: []
-      domains:
-        CharacterFeature:296d82a3-1278-4dc9-851b-a24532eada05: true
-        CharacterFeature:46e1891f-8463-4676-978f-4685cb36d5ef: true
-      source: Character Feature
-      implementation: 3
-      name: Catcher
-      implementationDetails: "Silver: verified in-game 2026-08-04 (6/6 cases: willing-approach ally, both forced-move variants, size gate, enemy exclusion, walking-away no-fire). Caveat: force-moved OBJECTS are not automated - adjudicate object catches manually."
-    max_hitpoints_roll: "80"
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-      guid: 335b9749-5042-440d-887c-a85a56cdcf7b-408
-    keywords:
-      Humanoid: true
-      Fey: true
-      Goblin: true
-      Bugbear: true
+      type: mcdm
     stability: 0
+    inflictedConditions: []
+    minion: false
   tokenType: null
   bestiaryId: e2e21039-09b7-4178-af15-0018c19dbb28
   summonerid: null
@@ -637,6 +640,6 @@ parentFolder: 48e8f60e-8ed1-400a-83c2-e4170481f4b4
 artist: null
 ord: 0
 ctime: 1741590320208
-mtime: 1785851336654
+mtime: 1785702933115
 hidden: false
 id: e2e21039-09b7-4178-af15-0018c19dbb28

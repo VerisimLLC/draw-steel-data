@@ -1,148 +1,85 @@
 __typeName: CharacterOngoingEffect
-buffType: debuff
 domains:
   CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
-display:
-  brightness: 1
-  hueshift: 0
-  bgcolor: "#ffffffff"
-  saturation: 1
-source: Ongoing Effect
-iconid: 7d3776a2-66de-4459-bb86-bd3ef8e1f756
-id: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
 condition: 2989a051-204f-442e-967d-edafc2dd5e43
-name: Engulfed
+id: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+iconid: 7d3776a2-66de-4459-bb86-bd3ef8e1f756
+display:
+  bgcolor: "#ffffffff"
+  hueshift: 0
+  saturation: 1
+  brightness: 1
+source: Ongoing Effect
 description: "This creature is engulfed in the shambling mound's sack. While engulfed, the creature is restrained, takes 3 poison damage at the start of each of their turns, and can't take damage from abilities used from outside the sack: damage from outside instead strikes the sack, represented by this effect's 30 temporary Stamina (the sack has damage immunity 5 and fire weakness 10). When the sack's temporary Stamina is destroyed, this effect ends and the creature is freed, appearing in an unoccupied space within 2 squares of the shambling mound. The engulfed creature moves with the shambling mound. If the shambling mound dies, the creature is freed."
+mtime: 1784116434392
+buffType: debuff
+guid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+name: Engulfed
+ctime: 1784038427232
 displayOwnIdentity: true
 modifiers:
 - __typeName: CharacterModifier
-  description: The sack has damage immunity 5.
-  guid: 90ae7d08-2eda-4999-bccf-9696a67ebbe5
-  domains:
-    CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
-  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-  name: Engulfing Sack Immunity
-  source: Ongoing Effect
   resistances:
   - __typeName: ResistanceEntry
-    apply: Damage Reduction
     damageType: all
+    apply: Damage Reduction
     dr: 5
+  source: Ongoing Effect
+  description: The sack has damage immunity 5.
+  name: Engulfing Sack Immunity
+  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+  guid: 90ae7d08-2eda-4999-bccf-9696a67ebbe5
   behavior: resistance
-- __typeName: CharacterModifier
-  description: The sack has fire weakness 10.
-  guid: c4534b5b-5a7b-4d2b-82f2-0fd19b070bb2
   domains:
     CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
-  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-  name: Engulfing Sack Fire Weakness
-  source: Ongoing Effect
+- __typeName: CharacterModifier
   resistances:
   - __typeName: ResistanceEntry
-    apply: Damage Reduction
     damageType: fire
+    apply: Damage Reduction
     dr: -10
+  source: Ongoing Effect
+  description: The sack has fire weakness 10.
+  name: Engulfing Sack Fire Weakness
+  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+  guid: c4534b5b-5a7b-4d2b-82f2-0fd19b070bb2
   behavior: resistance
+  domains:
+    CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
 - __typeName: CharacterModifier
   description: An engulfed creature takes 3 poison damage at the start of each of their turns.
-  guid: 26e9e761-1e51-44e6-be63-b71689c3c9bf
-  domains:
-    CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
-  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-  name: Engulfed
-  source: Ongoing Effect
   triggeredAbility:
     __typeName: TriggeredAbility
-    description: ""
     behaviors:
     - __typeName: ActivatedAbilityDamageBehavior
-      cannotBeReduced: true
       roll: "3"
       damageType: poison
+      cannotBeReduced: true
       bypassTempStamina: true
-    domains:
-      CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
-    repeatTargets: false
-    display:
-      brightness: 1
-      hueshift: 0
-      bgcolor: "#ffffffff"
-      saturation: 1
-    abilityType: none
+    targetType: self
     trigger: beginturn
     iconid: ui-icons/skills/1.png
-    targetType: self
-    numTargets: "1"
-    strain: []
-    name: Engulfed
-    range: 1
-    modifiers: []
     guid: 10e3c4b0-575a-4105-b1f5-e093e875634e
-  behavior: trigger
-- __typeName: CharacterModifier
-  name: "Engulfed: Carried in the Sack"
-  behavior: trigger
-  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-  description: When the engulfed creature is dragged along by the shambling mound's movement, keep them inside the mound's space.
-  source: Ongoing Effect
-  triggeredAbility:
-    __typeName: TriggeredAbility
-    name: "Engulfed: Carried in the Sack"
-    behaviors:
-    - __typeName: ActivatedAbilityRepositionIntoEngulferBehavior
-      ongoingEffectid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-    range: 1
-    repeatTargets: false
+    numTargets: "1"
     display:
-      brightness: 1
       bgcolor: "#ffffffff"
       hueshift: 0
       saturation: 1
-    abilityType: none
-    trigger: move
-    iconid: ui-icons/skills/1.png
-    silent: true
-    targetType: self
-    description: ""
-    numTargets: "1"
-    castImmediately: true
-    mandatory: true
-    modifiers: []
-    guid: 881f282b-a863-46a9-a9a9-148aa73493d1
-  guid: 8c745f2a-8de9-4c26-82f6-bfd9795b4235
-- __typeName: CharacterModifier
-  name: "Sack Destroyed: Freed"
-  behavior: trigger
-  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
-  description: When the sack's temporary Stamina is destroyed, the freed creature relocates to a space within 2 squares of the shambling mound, outside its space.
-  source: Ongoing Effect
-  triggeredAbility:
-    __typeName: TriggeredAbility
-    name: "Sack Destroyed: Freed"
-    behaviors:
-    - __typeName: ActivatedAbilityInvokeAbilityBehavior
-      targeting: prompt
-      standardAbilityParams:
-        range: "2"
-      standardAbility: a3c7e1f2-84b6-4d09-b5a1-6e2f93c10d7a
-      abilityType: standard
-      promptText: "The engulfing sack is destroyed: relocate to a space within 2 squares"
-    repeatTargets: false
-    display:
       brightness: 1
-      bgcolor: "#ffffffff"
-      hueshift: 0
-      saturation: 1
-    abilityType: none
-    trigger: tempstaminadepleted
-    iconid: ui-icons/skills/1.png
-    targetType: self
-    mandatory: true
-    numTargets: "1"
-    range: 1
     description: ""
+    strain: []
+    range: 1
+    domains:
+      CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
+    name: Engulfed
+    abilityType: none
+    repeatTargets: false
     modifiers: []
-    guid: 7ca089d8-b380-4287-99d7-59e1a938b34f
-  guid: cad0032c-cf33-4fb2-a24e-3fde9e01a227
-guid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+  source: Ongoing Effect
+  name: Engulfed
+  sourceguid: d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d
+  guid: 26e9e761-1e51-44e6-be63-b71689c3c9bf
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:d7bc1f4a-2d0c-4e4e-9a7e-3cb5ca3f2a3d: true
 _table: characterOngoingEffects

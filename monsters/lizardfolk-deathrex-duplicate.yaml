@@ -1,0 +1,491 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: 47a15b13-e16d-4951-9e37-8d1395ffb8c6
+    offtokenPortraitId: null
+    portraitFrameId: 928698a5-1bde-4274-8c84-e7c41c390652
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0.7695286
+    frameSaturation: 1
+    frameBrightness: 1
+    popoutScale: 0.8407135
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 91074692-f355-43e0-8572-d192454c9856
+  properties:
+    __typeName: monster
+    walkingSpeed: 5
+    opportunityAttack: 4
+    levelChoices: []
+    cr: 1
+    ev: 12
+    max_hitpoints_roll: "80"
+    keywords:
+      Humanoid: true
+      Lizardfolk: true
+    creatureSize: "2"
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      targetType: target
+      numTargets: 2
+      modifiers: []
+      description: |2-
+
+        **1 Malice**: One target adjacent to the deathrex is grabbed in the deathrex's mouth.
+      persistence: []
+      range: 3
+      implementation: 4
+      strain: []
+      categorization: Signature Ability
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 7 damage; pull 1; A<1 bleeding (save ends)
+        - 10 damage; pull 1; A<2 bleeding (save ends)
+        - 12 damage; pull 2; A<3 bleeding (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffectCustom: 6cd6e3fa-a223-404e-a816-c9a80e8a7e20
+        duration: 0
+        ongoingEffect: 6cd6e3fa-a223-404e-a816-c9a80e8a7e20
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: grab
+        customAbility:
+          __typeName: ActivatedAbility
+          objectTarget: false
+          targetAllegiance: enemy
+          modifiers: []
+          description: ""
+          targetFilter: target.Ongoing Effects has "Ripper Spear"
+          range: 1
+          implementation: 4
+          strain: []
+          actionResourceId: none
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffectSource: specific
+            ongoingEffectCustom: false
+            ongoingEffect: db8d0b4f-28e4-456f-bfd2-3198ae3a46eb
+            filterTarget: Target.Ongoing Effects has "Ripper Spear"
+          repeatTargets: false
+          targetType: target
+          name: Ripper Spear Grab Effect
+          sourceReference:
+            __typeName: SourceReference
+            page: 201
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+          abilityType: none
+          numTargets: "1"
+          iconid: ui-icons/skills/1.png
+          guid: 5c9fb55a-1231-4e51-bde1-9282a5a75f9c
+        invokeOnCaster: true
+        autoTarget: false
+        abilityType: custom
+        promptText: "Spend 1 Malice: One target adjacent to the deathrex is grabbed in the deathrex's mouth."
+        applyto: caster
+        filterTarget: Caster.Heroic Resources Available to Spend > 0
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 201
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      name: Ripper Spear
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      abilityType: none
+      keywords:
+        Weapon: true
+        Melee: true
+        Strike: true
+      iconid: ui-icons/skills/1.png
+      guid: c9fcc8b5-ba9b-463a-9719-673eec8a4f2f
+    - __typeName: ActivatedAbility
+      resourceNumber: 3
+      keywords:
+        Weapon: true
+        Melee: true
+        Strike: true
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      effectImplemented: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 201
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      modifiers: []
+      description: The target is released from the grab and slides 5.
+      targetFilter: Target.Conditions has "grabbed"
+      range: 1
+      implementation: 4
+      strain: []
+      categorization: Heroic Ability
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Might
+        tiers:
+        - 8 damage; M<1 dazed (save ends)
+        - 12 damage; M<2 dazed (save ends)
+        - 15 damage; M<3 dazed (save ends)
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        chatMessage: no longer grabbed
+        reminderText: ""
+        conditions:
+        - 70504ebe-3899-41d3-9f60-74b52ce35e39
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbilityParams:
+          range: "5"
+        standardAbility: 21f855e5-cef6-46a9-96aa-976d1ac35a6c
+        promptText: the target is no longer grabbed by the deathrex, and the deathrex slides them up to 5 squares.
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          behaviors: []
+          description: ""
+          modifiers: []
+          repeatTargets: false
+          numTargets: "1"
+          abilityType: none
+          name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          guid: ef4a0595-f687-44d8-b720-20e87d05641c
+        abilityType: standard
+      numTargets: 1
+      name: Death Roll
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      objectTarget: true
+      abilityType: none
+      targetType: target
+      iconid: ui-icons/skills/1.png
+      guid: e1d54c1c-acc9-422b-aa02-4bb3476e2d42
+    - __typeName: ActivatedAbility
+      sourceReference:
+        __typeName: SourceReference
+        page: 201
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      repeatTargets: false
+      targetType: self
+      implementationDetails: Players to adjudicate which creatures used an opportunity attack against the deathrex during their movement.
+      modifiers: []
+      description: The deathrex moves up to their speed. They can make a free strike against each creature who makes an opportunity attack against them during this movement.
+      effectImplemented: false
+      range: 1
+      implementation: 3
+      strain: []
+      categorization: Signature Ability
+      flavor: ""
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        standardAbilityParams:
+          distance: walking speed
+        invokeOnCaster: true
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          behaviors: []
+          description: ""
+          modifiers: []
+          repeatTargets: false
+          numTargets: "1"
+          abilityType: none
+          name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          guid: bec03deb-8f1d-436f-8c4d-2534ef8c9028
+        standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+        abilityType: standard
+        applyto: caster
+        promptText: The deathrex moves up to their speed, then make a free strike against each creture who makes an opportunity attack against them during this movement.
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptText: the deathrex now makes a free strike against each creature who made an opportunity attack agains them. (Director adjudication of targets  required)
+        invokeOnCaster: true
+        autoTarget: false
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          __typeName: ActivatedAbility
+          range: 1
+          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          behaviors: []
+          description: ""
+          modifiers: []
+          repeatTargets: false
+          numTargets: "1"
+          abilityType: none
+          name: Invoked Ability
+          iconid: ui-icons/skills/1.png
+          guid: 86ccdcd1-80c6-495d-8761-a8dd67615a2d
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+      keywords: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      name: Trundle
+      hasCustomIcon: true
+      abilityType: none
+      numTargets: 1
+      iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+      guid: e80e5d59-4e33-40bd-8289-5e88d807dd40
+    max_hitpoints: 10
+    creatureTemplates: []
+    attributes:
+      agl:
+        id: agl
+        baseValue: 2
+      mgt:
+        id: mgt
+        baseValue: 3
+      prs:
+        id: prs
+        baseValue: 2
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      inu:
+        id: inu
+        baseValue: 1
+      rea:
+        id: rea
+        baseValue: 0
+    skillRatings: []
+    traitNames: []
+    monster_type: Shedskin Duplicate
+    equipment: []
+    minion: false
+    movementSpeeds:
+      climb: 5
+      swim: 5
+    notes:
+    - title: Monster Notes
+      text: ""
+    groupid: d3456343-2a59-400e-af7d-dbb4bd9c8347
+    resources: []
+    resistances: []
+    monster_category: Monster
+    role: Leader
+    characterFeatures:
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:c7378ee5-76c3-41c2-82f6-d267e06a8dcc: true
+      implementation: 4
+      guid: c7378ee5-76c3-41c2-82f6-d267e06a8dcc
+      name: Rex Reptilian Escape
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:c7378ee5-76c3-41c2-82f6-d267e06a8dcc: true
+        behavior: trigger
+        name: Rex Reptilian Escape
+        sourceguid: c7378ee5-76c3-41c2-82f6-d267e06a8dcc
+        guid: 93e0d19f-1b4d-42a6-8839-243fa0f58f4f
+        description: While the deathrex still has a tail, whenever the deathrex is inflicted with an EoT or save ends effect, the deathrex can lose their tail to immediately end the effect and shift 2.
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          range: 1
+          guid: ab5a1bcb-7e0d-4eb1-bddb-a773591489bc
+          strain: []
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: conditions_and_effects
+            conditions: []
+            chatMessage: Lost their Tail!
+            purgeType: one
+            targetDuration: save|eot
+            includeProne: true
+          numTargets: "1"
+          repeatTargets: false
+          name: Rex Reptilian Escape
+          trigger: inflictcondition
+          abilityType: none
+          targetType: self
+          conditionFormula: not Self.Ongoing Effects has "Lost Tail"
+          description: ""
+      description: While the deathrex still has a tail, whenever the deathrex is inflicted with an EoT or save ends effect, the deathrex can lose their tail to immediately end the effect and shift 2.
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
+        CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
+      name: Swat the Fly
+      guid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
+      source: Character Feature
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
+          CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          trigger: Creature or object within distance moves or shift away from the deathrex
+          keywords:
+            Melee: true
+          effect: Slide the target up to 5 squares
+          name: Swat the Fly
+          target: Triggering creature or object
+          guid: 40a3c276-0813-42e4-84e4-2af46fa6be18
+        name: Swat the Fly
+        description: ""
+        source: Character Feature
+        behavior: triggerdisplay
+        guid: 24f98136-391c-43d7-86df-7137aecbb6e0
+        sourceguid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
+      - __typeName: CharacterModifier
+        resourceRefreshType: round
+        sourceguid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
+        behavior: trigger
+        name: Swat the Fly
+        description: ""
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          targetType: subject
+          subject: other
+          repeatTargets: false
+          persistence: []
+          iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
+          trigger: move
+          modifiers: []
+          description: ""
+          whenActive: combat
+          range: 1
+          display:
+            bgcolor:
+              __usertype: LuaColor
+              h: 0.801249563694
+              s: 0.9701167345047
+              v: 0.878193855285645
+              a: 1
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          strain: []
+          numTargets: "1"
+          name: Swat the Fly
+          triggerPrompt: Slide the target 5 squares
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: Slide 5
+          domains:
+            CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
+            CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
+          subjectRange: "1"
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          mandatory: false
+          abilityType: none
+          usageLimitOptions:
+            resourceRefreshType: round
+            charges: "1"
+            resourceid: 3c5c6840-2f21-4481-9429-2c70ee402175
+          conditionFormula: not path.forced
+          guid: 609e2d82-e2df-419c-9017-e4b035582552
+        domains:
+          CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
+          CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
+        source: Character Feature
+        guid: 3c5c6840-2f21-4481-9429-2c70ee402175
+      description: ""
+    titles: []
+    savingThrowRatings: []
+    inflictedConditions: []
+    stability: 2
+    innateAttacks: []
+    damage_taken: 0
+  tokenType: null
+  bestiaryId: 8b5f7d45-1446-4bd1-bef0-84f73d44dd15
+  summonerid: null
+  ownerId: ""
+  partyid: null
+  size: 4
+  createdTimestamp: 1726301040866
+description: Lizardfolk Deathrex duplicate
+parentFolder: 40714605-54b3-4a20-b782-f427973a5a25
+artist: null
+ord: 0
+ctime: 1778591364261
+mtime: 1785702729613
+hidden: false
+id: b1db52fd-9236-41d2-a011-860f1a55ed64
