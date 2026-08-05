@@ -1,0 +1,65 @@
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+id: 76a1a8c0-b457-429c-95df-bb938447e408
+buffType: debuff
+domains:
+  CharacterOngoingEffect:76a1a8c0-b457-429c-95df-bb938447e408: true
+display:
+  brightness: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+  saturation: 1
+source: Ongoing Effect
+iconid: ui-icons/skills/1.png
+condition: 2989a051-204f-442e-967d-edafc2dd5e43
+name: Impaled (Ashen Hoarder)
+description: "This creature is impaled on the ashen hoarder's blades. While impaled, the creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled at a time."
+displayOwnIdentity: true
+custom: false
+modifiers:
+- __typeName: CharacterModifier
+  description: An impaled creature is bleeding.
+  guid: 0cf65ab3-7782-490e-b670-028b29c65944
+  domains:
+    CharacterOngoingEffect:76a1a8c0-b457-429c-95df-bb938447e408: true
+  sourceguid: 76a1a8c0-b457-429c-95df-bb938447e408
+  name: Impaled Bleeding
+  source: Ongoing Effect
+  behavior: bestowcondition
+  conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+  explanation: ""
+- __typeName: CharacterModifier
+  name: "Impaled: Moves with the Ashen Hoarder"
+  behavior: trigger
+  sourceguid: 76a1a8c0-b457-429c-95df-bb938447e408
+  description: When the ashen hoarder moves, the impaled creature is carried along with them.
+  source: Ongoing Effect
+  domains:
+    CharacterOngoingEffect:76a1a8c0-b457-429c-95df-bb938447e408: true
+  guid: 4e0aaa1b-ad4f-445d-9969-ef7b70295eeb
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: "Impaled: Carried by the Ashen Hoarder"
+    behaviors:
+    - __typeName: ActivatedAbilityRepositionIntoEngulferBehavior
+      ongoingEffectid: 76a1a8c0-b457-429c-95df-bb938447e408
+    range: 1
+    repeatTargets: false
+    display:
+      brightness: 1
+      bgcolor: "#ffffffff"
+      hueshift: 0
+      saturation: 1
+    abilityType: none
+    trigger: move
+    iconid: ui-icons/skills/1.png
+    silent: true
+    targetType: self
+    description: ""
+    numTargets: "1"
+    castImmediately: true
+    mandatory: true
+    modifiers: []
+    strain: []
+    persistence: []
+    guid: 6186430c-110f-44b1-9f53-51881763ea01

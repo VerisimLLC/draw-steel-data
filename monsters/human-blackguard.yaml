@@ -17,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -56,772 +57,8 @@ info:
   updateid: 3b89c070-7342-4186-9da2-e115197759ff
   properties:
     __typeName: monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: f382e531-a237-470d-9959-30b1a2837edf
-      domains:
-        CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
-        CharacterFeature:f382e531-a237-470d-9959-30b1a2837edf: true
-      description: The blackguard ignores concealment if it's granted by a supernatural effect, or the target is supernatural.
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        modtype: remove_bane
-        rollType: ability_power_roll
-        sourceguid: d44878cf-1dba-4b92-acb6-2deaa4ab825a
-        displayCondition: Target.Conditions has "concealment"
-        name: Supernatural Insight
-        guid: a49159e4-1cf9-4cc2-bffb-3c704dc60052
-        keywords: []
-        domains:
-          CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
-          CharacterFeature:f382e531-a237-470d-9959-30b1a2837edf: true
-        description: The blackguard ignores concealment if it's granted by a supernatural effect, or the target is supernatural.
-        source: Trait
-        activationCondition: ""
-        behavior: power
-      name: Supernatural Insight
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: a7c02e1a-7c11-4186-b29c-8f4bbdd2863f
-      domains:
-        CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
-        CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
-      description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 1358be98-eae0-4ce7-8221-b853982624f7
-        guid: 661834fe-8c8b-40d2-9ae6-87ea3cb1cdb0
-        behavior: trigger
-        domains:
-          CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
-          CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
-        description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
-        source: Trait
-        name: End Effect
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          mandatory: false
-          triggerPrompt: Take 5 damage to end one effect that can be ended by a saving throw. This damage can't be reduced in any way.
-          strain: []
-          targetType: self
-          conditionFormula: Save Ends Effects
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            purgeType: one
-            damageToSelf: "5"
-            conditions: []
-            targetDuration: save
-            mode: conditions_and_effects
-          persistence: []
-          repeatTargets: false
-          abilityType: none
-          whenActive: combat
-          modifiers: []
-          numTargets: "1"
-          iconid: ui-icons/skills/1.png
-          guid: 9df36fcd-db8f-434b-885e-99cb7f3b11cf
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          domains:
-            CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
-            CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
-          trigger: endturn
-          description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
-          range: 1
-          name: 'End Effect '
-      name: End Effect
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: 1991a87c-a8b5-458b-a530-bbfc2d223247
-      domains:
-        CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
-      description: ""
-      source: Character Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        ability:
-          __typeName: TriggeredAbilityDisplay
-          distance: Melee 1
-          guid: 702976b0-f0bb-437a-8579-a76f75f13022
-          trigger: A creature makes a strike against the blackguard or an ally adjacent to them.
-          keywords:
-            Melee: true
-          effect: The damage is halved.
-          target: Self or one ally
-          name: Parry!
-        guid: 9933f84d-2350-419f-847d-d2af443b93f9
-        behavior: triggerdisplay
-        domains:
-          CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
-        description: ""
-        source: Character Feature
-        name: Parry!
-        sourceguid: 1991a87c-a8b5-458b-a530-bbfc2d223247
-      - __typeName: CharacterModifier
-        type: trigger
-        targetType: selforally
-        rules: |-
-          A creature makes a strike against the blackguard or an ally adjacent to them.
-          The damage is halved.
-        trigger: strike
-        sourceguid: 1991a87c-a8b5-458b-a530-bbfc2d223247
-        source: Character Feature
-        guid: 793539b3-8e18-48d7-b2bd-1017a2ce2826
-        name: Parry!
-        domains:
-          CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
-        description: ""
-        powerRollModifier:
-          __typeName: CharacterModifier
-          modtype: none
-          rollType: ability_power_roll
-          rules: ""
-          damageMultiplier: half
-          guid: 2815897a-36d4-41fe-aded-3ef6a41db917
-          description: The damage is halved.
-          behavior: power
-          keywords: []
-          source: Trigger
-          activationCondition: false
-          name: Parry!
-        range: "1"
-        behavior: powertabletrigger
-      name: Parry!
-    inflictedConditions: []
-    walkingSpeed: 5
-    opportunityAttack: 4
-    deathSavingThrowFailures: 0
-    max_hitpoints: 80
-    skillRatings: []
-    stamina_history:
-      __typeName: StatHistory
-      entries:
-        82ad1199-0057-4d3c-bf22-7309608dd94c:
-          timestamp: 1782178343137
-          userid: fWgsyXoFyNZCSaNPiJrHyGZz4583
-          disposition: bad
-          note: Purged condition
-          set: 75
-        1c0c8c3e-e1af-4b04-ad7e-e587c3cfdc33:
-          timestamp: 1782178348761
-          set: 80
-          userid: fWgsyXoFyNZCSaNPiJrHyGZz4583
-    groupid: f185d16e-35aa-42db-9fbd-529f55ab7935
-    resources: []
-    traitNames: []
-    minion: false
-    equipment: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: false
-      strain: []
-      targetTextOverride: " Each enemy in the area"
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 3 damage; M<1, slowed (save ends)
-        - 6 damage; M<2, slowed (save ends)
-        - 8 damage; M<3, slowed (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: custom
-        promptText: Select one ally to make a free strike
-        customAbility:
-          __typeName: ActivatedAbility
-          objectTarget: false
-          strain: []
-          targetType: target
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-            promptText: Free Strike
-            abilityType: standard
-            runOnController: true
-            customAbility:
-              __typeName: ActivatedAbility
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
-              behaviors: []
-              iconid: ui-icons/skills/1.png
-              guid: 914a3088-9852-4cec-a85e-aa89034e9762
-              description: ""
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              range: 1
-              name: Invoked Ability
-          categorization: Hidden
-          persistence: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: 48c6efbe-6b2e-41d3-867b-13fe734bc18d
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          description: ""
-          targetAllegiance: ally
-          range: "10"
-          name: Invoked Ability
-        applyto: caster
-        modesSelected:
-        - 1
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: custom
-        promptText: Select  ally to use a signature ability
-        customAbility:
-          __typeName: ActivatedAbility
-          implementation: 4
-          objectTarget: false
-          strain: []
-          targetType: target
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
-            promptText: Signature Strike
-            abilityType: standard
-            customAbility:
-              __typeName: ActivatedAbility
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
-              targetType: self
-              modifiers: []
-              behaviors: []
-              iconid: ui-icons/skills/1.png
-              guid: 963de1ea-4b01-4112-bd72-b53fc5a187f5
-              description: ""
-              display:
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-                saturation: 1
-              range: 1
-              name: Invoked Ability
-            runOnController: true
-            invokeOnCaster: false
-          sourceReference:
-            __typeName: SourceReference
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-            page: 184
-          persistence: []
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          iconid: ui-icons/skills/1.png
-          guid: fe0de912-6fa4-4fd3-aeca-53f83581e6f6
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: "10"
-          name: Invoked Ability
-        applyto: caster
-        modesSelected:
-        - 2
-      - __typeName: ActivatedAbilityReplenishBehavior
-        mode: expend
-        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-        applyto: caster
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 184
-      multipleModes: true
-      keywords:
-        Melee: true
-        Area: true
-        Weapon: true
-      hasCustomIcon: true
-      persistence: []
-      modeList:
-      - text: Normal
-        rules: One ally within 10 squares can make a free strike.
-      - text: "**1** Malice"
-        rules: One ally within 10 squares can use their signature ability instead.
-      targetFilter: ""
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      targetAllegiance: enemy
-      targetType: all
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      categorization: Signature Ability
-      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
-      guid: 8e79fcd7-60c1-4bb6-a0db-cdd064042a7f
-      flavor: ""
-      effectImplemented: false
-      description: |-
-        One ally within 10 squares can make a free strike.
-
-        **1 Malice:** One ally within 10 squares can use their signature ability instead.
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      range: 1
-      name: Zweihander Swing
-    - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: false
-      strain: []
-      targetTextOverride: One enemy
-      flavor: ""
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 184
-      targetFilter: ""
-      keywords:
-        Ranged: true
-      persistence: []
-      behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        ongoingEffect: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
-        duration: 1
-        durationUntilEndOfTurn: false
-        ongoingEffectCustom: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      hasCustomIcon: true
-      targetAllegiance: enemy
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      targetType: target
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      guid: 8e6546e2-727f-4ff1-89cf-98f4a305dfa9
-      effectImplemented: false
-      repeatTargets: false
-      description: The target is marked until the start of the blackguard's next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.
-      categorization: Ability
-      range: 10
-      name: You!
-    - __typeName: ActivatedAbility
-      implementation: 2
-      castImmediately: true
-      strain: []
-      targetType: self
-      flavor: ""
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 184
-      hasCustomIcon: true
-      persistence: []
-      effectImplemented: true
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      repeatTargets: false
-      villainAction: Villain Action 1
-      modifiers: []
-      actionResourceId: none
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        promptText: The blackguard shifts up to their speed.
-        abilityType: standard
-        applyto: targets
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: 1
-          name: Invoked Ability
-        standardAbilityParams:
-          targetfilter: ""
-          distance: walking speed
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: named
-        promptText: First Zweihander Swing
-        namedAbility: Zweihander Swing
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: 1
-          name: Invoked Ability
-        invokeOnCaster: false
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbilityParams:
-          targetfilter: walking speed
-        promptText: You may continue shifting
-        abilityType: standard
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: 1
-          name: Invoked Ability
-        guid: b2ac7b23-8ad4-4f49-8568-c9e3284f1663
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        guid: c370a587-c056-437d-9159-842b33750201
-        promptText: Second Zweihander Swing
-        namedAbility: Zweihander Swing
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          iconid: ui-icons/skills/1.png
-          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
-          description: ""
-          display:
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-          range: 1
-          name: Invoked Ability
-        abilityType: named
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      guid: 4bcf8499-746e-4f45-b91c-71fcc0397c0c
-      keywords: []
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '3d267b38-000c-4063-a64"
-      description: The blackguard shifts up to their speed. During or after this movement, they can use their Zweihander Swing twice.
-      categorization: Villain Action
-      range: 1
-      name: Advance!
-    - __typeName: ActivatedAbility
-      implementation: 4
-      objectTarget: false
-      strain: []
-      targetTextOverride: Each enemy in the area
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        promptWhenResolving: true
-        promptWhenResolvingText: Select targets in your preferred order to slide.
-        rule: slide 5
-      sourceReference:
-        __typeName: SourceReference
-        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 184
-      targetFilter: ""
-      categorization: Villain Action
-      hasCustomIcon: true
-      persistence: []
-      villainAction: Villain Action 2
-      targetAllegiance: enemy
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: 1
-      targetType: all
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'ac1a969c-edfb-46b2-b9e"
-      modifiers: []
-      actionResourceId: none
-      repeatTargets: false
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      guid: de6a2aa1-ad99-4e9c-95b1-00ed41676c61
-      flavor: ""
-      effectImplemented: false
-      description: The blackguard slides each target up to 5 squares
-      keywords:
-        Area: true
-        Magic: true
-      range: 5
-      name: Back!
-    - __typeName: ActivatedAbility
-      implementation: 2
-      strain: []
-      targetType: self
-      flavor: ""
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 184
-      hasCustomIcon: true
-      persistence: []
-      effectImplemented: true
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      abilityType: none
-      numTargets: "1"
-      keywords:
-        Weapon: true
-        Magic: true
-        Area: true
-        Ranged: true
-      villainAction: Villain Action 3
-      modifiers: []
-      actionResourceId: none
-      categorization: Villain Action
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      guid: 2d79e042-684e-46f4-9585-2c8216bea713
-      usageLimitOptions:
-        multicharge: false
-        resourceid: a0c4faf4-9f88-481a-b6f3-2d4a4bd205cb
-        charges: "1"
-        resourceRefreshType: encounter
-      repeatTargets: false
-      description: The blackguard uses their Zweihander Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).
-      behaviors:
-      - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-        modifier:
-          __typeName: CharacterModifier
-          attributes:
-          - targeting: cube
-            allegiance: enemy
-            operation: targeting
-            value: ""
-            id: targettype
-            radius: "3"
-          - id: range
-            operation: Set
-            value: "5"
-          cannotModifyAction: true
-          behavior: modifyability
-          guid: d07b1311-f22e-4c78-956c-60783bcbb1c3
-          mustPayResourceCost: true
-          ability:
-            __typeName: ActivatedAbility
-            repeatTargets: false
-            abilityType: none
-            numTargets: "1"
-            strain: []
-            targetType: self
-            modifiers: []
-            behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              promptText: Select Allies within 5 squares of target area
-              customAbility:
-                __typeName: ActivatedAbility
-                objectTarget: false
-                strain: []
-                targetType: target
-                behaviors:
-                - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                  standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-                  promptText: Free Strike
-                  abilityType: standard
-                  runOnController: true
-                  customAbility:
-                    __typeName: ActivatedAbility
-                    repeatTargets: false
-                    abilityType: none
-                    numTargets: "1"
-                    targetType: self
-                    modifiers: []
-                    behaviors: []
-                    iconid: ui-icons/skills/1.png
-                    guid: 8d15618b-3b89-4f3d-85e1-a8d336352d63
-                    description: ""
-                    display:
-                      brightness: 1
-                      hueshift: 0
-                      bgcolor: "#ffffffff"
-                      saturation: 1
-                    range: 1
-                    name: Invoked Ability
-                sourceReference:
-                  __typeName: SourceReference
-                  docid: cc66844a-04d0-49a0-8687-65ef83b15363
-                  page: 184
-                persistence: []
-                repeatTargets: false
-                abilityType: none
-                numTargets: Count Nearby Enemies(15)
-                modifiers: []
-                iconid: ui-icons/skills/1.png
-                guid: 99e06312-34e3-4c01-8ea8-d51785b7403b
-                categorization: Hidden
-                display:
-                  brightness: 1
-                  hueshift: 0
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                description: ""
-                targetAllegiance: ally
-                range: "15"
-                name: Invoked Ability
-            abilityModification: true
-            iconid: ui-icons/skills/1.png
-            guid: 7cfe3d3c-560b-4bea-9c1e-e67c43f46f15
-            description: ""
-            display:
-              brightness: 1
-              hueshift: 0
-              bgcolor: "#ffffffff"
-              saturation: 1
-            range: 1
-            name: New Ability
-          description: ""
-          source: ""
-          filterAbility: Ability.name is Zweihander Swing
-          name: Modify Attack
-      range: 1
-      name: I Can Throw My Blade and So Should You!
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 184
-      keywords:
-        Melee: true
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      iconid: ui-icons/skills/1.png
-      guid: 47770116-c860-4d09-89d1-469cc4751653
-      categorization: Trigger
-      flavor: ""
-      description: |
-        The damage is halved.
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-      range: 1
-      name: Parry!
-    equipmentMeta:
-      offhand0: []
-    skillProficiencies: []
-    max_hitpoints_roll: "80"
-    levelChoices: []
-    monster_type: Human Blackguard
-    damageEntries:
-      51dda9c0-479b-4b57-9af0-e168c70e1ca1:
-        timestamp: 1782178343137
-        id: 51dda9c0-479b-4b57-9af0-e168c70e1ca1
-        seq: 1
-        damage: 5
-    stability: 2
-    titles: []
-    notes:
-    - text: ""
-      title: Monster Notes
-    role: Leader
-    ev: 12
-    movementSpeeds: []
-    attributes:
-      int:
-        __typeName: CharacterAttribute
-        id: int
-      cha:
-        __typeName: CharacterAttribute
-        id: cha
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      rea:
-        id: rea
-        baseValue: 2
-      inu:
-        id: inu
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 2
-      prs:
-        id: prs
-        baseValue: 2
-      con:
-        __typeName: CharacterAttribute
-        id: con
-      str:
-        __typeName: CharacterAttribute
-        id: str
-      mgt:
-        id: mgt
-        baseValue: 3
-      wis:
-        __typeName: CharacterAttribute
-        id: wis
-    innateAttacks: []
-    deathSavingThrowSuccesses: 0
-    initiativeGrouping: c5751834-1238-43fc-b652-4ff37fcd8f15
     availableTriggers: []
-    keywords:
-      Humanoid: true
-      Human: true
-    cr: 1
-    savingThrowRatings: []
-    damage_taken: 0
     import:
-      type: mcdm
-      override: true
       data: |+
         Human Blackguard	Level 1 Leader
         Human, Humanoid	EV 12
@@ -872,17 +109,753 @@ info:
 
 
 
-    creatureSize: 1M
+      override: true
+      type: mcdm
+    traitNames: []
+    walkingSpeed: 5
+    notes:
+    - text: ""
+      title: Monster Notes
+    stability: 2
+    movementSpeeds: []
+    inflictedConditions: []
+    monster_type: Human Blackguard
+    equipment: []
+    damage_taken: 0
+    max_hitpoints_roll: "80"
+    resources: []
+    ev: 12
+    deathSavingThrowFailures: 0
+    stamina_history:
+      __typeName: StatHistory
+      entries:
+        82ad1199-0057-4d3c-bf22-7309608dd94c:
+          note: Purged condition
+          timestamp: 1782178343137
+          set: 75
+          disposition: bad
+          userid: fWgsyXoFyNZCSaNPiJrHyGZz4583
+        1c0c8c3e-e1af-4b04-ad7e-e587c3cfdc33:
+          timestamp: 1782178348761
+          set: 80
+          userid: fWgsyXoFyNZCSaNPiJrHyGZz4583
+    innateAttacks: []
+    keywords:
+      Humanoid: true
+      Human: true
+    initiativeGrouping: c5751834-1238-43fc-b652-4ff37fcd8f15
+    skillProficiencies: []
+    cr: 1
+    titles: []
+    characterFeatures:
+    - __typeName: CharacterFeature
+      name: Supernatural Insight
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Supernatural Insight
+        activationCondition: ""
+        guid: a49159e4-1cf9-4cc2-bffb-3c704dc60052
+        keywords: []
+        sourceguid: d44878cf-1dba-4b92-acb6-2deaa4ab825a
+        rollType: ability_power_roll
+        modtype: remove_bane
+        domains:
+          CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
+          CharacterFeature:f382e531-a237-470d-9959-30b1a2837edf: true
+        behavior: power
+        displayCondition: Target.Conditions has "concealment"
+        description: The blackguard ignores concealment if it's granted by a supernatural effect, or the target is supernatural.
+        source: Trait
+      implementation: 3
+      guid: f382e531-a237-470d-9959-30b1a2837edf
+      domains:
+        CharacterFeature:d44878cf-1dba-4b92-acb6-2deaa4ab825a: true
+        CharacterFeature:f382e531-a237-470d-9959-30b1a2837edf: true
+      description: The blackguard ignores concealment if it's granted by a supernatural effect, or the target is supernatural.
+      source: Trait
+    - __typeName: CharacterFeature
+      name: End Effect
+      modifiers:
+      - __typeName: CharacterModifier
+        name: End Effect
+        behavior: trigger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            targetDuration: save
+            conditions: []
+            damageToSelf: "5"
+            mode: conditions_and_effects
+          conditionFormula: Save Ends Effects
+          modifiers: []
+          mandatory: false
+          repeatTargets: false
+          domains:
+            CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
+            CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
+          triggerPrompt: Take 5 damage to end one effect that can be ended by a saving throw. This damage can't be reduced in any way.
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+          guid: 9df36fcd-db8f-434b-885e-99cb7f3b11cf
+          persistence: []
+          numTargets: "1"
+          whenActive: combat
+          targetType: self
+          strain: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          trigger: endturn
+          range: 1
+          name: 'End Effect '
+        domains:
+          CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
+          CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
+        sourceguid: 1358be98-eae0-4ce7-8221-b853982624f7
+        guid: 661834fe-8c8b-40d2-9ae6-87ea3cb1cdb0
+        description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+        source: Trait
+      implementation: 4
+      guid: a7c02e1a-7c11-4186-b29c-8f4bbdd2863f
+      domains:
+        CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
+        CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
+      description: At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+      source: Trait
+    - __typeName: CharacterFeature
+      name: Parry!
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Parry!
+        behavior: triggerdisplay
+        sourceguid: 1991a87c-a8b5-458b-a530-bbfc2d223247
+        domains:
+          CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Melee 1
+          trigger: A creature makes a strike against the blackguard or an ally adjacent to them.
+          effect: The damage is halved.
+          keywords:
+            Melee: true
+          target: Self or one ally
+          name: Parry!
+          guid: 702976b0-f0bb-437a-8579-a76f75f13022
+        guid: 9933f84d-2350-419f-847d-d2af443b93f9
+        description: ""
+        source: Character Feature
+      - __typeName: CharacterModifier
+        name: Parry!
+        trigger: strike
+        type: trigger
+        targetType: selforally
+        guid: 793539b3-8e18-48d7-b2bd-1017a2ce2826
+        range: "1"
+        rules: |-
+          A creature makes a strike against the blackguard or an ally adjacent to them.
+          The damage is halved.
+        domains:
+          CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
+        powerRollModifier:
+          __typeName: CharacterModifier
+          name: Parry!
+          damageMultiplier: half
+          activationCondition: false
+          rollType: ability_power_roll
+          behavior: power
+          rules: ""
+          guid: 2815897a-36d4-41fe-aded-3ef6a41db917
+          keywords: []
+          source: Trigger
+          description: The damage is halved.
+          modtype: none
+        sourceguid: 1991a87c-a8b5-458b-a530-bbfc2d223247
+        behavior: powertabletrigger
+        description: ""
+        source: Character Feature
+      implementation: 3
+      guid: 1991a87c-a8b5-458b-a530-bbfc2d223247
+      domains:
+        CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
+      description: ""
+      source: Character Feature
+    minion: false
+    skillRatings: []
     monster_category: Monster
+    opportunityAttack: 4
+    groupid: f185d16e-35aa-42db-9fbd-529f55ab7935
+    deathSavingThrowSuccesses: 0
+    equipmentMeta:
+      offhand0: []
     resistances:
     - __typeName: ResistanceEntry
       apply: Damage Reduction
-      damageType: corruption
       dr: 2
+      damageType: corruption
     - __typeName: ResistanceEntry
       apply: Damage Reduction
-      damageType: psychic
       dr: 2
+      damageType: psychic
+    max_hitpoints: 80
+    levelChoices: []
+    savingThrowRatings: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 3
+        tiers:
+        - 3 damage; M<1, slowed (save ends)
+        - 6 damage; M<2, slowed (save ends)
+        - 8 damage; M<3, slowed (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        abilityType: custom
+        promptText: Select one ally to make a free strike
+        modesSelected:
+        - 1
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors: []
+              modifiers: []
+              numTargets: "1"
+              targetType: self
+              range: 1
+              name: Invoked Ability
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              abilityType: none
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+                hueshift: 0
+              description: ""
+              guid: 914a3088-9852-4cec-a85e-aa89034e9762
+            abilityType: standard
+            runOnController: true
+            standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+            promptText: Free Strike
+          categorization: Hidden
+          repeatTargets: false
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: 48c6efbe-6b2e-41d3-867b-13fe734bc18d
+          name: Invoked Ability
+          numTargets: "1"
+          targetType: target
+          modifiers: []
+          strain: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          persistence: []
+          range: "10"
+          targetAllegiance: ally
+          objectTarget: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        abilityType: custom
+        promptText: Select  ally to use a signature ability
+        modesSelected:
+        - 2
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors: []
+              modifiers: []
+              numTargets: "1"
+              targetType: self
+              range: 1
+              name: Invoked Ability
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              abilityType: none
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+                hueshift: 0
+              description: ""
+              guid: 963de1ea-4b01-4112-bd72-b53fc5a187f5
+            abilityType: standard
+            promptText: Signature Strike
+            invokeOnCaster: false
+            standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
+            runOnController: true
+          modifiers: []
+          repeatTargets: false
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: fe0de912-6fa4-4fd3-aeca-53f83581e6f6
+          name: Invoked Ability
+          numTargets: "1"
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 184
+          targetType: target
+          strain: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          persistence: []
+          range: "10"
+          objectTarget: false
+      - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        mode: expend
+        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      targetAllegiance: enemy
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modeList:
+      - text: Normal
+        rules: One ally within 10 squares can make a free strike.
+      - text: "**1** Malice"
+        rules: One ally within 10 squares can use their signature ability instead.
+      keywords:
+        Weapon: true
+        Melee: true
+        Area: true
+      name: Zweihander Swing
+      effectImplemented: false
+      targetTextOverride: " Each enemy in the area"
+      multipleModes: true
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+      description: |-
+        One ally within 10 squares can make a free strike.
+
+        **1 Malice:** One ally within 10 squares can use their signature ability instead.
+      guid: 8e79fcd7-60c1-4bb6-a0db-cdd064042a7f
+      persistence: []
+      targetFilter: ""
+      hasCustomIcon: true
+      numTargets: 1
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 184
+      modifiers: []
+      targetType: all
+      implementation: 4
+      categorization: Signature Ability
+      strain: []
+      abilityType: none
+      range: 1
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      flavor: ""
+      repeatTargets: false
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
+        durationUntilEndOfTurn: false
+        ongoingEffectCustom: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
+        duration: 1
+      modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      keywords:
+        Ranged: true
+      repeatTargets: false
+      categorization: Ability
+      targetAllegiance: enemy
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+      description: The target is marked until the start of the blackguard's next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.
+      flavor: ""
+      persistence: []
+      targetTextOverride: One enemy
+      hasCustomIcon: true
+      numTargets: 1
+      targetFilter: ""
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 184
+      targetType: target
+      implementation: 4
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
+      strain: []
+      abilityType: none
+      range: 10
+      guid: 8e6546e2-727f-4ff1-89cf-98f4a305dfa9
+      name: You!
+      effectImplemented: false
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: targets
+        abilityType: standard
+        promptText: The blackguard shifts up to their speed.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
+        standardAbilityParams:
+          distance: walking speed
+          targetfilter: ""
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
+        abilityType: named
+        promptText: First Zweihander Swing
+        invokeOnCaster: false
+        namedAbility: Zweihander Swing
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
+        abilityType: standard
+        promptText: You may continue shifting
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          targetfilter: walking speed
+        guid: b2ac7b23-8ad4-4f49-8568-c9e3284f1663
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: Zweihander Swing
+        abilityType: named
+        promptText: Second Zweihander Swing
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          description: ""
+          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
+        guid: c370a587-c056-437d-9159-842b33750201
+      modifiers: []
+      actionResourceId: none
+      villainAction: Villain Action 1
+      keywords: []
+      repeatTargets: false
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+      description: The blackguard shifts up to their speed. During or after this movement, they can use their Zweihander Swing twice.
+      flavor: ""
+      name: Advance!
+      effectImplemented: true
+      hasCustomIcon: true
+      numTargets: 1
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 184
+      usageLimitOptions: "{'multicharge': False, 'resourceid': '3d267b38-000c-4063-a64"
+      castImmediately: true
+      targetType: self
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      strain: []
+      abilityType: none
+      range: 1
+      guid: 4bcf8499-746e-4f45-b91c-71fcc0397c0c
+      implementation: 2
+      categorization: Villain Action
+      persistence: []
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        promptWhenResolvingText: Select targets in your preferred order to slide.
+        rule: slide 5
+        promptWhenResolving: true
+      targetAllegiance: enemy
+      actionResourceId: none
+      villainAction: Villain Action 2
+      targetTextOverride: Each enemy in the area
+      name: Back!
+      effectImplemented: false
+      targetFilter: ""
+      categorization: Villain Action
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+      description: The blackguard slides each target up to 5 squares
+      guid: de6a2aa1-ad99-4e9c-95b1-00ed41676c61
+      persistence: []
+      modifiers: []
+      hasCustomIcon: true
+      numTargets: 1
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 184
+      usageLimitOptions: "{'multicharge': False, 'resourceid': 'ac1a969c-edfb-46b2-b9e"
+      targetType: all
+      implementation: 4
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      strain: []
+      abilityType: none
+      range: 5
+      flavor: ""
+      keywords:
+        Area: true
+        Magic: true
+      repeatTargets: false
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+        modifier:
+          __typeName: CharacterModifier
+          name: Modify Attack
+          ability:
+            __typeName: ActivatedAbility
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              promptText: Select Allies within 5 squares of target area
+              customAbility:
+                __typeName: ActivatedAbility
+                behaviors:
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  customAbility:
+                    __typeName: ActivatedAbility
+                    behaviors: []
+                    modifiers: []
+                    numTargets: "1"
+                    targetType: self
+                    range: 1
+                    name: Invoked Ability
+                    repeatTargets: false
+                    iconid: ui-icons/skills/1.png
+                    abilityType: none
+                    display:
+                      brightness: 1
+                      bgcolor: "#ffffffff"
+                      saturation: 1
+                      hueshift: 0
+                    description: ""
+                    guid: 8d15618b-3b89-4f3d-85e1-a8d336352d63
+                  abilityType: standard
+                  runOnController: true
+                  standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+                  promptText: Free Strike
+                modifiers: []
+                repeatTargets: false
+                display:
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                  saturation: 1
+                  hueshift: 0
+                description: ""
+                guid: 99e06312-34e3-4c01-8ea8-d51785b7403b
+                name: Invoked Ability
+                numTargets: Count Nearby Enemies(15)
+                sourceReference:
+                  __typeName: SourceReference
+                  docid: cc66844a-04d0-49a0-8687-65ef83b15363
+                  page: 184
+                targetType: target
+                targetAllegiance: ally
+                strain: []
+                abilityType: none
+                range: "15"
+                categorization: Hidden
+                persistence: []
+                iconid: ui-icons/skills/1.png
+                objectTarget: false
+            modifiers: []
+            numTargets: "1"
+            name: New Ability
+            targetType: self
+            iconid: ui-icons/skills/1.png
+            abilityModification: true
+            strain: []
+            abilityType: none
+            range: 1
+            repeatTargets: false
+            display:
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
+              hueshift: 0
+            description: ""
+            guid: 7cfe3d3c-560b-4bea-9c1e-e67c43f46f15
+          cannotModifyAction: true
+          source: ""
+          behavior: modifyability
+          filterAbility: Ability.name is Zweihander Swing
+          guid: d07b1311-f22e-4c78-956c-60783bcbb1c3
+          mustPayResourceCost: true
+          description: ""
+          attributes:
+          - targeting: cube
+            value: ""
+            allegiance: enemy
+            operation: targeting
+            id: targettype
+            radius: "3"
+          - id: range
+            operation: Set
+            value: "5"
+      categorization: Villain Action
+      actionResourceId: none
+      villainAction: Villain Action 3
+      keywords:
+        Weapon: true
+        Magic: true
+        Ranged: true
+        Area: true
+      effectImplemented: true
+      display:
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+        hueshift: 0
+      description: The blackguard uses their Zweihander Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).
+      flavor: ""
+      name: I Can Throw My Blade and So Should You!
+      hasCustomIcon: true
+      numTargets: "1"
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 184
+      usageLimitOptions:
+        resourceRefreshType: encounter
+        charges: "1"
+        resourceid: a0c4faf4-9f88-481a-b6f3-2d4a4bd205cb
+        multicharge: false
+      targetType: self
+      modifiers: []
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      strain: []
+      abilityType: none
+      range: 1
+      guid: 2d79e042-684e-46f4-9585-2c8216bea713
+      repeatTargets: false
+      implementation: 2
+      persistence: []
+    damageEntries:
+      51dda9c0-479b-4b57-9af0-e168c70e1ca1:
+        id: 51dda9c0-479b-4b57-9af0-e168c70e1ca1
+        timestamp: 1782178343137
+        seq: 1
+        damage: 5
+    creatureSize: 1M
+    role: Leader
+    attributes:
+      mgt:
+        id: mgt
+        baseValue: 3
+      agl:
+        id: agl
+        baseValue: 2
+      con:
+        __typeName: CharacterAttribute
+        id: con
+      str:
+        __typeName: CharacterAttribute
+        id: str
+      prs:
+        id: prs
+        baseValue: 2
+      cha:
+        __typeName: CharacterAttribute
+        id: cha
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      inu:
+        id: inu
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 2
+      int:
+        __typeName: CharacterAttribute
+        id: int
+      wis:
+        __typeName: CharacterAttribute
+        id: wis
   tokenType: null
   bestiaryId: 1154a70e-62de-4654-9ecb-fa203b778e40
   summonerid: null
@@ -895,6 +868,6 @@ parentFolder: 7fcca4d0-0ce3-4e95-946b-bd6053158331
 artist: null
 ord: 0
 ctime: 1741590219519
-mtime: 1782178401626
+mtime: 1785883085632
 hidden: false
 id: 1154a70e-62de-4654-9ecb-fa203b778e40
