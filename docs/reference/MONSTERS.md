@@ -1762,6 +1762,16 @@ Deregistered in Draw Steel (NOT available):
 
 Extends ActivatedAbility with trigger-specific fields.
 
+**PLACEMENT PITFALL: a triggered ability does NOT work from `innateActivatedAbilities`.**
+Placing an `ActivatedAbility` with a triggered-action `actionResourceId` (or a
+`TriggeredAbility`) in the monster's `innateActivatedAbilities` list produces a button that
+never fires from its trigger and does not function as a triggered action. Triggered
+abilities MUST be delivered as a `behavior: trigger` CharacterModifier on a
+CharacterFeature (in `characterFeatures`), with the `TriggeredAbility` in the modifier's
+`triggeredAbility` field. Use `mandatory: false` + `triggerPrompt` for optional triggers
+and `hasManualVersion: true` to also allow firing it manually. (Discovered on the Gloom
+Dragon's Encroaching Darkness, 2026-08.)
+
 ```yaml
 __typeName: TriggeredAbility
 name: "Ability Name"

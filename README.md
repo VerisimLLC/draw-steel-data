@@ -96,6 +96,33 @@ A good habit: treat the clone like any other source checkout. Work on a branch, 
 after a play or editing session with a message describing what changed, and keep an eye
 on `git diff` so app-driven rewrites do not smuggle in changes you did not intend.
 
+## Committing Convention: Only Commit What You Actually Changed
+
+Several contributors each run their own game against their own clone, and **each game
+holds a different slice of the content**. Your working tree reflects only *your* game's
+state: any monster another contributor has been working on in their game is stale in
+yours, even though the app has re-exported the whole file with a fresh timestamp. A
+bulk commit of the churned working tree therefore silently rolls back other people's
+work, and resolving merge conflicts wholesale in your own favor does the same thing.
+(This has happened; the recovery was not fun.)
+
+The rules:
+
+- **Commit only the files for assets you deliberately changed** in your session. Never
+  `git add -A` or stage the whole `monsters/` churn. Everything else in your dirty tree
+  is either formatting noise or another contributor's stale content.
+- **Before pushing, check each file for parallel work:**
+  ```
+  git fetch origin
+  git log --format="%h %an %s" $(git merge-base HEAD origin/main)..origin/main -- <file>
+  ```
+  If someone else has touched the file since your base, do not overwrite it wholesale.
+  Verify their change survives in your version, or leave the file out and coordinate.
+- **Resolve YAML merge conflicts per file, never all-mine.** Your export does not
+  contain upstream content that never reached your game.
+- **Keep commits small and single-purpose** so a bad one can be reverted cleanly
+  without taking unrelated work with it.
+
 ## YAML Structure
 
 Each top-level folder is an asset category; `objectTables/` holds the game-system
