@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,160 +54,172 @@ info:
   updateid: 7cbcc4d2-3246-4089-89ab-3932162ccc47
   properties:
     __typeName: monster
+    monster_type: Vampire
+    skillRatings: []
+    inflictedConditions: []
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    resources: []
+    max_hitpoints_roll: "40"
+    levelChoices: []
+    monster_category: Monster
+    damage_taken: 0
+    max_hitpoints: 40
+    keywords:
+      Vampire: true
+      Undead: true
+    attributes:
+      agl:
+        id: agl
+        baseValue: 2
+      mgt:
+        id: mgt
+        baseValue: 4
+      inu:
+        id: inu
+        baseValue: 1
+      prs:
+        id: prs
+        baseValue: 1
+      rea:
+        id: rea
+        baseValue: 1
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: c2c86467-2ac4-4f5c-bd6f-a3163f36e1e9
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        behavior: attribute
+        domains:
+          CharacterFeature:c2c86467-2ac4-4f5c-bd6f-a3163f36e1e9: true
+        description: The vampire has a speed of 10 while a creature is bleeding within 10. They must use their bite against a bleeding creature on their turn if able.
+        value: 10
+        attribute: speed
+        operation: set
+        name: Unslakable Bloodthirst
+        activationCondition: Count Nearby Creatures(10, "Bleeding") >= 1
+        sourceguid: c2c86467-2ac4-4f5c-bd6f-a3163f36e1e9
+        guid: d1052ce7-923e-4acc-9ff8-9f3d1b9058a6
+      implementation: 3
       domains:
         CharacterFeature:c2c86467-2ac4-4f5c-bd6f-a3163f36e1e9: true
       description: The vampire has a speed of 10 while a creature is bleeding within 10. The vampire must strike a bleeding creature on their turn if they are able to.
-      modifiers: []
-      source: Trait
+      guid: c2c86467-2ac4-4f5c-bd6f-a3163f36e1e9
       name: Unslakable Bloodthirst
-    inflictedConditions: []
-    walkingSpeed: 6
-    opportunityAttack: 3
-    damage_taken: 0
-    max_hitpoints: 40
-    skillRatings: []
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    resources: []
-    traitNames: []
-    minion: false
-    equipment: []
+    savingThrowRatings: []
+    availableTriggers: []
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 3
-      targetType: target
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      name: Exsanguinating Bite
+      numTargets: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 7 damage; M<2 bleeding (save ends)
         - 10 corruption damage; M<3 5 corruption damage and bleeding (save ends)
         - 11 corruption damage; 7 corruption damage; M<4 bleeding (save ends)
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
+        roll: 2d10 + Might
       modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      guid: 41361381-2a45-4a19-93ae-692588d36dc6
-      flavor: ""
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
       description: The vampire regains Stamina equal to the corruption damage dealt.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Exsanguinating Bite
-    - __typeName: ActivatedAbility
       implementation: 3
+      guid: 41361381-2a45-4a19-93ae-692588d36dc6
       targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       flavor: ""
-      categorization: Heroic Ability
-      effectImplemented: false
-      resourceNumber: 3
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      keywords:
-        Strike: true
-        Melee: true
-        Weapon: true
       iconid: ui-icons/skills/1.png
-      guid: cddf1ff8-b47f-4863-a08a-25e59db0adaf
+      categorization: Signature Ability
+      range: 1
+    - __typeName: ActivatedAbility
+      targetType: target
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      name: Vicious Pursuit
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 7 damage; A<2 slowed (save ends)
         - 10 damage; A<3 slowed (save ends)
         - 11 damage; A<4 slowed (save ends)
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: If the target is bleeding, the vampire may shift up to their speed before rolling power.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      range: 1
-      name: Vicious Pursuit
-    - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      categorization: Heroic Ability
-      targetFilter: Enemy
-      effectImplemented: false
-      resourceNumber: 2
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
+        roll: 2d10 + Might
       modifiers: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      resourceNumber: 3
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      implementation: 3
+      description: If the target is bleeding, the vampire may shift up to their speed before rolling power.
+      flavor: ""
+      guid: cddf1ff8-b47f-4863-a08a-25e59db0adaf
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      iconid: ui-icons/skills/1.png
+      categorization: Heroic Ability
+      range: 1
+    - __typeName: ActivatedAbility
+      targetType: target
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      targetFilter: Enemy
       keywords:
         Magic: true
+      name: 'Reactive Charm '
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: 1
+      behaviors: []
+      modifiers: []
+      description: The target becomes the new target of the strike.
+      categorization: Heroic Ability
+      flavor: ""
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      resourceNumber: 2
+      implementation: 0
       iconid: ui-icons/skills/1.png
       guid: c1ef6f2f-b13b-4192-a5cd-da16fcae40aa
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      flavor: ""
-      description: The target becomes the new target of the strike.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
       range: 5
-      name: 'Reactive Charm '
-    skillProficiencies: []
-    max_hitpoints_roll: "40"
-    levelChoices: []
-    monster_type: Vampire
-    cr: 7
-    keywords:
-      Undead: true
-      Vampire: true
-    ev: 9
-    movementSpeeds:
-      climb: 6
-    attributes:
-      inu:
-        id: inu
-        baseValue: 1
-      agl:
-        id: agl
-        baseValue: 2
-      prs:
-        id: prs
-        baseValue: 1
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: 1
+    role: Horde Hexer
+    equipment: []
     innateAttacks: []
+    ev: 9
+    stability: 3
+    minion: false
+    walkingSpeed: 6
     resistances:
     - __typeName: ResistanceEntry
+      dr: 7
       apply: Damage Reduction
       damageType: corruption
-      dr: 7
     - __typeName: ResistanceEntry
+      dr: 7
       apply: Damage Reduction
       damageType: poison
-      dr: 7
-    availableTriggers: []
-    stability: 3
-    initiativeGrouping: e8a43fc8-de6e-4abf-80ea-4ba8876606a9
+    opportunityAttack: 3
+    creatureSize: 1M
     import:
       type: mcdm
       data: |+
@@ -243,10 +256,12 @@ info:
 
 
 
-    role: Horde Hexer
-    creatureSize: 1M
-    monster_category: Monster
-    savingThrowRatings: []
+    traitNames: []
+    cr: 7
+    skillProficiencies: []
+    initiativeGrouping: e8a43fc8-de6e-4abf-80ea-4ba8876606a9
+    movementSpeeds:
+      climb: 6
   tokenType: null
   bestiaryId: d3e733b5-2069-439c-a399-90949afb105f
   summonerid: null
@@ -259,6 +274,6 @@ parentFolder: fc9b27fb-58bf-4b65-9400-d025e2de9480
 artist: null
 ord: 6
 ctime: 1741590313525
-mtime: 1775375121457
+mtime: 1785861057490
 hidden: false
 id: d3e733b5-2069-439c-a399-90949afb105f

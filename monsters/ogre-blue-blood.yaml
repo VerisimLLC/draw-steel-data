@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,108 +54,223 @@ info:
   updateid: ade7236b-ded0-4ced-a89b-276e15e22137
   properties:
     __typeName: monster
+    monster_type: Ogre Blue Blood
     skillRatings: []
+    inflictedConditions: []
+    withCaptain: Gain an edge on strikes
+    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
     max_hitpoints_roll: "13"
-    minion: true
     titles: []
-    movementSpeeds: []
-    resistances: []
+    monster_category: Monster
+    equipment: []
+    max_hitpoints: 13
+    damage_taken: 0
+    attributes:
+      agl:
+        id: agl
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 4
+      inu:
+        id: inu
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 2
+      rea:
+        id: rea
+        baseValue: -1
     characterFeatures:
     - __typeName: CharacterFeature
+      implementation: 3
+      domains:
+        CharacterFeature:62827544-6b6a-47a1-b7d2-90c32a015a40: true
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Trait
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          modifiers: []
+          strain: []
+          numTargets: "1"
+          repeatTargets: false
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            abilityType: standard
+            standardAbility: 7fe11a31-aa56-4479-abe3-06c7b51da51f
+            standardAbilityParams:
+              numcreatures: "1"
+              range: "5"
+            promptText: Select an ally within 5 to make the free strike instead
+            autoTarget: false
+          description: ""
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+          targetType: self
+          mandatory: false
+          abilityType: none
+          triggerPrompt: Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.
+          trigger: leaveadjacent
+          name: In My Stead
+          iconid: ui-icons/skills/1.png
+          guid: 387d5831-ddaa-4b3c-9489-7b409338d478
+          range: 1
+        behavior: trigger
+        name: In My Stead
+        description: |-
+          Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.
+
+
+          **Codex Implementation Note:** In My Stead does not disable the blue blood's own Opportunity Attack reaction — decline it manually to avoid a double free strike.
+        guid: 5818eb30-7e97-44c3-a273-966741bab39f
+        domains: []
+      name: In My Stead
       description: |-
         Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.
 
 
         **Codex Implementation Note:** In My Stead does not disable the blue blood's own Opportunity Attack reaction — decline it manually to avoid a double free strike.
       guid: 62827544-6b6a-47a1-b7d2-90c32a015a40
-      implementation: 3
-      name: In My Stead
       source: Trait
-      domains:
-        CharacterFeature:62827544-6b6a-47a1-b7d2-90c32a015a40: true
-      modifiers:
-      - __typeName: CharacterModifier
-        description: |-
-          Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.
-
-
-          **Codex Implementation Note:** In My Stead does not disable the blue blood's own Opportunity Attack reaction — decline it manually to avoid a double free strike.
-        behavior: trigger
-        guid: 5818eb30-7e97-44c3-a273-966741bab39f
-        name: In My Stead
-        domains: []
-        source: Trait
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          range: 1
-          triggerPrompt: Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.
-          strain: []
-          trigger: leaveadjacent
-          iconid: ui-icons/skills/1.png
-          name: In My Stead
-          modifiers: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            saturation: 1
-            brightness: 1
-          mandatory: false
-          description: ""
-          targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbility: 7fe11a31-aa56-4479-abe3-06c7b51da51f
-            applyto: caster
-            abilityType: standard
-            standardAbilityParams:
-              range: "5"
-              numcreatures: "1"
-            autoTarget: false
-            promptText: Select an ally within 5 to make the free strike instead
-          numTargets: "1"
-          abilityType: none
-          repeatTargets: false
-          guid: 387d5831-ddaa-4b3c-9489-7b409338d478
     - __typeName: CharacterFeature
-      description: The blue blood has damage immunity 2 while their squad has three or fewer minions in it.
-      guid: 1f77e1b0-6550-4fe8-9df0-7ce97e59b77a
       implementation: 4
-      name: Royal Anger
-      domains:
-        CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
       source: Trait
       modifiers:
       - __typeName: CharacterModifier
-        name: Royal Anger
-        filterCondition: Living Squad Members <= 3
-        behavior: resistance
-        domains:
-          CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
-        description: The blue blood has damage immunity 2 while their squad has three or fewer minions in it.
         iconColor:
           __usertype: LuaColor
           h: 0.612228870391846
           s: 1.00098073482513
           v: 1.00112557411194
           a: 1
-        statusIcon: c86775c1-72d6-4a46-8493-a8b9c341a1ee
-        displayIcon: true
-        sourceguid: 1f77e1b0-6550-4fe8-9df0-7ce97e59b77a
         resistances:
         - __typeName: ResistanceEntry
+          dr: "2"
           damageType: all
           apply: Damage Reduction
-          dr: "2"
-        source: Trait
+        behavior: resistance
+        domains:
+          CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
+        statusIcon: c86775c1-72d6-4a46-8493-a8b9c341a1ee
+        filterCondition: Living Squad Members <= 3
         guid: 9904a5fa-c65f-4d26-a8fd-bffaff6bc71e
-    withCaptain: Gain an edge on strikes
-    equipment: []
-    levelChoices: []
-    ev: 9
-    keywords:
-      Ogre: true
-      Giant: true
+        description: The blue blood has damage immunity 2 while their squad has three or fewer minions in it.
+        name: Royal Anger
+        source: Trait
+        sourceguid: 1f77e1b0-6550-4fe8-9df0-7ce97e59b77a
+        displayIcon: true
+      name: Royal Anger
+      description: The blue blood has damage immunity 2 while their squad has three or fewer minions in it.
+      guid: 1f77e1b0-6550-4fe8-9df0-7ce97e59b77a
+      domains:
+        CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
+    savingThrowRatings: []
+    minion: true
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      strain: []
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      name: Crush Underfoot
+      sourceReference:
+        __typeName: SourceReference
+        page: 211
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      numTargets: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 4 damage
+        - 7 damage; M<3 prone
+        - 8 damage; prone
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        modifier:
+          __typeName: CharacterModifier
+          behavior: power
+          domains: []
+          description: A target who is already prone takes an extra 4 damage from Crush Underfoot.
+          activationAfterRoll: false
+          guid: a0115bd3-9325-4a57-a64c-5cfac476bb78
+          modtype: none
+          rollType: ability_power_roll
+          keywords: []
+          name: Crush Underfoot Prone Target
+          activationCondition: Ability.Name is "Crush Underfoot" and Target.Conditions has "Prone"
+          sourceguid: 0510f21d-1f29-412a-8f6e-fd10a502917b
+          damageModifier: "4"
+        guid: 0510f21d-1f29-412a-8f6e-fd10a502917b
+      modifiers: []
+      description: An already prone target takes an additional 4 damage.
+      guid: 41ecf31e-7cba-4e0a-ac6d-656a2415729f
+      implementation: 4
+      flavor: ""
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      targetType: target
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      iconid: ui-icons/skills/1.png
+      categorization: Signature Ability
+      range: 2
+    - __typeName: ActivatedAbility
+      targetType: all
+      targetAllegiance: ally
+      repeatTargets: false
+      abilityType: none
+      keywords: []
+      name: Rampage
+      sourceReference:
+        __typeName: SourceReference
+        page: 209
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: 1
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 081b4c1c-999d-4b9b-bec4-2705eac0f940
+        ongoingEffectCustom: false
+        duration: endround
+      description: |
+        Until the end of the round, each ogre has damage immunity 5 and deals an extra 5 damage with abilities, and heroic abilities that target any ogre have their Heroic Resource cost reduced by 1 (to a minimum of 1).
+      categorization: Heroic Ability
+      guid: fbecf4b7-b92b-4484-9883-e6b84e9e5e79
+      flavor: ""
+      implementation: 3
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+      modifiers: []
+      filterTarget: Keywords has "Ogre"
+      iconid: ui-icons/skills/1.png
+      resourceNumber: "7"
+      range: 100
     role: Minion Brute
+    resistances: []
+    notes:
+    - text: ""
+      title: Monster Notes
+    ev: 9
+    stability: 4
+    resources: []
+    walkingSpeed: 5
+    opportunityAttack: 4
+    innateAttacks: []
+    creatureSize: "2"
     import:
       type: mcdm
       data: |+
@@ -178,122 +294,13 @@ info:
         <b>Defiant Anger</b>
         The blue blood has damage immunity 2 while they are winded.
 
-    inflictedConditions: []
-    opportunityAttack: 4
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      targetType: target
-      strain: []
-      effectImplemented: false
-      categorization: Signature Ability
-      name: Crush Underfoot
-      sourceReference:
-        __typeName: SourceReference
-        page: 211
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      guid: 41ecf31e-7cba-4e0a-ac6d-656a2415729f
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
-        tiers:
-        - 4 damage
-        - 7 damage; M<3 prone
-        - 8 damage; prone
-      - __typeName: ActivatedAbilityModifyPowerRollBehavior
-        modifier:
-          __typeName: CharacterModifier
-          damageModifier: "4"
-          activationCondition: Ability.Name is "Crush Underfoot" and Target.Conditions has "Prone"
-          keywords: []
-          domains: []
-          description: A target who is already prone takes an extra 4 damage from Crush Underfoot.
-          name: Crush Underfoot Prone Target
-          modtype: none
-          rollType: ability_power_roll
-          sourceguid: 0510f21d-1f29-412a-8f6e-fd10a502917b
-          guid: a0115bd3-9325-4a57-a64c-5cfac476bb78
-          behavior: power
-          activationAfterRoll: false
-        guid: 0510f21d-1f29-412a-8f6e-fd10a502917b
-      implementation: 4
-      iconid: ui-icons/skills/1.png
-      keywords:
-        Strike: true
-        Weapon: true
-        Melee: true
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        saturation: 1
-        brightness: 1
-      description: An already prone target takes an additional 4 damage.
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 2
-      flavor: ""
-      numTargets: 1
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-    - __typeName: ActivatedAbility
-      targetType: target
-      categorization: Heroic Ability
-      name: Rampage
-      sourceReference:
-        __typeName: SourceReference
-        page: 209
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      guid: fbecf4b7-b92b-4484-9883-e6b84e9e5e79
-      behaviors: []
-      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-      implementation: 0
-      iconid: ui-icons/skills/1.png
-      keywords: []
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        saturation: 1
-        brightness: 1
-      range: 1
-      resourceNumber: 7
-      flavor: ""
-      description: |
-        Until the end of the round, each ogre has damage immunity 5 and deals an extra 5 damage with abilities, and heroic abilities that target any ogre have their Heroic Resource cost reduced by 1 (to a minimum of 1).
-      numTargets: 1
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-    savingThrowRatings: []
-    notes:
-    - title: Monster Notes
-      text: ""
-    creatureSize: "2"
-    stability: 4
     traitNames: []
-    attributes:
-      rea:
-        baseValue: -1
-        id: rea
-      prs:
-        baseValue: 2
-        id: prs
-      agl:
-        baseValue: 1
-        id: agl
-      mgt:
-        baseValue: 4
-        id: mgt
-      inu:
-        baseValue: 0
-        id: inu
-    monster_type: Ogre Blue Blood
     cr: 7
-    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
-    monster_category: Monster
-    resources: []
-    walkingSpeed: 5
-    max_hitpoints: 13
-    innateAttacks: []
-    damage_taken: 0
+    movementSpeeds: []
+    keywords:
+      Ogre: true
+      Giant: true
+    levelChoices: []
   tokenType: null
   bestiaryId: a013bd1e-19ed-4a34-b6ca-c7e7479889bd
   summonerid: null
@@ -306,6 +313,6 @@ parentFolder: f3ad56da-f6fa-4d7d-a056-0d090e6a130f
 artist: null
 ord: 0
 ctime: 1741590289033
-mtime: 1783436154050
+mtime: 1785867163152
 hidden: false
 id: a013bd1e-19ed-4a34-b6ca-c7e7479889bd

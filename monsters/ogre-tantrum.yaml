@@ -14,6 +14,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,159 +54,165 @@ info:
   updateid: c1e68613-b9f5-4dd4-ae2b-a257bea41752
   properties:
     __typeName: monster
+    monster_type: Ogre Tantrum
+    skillRatings: []
+    inflictedConditions: []
+    withCaptain: +5 bonus to ranged distance
+    max_hitpoints_roll: "10"
     titles: []
+    monster_category: Monster
+    resistances: []
+    max_hitpoints: 10
+    damage_taken: 0
+    attributes:
+      agl:
+        id: agl
+        baseValue: 2
+      mgt:
+        id: mgt
+        baseValue: 4
+      inu:
+        id: inu
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: -1
+      rea:
+        id: rea
+        baseValue: -1
     characterFeatures:
     - __typeName: CharacterFeature
       implementation: 4
-      guid: 747763d9-7a3a-4951-babe-65b65f8d058e
-      domains:
-        CharacterFeature:747763d9-7a3a-4951-babe-65b65f8d058e: true
-      description: 'The tantrum has damage immunity 3 and a speed 8 while their squad has two or fewer minions in it. '
+      source: Trait
       modifiers:
       - __typeName: CharacterModifier
+        source: Trait
         resistances:
         - __typeName: ResistanceEntry
-          apply: Damage Reduction
-          damageType: all
           dr: "3"
-        statusIcon: c86775c1-72d6-4a46-8493-a8b9c341a1ee
+          damageType: all
+          apply: Damage Reduction
+        behavior: resistance
+        domains:
+          CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
+          CharacterFeature:93873a59-c0e9-4823-b91a-1d94609855a7: true
+        description: 'The tantrum has damage immunity 3 and a speed 8 while their squad has two or fewer minions in it. '
+        filterCondition: Living Squad Members <= 2
+        guid: ae553adc-1682-4dcd-95ec-4f6d04197a3d
         iconColor:
           __usertype: LuaColor
           h: 0.612228870391846
           s: 1.00098073482513
           v: 1.00112557411194
           a: 1
-        sourceguid: 93873a59-c0e9-4823-b91a-1d94609855a7
         name: Royal Anger
-        guid: ae553adc-1682-4dcd-95ec-4f6d04197a3d
         displayIcon: true
-        domains:
-          CharacterFeature:93873a59-c0e9-4823-b91a-1d94609855a7: true
-          CharacterFeature:1f77e1b0-6550-4fe8-9df0-7ce97e59b77a: true
-        description: 'The tantrum has damage immunity 3 and a speed 8 while their squad has two or fewer minions in it. '
-        source: Trait
-        filterCondition: Living Squad Members <= 2
-        behavior: resistance
+        sourceguid: 93873a59-c0e9-4823-b91a-1d94609855a7
+        statusIcon: c86775c1-72d6-4a46-8493-a8b9c341a1ee
       - __typeName: CharacterModifier
-        attribute: speed
-        filterCondition: Living Squad Members <= 2
-        value: 8
-        operation: set
-        guid: 1a1e45e4-1cc5-4f1a-87d6-41bf6dd7bff1
-        name: Excessive Anger
+        source: Trait
+        behavior: attribute
         domains:
           CharacterFeature:747763d9-7a3a-4951-babe-65b65f8d058e: true
         description: 'The tantrum has damage immunity 3 and a speed 8 while their squad has two or fewer minions in it. '
-        source: Trait
+        filterCondition: Living Squad Members <= 2
+        value: 8
+        attribute: speed
+        operation: set
+        name: Excessive Anger
+        guid: 1a1e45e4-1cc5-4f1a-87d6-41bf6dd7bff1
         sourceguid: 747763d9-7a3a-4951-babe-65b65f8d058e
-        behavior: attribute
-      source: Trait
       name: Excessive Anger
-    inflictedConditions: []
-    stability: 2
-    opportunityAttack: 4
-    cr: 7
-    withCaptain: +5 bonus to ranged distance
-    damage_taken: 0
-    max_hitpoints: 10
-    keywords:
-      Giant: true
-      Ogre: true
-    skillRatings: []
-    role: Minion Artillery
-    ev: 9
-    movementSpeeds: []
-    monster_type: Ogre Tantrum
-    attributes:
-      inu:
-        id: inu
-        baseValue: 0
-      agl:
-        id: agl
-        baseValue: 2
-      prs:
-        id: prs
-        baseValue: -1
-      mgt:
-        id: mgt
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: -1
-    resources: []
-    traitNames: []
-    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
-    minion: true
-    innateAttacks: []
+      description: 'The tantrum has damage immunity 3 and a speed 8 while their squad has two or fewer minions in it. '
+      guid: 747763d9-7a3a-4951-babe-65b65f8d058e
+      domains:
+        CharacterFeature:747763d9-7a3a-4951-babe-65b65f8d058e: true
     savingThrowRatings: []
-    equipment: []
-    walkingSpeed: 5
+    minion: true
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      implementation: 2
       strain: []
-      targetType: target
+      repeatTargets: false
+      effectImplemented: false
+      abilityType: none
+      keywords:
+        Weapon: true
+        Strike: true
+        Ranged: true
+      name: Throw Fit
+      sourceReference:
+        __typeName: SourceReference
+        page: 211
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      numTargets: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
         tiers:
         - 4 damage
         - 7 damage; push 2
         - 8 damage; push 4
-      categorization: Signature Ability
-      effectImplemented: false
-      repeatTargets: false
-      abilityType: none
-      numTargets: 1
+        roll: 2d10 + Might
       modifiers: []
+      description: The tantrum unearths a rock or a hunk of terrain and tosses it. The tantrum can A<3 grab an adjacent size-1 or smaller creature or object to use as the projectile for this ability.
+      categorization: Signature Ability
+      implementation: 2
+      flavor: ""
+      targetType: target
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 211
       iconid: ui-icons/skills/1.png
       guid: 70b3f986-a816-4d4c-bad3-933e61b24841
-      flavor: ""
-      keywords:
-        Strike: true
-        Weapon: true
-        Ranged: true
-      description: The tantrum unearths a rock or a hunk of terrain and tosses it. The tantrum can A<3 grab an adjacent size-1 or smaller creature or object to use as the projectile for this ability.
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
       range: 8
-      name: Throw Fit
     - __typeName: ActivatedAbility
-      implementation: 0
-      targetType: target
-      behaviors: []
-      categorization: Heroic Ability
-      keywords: []
-      resourceNumber: 7
+      targetType: all
+      targetAllegiance: ally
       repeatTargets: false
       abilityType: none
-      numTargets: 1
-      modifiers: []
-      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-      iconid: ui-icons/skills/1.png
-      guid: ab5f067a-6a34-4a43-baa3-a0c4b2e7d1e3
-      flavor: ""
+      keywords: []
+      name: Rampage
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 209
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      numTargets: 1
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 081b4c1c-999d-4b9b-bec4-2705eac0f940
+        ongoingEffectCustom: false
+        duration: endround
       description: |
         Until the end of the round, each ogre has damage immunity 5 and deals an extra 5 damage with abilities, and heroic abilities that target any ogre have their Heroic Resource cost reduced by 1 (to a minimum of 1).
+      categorization: Heroic Ability
+      guid: ab5f067a-6a34-4a43-baa3-a0c4b2e7d1e3
+      flavor: ""
+      implementation: 3
       display:
-        bgcolor: "#ffffffff"
         hueshift: 0
-        brightness: 1
+        bgcolor: "#ffffffff"
         saturation: 1
-      range: 1
-      name: Rampage
+        brightness: 1
+      modifiers: []
+      filterTarget: Keywords has "Ogre"
+      iconid: ui-icons/skills/1.png
+      resourceNumber: "7"
+      range: 100
+    role: Minion Artillery
+    equipment: []
+    innateAttacks: []
+    ev: 9
+    stability: 2
+    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
+    walkingSpeed: 5
+    keywords:
+      Ogre: true
+      Giant: true
+    resources: []
+    creatureSize: "2"
     import:
       type: mcdm
       data: |+
@@ -226,11 +233,11 @@ info:
         <b>Excessive Anger</b>
         The tantrum has damage immunity 3 and a speed of 8 while they are winded.
 
+    traitNames: []
+    cr: 7
+    movementSpeeds: []
+    opportunityAttack: 4
     levelChoices: []
-    max_hitpoints_roll: "10"
-    creatureSize: "2"
-    monster_category: Monster
-    resistances: []
   tokenType: null
   bestiaryId: c6071569-4b9b-42a1-a509-9f70ce05a35a
   summonerid: null
@@ -243,6 +250,6 @@ parentFolder: f3ad56da-f6fa-4d7d-a056-0d090e6a130f
 artist: null
 ord: 0
 ctime: 1741590305317
-mtime: 1775375119167
+mtime: 1785867163158
 hidden: false
 id: c6071569-4b9b-42a1-a509-9f70ce05a35a
