@@ -24,8 +24,8 @@ heroicResourceChecklist:
       threshold: 1
     - script: (1d Heroic Resource Gain at Start) + 1
       threshold: 7
-    editableField: true
     field: Level
+    editableField: true
 - details: The first time each round that a creature adjacent to your companion takes damage, you gain 2 Ferocity.
   name: Adjacent to Companion Damaged
   mode: round
@@ -132,7 +132,11 @@ levels:
           iconid: cca6f849-0f76-471a-9264-8544564e7c07
           conditionFormula: Victories > 0
           name: Start of Combat
-          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
           trigger: rollinitiative
           range: 5
           targetType: self
@@ -143,8 +147,6 @@ levels:
           strain: []
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: At the start of a combat encounter you gain Ferocity equal to your Victories.
-          modifiers: []
           behaviors:
           - __typeName: ActivatedAbilityReplenishBehavior
             resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
@@ -152,13 +154,11 @@ levels:
             chatMessage: Start of Combat
             checklistid: 7d9f4e21-3c8b-4a56-be91-2f4d7a8c6b53
             applyto: caster
+          modifiers: []
+          description: At the start of a combat encounter you gain Ferocity equal to your Victories.
           triggerPrompt: "Start of Combat: Gain Ferocity equal to your Victories."
           persistence: []
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
+          repeatTargets: false
           implementation: 4
         guid: 2b4f7c81-9e3d-4a56-b829-6c1d4e7a3f95
         domains:
@@ -179,12 +179,22 @@ levels:
           range: 5
           targetType: self
           guid: 4b7c2e83-5d1a-4f96-b238-9c6d3e1a8f72
-          triggerPrompt: "Start of Turn: Gain 1d3 Ferocity."
+          mandatory: game:heroicresourcetriggers
           numTargets: "1"
           abilityType: none
           strain: []
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: At the start of each of your turns during combat, you gain 1d3 Ferocity.
+          modifiers: []
+          triggerPrompt: "Start of Turn: Gain 1d3 Ferocity."
+          persistence: []
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+          whenActive: combat
           behaviors:
           - __typeName: ActivatedAbilityReplenishBehavior
             resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
@@ -201,19 +211,9 @@ levels:
                 threshold: 7
               - script: (2d Heroic Resource Gain at Start) + 1
                 threshold: 10
-              editableField: true
               field: Level
+              editableField: true
             applyto: caster
-          modifiers: []
-          mandatory: game:heroicresourcetriggers
-          persistence: []
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
-          whenActive: combat
-          description: At the start of each of your turns during combat, you gain 1d3 Ferocity.
           implementation: 4
         guid: 8e1c5a93-3f7b-4d62-a418-9b5d2c4e6f81
         domains:
@@ -315,7 +315,11 @@ levels:
           iconid: cca6f849-0f76-471a-9264-8544564e7c07
           conditionFormula: Resource = "Heroic Resource" and Quantity > 0
           name: Rampage on Ferocity Spend
-          repeatTargets: false
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
           trigger: useresource
           range: 1
           targetType: self
@@ -326,21 +330,17 @@ levels:
           strain: []
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: Whenever you or your companion spends ferocity, your companion gains rampage equal to the ferocity spent.
-          modifiers: []
           behaviors:
           - __typeName: ActivatedAbilityReplenishBehavior
             resourceid: 9f418676-96be-402b-92da-0f50294146b3
             chatMessage: Rampage Gained
             quantity: Quantity
             applyto: caster_companion
+          modifiers: []
+          description: Whenever you or your companion spends ferocity, your companion gains rampage equal to the ferocity spent.
           triggerPrompt: "Spent Ferocity: Companion gains equal Rampage."
           persistence: []
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
+          repeatTargets: false
           implementation: 4
         guid: 4f8c1d72-3b9e-4a56-b428-2d7c1e6f5a83
         domains:
@@ -385,16 +385,14 @@ levels:
               range: 1
               targetType: self
               guid: 4e8c1d72-3b9f-4a56-b428-2d5c1e7f6a83
-              mandatory: true
+              triggerPrompt: "Rampaging: Companion uses Feral Strike as a free maneuver."
               numTargets: "1"
               abilityType: none
               persistence: []
-              description: At the end of your turn while rampaging, your companion uses Feral Strike as a free maneuver. Each ally damaged grants 2 surges.
-              repeatTargets: false
               behaviors:
               - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                applyto: caster
                 instant: true
+                name: Rampaging Surges Window
                 momentaryEffect:
                   __typeName: CharacterOngoingEffect
                   description: While the rampaging Feral Strike resolves, each ally the companion damages grants 2 surges to the beastheart.
@@ -432,21 +430,21 @@ levels:
                       numTargets: "1"
                       abilityType: none
                       persistence: []
+                      description: Each ally damaged grants 2 surges to the beastheart.
+                      strain: []
+                      repeatTargets: false
+                      mandatory: true
+                      whenActive: combat
                       behaviors:
                       - __typeName: ActivatedAbilityReplenishBehavior
                         resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
                         chatMessage: Rampaging - Ally Damage Surge
                         quantity: "2"
                         applyto: caster_summoner
-                      repeatTargets: false
-                      description: Each ally damaged grants 2 surges to the beastheart.
-                      mandatory: true
-                      whenActive: combat
-                      strain: []
                       modifiers: []
                     guid: 7f2c5d83-3b1e-4a96-b528-1d6c4e8f5a82
                     description: Each ally damaged this way grants the beastheart 2 surges.
-                name: Rampaging Surges Window
+                applyto: caster
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
                 namedAbility: Feral Strike
                 abilityType: named
@@ -470,9 +468,11 @@ levels:
                   guid: 3a7c1e93-5b6d-4f48-b219-8e3c5d1f7a94
                   modifiers: []
                 applyto: caster
+              repeatTargets: false
+              description: At the end of your turn while rampaging, your companion uses Feral Strike as a free maneuver. Each ally damaged grants 2 surges.
               strain: []
               whenActive: combat
-              triggerPrompt: "Rampaging: Companion uses Feral Strike as a free maneuver."
+              mandatory: true
               modifiers: []
             guid: 9d4c2e83-5b1f-4a86-c628-7e1c3d6f5a82
             description: "Rampaging (rampage >= 8): at the end of your turn, your companion uses Feral Strike as a free maneuver. Each ally damaged grants 2 surges (delivered by the temporary effect this trigger applies during the strike)."
@@ -571,16 +571,16 @@ levels:
             Ranged: true
             Magic: true
           repeatTargets: false
-          range: 1
+          categorization: Ability
           targetType: self
           modeList:
           - text: Standard
-          - condition: Heroic Resources Available to Spend >= 1
-            text: Companion Shifts
+          - text: Companion Shifts
             rules: Spend 1 extra Ferocity. Your companion shifts up to their Speed.
+            condition: Heroic Resources Available to Spend >= 1
           flavor: "\"Better look away -- this might not be pretty.\""
-          guid: 6f000003-0000-4096-bcde-7d8e9f0a1b2c
-          categorization: Ability
+          targetTextOverride: Self
+          range: 1
           display:
             hueshift: 0
             brightness: 1
@@ -590,13 +590,7 @@ levels:
           channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
           numTargets: "1"
           abilityType: none
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          description: |-
-            You spend a Recovery without regaining Stamina. Your partner gains temporary Stamina equal to your recovery value as they leap out of your chest. Your partner teleports to your space from any distance, even without line of effect.
-
-            **Spend 1-5 Ferocity:** Your partner gains additional temporary Stamina equal to their Might score for each Ferocity spent.
-          domains:
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          strain: []
           behaviors:
           - __typeName: ActivatedAbilityReplenishBehavior
             chatMessage: Spent a Recovery (no Stamina gained)
@@ -650,6 +644,12 @@ levels:
             - 2
             applyto: caster_companion
             rule: shift {Movement Speed}
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          description: |-
+            You spend a Recovery without regaining Stamina. Your partner gains temporary Stamina equal to your recovery value as they leap out of your chest. Your partner teleports to your space from any distance, even without line of effect.
+
+            **Spend 1-5 Ferocity:** Your partner gains additional temporary Stamina equal to their Might score for each Ferocity spent.
           modifiers: []
           persistence: []
           abilityFilters:
@@ -658,8 +658,8 @@ levels:
           - formula: Self.Companion
             reason: You need a summoned companion to use Heart of the Beast.
           rangeTextOverride: Self
-          strain: []
-          targetTextOverride: Self
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          guid: 6f000003-0000-4096-bcde-7d8e9f0a1b2c
           implementation: 3
         name: Ability
         behavior: activated
@@ -697,12 +697,12 @@ levels:
               categorization: Ability
               targetType: self
               flavor: "\"Better look away -- this might not be pretty.\""
-              targetTextOverride: Self
+              guid: 6f000008-0000-4096-bcde-7d8e9f0a1b2c
               modeList:
               - text: Standard
-              - condition: Heroic Resources Available to Spend >= 1
-                text: Summoner Shifts
+              - text: Summoner Shifts
                 rules: Spend 1 extra Ferocity. Your summoner shifts up to their Speed.
+                condition: Heroic Resources Available to Spend >= 1
               range: 1
               multipleModes: true
               display:
@@ -712,12 +712,8 @@ levels:
                 saturation: 1
               numTargets: "1"
               abilityType: none
-              persistence: []
+              strain: []
               channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-              description: |-
-                You spend a Recovery without regaining Stamina. Your partner gains temporary Stamina equal to your recovery value as they leap out of your chest. Your partner teleports to your space from any distance, even without line of effect.
-
-                **Spend 1-5 Ferocity:** Your partner gains additional temporary Stamina equal to their Might score for each Ferocity spent.
               behaviors:
               - __typeName: ActivatedAbilityReplenishBehavior
                 chatMessage: Spent a Recovery (no Stamina gained)
@@ -771,6 +767,10 @@ levels:
                 - 2
                 applyto: caster_summoner
                 rule: shift {Movement Speed}
+              description: |-
+                You spend a Recovery without regaining Stamina. Your partner gains temporary Stamina equal to your recovery value as they leap out of your chest. Your partner teleports to your space from any distance, even without line of effect.
+
+                **Spend 1-5 Ferocity:** Your partner gains additional temporary Stamina equal to their Might score for each Ferocity spent.
               implementation: 3
               actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
               abilityFilters:
@@ -779,8 +779,8 @@ levels:
               - formula: Self.Summoner
                 reason: You need a summoner to use Heart of the Beast.
               rangeTextOverride: Self
-              strain: []
-              guid: 6f000008-0000-4096-bcde-7d8e9f0a1b2c
+              persistence: []
+              targetTextOverride: Self
               modifiers: []
         name: Heart of the Beast (Companion)
         behavior: modcompanion
@@ -822,16 +822,16 @@ levels:
             brightness: 1
             bgcolor: "#ffffffff"
             saturation: 1
-          categorization: Ability
+          range: 1
           targetType: self
           flavor: "\"Better look away -- this might not be pretty.\""
           targetTextOverride: Self
           implementation: 3
+          categorization: Ability
           repeatTargets: false
-          range: 1
           numTargets: "1"
           resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-          persistence: []
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
           resourceNumber: 5
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
@@ -845,7 +845,7 @@ levels:
           abilityType: none
           rangeTextOverride: Self
           strain: []
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          persistence: []
           modifiers: []
       - __typeName: CharacterModifier
         sourceguid: 6f001001-0000-4096-bcde-7d8e9f0a1b2c
@@ -874,16 +874,16 @@ levels:
                 Ranged: true
                 Magic: true
               repeatTargets: false
-              categorization: Ability
+              range: 1
               targetType: self
               flavor: "\"Better look away -- this might not be pretty.\""
-              targetTextOverride: Self
-              implementation: 3
               guid: 6f001008-0000-4096-bcde-7d8e9f0a1b2c
+              implementation: 3
+              targetTextOverride: Self
               numTargets: "1"
               resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-              persistence: []
-              range: 1
+              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+              categorization: Ability
               resourceNumber: 5
               description: Spend 5 Ferocity to restore your dead partner (the Beastheart) to life with 1 Stamina, even if their body was destroyed.
               behaviors:
@@ -898,8 +898,8 @@ levels:
                 saturation: 1
               abilityType: none
               rangeTextOverride: Self
-              actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
               strain: []
+              persistence: []
               modifiers: []
         name: Heart of the Beast (Revive, Companion)
         behavior: modcompanion
@@ -938,16 +938,16 @@ levels:
               Weapon: true
               Beastheart: true
             repeatTargets: false
-            range: 1
+            categorization: Signature Ability
             targetType: self
             flavor: You and your ally morph into each other, magically switching places.
             guid: 3a4b5c6d-7e8f-9a0b-1c2d-4e5f6a7b8c01
-            castImmediately: true
+            multipleModes: true
             implementation: 3
             numTargets: "1"
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            categorization: Signature Ability
+            range: 1
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             description: If you and a willing ally are standing on the ground within 10 squares of each other, you can teleport to swap places. If you do, you gain an edge on this ability.
@@ -989,11 +989,11 @@ levels:
                   saturation: 1
                 repeatTargets: false
                 description: ""
-                categorization: Hidden
                 targetFilter: Friends(Caster, Target) and Target.On Ground and caster.On Ground
+                range: 10
                 targetType: target
                 numTargets: "1"
-                range: 10
+                categorization: Hidden
                 guid: bb021f6d-4a85-4c73-9e4b-8d5a3c72b621
                 modifiers: []
               guid: bb019c2e-4f73-4a85-b821-3d5a7e1c9b41
@@ -1023,8 +1023,8 @@ levels:
                   Beastheart: true
                 repeatTargets: false
                 description: ""
-                objectTarget: true
                 categorization: Hidden
+                range: 1
                 targetType: target
                 behaviors:
                 - __typeName: ActivatedAbilityModifyPowerRollBehavior
@@ -1033,28 +1033,28 @@ levels:
                     __typeName: CharacterModifier
                     sourceguid: bb037b4c-4e92-4615-a615-2f8e9d1c5a83
                     name: Bodyswap Edge (Swapped)
-                    activationCondition: Cast.Spaces Moved > 0
-                    keywords: []
+                    behavior: power
+                    rollType: ability_power_roll
                     domains: []
                     description: You gain an edge on Bodyswap because you swapped places with a willing ally.
                     modtype: edge
-                    behavior: power
+                    activationCondition: Cast.Spaces Moved > 0
                     guid: bb043e91-4d76-4b48-b248-5a7c9f1e4b62
-                    rollType: ability_power_roll
+                    keywords: []
                 - __typeName: ActivatedAbilityPowerRollBehavior
                   tiers:
                   - 3 + I damage
                   - 5 + I damage
                   - 7 + I damage
                   roll: 2d10 + Intuition
-                range: 1
+                objectTarget: true
                 guid: bb052a8f-4c19-4537-b537-9e1d6c4a8b73
                 modifiers: []
               inheritKeywords: true
               abilityType: custom
               promptText: Choose Target
               applyto: caster
-            multipleModes: true
+            castImmediately: true
             modifiers: []
           name: Ability
           behavior: activated
@@ -1228,21 +1228,18 @@ levels:
               Weapon: true
               Strike: true
               Beastheart: true
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            range: 5
+            repeatTargets: false
+            objectTarget: false
             targetType: target
             flavor: Keep your head down, or I'll shoot it off!
             guid: 5c6d7e8f-9a0b-1c2d-3e4f-5a6b7c8d9e03
             numTargets: "1"
             abilityType: none
-            persistence: []
+            strain: []
             modifiers: []
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            description: If the target is not prone, they must use a free triggered action to fall prone or take extra damage equal to twice your Intuition score. Your companion can shift up to a number of squares equal to their Intuition score.
             behaviors:
             - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
               duration: end_of_next_turn
@@ -1302,12 +1299,15 @@ levels:
                 modifiers: []
               promptText: Companion shifts up to their Intuition.
               applyto: caster_companion
-            description: If the target is not prone, they must use a free triggered action to fall prone or take extra damage equal to twice your Intuition score. Your companion can shift up to a number of squares equal to their Intuition score.
-            strain: []
+            persistence: []
             categorization: Signature Ability
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            repeatTargets: false
-            objectTarget: false
+            display:
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
+            range: 5
             implementation: 3
       - __typeName: CharacterFeature
         classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
@@ -1342,7 +1342,7 @@ levels:
               Weapon: true
               Beastheart: true
             repeatTargets: false
-            range: 5
+            objectTarget: true
             targetType: target
             flavor: Lances of primordial energy leap from you and your companion to sear, crush, or freeze your foe.
             guid: 6d7e8f9a-0b1c-2d3e-4f5a-6b7c8d9e0f04
@@ -1351,19 +1351,9 @@ levels:
             numTargets: "1"
             abilityType: none
             persistence: []
-            objectTarget: true
+            range: 5
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            description: "Choose the damage type from one of the following: cold, fire, lightning, or sonic."
-            implementation: 3
-            categorization: Signature Ability
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            strain: []
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               modesSelected:
@@ -1399,12 +1389,6 @@ levels:
               - 6 + M sonic damage
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
               inheritRoll: true
-              promptText: Spend 1 surge to have your companion echo Stormrage.
-              guid: a1020001-c01d-4a96-b528-9c1d6e3f7a04
-              filterTarget: Resources.Surges >= 1
-              abilityType: custom
-              modesSelected:
-              - 1
               customAbility:
                 __typeName: ActivatedAbility
                 meleeRange: 1
@@ -1418,12 +1402,8 @@ levels:
                   Weapon: true
                   Beastheart: true
                   Cold: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                range: 5
+                repeatTargets: false
+                objectTarget: true
                 targetType: target
                 guid: a1030001-c01d-4a96-b528-9c1d6e3f7a04
                 numTargets: "1"
@@ -1443,20 +1423,24 @@ levels:
                   - 6 + M cold damage
                   roll: 2d10 + Might
                 description: Companion echoes Stormrage. Costs 1 surge.
-                objectTarget: true
                 persistence: []
-                repeatTargets: false
+                display:
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                  saturation: 1
                 categorization: Hidden
+                range: 5
                 modifiers: []
-              applyto: caster_companion
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              inheritRoll: true
               promptText: Spend 1 surge to have your companion echo Stormrage.
-              guid: a1020002-f01d-4a96-b528-9c1d6e3f7a04
               filterTarget: Resources.Surges >= 1
               abilityType: custom
               modesSelected:
-              - 2
+              - 1
+              guid: a1020001-c01d-4a96-b528-9c1d6e3f7a04
+              applyto: caster_companion
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              inheritRoll: true
               customAbility:
                 __typeName: ActivatedAbility
                 meleeRange: 1
@@ -1470,12 +1454,8 @@ levels:
                   Weapon: true
                   Beastheart: true
                   Fire: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                range: 5
+                repeatTargets: false
+                objectTarget: true
                 targetType: target
                 guid: a1030002-f01d-4a96-b528-9c1d6e3f7a04
                 numTargets: "1"
@@ -1495,20 +1475,24 @@ levels:
                   - 6 + M fire damage
                   roll: 2d10 + Might
                 description: Companion echoes Stormrage. Costs 1 surge.
-                objectTarget: true
                 persistence: []
-                repeatTargets: false
+                display:
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                  saturation: 1
                 categorization: Hidden
+                range: 5
                 modifiers: []
-              applyto: caster_companion
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              inheritRoll: true
               promptText: Spend 1 surge to have your companion echo Stormrage.
-              guid: a1020003-101d-4a96-b528-9c1d6e3f7a04
               filterTarget: Resources.Surges >= 1
               abilityType: custom
               modesSelected:
-              - 3
+              - 2
+              guid: a1020002-f01d-4a96-b528-9c1d6e3f7a04
+              applyto: caster_companion
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              inheritRoll: true
               customAbility:
                 __typeName: ActivatedAbility
                 meleeRange: 1
@@ -1522,12 +1506,8 @@ levels:
                   Weapon: true
                   Beastheart: true
                   Magic: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                range: 5
+                repeatTargets: false
+                objectTarget: true
                 targetType: target
                 guid: a1030003-101d-4a96-b528-9c1d6e3f7a04
                 numTargets: "1"
@@ -1547,20 +1527,24 @@ levels:
                   - 6 + M lightning damage
                   roll: 2d10 + Might
                 description: Companion echoes Stormrage. Costs 1 surge.
-                objectTarget: true
                 persistence: []
-                repeatTargets: false
+                display:
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                  saturation: 1
                 categorization: Hidden
+                range: 5
                 modifiers: []
-              applyto: caster_companion
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              inheritRoll: true
               promptText: Spend 1 surge to have your companion echo Stormrage.
-              guid: a1020004-501d-4a96-b528-9c1d6e3f7a04
               filterTarget: Resources.Surges >= 1
               abilityType: custom
               modesSelected:
-              - 4
+              - 3
+              guid: a1020003-101d-4a96-b528-9c1d6e3f7a04
+              applyto: caster_companion
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              inheritRoll: true
               customAbility:
                 __typeName: ActivatedAbility
                 meleeRange: 1
@@ -1574,12 +1558,8 @@ levels:
                   Weapon: true
                   Beastheart: true
                   Sonic: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                range: 5
+                repeatTargets: false
+                objectTarget: true
                 targetType: target
                 guid: a1030004-501d-4a96-b528-9c1d6e3f7a04
                 numTargets: "1"
@@ -1599,12 +1579,32 @@ levels:
                   - 6 + M sonic damage
                   roll: 2d10 + Might
                 description: Companion echoes Stormrage. Costs 1 surge.
-                objectTarget: true
                 persistence: []
-                repeatTargets: false
+                display:
+                  hueshift: 0
+                  brightness: 1
+                  bgcolor: "#ffffffff"
+                  saturation: 1
                 categorization: Hidden
+                range: 5
                 modifiers: []
+              promptText: Spend 1 surge to have your companion echo Stormrage.
+              filterTarget: Resources.Surges >= 1
+              abilityType: custom
+              modesSelected:
+              - 4
+              guid: a1020004-501d-4a96-b528-9c1d6e3f7a04
               applyto: caster_companion
+            implementation: 3
+            categorization: Signature Ability
+            display:
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
+            strain: []
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            description: "Choose the damage type from one of the following: cold, fire, lightning, or sonic."
             modeList:
             - text: Cold
             - text: Fire
@@ -1644,30 +1644,27 @@ levels:
             iconid: ui-icons/skills/1.png
             name: Bring the Thunder
             keywords:
-              Companion: true
               Area: true
               Magic: true
+              Companion: true
             repeatTargets: false
             categorization: Heroic Ability
             targetType: all
             modeList:
             - rules: "2 burst around companion: sonic damage, push, P-check taunted/frightened"
               text: Normal
-            - condition: Heroic Resources Available to Spend >= 1
-              text: Spend 1 Ferocity
+            - text: Spend 1 Ferocity
               rules: Also adds a 2 burst around you; enemies in both areas only affected once
+              condition: Heroic Resources Available to Spend >= 1
             flavor: Your companion unleashes a shattering roar, screech, or howl that terrifies your foes.
             guid: 3f010003-0001-4096-bcde-7d8e9f0a1b2c
-            persistence: []
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             range: 2
             multipleModes: true
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            persistence: []
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            description: "**Spend 1 Ferocity:** This ability also affects a 2 burst originating from you. An enemy in both areas is only affected once."
-            domains:
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               promptWhenResolving: true
@@ -1684,13 +1681,16 @@ levels:
               mode: expend
               chatMessage: Bring the Thunder - Spend 1 Ferocity for partner burst
               applyto: caster
+            resourceNumber: 3
+            description: "**Spend 1 Ferocity:** This ability also affects a 2 burst originating from you. An enemy in both areas is only affected once."
             display:
               hueshift: 0
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
             implementation: 3
-            resourceNumber: 3
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             abilityType: none
             partnerBurst: Mode = 2
             targetAllegiance: enemy
@@ -1725,7 +1725,7 @@ levels:
               Strike: true
               Companion: true
             repeatTargets: false
-            range: 1
+            categorization: Heroic Ability
             targetType: target
             flavor: Your companion circles your foe, luring them out of position with fake openings and unpredictable attacks.
             guid: 3f020003-0002-4096-bcde-7d8e9f0a1b2c
@@ -1738,7 +1738,7 @@ levels:
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            categorization: Heroic Ability
+            range: 1
             resourceNumber: 3
             description: A melee strike that slides the target. After the strike, you and your companion can each shift up to a number of squares equal to how far the target was slid.
             domains:
@@ -1836,7 +1836,7 @@ levels:
               Weapon: true
               Companion: true
             repeatTargets: false
-            range: 1
+            categorization: Heroic Ability
             targetType: target
             flavor: The enemy's blood flows like wine, invigorating your companion.
             guid: 3f030003-0003-4096-bcde-7d8e9f0a1b2c
@@ -1849,7 +1849,7 @@ levels:
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            categorization: Heroic Ability
+            range: 1
             resourceNumber: 3
             description: ""
             domains:
@@ -1973,7 +1973,7 @@ levels:
               Strike: true
               Companion: true
             repeatTargets: false
-            range: 1
+            categorization: Heroic Ability
             targetType: target
             flavor: You and your companion surround your foe in order to bring them down.
             guid: 3f040003-0004-4096-bcde-7d8e9f0a1b2c
@@ -1986,7 +1986,7 @@ levels:
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            categorization: Heroic Ability
+            range: 1
             resourceNumber: 3
             description: This forced movement can pass through your space but not end there. If the target passes through your space, they fall prone and take extra damage equal to your Intuition score.
             domains:
@@ -2031,7 +2031,11 @@ levels:
                     conditionFormula: Target.id = Self.id
                     name: Pushover Trample
                     subject: other
-                    repeatTargets: false
+                    display:
+                      hueshift: 0
+                      brightness: 1
+                      bgcolor: "#ffffffff"
+                      saturation: 1
                     trigger: movethrough
                     range: 1
                     targetType: subject
@@ -2040,17 +2044,13 @@ levels:
                     numTargets: "1"
                     abilityType: none
                     strain: []
+                    description: ""
+                    persistence: []
+                    repeatTargets: false
                     behaviors:
                     - __typeName: ActivatedAbilityDrawSteelCommandBehavior
                       applyto: targets
                       rule: prone; {Caster.Intuition} damage
-                    persistence: []
-                    display:
-                      hueshift: 0
-                      brightness: 1
-                      bgcolor: "#ffffffff"
-                      saturation: 1
-                    description: ""
                     modifiers: []
                   guid: 3f040012-0004-4096-bcde-7d8e9f0a1b2c
                   description: ""
@@ -2098,57 +2098,57 @@ levels:
             keywords:
               Beastheart: true
               Area: true
+            repeatTargets: false
+            categorization: Heroic Ability
             display:
               hueshift: 0
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            partnerBurst: Mode = 2
             range: 3
-            categorization: Heroic Ability
             targetType: all
             targetTextOverride: Each enemy in the area
             flavor: Let all of them come forward and shatter themselves against your might!
             guid: 4f010003-0001-4096-bcde-7d8e9f0a1b2c
             implementation: 3
-            abilityType: none
-            multipleModes: true
             strain: []
+            multipleModes: true
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-            description: |-
-              Distance: 3 Burst (around you). Target: Each enemy in the area.
-              Effect: You can spend a Recovery and gain 3 temporary Stamina for each target. Each target is taunted by you until the end of their next turn.
-              Spend 1 Ferocity: Also affects a 3 burst originating from your companion. Targets in the second area are taunted by your companion. An enemy in both areas is taunted only by you.
-              (Auto: taunts every target, lets you spend up to one Recovery per target, and grants you 3 temporary Stamina per target. Spend 1 Ferocity extends the burst around your companion in the same targeting pass.)
-            domains:
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-              rule: taunted (eot)
               applyto: targets
+              rule: taunted (eot)
             - __typeName: ActivatedAbilityCustomTriggerBehavior
               triggerName: Prompt Recovery
-              applyto: caster
               value: Cast.Target Count
+              applyto: caster
             - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
               chatMessage: All of You Versus All of Me (3 temporary Stamina per target)
               stamina: 3 * Cast.Target Count
               applyto: caster
             - __typeName: ActivatedAbilityReplenishBehavior
-              chatMessage: Spent 1 extra Ferocity for companion burst
-              mode: expend
               resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              mode: expend
+              chatMessage: Spent 1 extra Ferocity for companion burst
               modesSelected:
               - 2
               quantity: "1"
               applyto: caster
             resourceNumber: 5
+            description: |-
+              Distance: 3 Burst (around you). Target: Each enemy in the area.
+              Effect: You can spend a Recovery and gain 3 temporary Stamina for each target. Each target is taunted by you until the end of their next turn.
+              Spend 1 Ferocity: Also affects a 3 burst originating from your companion. Targets in the second area are taunted by your companion. An enemy in both areas is taunted only by you.
+              (Auto: taunts every target, lets you spend up to one Recovery per target, and grants you 3 temporary Stamina per target. Spend 1 Ferocity extends the burst around your companion in the same targeting pass.)
             persistence: []
+            abilityType: none
             implementationDetails: ""
             rangeTextOverride: 3 burst
-            repeatTargets: false
+            partnerBurst: Mode = 2
             targetAllegiance: enemy
             modifiers: []
           name: Ability
@@ -2189,7 +2189,7 @@ levels:
               Weapon: true
               Beastheart: true
             repeatTargets: false
-            categorization: Heroic Ability
+            range: 5
             targetType: target
             flavor: Invigorated by the smell of blood, you strike a savage blow.
             guid: 4f020003-0002-4096-bcde-7d8e9f0a1b2c
@@ -2197,7 +2197,7 @@ levels:
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            range: 5
+            categorization: Heroic Ability
             resourceNumber: 5
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
@@ -2260,19 +2260,22 @@ levels:
             flavor: As your arrows rain down on your foes, flames spiral around your companion, setting the arrows ablaze.
             guid: 4f030003-0003-4096-bcde-7d8e9f0a1b2c
             implementation: 3
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             display:
               hueshift: 0
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             numTargets: "1"
             abilityType: none
             persistence: []
-            resourceNumber: 5
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            resourceNumber: 5
+            description: "Effect: If your companion is in the area, they deal fire damage equal to their Intuition score to each target."
+            targetTextOverride: Each enemy in the area
+            strain: []
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -2312,9 +2315,6 @@ levels:
                 guid: 4f030004-0003-4096-bcde-7d8e9f0a1b2c
                 modifiers: []
               applyto: caster_companion
-            targetTextOverride: Each enemy in the area
-            strain: []
-            description: "Effect: If your companion is in the area, they deal fire damage equal to their Intuition score to each target."
             rangeTextOverride: 3 cube within 5
             range: 5
             targetAllegiance: enemy
@@ -2343,16 +2343,20 @@ levels:
               Weapon: true
               Beastheart: true
               Strike: true
-            repeatTargets: false
-            categorization: Heroic Ability
+            display:
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
+            range: 1
             targetType: target
             flavor: The wilderness has no concept of fair play.
             guid: 4f040003-0004-4096-bcde-7d8e9f0a1b2c
             implementation: 3
             numTargets: "1"
             abilityType: none
-            persistence: []
-            range: 1
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            categorization: Heroic Ability
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
@@ -2399,15 +2403,11 @@ levels:
                 guid: 4f040004-0004-4096-bcde-7d8e9f0a1b2c
                 modifiers: []
               applyto: caster_companion
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
+            repeatTargets: false
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             description: "Effect: If you grab the target while your companion is adjacent to them, your companion can make a melee free strike against the target."
             strain: []
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            persistence: []
             resourceNumber: 5
             modifiers: []
           name: Ability
@@ -2570,27 +2570,21 @@ levels:
               Strike: true
               Beastheart: true
             repeatTargets: false
-            objectTarget: true
+            range: "15"
             targetType: target
-            flavor: You channel your companion’s feral senses to take the perfect shot.
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
             guid: 4d4d4412-612e-43cb-b1a3-d43a20443bc0
             modifiers: []
+            objectTarget: true
             categorization: Heroic Ability
-            range: "15"
             numTargets: "1"
-            abilityType: none
-            strain: []
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            domains:
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            description: If you are hidden, you remain hidden after the strike.
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            implementationDetails: ""
+            strain: []
+            abilityType: none
+            resourceNumber: "9"
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -2598,11 +2592,17 @@ levels:
               - 18 + I Damage
               - 30 + I Damage
               roll: 2d10 + Intuition
-            resourceNumber: "9"
-            sourceReference:
-              __typeName: SourceReference
-              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-              page: 30
+            display:
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            implementationDetails: ""
+            description: If you are hidden, you remain hidden after the strike.
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            flavor: You channel your companion’s feral senses to take the perfect shot.
             implementation: 4
           name: Deadshot
           behavior: activated
@@ -2642,25 +2642,24 @@ levels:
             repeatTargets: false
             range: 1
             targetType: target
-            flavor: You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
             guid: 26be91b7-1743-477d-b9b2-cae6e6feb7ae
             implementation: 3
-            categorization: Heroic Ability
             display:
               hueshift: 0
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
+            categorization: Heroic Ability
             numTargets: "1"
             abilityType: none
             strain: []
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             resourceNumber: "9"
-            description: Each ally adjacent to the target can use a free triggered action to deal damage to the target equal to their highest characteristic score.
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            objectTarget: false
-            implementationDetails: Allies adjacent ALWAYS pile on damage rather than it being a choice.
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -2690,7 +2689,7 @@ levels:
                   saturation: 1
                 description: ""
                 numTargets: "1"
-                range: 1
+                objectTarget: false
                 targetType: target
                 behaviors:
                 - __typeName: ActivatedAbilityDamageBehavior
@@ -2698,15 +2697,16 @@ levels:
                   chatMessage: Dogpile - adjacent ally piles on
                   damageType: ""
                   applyto: targets
-                objectTarget: false
+                range: 1
                 guid: 8d2f1a63-4c07-4e95-b128-6a3f9c0e7d54
                 modifiers: []
               applyto: proximity_only
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            objectTarget: false
+            implementationDetails: Allies adjacent ALWAYS pile on damage rather than it being a choice.
+            description: Each ally adjacent to the target can use a free triggered action to deal damage to the target equal to their highest characteristic score.
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            sourceReference:
-              __typeName: SourceReference
-              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-              page: 30
+            flavor: You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.
             modifiers: []
       - __typeName: CharacterFeature
         classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
@@ -2742,22 +2742,13 @@ levels:
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            range: 1
+            categorization: Heroic Ability
             targetType: target
-            sourceReference:
-              __typeName: SourceReference
-              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-              page: 30
+            flavor: Harnessing your companion’s strength, you send your foe flying.
             guid: 11d51725-45d9-4cd6-9abc-81b7e6739dd4
             modifiers: []
             repeatTargets: false
-            categorization: Heroic Ability
-            description: ""
-            numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            strain: []
-            implementationDetails: ""
-            resourceNumber: "9"
+            range: 1
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -2765,12 +2756,21 @@ levels:
               - 15 + M damage; vertical push 6 ignoring stability if companion is adjacent; prone
               - 20 + M damage; vertical push 8 ignoring stability if companion is adjacent; prone
               roll: 2d10 + Might
+            numTargets: "1"
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            strain: []
+            implementationDetails: ""
+            resourceNumber: "9"
+            description: ""
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             abilityType: none
             preDescription: If your companion is adjacent to the target, this forced movement can ignore the target’s stability.
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            flavor: Harnessing your companion’s strength, you send your foe flying.
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
             objectTarget: false
             implementation: 4
       - __typeName: CharacterFeature
@@ -2804,25 +2804,24 @@ levels:
             repeatTargets: false
             range: 1
             targetType: target
-            flavor: In a gruesome display, you and your companion rip off a pinned enemy’s limb or other body part and toss it away.
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 30
             guid: 444b777e-bb58-4f7e-9faf-e48b988c972c
             implementation: 4
-            categorization: Heroic Ability
             display:
               hueshift: 0
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
+            categorization: Heroic Ability
             numTargets: "1"
             abilityType: none
             strain: []
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             resourceNumber: "9"
-            description: If the target is grabbed by your partner, the target takes extra damage equal to your Might score plus your partner’s Might score. If the target is reduced to 0 Stamina by this ability, each enemy within 2 squares who has p<Average is frightened (save ends).
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            objectTarget: false
-            implementationDetails: ""
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -2868,11 +2867,12 @@ levels:
                 modifiers: []
               promptText: ""
               applyto: targets
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            objectTarget: false
+            implementationDetails: ""
+            description: If the target is grabbed by your partner, the target takes extra damage equal to your Might score plus your partner’s Might score. If the target is reduced to 0 Stamina by this ability, each enemy within 2 squares who has p<Average is frightened (save ends).
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            sourceReference:
-              __typeName: SourceReference
-              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-              page: 30
+            flavor: In a gruesome display, you and your companion rip off a pinned enemy’s limb or other body part and toss it away.
             modifiers: []
       classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
       guid: 8b133c5a-4f3b-4ff3-9c56-37365e35f0b0
@@ -2922,9 +2922,9 @@ levels:
         source: Beastheart Class Feature
         classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
         name: Avatar of the Green Skill
+        guid: de7c7943-fb67-40be-8e94-5f91560f9d2d
         categories:
           lore: true
-        guid: de7c7943-fb67-40be-8e94-5f91560f9d2d
         individualSkills: []
       - __typeName: CharacterFeature
         description: Your companion's Reason score increases to 1, or increases by 1 if it is already 1 or higher.
@@ -2956,13 +2956,13 @@ levels:
             - __typeName: CharacterModifier
               attribute: rea
               name: Avatar of the Green (Companion Reason)
-              filterCondition: self.Reason > 0
+              behavior: attribute
               domains:
                 class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
               description: Your companion's Reason increases to 1, or by 1 if already 1 or higher.
               source: Beastheart
               sourceguid: 1111dce0-aa29-4a71-8949-380fb760154a
-              behavior: attribute
+              filterCondition: self.Reason > 0
               guid: b05ffe7e-0225-4874-a902-7e625cbbbc7f
               value: 1
             guid: 1111dce0-aa29-4a71-8949-380fb760154a
@@ -3057,12 +3057,6 @@ levels:
       - __typeName: CharacterModifier
         sourceguid: 94d6a2f6-00b5-4516-9989-311f88688c28
         source: Beastheart Class Feature
-        domains:
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        name: Characteristic Increase
-        behavior: modcompanion
-        description: Each of your characteristic scores increases by 1, to a maximum of 4.
-        guid: a5807355-61ca-4e78-93c2-b0d4316c852c
         feature:
           __typeName: CharacterFeature
           description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
@@ -3072,50 +3066,56 @@ levels:
           - __typeName: CharacterModifier
             sourceguid: 25548655-c0ac-4ebb-99db-526968b84399
             source: Beastheart
-            attribute: mgt
+            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
             name: Characteristic Increase
             behavior: attribute
-            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
+            attribute: mgt
             guid: 51902838-7bf7-4cc9-950f-b347074bbdd7
             value: 1
           - __typeName: CharacterModifier
             sourceguid: 25548655-c0ac-4ebb-99db-526968b84399
             source: Beastheart
-            attribute: agl
+            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
             name: Characteristic Increase
             behavior: attribute
-            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
+            attribute: agl
             guid: a84b7e68-f384-4f0b-aacf-e723b4cce6e7
             value: 1
           - __typeName: CharacterModifier
             sourceguid: 25548655-c0ac-4ebb-99db-526968b84399
             source: Beastheart
-            attribute: rea
+            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
             name: Characteristic Increase
             behavior: attribute
-            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
+            attribute: rea
             guid: 2399fc03-f146-4b47-8ad9-17b7c631df00
             value: 1
           - __typeName: CharacterModifier
             sourceguid: 25548655-c0ac-4ebb-99db-526968b84399
             source: Beastheart
-            attribute: inu
+            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
             name: Characteristic Increase
             behavior: attribute
-            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
+            attribute: inu
             guid: 94c45012-c582-4d5e-b9fe-1ce269350280
             value: 1
           - __typeName: CharacterModifier
             sourceguid: 25548655-c0ac-4ebb-99db-526968b84399
             source: Beastheart
-            attribute: prs
+            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
             name: Characteristic Increase
             behavior: attribute
-            description: Each of your and your companion’s characteristic scores increases by 1, to a maximum of 4.
+            attribute: prs
             guid: abd6d434-53dd-49b0-9436-33e183a3cbc2
             value: 1
           guid: 25548655-c0ac-4ebb-99db-526968b84399
           implementation: 4
+        name: Characteristic Increase
+        behavior: modcompanion
+        description: Each of your characteristic scores increases by 1, to a maximum of 4.
+        guid: a5807355-61ca-4e78-93c2-b0d4316c852c
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     - __typeName: CharacterSkillChoice
       description: You gain one skill of your choice.
       source: Beastheart Class Feature
@@ -3168,18 +3168,14 @@ levels:
               Melee: true
               Weapon: true
               Beastheart: true
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
+            repeatTargets: false
             range: 5
             targetType: target
             flavor: As your attack strikes home, your enemy's escaping life force drifts to your allies in crimson threads.
             guid: 21788bfc-c369-49c3-93c7-2a37ea8a1c89
             modifiers: []
             numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             categorization: Heroic Ability
             domains:
@@ -3218,19 +3214,23 @@ levels:
                   hasTemporaryHitpoints: true
                   ongoingEffect: 0a778b7d-d28c-4006-93e8-65924673dfb5
                   applyto: targets
-                objectTarget: false
                 categorization: Hidden
-                targetType: target
                 range: "2"
+                targetType: target
+                objectTarget: false
                 name: Life-Drinking Wound (Temporary Stamina)
                 guid: 5ebc389f-40f2-43f1-8406-1e6fc3497fbc
                 modifiers: []
               applyto: targets
-            abilityType: none
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             description: Up to three creatures within 2 squares of the target gain temporary Stamina equal to half the damage dealt.
             resourceNumber: "11"
             rangeTextOverride: Melee 1 or ranged 5
-            repeatTargets: false
+            display:
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+              saturation: 1
             targetAllegiance: enemy
             implementation: 3
       - __typeName: CharacterFeature
@@ -3268,7 +3268,7 @@ levels:
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            range: 5
+            objectTarget: true
             targetType: target
             flavor: Driven by the pain and desperation of battle, you and your companion spend your last strength in a flurry of wild attacks.
             guid: 52ff6a72-12e6-4c8d-a73f-5426b5fc206d
@@ -3277,7 +3277,7 @@ levels:
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            objectTarget: true
+            range: 5
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
@@ -3324,10 +3324,10 @@ levels:
                     text: Edge
                     details: Edge if you or your beastheart is bleeding, dying, or winded.
                     condition: Winded or Dying or (Conditions has "Bleeding") or Summoner.Winded or Summoner.Dying or (Summoner.Conditions has "Bleeding")
-                objectTarget: true
                 categorization: Hidden
-                targetType: target
                 range: 1
+                targetType: target
+                objectTarget: true
                 name: On the Razor's Edge (Companion)
                 guid: cb76d76d-d8e4-412f-87e3-290ec9853c12
                 modifiers: []
@@ -3365,16 +3365,16 @@ levels:
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            range: 1
+            categorization: Heroic Ability
             targetType: self
             flavor: Your enemies might be stronger than you, but that's why you're not alone.
-            targetTextOverride: Self
+            guid: f02c4161-d8c3-4537-b1e8-a9001122f422
             modifiers: []
             repeatTargets: false
             numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            categorization: Heroic Ability
+            range: 1
             resourceNumber: "11"
             description: You and your companion each use a different ability that costs 9 or fewer ferocity and is either a main action or a maneuver. These abilities cost no ferocity. If an ability lets you spend additional ferocity for an enhanced effect, you can't do so.
             behaviors:
@@ -3396,7 +3396,7 @@ levels:
                   brightness: 1
                   bgcolor: "#ffffffff"
                   saturation: 1
-                categorization: Hidden
+                range: 1
                 targetType: self
                 behaviors:
                 - __typeName: ActivatedAbilityAugmentedAbilityBehavior
@@ -3431,7 +3431,7 @@ levels:
                     filterAbility: (Ability.Action or Ability.Maneuver) and Ability.HeroicResourceCost <= 9
                     guid: b3a5e07b-c4f8-464a-b714-e0fbe9523145
                     source: Beastheart Class Feature
-                range: 1
+                categorization: Hidden
                 guid: 4a477c96-0e85-4510-8431-f5dfdaae6302
                 modifiers: []
               promptText: Use a free main action or maneuver (9 or fewer Ferocity).
@@ -3454,7 +3454,7 @@ levels:
                   brightness: 1
                   bgcolor: "#ffffffff"
                   saturation: 1
-                categorization: Hidden
+                range: 1
                 targetType: self
                 behaviors:
                 - __typeName: ActivatedAbilityAugmentedAbilityBehavior
@@ -3489,7 +3489,7 @@ levels:
                     filterAbility: (Ability.Action or Ability.Maneuver) and Ability.HeroicResourceCost <= 9
                     guid: 5d4c01a8-610a-46a9-857a-2916a65444ac
                     source: Beastheart Class Feature
-                range: 1
+                categorization: Hidden
                 guid: a3ed8cf7-b695-402c-bb79-76acf8f98ef3
                 modifiers: []
               promptText: Your companion uses a free main action or maneuver (9 or fewer Ferocity).
@@ -3498,8 +3498,8 @@ levels:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             implementationDetails: "Each routed ability costs no Ferocity (free cost inherited from this ability). The 'no additional ferocity for an enhanced effect' clause is player-enforced: do not move the channel slider on the chosen ability. 'A different ability' is satisfied by you and the companion drawing from separate ability pools; it is not engine-enforced for a generically-shared ability."
             rangeTextOverride: Self
-            abilityType: none
-            guid: f02c4161-d8c3-4537-b1e8-a9001122f422
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            targetTextOverride: Self
             implementation: 3
           name: Ride or Die
           behavior: activated
@@ -3549,12 +3549,12 @@ levels:
             flavor: Wrenching power from your primordial bond, you unleash elemental power in a devastating conflagration you can't control.
             guid: 07d63cf1-e984-418e-9a72-f7313d9d81b0
             targetTextOverride: Each enemy in the area
-            abilityType: none
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
@@ -3575,14 +3575,14 @@ levels:
                   - lightning
                   - sonic
                 name: Turn the World To Ash
-                activationCondition: true
+                behavior: power
                 rollType: ability_power_roll
                 description: ""
-                source: Beastheart Class Feature
-                behavior: power
+                modtype: none
+                activationCondition: true
                 keywords: []
                 guid: f2e86271-61ef-417a-9611-78e39991068e
-                modtype: none
+                source: Beastheart Class Feature
             - __typeName: ActivatedAbilityDamageBehavior
               cannotBeReduced: true
               roll: 5 * Charges
@@ -3733,7 +3733,11 @@ levels:
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
           repeatTargets: false
-          description: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain.
+          behaviors:
+          - __typeName: ActivatedAbilityReplenishBehavior
+            chatMessage: Ferox Gained
+            quantity: XP Gained
+            resourceid: e7b04a7e-61fc-4e17-b999-d95d7e751abb
           trigger: endrespite
           range: 1
           targetType: self
@@ -3742,11 +3746,7 @@ levels:
             brightness: 1
             bgcolor: "#ffffffff"
             saturation: 1
-          behaviors:
-          - __typeName: ActivatedAbilityReplenishBehavior
-            chatMessage: Ferox Gained
-            quantity: XP Gained
-            resourceid: e7b04a7e-61fc-4e17-b999-d95d7e751abb
+          description: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain.
           guid: 812a2114-2056-41de-ac2e-df9828dc5ce4
           modifiers: []
         guid: aeacce58-1e09-4ac1-a4cf-96e6e5182da3
@@ -3764,12 +3764,12 @@ levels:
         ability:
           __typeName: TriggeredAbilityDisplay
           target: ""
-          effect: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
+          distance: ""
           name: Ferox
           type: passive
-          keywords: []
           guid: e7f712a5-14d5-4b97-8895-a2972066103b
-          distance: ""
+          keywords: []
+          effect: You have an epic resource called ferox. Each time you finish a respite, you gain ferox equal to the XP you gain. You can spend ferox on your abilities as if it were Ferocity.
         guid: d8f484d5-6577-4949-88f4-13febfd2ef56
         domains:
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
@@ -3781,18 +3781,24 @@ levels:
           iconid: 0e377747-2985-47cb-87aa-52e6563a1230
           name: Ferox
           repeatTargets: false
-          range: 1
+          categorization: Ability
           targetType: self
           guid: 170f7e20-a752-4f30-8610-1dd0dc76c0ec
           modifiers: []
           numTargets: "1"
           abilityType: none
+          persistence: []
           actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+          resourceNumber: "1"
+          description: Spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
+          range: 1
           display:
             hueshift: 0
             brightness: 1
             bgcolor: "#ffffffff"
             saturation: 1
+          resourceCost: e7b04a7e-61fc-4e17-b999-d95d7e751abb
+          strain: []
           domains:
             class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
           behaviors:
@@ -3811,12 +3817,6 @@ levels:
             applyto: caster
             ongoingEffectCustom: fc2971b0-6787-4096-b0a4-49e87f6bf26f
             ongoingEffect: fc2971b0-6787-4096-b0a4-49e87f6bf26f
-          categorization: Ability
-          persistence: []
-          resourceCost: e7b04a7e-61fc-4e17-b999-d95d7e751abb
-          resourceNumber: "1"
-          description: Spend 1 ferox as a free maneuver to allow you and your companion to each take a main action on your turn, instead of a main action and a maneuver. On that turn, the Ferocity cost of your heroic abilities is reduced by 1.
-          strain: []
           implementation: 4
         name: Ferox
         behavior: activated
@@ -3869,14 +3869,18 @@ levels:
               saturation: 1
             categorization: Heroic Ability
             targetType: target
-            flavor: Your bloody-forehead smash drives your companion into a frenzy.
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 28
             guid: 17912277-beb1-434d-98d3-efb46725234c
             description: You are bleeding (save ends). Until the end of your next turn, your companion gains an edge on power rolls.
             numTargets: "1"
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            objectTarget: false
             resourceNumber: "7"
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               tiers:
@@ -3892,15 +3896,11 @@ levels:
               applyto: caster_companion
               ongoingEffectCustom: false
               ongoingEffect: 90b08c62-94d0-49fb-91a2-f99e45857561
-            domains:
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            objectTarget: false
             repeatTargets: false
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
             strain: []
-            sourceReference:
-              __typeName: SourceReference
-              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-              page: 28
+            flavor: Your bloody-forehead smash drives your companion into a frenzy.
             range: 1
             modifiers: []
       - __typeName: CharacterFeature
@@ -3938,16 +3938,16 @@ levels:
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            range: 5
+            objectTarget: false
             targetType: target
             flavor: You smash through their guard and shatter their armor, leaving them wide open.
             guid: d37f07b4-6af3-40ee-ba8a-30c4e4b4d906
             description: The next creature who damages the target before the start of your next turn gains 3 surges, which they can use on the triggering damage.
-            strain: []
+            categorization: Heroic Ability
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            strain: []
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            categorization: Heroic Ability
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
@@ -3967,7 +3967,7 @@ levels:
             repeatTargets: false
             abilityType: none
             rangeTextOverride: Melee 1 or ranged 5
-            objectTarget: false
+            range: 5
             targetAllegiance: enemy
             modifiers: []
       - __typeName: CharacterFeature
@@ -4004,16 +4004,16 @@ levels:
               brightness: 1
               bgcolor: "#ffffffff"
               saturation: 1
-            range: 5
+            objectTarget: false
             targetType: target
             flavor: Spectral teeth clamp on a foe, chaining them to you and draining their life essence.
             guid: 3dd27093-dad5-46a7-a97c-3ba18fb91e68
             description: Whenever a target more than 3 squares away from you fails the saving throw while weakened this way, you can pull the target up to a number of squares equal to your Intuition score as a free triggered action.
-            strain: []
+            categorization: Heroic Ability
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            strain: []
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            categorization: Heroic Ability
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
             behaviors:
@@ -4027,7 +4027,7 @@ levels:
             repeatTargets: false
             abilityType: none
             rangeTextOverride: Melee 1 or ranged 5
-            objectTarget: false
+            range: 5
             targetAllegiance: enemy
             modifiers: []
         - __typeName: CharacterModifier
@@ -4122,16 +4122,16 @@ levels:
             range: 10
             targetType: target
             guid: 5c9e1b40-7a26-4d83-8f15-2b6c9a0e3d71
+            persistence: []
             mandatory: false
-            strain: []
             triggerPrompt: Teleport to the target, shift up to your Might, make a melee free strike, then power roll every enemy within 5.
-            actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+            strain: []
             numTargets: "1"
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            persistence: []
-            resourceNumber: "7"
+            actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
             domains:
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            resourceNumber: "7"
             description: ""
             display:
               hueshift: 0
@@ -4268,5 +4268,5 @@ baseCharacteristics:
   mgt: 2
 id: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
 hitpointsCalculation: 21 + (Level - 1)*12
-mtime: 1786316147876
+mtime: 1786317998937
 _table: classes
