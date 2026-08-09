@@ -1,0 +1,302 @@
+__typeName: CharacterTemplate
+tag: Retainer
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    description: "Level 4 Role Advancement Ability for Ambusher retainers. This choice is a container: retainer monsters inherit its options into their own advancement choices."
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        sourceguid: c36bb27e-c2ec-454c-acd4-cf3c0ce16347
+        activatedAbility:
+          __typeName: ActivatedAbility
+          description: If the target is grabbed or the retainer had an edge on the power roll, the retainer gains 2 surges.
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          targetType: target
+          abilityType: none
+          implementation: 4
+          numTargets: "1"
+          guid: a04d7f54-826a-4835-abae-99e4209d9e39
+          categorization: Ability
+          domains: []
+          usageLimitOptions:
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: d43fae0c-9e77-4c5d-9aad-68422eed8957
+            charges: "1"
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+          range: 1
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 353
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 5 damage; M < Weak, bleeding (save ends)
+            - 9 damage; M < Average, bleeding (save ends)
+            - 12 damage; M < Strong, bleeding (save ends)
+          - __typeName: ActivatedAbilityReplenishBehavior
+            chatMessage: Go for the Jugular
+            quantity: "2"
+            applyto: caster
+            filterTarget: Cast.Boons > 0 or Cast.Primary Target.Conditions has "Grabbed"
+            resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+          strain: []
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          name: Go for the Jugular
+          objectTarget: false
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+        source: Creature Template
+        behavior: activated
+        name: Go for the Jugular
+        resourceRefreshType: encounter
+        guid: d43fae0c-9e77-4c5d-9aad-68422eed8957
+      source: Creature Template
+      implementation: 4
+      name: Go for the Jugular
+      canHavePrerequisites: true
+      guid: c36bb27e-c2ec-454c-acd4-cf3c0ce16347
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "4"
+      type: levelGained
+      guid: 84363473-8d52-48eb-a572-39dce2670852
+    numChoices: 1
+    name: Level 4 Ambusher Ability
+    allowDuplicateChoices: false
+    guid: 12c831ce-34fd-4926-bb74-5ad44768ea7b
+  - __typeName: CharacterFeatureChoice
+    description: "Level 7 Role Advancement Ability for Ambusher retainers. This choice is a container: retainer monsters inherit its options into their own advancement choices."
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        sourceguid: b621a9c3-9de1-40bd-88d1-494283f5c6fc
+        activatedAbility:
+          __typeName: ActivatedAbility
+          meleeRange: 1
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          targetType: target
+          abilityType: none
+          implementation: 4
+          numTargets: "1"
+          guid: ee7ade81-20f3-4304-90b6-d6fb5ffa029e
+          categorization: Ability
+          description: The retainer and their mentor can each move up to their speed.
+          usageLimitOptions:
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 31b4dd39-4c04-4754-9ca7-c6a41ea085ef
+            charges: "1"
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 7 damage; M < Weak, slowed (eot)
+            - 10 damage; M < Average, slowed (save ends)
+            - "15 damage; M < Strong, #slowed and the target can't use triggered actions (save ends)"
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            filterTarget: not Cast.PassesPotency(target, "M", "Strong")
+            tiersSelected:
+            - 3
+            rule: slowed (save ends)
+          - __typeName: ActivatedAbilityApplyRidersBehavior
+            conditionid: 68f455f5-135f-495c-822d-40d809d2b15f
+            tiersSelected:
+            - 3
+            riderid: 2ccbb07d-60c7-4294-bfee-58b4cd0ac12b
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            promptText: Move up to your speed
+            abilityType: standard
+            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+            customAbility:
+              __typeName: ActivatedAbility
+              description: ""
+              iconid: ui-icons/skills/1.png
+              repeatTargets: false
+              targetType: self
+              range: 1
+              modifiers: []
+              guid: dd92ad99-0352-4516-8e8b-3554566ce090
+              abilityType: none
+              behaviors: []
+              name: Invoked Ability
+              numTargets: "1"
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+                hueshift: 0
+            applyto: caster
+            runOnController: true
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            promptText: Move up to your speed
+            customAbility:
+              __typeName: ActivatedAbility
+              description: ""
+              iconid: ui-icons/skills/1.png
+              repeatTargets: false
+              targetType: self
+              range: 1
+              modifiers: []
+              guid: dd92ad99-0352-4516-8e8b-3554566ce090
+              abilityType: none
+              behaviors: []
+              name: Invoked Ability
+              numTargets: "1"
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+                hueshift: 0
+            abilityType: standard
+            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+            runOnController: true
+            applyto: caster_mentor
+            guid: eef6e53d-3836-490f-923c-8d136eb06de8
+          domains: []
+          implementationDetails: ""
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+            Ranged: true
+          strain: []
+          range: 5
+          modifiers: []
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 353
+          flavor: ""
+          name: Hamstring Slice
+          objectTarget: false
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+        source: Creature Template
+        behavior: activated
+        resourceRefreshType: encounter
+        name: Hamstring Slice
+        guid: 31b4dd39-4c04-4754-9ca7-c6a41ea085ef
+      source: Creature Template
+      implementation: 4
+      name: Hamstring Slice
+      canHavePrerequisites: true
+      guid: b621a9c3-9de1-40bd-88d1-494283f5c6fc
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "7"
+      type: levelGained
+      guid: 46c34bb6-185e-468e-a7b9-35d71f74f24a
+    numChoices: 1
+    name: Level 7 Ambusher Ability
+    allowDuplicateChoices: false
+    guid: 006a69fe-98fc-4142-9ef4-97edcb8808d4
+  - __typeName: CharacterFeatureChoice
+    description: "Level 10 Role Advancement Ability for Ambusher retainers. This choice is a container: retainer monsters inherit its options into their own advancement choices."
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        sourceguid: 6eff4b9d-9ccf-469c-bd26-1e7dea568cc7
+        activatedAbility:
+          __typeName: ActivatedAbility
+          description: The retainer gains 2 surges when any creature makes a strike against a target grabbed this way.
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          targetType: target
+          abilityType: none
+          implementation: 1
+          numTargets: "1"
+          guid: 2c348921-9ac8-47ff-b414-002f8c037711
+          categorization: Ability
+          usageLimitOptions:
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 0bf7494f-a113-4bb7-a0ef-98bca967c964
+            charges: "1"
+          strain: []
+          domains: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - "11 damage; #a size 1 or smaller target who has M < Weak is grabbed"
+            - "16 damage; #a size 1 or smaller target who has M < Average is grabbed"
+            - "21 damage; #a size 1 or smaller target who has M < Strong is grabbed"
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            filterTarget: Target.Size < 5 and not Cast.PassesPotency(target, "M")
+            rule: grabbed
+          - __typeName: ActivatedAbilityApplyRidersBehavior
+            conditionid: 70504ebe-3899-41d3-9f60-74b52ce35e39
+            riderid: 55e75643-bbeb-40b8-b17c-a9a6ec6e6551
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+            Ranged: true
+          meleeRange: 1
+          range: 5
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          modifiers: []
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 353
+          flavor: ""
+          name: Hold 'Em Down
+          objectTarget: false
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+        source: Creature Template
+        behavior: activated
+        resourceRefreshType: encounter
+        name: Hold 'Em Down
+        guid: 0bf7494f-a113-4bb7-a0ef-98bca967c964
+      source: Creature Template
+      implementation: 4
+      name: Hold 'Em Down
+      canHavePrerequisites: true
+      guid: 6eff4b9d-9ccf-469c-bd26-1e7dea568cc7
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "10"
+      type: levelGained
+      guid: 40b81976-f964-4930-99c9-e44353ac6822
+    numChoices: 1
+    name: Level 10 Ambusher Ability
+    allowDuplicateChoices: false
+    guid: 3159c756-66e5-4b1a-8ea3-7ff2cb2f7619
+prerequisite: Retainer
+name: Ambusher Abilities
+mtime: 1786233680584
+id: 722a01b2-68a5-434a-88f5-e86a1e897005
+_table: creatureTemplates
