@@ -1,0 +1,214 @@
+__typeName: CharacterTemplate
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      type: levelGained
+      skill: "7"
+      guid: d2ceaaf2-ae56-46c3-9f61-a145de802930
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      implementation: 4
+      name: Hangry Frenzy
+      canHavePrerequisites: true
+      source: Creature Template
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        sourceguid: ec7467aa-17a8-4d0f-a3a6-7101348dad2f
+        source: Creature Template
+        name: Hangry Frenzy
+        resourceRefreshType: encounter
+        behavior: activated
+        activatedAbility:
+          __typeName: ActivatedAbility
+          repeatTargets: false
+          implementation: 4
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          objectTarget: false
+          abilityType: none
+          numTargets: "3"
+          name: Hangry Frenzy
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 373
+          implementationDetails: ""
+          domains: []
+          categorization: Ability
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 6 damage
+            - 11 damage
+            - 14 damage
+            roll: 2d10 + Highest Characteristic
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            roll: Cast.Damage Dealt * 0.5
+          keywords:
+            Melee: true
+          strain: []
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          description: The mercenary must be winded to use this ability. The mercenary uses Big Bite against each target.
+          targetType: target
+          guid: b2d3dc0f-23a2-4b1c-a146-13574941946d
+          range: 1
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          usageLimitOptions:
+            resourceid: 0154d75a-baf0-4997-989a-35db0e8bfb08
+            resourceRefreshType: encounter
+            charges: "1"
+            multicharge: false
+        guid: 0154d75a-baf0-4997-989a-35db0e8bfb08
+      - __typeName: CharacterModifier
+        sourceguid: ec7467aa-17a8-4d0f-a3a6-7101348dad2f
+        filterCondition: Winded < 1
+        description: ""
+        abilityFilter: not Ability.name = "Hangry Frenzy"
+        name: Hangry Frenzy
+        source: Creature Template
+        behavior: suppressabilities
+        explanation: The mercenary must be winded to use Hangry Frenzy.
+        guid: eee54808-9b3d-4c3a-9392-65fe773b4dd5
+      guid: ec7467aa-17a8-4d0f-a3a6-7101348dad2f
+    allowDuplicateChoices: false
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetPath: modifierInfo/features/2
+      targetid: 858ced99-4739-4c16-b9ec-be11a0819a0a
+    numChoices: 1
+    name: Level 7 Retainer Advancement Ability
+    guid: 2e239b9b-a030-4ec3-bd5a-6b6bb62ce522
+  - __typeName: CharacterFeatureChoice
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      type: levelGained
+      skill: "10"
+      guid: 21bc3710-b193-42e3-ad65-7014155fffdf
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      implementation: 2
+      name: Fire Bad
+      canHavePrerequisites: true
+      source: Creature Template
+      modifiers:
+      - __typeName: CharacterModifier
+        rules: The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.
+        sourceguid: 71da5980-a851-42f5-a43d-53f96f377b2f
+        damageType: typed
+        behavior: powertabletrigger
+        targetType: self
+        name: Fire Bad
+        description: |
+          **Trigger** An ability deals acid or fire damage to the mercenary.
+
+          **Effect** The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.
+        type: trigger
+        abilityFilter: Ability.Damage Types has "acid" or Ability.Damage Types has "fire"
+        trigger: takedamage
+        range: 1
+        guid: 5816374c-d743-4b4d-ac54-809371d1a0b8
+        powerRollModifier:
+          __typeName: CharacterModifier
+          modtype: none
+          source: Trigger
+          rollType: ability_power_roll
+          triggerBefore:
+            __typeName: TriggeredAbility
+            repeatTargets: false
+            display:
+              bgcolor: "#ffffffff"
+              saturation: 1
+              brightness: 1
+              hueshift: 0
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              customAbility:
+                __typeName: ActivatedAbility
+                repeatTargets: false
+                display:
+                  bgcolor: "#ffffffff"
+                  saturation: 1
+                  brightness: 1
+                  hueshift: 0
+                behaviors: []
+                abilityType: none
+                description: ""
+                numTargets: "1"
+                guid: 6c40ecb5-7a7c-4314-ac8c-6ce2dd02b83b
+                name: Invoked Ability
+                range: 1
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                targetType: self
+              abilityType: standard
+              standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+              promptText: Move up to your speed. If this takes you beyond the distance of the triggering ability, it has no effect on you.
+            strain: []
+            abilityType: none
+            guid: e0e21b2c-178e-4633-a32b-5990f782a31c
+            description: ""
+            numTargets: "1"
+            name: Fire Bad
+            trigger: d20roll
+            range: 1
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            targetType: self
+          activationAfterRoll: false
+          behavior: power
+          keywords: []
+          hasTriggerBefore: true
+          description: The mercenary moves up to their speed and the triggering ability has no effect on them.
+          rules: ""
+          damageMultiplier: none
+          name: Fire Bad
+          adjustments: []
+          activationCondition: false
+          changeTarget: false
+          guid: 6f7e87a1-31f4-42fb-a8ca-2c196298d425
+        source: Creature Template
+      - __typeName: CharacterModifier
+        description: ""
+        sourceguid: 71da5980-a851-42f5-a43d-53f96f377b2f
+        name: Fire Bad
+        source: Creature Template
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          guid: 89228365-fc62-41a6-bf7b-d53268b92160
+          target: Self
+          keywords: []
+          distance: Self
+          name: Fire Bad
+          trigger: An ability deals acid or fire damage to the mercenary.
+          effect: The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.
+          implementationNotes: "The Codex assumes the move takes the mercenary out of the ability's distance and negates its damage automatically. "
+        behavior: triggerdisplay
+        guid: 99a71aa1-8bb7-428e-b7f7-ac07843e23b5
+      guid: 71da5980-a851-42f5-a43d-53f96f377b2f
+    allowDuplicateChoices: false
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetPath: modifierInfo/features/3
+      targetid: 858ced99-4739-4c16-b9ec-be11a0819a0a
+    numChoices: 1
+    name: Level 10 Retainer Advancement Ability
+    guid: 7efa71f3-7612-4e42-9288-a007de2d220c
+tag: retainer
+prerequisite: Retainer
+id: 53dab8da-668b-481e-8757-109fe93413bd
+name: Troll Mercenary
+mtime: 1786405860326
+_table: creatureTemplates
