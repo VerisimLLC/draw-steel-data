@@ -1,0 +1,229 @@
+__typeName: CharacterOngoingEffect
+association: []
+ctime: 1786370057005
+domains:
+  CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+buffType: buff
+source: Ongoing Effect
+modifiers:
+- __typeName: CharacterModifier
+  targetFilter: ""
+  trigger: takedamage
+  rules: The strike's damage is halved and its potency is reduced by 1.
+  domains:
+    CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+  name: Shield Block
+  type: trigger
+  behavior: powertabletrigger
+  targetType: ally
+  guid: b3b98ff8-57ad-40e6-ad93-14bf1df0ac5d
+  abilityFilter: Ability.Keywords has "strike"
+  description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+  powerRollModifier:
+    __typeName: CharacterModifier
+    adjustments: []
+    damageMultiplier: half
+    rules: ""
+    source: Trigger
+    name: Shield Block
+    modtype: none
+    behavior: power
+    resourceRefreshType: encounter
+    guid: cb37f92f-bfbb-42b9-a82c-d52058bd6b5e
+    rollType: ability_power_roll
+    description: The strike's damage is halved and its potency is reduced by 1.
+    potencymod: "-1"
+    activationCondition: true
+    activationAfterRoll: false
+    keywords: []
+  sourceguid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
+  range: 5
+  source: Creature Template
+- __typeName: CharacterModifier
+  source: Ongoing Effect
+  guid: fbc02f86-c1db-406d-ad63-29d244a72cc0
+  feature:
+    __typeName: CharacterFeature
+    guid: 5b16ebf2-ec48-4871-acc9-c02e37d49d98
+    description: Modify the riders of a mount
+    name: Mount Riders
+    modifiers:
+    - __typeName: CharacterModifier
+      targetFilter: ""
+      trigger: takedamage
+      rules: The strike's damage is halved and its potency is reduced by 1.
+      name: Shield Block - Ally
+      type: trigger
+      behavior: powertabletrigger
+      targetType: ally
+      guid: 5d3194eb-ebb2-413f-b2d7-5e1b027789c6
+      abilityFilter: Ability.Keywords has "strike"
+      description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+      powerRollModifier:
+        __typeName: CharacterModifier
+        adjustments: []
+        potencymod: "-1"
+        rules: ""
+        keywords: []
+        name: Shield Block - Ally
+        modtype: none
+        behavior: power
+        damageMultiplier: half
+        guid: 585a8d00-e952-4640-b271-e1daab2a68a2
+        rollType: ability_power_roll
+        description: The strike's damage is halved and its potency is reduced by 1.
+        source: Trigger
+        activationCondition: true
+        activationAfterRoll: false
+        resourceRefreshType: encounter
+      sourceguid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
+      range: 5
+      source: Mount
+    - __typeName: CharacterModifier
+      source: Mount
+      guid: 632eb185-7a81-470f-97da-d452d6df3677
+      abilityFilter: Ability.name = "End Living Backpack"
+      explanation: You cannot take main actions, maneuvers, or move actions
+      sourceguid: 5b16ebf2-ec48-4871-acc9-c02e37d49d98
+      name: Living Backpack
+      description: Modify the riders of a mount
+      behavior: suppressabilities
+    - __typeName: CharacterModifier
+      guid: 72f0c6b8-bdce-4cf9-b157-6f8535440a39
+      behavior: activated
+      description: Modify the riders of a mount
+      name: Mount Riders
+      activatedAbility:
+        __typeName: ActivatedAbility
+        numTargets: "1"
+        strain: []
+        targeting: pathfind
+        targetType: emptyspace
+        guid: 6a12501a-7057-49e2-bedc-5c61814add42
+        categorization: Ability
+        iconid: ui-icons/skills/1.png
+        display:
+          saturation: 1
+          brightness: 1
+          hueshift: 0
+          bgcolor: "#ffffffff"
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        domains: []
+        modifiers: []
+        abilityType: none
+        implementation: 3
+        description: ""
+        behaviors:
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          ongoingEffect: 3a84d56d-2c01-4041-b16f-327fb88f058b
+          mode: effect
+          applyto: caster_mentor
+        name: End Living Backpack
+        repeatTargets: false
+        range: 1
+      sourceguid: 5b16ebf2-ec48-4871-acc9-c02e37d49d98
+      source: Mount
+    source: Mount
+  description: While the shieldbearer is on their mentor's back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer's mentor. Additionally, the shieldbearer moves with the mentor, and they can't use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor's space when the effect ends, they move into an adjacent unoccupied space of their choice.
+  domains:
+    CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+  name: Living Backpack
+  sourceguid: 3a84d56d-2c01-4041-b16f-327fb88f058b
+  behavior: modrider
+- __typeName: CharacterModifier
+  source: Mount
+  guid: f4327483-0706-4575-96ae-2fbbcc403649
+  sourceguid: 5b16ebf2-ec48-4871-acc9-c02e37d49d98
+  description: Modify the riders of a mount
+  domains:
+    CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+  name: Mount Riders
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    range: 1
+    strain: []
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      ongoingEffect: 3a84d56d-2c01-4041-b16f-327fb88f058b
+      mode: effect
+    - __typeName: ActivatedAbilityFloatTextBehavior
+      text: Living Shield Ends
+      color: "#ffffffff"
+    targetType: self
+    guid: 75df4ee5-a053-4509-a1db-36eaa1128fc2
+    iconid: ui-icons/skills/1.png
+    display:
+      saturation: 1
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+    conditionFormula: Subject.Mentor = Self
+    trigger: forcemove
+    domains:
+      CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+    modifiers: []
+    abilityType: none
+    subject: allies
+    description: ""
+    numTargets: "1"
+    name: Mount Riders
+    repeatTargets: false
+    subjectRange: "1"
+  behavior: trigger
+- __typeName: CharacterModifier
+  behavior: trigger
+  guid: 6ce27266-2d3d-4097-bd7b-6727dd1c00ee
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    range: 1
+    strain: []
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      ongoingEffect: 3a84d56d-2c01-4041-b16f-327fb88f058b
+      mode: effect
+    - __typeName: ActivatedAbilityFloatTextBehavior
+      text: Living Shield Ends
+      guid: b7d8b0f8-4dae-46eb-82cb-560698959e02
+      color: "#ffffffff"
+    targetType: self
+    guid: dd0ca2dc-4ec4-4ed1-8cb1-96ff56207ca5
+    iconid: ui-icons/skills/1.png
+    display:
+      saturation: 1
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+    conditionFormula: Subject.Mentor = Self and Condition = "prone"
+    trigger: inflictcondition
+    domains:
+      CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+    name: Mount Riders
+    abilityType: none
+    subject: allies
+    description: ""
+    numTargets: "1"
+    modifiers: []
+    repeatTargets: false
+    subjectRange: "1"
+  description: Modify the riders of a mount
+  domains:
+    CharacterOngoingEffect:3a84d56d-2c01-4041-b16f-327fb88f058b: true
+  name: Mount Riders
+  sourceguid: 5b16ebf2-ec48-4871-acc9-c02e37d49d98
+  source: Mount
+mtime: 1786371484999
+guid: 3a84d56d-2c01-4041-b16f-327fb88f058b
+custom: true
+description: While the shieldbearer is on their mentor's back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer's mentor. Additionally, the shieldbearer moves with the mentor, and they can't use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor's space when the effect ends, they move into an adjacent unoccupied space of their choice.
+id: 3a84d56d-2c01-4041-b16f-327fb88f058b
+iconid: 20c26bc2-3c3b-498c-af59-f29874538b13
+name: Living Backpack
+display:
+  saturation: 1
+  brightness: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+_table: characterOngoingEffects
