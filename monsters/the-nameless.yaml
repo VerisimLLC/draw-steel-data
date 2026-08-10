@@ -94,27 +94,139 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: null
+  updateid: b0fad782-b937-49bc-984e-31cf89c60f57
   properties:
     __typeName: follower
-    monster_type: The Nameless
-    followerType: retainer
-    initiativeGrouping: 5b488e0e-58f4-43e7-aff8-7abb341bf061
-    availableRolls: 0
+    damage_taken: 0
+    stability: 4
+    cr: 6
+    retainer: true
     walkingSpeed: 5
-    movementSpeeds:
-      fly: 5
-    max_hitpoints: 66
-    keywords:
-      Draconian: true
-      Humanoid: true
-      Dragon: true
     inflictedConditions: []
+    keywords:
+      Humanoid: true
+      Draconian: true
+      Dragon: true
+    creatureTemplates:
+    - 25263715-cef4-4e25-b4bd-ddedc3a87dea
+    ongoingEffects: []
     role: Follower Defender
-    innateAttacks: []
-    notes:
-    - text: ""
-      title: Monster Notes
+    levelChoices: []
+    monster_category: Draconian
+    followerType: retainer
+    max_hitpoints: 66
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: ""
+      guid: 888f3b50-ccec-4853-bf13-1cb015b10677
+      domains:
+        CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
+      name: I’m Not a Steed, You’re Equipment
+      source: Character Feature
+      implementation: 3
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 888f3b50-ccec-4853-bf13-1cb015b10677
+        activatedAbility:
+          __typeName: ActivatedAbility
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          domains:
+            CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 359
+          targetAllegiance: ally
+          iconid: ui-icons/skills/1.png
+          name: I’m Not a Steed, You’re Equipment
+          numTargets: "1"
+          description: The Nameless’s mentor enters the Nameless’s space and rides on their back. The Nameless or the mentor can move the mentor to an adjacent space as a free maneuver. While in the Nameless’s space, the mentor moves with them and can’t use their move action, and  ability rolls against the mentor take a bane.
+          targetType: target
+          abilityType: none
+          keywords:
+            Melee: true
+          repeatTargets: false
+          categorization: Ability
+          implementationDetails: The mentor manually climbs off of The Nameless
+          strain: []
+          usageLimitOptions:
+            multicharge: false
+            resourceid: 1d951487-91db-4508-a593-ab578e9e0ed9
+            charges: "1"
+            resourceRefreshType: encounter
+          range: 1
+          modifiers: []
+          guid: 45e7b6e3-94b0-486c-827b-f8930abac38e
+          objectTarget: false
+          implementation: 3
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: eoe
+            applyto: caster
+            ongoingEffect: 2ef7fadd-17e0-449c-8c64-e32056eceb2f
+            ongoingEffectCustom: 2ef7fadd-17e0-449c-8c64-e32056eceb2f
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            runOnController: true
+            abilityType: named
+            promptText: You may climb onto The Nameless
+            namedAbility: Climb Creature
+            customAbility:
+              __typeName: ActivatedAbility
+              targetType: self
+              display:
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+                hueshift: 0
+              description: ""
+              repeatTargets: false
+              behaviors: []
+              range: 1
+              iconid: ui-icons/skills/1.png
+              abilityType: none
+              name: Invoked Ability
+              modifiers: []
+              guid: f834f3b4-999e-4981-b8df-cff495ad6023
+              numTargets: "1"
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        domains:
+          CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
+        resourceRefreshType: encounter
+        guid: 1d951487-91db-4508-a593-ab578e9e0ed9
+        name: I’m Not a Steed, You’re Equipment
+        source: Character Feature
+        description: ""
+        behavior: activated
+    - __typeName: CharacterFeature
+      description: Ranged strikes against the Nameless take a bane
+      guid: a619677d-1fa1-45a0-8ee5-0bc667b67035
+      domains:
+        CharacterFeature:a619677d-1fa1-45a0-8ee5-0bc667b67035: true
+      name: Wing Block
+      source: Character Feature
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: a619677d-1fa1-45a0-8ee5-0bc667b67035
+        activationAfterRoll: false
+        activationCondition: true
+        description: Ranged strikes against the Nameless take a bane
+        name: Wing Block
+        behavior: power
+        guid: e92cc98c-e35e-4358-acf9-4bfb9529c3e8
+        domains:
+          CharacterFeature:a619677d-1fa1-45a0-8ee5-0bc667b67035: true
+        modtype: bane
+        source: Character Feature
+        keywords:
+          Ranged: true
+        rollType: enemy_ability_power_roll
+    opportunityAttack: 6
+    availableRolls: 0
     animations:
       guid: 2e0cd92f-9d42-4ed6-81b1-9e030595caf2-148
       anim:
@@ -122,23 +234,76 @@ info:
           1d951487-91db-4508-a593-ab578e9e0ed9: 1
           d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
         animType: consumeResource
-    equipment:
-      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    initiativeGrouping: 5b488e0e-58f4-43e7-aff8-7abb341bf061
+    titles: []
     groupid: 30f074ad-8a42-413f-a987-fb1a491e8ac7
     resources:
       1d951487-91db-4508-a593-ab578e9e0ed9:
         __typeName: CharacterResource
-        refreshid: 1b63d187-ff12-4863-ab95-8084c67a591f
         used: 1
+        refreshid: 1b63d187-ff12-4863-ab95-8084c67a591f
       d19658a2-4d7b-4504-af9e-1a5410fb17fd:
         __typeName: CharacterResource
-        refreshid: 1b63d187-ff12-4863-ab95-8084c67a591f-4-95749f95-b4a2-4f46-bf51-1ea7d4a1b238-0
         used: 1
+        refreshid: 1b63d187-ff12-4863-ab95-8084c67a591f-4-95749f95-b4a2-4f46-bf51-1ea7d4a1b238-0
+    savingThrowRatings: []
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 6
+      apply: Damage Reduction
+      damageType: corruption
+    notes:
+    - text: ""
+      title: Monster Notes
+    monster_type: The Nameless
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      display:
+        bgcolor: "#ffffffff"
+        saturation: 1
+        brightness: 1
+        hueshift: 0
+      implementation: 4
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 359
+      guid: 8f756f24-dc03-41b6-b57c-ffaa27552a42
+      name: 'Baneful Blade '
+      strain: []
+      targetType: target
+      abilityType: none
+      keywords:
+        Melee: true
+        Charge: true
+        Strike: true
+        Weapon: true
+      categorization: Signature Ability
+      description: ""
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 6 damage
+        - 11 damage
+        - 14 damage; push 2
+        roll: 2d10 + Highest Characteristic
+      range: 1
+      modifiers: []
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      objectTarget: true
+      numTargets: "1"
+      iconid: ui-icons/skills/1.png
+      repeatTargets: false
+    equipment:
+      mainhand1: 22ab52f5-955b-40c8-80c3-826f823e0a5b
+    skillProficiencies: []
+    skillRatings: []
     attributes:
-      mgt:
+      prs:
         __typeName: CharacterAttribute
-        baseValue: 3
-        id: mgt
+        baseValue: 2
+        id: prs
       agl:
         __typeName: CharacterAttribute
         baseValue: 2
@@ -147,179 +312,16 @@ info:
         __typeName: CharacterAttribute
         baseValue: 1
         id: inu
-      prs:
+      mgt:
         __typeName: CharacterAttribute
-        baseValue: 2
-        id: prs
+        baseValue: 3
+        id: mgt
       rea:
         __typeName: CharacterAttribute
         baseValue: 1
         id: rea
-    damage_taken: 0
-    levelChoices: []
-    stability: 4
-    titles: []
-    monster_category: Draconian
-    skillRatings: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      modifiers: []
-      keywords:
-        Strike: true
-        Weapon: true
-        Charge: true
-        Melee: true
-      numTargets: "1"
-      implementation: 4
-      iconid: ui-icons/skills/1.png
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        saturation: 1
-        brightness: 1
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 6 damage
-        - 11 damage
-        - 14 damage; push 2
-        roll: 2d10 + Highest Characteristic
-      abilityType: none
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 359
-      guid: 8f756f24-dc03-41b6-b57c-ffaa27552a42
-      targetType: target
-      repeatTargets: false
-      range: 1
-      strain: []
-      objectTarget: true
-      name: 'Baneful Blade '
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: ""
-    skillProficiencies: []
-    cr: 6
-    characterFeatures:
-    - __typeName: CharacterFeature
-      source: Character Feature
-      name: I’m Not a Steed, You’re Equipment
-      guid: 888f3b50-ccec-4853-bf13-1cb015b10677
-      domains:
-        CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
-      modifiers:
-      - __typeName: CharacterModifier
-        source: Character Feature
-        resourceRefreshType: encounter
-        sourceguid: 888f3b50-ccec-4853-bf13-1cb015b10677
-        activatedAbility:
-          __typeName: ActivatedAbility
-          modifiers: []
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          usageLimitOptions:
-            resourceid: 1d951487-91db-4508-a593-ab578e9e0ed9
-            resourceRefreshType: encounter
-            charges: "1"
-            multicharge: false
-          numTargets: "1"
-          domains:
-            CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
-          implementation: 3
-          targetType: target
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            ongoingEffectCustom: 2ef7fadd-17e0-449c-8c64-e32056eceb2f
-            applyto: caster
-            ongoingEffect: 2ef7fadd-17e0-449c-8c64-e32056eceb2f
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: You may climb onto The Nameless
-            abilityType: named
-            customAbility:
-              __typeName: ActivatedAbility
-              behaviors: []
-              display:
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                saturation: 1
-                brightness: 1
-              modifiers: []
-              description: ""
-              guid: f834f3b4-999e-4981-b8df-cff495ad6023
-              numTargets: "1"
-              name: Invoked Ability
-              iconid: ui-icons/skills/1.png
-              range: 1
-              abilityType: none
-              repeatTargets: false
-              targetType: self
-            namedAbility: Climb Creature
-            runOnController: true
-          categorization: Ability
-          targetAllegiance: ally
-          abilityType: none
-          name: I’m Not a Steed, You’re Equipment
-          objectTarget: false
-          sourceReference:
-            __typeName: SourceReference
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-            page: 359
-          keywords:
-            Melee: true
-          range: 1
-          iconid: ui-icons/skills/1.png
-          guid: 45e7b6e3-94b0-486c-827b-f8930abac38e
-          strain: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            saturation: 1
-            brightness: 1
-          implementationDetails: The mentor manually climbs off of The Nameless
-          repeatTargets: false
-          description: The Nameless’s mentor enters the Nameless’s space and rides on their back. The Nameless or the mentor can move the mentor to an adjacent space as a free maneuver. While in the Nameless’s space, the mentor moves with them and can’t use their move action, and  ability rolls against the mentor take a bane.
-        name: I’m Not a Steed, You’re Equipment
-        domains:
-          CharacterFeature:888f3b50-ccec-4853-bf13-1cb015b10677: true
-        behavior: activated
-        guid: 1d951487-91db-4508-a593-ab578e9e0ed9
-        description: ""
-      implementation: 3
-      description: ""
-    - __typeName: CharacterFeature
-      source: Character Feature
-      name: Wing Block
-      guid: a619677d-1fa1-45a0-8ee5-0bc667b67035
-      domains:
-        CharacterFeature:a619677d-1fa1-45a0-8ee5-0bc667b67035: true
-      modifiers:
-      - __typeName: CharacterModifier
-        source: Character Feature
-        sourceguid: a619677d-1fa1-45a0-8ee5-0bc667b67035
-        activationCondition: true
-        modtype: bane
-        keywords:
-          Ranged: true
-        activationAfterRoll: false
-        guid: e92cc98c-e35e-4358-acf9-4bfb9529c3e8
-        rollType: enemy_ability_power_roll
-        domains:
-          CharacterFeature:a619677d-1fa1-45a0-8ee5-0bc667b67035: true
-        behavior: power
-        name: Wing Block
-        description: Ranged strikes against the Nameless take a bane
-      implementation: 4
-      description: Ranged strikes against the Nameless take a bane
-    ongoingEffects: []
-    opportunityAttack: 6
-    resistances:
-    - __typeName: ResistanceEntry
-      apply: Damage Reduction
-      dr: 6
-      damageType: corruption
-    savingThrowRatings: []
-    retainer: true
+    movementSpeeds:
+      fly: 5
   tokenType: null
   bestiaryId: b208cc11-5350-422a-9c56-9cc4bc396c83
   summonerid: null

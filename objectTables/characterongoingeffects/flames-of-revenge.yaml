@@ -1,0 +1,65 @@
+__typeName: CharacterOngoingEffect
+_table: characterOngoingEffects
+id: 290386df-3fd5-4522-bec0-6fb3055a50eb
+guid: 8e8da5e8-5772-4232-a71f-615c53aea0d0
+name: Flames of Revenge
+description: This creature burns with flame. They have fire immunity 10, and any creature who targets them with a strike takes 10 fire damage.
+source: Ongoing Effect
+implementation: 3
+custom: true
+buffType: buff
+association: []
+iconid: ui-icons/skills/1.png
+display:
+  saturation: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+  brightness: 1
+modifiers:
+- __typeName: CharacterModifier
+  behavior: resistance
+  name: Flames of Revenge
+  guid: 3fbe99b2-5f79-4bed-a01c-b5f6fc4625be
+  sourceguid: 8e8da5e8-5772-4232-a71f-615c53aea0d0
+  source: Ongoing Effect
+  description: Fire immunity 10.
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: fire
+    dr: "10"
+- __typeName: CharacterModifier
+  behavior: trigger
+  name: Flames of Revenge
+  guid: 7a01e6d6-efde-4b11-b34f-1233dcd44287
+  sourceguid: 8e8da5e8-5772-4232-a71f-615c53aea0d0
+  source: Ongoing Effect
+  description: Any creature who targets this creature with a strike takes 10 fire damage.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Flames of Revenge
+    guid: e9c7ae1c-c7af-47a9-bc36-72cb2f77c3f5
+    trigger: targetwithability
+    conditionFormula: Used Ability.Keywords has "strike"
+    targetType: attacker
+    numTargets: "1"
+    range: 20
+    mandatory: true
+    silent: true
+    whenActive: combat
+    repeatTargets: false
+    abilityType: none
+    modifiers: []
+    strain: []
+    persistence: []
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: 10 fire damage
+      applyto: targets
+    description: ""
+    iconid: ui-icons/skills/1.png
+    display:
+      saturation: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      brightness: 1

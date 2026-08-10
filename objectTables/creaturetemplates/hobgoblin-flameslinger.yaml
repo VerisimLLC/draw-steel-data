@@ -1,0 +1,212 @@
+__typeName: CharacterTemplate
+name: Hobgoblin Flameslinger
+id: 93144eff-70cf-4426-8ccc-defaed65bdb0
+prerequisite: Retainer
+tag: retainer
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    numChoices: 1
+    name: Level 7 Retainer Advancement Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      type: levelGained
+      skill: "7"
+      guid: 30b1655e-e732-4b17-bfb0-083475d8caf3
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      name: Unholy Attraction
+      source: Creature Template
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        name: Unholy Attraction
+        behavior: activated
+        resourceRefreshType: encounter
+        source: Creature Template
+        activatedAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 8 damage; pull 1
+            - 12 damage; pull 2
+            - 16 damage; pull 4
+            promptWhenResolving: true
+            roll: 2d10 + Highest Characteristic
+          - __typeName: ActivatedAbilityDelayBehavior
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            filterTarget: Caster.Distance(Target) < 2
+            applyto: targets
+            rule: P < Average, prone
+          strain: []
+          targetAllegiance: enemy
+          radius: 3
+          categorization: Ability
+          usageLimitOptions:
+            resourceRefreshType: encounter
+            resourceid: 91d64f74-faac-47f2-a56c-f63b5b56b827
+            multicharge: false
+            charges: "1"
+          modifiers: []
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 366
+          implementation: 4
+          keywords:
+            Magic: true
+            Area: true
+            Ranged: true
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          repeatTargets: false
+          domains: []
+          objectTarget: false
+          range: 10
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          iconid: ui-icons/skills/1.png
+          name: Unholy Attraction
+          targetType: cube
+          targetTextOverride: Each enemy in the area
+          abilityType: none
+          numTargets: "1"
+          description: A target who is pulled adjacent to the flameslinger and who has P < Average is knocked prone.
+          guid: 4407a75b-9a7c-4ae8-8447-f427252996ad
+        sourceguid: e46d152e-bd11-42cf-ae25-4fbbe764db7e
+        guid: 91d64f74-faac-47f2-a56c-f63b5b56b827
+      guid: e46d152e-bd11-42cf-ae25-4fbbe764db7e
+      canHavePrerequisites: true
+      implementation: 4
+    allowDuplicateChoices: false
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetPath: modifierInfo/features/2
+      targetid: 27b038d4-48f7-4792-b529-86518de6530d
+    guid: 6d4eeb92-d406-4eed-b05f-67e41fc1a708
+  - __typeName: CharacterFeatureChoice
+    numChoices: 1
+    name: Level 10 Retainer Advancement Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      type: levelGained
+      skill: "10"
+      guid: 76ee90d4-0d0c-4551-82d0-7e16893f1747
+    options:
+    - __typeName: CharacterFeature
+      description: ""
+      name: Fire Spiral
+      source: Creature Template
+      modifiers:
+      - __typeName: CharacterModifier
+        description: ""
+        name: Fire Spiral
+        behavior: activated
+        resourceRefreshType: encounter
+        source: Creature Template
+        activatedAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 8 damage; push 2
+            - 12 damage; push 3
+            - 16 damage; push 5
+            roll: 2d10 + Highest Characteristic
+          strain: []
+          targetTextOverride: Each enemy in the area
+          radius: "3"
+          description: If the flameslinger's mentor is within 10 squares of the flameslinger, the mentor can be the source of the burst instead of the flameslinger.
+          categorization: Ability
+          usageLimitOptions:
+            resourceRefreshType: encounter
+            resourceid: 63e92bb6-b837-46c2-a86d-d01e057aeaaa
+            multicharge: false
+            charges: "1"
+          modifiers: []
+          multipleModes: false
+          modeList:
+          - text: Burst from the flameslinger
+          - hasAbility: true
+            text: Burst from the mentor
+            variation:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                guid: c7517995-6d8d-4931-8e08-83b594fd4b2b
+                tiers:
+                - 8 damage; push 2
+                - 12 damage; push 3
+                - 16 damage; push 5
+                roll: 2d10 + Highest Characteristic
+              strain: []
+              targetTextOverride: Each enemy in the area
+              radius: 3
+              categorization: Hidden
+              modifiers: []
+              keywords:
+                Area: true
+                Magic: true
+              display:
+                saturation: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+              repeatTargets: false
+              targetAllegiance: enemy
+              objectTarget: false
+              domains: []
+              iconid: ui-icons/skills/1.png
+              name: Fire Spiral
+              targetType: cube
+              range: 10
+              abilityType: none
+              numTargets: "1"
+              description: ""
+              guid: 0a106456-7e68-4210-81bb-d7efa493a5ba
+          implementation: 3
+          implementationDetails: Retainer or Mentor source location for burst is implemented as Cube targeting
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          repeatTargets: false
+          objectTarget: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 362
+          range: "10"
+          domains: []
+          iconid: ui-icons/skills/1.png
+          name: Fire Spiral
+          targetType: cube
+          keywords:
+            Area: true
+            Magic: true
+          abilityType: none
+          rangeTextOverride: 3 burst
+          numTargets: "1"
+          guid: 6c6ea9fb-d472-4770-bbb4-063cf3258903
+        sourceguid: 28da5801-1211-4a0d-96d4-f4ba4f45cd8d
+        guid: 63e92bb6-b837-46c2-a86d-d01e057aeaaa
+      guid: 28da5801-1211-4a0d-96d4-f4ba4f45cd8d
+      canHavePrerequisites: true
+      implementation: 3
+    allowDuplicateChoices: false
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetPath: modifierInfo/features/3
+      targetid: 27b038d4-48f7-4792-b529-86518de6530d
+    guid: 8ef3d911-e665-451b-ac5d-24b29f5c7396
+mtime: 1786321997818
+_table: creatureTemplates

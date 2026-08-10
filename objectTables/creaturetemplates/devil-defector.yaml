@@ -1,0 +1,227 @@
+__typeName: CharacterTemplate
+prerequisite: Retainer
+tag: retainer
+id: cec6c6d5-d89e-44c9-b02e-f874447121bb
+name: Devil Defector
+mtime: 1786305775828
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetid: 1a4db627-5a83-4713-8bff-53cd2707db46
+      targetPath: modifierInfo/features/2
+    options:
+    - __typeName: CharacterFeature
+      guid: 3ca15aa9-07a5-4251-b5fb-2db80c7682d9
+      source: Creature Template
+      name: Flames of Revenge
+      canHavePrerequisites: true
+      description: ""
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Creature Template
+        activatedAbility:
+          __typeName: ActivatedAbility
+          categorization: Ability
+          numTargets: "1"
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          objectTarget: false
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          radius: 3
+          repeatTargets: false
+          targetTextOverride: Each enemy in the area
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 359
+          keywords:
+            Area: true
+            Magic: true
+            Ranged: true
+          range: 10
+          usageLimitOptions:
+            resourceid: c910bc77-ccee-4b5e-94be-9396c1924e5c
+            resourceRefreshType: encounter
+            charges: "1"
+            multicharge: false
+          domains: []
+          implementationDetails: ""
+          targetFilter: Enemy or Caster.Mentor
+          targetType: cube
+          guid: ffaa5132-29ed-4ce9-a0c9-a1af0d65f270
+          strain: []
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+          description: If the defector's mentor is in the area, the mentor burns with flame until the end of the defector's next turn. While this fire burns the mentor has fire immunity 10, and any creature who targets the mentor with a strike takes 10 fire damage.
+          name: Flames of Revenge
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            filterTarget: not Target = Caster.Mentor
+            tiers:
+            - 6 corruption damage
+            - 10 corruption damage
+            - 14 corruption damage
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            durationUntilEndOfTurn: true
+            ongoingEffectCustom: false
+            duration: 1
+            applyto: targets
+            filterTarget: Target = Caster.Mentor
+            ongoingEffect: 290386df-3fd5-4522-bec0-6fb3055a50eb
+        sourceguid: 3ca15aa9-07a5-4251-b5fb-2db80c7682d9
+        name: Flames of Revenge
+        resourceRefreshType: encounter
+        description: ""
+        behavior: activated
+        guid: c910bc77-ccee-4b5e-94be-9396c1924e5c
+    name: Level 7 Retainer Advancement Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "7"
+      type: levelGained
+      guid: c6d305c1-5bde-4e0a-80c7-349fa1ebda22
+    guid: 8f9be68a-679c-4bd9-a5a1-57ca4b5d8d80
+  - __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    numChoices: 1
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetTable: creatureTemplates
+      targetid: 1a4db627-5a83-4713-8bff-53cd2707db46
+      targetPath: modifierInfo/features/3
+    options:
+    - __typeName: CharacterFeature
+      guid: 8dd9e732-e73a-4dd4-8fde-5d7a67848e29
+      source: Creature Template
+      name: Hell On Earth
+      canHavePrerequisites: true
+      description: ""
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        source: Creature Template
+        activatedAbility:
+          __typeName: ActivatedAbility
+          categorization: Ability
+          numTargets: "1"
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          objectTarget: false
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          radius: 5
+          repeatTargets: false
+          description: The area burns with infernal fire until the end of the devil's next turn. Any enemy of the defector who ends their turn in the area takes 10 fire damage, and if they have P < Average they are frightened (save ends).
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 357
+          keywords:
+            Area: true
+            Magic: true
+            Ranged: true
+          range: 10
+          usageLimitOptions:
+            resourceid: 40d0eb03-469c-43b3-b584-f22155ddfa6e
+            resourceRefreshType: encounter
+            charges: "1"
+            multicharge: false
+          domains: []
+          implementationDetails: ""
+          behaviors:
+          - __typeName: ActivatedAbilityAuraBehavior
+            aliveafterdeath: true
+            aura:
+              __typeName: Aura
+              source: Hell On Earth
+              description: Any enemy of the defector who ends their turn in the area takes 10 fire damage, and if they have P < Average they are frightened (save ends).
+              modifiers:
+              - __typeName: CharacterModifier
+                source: Aura
+                sourceguid: 8dd6bdf5-babf-46f7-ad61-922cb1fc1ed7
+                description: An enemy who ends their turn in the area takes 10 fire damage, and is frightened (save ends) if they have P < Average.
+                behavior: trigger
+                name: Hell On Earth
+                triggeredAbility:
+                  __typeName: TriggeredAbility
+                  targetType: self
+                  strain: []
+                  numTargets: "1"
+                  trigger: endturn
+                  name: Hell On Earth
+                  iconid: ui-icons/skills/1.png
+                  mandatory: true
+                  behaviors:
+                  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                    applyto: targets
+                    rule: 10 fire damage
+                  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                    ongoingEffectSource: specific
+                    ongoingEffectCustom: false
+                    duration: save_ends
+                    filterTarget: not Passes Potency("P", AurasCaster("Hell on Earth").Average)
+                    ongoingEffect: 3cc61ad4-03d5-4db9-af58-bf59318c9d5a
+                  description: ""
+                  range: 1
+                  repeatTargets: false
+                  persistence: []
+                  modifiers: []
+                  display:
+                    saturation: 1
+                    hueshift: 0
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                  abilityType: none
+                  guid: a5848256-a1e7-4908-b564-2c96542cebb3
+                guid: 0009ed1f-bd15-47f9-a812-98f8256045c1
+              display:
+                saturation: 1
+                brightness: 1
+                bgcolor: "#ffffffff"
+                hueshift: 0
+              movedamage: none
+              creatureFilter: ""
+              objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
+              applyto: enemies
+              name: Hell On Earth
+              triggers: []
+              guid: 8dd6bdf5-babf-46f7-ad61-922cb1fc1ed7
+            duration: endnextturn
+          strain: []
+          guid: 85951721-55f6-4c2e-be62-11dd872742c7
+          targetTextOverride: Special
+          display:
+            saturation: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+          name: Hell On Earth
+          abilityType: none
+          targetType: cube
+        sourceguid: 8dd9e732-e73a-4dd4-8fde-5d7a67848e29
+        name: Hell On Earth
+        resourceRefreshType: encounter
+        description: ""
+        behavior: activated
+        guid: 40d0eb03-469c-43b3-b584-f22155ddfa6e
+    name: Level 10 Retainer Advancement Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "10"
+      type: levelGained
+      guid: e8dbff37-21ee-45fe-ab76-532d60f39fbc
+    guid: 8f161578-f783-40f3-aa8f-1f5134c0ad24
+_table: creatureTemplates

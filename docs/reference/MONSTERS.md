@@ -685,7 +685,11 @@ symbols: `Self` (the creature being tested), `Target` (synonym for Self), `Aura`
 | ID | Description |
 |----|-------------|
 | `onenter` | When a creature enters the aura |
+| `casterstartturnaura` | At the start of the caster's turn |
 | `casterendturnaura` | At the end of the caster's turn |
+
+Both caster-turn triggers use `targetType: aura` (every creature in the aura except the
+caster). Set `destroyaura: true` on the trigger to remove the aura once it fires.
 
 **Trigger structure:**
 
