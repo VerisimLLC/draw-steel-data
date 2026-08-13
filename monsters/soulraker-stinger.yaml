@@ -4,8 +4,11 @@ info:
     mountedOnObject: null
     mountedSaddle: 0
     floor: null
-    map: null
-    loc: []
+    map: 97f55a4d-7059-40ce-8b68-2901615d5f15
+    loc:
+    - 2
+    - 2
+    - 1
     pos:
       x: 0
       y: 0
@@ -54,35 +57,88 @@ info:
   updateid: ca1f66a0-4d6e-4341-bda3-69d651f89bc6
   properties:
     __typeName: monster
-    opportunityAttack: 4
+    walkingSpeed: 6
+    equipment: []
+    cr: 7
+    resources: []
+    minion: true
+    ev: 9
+    stability: 0
+    monster_category: Monster
+    max_hitpoints: 10
+    traitNames: []
     keywords:
       Demon: true
-      Abyssal: true
       Soulraker: true
-    minion: true
-    max_hitpoints: 10
-    cr: 7
-    ev: 9
-    creatureSize: 1M
+      Abyssal: true
+    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
+    initiativeGrouping: dee50539-5073-413e-87c0-17e9d5da7be9
+    characterFeatures:
+    - __typeName: CharacterFeature
+      description: Each creature within 2 of the stinger can't be hidden from them.
+      guid: e30eb686-1587-4c5b-afc0-6c7edbdffd11
+      modifiers:
+      - __typeName: CharacterModifier
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        sourceguid: e30eb686-1587-4c5b-afc0-6c7edbdffd11
+        value: 2
+        behavior: attribute
+        guid: b98818b7-3b8e-44bf-bd12-b5023bfdaac7
+        source: Trait
+        name: Soulsight
+        domains:
+          CharacterFeature:e30eb686-1587-4c5b-afc0-6c7edbdffd11: true
+        description: Each creature within 2 of the stinger can't be hidden from them.
+      name: Soulsight
+      domains:
+        CharacterFeature:e30eb686-1587-4c5b-afc0-6c7edbdffd11: true
+      source: Trait
+      implementation: 4
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:99da3d4c-f6e6-45c4-b477-3e0197e94296: true
+      modifiers: []
+      description: A creature who starts their turn with 2 or more soulraker minions adjacent to them takes 3 sonic damage.
+      guid: 99da3d4c-f6e6-45c4-b477-3e0197e94296
+      source: Trait
+      name: Abyssal Buzzing
+    - __typeName: CharacterFeature
+      description: While winded, the blight phage has an edge on strikes, and strikes have an edge against them.
+      guid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
+        behavior: power
+        guid: 81d870f5-26f0-4686-805f-7626b4a1a5bb
+        source: Trait
+        keywords: []
+        activationCondition: self.Winded = 1
+        modtype: edge
+        name: Lethe
+        domains:
+          CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
+        rollType: ability_power_roll
+        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
+      - __typeName: CharacterModifier
+        sourceguid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
+        behavior: power
+        guid: 85c47d93-06a0-434a-b5e4-57cfb6b7d899
+        source: Trait
+        keywords: []
+        activationCondition: Target.Winded = 1
+        modtype: edge
+        name: Lethe
+        domains:
+          CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
+        rollType: enemy_ability_power_roll
+        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
+      name: Lethe
+      domains:
+        CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
+      source: Trait
+      implementation: 4
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      keywords:
-        Strike: true
-        Magic: true
-        Weapon: true
-        Ranged: true
-      numTargets: 1
-      modifiers: []
-      description: All soulraker demons are concealed from the target until the start of the stinger's next turn.
-      effectImplemented: false
-      range: 20
-      implementation: 3
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        hueshift: 0
-        brightness: 1
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Reason
@@ -90,30 +146,32 @@ info:
         - 4 poison damage
         - 7 poison damage
         - 8 poison damage
-      targetType: target
-      categorization: Signature Ability
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      repeatTargets: false
       abilityType: none
-      name: Barb Launch
-      iconid: ui-icons/skills/1.png
-      guid: 25f32024-cf8c-4b41-951b-aebaf1880d59
-    - __typeName: ActivatedAbility
-      keywords:
-        Magic: true
-        Strike: true
-        Ranged: true
-      numTargets: 1
-      modifiers: []
-      description: ""
-      range: 10
-      implementation: 4
+      range: 20
       flavor: ""
+      effectImplemented: false
+      description: All soulraker demons are concealed from the target until the start of the stinger's next turn.
+      categorization: Signature Ability
+      modifiers: []
+      guid: 25f32024-cf8c-4b41-951b-aebaf1880d59
+      targetType: target
+      keywords:
+        Weapon: true
+        Ranged: true
+        Strike: true
+        Magic: true
+      iconid: ui-icons/skills/1.png
       display:
-        bgcolor: "#ffffffff"
-        saturation: 1
         hueshift: 0
         brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+      numTargets: 1
+      name: Barb Launch
+      implementation: 3
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      repeatTargets: false
+    - __typeName: ActivatedAbility
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + 4
@@ -121,45 +179,88 @@ info:
         - 7 corruption damage
         - 10 corruption damage
         - 11 corruption damage
-      categorization: Signature Ability
-      targetType: target
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      name: 'Blight Puss '
       abilityType: none
-      repeatTargets: false
-      iconid: ui-icons/skills/1.png
       guid: 19513170-08e1-44a2-a8c1-bb3a2af89540
-    - __typeName: ActivatedAbility
-      resourceNumber: 3
-      targetType: all
-      repeatTargets: false
-      modifiers: []
-      description: ""
-      targetFilter: Enemy
-      range: 5
-      implementation: 0
-      keywords:
-        Magic: true
-        Melee: true
-        Area: true
       flavor: ""
+      repeatTargets: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      targetType: target
+      keywords:
+        Ranged: true
+        Strike: true
+        Magic: true
+      description: ""
       display:
-        bgcolor: "#ffffffff"
-        saturation: 1
         hueshift: 0
         brightness: 1
-      behaviors: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      categorization: Heroic Ability
-      name: 'Blight Rain '
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      abilityType: none
+        bgcolor: "#ffffffff"
+        saturation: 1
       numTargets: 1
-      iconid: ui-icons/skills/1.png
+      implementation: 4
+      categorization: Signature Ability
+      name: 'Blight Puss '
+      range: 10
+    - __typeName: ActivatedAbility
+      behaviors: []
+      abilityType: none
       guid: 34f2d047-4833-49c2-9cd6-2d8179557e69
-    levelChoices: []
+      resourceNumber: 3
+      repeatTargets: false
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      targetFilter: Enemy
+      modifiers: []
+      iconid: ui-icons/skills/1.png
+      description: ""
+      flavor: ""
+      targetType: all
+      keywords:
+        Area: true
+        Melee: true
+        Magic: true
+      name: 'Blight Rain '
+      display:
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+      numTargets: 1
+      implementation: 0
+      range: 5
+      categorization: Heroic Ability
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+    withCaptain: Gain an edge on strikes
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: -5
+      apply: Damage Reduction
+      damageType: holy
+    titles: []
+    creatureSize: 1M
+    innateAttacks: []
+    monster_type: Soulraker Stinger
+    movementSpeeds:
+      climb: 6
+    opportunityAttack: 4
+    max_hitpoints_roll: "10"
+    attributes:
+      rea:
+        baseValue: 4
+        id: rea
+      prs:
+        baseValue: 0
+        id: prs
+      agl:
+        baseValue: -1
+        id: agl
+      mgt:
+        baseValue: 0
+        id: mgt
+      inu:
+        baseValue: 4
+        id: inu
     import:
-      type: mcdm
       data: |+
         Soulraker Stinger    Level 7 Minion Artillery
         Abyssal, Demon, Soulraker    EV 9 for four minions
@@ -208,141 +309,27 @@ info:
 
 
 
-    attributes:
-      agl:
-        id: agl
-        baseValue: -1
-      mgt:
-        id: mgt
-        baseValue: 0
-      prs:
-        id: prs
-        baseValue: 0
-      inu:
-        id: inu
-        baseValue: 4
-      rea:
-        id: rea
-        baseValue: 4
+      type: mcdm
     skillRatings: []
-    traitNames: []
-    stability: 0
-    equipment: []
-    damage_taken: 0
-    movementSpeeds:
-      climb: 6
-    monster_category: Monster
-    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      damageType: holy
-      dr: -5
-      apply: Damage Reduction
-    savingThrowRatings: []
+    minionSquad: Soulraker Stinger Squad 1
     role: Minion Artillery
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:e30eb686-1587-4c5b-afc0-6c7edbdffd11: true
-      name: Soulsight
-      description: Each creature within 2 of the stinger can't be hidden from them.
-      implementation: 4
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
-        sourceguid: e30eb686-1587-4c5b-afc0-6c7edbdffd11
-        behavior: attribute
-        name: Soulsight
-        guid: b98818b7-3b8e-44bf-bd12-b5023bfdaac7
-        value: 2
-        source: Trait
-        domains:
-          CharacterFeature:e30eb686-1587-4c5b-afc0-6c7edbdffd11: true
-        description: Each creature within 2 of the stinger can't be hidden from them.
-      guid: e30eb686-1587-4c5b-afc0-6c7edbdffd11
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:99da3d4c-f6e6-45c4-b477-3e0197e94296: true
-      name: Abyssal Buzzing
-      description: A creature who starts their turn with 2 or more soulraker minions adjacent to them takes 3 sonic damage.Demon Blight Phage    Level 7 Horde ControllerAbyssal, Demon    EV 9
-      source: Trait
-      modifiers: []
-      guid: 99da3d4c-f6e6-45c4-b477-3e0197e94296
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
-      name: Lethe
-      description: While winded, the blight phage has an edge on strikes, and strikes have an edge against them.
-      implementation: 4
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        rollType: ability_power_roll
-        keywords: []
-        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
-        source: Trait
-        behavior: power
-        name: Lethe
-        modtype: edge
-        guid: 81d870f5-26f0-4686-805f-7626b4a1a5bb
-        activationCondition: self.Winded = 1
-        domains:
-          CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
-        sourceguid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
-      - __typeName: CharacterModifier
-        rollType: enemy_ability_power_roll
-        keywords: []
-        description: While winded, the chorogaunt has an edge on strikes, and strikes have an edge against them.
-        source: Trait
-        behavior: power
-        name: Lethe
-        modtype: edge
-        guid: 85c47d93-06a0-434a-b5e4-57cfb6b7d899
-        activationCondition: Target.Winded = 1
-        domains:
-          CharacterFeature:a35b6b6a-3ba8-4a8f-857a-a465868c1eb1: true
-        sourceguid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
-      guid: a35b6b6a-3ba8-4a8f-857a-a465868c1eb1
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:1c232284-7c1d-457a-b9c3-7b4f8125e28c: true
-      name: Soulsight
-      description: Each creature within 2 of the blight phage can't be hidden from them.
-      implementation: 4
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
-        sourceguid: 1c232284-7c1d-457a-b9c3-7b4f8125e28c
-        behavior: attribute
-        name: Soulsight
-        guid: 6b7c5a49-e90a-4115-96db-7252714f00da
-        value: 2
-        source: Trait
-        domains:
-          CharacterFeature:1c232284-7c1d-457a-b9c3-7b4f8125e28c: true
-        description: Each creature within 2 of the blight phage can't be hidden from them.
-      guid: 1c232284-7c1d-457a-b9c3-7b4f8125e28c
-    monster_type: Soulraker Stinger
-    innateAttacks: []
-    withCaptain: Gain an edge on strikes
-    max_hitpoints_roll: "10"
+    levelChoices: []
+    skillProficiencies: []
+    savingThrowRatings: []
     inflictedConditions: []
-    walkingSpeed: 6
+    damage_taken: 0
   tokenType: null
   bestiaryId: 5dac621c-80cd-4931-b2e0-db6352fd92e5
   summonerid: null
-  ownerId: null
+  ownerId: ""
   partyid: null
-  size: -1
+  size: 2
   createdTimestamp: 1737961965990
 description: Soulraker Stinger
 parentFolder: d28dbebc-b729-459f-858a-44e596d131e0
 artist: null
 ord: 3
 ctime: 1741590256180
-mtime: 1785702739928
+mtime: 1786620014390
 hidden: false
 id: 5dac621c-80cd-4931-b2e0-db6352fd92e5
