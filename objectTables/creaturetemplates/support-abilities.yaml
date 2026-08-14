@@ -1,0 +1,262 @@
+__typeName: CharacterTemplate
+id: fd07ef53-b310-4964-8325-961a04c8b0a6
+prerequisite: Retainer
+mtime: 1786292919488
+tag: Retainer
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - __typeName: CharacterFeatureChoice
+    name: Level 4 Support Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "4"
+      type: levelGained
+      guid: e6782b43-472a-40fb-a728-fc393e33b2e6
+    description: Level 4 Role Advancement Ability for Support retainers.
+    allowDuplicateChoices: false
+    numChoices: 1
+    options:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Battlefield Medic
+        description: ""
+        source: Creature Template
+        sourceguid: d1d656dc-ecb1-41a4-bd2a-9c894ced7a96
+        guid: 30f81aa0-271b-44d5-af6b-83d58cf29b74
+        behavior: activated
+        activatedAbility:
+          __typeName: ActivatedAbility
+          guid: b5f92af9-284d-4f1f-8fc0-e9516c68a2ac
+          domains: []
+          categorization: Ability
+          implementation: 4
+          targetType: selforally
+          repeatTargets: false
+          keywords:
+            Melee: true
+          implementationDetails: ""
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbilityParams:
+              numrecoveries: "1"
+            invokeOnCaster: false
+            abilityType: standard
+            applyto: targets
+            runOnController: true
+            promptText: The target spends a Recovery
+            standardAbility: f57cb6f7-13b9-4ebb-8e88-88ead0a9c203
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 4a2c4436-0539-4d8a-ba4e-7ab62411b588
+            duration: 1
+            applyto: targets
+            durationUntilEndOfTurn: false
+            ongoingEffectCustom: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          modifiers: []
+          strain: []
+          range: 1
+          description: The target spends a Recovery, and ability rolls against the target take a bane until the start of the retainer's next turn.
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          name: Battlefield Medic
+          objectTarget: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 355
+      description: ""
+      source: Creature Template
+      implementation: 4
+      canHavePrerequisites: true
+      name: Battlefield Medic
+      guid: d1d656dc-ecb1-41a4-bd2a-9c894ced7a96
+    guid: cf5f2b4b-29be-4306-be91-67dcd4c1c3ba
+  - __typeName: CharacterFeatureChoice
+    name: Level 7 Support Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "7"
+      type: levelGained
+      guid: a75f7aa5-bfec-46ac-8eba-76166d837435
+    description: Level 7 Role Advancement Ability for Support retainers.
+    allowDuplicateChoices: false
+    numChoices: 1
+    options:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 7c4cc15b-7b99-4e39-89ac-956c8b8b1efb
+        resourceRefreshType: encounter
+        description: ""
+        source: Creature Template
+        sourceguid: fbd5e8b6-665d-4826-be72-88a50f0b25db
+        name: Focus Fire
+        behavior: activated
+        activatedAbility:
+          __typeName: ActivatedAbility
+          guid: d5464a5d-a7f7-4861-aa10-4d3743b17fe3
+          domains: []
+          categorization: Ability
+          implementation: 4
+          usageLimitOptions:
+            multicharge: false
+            charges: "1"
+            resourceRefreshType: encounter
+            resourceid: 7c4cc15b-7b99-4e39-89ac-956c8b8b1efb
+          targetType: target
+          repeatTargets: false
+          keywords:
+            Strike: true
+            Weapon: true
+            Ranged: true
+          name: Focus Fire
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          modifiers: []
+          strain: []
+          range: 5
+          description: One ally within distance gains 2 surges.
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 9 damage
+            - 13 damage
+            - 18 damage
+            roll: 2d10 + Highest Characteristic
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            invokeOnCaster: true
+            abilityType: none
+            applyto: caster
+            runOnController: true
+            promptText: Choose one ally within 5 squares to gain 2 surges
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityReplenishBehavior
+                chatMessage: Focus Fire
+                quantity: "2"
+                resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+              iconid: ui-icons/skills/1.png
+              categorization: Hidden
+              modifiers: []
+              guid: 8c134f2d-7c9a-493c-a64d-4c7810824358
+              targetType: target
+              repeatTargets: false
+              strain: []
+              range: 5
+              description: ""
+              numTargets: "1"
+              display:
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+                hueshift: 0
+              abilityType: none
+              targetAllegiance: ally
+              name: Focus Fire Surges
+          objectTarget: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 356
+      description: ""
+      source: Creature Template
+      implementation: 4
+      canHavePrerequisites: true
+      name: Focus Fire
+      guid: fbd5e8b6-665d-4826-be72-88a50f0b25db
+    guid: b917e1ea-1570-4c36-a8af-21af7ac8a34b
+  - __typeName: CharacterFeatureChoice
+    name: Level 10 Support Ability
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      skill: "10"
+      type: levelGained
+      guid: a907e9f7-1896-4ff0-a56b-1c5e5e5dc827
+    description: Level 10 Role Advancement Ability for Support retainers.
+    allowDuplicateChoices: false
+    numChoices: 1
+    options:
+    - __typeName: CharacterFeature
+      modifiers:
+      - __typeName: CharacterModifier
+        guid: 297b64a5-b564-4c11-b72d-c14f3812b51b
+        resourceRefreshType: encounter
+        description: ""
+        source: Creature Template
+        sourceguid: 9e377f18-85f6-415a-b9a1-356675c4eca0
+        name: Back from the Dead
+        behavior: activated
+        activatedAbility:
+          __typeName: ActivatedAbility
+          guid: fa5e8643-0881-4e1f-8df8-b6febc7f5323
+          domains: []
+          categorization: Ability
+          implementation: 3
+          usageLimitOptions:
+            multicharge: false
+            charges: "1"
+            resourceRefreshType: encounter
+            resourceid: 297b64a5-b564-4c11-b72d-c14f3812b51b
+          targetType: target
+          repeatTargets: false
+          keywords:
+            Melee: true
+          implementationDetails: The Codex does not enforce a time lime on when the ally died
+          name: Back from the Dead
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          targetAllegiance: ally
+          targetTextOverride: 1 ally
+          modifiers: []
+          strain: []
+          range: 1
+          description: If the target is at or below 0 Stamina, or if they have died due to Stamina loss since the end of the retainer's last turn, the target is alive with 1 Stamina and can spend a Recovery.
+          numTargets: "1"
+          display:
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+            hueshift: 0
+          behaviors:
+          - __typeName: ActivatedAbilitySetStaminaBehavior
+            roll: "1"
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbilityParams:
+              numrecoveries: "1"
+            invokeOnCaster: false
+            abilityType: standard
+            applyto: targets
+            runOnController: true
+            promptText: The target spends a Recovery
+            standardAbility: f57cb6f7-13b9-4ebb-8e88-88ead0a9c203
+          objectTarget: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 355
+      description: ""
+      source: Creature Template
+      implementation: 3
+      canHavePrerequisites: true
+      name: Back from the Dead
+      guid: 9e377f18-85f6-415a-b9a1-356675c4eca0
+    guid: 895dfc42-d94f-4184-b9d3-e88f3f2f3aa8
+name: Support Abilities
+_table: creatureTemplates

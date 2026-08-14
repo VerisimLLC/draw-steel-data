@@ -586,6 +586,9 @@ aura:
 
 **Used by**: Virtuoso Tough Crowd, Vampire Shadowflame Mantle
 
+Use `casterstartturnaura` (both places) instead for "At the start of your turn..." auras.
+Either trigger accepts `destroyaura: true` to remove the aura after it fires.
+
 ### Begin-round effects (once per round, not per turn)
 
 ```yaml

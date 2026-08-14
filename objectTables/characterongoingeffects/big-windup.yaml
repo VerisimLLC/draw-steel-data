@@ -1,0 +1,71 @@
+__typeName: CharacterOngoingEffect
+_table: characterOngoingEffects
+id: 9fb68427-cf88-4ad0-9f31-b7fdb1190940
+guid: 9730b604-1f01-4d16-abeb-4ebb41fb9825
+name: Big Windup
+description: Strikes made against this creature gain an edge. At the start of their next turn they gain 2 surges, and their abilities force move creatures 2 additional squares.
+source: Ongoing Effect
+implementation: 3
+custom: true
+association: []
+iconid: ui-icons/skills/1.png
+display:
+  saturation: 1
+  hueshift: 0
+  bgcolor: "#ffffffff"
+  brightness: 1
+modifiers:
+- __typeName: CharacterModifier
+  behavior: power
+  modtype: edge
+  rollType: enemy_ability_power_roll
+  name: Big Windup
+  guid: d32f61d2-4d5f-4b69-bd3f-d5aef13f08ad
+  sourceguid: 9730b604-1f01-4d16-abeb-4ebb41fb9825
+  source: Ongoing Effect
+  description: Strikes made against this creature gain an edge.
+  activationCondition: "1"
+  keywords:
+    Strike: true
+- __typeName: CharacterModifier
+  behavior: attribute
+  attribute: ba15f0e1-b50c-4324-af08-ce8f2b8f2cf0
+  value: 2
+  name: Big Windup
+  guid: b6319ac3-c2d4-4823-804a-ae62d1490a35
+  sourceguid: 9730b604-1f01-4d16-abeb-4ebb41fb9825
+  source: Ongoing Effect
+  description: This creature's abilities force move creatures 2 additional squares.
+- __typeName: CharacterModifier
+  behavior: trigger
+  name: Big Windup
+  guid: 9ccb70b8-ce6b-47ef-89d2-e82085b03ced
+  sourceguid: 9730b604-1f01-4d16-abeb-4ebb41fb9825
+  source: Ongoing Effect
+  description: At the start of their next turn, this creature gains 2 surges.
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Big Windup Surges
+    guid: dbb150db-77ef-461d-8413-8e4d773d0ca1
+    trigger: beginturn
+    targetType: self
+    numTargets: "1"
+    range: 1
+    mandatory: true
+    whenActive: combat
+    repeatTargets: false
+    abilityType: none
+    modifiers: []
+    strain: []
+    persistence: []
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: target gains 2 surges
+      applyto: targets
+    description: The retainer follows through on their windup and gains 2 surges.
+    iconid: ui-icons/skills/1.png
+    display:
+      saturation: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      brightness: 1

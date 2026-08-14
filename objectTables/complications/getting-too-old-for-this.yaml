@@ -3,11 +3,106 @@ modifierInfo:
   __typeName: ClassLevel
   features:
   - __typeName: CharacterFeature
-    implementation: 1
+    implementation: 3
     guid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
     canHavePrerequisites: true
     description: On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability's other prerequisites and can spend any required Heroic Resource, you can use the ability. Once you use this benefit, you can't do so again until you earn 2 or more Victories.
-    modifiers: []
+    modifiers:
+    # The "2 or more Victories" cooldown is modelled as a 2-point resource rather than a
+    # usage limit, because no refresh type tracks victories. Using the benefit spends both
+    # points; each Victory earned refunds one, so the second Victory is what makes it
+    # available again. RefreshResource clamps at full, so banking extra Victories does not
+    # let the benefit be used twice in a row.
+    - __typeName: CharacterModifier
+      behavior: resource
+      name: Getting Too Old for This - Benefit
+      guid: e6141f69-b91f-4aa1-8d78-c1559081d257
+      sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
+      source: Complications
+      description: On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability's other prerequisites and can spend any required Heroic Resource, you can use the ability. Once you use this benefit, you can't do so again until you earn 2 or more Victories.
+      resourceType: 84e48e9e-459c-449e-a122-57561cbd510a
+      num: 2
+    - __typeName: CharacterModifier
+      behavior: trigger
+      name: Getting Too Old for This - Benefit
+      guid: e697de65-d2f1-4d1a-bf4c-4f154d983f72
+      sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
+      source: Complications
+      description: Each Victory you earn brings your old tricks back to mind.
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        name: Getting Too Old for This
+        guid: 6be21313-19ee-4b54-84f8-27f6aeda2f27
+        trigger: earnvictory
+        targetType: self
+        mandatory: true
+        castImmediately: true
+        abilityType: none
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        modifiers: []
+        strain: []
+        persistence: []
+        iconid: ui-icons/skills/1.png
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        description: Each Victory you earn brings your old tricks back to mind.
+        behaviors:
+        - __typeName: ActivatedAbilityReplenishBehavior
+          resourceid: 84e48e9e-459c-449e-a122-57561cbd510a
+          quantity: Quantity
+          chatMessage: Getting Too Old for This
+    - __typeName: CharacterModifier
+      behavior: activated
+      name: Getting Too Old for This - Benefit
+      guid: a8bf7ca9-ebae-40a1-be50-df9c4f5ab9e4
+      sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
+      source: Complications
+      description: On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability's other prerequisites and can spend any required Heroic Resource, you can use the ability. Once you use this benefit, you can't do so again until you earn 2 or more Victories.
+      activatedAbility:
+        __typeName: ActivatedAbility
+        name: One Last Trick
+        guid: 12fa00da-ae15-4e75-a9ec-90a89fec86bc
+        categorization: Ability
+        # Costs a Main Action, and suppressInvokedActionCost below stops the borrowed
+        # ability charging its own action on top -- without that the pair is unaffordable.
+        # The borrowed ability still pays its own Heroic Resource.
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        resourceCost: 84e48e9e-459c-449e-a122-57561cbd510a
+        resourceNumber: "2"
+        targetType: self
+        # Skips the action bar's "Confirm" step -- a self-targeted ability has no
+        # targeting choices to make, so the picker should open straight away.
+        castImmediately: true
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        keywords: {}
+        modifiers: []
+        iconid: ui-icons/skills/1.png
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        flavor: You still remember some of your old tricks.
+        description: Choose a heroic ability you would be able to learn if you were one level higher, and use it. You must still pay its costs.
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: chooseClassAbility
+          # "<= 1" not "= 1": everything a character one level higher could have,
+          # which includes the level-1 choices this character passed over. Most classes
+          # unlock heroic abilities only every few levels, so "= 1" leaves the benefit
+          # inert at most levels.
+          abilityFilter: Ability.Levels Above <= 1 and Ability.Categorization = "Heroic Ability" and not Ability.Known and Ability.Prerequisites Met
+          chooseAbilityTitle: One Last Trick
+          chooseAbilityEmptyText: You have no heroic abilities available one level above your own right now.
+          suppressInvokedActionCost: true
+          applyto: caster
     source: Complications
     name: Getting Too Old for This - Benefit
   - __typeName: CharacterFeature
