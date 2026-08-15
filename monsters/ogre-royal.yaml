@@ -54,18 +54,141 @@ info:
   updateid: 095c2395-0554-4f8f-b9e0-7f0564da788c
   properties:
     __typeName: monster
-    opportunityAttack: 5
-    keywords:
-      Ogre: true
-      Giant: true
-    ev: 14
-    damage_taken: 0
-    cr: 7
-    creatureSize: "2"
-    max_hitpoints_roll: "15"
     savingThrowRatings: []
+    traitNames:
+    - With Captain Edge on attacks
+    max_hitpoints_roll: "15"
+    role: Brute Minion
+    damage_taken: 0
+    minion: true
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 3
+      description: Whenever the royal would make a free strike, an ally within 5 can make a free strike instead.
+      domains:
+        CharacterFeature:53021ce2-f60e-442a-bb99-30adda5d320d: true
+      source: Trait
+      guid: 53021ce2-f60e-442a-bb99-30adda5d320d
+      modifiers:
+      - __typeName: CharacterModifier
+        domains:
+          CharacterFeature:53021ce2-f60e-442a-bb99-30adda5d320d: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            autoTarget: false
+            promptText: Select an ally within 5 to make the free strike instead
+            standardAbility: 7fe11a31-aa56-4479-abe3-06c7b51da51f
+            abilityType: standard
+            applyto: caster
+            standardAbilityParams:
+              numcreatures: "1"
+              range: "5"
+          mandatory: false
+          targetType: self
+          guid: fb0fa518-2edc-4fe4-a88a-6c6cc6fd1a2a
+          trigger: leaveadjacent
+          name: In My Stead
+        source: Trait
+        name: In My Stead
+        guid: 264ff4a0-17a5-404e-b501-0c64a9895e75
+        behavior: trigger
+        description: ""
+      name: In My Stead
+    - __typeName: CharacterFeature
+      implementation: 3
+      description: The royal has Weapon immunity 2 while they are winded.
+      domains:
+        CharacterFeature:b9dcdcd0-12c9-4c75-bda9-23d05be18704: true
+      source: Trait
+      guid: b9dcdcd0-12c9-4c75-bda9-23d05be18704
+      modifiers:
+      - __typeName: CharacterModifier
+        displayIcon: false
+        source: Trait
+        behavior: resistance
+        resistances:
+        - __typeName: ResistanceEntry
+          stacks: false
+          dr: " 2"
+          damageType: all
+          apply: Damage Reduction
+        sourceguid: b9dcdcd0-12c9-4c75-bda9-23d05be18704
+        description: While winded, the goon has damage immunity 2.
+        statusIcon: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+        name: Defiant Anger
+        guid: 34e96ef1-1564-488d-90ff-236e2dc848f1
+        filterCondition: Winded = 1
+        domains:
+          CharacterFeature:b9dcdcd0-12c9-4c75-bda9-23d05be18704: true
+      name: Defiant Anger
+    innateAttacks: []
+    equipment: []
+    resources: []
+    opportunityAttack: 5
+    inflictedConditions: []
+    creatureSize: "2"
+    movementSpeeds: []
+    ev: 14
+    monster_type: Ogre Royal
+    max_hitpoints: 15
+    monster_category: Monster
+    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
+    cr: 7
+    stability: 4
+    attributes:
+      prs:
+        baseValue: 2
+        id: prs
+      agl:
+        baseValue: 1
+        id: agl
+      mgt:
+        baseValue: 4
+        id: mgt
+      inu:
+        baseValue: 0
+        id: inu
+      rea:
+        baseValue: -1
+        id: rea
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      targetType: target
+      range: 2
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      implementation: 3
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+        hueshift: 0
+      categorization: Signature Ability
+      repeatTargets: false
+      flavor: ""
+      numTargets: 1
+      name: Crush Underfoot
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 5 damage
+        - 8 damage; M<3 prone
+        - 11 damage; prone
+        roll: 2d10 + 4
+      effectImplemented: false
+      iconid: ui-icons/skills/1.png
+      guid: b8f63902-b727-4f7d-a61b-537baa6249bf
+      abilityType: none
+      modifiers: []
+      description: An already prone target takes an additional 5 damage.
+    resistances: []
+    skillRatings: []
     import:
-      type: mcdm
       data: |+
         Ogre Royal	Level 7 Brute Minion
         Giant, Ogre	EV 14
@@ -87,135 +210,12 @@ info:
         <b>Defiant Anger</b>
         The royal has Weapon immunity 2 while they are winded.
 
-    attributes:
-      agl:
-        id: agl
-        baseValue: 1
-      mgt:
-        id: mgt
-        baseValue: 4
-      prs:
-        id: prs
-        baseValue: 2
-      inu:
-        id: inu
-        baseValue: 0
-      rea:
-        id: rea
-        baseValue: -1
-    stability: 4
-    equipment: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      keywords:
-        Melee: true
-        Weapon: true
-        Strike: true
-      numTargets: 1
-      modifiers: []
-      description: An already prone target takes an additional 5 damage.
-      effectImplemented: false
-      range: 2
-      implementation: 3
-      flavor: ""
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        hueshift: 0
-        brightness: 1
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 4
-        tiers:
-        - 5 damage
-        - 8 damage; M<3 prone
-        - 11 damage; prone
-      targetType: target
-      categorization: Signature Ability
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      repeatTargets: false
-      abilityType: none
-      name: Crush Underfoot
-      iconid: ui-icons/skills/1.png
-      guid: b8f63902-b727-4f7d-a61b-537baa6249bf
-    max_hitpoints: 15
-    traitNames:
-    - With Captain Edge on attacks
-    movementSpeeds: []
-    monster_category: Monster
-    groupid: 83a948ff-8852-4626-adfc-f05ec9e2af22
-    resources: []
-    resistances: []
-    walkingSpeed: 5
-    role: Brute Minion
-    characterFeatures:
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:53021ce2-f60e-442a-bb99-30adda5d320d: true
-      name: In My Stead
-      description: Whenever the royal would make a free strike, an ally within 5 can make a free strike instead.
-      implementation: 3
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:53021ce2-f60e-442a-bb99-30adda5d320d: true
-        behavior: trigger
-        name: In My Stead
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          name: In My Stead
-          targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbilityParams:
-              numcreatures: "1"
-              range: "5"
-            autoTarget: false
-            promptText: Select an ally within 5 to make the free strike instead
-            standardAbility: 7fe11a31-aa56-4479-abe3-06c7b51da51f
-            applyto: caster
-            abilityType: standard
-          mandatory: false
-          trigger: leaveadjacent
-          guid: fb0fa518-2edc-4fe4-a88a-6c6cc6fd1a2a
-        source: Trait
-        guid: 264ff4a0-17a5-404e-b501-0c64a9895e75
-        description: ""
-      guid: 53021ce2-f60e-442a-bb99-30adda5d320d
-    - __typeName: CharacterFeature
-      domains:
-        CharacterFeature:b9dcdcd0-12c9-4c75-bda9-23d05be18704: true
-      implementation: 3
-      description: The royal has Weapon immunity 2 while they are winded.
-      source: Trait
-      name: Defiant Anger
-      modifiers:
-      - __typeName: CharacterModifier
-        domains:
-          CharacterFeature:b9dcdcd0-12c9-4c75-bda9-23d05be18704: true
-        resistances:
-        - __typeName: ResistanceEntry
-          damageType: all
-          dr: " 2"
-          apply: Damage Reduction
-          stacks: false
-        sourceguid: b9dcdcd0-12c9-4c75-bda9-23d05be18704
-        filterCondition: Winded = 1
-        behavior: resistance
-        name: Defiant Anger
-        source: Trait
-        statusIcon: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-        displayIcon: false
-        description: While winded, the goon has damage immunity 2.
-        guid: 34e96ef1-1564-488d-90ff-236e2dc848f1
-      guid: b9dcdcd0-12c9-4c75-bda9-23d05be18704
-    monster_type: Ogre Royal
-    innateAttacks: []
-    skillRatings: []
+      type: mcdm
     levelChoices: []
-    inflictedConditions: []
-    minion: true
+    walkingSpeed: 5
+    keywords:
+      Ogre: true
+      Giant: true
   tokenType: null
   bestiaryId: f8684724-e3d9-495d-9ad0-fa8ce9d7b4b3
   summonerid: null
@@ -228,6 +228,6 @@ parentFolder: f3ad56da-f6fa-4d7d-a056-0d090e6a130f
 artist: null
 ord: 0
 ctime: 1741590329353
-mtime: 1785702933737
-hidden: false
+mtime: 1786688520699
+hidden: true
 id: f8684724-e3d9-495d-9ad0-fa8ce9d7b4b3

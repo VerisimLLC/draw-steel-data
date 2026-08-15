@@ -1,0 +1,222 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: 1533da55-db8c-4cba-a129-76b5c84863cf
+    offtokenPortraitId: null
+    portraitFrameId: 9f13cbbb-ffc7-4325-ba9b-daf5d0b1d9e3
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 0.7876113
+    portraitOffset:
+      x: 0.03329778
+      y: 0.1898229
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 7c372160-a6e9-4a6d-8123-679711efc973
+  properties:
+    __typeName: monster
+    monster_type: Troll Whelp
+    levelChoices: []
+    cr: 5
+    max_hitpoints: 10
+    minion: true
+    savingThrowRatings: []
+    innateAttacks: []
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: -8
+      damageType: acid
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: -8
+      damageType: fire
+    traitNames: []
+    movementSpeeds: []
+    stability: 3
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      description: ""
+      iconid: ui-icons/skills/1.png
+      name: Jaws and Claws
+      targetType: target
+      strain: []
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 3
+        promptWhenResolving: true
+        promptWhenResolvingText: Select the creatures to slide in your preferred order
+        tiers:
+        - 3 damage
+        - 6 damage; slide 1
+        - 7 damage; slide 2; M<2 bleeding (save ends)
+      display:
+        saturation: 1
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+      guid: c24f2794-28a2-4ac9-b9d5-e4a471336848
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      keywords:
+        Strike: true
+        Melee: true
+        Weapon: true
+      categorization: Signature Ability
+      abilityType: none
+      effectImplemented: false
+      implementation: 4
+      numTargets: 1
+      repeatTargets: false
+      range: 1
+      flavor: ""
+      modifiers: []
+      sourceReference:
+        __typeName: SourceReference
+        page: 255
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+    withCaptain: +2 damage bonus to strikes
+    monster_category: Monster
+    titles: []
+    groupid: 67902c1a-5307-415e-8495-52212b0c0def
+    opportunityAttack: 3
+    damage_taken: 0
+    characterFeatures:
+    - __typeName: CharacterFeature
+      name: Lingering Hunger
+      implementation: 3
+      domains:
+        CharacterFeature:bf83e752-3c2b-46c8-87ea-0c9d49eac400: true
+      description: Whenever two or more whelps are simultaneously reduced to 0 Stamina by damage that isn't acid or fire damage, half of those whelps become **troll limbjumbles** with 4 Stamina.
+      source: Trait
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Lingering Hunger
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: squadminiondeaths
+          domains:
+            CharacterFeature:bf83e752-3c2b-46c8-87ea-0c9d49eac400: true
+          description: Half of the whelps simultaneously slain by damage that isn't acid or fire rise again as troll limbjumbles with 4 Stamina.
+          iconid: ui-icons/skills/1.png
+          name: Lingering Hunger
+          conditionFormula: minionskilled >= 2 and damage type is not acid and damage type is not fire
+          strain: []
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            monsterType: 17dc01c1-2300-46b9-bc3b-c0b666a112b5
+            choosePlacement: true
+            placementPrompt: "Lingering Hunger Trait:"
+            initialDamageTaken: "4"
+            groupInitiativeWithCaster: false
+            casterChoosesCreatures: false
+            numSummons: floor(Minions Killed / 2)
+            guid: b6b27494-60ac-4727-9098-38e82eaf70bb
+          display:
+            hueshift: 0
+            bgcolor: "#ffffffff"
+            brightness: 1
+            saturation: 1
+          guid: fca65eb6-3d10-4a04-ad81-3e7ed0c31f3f
+          mandatory: true
+          persistence: []
+          abilityType: none
+          numTargets: "1"
+          repeatTargets: false
+          targetType: self
+          whenActive: combat
+          modifiers: []
+          range: 1
+        behavior: trigger
+        domains:
+          CharacterFeature:bf83e752-3c2b-46c8-87ea-0c9d49eac400: true
+        description: Whenever two or more whelps are simultaneously reduced to 0 Stamina by damage that isn't acid or fire damage, half of those whelps become **troll limbjumbles** with 4 Stamina.
+        sourceguid: bf83e752-3c2b-46c8-87ea-0c9d49eac400
+        source: Trait
+        guid: ab1a889c-a82f-4db9-9adf-87df76ef7f4f
+      guid: bf83e752-3c2b-46c8-87ea-0c9d49eac400
+    attributes:
+      prs:
+        __typeName: CharacterAttribute
+        id: prs
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 3
+      inu:
+        __typeName: CharacterAttribute
+        id: inu
+        baseValue: 0
+      agl:
+        id: agl
+        baseValue: 1
+      rea:
+        __typeName: CharacterAttribute
+        id: rea
+        baseValue: -1
+    notes:
+    - title: Monster Notes
+      text: ""
+    ev: 7
+    walkingSpeed: 6
+    creatureSize: 1L
+    equipment: []
+    inflictedConditions: []
+    role: Minion Brute
+    skillRatings: []
+    resources: []
+    keywords:
+      Troll: true
+    max_hitpoints_roll: "8"
+  tokenType: null
+  bestiaryId: 17dc01c1-2300-46b9-bc3b-c0b666a112b5
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1738222946034
+description: Troll Whelp
+parentFolder: f10d63e4-32ef-4b09-8bed-6007e0c43454
+artist: null
+ord: 0
+ctime: 1784547515618
+mtime: 1784547515618
+hidden: false
+id: e3ac87f4-fb42-4be6-80da-6637b11fa3ed

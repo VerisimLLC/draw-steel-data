@@ -1,0 +1,507 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: 97f55a4d-7059-40ce-8b68-2901615d5f15
+    loc:
+    - 11
+    - 3
+    - 1
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: 2641d795-e52a-45e0-9cb9-a3dedb3bcdf0
+    offtokenPortraitId: null
+    portraitFrameId: 928698a5-1bde-4274-8c84-e7c41c390652
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: Sporeling
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise:
+    portraitId: null
+    offtokenPortraitId: null
+    portraitFrameId: null
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: f9d35f5f-6ec9-4285-a4d8-fbb71461e841
+  properties:
+    __typeName: AnimalCompanion
+    savingThrowRatings: []
+    walkingSpeed: 5
+    max_hitpoints_roll: 2d8+2
+    creatureSize: 1S
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 3
+      description: You have 0 stability.
+      domains:
+        CharacterFeature:4e1f3c83-3b6f-4a76-b428-7c1d6e3f5a82: true
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Attributes
+        behavior: attribute
+        operation: set
+        domains:
+          CharacterFeature:4e1f3c83-3b6f-4a76-b428-7c1d6e3f5a82: true
+        description: You have 0 stability.
+        source: Character Feature
+        attribute: forcedmoveresistance
+        guid: 5f9d2c84-5c2a-4f87-a428-8d3e1f6c5b73
+        sourceguid: 4e1f3c83-3b6f-4a76-b428-7c1d6e3f5a82
+        value: 0
+      guid: 4e1f3c83-3b6f-4a76-b428-7c1d6e3f5a82
+      tags:
+        Hidden: true
+      source: Character Feature
+      name: Attributes
+    - __typeName: CharacterFeature
+      implementation: 2
+      description: The sporeling can end their movement in an ally's space. While occupying an ally's space, the sporeling has cover.
+      domains:
+        CharacterFeature:6a3f2d95-4b1c-4a87-a528-9d2e6f3c8a04: true
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Skulker - Cover
+        source: Character Feature
+        sourceguid: 6a3f2d95-4b1c-4a87-a528-9d2e6f3c8a04
+        domains:
+          CharacterFeature:6a3f2d95-4b1c-4a87-a528-9d2e6f3c8a04: true
+        description: While occupying an ally's space, the sporeling has cover.
+        behavior: attribute
+        attribute: eb16736e-b50b-4dcd-8966-c28ce9c33d7e
+        guid: 7b4e3c84-5c2a-4f87-a428-1e4f7d8c9b15
+        filterCondition: InAllySpace
+        value: 1
+      guid: 6a3f2d95-4b1c-4a87-a528-9d2e6f3c8a04
+      source: Character Feature
+      name: Skulker
+    - __typeName: CharacterFeature
+      domains:
+        CharacterFeature:8c5d4e83-6b1f-4a86-b418-2c3d6e7f5a92: true
+      implementation: 3
+      tags:
+        Ability: true
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          trigger: dealdamage
+          targetType: self
+          range: 1
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          mandatory: true
+          guid: 1e7f6d95-8d3c-4c97-b619-4f5e8d1c2b37
+          repeatTargets: false
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions:
+            - 9d4f1c95-5c2b-4a76-b428-3e4f1d2c8a05
+            mode: conditions
+          numTargets: "1"
+          name: Spore Puff Cleanup
+          strain: []
+          description: ""
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          conditionFormula: Self.Conditions has "Invisible From" and Target.id = ConditionCaster("Invisible From").id
+          modifiers: []
+          persistence: []
+        sourceguid: 8c5d4e83-6b1f-4a86-b418-2c3d6e7f5a92
+        description: When the sporeling deals damage to the creature they are invisible from, end the Invisible From condition on the sporeling.
+        source: Trait
+        name: Spore Puff
+        guid: 9d6f5e94-7c2b-4b97-a519-3e4f7d8c9b26
+        behavior: trigger
+        domains:
+          CharacterFeature:8c5d4e83-6b1f-4a86-b418-2c3d6e7f5a92: true
+      - __typeName: CharacterModifier
+        description: ""
+        activatedAbility:
+          __typeName: ActivatedAbility
+          strain: []
+          targetType: target
+          modeList:
+          - text: Normal
+            rules: "{3 + Might} poison damage; sporeling invisible from target until EoT or sporeling damages target"
+          - condition: Heroic Resources Available to Spend >= 1
+            rules: "{3 + Might} poison damage; M < {Strong} Dazed (EoT); sporeling invisible from target until EoT or sporeling damages target"
+            text: Spend 1 Ferocity
+          keywords:
+            Melee: true
+            Companion: true
+          targetAllegiance: enemy
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          implementation: 4
+          display:
+            bgcolor: "#ffffffff"
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+          abilityType: none
+          repeatTargets: false
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            guid: 7737b7e5-e407-4d81-8c9a-ab24cfbd957e
+            modesSelected:
+            - 1
+            rule: 3 + M poison damage; become invisible from target (eot)
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            guid: 56726136-44bc-42a6-965d-0c9485bc3ac0
+            modesSelected:
+            - 2
+            rule: 3 + M poison damage; M<[Strong] Dazed (EoT); become invisible from target (eot)
+          - __typeName: ActivatedAbilityReplenishBehavior
+            modesSelected:
+            - 2
+            mode: expend
+            applyto: caster
+            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          numTargets: "1"
+          name: Spore Puff
+          range: 1
+          objectTarget: false
+          flavor: The sporeling breathes a cloud of disorienting fumes.
+          multipleModes: true
+          description: |-
+            {3 + Might} poison damage. The sporeling is invisible to the target until the end of the sporeling's next turn or until the sporeling deals damage to the target.
+
+            **Spend 1 Ferocity:** M < [Strong] dazed (EoT).
+          iconid: ui-icons/skills/1.png
+          categorization: Signature Ability
+          guid: 36fc574c-ef1a-4233-87b8-e9e591cdf4a0
+          modifiers: []
+          persistence: []
+        behavior: activated
+        guid: 55230c67-231c-414f-9d2e-bc5e8ee86b95
+        source: Trait
+        name: Spore Puff
+      name: Spore Puff
+      guid: 8c5d4e83-6b1f-4a86-b418-2c3d6e7f5a92
+      source: Trait
+      description: When the sporeling deals damage to the creature they are invisible from, the Invisible From condition ends.
+    - __typeName: CharacterFeature
+      implementation: 3
+      description: Whenever the sporeling makes a strike while rampaging, the sporeling can cause the target to be slowed until the end of the target's next turn.
+      domains:
+        CharacterFeature:f4cef06b-d391-42fe-aabc-159fc0ae12fb: true
+      modifiers:
+      - __typeName: CharacterModifier
+        applyToFreeStrikes: true
+        source: Character Feature
+        name: Slowing Spores
+        behavior: power
+        addText: Slowed (EoT)
+        activationCondition: Self.Rampaging and Self.Level >= 3
+        domains:
+          CharacterFeature:f4cef06b-d391-42fe-aabc-159fc0ae12fb: true
+        modtype: none
+        rollType: ability_power_roll
+        description: Whenever the sporeling makes a strike while rampaging, the sporeling can cause the target to be slowed until the end of the target's next turn.
+        guid: 0509103c-e4a2-430f-bbcd-26a0d1bf23c4
+        sourceguid: f4cef06b-d391-42fe-aabc-159fc0ae12fb
+        keywords:
+          Strike: true
+      guid: f4cef06b-d391-42fe-aabc-159fc0ae12fb
+      source: Character Feature
+      name: Slowing Spores
+    - __typeName: CharacterFeature
+      implementation: 3
+      description: While the sporeling is rampaging, you can teleport up to 15 squares as a free maneuver once per turn, then gain an edge on your next strike this turn.
+      domains:
+        CharacterFeature:a2839cdf-b616-49b4-9f47-8bb4daee6640: true
+      source: Character Feature
+      guid: a2839cdf-b616-49b4-9f47-8bb4daee6640
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Plant Walk
+        behavior: modsummoner
+        source: Character Feature
+        sourceguid: a2839cdf-b616-49b4-9f47-8bb4daee6640
+        description: While the sporeling rampages and its beastheart is level 6+, the beastheart can teleport 15 squares as a free maneuver and gain an edge on their next strike.
+        guid: c6a2ab32-2b1a-4076-b117-ca360520065f
+        feature:
+          __typeName: CharacterFeature
+          implementation: 3
+          description: Teleport maneuver from the sporeling. Game does not adjudicate adjacency.
+          modifiers:
+          - __typeName: CharacterModifier
+            sourceguid: 6072ca6c-8d13-44ef-8876-e7851cbb334a
+            description: Teleport maneuver from the sporeling. Game does not adjudicate adjacency.
+            activatedAbility:
+              __typeName: ActivatedAbility
+              strain: []
+              targetType: emptyspace
+              range: "15"
+              actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+              implementation: 3
+              id: 8010820f-6bf3-422f-985b-2af02f620113
+              abilityType: none
+              repeatTargets: false
+              targeting: direct
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: teleport
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                ongoingEffectSource: specific
+                ongoingEffectCustom: false
+                duration: eoe
+                applyto: caster
+                ongoingEffect: 21827a29-9af8-46ac-86a0-fc74841584a8
+              numTargets: "1"
+              name: Plant Walk
+              source: Monster
+              documentation: Allows a creature to jump a certain number of squares
+              usageLimitOptions:
+                charges: "1"
+                multicharge: false
+                resourceid: 050b23e0-96a6-4a1f-ae1b-0c27f5f84040
+                resourceRefreshType: turn
+              categorization: Common Ability
+              description: Teleport to a space within 15 squares as a free maneuver, then gain an edge on your next strike before the end of your turn.
+              iconid: ui-icons/skills/1.png
+              display:
+                bgcolor: "#ffffffff"
+                saturation: 1
+                brightness: 1
+                hueshift: 0
+              guid: 188ed54f-44d3-4a68-9b29-9b2c8c10fe0a
+              modifiers: []
+              persistence: []
+            behavior: activated
+            name: Plant Walk
+            source: Beastheart
+            guid: c8d1abbf-51d0-4db1-9043-6a1a07174f57
+          name: Plant Walk
+          source: Beastheart
+          guid: 6072ca6c-8d13-44ef-8876-e7851cbb334a
+        mode: summoner
+        filterCondition: Self.Rampaging and Summoner.Level >= 6
+        domains:
+          CharacterFeature:a2839cdf-b616-49b4-9f47-8bb4daee6640: true
+      name: Plant Walk
+    - __typeName: CharacterFeature
+      implementation: 3
+      domains:
+        CharacterFeature:1a5f3d94-0000-4a10-9001-000000000001: true
+      description: While the sporeling is rampaging, you and the sporeling sprout gripping mycelia; whenever you or the sporeling makes a strike against a creature with M < [Strong], the creature is grabbed by the attacker. Also, you and the sporeling can't be force moved or knocked prone until the rampage ends.
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - __typeName: CharacterModifier
+        applyToFreeStrikes: true
+        name: Trailing Mycelia
+        behavior: power
+        rollType: ability_power_roll
+        activationCondition: Self.Rampaging and Self.Level >= 10
+        sourceguid: 1a5f3d94-0000-4a10-9001-000000000001
+        modtype: none
+        source: Character Feature
+        description: On a strike, M < [Strong] the target is grabbed.
+        guid: 1a5f3d94-0000-4a10-9001-000000000002
+        addText: M < Strong Grabbed
+        keywords:
+          Strike: true
+      - __typeName: CharacterModifier
+        name: Trailing Mycelia
+        source: Character Feature
+        operation: set
+        sourceguid: 1a5f3d94-0000-4a10-9001-000000000001
+        description: Can't be force moved while rampaging.
+        behavior: attribute
+        attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
+        guid: 1a5f3d94-0000-4a10-9001-000000000003
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        value: "1"
+      - __typeName: CharacterModifier
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        sourceguid: 1a5f3d94-0000-4a10-9001-000000000001
+        description: Can't be knocked prone while rampaging.
+        conditions:
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        source: Character Feature
+        guid: 1a5f3d94-0000-4a10-9001-000000000004
+        behavior: conditionimmunity
+        name: Trailing Mycelia
+      - __typeName: CharacterModifier
+        name: Trailing Mycelia
+        source: Character Feature
+        sourceguid: 1a5f3d94-0000-4a10-9001-000000000001
+        description: While rampaging (L10+), you gain the mycelia grab and the force-move/prone immunity too.
+        mode: summoner
+        feature:
+          __typeName: CharacterFeature
+          implementation: 3
+          description: Your strikes grab (M < [Strong]) and you can't be force moved or knocked prone while your sporeling rampages.
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - __typeName: CharacterModifier
+            applyToFreeStrikes: true
+            name: Trailing Mycelia
+            behavior: power
+            rollType: ability_power_roll
+            activationCondition: true
+            sourceguid: 1a5f3d94-0000-4a10-9001-000000000006
+            modtype: none
+            source: Beastheart
+            description: On a strike, M < [Strong] the target is grabbed.
+            guid: 1a5f3d94-0000-4a10-9001-000000000007
+            addText: M < Strong Grabbed
+            keywords:
+              Strike: true
+          - __typeName: CharacterModifier
+            name: Trailing Mycelia
+            behavior: attribute
+            operation: set
+            sourceguid: 1a5f3d94-0000-4a10-9001-000000000006
+            description: Can't be force moved.
+            source: Beastheart
+            guid: 1a5f3d94-0000-4a10-9001-000000000008
+            attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
+            value: "1"
+          - __typeName: CharacterModifier
+            sourceguid: 1a5f3d94-0000-4a10-9001-000000000006
+            description: Can't be knocked prone.
+            conditions:
+            - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+            behavior: conditionimmunity
+            name: Trailing Mycelia
+            source: Beastheart
+            guid: 1a5f3d94-0000-4a10-9001-000000000009
+          guid: 1a5f3d94-0000-4a10-9001-000000000006
+          source: Beastheart
+          name: Trailing Mycelia
+        guid: 1a5f3d94-0000-4a10-9001-000000000005
+        filterCondition: Self.Rampaging and Summoner.Level >= 10
+        behavior: modsummoner
+      guid: 1a5f3d94-0000-4a10-9001-000000000001
+      source: Character Feature
+      name: Trailing Mycelia
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
+      guid: 3c7e2d94-5d6f-4a86-b418-6c2d6e3f5a82
+    classes: []
+    notes:
+    - title: Backstory
+      text: ""
+    inflictedConditions: []
+    innateAttacks: []
+    initiativeGrouping: e7675049-7db0-427d-b200-4dc951ea172a
+    resources:
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 8fad02f4-4832-42e8-b52e-5063e3550b06-9
+    monster_type: Sporeling
+    titles: []
+    skillProficiencies: []
+    equipment: []
+    cr: 1
+    max_hitpoints: 13
+    attributes:
+      inu:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: inu
+      agl:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: agl
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      prs:
+        __typeName: CharacterAttribute
+        baseValue: 1
+        id: prs
+      mgt:
+        __typeName: CharacterAttribute
+        baseValue: 2
+        id: mgt
+      rea:
+        __typeName: CharacterAttribute
+        baseValue: -1
+        id: rea
+    innateActivatedAbilities: []
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 3
+      damageType: poison
+      apply: Damage Reduction
+    skillRatings:
+      a27ca113-bc01-49d0-9864-3316e6f525f4: true
+    import: []
+    levelChoices: []
+    damage_taken: 0
+    monster_category: Beast
+  tokenType: null
+  bestiaryId: 1a5f3d94-6c2b-4a87-b528-4e5f8d1c2c15
+  summonerid: null
+  ownerId: ""
+  partyid: 0339ff3e-f288-4a85-a02c-a458c091684f
+  size: 1
+  createdTimestamp: 1778600000000
+description: Sporeling
+parentFolder: 175fcd4e-a788-4f12-912d-e35d93395e3e
+artist: null
+ord: 11
+ctime: 1779087601456
+mtime: 1786705631077
+hidden: false
+id: 1a5f3d94-6c2b-4a87-b528-4e5f8d1c2c15
