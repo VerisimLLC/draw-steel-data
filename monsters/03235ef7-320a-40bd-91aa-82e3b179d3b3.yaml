@@ -78,6 +78,8 @@ info:
     characterFeatures:
     - __typeName: CharacterFeature
       guid: f330463d-3ed8-4630-b939-de833699d683
+      tags:
+        Hidden: true
       domains:
         CharacterFeature:f330463d-3ed8-4630-b939-de833699d683: true
       description: Your Creature Size is 4.
@@ -114,7 +116,7 @@ info:
       domains:
         CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
         CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-      description: The dragon can take two turns each round. They can’t take turns consecutively.
+      description: "**End Effect:** At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.\n**Solo Turns:** The dragon can take two turns each round. They can't take turns consecutively."
       source: Character Feature
       modifiers:
       - __typeName: CharacterModifier
@@ -128,8 +130,48 @@ info:
         description: The dragon can take two turns each round. They can’t take turns consecutively.
         source: Character Feature
         value: 1
-        name: Solo Turn
-      name: Solo Turn
+        name: Solo Turns
+      - __typeName: CharacterModifier
+        source: Trait
+        behavior: trigger
+        name: End Effect
+        description: ""
+        guid: 241b5303-d475-40ab-a986-871524641a01
+        sourceguid: c78de066-7b86-4311-997e-c2dbe765ceac
+        domains:
+          CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          mandatory: false
+          castImmediately: true
+          triggerPrompt: End effect for 10
+          strain: []
+          targetType: self
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            purgeType: one
+            damageToSelf: "10"
+            targetDuration: save
+            conditions: []
+          persistence: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          abilityType: none
+          whenActive: combat
+          conditionFormula: Save Ends Effects
+          modifiers: []
+          iconid: ui-icons/skills/1.png
+          guid: 6825308e-8417-4405-adf2-b7a55f614720
+          description: ""
+          repeatTargets: false
+          trigger: endturn
+          numTargets: "1"
+          range: 1
+          name: End Effect
+      name: Solo Monster
     inflictedConditions: []
     walkingSpeed: 8
     opportunityAttack: 7
