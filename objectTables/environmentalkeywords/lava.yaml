@@ -1,26 +1,111 @@
 __typeName: EnvironmentalKeyword
-difficultTerrain: true
-defaultHeight: 0
-iconid: ui-icons/skills/1.png
-powerRollEnabled: true
-powerRollBonus: 2
-name: Lava
-includeAdjacent: true
-description: A patch of blisteringly hot molten rock wells up from the ground, threatening anyone who gets close to it. A creature that enters the lava or starts their turn there, or starts their turn adjacent to the lava, is targeted by the Liquid Hot Magma power roll. The roll takes a bane against a creature adjacent to the lava but not in it. Lava is difficult terrain.
 modifiers: []
-ctime: 1786406400000
-source: Environmental Keyword
-guid: 0ec9bd34-e2e3-4fee-abe9-7fce3a80c063
-implementation: 4
+defaultHeight: 0
+id: 46863096-6276-4e8c-8554-11c59114dbeb
 powerRollTiers:
 - 5 fire damage; M<1 burning (save ends)
 - 9 fire damage; M<2 burning (save ends)
 - 12 fire damage; M<3 burning (save ends)
-mtime: 1786762888953
-id: 46863096-6276-4e8c-8554-11c59114dbeb
+mtime: 1786913917214
+name: Lava
+powerRollEnabled: true
+powerRollBonus: 2
 display:
   saturation: 1
+  bgcolor: "#e2571e"
   hueshift: 0
   brightness: 1
-  bgcolor: "#e2571e"
+script: |-
+  --Lava: heat-plume distortion over the zone and its adjacent ring, plus
+  --rising sparks emitted only from the core lava tiles, for as long as the
+  --zone exists.
+  --
+  --zone.locsAndAdjacent = the zone's tiles plus every tile 8-way adjacent,
+  --matching Lava's Affects Adjacent Squares reach.
+
+  local def = {}
+
+  def.create = function(zone)
+    zone.data.heat = dmhub.CreateWorldDistortion{
+      type = "heatwave",
+      locs = zone.locsAndAdjacent,
+      strength = 16,
+      edgeFade = 0.5,
+      direction = { x = 0, y = 1 },
+      plumeWidth = 2.5,
+      plumeHeight = 1.25,
+      turbulence = 0.7,
+      shimmer = 0.7,
+      haze = 1,
+      frequency = 1.35,
+      speed = 3,
+    }
+
+    if dmhub.supportsParticleSystems then
+      zone.data.sparks = dmhub.CreateParticleSystem{
+        locs = zone.locs,
+        image = "b9cb59b9-ddad-423b-b528-f154c7600b80",
+        rate = 2.5,
+        lifetime = { val = 1.1, maxVal = 2.1 },
+        speed = 0,
+        verticalSpeed = 0.75,
+        opacity = 1,
+        fadein = 0.08,
+        fadeout = 0.55,
+        birthColor = { r = 1, g = 0.55, b = 0.05, a = 1 },
+        deathColor = { r = 1, g = 0.3, b = 0.02, a = 1 },
+        birthSize = 0.09,
+        deathSize = 0.025,
+        type = "Default",
+        rotation = { val = 0, maxVal = 360 },
+        rotationOverLifetime = { val = -45, maxVal = 45 },
+        worldSpace = true,
+        noiseStrength = { val = 0.08, maxVal = 0.18 },
+        noiseFrequency = 0.65,
+        noiseScroll = { val = 0.15, maxVal = 0.35 },
+        maxParticles = 1000,
+      }
+    end
+  end
+
+  def.locsChanged = function(zone)
+    if zone.data.heat ~= nil then
+      zone.data.heat:SetLocs(zone.locsAndAdjacent)
+    end
+    if zone.data.sparks ~= nil then
+      zone.data.sparks:SetLocs(zone.locs)
+    end
+  end
+
+  def.destroy = function(zone)
+    if zone.data.heat ~= nil then
+      zone.data.heat:Stop()
+    end
+    if zone.data.sparks ~= nil then
+      zone.data.sparks:Stop()
+    end
+  end
+
+  return def
+description: A patch of blisteringly hot molten rock wells up from the ground, threatening anyone who gets close to it. A creature that enters the lava or starts their turn there, or starts their turn adjacent to the lava, is targeted by the Liquid Hot Magma power roll. The roll takes a bane against a creature adjacent to the lava but not in it. Lava is difficult terrain.
+difficultTerrain: true
+source: Environmental Keyword
+iconid: ui-icons/skills/1.png
+implementation: 4
+ctime: 1786406400000
+includeAdjacent: true
+guid: 0ec9bd34-e2e3-4fee-abe9-7fce3a80c063
+appearance:
+  spriteAlpha: 1
+  edgeOwned: true
+  edgeFade: 0
+  tileOwned: true
+  edgeWallId: 2e162283-8bfb-4bd3-a266-022b9cbd45f1
+  tileImageId: 230df4a2-0eb6-4883-952b-4d3be89b056c
+  alpha: 1
+  tileid: ec94744c-991b-4e5e-acb8-027b57eb1b61
+  spriteScale: 1
+  mode: floor
+  fractalEdge: 0.548839745455659
+  edgeImageId: 7a033e4e-e199-4ac8-ad56-ed0f3b1303fb
 _table: environmentalKeywords
