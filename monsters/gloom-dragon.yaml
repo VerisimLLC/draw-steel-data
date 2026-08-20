@@ -979,11 +979,22 @@ info:
         sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
         description: "At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. "
         name: End Effect
+      - __typeName: CharacterModifier
+        description: The dragon can take two turns each round. They can't take turns consecutively.
+        behavior: attribute
+        sourceguid: 41e2a67e-9b71-48bd-b1fa-52ed44f225dd
+        name: Solo Turns
+        source: Character Feature
+        guid: b849cc14-fc7f-4120-9a98-f9c2bef465fd
+        domains:
+          CharacterFeature:41e2a67e-9b71-48bd-b1fa-52ed44f225dd: true
+        attribute: extraturns
+        value: 1
       implementation: 4
       guid: 41e2a67e-9b71-48bd-b1fa-52ed44f225dd
       domains:
         CharacterFeature:41e2a67e-9b71-48bd-b1fa-52ed44f225dd: true
-      description: "At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. "
+      description: "**End Effect:** At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.\n**Solo Turns:** The dragon can take two turns each round. They can't take turns consecutively."
       name: Solo Monster
     - __typeName: CharacterFeature
       source: Trait
@@ -1102,30 +1113,6 @@ info:
       description: Once per turn, the dragon can shift up to their speed, leaving behind a 4 cube area of magical darkness in their starting space that lasts until the end of the encounter. The dragon ignores concealment created by this darkness. Any enemy who ends their turn in the area and has I<3 is frightened of the dragon until the end of their next turn.
       name: Shadow Skulk
     - __typeName: CharacterFeature
-      source: Character Feature
-      modifiers:
-      - __typeName: CharacterModifier
-        description: The dragon can take two turns each round. They can't take turns consecutively.
-        behavior: attribute
-        sourceguid: 7cee5a0a-4bcd-4855-8b40-92d854589f84
-        name: Solo Turn
-        source: Character Feature
-        guid: b849cc14-fc7f-4120-9a98-f9c2bef465fd
-        domains:
-          CharacterFeature:7cee5a0a-4bcd-4855-8b40-92d854589f84: true
-          CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
-          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-        attribute: extraturns
-        value: 1
-      implementation: 4
-      guid: 7cee5a0a-4bcd-4855-8b40-92d854589f84
-      domains:
-        CharacterFeature:7cee5a0a-4bcd-4855-8b40-92d854589f84: true
-        CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
-        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-      description: The dragon can take two turns each round. They can't take turns consecutively.
-      name: Solo Turn
-    - __typeName: CharacterFeature
       source: Trait
       modifiers:
       - __typeName: CharacterModifier
@@ -1141,6 +1128,8 @@ info:
         value: 1
       implementation: 3
       guid: 68a80811-f4aa-42e8-a24e-f31fef14809a
+      tags:
+        Hidden: true
       domains:
         CharacterFeature:68a80811-f4aa-42e8-a24e-f31fef14809a: true
       description: The dragon hovers, and does not fall when prone or when its speed is reduced to 0.
@@ -1479,6 +1468,8 @@ info:
         name: Encroaching Darkness
       implementation: 4
       guid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
+      tags:
+        Trigger: true
       domains:
         CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
       description: "Trigger: A creature within 10 squares moves. Effect: The dragon spends 1 Malice to move two existing cubes of magical darkness they created up to 10 squares each."
