@@ -1,0 +1,332 @@
+info:
+  locInfo:
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    floor: null
+    map: null
+    loc: []
+    pos:
+      x: 0
+      y: 0
+    path: null
+    summonLocCleared: null
+    summonLocId: null
+    summonLoc: []
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+    rotation: 0
+  appearance:
+    portraitId: null
+    offtokenPortraitId: null
+    portraitFrameId: e0946fe5-d98e-4543-bc4a-407534377572
+    portraitRibbon: null
+    backgroundId: null
+    anthem: null
+    anthemVolume: 1
+    tokenScaling: 1
+    tokenZoom: 1
+    portraitOffset:
+      x: 0
+      y: 0
+    frameHueShift: 0
+    frameSaturation: 1
+    frameBrightness: 1
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    saddlePositions: []
+  disguise: null
+  settings:
+    canRotate: false
+    useLight: false
+    lightColor:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    lightIntensity: 0.1
+    lightRadius: 10
+    lightFalloff: 0.1
+    lightAngle: 360
+  mountedBy: {}
+  updateid: 83f37793-433f-43c2-82a9-beba7b30e809
+  properties:
+    __typeName: monster
+    opportunityAttack: 0
+    keywords:
+      Object: true
+    savingThrowRatings: []
+    creatureSize: "2"
+    max_hitpoints_roll: "20"
+    minion: false
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 0
+    stability: 0
+    traitNames: []
+    inflictedConditions: []
+    walkingSpeed: 0
+    cr: 3
+    ev: 3
+    movementSpeeds: []
+    max_hitpoints: 20
+    notes:
+    - title: Monster Notes
+      text: This machine includes several interlocking gears and is used for grinding powder.
+    levelChoices: []
+    resources: []
+    resistances: []
+    skillRatings: []
+    role: Fortification Ambusher
+    monster_type: Machine 1
+    equipment: []
+    monster_category: Monster
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 0
+      guid: ed3e85c3-bad3-4296-9e31-3472ee6cb2b2
+      domains:
+        CharacterFeature:ed3e85c3-bad3-4296-9e31-3472ee6cb2b2: true
+      description: Machine 1 must be completely destroyed. When it is, the Self Destruct ability is activated.
+      implementationDetails: Reference text for the Director. The mechanical half of this (Self Destruct firing when Machine 1 is reduced to 0 Stamina) is automated by the Self Destruct trait below.
+      modifiers: []
+      source: Character Feature
+      name: Deactivate
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 93e077ff-1063-41e6-b12c-38549911fe00
+      name: Activate
+      domains:
+        CharacterFeature:93e077ff-1063-41e6-b12c-38549911fe00: true
+      description: |-
+        **Trigger:** A creature or object moves adjacent to Machine 1.
+
+        **Effect:** The Grinder ability.
+      implementationDetails: Fires automatically as a free triggered action when any creature finishes a move within 1 square of Machine 1, running the full Grinder power roll and forced movement. The engine has no "enters an adjacent space" trigger, so this uses finishmove with a subject range of 1 - a creature that passes through an adjacent square without stopping there is not caught.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: 9f1476b4-f1bb-4e72-a329-383b95dd72b5
+        sourceguid: 93e077ff-1063-41e6-b12c-38549911fe00
+        name: Activate
+        source: Trait
+        domains:
+          CharacterFeature:93e077ff-1063-41e6-b12c-38549911fe00: true
+        description: |-
+          **Trigger:** A creature or object moves adjacent to Machine 1.
+
+          **Effect:** The Grinder ability.
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Grinder
+          guid: 22f3f748-dacc-42ea-9deb-5003c5147d8b
+          description: "**Trigger:** A creature or object moves adjacent to Machine 1."
+          trigger: finishmove
+          subject: any
+          subjectRange: "1"
+          targetType: subject
+          mandatory: true
+          objectTarget: true
+          range: 1
+          numTargets: "1"
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          whenActive: combat
+          triggerPrompt: A creature or object moved adjacent to Machine 1. The grinding gears seize them.
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          strain: []
+          persistence: []
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          iconid: ui-icons/skills/1.png
+          domains:
+            CharacterFeature:93e077ff-1063-41e6-b12c-38549911fe00: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + 2
+            tiers:
+            - 7 damage
+            - 11 damage
+            - 15 damage
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: pull 1; push 5
+            applyto: targets
+    - __typeName: CharacterFeature
+      implementation: 3
+      guid: 12401024-a0b8-4138-a478-51dd4c37e57f
+      name: Self Destruct
+      domains:
+        CharacterFeature:12401024-a0b8-4138-a478-51dd4c37e57f: true
+      description: When Machine 1 is destroyed, it uses its Self Destruct ability, which explodes in a 2 burst against each creature and object in the area.
+      implementationDetails: Fires automatically when Machine 1 drops to 0 Stamina, running the full Self Destruct power roll against everything in the 2 burst.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: trigger
+        guid: d2f8c884-a549-47ed-a1af-0b44178546d9
+        sourceguid: 12401024-a0b8-4138-a478-51dd4c37e57f
+        name: Self Destruct
+        source: Trait
+        domains:
+          CharacterFeature:12401024-a0b8-4138-a478-51dd4c37e57f: true
+        description: "**Trigger:** Machine 1 is destroyed."
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          name: Self Destruct
+          guid: e32837a1-da23-470c-88bd-afd56876919e
+          description: "**Trigger:** Machine 1 is destroyed."
+          trigger: zerohitpoints
+          subject: self
+          targetType: all
+          mandatory: true
+          objectTarget: true
+          range: 2
+          numTargets: "1"
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          abilityType: none
+          repeatTargets: false
+          modifiers: []
+          strain: []
+          persistence: []
+          keywords:
+            Area: true
+          iconid: ui-icons/skills/1.png
+          domains:
+            CharacterFeature:12401024-a0b8-4138-a478-51dd4c37e57f: true
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + 2
+            tiers:
+            - 7 damage
+            - 11 damage
+            - 15 damage
+    - __typeName: CharacterFeature
+      implementation: 0
+      guid: b9f72c75-c6a9-43bc-a297-cc11a46cb54d
+      domains:
+        CharacterFeature:b9f72c75-c6a9-43bc-a297-cc11a46cb54d: true
+      description: A creature within 10 squares can spend 1 intel to know how the machine works.
+      implementationDetails: Narrative. Intel is a party resource the Director tracks; there is no hook that lets a creature spend it against another creature's stat block to reveal information.
+      modifiers: []
+      source: Character Feature
+      name: Intel
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      name: Grinder
+      guid: e0b3de2a-245c-4d51-8172-9ec0c7907e4f
+      implementation: 3
+      targetType: target
+      objectTarget: true
+      numTargets: 1
+      repeatTargets: false
+      abilityType: none
+      modifiers: []
+      range: 1
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      categorization: Signature Ability
+      targetTextOverride: The triggering creature or object
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      description: |-
+        **Trigger:** A creature or object moves adjacent to Machine 1.
+
+        **Effect:** The target is pulled into the machine's space and is then pushed 5 in the direction opposite to the one from which they came.
+      implementationDetails: Power roll and damage are fully automated. The pull-then-push is run through the rules engine as "pull 1; push 5", so it respects stability and forced-movement restrictions. The engine pushes directly away from Machine 1 rather than tracing the exact path the target arrived along, so the printed "direction opposite to the one from which they came" is approximated by "away from the machine" - identical in the normal case where the target walked straight in.
+      flavor: ""
+      iconid: ui-icons/skills/1.png
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 2
+        tiers:
+        - 7 damage
+        - 11 damage
+        - 15 damage
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: pull 1; push 5
+        applyto: targets
+    - __typeName: ActivatedAbility
+      name: Self Destruct
+      guid: 03612653-8b67-4a2c-8737-01471270f36b
+      implementation: 4
+      targetType: all
+      objectTarget: true
+      numTargets: 1
+      repeatTargets: false
+      abilityType: none
+      modifiers: []
+      range: 2
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      categorization: Ability
+      targetTextOverride: Each creature and object in the area
+      keywords:
+        Area: true
+      description: |-
+        **Trigger:** Machine 1 is destroyed.
+
+        The machine detonates in a 2 burst.
+      implementationDetails: Manual copy of the trait-driven detonation, provided so the Director can fire the burst by hand if the machine is removed some other way. Area, power roll, and damage are all automated.
+      flavor: ""
+      iconid: ui-icons/skills/1.png
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 2
+        tiers:
+        - 7 damage
+        - 11 damage
+        - 15 damage
+    innateAttacks: []
+    damage_taken: 0
+  tokenType: null
+  bestiaryId: 218a86ce-9e70-404a-a09f-9527a8022349
+  summonerid: null
+  ownerId: null
+  partyid: null
+  size: -1
+  createdTimestamp: 1784227200000
+description: Machine 1
+parentFolder: 718cecc3-3326-4c41-802b-eb492fbc1133
+artist: null
+ord: 0
+ctime: 1784227200000
+mtime: 1785704793882
+hidden: false
+id: 218a86ce-9e70-404a-a09f-9527a8022349

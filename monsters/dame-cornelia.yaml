@@ -16,7 +16,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
-    teleportStyle: ""
+    teleportStyle: ''
     updateid: 0
     rotation: 0
   appearance:
@@ -59,7 +59,7 @@ info:
     __typeName: monster
     role: Leader
     notes:
-    - text: ""
+    - text: ''
       title: Monster Notes
     innateAttacks: []
     keywords:
@@ -78,203 +78,291 @@ info:
     ev: 12
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
-      targetAllegiance: enemy
-      keywords:
-        Area: true
-        Weapon: true
-      iconid: 64c8fbe4-c9d7-49e7-b223-bcb6cc3688ad
-      guid: 527a5f02-3679-4c5a-b962-6a9b40fd8e00
-      implementation: 3
-      abilityType: none
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
+        roll: 2d10 + 3
         tiers:
-        - 3 damage; M<1 slowed (save ends)
-        - 6 damage; M<2 slowed (save ends)
-        - 8 damage; M<3 slowed (save ends)
+        - 3 damage; M<1, slowed (save ends)
+        - 6 damage; M<2, slowed (save ends)
+        - 8 damage; M<3, slowed (save ends)
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        runOnController: true
-        namedAbility: Glaive Swing Effect
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            hueshift: 0
-            brightness: 1
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          repeatTargets: false
-          targetType: self
-          guid: b799fcd6-af39-44e8-8db8-02f87e6c316b
-          description: ""
-          modifiers: []
-          abilityType: none
-          numTargets: "1"
-          range: 1
-          behaviors: []
-        abilityType: named
-        invokeOnCaster: true
         applyto: caster
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        hueshift: 0
-        brightness: 1
-      objectTarget: false
-      repeatTargets: false
-      targetType: all
-      categorization: Signature Ability
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      name: Glaive Swing
-      range: 1
-      persistence: []
-      numTargets: "1"
-      strain: []
-      description: |-
-        One ally within 10 squares can make a free strike.
-
-        1 Malice: One ally within 10 squares can use their signature
-        ability instead.
-    - __typeName: ActivatedAbility
-      name: Glaive Swing Effect
-      iconid: ui-icons/skills/1.png
-      guid: 3dcf7658-b9bf-4822-b231-beb683f2bb5a
-      implementation: 3
-      abilityType: none
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        runOnController: true
-        promptText: One ally within 10 squares can make a free strike
-        abilityType: standard
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            hueshift: 0
-            brightness: 1
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          repeatTargets: false
-          targetType: self
-          guid: 96169fcd-a8ab-4f55-b1bc-f9e9a8279b3f
-          description: ""
-          modifiers: []
-          abilityType: none
-          numTargets: "1"
-          range: 1
-          behaviors: []
-        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-        invokeOnCaster: false
+        abilityType: custom
+        promptText: Select one ally to make a free strike
         modesSelected:
         - 1
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        runOnController: true
-        promptText: One ally within 10 squares can use a signature ability
         customAbility:
           __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors: []
+              modifiers: []
+              numTargets: '1'
+              targetType: self
+              range: 1
+              name: Invoked Ability
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              abilityType: none
+              display:
+                brightness: 1
+                bgcolor: '#ffffffff'
+                saturation: 1
+                hueshift: 0
+              description: ''
+              guid: 914a3088-9852-4cec-a85e-aa89034e9762
+            abilityType: standard
+            runOnController: true
+            standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+            promptText: Free Strike
+          categorization: Hidden
+          repeatTargets: false
           display:
-            bgcolor: "#ffffffff"
+            brightness: 1
+            bgcolor: '#ffffffff'
             saturation: 1
             hueshift: 0
-            brightness: 1
+          description: ''
+          guid: 0c9d8e39-49c0-418b-8edd-e731acd759a9
           name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          repeatTargets: false
-          targetType: self
-          guid: 49c7adad-4acd-4eee-85ed-a96c6e9b65a1
-          description: ""
+          numTargets: '1'
+          targetType: target
           modifiers: []
+          strain: []
           abilityType: none
-          numTargets: "1"
-          range: 1
-          behaviors: []
-        abilityType: standard
-        standardAbility: 64d1be94-fd92-4d0b-92f4-a6d638089f1a
+          iconid: ui-icons/skills/1.png
+          persistence: []
+          range: '10'
+          targetAllegiance: ally
+          objectTarget: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        abilityType: custom
+        promptText: Select  ally to use a signature ability
         modesSelected:
         - 2
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors: []
+              modifiers: []
+              numTargets: '1'
+              targetType: self
+              range: 1
+              name: Invoked Ability
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
+              abilityType: none
+              display:
+                brightness: 1
+                bgcolor: '#ffffffff'
+                saturation: 1
+                hueshift: 0
+              description: ''
+              guid: 963de1ea-4b01-4112-bd72-b53fc5a187f5
+            abilityType: standard
+            promptText: Signature Strike
+            invokeOnCaster: false
+            standardAbility: 7b19698f-5fe2-4eea-9ef8-7621a7974073
+            runOnController: true
+          modifiers: []
+          repeatTargets: false
+          display:
+            brightness: 1
+            bgcolor: '#ffffffff'
+            saturation: 1
+            hueshift: 0
+          description: ''
+          guid: 35ebe52d-5a63-42ab-9e83-72f4adc24171
+          name: Invoked Ability
+          numTargets: '1'
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 184
+          targetType: target
+          strain: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          persistence: []
+          range: '10'
+          objectTarget: false
       - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
         mode: expend
         resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-        applyto: caster
-        modesSelected:
-        - 2
+      targetAllegiance: enemy
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modeList:
+      - text: Normal
+        rules: One ally within 10 squares can make a free strike.
+      - text: '**1** Malice'
+        rules: One ally within 10 squares can use their signature ability instead.
+      keywords:
+        Weapon: true
+        Melee: true
+        Area: true
+      name: Glaive Swing
+      effectImplemented: false
+      targetTextOverride: ' Each enemy in the area'
+      multipleModes: true
       display:
-        bgcolor: "#ffffffff"
+        brightness: 1
+        bgcolor: '#ffffffff'
         saturation: 1
         hueshift: 0
-        brightness: 1
-      range: "10"
-      modeList:
-      - text: No Malice
-        rules: One ally within 10 squares can make a free strike
-      - text: 1 Malice
-        rules: One ally within 10 squares can use their signature ability instead.
-      targetType: target
-      resourceCost: none
-      multipleModes: true
-      categorization: Hidden
-      objectTarget: false
-      description: ""
-      strain: []
-      repeatTargets: false
+      description: 'One ally within 10 squares can make a free strike.
+
+
+        **1 Malice:** One ally within 10 squares can use their signature ability instead.'
+      guid: ac3274b4-5799-4395-93a8-309063d45f3e
       persistence: []
-      numTargets: "1"
-      resourceNumber: ""
+      targetFilter: ''
+      hasCustomIcon: true
+      numTargets: 1
+      sourceReference:
+        __typeName: SourceReference
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        page: 40
       modifiers: []
-    - __typeName: ActivatedAbility
-      targetAllegiance: enemy
-      name: You!
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      guid: 97992faa-ba4e-41db-be48-165066b2a10b
-      implementation: 3
+      targetType: all
+      implementation: 4
+      categorization: Signature Ability
+      strain: []
       abilityType: none
+      range: 1
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      flavor: ''
+      repeatTargets: false
+      objectTarget: false
+    - __typeName: ActivatedAbility
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        ongoingEffectCustom: false
-        ongoingEffect: 319e19ac-4f15-4c16-be71-96d448241c10
-      range: "10"
-      objectTarget: false
-      repeatTargets: false
-      targetType: target
-      categorization: Signature Ability
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        ongoingEffect: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
+        durationUntilEndOfTurn: false
+        ongoingEffectCustom: 7de9bdb4-afd0-47c8-8faf-9dbfa91f9aa6
+        duration: 1
       modifiers: []
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      keywords:
+        Ranged: true
+      repeatTargets: false
+      categorization: Ability
+      targetAllegiance: enemy
       display:
-        bgcolor: "#ffffffff"
+        brightness: 1
+        bgcolor: '#ffffffff'
         saturation: 1
         hueshift: 0
-        brightness: 1
+      description: The target is marked until the start of Cornelia's next turn. Cornelia and each of her allies gain an edge on abilities used against targets marked by Cornelia.
+      flavor: ''
       persistence: []
-      numTargets: "1"
-      description: The target is marked until the start of Cornelia's next turn. Cornelia and each of her allies gains an edge on abilities used against targets marked by her.
-      strain: []
-    - __typeName: ActivatedAbility
-      name: Advance!
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      villainAction: Villain Action 1
+      targetTextOverride: One enemy
+      hasCustomIcon: true
+      numTargets: 1
+      targetFilter: ''
+      sourceReference:
+        __typeName: SourceReference
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        page: 40
+      targetType: target
+      implementation: 4
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
       strain: []
       abilityType: none
-      behaviors: []
-      range: 1
-      modeList: []
+      range: 10
+      guid: e89b6461-7b0c-459d-9cb0-70776d4a2624
+      name: You!
+      effectImplemented: false
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: shift {Movement Speed}
+        applyto: caster
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: '1'
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: '#ffffffff'
+            saturation: 1
+            hueshift: 0
+          description: ''
+          guid: 863b6059-c214-46ea-8bf2-8e0d1cb5966e
+        abilityType: named
+        promptText: First Glaive Swing
+        invokeOnCaster: false
+        namedAbility: Glaive Swing
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        namedAbility: Glaive Swing
+        abilityType: named
+        promptText: Second Glaive Swing
+        customAbility:
+          __typeName: ActivatedAbility
+          behaviors: []
+          modifiers: []
+          numTargets: '1'
+          targetType: self
+          range: 1
+          name: Invoked Ability
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          abilityType: none
+          display:
+            brightness: 1
+            bgcolor: '#ffffffff'
+            saturation: 1
+            hueshift: 0
+          description: ''
+          guid: 07ad222d-c6b8-45cb-acd7-fa2380b9a5b6
+        guid: c370a587-c056-437d-9159-842b33750201
       modifiers: []
-      multipleModes: true
-      categorization: Villain Action
-      description: Cornelia shifts up to her speed. During or after this movement, she can use her Glaive Swing twice.
+      actionResourceId: none
+      villainAction: Villain Action 1
+      keywords: []
+      repeatTargets: false
       display:
-        bgcolor: "#ffffffff"
+        brightness: 1
+        bgcolor: '#ffffffff'
         saturation: 1
         hueshift: 0
-        brightness: 1
+      description: Cornelia shifts up to her speed. During or after this movement, she can use her Glaive Swing twice.
+      flavor: ''
+      name: Advance!
+      effectImplemented: true
+      hasCustomIcon: true
+      numTargets: 1
+      sourceReference:
+        __typeName: SourceReference
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        page: 40
+      usageLimitOptions: '{''multicharge'': False, ''resourceid'': ''3d267b38-000c-4063-a64'
+      castImmediately: true
       targetType: self
+      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+      strain: []
+      abilityType: none
+      range: 1
+      guid: d2c90b93-c145-4235-ba46-ce2753b5ec5c
+      implementation: 3
+      categorization: Villain Action
       persistence: []
-      numTargets: "1"
-      repeatTargets: false
-      guid: c8a339e3-a68d-4604-9b42-60feb009da32
     - __typeName: ActivatedAbility
       targetAllegiance: enemy
       keywords:
@@ -288,7 +376,7 @@ info:
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         rule: slide 5
       display:
-        bgcolor: "#ffffffff"
+        bgcolor: '#ffffffff'
         saturation: 1
         hueshift: 0
         brightness: 1
@@ -299,11 +387,15 @@ info:
       name: Back!
       description: Cornelia slides each target up to 5 squares.
       guid: 9e4c2b5e-e6f9-413a-8398-67bc46a00ac5
-      range: "5"
+      range: '5'
       persistence: []
-      numTargets: "1"
+      numTargets: '1'
       strain: []
       repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        page: 40
     - __typeName: ActivatedAbility
       keywords:
         Ranged: true
@@ -312,105 +404,67 @@ info:
         Weapon: true
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
       guid: ac606cde-56d8-4de1-b229-7c619f8bf8b1
-      implementation: 3
+      implementation: 4
       abilityType: none
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        guid: 626e0e5f-8c9e-426d-a371-60472a6d0d61
-        roll: 2d10 + 2
+        roll: 2d10 + 3
         tiers:
-        - 3 damage; M<1 slowed (save ends)
-        - 6 damage; M<2 slowed (save ends)
-        - 8 damage; M<3 slowed (save ends)
+        - 3 damage; M<1, slowed (save ends)
+        - 6 damage; M<2, slowed (save ends)
+        - 8 damage; M<3, slowed (save ends)
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: You can throw your blade too!
-        filterTarget: friends(target, caster) and target != caster
-        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+        invokeOnCaster: true
+        autoTarget: false
+        targeting: prompt
+        abilityType: standard
+        applyto: targets
+        standardAbility: 7cb2aa05-2a8d-42ed-acd0-e1086e87beb0
+        promptText: Each ally within 5 squares of the area can make a free strike against a target (one target per ally). Choose allies to free strike this target.
+        standardAbilityParams:
+          range: '999'
+          targetcount: '999'
+          targetid: <<target.id>>
         customAbility:
           __typeName: ActivatedAbility
           display:
-            bgcolor: "#ffffffff"
-            saturation: 1
             hueshift: 0
+            saturation: 1
+            bgcolor: '#ffffffff'
             brightness: 1
           name: Invoked Ability
           iconid: ui-icons/skills/1.png
           repeatTargets: false
           targetType: self
-          guid: e8fbe872-6cdd-4b92-bed8-48b2d9ea1a32
-          description: ""
-          modifiers: []
-          abilityType: none
-          numTargets: "1"
+          guid: f0c8b5d1-7a5d-4340-a9eb-92d2873c87c9
+          description: ''
           range: 1
+          abilityType: none
+          numTargets: '1'
+          modifiers: []
           behaviors: []
-        abilityType: standard
-        target_proximity_range: "5"
-        applyto: proximity_only
-      range: "5"
+      range: 5
       display:
-        bgcolor: "#ffffffff"
+        bgcolor: '#ffffffff'
         saturation: 1
         hueshift: 0
         brightness: 1
       modifiers: []
       targetType: cube
       categorization: Villain Action
-      radius: "3"
+      radius: 3
       description: Cornelia uses her Glaive Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).
       name: I Can Throw My Blade and So Should You!
       strain: []
       persistence: []
-      numTargets: "1"
+      numTargets: '1'
       repeatTargets: false
       villainAction: Villain Action 3
-    - __typeName: ActivatedAbility
-      targetAllegiance: ally
-      name: VA3 Effect
-      iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      guid: b9bf62bc-11b0-43c1-81c4-c839fcb630ff
-      strain: []
-      abilityType: none
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        runOnController: true
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            bgcolor: "#ffffffff"
-            saturation: 1
-            hueshift: 0
-            brightness: 1
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          repeatTargets: false
-          targetType: self
-          guid: aee177c5-0291-4b36-8cd1-6a89c69c4e2f
-          description: ""
-          modifiers: []
-          abilityType: none
-          numTargets: "1"
-          range: 1
-          behaviors: []
-        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-        abilityType: standard
-        promptText: Chose the same centerpoint as before.
-      range: "5"
-      objectTarget: false
-      repeatTargets: false
-      targetType: cube
-      categorization: Hidden
-      radius: "13"
-      description: Cornelia uses her Glaive Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).
-      modifiers: []
-      persistence: []
-      numTargets: "1"
-      display:
-        bgcolor: "#ffffffff"
-        saturation: 1
-        hueshift: 0
-        brightness: 1
-      implementation: 3
+      targetAllegiance: enemy
+      sourceReference:
+        __typeName: SourceReference
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        page: 40
     walkingSpeed: 5
     titles: []
     skillProficiencies: []
@@ -455,58 +509,61 @@ info:
     skillRatings: []
     characterFeatures:
     - __typeName: CharacterFeature
-      guid: fec93bad-1053-41ec-a6ab-1136a911cd80
-      description: At the end of each of her turns, Cornelia can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
       name: End Effect
-      domains:
-        CharacterFeature:fec93bad-1053-41ec-a6ab-1136a911cd80: true
-        CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
       modifiers:
       - __typeName: CharacterModifier
-        guid: e33ea2d9-6393-4e4a-93c5-af808f232588
-        behavior: trigger
         name: End Effect
-        sourceguid: 58bdd65e-5a1b-4448-8a61-1b18d5171e7b
-        domains:
-          CharacterFeature:fec93bad-1053-41ec-a6ab-1136a911cd80: true
-          CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
-        description: At the end of each of her turns, Cornelia can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
+        behavior: trigger
         triggeredAbility:
           __typeName: TriggeredAbility
-          name: End Effect
-          iconid: ui-icons/skills/1.png
-          mandatory: false
-          guid: f2459800-5424-4e21-9879-b320a1a0b74e
-          strain: []
-          domains:
-            CharacterFeature:fec93bad-1053-41ec-a6ab-1136a911cd80: true
-            CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
-          abilityType: none
-          hasManualVersion: true
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            targetDuration: save
-            mode: conditions
-            conditions: []
             purgeType: one
-            damageToSelf: "5"
-          range: 1
+            targetDuration: save
+            conditions: []
+            damageToSelf: '5'
+            mode: conditions_and_effects
+          conditionFormula: Save Ends Effects
           modifiers: []
-          targetType: self
-          triggerPrompt: End one save ends effect on self, take 5 damage.
-          description: At the end of each of her turns, Cornelia can take 5 damage to end one effect on her that can be ended by a saving throw. Thisdamage can't  be reduced in any way.
+          mandatory: false
           repeatTargets: false
-          conditionFormula: SaveEndsEffects
-          persistence: []
-          numTargets: "1"
-          trigger: endturn
+          domains:
+            CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
+            CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
+          triggerPrompt: Take 5 damage to end one effect that can be ended by a saving throw. This damage can't be reduced in any way.
           display:
-            bgcolor: "#ffffffff"
+            brightness: 1
+            bgcolor: '#ffffffff'
             saturation: 1
             hueshift: 0
-            brightness: 1
+          description: At the end of each of their turns, Cornelia can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+          guid: d3b6416c-4d65-4432-a379-842aef010c0b
+          persistence: []
+          numTargets: '1'
+          whenActive: combat
+          targetType: self
+          strain: []
+          abilityType: none
+          iconid: ui-icons/skills/1.png
+          trigger: endturn
+          range: 1
+          name: 'End Effect '
+          sourceReference:
+            __typeName: SourceReference
+            docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+            page: 40
+        domains:
+          CharacterFeature:4a07a8e8-85db-41f7-811e-2d47327bc8e0: true
+        sourceguid: 4a07a8e8-85db-41f7-811e-2d47327bc8e0
+        guid: 99ec8fef-a0b5-4129-a86b-0a1a56f22b65
+        description: At the end of each of her turns, Cornelia can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
         source: Trait
-      implementation: 3
+      implementation: 4
+      guid: 4a07a8e8-85db-41f7-811e-2d47327bc8e0
+      domains:
+        CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
+        CharacterFeature:a7c02e1a-7c11-4186-b29c-8f4bbdd2863f: true
+      description: At the end of each of her turns, Cornelia can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
       source: Trait
     - __typeName: CharacterFeature
       guid: 8964ee25-327a-45bf-bdc6-176d6e32331d
@@ -534,26 +591,32 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: 5 corruption damage
-          range: "2"
+          range: '2'
           objectTarget: false
           modifiers: []
           targetType: all
-          description: ""
+          description: ''
           display:
-            bgcolor: "#ffffffff"
+            bgcolor: '#ffffffff'
             saturation: 1
             hueshift: 0
             brightness: 1
           persistence: []
-          numTargets: "1"
+          numTargets: '1'
           trigger: zerohitpoints
           repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+            page: 40
         source: Character Feature
       implementation: 3
       source: Character Feature
     - __typeName: CharacterFeature
       guid: 422326ac-8bc4-47d6-8299-aac59f413034
-      description: ""
+      tags:
+        Trigger: true
+      description: ''
       name: Parry!
       domains:
         CharacterFeature:422326ac-8bc4-47d6-8299-aac59f413034: true
@@ -565,7 +628,7 @@ info:
         sourceguid: 422326ac-8bc4-47d6-8299-aac59f413034
         domains:
           CharacterFeature:422326ac-8bc4-47d6-8299-aac59f413034: true
-        description: ""
+        description: ''
         ability:
           __typeName: TriggeredAbilityDisplay
           guid: c25a34ad-5fe6-4c3d-9d83-b301073356e4
@@ -577,13 +640,13 @@ info:
           keywords: []
         source: Character Feature
       - __typeName: CharacterModifier
-        range: "1"
+        range: '1'
         powerRollModifier:
           __typeName: CharacterModifier
           modtype: none
           rollType: ability_power_roll
           name: Parry!
-          rules: ""
+          rules: ''
           activationCondition: false
           guid: abf1322a-f39b-43ad-b25f-600553502ff2
           description: 'A creature makes a strike against Cornelia or an ally adjacent to her '
@@ -595,7 +658,7 @@ info:
         targetType: selforally
         guid: b6f8226a-72d3-4ac8-a615-92f16e601822
         type: trigger
-        description: ""
+        description: ''
         name: Parry!
         rules: The damage is halved.
         domains:
@@ -625,10 +688,11 @@ info:
         resources:
           d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
     groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    creatureSize: 1M
   tokenType: null
   bestiaryId: 8906eb64-ba29-4e79-92ad-f9489dec9962
   summonerid: null
-  ownerId: ""
+  ownerId: ''
   partyid: null
   size: 2
   createdTimestamp: 1758666750316

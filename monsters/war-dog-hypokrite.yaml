@@ -55,11 +55,24 @@ info:
     __typeName: monster
     characterFeatures:
     - __typeName: CharacterFeature
+      implementation: 3
       guid: debb3cad-b168-422a-a60d-ac47eee5ada9
       domains:
         CharacterFeature:debb3cad-b168-422a-a60d-ac47eee5ada9: true
-      description: The hypokrite is invisible while adjacent to an unhidden ally. When using the Hide maneuver, the hypocrite can choose to disguise themself as another creature within line of effect.
-      modifiers: []
+      description: The hypokrite is invisible while adjacent to any ally who isn't hidden, and they can attempt to hide even while observed. Whenever they use the Hide maneuver, the hypokrite can disguise themself as another creature within line of effect.
+      modifiers:
+      - __typeName: CharacterModifier
+        behavior: bestowcondition
+        conditionid: 98e85a3b-95a1-41d8-b176-d2d64e7d18d0
+        name: Face in the Crowd
+        guid: 3f8c21a7-5d6e-4b09-9c14-72ae8d05b3f1
+        sourceguid: debb3cad-b168-422a-a60d-ac47eee5ada9
+        source: Trait
+        domains:
+          CharacterFeature:debb3cad-b168-422a-a60d-ac47eee5ada9: true
+        filterCondition: CountNearbyFriends(1, "~hidden") > 0
+        explanation: "Face in the Crowd: the hypokrite is invisible while adjacent to an ally who is not hidden."
+        description: The hypokrite is invisible while adjacent to any ally who isn't hidden.
       source: Trait
       name: Face in the Crowd
     - __typeName: CharacterFeature
@@ -160,7 +173,7 @@ info:
         <b>Effect</b> The hypokrite activates their Loyalty Collar ability and teleports to an unoccupied square adjacent to an ally within distance alive.
 
         <b>Face in the Crowd</b>
-        The hypokrite is invisible while adjacent to an unhidden ally. When using the Hide maneuver, the hypocrite can choose to disguise themself as another creature within line of effect.
+        The hypokrite is invisible while adjacent to any ally who isn't hidden, and they can attempt to hide even while observed. Whenever they use the Hide maneuver, the hypokrite can disguise themself as another creature within line of effect.
 
         <b>Loyalty Collar</b>
         When the hypokrite dies, they explode, dealing 2d6 damage to each adjacent enemy.
@@ -180,6 +193,22 @@ info:
         - 6 damage
         - 8 damage; A<2 bleeding (save ends)
         - 10 damage; A<3 bleeding and weakened (save ends)
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 1d5b93ca-7e46-4c02-9f81-3ab60d47e2c5
+        modifier:
+          __typeName: CharacterModifier
+          behavior: power
+          modtype: none
+          rollType: ability_power_roll
+          damageModifier: "6"
+          damageModifierType: none
+          activationCondition: Conditions has "Hidden"
+          name: Hidden or Disguised
+          description: This ability deals an additional 6 damage if the hypokrite is hidden or disguised.
+          guid: 8a3f16d2-47c9-4e58-b1a0-6d92ce70f4b3
+          sourceguid: 1d5b93ca-7e46-4c02-9f81-3ab60d47e2c5
+          domains: []
+          keywords: []
       categorization: Signature Ability
       effectImplemented: false
       repeatTargets: false

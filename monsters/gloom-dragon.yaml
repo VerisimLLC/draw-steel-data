@@ -6,17 +6,32 @@ info:
     floor: null
     map: 97f55a4d-7059-40ce-8b68-2901615d5f15
     loc:
-    - 10
-    - -4
+    - 0
+    - -1
     - 1
     pos:
-      x: 0
-      y: 0
+      x: 1.5
+      y: 0.5
     path:
+      guid: 95017c7d-40a2-4089-9168-e13e1b13527d
       movementType: 0
-      steps: []
-      cost: 0
-      costs: []
+      steps:
+      - - -2
+        - -1
+        - 1
+      - - -1
+        - -1
+        - 1
+      - - 0
+        - -1
+        - 1
+      cost: 20
+      costs:
+      - cost: 0
+        surface: 1
+      - cost: 10
+      - cost: 20
+        surface: 1
       mountStart: ""
       objectStart: ""
       saddleStart: 0
@@ -26,9 +41,9 @@ info:
     summonLocCleared: null
     summonLocId: null
     summonLoc: []
-    teleportAnimId: 436f1f60-8ea0-4760-8017-a90956b97657
+    teleportAnimId: null
     teleportStyle: ""
-    updateid: 0
+    updateid: 3205005
     rotation: 0
   appearance:
     portraitId: 1533da55-db8c-4cba-a129-76b5c84863cf
@@ -86,19 +101,488 @@ info:
   updateid: 1f0497ca-1288-4592-8253-db76dc99f701
   properties:
     __typeName: monster
-    inflictedConditions: []
-    groupid: c8ac88e1-3d1e-4bb7-8218-acbc05329b2e
-    availableTriggers: []
-    creatureSize: "4"
-    traitNames: []
-    ongoingEffects: []
-    levelChoices: []
-    stability: 2
+    aurasEntered:
+      "---sub-fe7aaa12-a869-40e0-ad18-2e938ae78b5a": true
     aurasEnteredTurnId: d24b8b27-09a1-4b15-a9cf-59a4b6f2a2d4-1-b6b6d8b3-8805-4e4a-a63f-d473bd0d8d1c-0
-    innateAttacks: []
+    notes:
+    - title: Monster Notes
+      text: ""
     damage_taken: 0
+    levelChoices: []
+    monster_category: Monster
+    skillRatings: []
+    stability: 2
+    skillProficiencies: []
+    titles: []
     minion: false
+    creatureSize: "4"
+    equipmentMeta:
+      offhand0: []
+    availableTriggers: []
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      targetTextOverride: Each enemy and object in the area
+      guid: dcbcf78b-0f5d-470a-9a0b-a1d610905ef3
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      description: Each target makes an Agility test. A dragonsealed creature has psychic weakness 3 and cold weakness 3. Additionally, the area is filled with magical darkness. The dragon ignores concealment created by this darkness.
+      iconid: ui-icons/skills/1.png
+      numTargets: 1
+      targetType: cube
+      keywords:
+        Magic: true
+        Ranged: true
+        Area: true
+      categorization: Signature Ability
+      range: 10
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      implementation: 3
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        isTest: false
+        attrid: agl
+        resistanceRoll: true
+        resistanceAttr: agl
+        tiers:
+        - 14 cold damage; the target is dragonsealed (save ends)
+        - 11 cold damage; the target is dragonsealed (save ends)
+        - 6 cold damage
+        roll: 2d10 + Agility
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: 69be16df-3735-4234-904f-1b781284e1fd
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+        - 1
+        durationUntilEndOfTurn: false
+        duration: save_ends
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        aura:
+          __typeName: Aura
+          modifiers: []
+          movedamage: none
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          canrelocate: true
+          triggers: []
+          name: Magical Darkness
+          relocateRange: 10
+          creatureFilter: ""
+          guid: cf3dffd2-a007-4c38-bf0f-e120cdce46b8
+          concealment: true
+          relocateResource: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          objectid: a4861b94-821f-4cf5-baa1-fd1b7e7cc4cc
+          applyto: all
+        duration: eoe
+      name: Breath of Brume
+      modifiers: []
+      radius: "4"
+      targetFilter: Enemy
+      abilityType: none
+      objectTarget: true
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 97
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      implementation: 3
+      guid: ec05a544-88b0-47bd-9663-49cc44e19fc4
+      strain: []
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      description: |2-
+
+        **3 Malice**: The pull becomes a vertical slide.
+      iconid: ui-icons/skills/1.png
+      numTargets: 2
+      targetType: target
+      keywords:
+        Magic: true
+        Strike: true
+        Melee: true
+        Charge: true
+      categorization: Signature Ability
+      name: Phantom Tail Swing
+      behaviors:
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        modifier:
+          __typeName: CharacterModifier
+          description: "3 Malice: The pull becomes a vertical slide."
+          behavior: power
+          rollType: ability_power_roll
+          replacePattern: pull
+          keywords: []
+          name: "3 Malice: Vertical Slide"
+          domains: []
+          resourceCostAmount: "3"
+          resourceCostType: cost
+          guid: caa30d88-68d5-4d89-9ddd-0214e537a026
+          replaceText: vertical slide
+          sourceguid: b2d30fbe-0c95-49fa-ba01-70115ac850c3
+          activationCondition: false
+          modtype: none
+        guid: b2d30fbe-0c95-49fa-ba01-70115ac850c3
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        promptWhenResolvingText: Select targets to pull in your preferred order.
+        roll: 2d10 + Agility
+        promptWhenResolving: true
+        tiers:
+        - 10 psychic damage; pull 2
+        - 15 psychic damage; pull 4
+        - 18 psychic damage; pull 6
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      modifiers: []
+      persistence: []
+      abilityType: none
+      range: 3
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 97
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      targetTextOverride: Each enemy in the area
+      guid: 3c65b841-7c1f-49b6-a47d-c6cbfa2518f6
+      range: 10
+      resourceNumber: 5
+      implementation: 4
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      description: Each target must be dragonsealed. Each target takes 3 psychic damage, and if they have I<3 they immediately make a free strike against one creature of the dragon's choice.
+      modifiers: []
+      numTargets: 1
+      targetType: all
+      keywords:
+        Magic: true
+        Area: true
+      categorization: Heroic Ability
+      name: Visions in the Dark
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      targetFilter: Target.Ongoing Effects has "DragonsealedGloom"
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        chatMessage: Visions in the Dark
+        roll: "3"
+        damageType: psychic
+        titleText: Visions in the Dark
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          description: ""
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          name: Invoked Ability
+          behaviors: []
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          guid: ff5ff39b-034a-4102-827d-6190d3442f2b
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
+          abilityType: none
+          range: 1
+        promptText: "Visions in the Dark: the target makes a free strike against one creature of the dragon's choice"
+        filterTarget: Intuition Potency Resistance < 3
+        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+        abilityType: standard
+      targetAllegiance: enemy
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      iconid: ui-icons/skills/1.png
+      strain: []
+      abilityType: none
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 97
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      range: 5
+      targetTextOverride: Each enemy in the area
+      guid: 69962dba-ff8e-4e9b-b36c-708e90f16209
+      implementation: 4
+      strain: []
+      description: ""
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      usageLimitOptions:
+        multicharge: false
+        resourceRefreshType: encounter
+        charges: "1"
+        resourceid: 8f5fbb93-0935-4212-9d0b-e43ef84a3673
+      modifiers: []
+      numTargets: 1
+      targetType: all
+      keywords:
+        Magic: true
+        Area: true
+      categorization: Villain Action
+      name: Enveloping Umbrage
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      targetFilter: ""
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        promptWhenResolvingText: Select target to pull in your preferred order.
+        roll: 2d10 + Agility
+        promptWhenResolving: true
+        tiers:
+        - pull 2; I<2 frightened (EoT)
+        - pull 4; I<3 frightened (save ends)
+        - pull 6; I<4 frightened (save ends)
+      targetAllegiance: enemy
+      villainAction: Villain Action 1
+      iconid: ui-icons/skills/1.png
+      persistence: []
+      abilityType: none
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        page: 97
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+      targetTextOverride: Each enemy in the area
+      guid: 9d6a49ed-34d0-4a94-a415-ff1a380396c6
+      range: 10
+      strain: []
+      implementation: 4
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      description: Each target must be dragonsealed. Any target who has I<3 is also dazed (save ends).
+      modifiers: []
+      numTargets: 1
+      targetType: all
+      keywords:
+        Magic: true
+        Area: true
+      categorization: Villain Action
+      name: Pall of Nightmares
+      villainAction: Villain Action 2
+      usageLimitOptions:
+        multicharge: false
+        resourceRefreshType: encounter
+        charges: "1"
+        resourceid: c32b0b68-2d70-4e71-8d9e-0996edcea47e
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 6 psychic damage
+        - 11 psychic damage
+        - 14 psychic damage
+        roll: 2d10 + Agility
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: I<3 dazed (save ends)
+        filterTarget: ""
+        applyto: targets
+      targetAllegiance: enemy
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      targetFilter: Target.Ongoing Effects has "DragonsealedGloom"
+      iconid: ui-icons/skills/1.png
+      abilityType: none
+      objectTarget: false
+    - __typeName: ActivatedAbility
+      flavor: ""
+      repeatTargets: false
+      implementation: 3
+      guid: 46f54334-5247-4b11-b1fc-b967a50c5445
+      strain: []
+      display:
+        saturation: 1
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+      description: The dragon disappears from the encounter map. The dragon and three hallucinatory illusions of themself then immediately reappear in unoccupied spaces on the encounter map, and the dragon and each illusion uses Breath of Brume. Each illusion is indistinguishable from the dragon except by supernatural means, has 1 Stamina, and has the dragon's speed. An illusion acts on the dragon's turns but can take only move actions. Once per round before or after using an ability, the dragon can trade places with any duplicate using Trade Places.
+      iconid: ui-icons/skills/1.png
+      numTargets: 1
+      targetType: self
+      keywords: []
+      categorization: Villain Action
+      name: Absence of All Light
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: teleport 100
+        applyto: caster
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          description: ""
+          modifiers: []
+          numTargets: "1"
+          repeatTargets: false
+          categorization: Hidden
+          range: 100
+          name: Absence of All Light
+          targetType: emptyspace
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            numSummons: "1"
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: true
+            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
+            casterControls: true
+          persistence: []
+          guid: 4a97e5fb-13f6-4586-92e8-44bc4a913635
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          display:
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+        promptText: Place first illusion
+        guid: f047b30a-bfcd-419f-b995-b7f54d60d66a
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          description: ""
+          modifiers: []
+          numTargets: "1"
+          repeatTargets: false
+          categorization: Hidden
+          range: 100
+          name: Absence of All Light
+          targetType: emptyspace
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            numSummons: "1"
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: true
+            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
+            casterControls: true
+          persistence: []
+          guid: 51dbefe4-20a4-406c-bd88-9458bc563419
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          display:
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+        promptText: Place second illusion
+        guid: d2b85737-6c19-4722-af6e-e670e253449f
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          __typeName: ActivatedAbility
+          description: ""
+          modifiers: []
+          numTargets: "1"
+          repeatTargets: false
+          categorization: Hidden
+          range: 100
+          name: Absence of All Light
+          targetType: emptyspace
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            numSummons: "1"
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: true
+            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
+            casterControls: true
+          persistence: []
+          guid: 602ea531-c22c-46d7-bbbe-854b0c65ad8c
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          display:
+            saturation: 1
+            brightness: 1
+            hueshift: 0
+            bgcolor: "#ffffffff"
+        promptText: Place third illusion
+        guid: 1fcc468e-325a-4e97-86b0-1c8ad3444965
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        ongoingEffect: da0493e6-9618-472f-a4da-866f8a24e1be
+        applyto: caster
+        duration: eoe
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        promptWhenResolvingText: Choose who uses Breath of Brume next
+        promptText: "Absence of All Light: use Breath of Brume"
+        promptWhenResolving: true
+        guid: a4a387dc-bb5c-4ef9-bfdf-045e572f2502
+        filterTarget: Name is "Gloom Dragon" or Name is "Gloom Dragon Illusion"
+        namedAbility: Breath of Brume
+        abilityType: named
+        applyto: all_creatures
+      villainAction: Villain Action 3
+      modifiers: []
+      usageLimitOptions:
+        multicharge: false
+        resourceRefreshType: encounter
+        charges: "1"
+        resourceid: 913dc9dd-3ee3-484f-ab37-13f274f3f2d1
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      abilityType: none
+      range: 1
+    cr: 4
+    opportunityAttack: 6
+    innateAttacks: []
+    max_hitpoints: 350
+    equipment: []
+    resources:
+      8f5fbb93-0935-4212-9d0b-e43ef84a3673:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e
+      6d45b5dc-30d5-46b5-8712-8ad063bd9869:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: ea6617f0-b3e3-415d-9f49-fe9fdfa3a645-1-7e1ea341-8d87-46c6-b8f1-744178c56210-0
+      7038b266-8ab6-4649-8a20-d76fa95e1273:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e-1
+      913dc9dd-3ee3-484f-ab37-13f274f3f2d1:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 23590346-73f9-484d-ba53-0e21a6594b21
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        used: 1
+      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e-1-7e1ea341-8d87-46c6-b8f1-744178c56210-0
+    currentMoveType: walk
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: c41adb5b-3f80-4d89-994b-a34489d6b63a-1489
     import:
+      type: mcdm
       data: |+
         Gloom Dragon	Level 4 Solo
         Dragon, Elemental	EV 60
@@ -174,966 +658,519 @@ info:
         <b>Effect</b> The dragon disappears and then reappears anywhere on the encounter map, along with three hallucinatory versions of them at other points on the encounter map (the director determines which one is real). Then, the dragon and each hallucination immediately uses Breath of Brume.
         Each hallucination has 1 Stamina and shares the dragon's speed and turn. Once per round, the dragon can instantly trade places with a duplicate before or after using an ability.
 
-      type: mcdm
+    ev: 72
+    movementSpeeds:
+      fly: 8
+    initiativeGrouping: 29b7245a-9652-4311-b548-6b12232288f3
     attributes:
-      int:
-        __typeName: CharacterAttribute
-        id: int
-      wis:
-        __typeName: CharacterAttribute
-        id: wis
-      prs:
-        id: prs
-        baseValue: 4
-      dex:
-        __typeName: CharacterAttribute
-        id: dex
-      con:
-        __typeName: CharacterAttribute
-        id: con
       inu:
         id: inu
         baseValue: 3
+      wis:
+        __typeName: CharacterAttribute
+        id: wis
       str:
         __typeName: CharacterAttribute
         id: str
       agl:
         id: agl
         baseValue: 4
-      rea:
-        id: rea
-        baseValue: 1
+      int:
+        __typeName: CharacterAttribute
+        id: int
       mgt:
         id: mgt
         baseValue: 2
+      con:
+        __typeName: CharacterAttribute
+        id: con
       cha:
         __typeName: CharacterAttribute
         id: cha
-    notes:
-    - title: Monster Notes
-      text: ""
-    initiativeGrouping: b6b6d8b3-8805-4e4a-a63f-d473bd0d8d1c
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      objectTarget: true
-      range: 10
-      targetType: cube
-      radius: "4"
-      guid: dcbcf78b-0f5d-470a-9a0b-a1d610905ef3
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      numTargets: 1
-      abilityType: none
-      description: Each target makes an Agility test. A dragonsealed creature has psychic weakness 3 and cold weakness 3. Additionally, the area is filled with magical darkness. The dragon ignores concealment created by this darkness.
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      flavor: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        resistanceRoll: true
-        tiers:
-        - 14 cold damage; the target is dragonsealed (save ends)
-        - 11 cold damage; the target is dragonsealed (save ends)
-        - 6 cold damage
-        attrid: agl
-        isTest: false
-        resistanceAttr: agl
-        roll: 2d10 + Agility
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        durationUntilEndOfTurn: false
-        ongoingEffectCustom: false
-        tiersSelected:
-        - 2
-        - 1
-        ongoingEffect: 69be16df-3735-4234-904f-1b781284e1fd
-        duration: save_ends
-      - __typeName: ActivatedAbilityAuraBehavior
-        aliveafterdeath: true
-        aura:
-          __typeName: Aura
-          applyto: all
-          objectid: a4861b94-821f-4cf5-baa1-fd1b7e7cc4cc
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          relocateResource: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          triggers: []
-          concealment: true
-          movedamage: none
-          guid: cf3dffd2-a007-4c38-bf0f-e120cdce46b8
-          name: Magical Darkness
-          canrelocate: true
-          relocateRange: 10
-          modifiers: []
-          creatureFilter: ""
-        duration: eoe
-      targetFilter: Enemy
-      categorization: Signature Ability
-      name: Breath of Brume
-      repeatTargets: false
-      targetTextOverride: Each enemy and object in the area
-      implementation: 3
-      keywords:
-        Magic: true
-        Ranged: true
-        Area: true
-    - __typeName: ActivatedAbility
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 97
-      behaviors:
-      - __typeName: ActivatedAbilityModifyPowerRollBehavior
-        guid: b2d30fbe-0c95-49fa-ba01-70115ac850c3
-        modifier:
-          __typeName: CharacterModifier
-          behavior: power
-          replacePattern: pull
-          description: "3 Malice: The pull becomes a vertical slide."
-          replaceText: vertical slide
-          activationCondition: false
-          sourceguid: b2d30fbe-0c95-49fa-ba01-70115ac850c3
-          modtype: none
-          rollType: ability_power_roll
-          guid: caa30d88-68d5-4d89-9ddd-0214e537a026
-          name: "3 Malice: Vertical Slide"
-          resourceCostType: cost
-          domains: []
-          resourceCostAmount: "3"
-          keywords: []
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        promptWhenResolving: true
-        promptWhenResolvingText: Select targets to pull in your preferred order.
-        tiers:
-        - 10 psychic damage; pull 2
-        - 15 psychic damage; pull 4
-        - 18 psychic damage; pull 6
-        roll: 2d10 + Agility
-      targetType: target
-      strain: []
-      guid: ec05a544-88b0-47bd-9663-49cc44e19fc4
-      modifiers: []
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      iconid: ui-icons/skills/1.png
-      numTargets: 2
-      abilityType: none
-      categorization: Signature Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      flavor: ""
-      persistence: []
-      range: 3
-      name: Phantom Tail Swing
-      description: |2-
-
-        **3 Malice**: The pull becomes a vertical slide.
-      repeatTargets: false
-      implementation: 3
-      keywords:
-        Charge: true
-        Strike: true
-        Magic: true
-        Melee: true
-    - __typeName: ActivatedAbility
-      objectTarget: false
-      sourceReference:
-        __typeName: SourceReference
-        page: 97
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      targetAllegiance: enemy
-      resourceNumber: 5
-      behaviors:
-      - __typeName: ActivatedAbilityDamageBehavior
-        roll: "3"
-        chatMessage: Visions in the Dark
-        titleText: Visions in the Dark
-        damageType: psychic
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-        abilityType: standard
-        filterTarget: Intuition Potency Resistance < 3
-        promptText: "Visions in the Dark: the target makes a free strike against one creature of the dragon's choice"
-        customAbility:
-          __typeName: ActivatedAbility
-          numTargets: "1"
-          abilityType: none
-          description: ""
-          range: 1
-          targetType: self
-          repeatTargets: false
-          guid: ff5ff39b-034a-4102-827d-6190d3442f2b
-          modifiers: []
-          behaviors: []
-          name: Invoked Ability
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          iconid: ui-icons/skills/1.png
-      targetType: all
-      strain: []
-      guid: 3c65b841-7c1f-49b6-a47d-c6cbfa2518f6
-      modifiers: []
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: ui-icons/skills/1.png
-      numTargets: 1
-      abilityType: none
-      categorization: Heroic Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      targetTextOverride: Each enemy in the area
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      targetFilter: Target.Ongoing Effects has "DragonsealedGloom"
-      repeatTargets: false
-      range: 10
-      name: Visions in the Dark
-      flavor: ""
-      description: Each target must be dragonsealed. Each target takes 3 psychic damage, and if they have I<3 they immediately make a free strike against one creature of the dragon's choice.
-      implementation: 4
-      keywords:
-        Magic: true
-        Area: true
-    - __typeName: ActivatedAbility
-      objectTarget: false
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 97
-      targetAllegiance: enemy
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        promptWhenResolving: true
-        promptWhenResolvingText: Select target to pull in your preferred order.
-        tiers:
-        - pull 2; I<2 frightened (EoT)
-        - pull 4; I<3 frightened (save ends)
-        - pull 6; I<4 frightened (save ends)
-        roll: 2d10 + Agility
-      targetType: all
-      strain: []
-      guid: 69962dba-ff8e-4e9b-b36c-708e90f16209
-      modifiers: []
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      iconid: ui-icons/skills/1.png
-      targetTextOverride: Each enemy in the area
-      targetFilter: ""
-      numTargets: 1
-      abilityType: none
-      categorization: Villain Action
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      usageLimitOptions:
-        multicharge: false
-        resourceRefreshType: encounter
-        charges: "1"
-        resourceid: 8f5fbb93-0935-4212-9d0b-e43ef84a3673
-      flavor: ""
-      villainAction: Villain Action 1
-      persistence: []
-      range: 5
-      name: Enveloping Umbrage
-      description: ""
-      repeatTargets: false
-      implementation: 4
-      keywords:
-        Magic: true
-        Area: true
-    - __typeName: ActivatedAbility
-      objectTarget: false
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 97
-      targetAllegiance: enemy
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 6 psychic damage
-        - 11 psychic damage
-        - 14 psychic damage
-        roll: 2d10 + Agility
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        applyto: targets
-        rule: I<3 dazed (save ends)
-        filterTarget: ""
-      targetType: all
-      strain: []
-      guid: 9d6a49ed-34d0-4a94-a415-ff1a380396c6
-      modifiers: []
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      iconid: ui-icons/skills/1.png
-      abilityType: none
-      numTargets: 1
-      targetFilter: Target.Ongoing Effects has "DragonsealedGloom"
-      description: Each target must be dragonsealed. Any target who has I<3 is also dazed (save ends).
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      villainAction: Villain Action 2
-      flavor: ""
-      usageLimitOptions:
-        multicharge: false
-        resourceRefreshType: encounter
-        charges: "1"
-        resourceid: c32b0b68-2d70-4e71-8d9e-0996edcea47e
-      range: 10
-      categorization: Villain Action
-      name: Pall of Nightmares
-      targetTextOverride: Each enemy in the area
-      repeatTargets: false
-      implementation: 4
-      keywords:
-        Magic: true
-        Area: true
-    - __typeName: ActivatedAbility
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        applyto: caster
-        rule: teleport 100
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Place first illusion
-        guid: f047b30a-bfcd-419f-b995-b7f54d60d66a
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          numTargets: "1"
-          abilityType: none
-          categorization: Hidden
-          behaviors:
-          - __typeName: ActivatedAbilitySummonBehavior
-            groupInitiativeWithCaster: true
-            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
-            numSummons: "1"
-            casterChoosesCreatures: false
-            casterControls: true
-          range: 100
-          targetType: emptyspace
-          display:
-            saturation: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-          strain: []
-          guid: 4a97e5fb-13f6-4586-92e8-44bc4a913635
-          modifiers: []
-          name: Absence of All Light
-          persistence: []
-          description: ""
-          iconid: ui-icons/skills/1.png
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Place second illusion
-        guid: d2b85737-6c19-4722-af6e-e670e253449f
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          numTargets: "1"
-          abilityType: none
-          categorization: Hidden
-          behaviors:
-          - __typeName: ActivatedAbilitySummonBehavior
-            groupInitiativeWithCaster: true
-            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
-            numSummons: "1"
-            casterChoosesCreatures: false
-            casterControls: true
-          range: 100
-          targetType: emptyspace
-          display:
-            saturation: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-          strain: []
-          guid: 51dbefe4-20a4-406c-bd88-9458bc563419
-          modifiers: []
-          name: Absence of All Light
-          persistence: []
-          description: ""
-          iconid: ui-icons/skills/1.png
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Place third illusion
-        guid: 1fcc468e-325a-4e97-86b0-1c8ad3444965
-        customAbility:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          numTargets: "1"
-          abilityType: none
-          categorization: Hidden
-          behaviors:
-          - __typeName: ActivatedAbilitySummonBehavior
-            groupInitiativeWithCaster: true
-            monsterType: 044a1034-8336-420d-b4d8-0e5a90981f46
-            numSummons: "1"
-            casterChoosesCreatures: false
-            casterControls: true
-          range: 100
-          targetType: emptyspace
-          display:
-            saturation: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            brightness: 1
-          strain: []
-          guid: 602ea531-c22c-46d7-bbbe-854b0c65ad8c
-          modifiers: []
-          name: Absence of All Light
-          persistence: []
-          description: ""
-          iconid: ui-icons/skills/1.png
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        applyto: caster
-        ongoingEffectCustom: false
-        ongoingEffect: da0493e6-9618-472f-a4da-866f8a24e1be
-        duration: eoe
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: all_creatures
-        namedAbility: Breath of Brume
-        guid: a4a387dc-bb5c-4ef9-bfdf-045e572f2502
-        abilityType: named
-        filterTarget: Name is "Gloom Dragon" or Name is "Gloom Dragon Illusion"
-        promptText: "Absence of All Light: use Breath of Brume"
-        promptWhenResolvingText: Choose who uses Breath of Brume next
-        promptWhenResolving: true
-      targetType: self
-      strain: []
-      guid: 46f54334-5247-4b11-b1fc-b967a50c5445
-      modifiers: []
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      iconid: ui-icons/skills/1.png
-      repeatTargets: false
-      abilityType: none
-      description: The dragon disappears from the encounter map. The dragon and three hallucinatory illusions of themself then immediately reappear in unoccupied spaces on the encounter map, and the dragon and each illusion uses Breath of Brume. Each illusion is indistinguishable from the dragon except by supernatural means, has 1 Stamina, and has the dragon's speed. An illusion acts on the dragon's turns but can take only move actions. Once per round before or after using an ability, the dragon can trade places with any duplicate using Trade Places.
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      flavor: ""
-      usageLimitOptions:
-        multicharge: false
-        resourceRefreshType: encounter
-        charges: "1"
-        resourceid: 913dc9dd-3ee3-484f-ab37-13f274f3f2d1
-      range: 1
-      villainAction: Villain Action 3
-      name: Absence of All Light
-      numTargets: 1
-      categorization: Villain Action
-      implementation: 3
-      keywords: []
-    equipmentMeta:
-      offhand0: []
-    movementSpeeds:
-      fly: 8
+      prs:
+        id: prs
+        baseValue: 4
+      dex:
+        __typeName: CharacterAttribute
+        id: dex
+      rea:
+        id: rea
+        baseValue: 1
+    walkingSpeed: 8
+    resistances:
+    - __typeName: ResistanceEntry
+      dr: 5
+      damageType: psychic
+      apply: Damage Reduction
     role: Solo
-    cr: 4
+    keywords:
+      Gloom Dragon: true
+      Elemental: true
+      Dragon: true
     monster_type: Gloom Dragon
-    equipment: []
-    currentMoveType: walk
-    animations:
-      guid: c41adb5b-3f80-4d89-994b-a34489d6b63a-1489
-      anim:
-      - animType: consumeResource
-        resources:
-          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
-    skillProficiencies: []
+    auras: []
+    ongoingEffects: []
+    traitNames: []
     characterFeatures:
     - __typeName: CharacterFeature
       source: Trait
-      guid: f54a9ee9-b8d2-4a11-a109-eb54e344ec11
-      name: Gloaming Wyrmscale Aura
-      description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
-      domains:
-        CharacterFeature:f54a9ee9-b8d2-4a11-a109-eb54e344ec11: true
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        behavior: aura
         description: ""
+        behavior: aura
         sourceguid: f54a9ee9-b8d2-4a11-a109-eb54e344ec11
+        name: Gloaming Wyrmscale Aura
         source: Trait
+        guid: 05f5821c-c7df-4656-8b58-c47acf998d0a
         radius: "3"
         aura:
           __typeName: Aura
-          applyto: enemies
-          subauras:
-          - __typeName: Aura
-            applyto: sametype
-            guid: fe7aaa12-a869-40e0-ad18-2e938ae78b5a
-            name: Sub-Aura
-            concealment: true
-            display:
-              saturation: 1
-              brightness: 1
-              bgcolor: "#ffffffff"
-              hueshift: 0
-            modifiers: []
-            creatureFilter: Self
           description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#5a4a7aff"
-            hueshift: 0
-          triggers: []
-          source: Gloaming Wyrmscale Aura
-          guid: 6cfd41ae-45b1-4540-afa7-ffe6b8cea907
           modifiers:
           - __typeName: CharacterModifier
             source: Aura
+            behavior: trigger
             guid: e538922a-1337-465d-b6e0-c7a93aab42dd
-            name: Gloaming Wyrmscale Aura
-            description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
             triggeredAbility:
               __typeName: TriggeredAbility
-              range: 1
+              repeatTargets: false
               trigger: beginturn
-              silent: true
-              strain: []
               guid: 4ddd0270-1b2a-4723-b39a-ba445b6d95ef
-              modifiers: []
-              iconid: ui-icons/skills/1.png
+              strain: []
               mandatory: true
-              numTargets: "1"
-              abilityType: none
-              description: ""
               display:
                 saturation: 1
+                hueshift: 0
                 brightness: 1
                 bgcolor: "#ffffffff"
-                hueshift: 0
-              persistence: []
-              name: Gloaming Wyrmscale Aura
-              repeatTargets: false
+              description: ""
+              modifiers: []
+              numTargets: "1"
               targetType: self
+              name: Gloaming Wyrmscale Aura
+              silent: true
               behaviors:
               - __typeName: ActivatedAbilityDamageBehavior
-                damageType: psychic
                 chatMessage: Gloaming Wyrmscale Aura
+                damageType: psychic
                 titleText: Gloaming Wyrmscale Aura
                 roll: "2"
-            behavior: trigger
+              iconid: ui-icons/skills/1.png
+              persistence: []
+              abilityType: none
+              range: 1
+            description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
             sourceguid: 6cfd41ae-45b1-4540-afa7-ffe6b8cea907
+            name: Gloaming Wyrmscale Aura
           movedamage: none
+          subauras:
+          - __typeName: Aura
+            creatureFilter: Self
+            name: Sub-Aura
+            guid: fe7aaa12-a869-40e0-ad18-2e938ae78b5a
+            concealment: true
+            applyto: sametype
+            modifiers: []
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
           name: Gloaming Wyrmscale Aura
+          source: Gloaming Wyrmscale Aura
+          applyto: enemies
           implementation: 3
+          guid: 6cfd41ae-45b1-4540-afa7-ffe6b8cea907
+          triggers: []
           creatureFilter: ""
-        name: Gloaming Wyrmscale Aura
+          objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#5a4a7aff"
         domains:
           CharacterFeature:f54a9ee9-b8d2-4a11-a109-eb54e344ec11: true
-        guid: 05f5821c-c7df-4656-8b58-c47acf998d0a
       - __typeName: CharacterModifier
-        behavior: power
         description: While one or more enemies is in the dragon's aura, the dragon's abilities deal an extra 3 psychic damage.
-        name: Gloaming Wyrmscale Aura
-        activationCondition: "1"
+        behavior: power
+        rollType: ability_power_roll
         sourceguid: f54a9ee9-b8d2-4a11-a109-eb54e344ec11
+        name: Gloaming Wyrmscale Aura
         source: Trait
-        damageModifierType: psychic
+        modtype: none
+        damageModifier: "3"
         guid: 2e4ca20a-7054-4b58-bea3-6c26d3d1eec3
         displayCondition: CountNearbyEnemies(3) >= 1
-        modtype: none
+        damageModifierType: psychic
+        activationCondition: "1"
         domains:
           CharacterFeature:f54a9ee9-b8d2-4a11-a109-eb54e344ec11: true
-        damageModifier: "3"
-        rollType: ability_power_roll
       - __typeName: CharacterModifier
-        value: 1
-        behavior: attribute
         description: The dragon ignores concealment created by its magical darkness.
-        attribute: 16228928-9f29-4510-a703-65344f2356ef
+        behavior: attribute
         sourceguid: f54a9ee9-b8d2-4a11-a109-eb54e344ec11
+        name: Gloaming Wyrmscale Aura
         source: Trait
         guid: 76f0e185-5e2c-4a06-bd4c-3d163fae3f45
-        name: Gloaming Wyrmscale Aura
+        value: 1
+        attribute: 16228928-9f29-4510-a703-65344f2356ef
         domains:
           CharacterFeature:f54a9ee9-b8d2-4a11-a109-eb54e344ec11: true
+      implementation: 3
+      guid: f54a9ee9-b8d2-4a11-a109-eb54e344ec11
+      domains:
+        CharacterFeature:f54a9ee9-b8d2-4a11-a109-eb54e344ec11: true
+      description: The dragon's scales create a 3 aura of dark supernatural fog around them that feeds on their victims' fears and provides concealment to the dragon only. Each enemy who starts their turn in the area takes 2 psychic damage. Additionally, whenever one or more enemies is in the area, the dragon's abilities deal an extra 3 psychic damage.
+      name: Gloaming Wyrmscale Aura
     - __typeName: CharacterFeature
       source: Trait
-      guid: 6076095e-130c-45ba-a6d4-7d6272aad99e
-      name: Gloom Dragon's Domain
-      description: If the encounter map is a location the dragon has occupied for 1 week or more, illusory magic suffuses the location with shadowy malevolence. Each creature on the encounter map other than the dragon takes a -2 penalty to saving throws made to end the frightened condition. Additionally, whenever a frightened enemy on the encounter map takes damage, they take an extra 3 psychic damage.
-      domains:
-        CharacterFeature:6076095e-130c-45ba-a6d4-7d6272aad99e: true
-      implementation: 4
       modifiers:
       - __typeName: CharacterModifier
         source: Trait
-        modes:
-        - name: Wandering
-        - description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
-          name: In Their Domain
         behavior: monstermodes
-        name: Gloom Dragon's Domain
-        description: Switch on In Their Domain when the encounter map is a location the dragon has occupied for 1 week or more.
         domains:
           CharacterFeature:6076095e-130c-45ba-a6d4-7d6272aad99e: true
         guid: d123137e-4af9-42ed-a8f7-bd18994227dd
         sourceguid: 6076095e-130c-45ba-a6d4-7d6272aad99e
+        description: Switch on In Their Domain when the encounter map is a location the dragon has occupied for 1 week or more.
+        modes:
+        - name: Wandering
+        - description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
+          name: In Their Domain
+        name: Gloom Dragon's Domain
       - __typeName: CharacterModifier
-        behavior: aura
-        conditionFormula: Monster Mode = 2
         description: ""
+        behavior: aura
         sourceguid: 6076095e-130c-45ba-a6d4-7d6272aad99e
+        conditionFormula: Monster Mode = 2
+        name: Gloom Dragon's Domain
         source: Trait
+        filterCondition: Monster Mode = 2
+        guid: 86b325eb-18fc-4850-a030-044336819922
         radius: "100"
         aura:
           __typeName: Aura
-          applyto: allother
+          description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
+          modifiers:
+          - __typeName: CharacterModifier
+            description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
+            behavior: attribute
+            attribute: 02644e92-ec2c-4cf1-8a40-c569e2e5ac8b
+            guid: e1c659c9-140f-4003-a81c-807053ca1a45
+            source: Aura
+            sourceguid: 2cea6a7d-c803-4d1a-99b5-85dce5610bd2
+            value: -2
+            name: Gloom Dragon's Domain
+          movedamage: none
           subauras:
           - __typeName: Aura
-            applyto: enemies
             description: Fightened enemies take an extra 3 psychic damage whenever they take damage.
-            display:
-              saturation: 1
-              brightness: 1
-              bgcolor: "#ffffffff"
-              hueshift: 0
-            triggers: []
-            guid: a7a9efb6-9c48-47fa-b80b-a6681a59b22f
-            name: Gloom Dragon's Domain (Frightened Enemies)
-            movedamage: none
             modifiers:
             - __typeName: CharacterModifier
               source: Aura
-              description: Fightened enemies take an extra 3 psychic damage whenever they take damage.
               behavior: trigger
-              name: Gloom Dragon's Domain
+              filterCondition: Conditions has "Frightened"
+              guid: 4ef73502-bfb5-47e3-86fb-10347e293c24
               triggeredAbility:
                 __typeName: TriggeredAbility
-                range: 1
-                trigger: losehitpoints
-                silent: true
-                strain: []
-                guid: 9246e144-a0f4-4751-bb89-d46fc874d318
-                modifiers: []
-                iconid: ui-icons/skills/1.png
-                mandatory: true
                 repeatTargets: false
-                abilityType: none
-                description: ""
+                trigger: losehitpoints
+                implementation: 4
+                guid: 9246e144-a0f4-4751-bb89-d46fc874d318
+                strain: []
+                mandatory: true
                 display:
                   saturation: 1
+                  hueshift: 0
                   brightness: 1
                   bgcolor: "#ffffffff"
-                  hueshift: 0
-                persistence: []
-                name: Gloom Dragon's Domain
+                description: ""
+                modifiers: []
                 numTargets: "1"
                 targetType: self
-                implementation: 4
+                name: Gloom Dragon's Domain
+                silent: true
                 behaviors:
                 - __typeName: ActivatedAbilityDamageBehavior
                   chatMessage: Gloom Dragon's Domain
                   doesNotTrigger: true
+                  damageType: psychic
                   roll: "3"
                   titleText: Gloom Dragon's Domain
-                  damageType: psychic
-              filterCondition: Conditions has "Frightened"
-              guid: 4ef73502-bfb5-47e3-86fb-10347e293c24
+                iconid: ui-icons/skills/1.png
+                persistence: []
+                abilityType: none
+                range: 1
               sourceguid: a7a9efb6-9c48-47fa-b80b-a6681a59b22f
+              description: Fightened enemies take an extra 3 psychic damage whenever they take damage.
+              name: Gloom Dragon's Domain
+            movedamage: none
+            name: Gloom Dragon's Domain (Frightened Enemies)
             implementation: 4
+            guid: a7a9efb6-9c48-47fa-b80b-a6681a59b22f
+            display:
+              saturation: 1
+              hueshift: 0
+              brightness: 1
+              bgcolor: "#ffffffff"
+            triggers: []
             creatureFilter: ""
-          description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#00000000"
-            hueshift: 0
+            applyto: enemies
           triggers: []
           source: Gloom Dragon's Domain
-          guid: 2cea6a7d-c803-4d1a-99b5-85dce5610bd2
-          modifiers:
-          - __typeName: CharacterModifier
-            value: -2
-            guid: e1c659c9-140f-4003-a81c-807053ca1a45
-            behavior: attribute
-            name: Gloom Dragon's Domain
-            description: All other creatures take -2 on saving throws while frightened, and frightened enemies take an extra 3 psychic damage whenever they take damage.
-            attribute: 02644e92-ec2c-4cf1-8a40-c569e2e5ac8b
-            source: Aura
-            sourceguid: 2cea6a7d-c803-4d1a-99b5-85dce5610bd2
-          movedamage: none
-          name: Gloom Dragon's Domain
           implementation: 4
+          guid: 2cea6a7d-c803-4d1a-99b5-85dce5610bd2
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#00000000"
+          name: Gloom Dragon's Domain
           creatureFilter: ""
-        name: Gloom Dragon's Domain
-        filterCondition: Monster Mode = 2
+          applyto: allother
         domains:
           CharacterFeature:6076095e-130c-45ba-a6d4-7d6272aad99e: true
-        guid: 86b325eb-18fc-4850-a030-044336819922
+      implementation: 4
+      guid: 6076095e-130c-45ba-a6d4-7d6272aad99e
+      domains:
+        CharacterFeature:6076095e-130c-45ba-a6d4-7d6272aad99e: true
+      description: If the encounter map is a location the dragon has occupied for 1 week or more, illusory magic suffuses the location with shadowy malevolence. Each creature on the encounter map other than the dragon takes a -2 penalty to saving throws made to end the frightened condition. Additionally, whenever a frightened enemy on the encounter map takes damage, they take an extra 3 psychic damage.
+      name: Gloom Dragon's Domain
     - __typeName: CharacterFeature
       source: Trait
-      guid: 41e2a67e-9b71-48bd-b1fa-52ed44f225dd
-      name: Solo Monster
-      description: "At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. "
-      domains:
-        CharacterFeature:41e2a67e-9b71-48bd-b1fa-52ed44f225dd: true
-      implementation: 4
       modifiers:
       - __typeName: CharacterModifier
         source: Trait
         behavior: trigger
-        name: End Effect
-        description: "At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. "
+        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
         triggeredAbility:
           __typeName: TriggeredAbility
-          triggerPrompt: End effect for 10
-          conditionFormula: Save Ends Effects
-          range: 1
-          targetType: self
-          strain: []
+          repeatTargets: false
+          trigger: endturn
+          implementation: 4
           guid: d7fb95fc-a78f-457f-bad6-1283f029cc88
-          modifiers: []
-          whenActive: combat
-          iconid: ui-icons/skills/1.png
+          strain: []
           mandatory: false
-          numTargets: "1"
-          abilityType: none
-          description: ""
           display:
             saturation: 1
+            hueshift: 0
             brightness: 1
             bgcolor: "#ffffffff"
-            hueshift: 0
-          persistence: []
-          repeatTargets: false
+          description: ""
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          conditionFormula: Save Ends Effects
+          whenActive: combat
           name: End Effect
-          trigger: endturn
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            purgeType: one
             targetDuration: save
+            conditions: []
             damageToSelf: "10"
-          implementation: 4
+            purgeType: one
           castImmediately: true
-        guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
+          triggerPrompt: End effect for 10
+          iconid: ui-icons/skills/1.png
+          persistence: []
+          abilityType: none
+          range: 1
         sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        description: "At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way. "
+        name: End Effect
+      - __typeName: CharacterModifier
+        description: The dragon can take two turns each round. They can't take turns consecutively.
+        behavior: attribute
+        sourceguid: 41e2a67e-9b71-48bd-b1fa-52ed44f225dd
+        name: Solo Turns
+        source: Character Feature
+        guid: b849cc14-fc7f-4120-9a98-f9c2bef465fd
+        domains:
+          CharacterFeature:41e2a67e-9b71-48bd-b1fa-52ed44f225dd: true
+        attribute: extraturns
+        value: 1
+      implementation: 4
+      guid: 41e2a67e-9b71-48bd-b1fa-52ed44f225dd
+      domains:
+        CharacterFeature:41e2a67e-9b71-48bd-b1fa-52ed44f225dd: true
+      description: "**End Effect:** At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.\n**Solo Turns:** The dragon can take two turns each round. They can't take turns consecutively."
+      name: Solo Monster
     - __typeName: CharacterFeature
       source: Trait
-      guid: b41da1c6-76e7-40ba-90a9-34530298508e
-      name: Shadow Skulk
-      description: Once per turn, the dragon can shift up to their speed, leaving behind a 4 cube area of magical darkness in their starting space that lasts until the end of the encounter. The dragon ignores concealment created by this darkness. Any enemy who ends their turn in the area and has I<3 is frightened of the dragon until the end of their next turn.
-      domains:
-        CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        source: Trait
-        name: Shadow Skulk
+        description: ""
         behavior: activated
+        domains:
+          CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
+        sourceguid: b41da1c6-76e7-40ba-90a9-34530298508e
         activatedAbility:
           __typeName: ActivatedAbility
+          repeatTargets: false
           sourceReference:
             __typeName: SourceReference
             page: 97
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
-          range: 1
-          targetType: cube
-          radius: "4"
-          guid: fc681314-4026-4d08-9419-920e88ccae14
-          modifiers: []
-          actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
-          iconid: ui-icons/skills/1.png
           targetTextOverride: Place the 4 cube of magical darkness on your starting space
-          description: Once per turn, the dragon can shift up to their speed, leaving behind a 4 cube area of magical darkness in their starting space that lasts until the end of the encounter. Any enemy who ends their turn in the area and has I<3 is frightened of the dragon until the end of their next turn.
-          repeatTargets: false
-          abilityType: none
-          categorization: Ability
+          guid: fc681314-4026-4d08-9419-920e88ccae14
+          domains:
+            CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
+          strain: []
+          implementationDetails: "The area is not automatically placed, you will need to place the area over the dragon's current position. "
           display:
             saturation: 1
+            hueshift: 0
             brightness: 1
             bgcolor: "#ffffffff"
-            hueshift: 0
-          strain: []
-          persistence: []
-          usageLimitOptions:
-            resourceRefreshType: turn
-            charges: "1"
-            resourceid: 6d45b5dc-30d5-46b5-8712-8ad063bd9869
-          implementationDetails: "The area is not automatically placed, you will need to place the area over the dragon's current position. "
+          description: Once per turn, the dragon can shift up to their speed, leaving behind a 4 cube area of magical darkness in their starting space that lasts until the end of the encounter. Any enemy who ends their turn in the area and has I<3 is frightened of the dragon until the end of their next turn.
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          targetType: cube
+          keywords:
+            Magic: true
+          categorization: Ability
+          implementation: 3
+          actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+          name: Shadow Skulk
           behaviors:
           - __typeName: ActivatedAbilityAuraBehavior
             aliveafterdeath: true
             aura:
               __typeName: Aura
-              applyto: enemies
-              relocateResource: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-              objectid: a4861b94-821f-4cf5-baa1-fd1b7e7cc4cc
               description: Any enemy who ends their turn in the area and has i<3] is frightened of the dragon until the end of their next turn.
-              display:
-                saturation: 1
-                brightness: 1
-                bgcolor: "#ffffffff"
-                hueshift: 0
               relocateRange: 10
-              triggers: []
-              concealment: true
               movedamage: none
-              guid: 11bbc4da-118a-4413-8f16-45034b9648ad
+              applyto: enemies
+              canrelocate: true
+              name: Magical Darkness
+              triggers: []
+              creatureFilter: ""
               modifiers:
               - __typeName: CharacterModifier
                 source: Aura
+                behavior: trigger
                 guid: 3c41491f-0214-4cca-b00a-6ac3d38fb32f
-                name: Magical Darkness
-                description: Any enemy who ends their turn in the area and has i<3] is frightened of the dragon until the end of their next turn.
                 triggeredAbility:
                   __typeName: TriggeredAbility
-                  range: 1
+                  repeatTargets: false
                   trigger: endturn
-                  silent: true
-                  strain: []
                   guid: 9a2c69df-adcf-4d40-af0c-f687ecf51ec5
-                  modifiers: []
-                  iconid: ui-icons/skills/1.png
+                  strain: []
                   mandatory: true
-                  numTargets: "1"
-                  abilityType: none
-                  description: ""
                   display:
                     saturation: 1
+                    hueshift: 0
                     brightness: 1
                     bgcolor: "#ffffffff"
-                    hueshift: 0
-                  persistence: []
-                  name: Shadow Skulk Darkness
-                  repeatTargets: false
+                  description: ""
+                  modifiers: []
+                  numTargets: "1"
                   targetType: self
+                  name: Shadow Skulk Darkness
+                  silent: true
                   behaviors:
                   - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                    applyto: targets
                     rule: I<3 frightened (EoT)
-                behavior: trigger
+                    applyto: targets
+                  iconid: ui-icons/skills/1.png
+                  persistence: []
+                  abilityType: none
+                  range: 1
                 sourceguid: 11bbc4da-118a-4413-8f16-45034b9648ad
-              canrelocate: true
-              name: Magical Darkness
+                description: Any enemy who ends their turn in the area and has i<3] is frightened of the dragon until the end of their next turn.
+                name: Magical Darkness
               implementation: 3
-              creatureFilter: ""
+              guid: 11bbc4da-118a-4413-8f16-45034b9648ad
+              concealment: true
+              relocateResource: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+              objectid: a4861b94-821f-4cf5-baa1-fd1b7e7cc4cc
+              display:
+                saturation: 1
+                hueshift: 0
+                brightness: 1
+                bgcolor: "#ffffffff"
             duration: eoe
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            applyto: caster
             rule: shift {MovementSpeed}
-          name: Shadow Skulk
-          numTargets: "1"
-          domains:
-            CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
-          implementation: 3
-          keywords:
-            Magic: true
-        description: ""
-        domains:
-          CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
+            applyto: caster
+          usageLimitOptions:
+            resourceRefreshType: turn
+            charges: "1"
+            resourceid: 6d45b5dc-30d5-46b5-8712-8ad063bd9869
+          modifiers: []
+          radius: "4"
+          persistence: []
+          abilityType: none
+          range: 1
         guid: d896550d-076b-45dc-bfb9-67dfe7f7e1c4
-        sourceguid: b41da1c6-76e7-40ba-90a9-34530298508e
-    - __typeName: CharacterFeature
-      source: Character Feature
-      guid: 7cee5a0a-4bcd-4855-8b40-92d854589f84
-      name: Solo Turn
-      description: The dragon can take two turns each round. They can't take turns consecutively.
+        source: Trait
+        name: Shadow Skulk
+      implementation: 3
+      guid: b41da1c6-76e7-40ba-90a9-34530298508e
       domains:
-        CharacterFeature:7cee5a0a-4bcd-4855-8b40-92d854589f84: true
-        CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
-        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-      implementation: 4
-      modifiers:
-      - __typeName: CharacterModifier
-        value: 1
-        behavior: attribute
-        description: The dragon can take two turns each round. They can't take turns consecutively.
-        attribute: extraturns
-        sourceguid: 7cee5a0a-4bcd-4855-8b40-92d854589f84
-        source: Character Feature
-        guid: b849cc14-fc7f-4120-9a98-f9c2bef465fd
-        name: Solo Turn
-        domains:
-          CharacterFeature:7cee5a0a-4bcd-4855-8b40-92d854589f84: true
-          CharacterFeature:c78de066-7b86-4311-997e-c2dbe765ceac: true
-          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
+        CharacterFeature:b41da1c6-76e7-40ba-90a9-34530298508e: true
+      description: Once per turn, the dragon can shift up to their speed, leaving behind a 4 cube area of magical darkness in their starting space that lasts until the end of the encounter. The dragon ignores concealment created by this darkness. Any enemy who ends their turn in the area and has I<3 is frightened of the dragon until the end of their next turn.
+      name: Shadow Skulk
     - __typeName: CharacterFeature
       source: Trait
-      guid: 68a80811-f4aa-42e8-a24e-f31fef14809a
-      name: Hover
-      description: The dragon hovers, and does not fall when prone or when its speed is reduced to 0.
-      domains:
-        CharacterFeature:68a80811-f4aa-42e8-a24e-f31fef14809a: true
-      implementation: 3
       modifiers:
       - __typeName: CharacterModifier
-        value: 1
-        behavior: attribute
         description: ""
-        attribute: fb37652f-d640-4a53-9392-0930dcb30eab
+        behavior: attribute
         sourceguid: 68a80811-f4aa-42e8-a24e-f31fef14809a
+        name: Hover
         source: Trait
         guid: 0e19e9b7-e90d-40ff-8a16-694811b24da8
-        name: Hover
         domains:
           CharacterFeature:68a80811-f4aa-42e8-a24e-f31fef14809a: true
+        attribute: fb37652f-d640-4a53-9392-0930dcb30eab
+        value: 1
+      implementation: 3
+      guid: 68a80811-f4aa-42e8-a24e-f31fef14809a
+      tags:
+        Hidden: true
+      domains:
+        CharacterFeature:68a80811-f4aa-42e8-a24e-f31fef14809a: true
+      description: The dragon hovers, and does not fall when prone or when its speed is reduced to 0.
+      name: Hover
     - __typeName: CharacterFeature
       source: Trait
-      guid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
-      name: Encroaching Darkness
-      description: "Trigger: A creature within 10 squares moves. Effect: The dragon spends 1 Malice to move two existing cubes of magical darkness they created up to 10 squares each."
-      domains:
-        CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
-      implementation: 4
       modifiers:
       - __typeName: CharacterModifier
-        source: Trait
+        description: ""
+        behavior: trigger
+        domains:
+          CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
+        sourceguid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
         triggeredAbility:
           __typeName: TriggeredAbility
-          subjectRange: "10"
-          displayCardType: free
-          resourceNumber: 1
-          range: 1
-          targetType: self
-          strain: []
-          guid: ad7ae34d-e9b9-46ba-b744-e4d73d8494b8
-          modifiers: []
-          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
-          iconid: ui-icons/skills/1.png
-          mandatory: false
-          repeatTargets: false
-          numTargets: "1"
-          abilityType: none
-          description: "Trigger: A creature within 10 squares moves. Effect: The dragon moves two existing cubes of magical darkness they created up to 10 squares each."
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          trigger: move
-          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          subject: other
           domains:
             CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
-          persistence: []
-          triggerPrompt: The dragon moves two existing cubes of magical darkness they created up to 10 squares each.
-          hasManualVersion: true
-          name: Encroaching Darkness
-          subject: other
+          trigger: move
+          subjectRange: "10"
           implementation: 4
+          guid: ad7ae34d-e9b9-46ba-b744-e4d73d8494b8
+          displayCardType: free
+          hasManualVersion: true
+          mandatory: false
+          display:
+            saturation: 1
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+          description: "Trigger: A creature within 10 squares moves. Effect: The dragon moves two existing cubes of magical darkness they created up to 10 squares each."
+          modifiers: []
+          numTargets: "1"
+          targetType: self
+          resourceNumber: 1
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          name: Encroaching Darkness
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          triggerPrompt: The dragon moves two existing cubes of magical darkness they created up to 10 squares each.
           behaviors:
           - __typeName: ActivatedAbilityScriptBehavior
-            name: Move Darkness Cubes
             code: |
               -- Encroaching Darkness: move up to two Magical Darkness cubes, each up
               -- to 10 squares from its current position. Cubes are read off the map
@@ -1399,81 +1436,51 @@ info:
 
                   MoveCube(chosen)
               end
-        behavior: trigger
-        name: Encroaching Darkness
-        description: ""
-        domains:
-          CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
+            name: Move Darkness Cubes
+          repeatTargets: false
+          iconid: ui-icons/skills/1.png
+          strain: []
+          persistence: []
+          abilityType: none
+          range: 1
         guid: be87f4af-9306-418f-9444-96f6e5935b7c
-        sourceguid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
+        source: Trait
+        name: Encroaching Darkness
       - __typeName: CharacterModifier
         source: Trait
         ability:
           __typeName: TriggeredAbilityDisplay
-          cost: 1 Malice
-          trigger: A creature within 10 squares moves.
           distance: Self
-          guid: 5b54a280-09cb-4ebd-9114-14ecff427fee
-          effect: The dragon moves two existing cubes of magical darkness they created up to 10 squares each.
-          type: free
           target: Self
+          effect: The dragon moves two existing cubes of magical darkness they created up to 10 squares each.
           name: Encroaching Darkness
+          trigger: A creature within 10 squares moves.
+          cost: 1 Malice
+          guid: 5b54a280-09cb-4ebd-9114-14ecff427fee
           keywords: []
-        guid: 10853636-004d-4e21-98ad-d950691cd2d8
-        name: Encroaching Darkness
-        description: "Trigger: A creature within 10 squares moves. Effect: The dragon spends 1 Malice to move two existing cubes of magical darkness they created up to 10 squares each."
+          type: free
         domains:
           CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
+        guid: 10853636-004d-4e21-98ad-d950691cd2d8
         behavior: triggerdisplay
         sourceguid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
-    auras: []
-    opportunityAttack: 6
-    aurasEntered:
-      "---sub-fe7aaa12-a869-40e0-ad18-2e938ae78b5a": true
+        description: "Trigger: A creature within 10 squares moves. Effect: The dragon spends 1 Malice to move two existing cubes of magical darkness they created up to 10 squares each."
+        name: Encroaching Darkness
+      implementation: 4
+      guid: a6bb14c9-67cd-436c-a0bc-204afeadabf0
+      tags:
+        Trigger: true
+      domains:
+        CharacterFeature:a6bb14c9-67cd-436c-a0bc-204afeadabf0: true
+      description: "Trigger: A creature within 10 squares moves. Effect: The dragon spends 1 Malice to move two existing cubes of magical darkness they created up to 10 squares each."
+      name: Encroaching Darkness
     monsterMode: 1
-    walkingSpeed: 8
-    resistances:
-    - __typeName: ResistanceEntry
-      dr: 5
-      apply: Damage Reduction
-      damageType: psychic
-    max_hitpoints: 350
     savingThrowRatings: []
-    monster_category: Monster
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e-1-7e1ea341-8d87-46c6-b8f1-744178c56210-0
-        used: 1
-      913dc9dd-3ee3-484f-ab37-13f274f3f2d1:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 23590346-73f9-484d-ba53-0e21a6594b21
-      8f5fbb93-0935-4212-9d0b-e43ef84a3673:
-        __typeName: CharacterResource
-        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e
-        used: 1
-      7038b266-8ab6-4649-8a20-d76fa95e1273:
-        __typeName: CharacterResource
-        refreshid: f5acf160-682d-478c-80c0-d4f5743c5b5e-1
-        used: 1
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        used: 1
-      6d45b5dc-30d5-46b5-8712-8ad063bd9869:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: ea6617f0-b3e3-415d-9f49-fe9fdfa3a645-1-7e1ea341-8d87-46c6-b8f1-744178c56210-0
-    max_hitpoints_roll: "350"
     summonHistory:
       Gloom Dragon Illusion: true
-    skillRatings: []
-    ev: 72
-    titles: []
-    keywords:
-      Elemental: true
-      Dragon: true
-      Gloom Dragon: true
+    inflictedConditions: []
+    max_hitpoints_roll: "350"
+    groupid: c8ac88e1-3d1e-4bb7-8218-acbc05329b2e
   tokenType: null
   bestiaryId: bde6e5c5-715e-4174-b7f4-e062768e4a01
   summonerid: null
@@ -1486,6 +1493,6 @@ parentFolder: aa240fca-4fa8-4add-ac99-cb9c5724a8dd
 artist: null
 ord: 4
 ctime: 1741590301830
-mtime: 1785813873048
+mtime: 1786436811635
 hidden: false
 id: bde6e5c5-715e-4174-b7f4-e062768e4a01

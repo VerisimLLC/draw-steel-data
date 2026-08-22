@@ -4,8 +4,11 @@ info:
     mountedOnObject: null
     mountedSaddle: 0
     floor: null
-    map: null
-    loc: []
+    map: 97f55a4d-7059-40ce-8b68-2901615d5f15
+    loc:
+    - 2
+    - 1
+    - 1
     pos:
       x: 0
       y: 0
@@ -14,6 +17,7 @@ info:
     summonLocId: null
     summonLoc: []
     teleportAnimId: null
+    teleportStyle: ""
     updateid: 0
     rotation: 0
   appearance:
@@ -53,20 +57,280 @@ info:
   updateid: ee774714-1298-44aa-83e1-cc0c2d5f5e5d
   properties:
     __typeName: monster
+    role: Elite Brute
+    equipment: []
+    cr: 4
+    resources: []
+    minion: false
+    ev: 24
+    stability: 2
+    monster_category: Monster
+    availableTriggers: []
+    max_hitpoints: 140
+    traitNames: []
     keywords:
       Soulless: true
       Undead: true
-    skillRatings: []
-    stability: 2
-    ev: 24
-    cr: 4
-    implementation: 2
-    role: Elite Brute
-    equipment: []
-    traitNames: []
-    titles: []
-    max_hitpoints: 140
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    initiativeGrouping: 64329beb-ac0a-4765-b889-ac341dfee9fe
+    characterFeatures:
+    - __typeName: CharacterFeature
+      implementation: 4
+      domains:
+        CharacterFeature:3becff94-3005-4442-b6b1-64cf1c2a9840: true
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: 3becff94-3005-4442-b6b1-64cf1c2a9840
+        behavior: power
+        guid: c2985007-e4e0-41ee-84b3-85729ba4aa49
+        damageMultiplier: half
+        rollType: enemy_ability_power_roll
+        keywords: []
+        domains:
+          CharacterFeature:3becff94-3005-4442-b6b1-64cf1c2a9840: true
+        activationCondition: false
+        activationAfterRoll: Cast.Tier = 1
+        description: When the giant zombie is targeted by an ability that deals rolled damage, they halve the damage from a tier 1 outcome.
+        modtype: none
+        name: Negative Nerves
+        source: Trait
+      description: When the giant zombie is targeted by an ability that deals rolled damage, they halve the damage from a tier 1 outcome.
+      guid: 3becff94-3005-4442-b6b1-64cf1c2a9840
+      source: Trait
+      name: Negative Nerves
+    - __typeName: CharacterFeature
+      implementation: 4
+      domains:
+        CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
+      modifiers:
+      - __typeName: CharacterModifier
+        sourceguid: caf8abe1-499e-4a96-a44e-a09e2a7bad15
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            roll: (-Stamina) + 50
+            applyto: caster
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            color: "#ffffffff"
+            applyto: caster
+            text: Endless Knight!
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: prone
+          - __typeName: ActivatedAbilityRaiseCorpseBehavior
+            applyto: caster
+            restoreStamina: false
+          abilityType: none
+          guid: 1e788a1d-765f-4621-97f5-f9dbd029c687
+          trigger: zerohitpoints
+          conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
+          repeatTargets: false
+          modifiers: []
+          description: ""
+          range: 1
+          targetType: self
+          iconid: ui-icons/skills/1.png
+          usageLimitOptions:
+            charges: "1"
+            resourceid: a5e35bc3-6ca7-4086-a537-0588d89920f1
+            resourceRefreshType: encounter
+          display:
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+            bgcolor: "#ffffffff"
+          numTargets: "1"
+          name: Endless Knight
+          domains:
+            CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
+          strain: []
+          persistence: []
+        behavior: trigger
+        guid: a5e35bc3-6ca7-4086-a537-0588d89920f1
+        source: Trait
+        resourceRefreshType: encounter
+        name: Endless Knight
+        domains:
+          CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
+        description: The first time the giant zombie is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 50 Stamina and fall prone.
+      description: The first time the giant zombie is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 50 Stamina and fall prone.
+      guid: caf8abe1-499e-4a96-a44e-a09e2a7bad15
+      source: Trait
+      name: Endless Knight
+    - __typeName: CharacterFeature
+      name: Knocking Heads
+      guid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
+      tags:
+        Trigger: true
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Knocking Heads
+        activatedAbility:
+          __typeName: ActivatedAbility
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                tiers:
+                - 9 damage
+                - 14 damage; A<2 grabbed
+                - 17 damage; A<3 grabbed
+                roll: 2d10 + Might
+              abilityType: none
+              guid: eb61121c-0f24-4ab4-98fc-4b8d459b8136
+              strain: []
+              description: ""
+              categorization: Hidden
+              modifiers:
+              - __typeName: CharacterModifier
+                behavior: power
+                guid: 6b75e0f9-59dc-4366-980f-06af3bb94823
+                rollType: ability_power_roll
+                keywords: []
+                activationCondition: true
+                description: The targets are smashed together, giving Rotten Smash a double edge.
+                modtype: double_edge
+                source: Ability
+                name: Knocking Heads
+              objectTarget: true
+              targetType: target
+              iconid: ui-icons/skills/1.png
+              range: 3
+              display:
+                hueshift: 0
+                brightness: 1
+                bgcolor: "#ffffffff"
+                saturation: 1
+              numTargets: 2
+              name: Rotten Smash (Knocking Heads)
+              repeatTargets: false
+              keywords:
+                Weapon: true
+                Melee: true
+                Strike: true
+              persistence: []
+            abilityType: custom
+            applyto: caster
+            promptText: Smash the grabbed targets together with Rotten Smash (double edge)
+            invokeOnCaster: true
+            targeting: inherit
+          abilityType: none
+          guid: c89667d1-f689-4628-858f-2479f157dbba
+          strain: []
+          description: The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.
+          categorization: Heroic Ability
+          range: 3
+          keywords: []
+          flavor: ""
+          implementation: 3
+          modifiers: []
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          resourceNumber: 1
+          objectTarget: true
+          targetType: target
+          iconid: ui-icons/skills/1.png
+          abilityFilters:
+          - reason: The giant zombie must have two creatures or objects grabbed
+            formula: self.Number of Creatures Grabbed >= 2
+          display:
+            hueshift: 0
+            brightness: 1
+            bgcolor: "#ffffffff"
+            saturation: 1
+          numTargets: 2
+          name: Knocking Heads
+          repeatTargets: false
+          reasonedFilters:
+          - reason: The giant zombie can only smash together creatures or objects they have grabbed
+            formula: ConditionCaster("grabbed") = Caster
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+        behavior: activated
+        guid: d6567b77-b9d5-4194-acfb-288f74205d32
+        source: Character Feature
+        description: ""
+      description: |-
+        **Trigger:** The giant zombie grabs two creatures or objects, or starts their turn with two creatures or objects grabbed.
+
+        **Effect:** The creatures or objects are smashed together using Rotten Smash, which has a double edge.
+      domains:
+        CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
+      source: Character Feature
+      implementation: 2
+    innateActivatedAbilities:
+    - __typeName: ActivatedAbility
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 9 damage
+        - 14 damage; A<2 grabbed
+        - 17 damage; A<3 grabbed
+        roll: 2d10 + Might
+      abilityType: none
+      guid: b71c7917-a460-442d-8ccb-95b8a55976e6
+      flavor: ""
+      repeatTargets: false
+      categorization: Signature Ability
+      keywords:
+        Weapon: true
+        Melee: true
+        Strike: true
+      modifiers: []
+      description: ""
+      name: Rotten Smash
+      objectTarget: true
+      targetType: target
+      iconid: ui-icons/skills/1.png
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 266
+      display:
+        hueshift: 0
+        brightness: 1
+        bgcolor: "#ffffffff"
+        saturation: 1
+      numTargets: 2
+      implementation: 4
+      range: 3
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      strain: []
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: 4
+      damageType: corruption
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      dr: 4
+      damageType: poison
+    damage_taken: 0
+    creatureSize: "3"
+    innateAttacks: []
+    monster_type: Giant Zombie
+    movementSpeeds: []
+    opportunityAttack: 6
+    max_hitpoints_roll: "140"
+    attributes:
+      rea:
+        baseValue: -2
+        id: rea
+      prs:
+        baseValue: 2
+        id: prs
+      agl:
+        baseValue: -1
+        id: agl
+      mgt:
+        baseValue: 3
+        id: mgt
+      inu:
+        baseValue: 1
+        id: inu
     import:
+      type: mcdm
       data: |+
         Giant Zombie    Level 4 Elite Brute
         Undead    EV 24
@@ -92,392 +356,27 @@ info:
 
         <b>Arise</b>
         The first time the giant zombie is reduced to 0 Stamina with non-fire/non-holy damage and their body isn't destroyed, they regain half their Stamina and fall prone.
-        Mummy    Level 4 Horde Brute
-        Mummy, Undead    EV 6
-        <b>Stamina</b> 50    <b>Immunity</b> corruption 4, poison 4 / <b>Weakness</b> fire 5
-        <b>Speed</b> 5    <b>Size</b> 1M /<b> Stability</b> 2
-        <b>    Free Strike</b> 3
-        Might +3    Agility -1    Reason +1    Intuition +3    Presence +0
-        <b>Accursed Bindings</b> (Action)%E2%97%86 2d10 + 3 %E2%97%86 Signature
-        <b>Keywords</b> Melee, Strike, Weapon
-        <b>Distance</b> Melee 3<b>    Target</b> 1 creature or object
-        %E2%9C%A6    <b>%E2%89%A411</b>    6 corruption damage; pull 1
-        %E2%98%85    <b>12-16</b>    8 corruption damage; pull 2
-        %E2%9C%B8    <b>17</b>    10 corruption damage; pull 2; M<3 restrained (save ends)
-        <b>Effect</b> The potency of the mummy's next ability used against the target increases by 1.
 
-        <b>Eldritch Curse</b> (Action) %E2%97%86 2d10 + 3 %E2%97%86 3 Malice
-        <b>Keywords</b> Magic, Ranged
-        <b>Distance</b> Ranged 10<b>    Target</b> One creature
-        %E2%9C%A6    <b>%E2%89%A411</b>    3 corruption damage; I<1 cursed (save ends)
-        %E2%98%85    <b>12-16</b>    5 corruption damage; I<2 cursed (save ends)
-        %E2%9C%B8    <b>17</b>    7 corruption damage; I<3 cursed (save ends)
-        <b>Effect</b> A cursed target is bleeding and weakened, and allies have an edge on strikes made against them.
-
-        <b>Blast of Mummy Dust</b> (Triggered Action) %E2%97%86 1 Malice
-        <b>Keywords</b> Area
-        <b>Distance</b> 1 burst    <b>Target</b> 1 restrained target
-        <b>Trigger</b> The mummy comes within distance of the target or starts their turn within distance of the target.
-        <b>Effect</b> 8 poison damage.
-
-      type: mcdm
-    max_hitpoints_roll: "140"
-    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    resources: []
-    resistances:
-    - __typeName: ResistanceEntry
-      dr: 4
-      apply: Damage Reduction
-      damageType: corruption
-    - __typeName: ResistanceEntry
-      dr: 4
-      apply: Damage Reduction
-      damageType: poison
-    innateAttacks: []
-    monster_type: Giant Zombie
-    attributes:
-      agl:
-        id: agl
-        baseValue: -1
-      mgt:
-        id: mgt
-        baseValue: 3
-      prs:
-        id: prs
-        baseValue: 2
-      rea:
-        id: rea
-        baseValue: -2
-      inu:
-        id: inu
-        baseValue: 1
-    levelChoices: []
-    opportunityAttack: 6
-    minion: false
+    skillRatings: []
     walkingSpeed: 6
-    damage_taken: 0
-    monster_category: Monster
-    characterFeatures:
-    - __typeName: CharacterFeature
-      guid: 3becff94-3005-4442-b6b1-64cf1c2a9840
-      description: When the giant zombie is targeted by an ability that deals rolled damage, they halve the damage from a tier 1 outcome.
-      name: Negative Nerves
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: c2985007-e4e0-41ee-84b3-85729ba4aa49
-        behavior: power
-        name: Negative Nerves
-        description: When the giant zombie is targeted by an ability that deals rolled damage, they halve the damage from a tier 1 outcome.
-        source: Trait
-        sourceguid: 3becff94-3005-4442-b6b1-64cf1c2a9840
-        domains:
-          CharacterFeature:3becff94-3005-4442-b6b1-64cf1c2a9840: true
-        rollType: enemy_ability_power_roll
-        modtype: none
-        keywords: {}
-        damageMultiplier: half
-        activationCondition: false
-        activationAfterRoll: Cast.Tier = 1
-      implementation: 4
-      domains:
-        CharacterFeature:3becff94-3005-4442-b6b1-64cf1c2a9840: true
-    - __typeName: CharacterFeature
-      guid: caf8abe1-499e-4a96-a44e-a09e2a7bad15
-      description: The first time the giant zombie is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 50 Stamina and fall prone.
-      name: Endless Knight
-      source: Trait
-      modifiers:
-      - __typeName: CharacterModifier
-        resourceRefreshType: encounter
-        sourceguid: caf8abe1-499e-4a96-a44e-a09e2a7bad15
-        guid: a5e35bc3-6ca7-4086-a537-0588d89920f1
-        behavior: trigger
-        domains:
-          CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
-        description: The first time the giant zombie is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 50 Stamina and fall prone.
-        source: Trait
-        name: Endless Knight
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          strain: []
-          targetType: self
-          conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
-          behaviors:
-          - __typeName: ActivatedAbilityHealBehavior
-            roll: (-Stamina) + 50
-            applyto: caster
-          - __typeName: ActivatedAbilityFloatTextBehavior
-            color: "#ffffffff"
-            applyto: caster
-            text: Endless Knight!
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            applyto: caster
-            rule: prone
-          - __typeName: ActivatedAbilityRaiseCorpseBehavior
-            restoreStamina: false
-            applyto: caster
-          persistence: []
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
-          numTargets: "1"
-          modifiers: []
-          description: ""
-          iconid: ui-icons/skills/1.png
-          guid: 1e788a1d-765f-4621-97f5-f9dbd029c687
-          usageLimitOptions:
-            resourceid: a5e35bc3-6ca7-4086-a537-0588d89920f1
-            charges: "1"
-            resourceRefreshType: encounter
-          domains:
-            CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
-          trigger: zerohitpoints
-          repeatTargets: false
-          range: 1
-          name: Endless Knight
-      implementation: 4
-      domains:
-        CharacterFeature:caf8abe1-499e-4a96-a44e-a09e2a7bad15: true
-    - __typeName: CharacterFeature
-      guid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
-      description: |-
-        **Trigger:** The giant zombie grabs two creatures or objects, or starts their turn with two creatures or objects grabbed.
-
-        **Effect:** The creatures or objects are smashed together using Rotten Smash, which has a double edge.
-      name: Knocking Heads
-      domains:
-        CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
-      source: Character Feature
-      modifiers: []
-      implementation: 2
-    inflictedConditions: []
+    titles: []
+    skillProficiencies: []
+    implementation: 2
     savingThrowRatings: []
-    movementSpeeds: []
-    creatureSize: "3"
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      guid: b71c7917-a460-442d-8ccb-95b8a55976e6
-      iconid: ui-icons/skills/1.png
-      targetType: target
-      keywords:
-        Weapon: true
-        Strike: true
-        Melee: true
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 266
-      name: Rotten Smash
-      numTargets: 2
-      flavor: ""
-      categorization: Signature Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      range: 3
-      objectTarget: true
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: ""
-      strain: []
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-      implementation: 4
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 9 damage
-        - 14 damage; A<2 grabbed
-        - 17 damage; A<3 grabbed
-        roll: 2d10 + Might
-    - __typeName: ActivatedAbility
-      guid: b235a780-9aa2-4be8-9425-dcbdc6398dc6
-      iconid: ui-icons/skills/1.png
-      targetType: target
-      keywords: []
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      name: Knocking Heads
-      numTargets: 2
-      flavor: ""
-      resourceNumber: 1
-      categorization: Heroic Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      abilityFilters:
-      - formula: self.Number of Creatures Grabbed >= 2
-        reason: The giant zombie must have two creatures or objects grabbed
-      reasonedFilters:
-      - formula: ConditionCaster("grabbed") = Caster
-        reason: The giant zombie can only smash together creatures or objects they have grabbed
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        invokeOnCaster: true
-        targeting: inherit
-        abilityType: custom
-        promptText: Smash the grabbed targets together with Rotten Smash (double edge)
-        customAbility:
-          __typeName: ActivatedAbility
-          guid: 6f85fd87-b695-431f-a693-095a8804d4f6
-          iconid: ui-icons/skills/1.png
-          name: Rotten Smash (Knocking Heads)
-          categorization: Hidden
-          targetType: target
-          numTargets: 2
-          objectTarget: true
-          range: 3
-          keywords:
-            Weapon: true
-            Strike: true
-            Melee: true
-          display:
-            saturation: 1
-            brightness: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-          abilityType: none
-          repeatTargets: false
-          description: ""
-          strain: []
-          persistence: []
-          modifiers:
-          - __typeName: CharacterModifier
-            guid: 47f5d7e2-2f6f-4fd9-a4d7-4567e77d95a8
-            behavior: power
-            modtype: double_edge
-            rollType: ability_power_roll
-            activationCondition: true
-            keywords: {}
-            name: Knocking Heads
-            description: The targets are smashed together, giving Rotten Smash a double edge.
-            source: Ability
-          behaviors:
-          - __typeName: ActivatedAbilityPowerRollBehavior
-            tiers:
-            - 9 damage
-            - 14 damage; A<2 grabbed
-            - 17 damage; A<3 grabbed
-            roll: 2d10 + Might
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      description: The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.
-      range: 3
-      objectTarget: true
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-      implementation: 3
-    - __typeName: ActivatedAbility
-      guid: 5b799579-855c-47eb-b8a8-b30040558a85
-      iconid: ui-icons/skills/1.png
-      targetType: target
-      keywords:
-        Weapon: true
-        Strike: true
-        Melee: true
-      name: Accursed Bindings
-      numTargets: 1
-      flavor: ""
-      categorization: Signature Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 6 corruption damage; pull 1
-        - 8 corruption damage; pull 2
-        - 10 corruption damage; pull 2; M<3 restrained (save ends)
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: The potency of the mummy's next ability used against the target increases by 1.
-      range: 3
-      abilityType: none
-      implementation: 3
-      modifiers: []
-      effectImplemented: false
-      repeatTargets: false
-    - __typeName: ActivatedAbility
-      guid: 7adcfd8c-9a6c-40c5-bb1f-749844455a03
-      iconid: ui-icons/skills/1.png
-      targetType: target
-      keywords:
-        Magic: true
-        Ranged: true
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      name: Eldritch Curse
-      numTargets: 1
-      flavor: ""
-      resourceNumber: 3
-      categorization: Heroic Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
-        tiers:
-        - 3 corruption damage; I<1 cursed (save ends)
-        - 5 corruption damage; I<2 cursed (save ends)
-        - 7 corruption damage; I<3 cursed (save ends)
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      description: A cursed target is bleeding and weakened, and allies have an edge on strikes made against them.
-      range: 10
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-      effectImplemented: false
-      implementation: 3
-    - __typeName: ActivatedAbility
-      guid: 41fbfb8c-4779-4bc1-a15f-1b5b63cd46ac
-      iconid: ui-icons/skills/1.png
-      targetType: self
-      keywords:
-        Area: true
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      name: Blast of Mummy Dust
-      numTargets: "1"
-      flavor: ""
-      resourceNumber: 1
-      categorization: Heroic Ability
-      display:
-        saturation: 1
-        brightness: 1
-        bgcolor: "#ffffffff"
-        hueshift: 0
-      behaviors: []
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      description: 8 poison damage.
-      range: 1
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-      effectImplemented: false
-      implementation: 0
+    inflictedConditions: []
+    levelChoices: []
   tokenType: null
   bestiaryId: 6a46b395-d599-4c4d-8e59-6b0a5001e215
   summonerid: null
-  ownerId: null
+  ownerId: ""
   partyid: null
-  size: -1
+  size: 5
   createdTimestamp: 1737961969981
 description: Giant Zombie
 parentFolder: 68f67367-de21-43f0-8448-61d0408cd721
 artist: null
 ord: 4
 ctime: 1741590261639
-mtime: 1775375017577
+mtime: 1786606607508
 hidden: false
 id: 6a46b395-d599-4c4d-8e59-6b0a5001e215

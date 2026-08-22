@@ -2427,7 +2427,38 @@ Abilities can have multiple modes (e.g., normal + malice-enhanced). Use `multipl
 - `modesSelected` -- on any behavior, limits execution to listed modes (1-indexed)
 - GoblinScript `when mode = X else Y` -- use in fields like `resourceNumber`, `range`
 - `mode.condition` -- optional GoblinScript to conditionally enable a mode
+- `mode.conditionReason` -- optional text shown when `condition` fails, instead of
+  hiding the mode (**triggered abilities only** -- see below)
 - `mode.variation` -- optional complete alternate ActivatedAbility for full swaps
+
+**Unavailable modes: hidden, or offered greyed out.** By default a mode whose
+`condition` evaluates false is simply not offered. Filling in `conditionReason`
+opts that mode into being shown anyway -- dimmed, annotated with the reason, but
+still pressable, so the player can see what they are missing and the table can
+allow it regardless. Blank (the default) keeps the hide behaviour.
+
+```yaml
+modeList:
+  - text: "Additional Damage"          # mode 1: always available
+  - text: "Spend Recovery"
+    condition: Attacker.Resources.Recovery > 0
+    conditionReason: No recoveries remaining   # offered greyed out, not hidden
+  - text: "Shift"
+    condition: Attacker.Movement Speed > 0     # no reason: hidden when speed is 0
+```
+
+**Scope -- this only works on triggered abilities.** `conditionReason` is read
+when a TriggeredAbility builds its prompt options (`TriggeredAbility.lua`). The
+normal cast bar for a regular ActivatedAbility (`DSActionBar.lua`) still hard-hides
+any mode whose condition fails and has no reason path, so putting
+`conditionReason` on a monster's malice-gated Strike mode does nothing. For those,
+a failing condition means the mode disappears -- design around that.
+
+Two further notes for trigger modes:
+- **Mode 1 cannot take a reason.** It is the trigger's own activate card, carried
+  separately from the option list; only modes 2+ are condition-checked.
+- The reason string is GoblinScript-interpolated, so `{Reason|your Reason score}`
+  style substitution works inside it just as it does in `rules`.
 
 ### Damage Halving (powertabletrigger with damageMultiplier)
 

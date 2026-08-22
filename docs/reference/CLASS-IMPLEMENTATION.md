@@ -127,6 +127,71 @@ subject: any                         # Fires when ANY creature gets the conditio
 subjectRange: "10"                   # Within 10 squares
 ```
 
+### Multi-Option Triggers (modeList)
+
+When a trigger offers the player a **choice** of benefits rather than one fixed
+effect (Tactician's Mark, "choose one of the following"), put the options in
+`modeList` and gate each behavior with `modesSelected`. The trigger panel renders
+one card per option and the player picks.
+
+```yaml
+- __typeName: CharacterModifier
+  behavior: trigger
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    trigger: losehitpoints
+    subject: enemy
+    targetType: attacker
+    conditionFormula: HasAbility and Ability.doesdamage
+    triggerPrompt: Choose one Mark benefit.
+    multipleModes: true
+    modeList:
+    - text: Additional Damage                    # mode 1 = the trigger's own card
+      rules: The ability deals {2*Reason|double your Reason score in} additional damage.
+      condition: ""
+    - text: Spend Recovery
+      rules: The damage dealer can spend a Recovery.
+      condition: Attacker.Resources.Recovery > 0
+      conditionReason: No recoveries remaining   # offered greyed out, not hidden
+    - text: Shift
+      rules: The damage dealer can shift up to {Reason|a number of squares equal to your Reason score}.
+      condition: Attacker.Movement Speed > 0
+      conditionReason: Speed is 0
+    - text: Taunt
+      rules: The marked creature is taunted by you (EoT).
+      condition: Attacker.ID = Self.ID and Ability.Keywords has "Melee"
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: Taunted (EoT)
+      applyto: subject
+      modesSelected: [4]                          # indexes into modeList
+```
+
+**Key points:**
+
+- **`modeList[1]` is the trigger's own activate card**, not an option in the list.
+  Its `text` and `rules` become the trigger's headline; only modes 2+ are
+  condition-checked. A `condition` or `conditionReason` on mode 1 does nothing.
+- **`modesSelected` indexes `modeList`, 1-based** -- the mode's authored position,
+  not its position among the options the player actually sees. Hidden modes leave
+  holes in the displayed list; the runtime carries the real index through, so you
+  always write the `modeList` position here.
+- **A failing `condition` hides the mode** unless you give it a
+  `conditionReason`. With a reason set, the mode is offered anyway: dimmed,
+  annotated with that text, but still pressable, so the player can see what they
+  are missing and the table can allow it. Blank (the default) hides as before.
+  Use a reason when the option is *temporarily* out of reach ("No recoveries
+  remaining"); leave it blank when the option is simply irrelevant in context.
+- **`rules` and `conditionReason` are both GoblinScript-interpolated** --
+  `{Reason|a number of squares equal to your Reason score}` renders the computed
+  number with that fallback text.
+- Condition formulas here see the trigger's context symbols (`Attacker`, `Ability`,
+  `Self`), which is how `Attacker.Resources.Recovery > 0` works above.
+
+Fields are edited in the ability editor's **Modes** section; `conditionReason` is
+the "Condition Reason" input under Mode Condition and tells a player *why* they cannot
+use the ability.
+
 ### Key UUIDs
 
 | UUID | Purpose |

@@ -74,61 +74,27 @@ info:
     lightFalloff: 0.1
     lightAngle: 360
   mountedBy: {}
-  updateid: f67c16b6-adef-4ed7-8cbd-702616ccd583
+  updateid: 0503aa2f-444a-43bc-977a-c08fd66fd739
   properties:
     __typeName: monster
     inflictedConditions: []
-    innateAttacks: []
+    moveDistance: 15
     max_hitpoints: 250
     groupid: b2158049-17c2-4846-b7ee-a54f23397281
     keywords:
       Thorn Dragon: true
-      Elemental: true
       Dragon: true
+      Elemental: true
     damage_taken: 0
     62548339-60e7-4bac-b5f1-e5debb8b7202_history:
       __typeName: StatHistory
       entries:
         b2da4f3b-4c54-4838-b6a5-00f20bca3793:
           set: "-1/0"
+          note: Briar Bindings
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e
-          note: Briar Bindings
-    84e877fe-3b19-4a5a-94b4-b07bb52b3446_history:
-      __typeName: StatHistory
-      entries:
-        7af11d0c-7fac-4d3e-96c0-d745980e1721:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-          note: Provoking Nettles
-        12be2419-238e-4e3c-b37b-b9fef43a74fa:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e-3-698e1cd2-7b88-4806-8fab-e6c7d103a4e4
-          note: Provoking Nettles
-        7967c961-cc73-43a7-a929-5473c2659e25:
-          set: 0/0
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          note: Provoking Nettles
-        f7bc36b6-dacd-4e30-9c0e-145114a3d21d:
-          set: 0/0
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          note: Provoking Nettles
-        88b10974-af73-44bc-9ae6-9ff0857ed9ad:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-1-ddabc63f-52af-4a84-8184-f3f05c788afb
-          note: Provoking Nettles
-        1114094b-e397-40f1-94d8-86cd449b230a:
-          set: 0/0
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          note: Provoking Nettles
-        b75e4f39-ac06-4c23-9cb5-4f77719e37f6:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-2-ddabc63f-52af-4a84-8184-f3f05c788afb
-          note: Provoking Nettles
+    role: Solo
     deathSavingThrowSuccesses: 0
     equipment: []
     c646c3d5-620d-4569-90ae-10aa9f4df9b9_history:
@@ -136,9 +102,9 @@ info:
       entries:
         8970709b-d283-4007-973c-1698d40d7272:
           set: "-1/0"
+          note: Provoking Nettles
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-          note: Provoking Nettles
     characterFeatures:
     - __typeName: CharacterFeature
       description: 'The dragon’s scales create a 2 aura of withering green magic around them. Any creature other than the dragon who regains Stamina in the area regains only half the expected amount. Any winded creature who enters the area for the first time in a round or starts their turn there takes 1d3 corruption damage. '
@@ -148,7 +114,8 @@ info:
         aura:
           __typeName: Aura
           triggers:
-          - ability:
+          - trigger: onenter
+            ability:
               __typeName: TriggeredAbility
               modifiers: []
               hostile: true
@@ -162,18 +129,18 @@ info:
               trigger: onenter
               name: Withering Wyrmscale Aura
               implementation: 4
-              iconid: ui-icons/skills/1.png
-              numTargets: "1"
-              description: ""
-              conditionFormula: Winded
-              guid: d62ff04b-48b1-4d34-8dc6-750ba31d00d2
-              persistence: []
-              strain: []
-              range: 5
               abilityType: none
-              silent: true
-              radius: 0
+              strain: []
+              persistence: []
+              conditionFormula: Winded
+              description: ""
+              guid: d62ff04b-48b1-4d34-8dc6-750ba31d00d2
               mandatory: false
+              range: 5
+              numTargets: "1"
+              iconid: ui-icons/skills/1.png
+              radius: 0
+              silent: true
               repeatTargets: false
               triggerPrompt: Any winded creature who enters the area for the first time in a round or starts their turn there takes 1d3 corruption damage.
               display:
@@ -181,24 +148,23 @@ info:
                 hueshift: 0
                 saturation: 1
                 brightness: 1
-            trigger: onenter
           modifiers:
           - __typeName: CharacterModifier
             description: ""
             triggeredAbility:
               __typeName: TriggeredAbility
-              implementation: 4
+              numTargets: "1"
               modifiers: []
-              strain: []
+              iconid: ui-icons/skills/1.png
+              repeatTargets: false
+              persistence: []
+              targetType: self
+              guid: 6e24326a-b657-4cda-8c0d-4d1e43bf2fad
+              range: 1
               behaviors:
               - __typeName: ActivatedAbilityFloatTextBehavior
                 color: "#ffffffff"
                 text: "Withering Aura: Heal Only Half"
-              description: ""
-              targetType: self
-              persistence: []
-              guid: 6e24326a-b657-4cda-8c0d-4d1e43bf2fad
-              range: 1
               trigger: regainhitpoints
               display:
                 bgcolor: "#ffffffff"
@@ -206,33 +172,33 @@ info:
                 saturation: 1
                 brightness: 1
               name: Withering Wyrmscale Aura
+              description: ""
+              implementation: 4
               abilityType: none
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              numTargets: "1"
+              strain: []
             name: Withering Wyrmscale Aura
             behavior: trigger
-            sourceguid: df5fcc2c-3a34-4550-ae01-21600dca91f1
             guid: 9880b4c0-358d-4d2c-a202-827b2868d871
+            sourceguid: df5fcc2c-3a34-4550-ae01-21600dca91f1
             source: Withering Wyrmscale Aura
           - __typeName: CharacterModifier
             sourceguid: df5fcc2c-3a34-4550-ae01-21600dca91f1
             source: Withering Wyrmscale Aura
             description: ""
-            attribute: b1ca9d1f-ee63-4784-85a6-d7bceb4a078b
+            guid: 9b71827f-ed33-4c28-ba68-c7ab46e0eba3
             name: Withering Wyrmscale Aura
             behavior: attribute
             value: 1
             operation: set
-            guid: 9b71827f-ed33-4c28-ba68-c7ab46e0eba3
+            attribute: b1ca9d1f-ee63-4784-85a6-d7bceb4a078b
           creatureFilter: ""
           guid: aee61e1d-386f-4144-b587-71fa3d4a0343
           source: Withering Wyrmscale Aura
           applyto: allother
           name: Withering Wyrmscale Aura
-          movedamage: none
-          implementation: 4
           iconid: d549bb7f-11c6-4595-9d3d-2714c2106df1
+          implementation: 4
+          movedamage: none
           display:
             bgcolor:
               __usertype: LuaColor
@@ -243,25 +209,30 @@ info:
             hueshift: 0
             saturation: 1
             brightness: 1
-        guid: b2b09030-9367-41d6-97af-5560d445cc65
+        sourceguid: 00973a0b-eac4-4109-b050-468c3e7391df
         source: Trait
         description: 'The dragon’s scales create a 2 aura of withering green magic around them. Any creature other than the dragon who regains Stamina in the area regains only half the expected amount. Any winded creature who enters the area for the first time in a round or starts their turn there takes 1d3 corruption damage. '
         radius: "2"
         behavior: aura
-        sourceguid: 00973a0b-eac4-4109-b050-468c3e7391df
+        name: Withering Wyrmscale Aura
         domains:
           CharacterFeature:00973a0b-eac4-4109-b050-468c3e7391df: true
-        name: Withering Wyrmscale Aura
+        guid: b2b09030-9367-41d6-97af-5560d445cc65
       name: Withering Wyrmscale Aura
-      guid: 00973a0b-eac4-4109-b050-468c3e7391df
-      implementation: 4
       domains:
         CharacterFeature:00973a0b-eac4-4109-b050-468c3e7391df: true
+      implementation: 4
+      guid: 00973a0b-eac4-4109-b050-468c3e7391df
       source: Trait
     - __typeName: CharacterFeature
       description: If the encounter map is a location the dragon has occupied for 1 week or more, each space on the map is considered difficult terrain for all creatures except for the dragon. Each such creature who moves within the area takes 1 damage for each square they enter. A creature restrained in this area is also bleeding.
       modifiers:
       - __typeName: CharacterModifier
+        sourceguid: e96cb378-344a-4df6-8a35-12dbbc014848
+        source: Trait
+        description: ""
+        name: Dragon's Domain
+        behavior: activated
         activatedAbility:
           __typeName: ActivatedAbility
           modifiers: []
@@ -271,96 +242,67 @@ info:
             objectid: f6b28afb-fcfd-43da-a5f6-5e8f14a6d57e
           name: Dragon's Domain
           implementation: 4
+          iconid: 0e377747-2985-47cb-87aa-52e6563a1230
+          strain: []
+          persistence: []
+          guid: a76645c4-f7a5-4115-89f7-eab864c30796
+          range: 1
+          numTargets: "1"
           domains:
             CharacterFeature:e96cb378-344a-4df6-8a35-12dbbc014848: true
-          numTargets: "1"
-          guid: a76645c4-f7a5-4115-89f7-eab864c30796
-          description: Set this map as your Domain.
-          range: 1
-          strain: []
-          abilityType: none
           radius: "1"
-          persistence: []
+          description: Set this map as your Domain.
           repeatTargets: false
-          iconid: 0e377747-2985-47cb-87aa-52e6563a1230
+          abilityType: none
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
             brightness: 1
-        source: Trait
-        description: ""
-        name: Dragon's Domain
-        behavior: activated
-        guid: de013a1e-4a60-4c42-bcd9-0ca82806db52
         domains:
           CharacterFeature:e96cb378-344a-4df6-8a35-12dbbc014848: true
-        sourceguid: e96cb378-344a-4df6-8a35-12dbbc014848
+        guid: de013a1e-4a60-4c42-bcd9-0ca82806db52
       name: Thorn Dragon's Domain
-      guid: d9745447-2470-474c-b0aa-a0b2f17b4ff2
-      implementation: 4
       domains:
         CharacterFeature:d9745447-2470-474c-b0aa-a0b2f17b4ff2: true
+      implementation: 4
+      guid: d9745447-2470-474c-b0aa-a0b2f17b4ff2
       source: Trait
     - __typeName: CharacterFeature
-      description: The dragon can take two turns each round. They can’t take turns consecutively.
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: cafd4a84-1bbe-4907-8be5-6382cdd5c948
-        source: Character Feature
-        description: The dragon can take two turns each round. They can’t take turns consecutively.
-        attribute: extraturns
-        name: Solo Turn
-        behavior: attribute
-        value: 1
-        domains:
-          CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-          CharacterFeature:2b553781-bcfb-4928-8b9f-488b0e81091f: true
-          CharacterFeature:2ad5b1fe-2070-42bc-9453-887ff10e34d4: true
-        guid: 1a9685a7-4246-43ce-8a50-03d598d941a4
-      name: Solo Turn
-      guid: 2b553781-bcfb-4928-8b9f-488b0e81091f
-      implementation: 4
-      domains:
-        CharacterFeature:cafd4a84-1bbe-4907-8be5-6382cdd5c948: true
-        CharacterFeature:2b553781-bcfb-4928-8b9f-488b0e81091f: true
-        CharacterFeature:2ad5b1fe-2070-42bc-9453-887ff10e34d4: true
-      source: Character Feature
-    - __typeName: CharacterFeature
-      description: At the end of each of their turns, the dragon can take 10 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
+      description: "**End Effect:** At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.\n**Solo Turns:** The dragon can take two turns each round. They can't take turns consecutively."
       modifiers:
       - __typeName: CharacterModifier
         description: At the end of each of their turns, the dragon can take 10 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
-        guid: cb37d168-41af-435f-889a-98ef0d7b23fe
+        sourceguid: 58bdd65e-5a1b-4448-8a61-1b18d5171e7b
         triggeredAbility:
           __typeName: TriggeredAbility
           modifiers: []
           targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            damageToSelf: "10"
-            targetDuration: save
-            mode: conditions_and_effects
-            chatMessage: End Effect
-            purgeType: one
+          description: At the end of each of their turns, the dragon can take 10 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
           trigger: endturn
           name: End Effect
           hasManualVersion: true
           implementation: 4
-          iconid: ui-icons/skills/1.png
-          numTargets: "1"
-          guid: 8c9a1352-afbd-4549-811d-8d81fe508fdd
-          strain: []
-          persistence: []
-          conditionFormula: Save Ends Effects
-          range: 1
-          description: At the end of each of their turns, the dragon can take 10 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
           abilityType: none
+          strain: []
+          conditionFormula: Save Ends Effects
+          persistence: []
+          guid: 8c9a1352-afbd-4549-811d-8d81fe508fdd
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            purgeType: one
+            targetDuration: save
+            mode: conditions_and_effects
+            chatMessage: End Effect
+            damageToSelf: "10"
+          range: 1
+          iconid: ui-icons/skills/1.png
           domains:
             CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
             CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
             CharacterFeature:12a58812-8ad5-49a5-836f-0490c7ec927d: true
+          numTargets: "1"
           mandatory: false
           repeatTargets: false
           triggerPrompt: End one save ends effect on self, take 10 damage.
@@ -371,31 +313,52 @@ info:
             brightness: 1
         name: End Effect
         behavior: trigger
-        sourceguid: 58bdd65e-5a1b-4448-8a61-1b18d5171e7b
         domains:
           CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
           CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
           CharacterFeature:12a58812-8ad5-49a5-836f-0490c7ec927d: true
+        guid: cb37d168-41af-435f-889a-98ef0d7b23fe
         source: Trait
-      name: End Effect
-      guid: 12a58812-8ad5-49a5-836f-0490c7ec927d
-      implementation: 4
+      - __typeName: CharacterModifier
+        sourceguid: 12a58812-8ad5-49a5-836f-0490c7ec927d
+        source: Trait
+        description: The dragon can take two turns each round. They can't take turns consecutively.
+        guid: 1a9685a7-4246-43ce-8a50-03d598d941a4
+        name: Solo Turns
+        behavior: attribute
+        value: 1
+        domains:
+          CharacterFeature:12a58812-8ad5-49a5-836f-0490c7ec927d: true
+        attribute: extraturns
+      name: Solo Monster
       domains:
         CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
         CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
         CharacterFeature:12a58812-8ad5-49a5-836f-0490c7ec927d: true
+      implementation: 4
+      guid: 12a58812-8ad5-49a5-836f-0490c7ec927d
       source: Trait
     - __typeName: CharacterFeature
       description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
       modifiers:
       - __typeName: CharacterModifier
         guid: c8e99ca7-d001-49ac-86f8-308f23c3d606
-        source: Character Feature
+        resourceRefreshType: turn
         description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
         triggeredAbility:
           __typeName: TriggeredAbility
           modifiers: []
           targetType: self
+          description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
+          trigger: beginturn
+          name: Provoking Nettles
+          hasManualVersion: true
+          implementation: 4
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          numTargets: "1"
+          castImmediately: true
+          guid: 9811c45c-82a6-46e0-b781-49f37610e986
+          persistence: []
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             applyto: caster
@@ -404,39 +367,29 @@ info:
               modifiers: []
               targetType: self
               guid: a3f7c2b1-8e4d-4f2a-9c6b-1d5e8f3a7c92
+              numTargets: "1"
               behaviors: []
+              abilityType: none
               description: ""
-              iconid: ui-icons/skills/1.png
-              range: 1
               name: Invoked Ability
+              range: 1
+              repeatTargets: false
+              iconid: ui-icons/skills/1.png
               display:
                 bgcolor: "#ffffffff"
                 hueshift: 0
                 saturation: 1
                 brightness: 1
-              repeatTargets: false
-              abilityType: none
-              numTargets: "1"
             filterTarget: ""
             invokeOnCaster: true
             abilityType: named
             namedAbility: Provoking Nettles
-          trigger: beginturn
-          name: Provoking Nettles
-          hasManualVersion: true
-          implementation: 4
-          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-          strain: []
-          castImmediately: true
-          range: 1
-          guid: 9811c45c-82a6-46e0-b781-49f37610e986
-          description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
           usageLimitOptions:
             resourceid: c8e99ca7-d001-49ac-86f8-308f23c3d606
-            resourceRefreshType: turn
             charges: "1"
-          persistence: []
-          numTargets: "1"
+            resourceRefreshType: turn
+          range: 1
+          strain: []
           abilityType: none
           mandatory: false
           repeatTargets: false
@@ -448,11 +401,16 @@ info:
             brightness: 1
         name: Provoking Nettles
         behavior: trigger
-        resourceRefreshType: turn
+        sourceguid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
         domains:
           CharacterFeature:3f0e7760-5fbf-4d0f-a9b9-aab9e895e832: true
-        sourceguid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
+        source: Character Feature
       - __typeName: CharacterModifier
+        sourceguid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
+        source: Character Feature
+        description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
+        name: Provoking Nettles
+        behavior: activated
         activatedAbility:
           __typeName: ActivatedAbility
           modifiers: []
@@ -460,11 +418,17 @@ info:
           description: ""
           name: Provoking Nettles
           implementation: 4
-          iconid: ui-icons/skills/1.png
-          strain: []
+          domains:
+            CharacterFeature:3f0e7760-5fbf-4d0f-a9b9-aab9e895e832: true
+          numTargets: "1"
           castImmediately: true
           guid: a15a1f43-0f3b-4d68-a757-fa70d1fd9368
           range: 1
+          abilityType: none
+          categorization: Ability
+          strain: []
+          iconid: ui-icons/skills/1.png
+          repeatTargets: false
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             ongoingEffectCustom: da882fec-e48a-42a7-9f9a-c7454afe12ae
@@ -476,59 +440,48 @@ info:
               __typeName: ActivatedAbility
               targeting: pathfind
               modifiers: []
+              numTargets: "1"
+              iconid: ui-icons/skills/1.png
+              repeatTargets: false
+              targetType: anyspace
+              guid: a696a3b6-1dd3-40d1-bd8c-04d723e67417
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: shift
+              description: ""
+              strain: []
+              categorization: Hidden
+              name: Shift
+              range: "5"
+              implementation: 4
+              abilityType: none
               display:
                 bgcolor: "#ffffffff"
                 hueshift: 0
                 saturation: 1
                 brightness: 1
-              implementation: 4
-              behaviors:
-              - __typeName: ActivatedAbilityRelocateCreatureBehavior
-                movementType: shift
-              targetType: anyspace
-              guid: a696a3b6-1dd3-40d1-bd8c-04d723e67417
-              description: ""
-              range: "5"
-              strain: []
-              categorization: Hidden
-              name: Shift
-              abilityType: none
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              numTargets: "1"
             standardAbilityParams:
               distance: "5"
             abilityType: custom
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             applyto: caster
-            conditions: []
             mode: effect
+            conditions: []
             ongoingEffect: da882fec-e48a-42a7-9f9a-c7454afe12ae
-          categorization: Ability
-          abilityType: none
-          domains:
-            CharacterFeature:3f0e7760-5fbf-4d0f-a9b9-aab9e895e832: true
-          repeatTargets: false
-          numTargets: "1"
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
             brightness: 1
-        source: Character Feature
-        description: Once per turn, the dragon shifts up to 5 squares and can move through enemies’ spaces at their usual speed. The first time the dragon moves through an enemy’s space during this movement, the enemy takes 3 damage.
-        name: Provoking Nettles
-        behavior: activated
-        guid: 6516fdc5-14a9-4ccc-ac84-78afac1628f2
         domains:
           CharacterFeature:3f0e7760-5fbf-4d0f-a9b9-aab9e895e832: true
-        sourceguid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
+        guid: 6516fdc5-14a9-4ccc-ac84-78afac1628f2
       name: Provoking Nettles
-      guid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
-      implementation: 4
       domains:
         CharacterFeature:3f0e7760-5fbf-4d0f-a9b9-aab9e895e832: true
+      implementation: 4
+      guid: 3f0e7760-5fbf-4d0f-a9b9-aab9e895e832
       source: Character Feature
     - __typeName: CharacterFeature
       description: ""
@@ -536,26 +489,26 @@ info:
       - __typeName: CharacterModifier
         description: ""
         guid: e9c7ef66-cfb2-4608-9571-2b1e4c630ade
-        sourceguid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
+        domains:
+          CharacterFeature:b08ac503-49f2-42ef-ae74-a02f8ce8b589: true
         ability:
           __typeName: TriggeredAbilityDisplay
           target: The triggering creature
           trigger: A dragonsealed creature within distance ends the dragonsealed effect
           name: Prickly Situation
           type: free
-          guid: 1eb12c70-f9af-44bf-87c6-c81ddf490a15
-          effect: The target is pulled up to 5 squares toward the dragon, and if they have A<2, they are restrained until the end of their next turn.
           keywords:
             Ranged: true
             Magic: true
+          guid: 1eb12c70-f9af-44bf-87c6-c81ddf490a15
+          effect: The target is pulled up to 5 squares toward the dragon, and if they have A<2, they are restrained until the end of their next turn.
         behavior: triggerdisplay
         name: Prickly Situation
-        domains:
-          CharacterFeature:b08ac503-49f2-42ef-ae74-a02f8ce8b589: true
+        sourceguid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
         source: Trait
       - __typeName: CharacterModifier
         description: ""
-        guid: c99f95c8-fa4a-4255-be13-fe1a8746823a
+        sourceguid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
         triggeredAbility:
           __typeName: TriggeredAbility
           modifiers: []
@@ -570,40 +523,42 @@ info:
           hasManualVersion: true
           implementation: 4
           iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
-          numTargets: "1"
+          strain: []
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            saturation: 1
+            brightness: 1
+          persistence: []
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: pull 5; A<2 restrained (EoT)
           - __typeName: ActivatedAbilityFloatTextBehavior
             color: "#ffffffff"
             text: Prickly Situation
-          strain: []
-          targetTextOverride: A dragonsealed creature within distance ends the dragonsealed effect.
-          persistence: []
           guid: 6458e91a-391b-479f-8f14-07b3cdfdcffb
+          mandatory: false
           range: "10"
+          abilityType: none
+          numTargets: "1"
           conditionFormula: Trigger Name = "madesaveDragonsealedThorn" and (Trigger Value >= Save Ends)
           subjectRange: "10"
-          abilityType: none
-          mandatory: false
           repeatTargets: false
           triggerPrompt: A dragonsealed creature within distance ends the dragonsealed effect. Pull the target 5 squares and A < 2 restrained (EoT)
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            saturation: 1
-            brightness: 1
+          targetTextOverride: A dragonsealed creature within distance ends the dragonsealed effect.
         name: Prickly Situation
         behavior: trigger
-        sourceguid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
         domains:
           CharacterFeature:b08ac503-49f2-42ef-ae74-a02f8ce8b589: true
+        guid: c99f95c8-fa4a-4255-be13-fe1a8746823a
         source: Trait
       name: Prickly Situation
-      guid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
-      implementation: 4
       domains:
         CharacterFeature:b08ac503-49f2-42ef-ae74-a02f8ce8b589: true
+      implementation: 4
+      guid: b08ac503-49f2-42ef-ae74-a02f8ce8b589
+      tags:
+        Trigger: true
       source: Trait
     - __typeName: CharacterFeature
       description: ""
@@ -611,26 +566,26 @@ info:
       - __typeName: CharacterModifier
         description: ""
         guid: 6ffd8795-9016-4f74-b175-b90d3934e4f8
-        sourceguid: 98f67e11-3612-4df6-ad38-6e56af342911
+        domains:
+          CharacterFeature:98f67e11-3612-4df6-ad38-6e56af342911: true
         ability:
           __typeName: TriggeredAbilityDisplay
           cost: 1 Malice
           distance: Melee 1
           type: free
-          keywords: []
+          effect: 'The dragon makes a free strike against the target, and if the target has M<2, they are bleeding until the end of their next turn. '
           target: The triggering creature
           trigger: A creature within distance deals damage to the dragon with a melee strike.
           name: Thorny Scales
-          effect: 'The dragon makes a free strike against the target, and if the target has M<2, they are bleeding until the end of their next turn. '
           guid: 2b38f0c0-a153-4bbe-83ee-fc99b64d305d
+          keywords: []
         behavior: triggerdisplay
         name: Thorny Scales
-        domains:
-          CharacterFeature:98f67e11-3612-4df6-ad38-6e56af342911: true
+        sourceguid: 98f67e11-3612-4df6-ad38-6e56af342911
         source: Trait
       - __typeName: CharacterModifier
         description: ""
-        guid: e7b0b420-402c-4be1-9acb-c0ae19a55c67
+        sourceguid: 98f67e11-3612-4df6-ad38-6e56af342911
         triggeredAbility:
           __typeName: TriggeredAbility
           modifiers: []
@@ -647,17 +602,17 @@ info:
           name: Thorny Scales (1 Malice)
           hasManualVersion: true
           implementation: 4
-          iconid: ui-icons/skills/1.png
+          conditionFormula: (Ability.Keywords has "Melee") and (Ability.Keywords has "Strike") and (Distance(Attacker) < 2) and (Malice > 0)
           numTargets: "1"
           castImmediately: true
-          description: 'The dragon makes a free strike against the target, and if the target has M<2, they are bleeding until the end of their next turn. '
-          conditionFormula: (Ability.Keywords has "Melee") and (Ability.Keywords has "Strike") and (Distance(Attacker) < 2) and (Malice > 0)
           persistence: []
+          description: 'The dragon makes a free strike against the target, and if the target has M<2, they are bleeding until the end of their next turn. '
           guid: 917370c0-6456-4519-bc19-68613e7fd8ed
+          iconid: ui-icons/skills/1.png
           range: 1
           strain: []
-          abilityType: none
           resourceNumber: 1
+          abilityType: none
           mandatory: false
           repeatTargets: false
           triggerPrompt: A creature within distance deals damage to the dragon with a melee strike.
@@ -668,15 +623,17 @@ info:
             brightness: 1
         name: Thorny Scales
         behavior: trigger
-        sourceguid: 98f67e11-3612-4df6-ad38-6e56af342911
         domains:
           CharacterFeature:98f67e11-3612-4df6-ad38-6e56af342911: true
+        guid: e7b0b420-402c-4be1-9acb-c0ae19a55c67
         source: Trait
       name: Thorny Scales
-      guid: 98f67e11-3612-4df6-ad38-6e56af342911
-      implementation: 4
       domains:
         CharacterFeature:98f67e11-3612-4df6-ad38-6e56af342911: true
+      implementation: 4
+      guid: 98f67e11-3612-4df6-ad38-6e56af342911
+      tags:
+        Trigger: true
       source: Trait
     equipmentMeta:
       offhand0: []
@@ -685,24 +642,24 @@ info:
       entries:
         804e700c-938e-4639-a727-56d320e24455:
           set: "-1/0"
+          note: Provoking Nettles
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-          note: Provoking Nettles
         3e0a54b5-999b-4b27-8e59-b02e34f5b1c2:
           set: "-1/0"
+          note: Provoking Nettles
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-2-ddabc63f-52af-4a84-8184-f3f05c788afb
-          note: Provoking Nettles
         a117495d-0d5e-4b24-bd65-31991a26fc1e:
           set: "-1/0"
+          note: Provoking Nettles
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e-3-698e1cd2-7b88-4806-8fab-e6c7d103a4e4
-          note: Provoking Nettles
         3198cf33-0c05-4a4b-8c1e-f3369cd1bf1b:
           set: "-1/0"
+          note: Provoking Nettles
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-1-ddabc63f-52af-4a84-8184-f3f05c788afb
-          note: Provoking Nettles
         a58ef90d-4869-46bf-910d-fe6b7b2b7b6b:
           set: 0/0
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
@@ -710,10 +667,10 @@ info:
     moveDistanceRoundId: 4afbbf99-f4a4-457f-8758-4b9b5e75547e-3
     skillProficiencies: []
     resources:
-      62548339-60e7-4bac-b5f1-e5debb8b7202:
+      2064bdab-6a7b-4168-8ad2-2624b7da53ba:
         __typeName: CharacterResource
         used: 1
-        refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e
+        refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
       a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
         __typeName: CharacterResource
         used: 1
@@ -726,22 +683,22 @@ info:
         __typeName: CharacterResource
         used: 1
         refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-      e2050ed1-6c98-4f2d-933c-50b690f5c311:
+      62548339-60e7-4bac-b5f1-e5debb8b7202:
         __typeName: CharacterResource
         used: 1
-        refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
+        refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e
       d19658a2-4d7b-4504-af9e-1a5410fb17fd:
         __typeName: CharacterResource
         used: 1
         refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
+      e2050ed1-6c98-4f2d-933c-50b690f5c311:
+        __typeName: CharacterResource
+        used: 1
+        refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
       84e877fe-3b19-4a5a-94b4-b07bb52b3446:
         __typeName: CharacterResource
         used: 1
         refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-      2064bdab-6a7b-4168-8ad2-2624b7da53ba:
-        __typeName: CharacterResource
-        used: 1
-        refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
     innateActivatedAbilities:
     - __typeName: ActivatedAbility
       modifiers: []
@@ -749,45 +706,6 @@ info:
       implementationDetails: ""
       targetFilter: Enemy
       name: Virulent Breath
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 12 poison damage; the target is dragonsealed (save ends)
-        - 9 poison damage; the target is dragonsealed (save ends)
-        - 5 poison damage
-        resistanceRoll: true
-        roll: 2d10 + Might
-        attrid: mgt
-        resistanceAttr: mgt
-        isTest: false
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        durationUntilEndOfTurn: false
-        tiersSelected:
-        - 2
-        - 1
-        ongoingEffect: 4ef44735-ac86-41a8-bd3b-5ad8c07671d9
-        ongoingEffectCustom: false
-        duration: save_ends
-      implementation: 4
-      abilityType: none
-      numTargets: 1
-      guid: ece32d98-1eb7-46fa-9e4b-f77705a156e1
-      targetTextOverride: Each creature and object in the area
-      range: 10
-      effectImplemented: false
-      strain: []
-      iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
-      keywords:
-        Magic: true
-        Area: true
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      objectTarget: true
-      targetType: line
-      categorization: Signature Ability
-      radius: 1
-      description: 'A dragonsealed creature has their wounds bound by nettles and thorns, causing them to take an extra 1d3 damage whenever they take damage rolled as a d6 or a d3. '
-      repeatTargets: false
-      persistence: []
       display:
         bgcolor:
           __usertype: LuaColor
@@ -798,51 +716,75 @@ info:
         hueshift: 0
         saturation: 1
         brightness: 1
+      implementation: 4
+      iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+      strain: []
+      persistence: []
+      guid: ece32d98-1eb7-46fa-9e4b-f77705a156e1
+      description: 'A dragonsealed creature has their wounds bound by nettles and thorns, causing them to take an extra 1d3 damage whenever they take damage rolled as a d6 or a d3. '
+      abilityType: none
+      numTargets: 1
+      targetType: line
+      keywords:
+        Area: true
+        Magic: true
+      objectTarget: true
+      effectImplemented: false
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      categorization: Signature Ability
+      radius: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        tiers:
+        - 12 poison damage; the target is dragonsealed (save ends)
+        - 9 poison damage; the target is dragonsealed (save ends)
+        - 5 poison damage
+        resistanceRoll: true
+        isTest: false
+        attrid: mgt
+        resistanceAttr: mgt
+        roll: 2d10 + Might
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        durationUntilEndOfTurn: false
+        tiersSelected:
+        - 2
+        - 1
+        ongoingEffect: 4ef44735-ac86-41a8-bd3b-5ad8c07671d9
+        ongoingEffectCustom: false
+        duration: save_ends
+      repeatTargets: false
+      range: 10
+      targetTextOverride: Each creature and object in the area
     - __typeName: ActivatedAbility
       modifiers: []
       targetType: target
-      description: "2 Malice: Each target takes an extra 1d3 damage, and if they have A<2, they are bleeding (save ends). "
+      description: "2 Malice: Each target takes an extra 1d3 damage, and if they have A<2, they are bleeding (save ends)."
       targetFilter: Enemy
       name: Spinous Tail Swing
       implementation: 4
-      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
-      numTargets: 2
-      keywords:
-        Strike: true
-        Charge: true
-        Melee: true
-        Weapon: true
-      multipleModes: true
       abilityType: none
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      persistence: []
-      guid: af37d96b-fa41-42ba-81a1-f4e09044e08d
-      range: 2
       strain: []
-      categorization: Signature Ability
-      modeList:
-      - text: Base
-      - rules: Each target takes an extra 1d3 damage, and if they have A<2, they are bleeding (save ends).
-        condition: Malice >= 2
-        text: 2 Malice
+      persistence: []
+      flavor: ""
+      repeatTargets: false
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
         tiers:
         - 8 damage; push 2
         - 12 damage; push 4
         - 15 damage; push 8
+        roll: 2d10 + 3
       - __typeName: ActivatedAbilityDamageBehavior
+        titleText: "2 Malice: 1d3 extra damage"
         roll: 1d3
+        chatMessage: Spinous Tail Swing extra 1d3 damage
         modesSelected:
         - 2
-        titleText: "2 Malice: 1d3 extra damage"
-        chatMessage: Spinous Tail Swing extra 1d3 damage
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: bleeding (save ends)
         filterTarget: not Cast.PassesPotency(Target,"A",2)
         modesSelected:
         - 2
-        rule: bleeding (save ends)
       - __typeName: ActivatedAbilityReplenishBehavior
         resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
         modesSelected:
@@ -850,8 +792,23 @@ info:
         mode: expend
         applyto: caster
         quantity: "2"
-      repeatTargets: false
-      flavor: ""
+      guid: af37d96b-fa41-42ba-81a1-f4e09044e08d
+      iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
+      range: 2
+      numTargets: 2
+      categorization: Signature Ability
+      modeList:
+      - text: Base
+      - condition: Malice >= 2
+        rules: Each target takes an extra 1d3 damage, and if they have A<2, they are bleeding (save ends).
+        text: 2 Malice
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      multipleModes: true
+      keywords:
+        Strike: true
+        Charge: true
+        Melee: true
+        Weapon: true
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -861,81 +818,81 @@ info:
       modifiers: []
       flavor: ""
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        promptWhenResolving: true
-        rule: pull 5
-      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
-        applyto: caster
-        stamina: 5 * cast.Target Count
-      targetFilter: target.Ongoing Effects has "DragonsealedThorn"
-      keywords:
-        Area: true
-      name: Investiture of Verdure
-      guid: 47f491bb-cefa-46bc-96dc-c6b2dcf16872
-      implementation: 4
-      abilityType: none
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      targetTextOverride: Each dragonsealed enemy in the area
-      range: 10
-      effectImplemented: false
       implementationDetails: ""
-      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
-      strain: []
-      persistence: []
-      numTargets: 1
-      objectTarget: false
-      description: Each target is pulled 5 toward the dragon. For each creature pulled, the dragon gains 5 temporary Stamina.
-      categorization: Heroic Ability
-      resourceNumber: 5
-      targetAllegiance: enemy
-      repeatTargets: false
-      targetType: all
+      targetFilter: target.Ongoing Effects has "DragonsealedThorn"
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         saturation: 1
         brightness: 1
+      name: Investiture of Verdure
+      targetType: all
+      implementation: 4
+      iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      range: 10
+      targetAllegiance: enemy
+      resourceNumber: 5
+      strain: []
+      description: Each target is pulled 5 toward the dragon. For each creature pulled, the dragon gains 5 temporary Stamina.
+      objectTarget: false
+      guid: 47f491bb-cefa-46bc-96dc-c6b2dcf16872
+      numTargets: 1
+      effectImplemented: false
+      persistence: []
+      categorization: Heroic Ability
+      abilityType: none
+      keywords:
+        Area: true
+      repeatTargets: false
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: pull 5
+        promptWhenResolving: true
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        applyto: caster
+        stamina: 5 * cast.Target Count
+      targetTextOverride: Each dragonsealed enemy in the area
     - __typeName: ActivatedAbility
       modifiers: []
       flavor: ""
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 5 damage; A<1 restrained (save ends)
-        - 9 damage; A<2 restrained (save ends)
-        - 12 damage; A<3 restrained (save ends)
-        roll: 2d10 + 3
+      description: ""
       targetFilter: Enemy
       name: Briar Bindings
       implementation: 4
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      numTargets: 1
-      categorization: Villain Action
       actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      targetTextOverride: Each enemy in the area
-      range: 4
-      guid: 07f9e708-e3f0-45df-8037-165861ad449d
-      persistence: []
-      description: ""
-      usageLimitOptions:
-        resourceid: 62548339-60e7-4bac-b5f1-e5debb8b7202
-        multicharge: false
-        resourceRefreshType: encounter
-        charges: "1"
-      strain: []
-      villainAction: Villain Action 1
-      abilityType: none
-      keywords:
-        Magic: true
-        Area: true
-      repeatTargets: false
-      targetType: all
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
         saturation: 1
         brightness: 1
+      targetType: all
+      range: 4
+      keywords:
+        Area: true
+        Magic: true
+      abilityType: none
+      persistence: []
+      villainAction: Villain Action 1
+      usageLimitOptions:
+        resourceid: 62548339-60e7-4bac-b5f1-e5debb8b7202
+        multicharge: false
+        charges: "1"
+        resourceRefreshType: encounter
+      strain: []
+      categorization: Villain Action
+      numTargets: 1
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 3
+        tiers:
+        - 5 damage; A<1 restrained (save ends)
+        - 9 damage; A<2 restrained (save ends)
+        - 12 damage; A<3 restrained (save ends)
+      repeatTargets: false
+      guid: 07f9e708-e3f0-45df-8037-165861ad449d
+      targetTextOverride: Each enemy in the area
     - __typeName: ActivatedAbility
       modifiers: []
       flavor: ""
@@ -943,28 +900,22 @@ info:
       name: 'Thorned Armor '
       implementation: 4
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      numTargets: 1
+      strain: []
       castImmediately: true
-      categorization: Villain Action
       guid: 9002191c-47a7-46e3-b891-7b4bb90eec0f
-      range: 1
+      targetType: self
       usageLimitOptions:
         resourceid: 2064bdab-6a7b-4168-8ad2-2624b7da53ba
         multicharge: false
-        resourceRefreshType: encounter
         charges: "1"
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      persistence: []
-      strain: []
-      effectImplemented: false
-      abilityType: none
-      villainAction: Villain Action 2
+        resourceRefreshType: encounter
+      keywords: []
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         ongoingEffectCustom: false
+        applyto: caster
         ongoingEffect: 9da79f0c-cef5-4dab-b38e-69a1259d187f
         duration: eoe
-        applyto: caster
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         applyto: caster
         customAbility:
@@ -972,24 +923,30 @@ info:
           modifiers: []
           targetType: self
           guid: 1ab77cf2-becf-4d54-92a6-69d27fad5e26
+          numTargets: "1"
           behaviors: []
+          iconid: ui-icons/skills/1.png
           description: ""
+          name: Invoked Ability
           range: 1
+          repeatTargets: false
+          abilityType: none
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
             brightness: 1
-          name: Invoked Ability
-          abilityType: none
-          repeatTargets: false
-          iconid: ui-icons/skills/1.png
-          numTargets: "1"
         abilityType: named
         namedAbility: Provoking Nettles
-      keywords: []
+      persistence: []
+      villainAction: Villain Action 2
+      effectImplemented: false
+      abilityType: none
+      categorization: Villain Action
+      numTargets: 1
+      range: 1
       repeatTargets: false
-      targetType: self
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -999,31 +956,17 @@ info:
       modifiers: []
       flavor: ""
       description: "Poisonous overgrowth and seeking vines cover all surfaces on the encounter map. The dragon uses their Bramble Barricade Malice feature twice at no cost. Until the end of the encounter, any creature force moved by the dragon takes 1d3 poison damage, and if they have M<2, they are weakened (save ends). \n\nSpecial: If the Thorn Dragon’s Domain trait is in effect, any creature other than the dragon who starts their turn on the encounter map takes 1d3 poison damage. "
-      categorization: Villain Action
-      guid: 33764090-8805-4871-a498-9b084023715e
+      display:
+        bgcolor: "#ffffffff"
+        hueshift: 0
+        saturation: 1
+        brightness: 1
+      rangeTextOverride: Special
       name: Malign Thicket
-      targetTextOverride: Special
+      repeatTargets: false
       implementation: 4
-      abilityType: none
-      numTargets: 1
-      range: 1
-      effectImplemented: false
-      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      strain: []
-      multipleModes: true
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      persistence: []
-      keywords: []
-      usageLimitOptions:
-        resourceid: e2050ed1-6c98-4f2d-933c-50b690f5c311
-        multicharge: false
-        resourceRefreshType: encounter
-        charges: "1"
-      targetType: map
-      villainAction: Villain Action 3
-      modeList:
-      - text: Normal
-      - text: "Special: Domain"
+      strain: []
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         applyto: caster
@@ -1032,19 +975,19 @@ info:
           modifiers: []
           targetType: self
           guid: d9c644a3-cf78-458c-800f-e612d37de978
+          numTargets: "1"
           behaviors: []
+          iconid: ui-icons/skills/1.png
           description: ""
+          name: Invoked Ability
           range: 1
+          repeatTargets: false
+          abilityType: none
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
             brightness: 1
-          name: Invoked Ability
-          abilityType: none
-          repeatTargets: false
-          iconid: ui-icons/skills/1.png
-          numTargets: "1"
         runOnController: false
         promptText: The dragon uses their Bramble Barricade Malice feature twice at no cost.
         invokeOnCaster: true
@@ -1057,29 +1000,29 @@ info:
           modifiers: []
           targetType: self
           guid: d9c644a3-cf78-458c-800f-e612d37de978
+          numTargets: "1"
           behaviors: []
+          iconid: ui-icons/skills/1.png
           description: ""
+          name: Invoked Ability
           range: 1
+          repeatTargets: false
+          abilityType: none
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             saturation: 1
             brightness: 1
-          name: Invoked Ability
-          abilityType: none
-          repeatTargets: false
-          iconid: ui-icons/skills/1.png
-          numTargets: "1"
-        guid: fe25be8b-9b44-4ae7-b5be-e65ca9a1a380
+        invokeOnCaster: true
         runOnController: false
         promptText: The dragon uses their Bramble Barricade Malice feature twice at no cost.
-        invokeOnCaster: true
         abilityType: named
+        guid: fe25be8b-9b44-4ae7-b5be-e65ca9a1a380
         namedAbility: Bramble Barricade
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         ongoingEffectCustom: false
-        duration: eoe
         ongoingEffect: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
+        duration: eoe
         modesSelected:
         - 2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
@@ -1089,13 +1032,27 @@ info:
         - 1
         ongoingEffectCustom: false
         duration: eoe
-      repeatTargets: false
-      rangeTextOverride: Special
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        saturation: 1
-        brightness: 1
+      abilityType: none
+      villainAction: Villain Action 3
+      targetType: map
+      usageLimitOptions:
+        resourceid: e2050ed1-6c98-4f2d-933c-50b690f5c311
+        multicharge: false
+        charges: "1"
+        resourceRefreshType: encounter
+      keywords: []
+      guid: 33764090-8805-4871-a498-9b084023715e
+      persistence: []
+      effectImplemented: false
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      categorization: Villain Action
+      modeList:
+      - text: Normal
+      - text: "Special: Domain"
+      numTargets: 1
+      multipleModes: true
+      range: 1
+      targetTextOverride: Special
     import:
       data: |+
         Thorn Dragon	Level 2 Solo
@@ -1172,21 +1129,21 @@ info:
     2064bdab-6a7b-4168-8ad2-2624b7da53ba_history:
       __typeName: StatHistory
       entries:
-        c9a28844-afa5-4e10-b87f-2eacc29f4410:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e
-          note: 'Thorned Armor '
-        72089abd-5ca5-4f69-8c71-117f901347fb:
-          set: "-1/0"
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: effaf943-17bc-465d-befe-a20dcfb2cff7
-          note: 'Thorned Armor '
         d8969287-45a1-4c0f-a1e2-7cba321dcd1c:
           set: "-1/0"
+          note: 'Thorned Armor '
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
+        72089abd-5ca5-4f69-8c71-117f901347fb:
+          set: "-1/0"
           note: 'Thorned Armor '
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: effaf943-17bc-465d-befe-a20dcfb2cff7
+        c9a28844-afa5-4e10-b87f-2eacc29f4410:
+          set: "-1/0"
+          note: 'Thorned Armor '
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e
     walkingSpeed: 8
     a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
       __typeName: StatHistory
@@ -1197,22 +1154,25 @@ info:
           note: Investiture of Verdure
         36bed6a1-972f-4b74-9451-a9753db7797a:
           set: 0/1
+          note: Investiture of Verdure
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
-          note: Investiture of Verdure
     e2050ed1-6c98-4f2d-933c-50b690f5c311_history:
       __typeName: StatHistory
       entries:
         df5389a1-161c-4ce2-ba8a-c43af2455a10:
           set: "-1/0"
+          note: Malign Thicket
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 346cdddf-19bc-4e9e-8ce9-6663b4285443
-          note: Malign Thicket
         94864a27-f591-4026-a34d-1b4ea0d408d6:
           set: "-1/0"
+          note: Malign Thicket
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa
-          note: Malign Thicket
+    notes:
+    - text: ""
+      title: Thorn Dragon
     monster_category: Monster
     damageEntries:
       9f299ca7-1d63-43d7-8a71-c3b679926d7e:
@@ -1221,8 +1181,8 @@ info:
         attackerid: 5b0c6698-a3ed-43c4-8a99-0c00473c9eb1
         id: 9f299ca7-1d63-43d7-8a71-c3b679926d7e
         damage: 8
-    availableTriggers: []
-    deathSavingThrowFailures: 0
+    ev: 48
+    notesRevision: 76fad8a5-edd3-4243-be4c-3c33494e0bda
     titles: []
     movementSpeeds:
       fly: 8
@@ -1235,24 +1195,24 @@ info:
           set: 1/1
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           note: Virulent Breath
-        fe3969a2-c0f4-412e-a8db-5086bdcc2c3b:
-          set: 0/1
+        3c612173-07a9-4fff-a7ca-b18eccbde863:
+          set: 1/1
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
           note: Virulent Breath
         78aa1315-7245-4073-bcf5-cd1e79464907:
           set: 1/1
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           note: Virulent Breath
-        e25275e4-89ae-4182-8156-e8c85d2a0326:
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          note: Virulent Breath
-        3c612173-07a9-4fff-a7ca-b18eccbde863:
-          set: 1/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-          note: Virulent Breath
         117424dd-2a7b-4696-85bc-fcd7697823d1:
+          set: 1/1
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          note: Virulent Breath
+        fe3969a2-c0f4-412e-a8db-5086bdcc2c3b:
+          set: 0/1
+          note: Virulent Breath
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
+        e25275e4-89ae-4182-8156-e8c85d2a0326:
           set: 1/1
           userid: qEfsVECZ5sUF7XdznhpYiuErYD12
           note: Virulent Breath
@@ -1267,11 +1227,11 @@ info:
     resistances:
     - __typeName: ResistanceEntry
       damageType: poison
-      apply: Damage Reduction
       dr: 5
+      apply: Damage Reduction
     initiativeGrouping: 3b34455b-7c49-4b11-967c-305e3bdb4312
-    moveDistance: 15
-    monster_type: Thorn Dragon
+    creatureSize: "3"
+    levelChoices: []
     animations:
       guid: b2a03346-aefe-426d-846f-2229363f01c4-2703
       anim:
@@ -1279,14 +1239,44 @@ info:
         resources:
           a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
     savingThrowRatings: []
-    notesRevision: 76fad8a5-edd3-4243-be4c-3c33494e0bda
     skillRatings: []
+    84e877fe-3b19-4a5a-94b4-b07bb52b3446_history:
+      __typeName: StatHistory
+      entries:
+        7af11d0c-7fac-4d3e-96c0-d745980e1721:
+          set: "-1/0"
+          note: Provoking Nettles
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: 1c61c44c-55c0-4e08-b2c7-6000a46a2aaa-16-2f70db5c-c643-403f-a422-d6c5d5c4a25b
+        12be2419-238e-4e3c-b37b-b9fef43a74fa:
+          set: "-1/0"
+          note: Provoking Nettles
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: 4afbbf99-f4a4-457f-8758-4b9b5e75547e-3-698e1cd2-7b88-4806-8fab-e6c7d103a4e4
+        7967c961-cc73-43a7-a929-5473c2659e25:
+          set: 0/0
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          note: Provoking Nettles
+        f7bc36b6-dacd-4e30-9c0e-145114a3d21d:
+          set: 0/0
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          note: Provoking Nettles
+        b75e4f39-ac06-4c23-9cb5-4f77719e37f6:
+          set: "-1/0"
+          note: Provoking Nettles
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-2-ddabc63f-52af-4a84-8184-f3f05c788afb
+        1114094b-e397-40f1-94d8-86cd449b230a:
+          set: 0/0
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          note: Provoking Nettles
+        88b10974-af73-44bc-9ae6-9ff0857ed9ad:
+          set: "-1/0"
+          note: Provoking Nettles
+          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
+          refreshid: fde29a19-5020-492b-8e67-f6ecfa037831-1-ddabc63f-52af-4a84-8184-f3f05c788afb
+    deathSavingThrowFailures: 0
     max_hitpoints_roll: "250"
-    notes:
-    - title: Thorn Dragon
-      text: ""
-    minion: false
-    moveDiag: 0
     attributes:
       inu:
         baseValue: 1
@@ -1303,13 +1293,14 @@ info:
       prs:
         baseValue: 2
         id: prs
-    role: Solo
+    moveDiag: 0
+    minion: false
     ongoingEffects: []
     cr: 2
-    creatureSize: "3"
+    monster_type: Thorn Dragon
     stability: 6
-    levelChoices: []
-    ev: 48
+    innateAttacks: []
+    availableTriggers: []
   tokenType: null
   bestiaryId: f1755110-0c32-4bfa-997a-1a05e75486f4
   summonerid: null

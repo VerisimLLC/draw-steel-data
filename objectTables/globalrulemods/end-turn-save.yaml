@@ -1,6 +1,6 @@
 __typeName: GlobalRuleMod
 id: 800867b2-86ac-4848-b95f-e147019ef22d
-mtime: 1772713269810
+mtime: 1786318925286
 _migrated_apply: true
 ctime: 1711321751814
 modifierInfo:
@@ -29,7 +29,8 @@ modifierInfo:
         behaviors:
         - __typeName: ActivatedAbilitySaveBehavior
           applyto: caster
-        description: ""
+          durationScope: eot
+        description: End of turn conditions on this creature expire automatically.
         iconid: ui-icons/skills/1.png
         guid: 89521cd2-d9cb-43b8-b17d-3a45d2a0387d
         display:
@@ -41,7 +42,41 @@ modifierInfo:
         trigger: endturn
         persistence: []
         range: 5
-        name: End Turn Save
+        name: End Turn Effects
+      behavior: trigger
+    - __typeName: CharacterModifier
+      guid: 16a41e08-5be3-4c18-8500-d213da2d6022
+      name: End Turn Save
+      sourceguid: d2b4ac7c-444b-429b-a7c2-99b38b931b65
+      description: ""
+      source: End Turn Save Global Rule Mod Feature
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        repeatTargets: false
+        abilityType: none
+        numTargets: "1"
+        strain: []
+        targetType: self
+        modifiers: []
+        behaviors:
+        - __typeName: ActivatedAbilitySaveBehavior
+          applyto: caster
+          durationScope: save
+          promptEach: true
+        description: Offer a saving throw against each effect on this creature that
+          is ended by a saving throw.
+        iconid: ui-icons/skills/1.png
+        guid: 5e398f70-925a-4640-97da-549345548e6f
+        display:
+          bgcolor: "#ffffffff"
+          hueshift: 0
+          brightness: 1
+          saturation: 1
+        conditionFormula: not dead
+        trigger: endturn
+        persistence: []
+        range: 5
+        name: End Turn Saving Throws
       behavior: trigger
     name: End Turn Save
 name: End Turn Save

@@ -1004,6 +1004,12 @@ The pieces, all pure data:
    with per-mode `condition`s; the unavailable mode is hidden from the cast
    bar, which auto-selects the available one.
 
+   (Hiding is what the cast bar does, and it is what you want here. Note that
+   **triggered** abilities have a second option the cast bar does not: filling
+   in a mode's `conditionReason` offers the failing mode greyed out with that
+   text instead of hiding it. It has no effect on a monster's castable
+   abilities -- see "Multi-Mode Abilities" in MONSTERS.md.)
+
    `multipleModes` takes THREE values, and the editor UI keys off which one:
    `false` (no modes), `true` ("Multiple Modes" -- one ability, behaviors
    gated per-mode via `modesSelected`), or `"variations"` ("Ability
