@@ -617,6 +617,13 @@ aura:
   blocks_movement: false     # Blocks creature movement (wall)
   concealment: false         # Offers concealment to creatures in aura
 
+  # --- Vertical Extent ---
+  # By default an aura reaches as far above and below its source as it does
+  # laterally: a radius-1 aura carried by a creature bands around the caster's
+  # altitude, and a placed zone bands around its cast altitude. Set
+  # unlimitedHeight to restore the legacy infinite vertical column.
+  unlimitedHeight: false
+
   # --- Movement Damage ---
   movedamage: "none"         # Damage type per square: "none", "fire", "poison", "acid", etc.
   damage: 0                  # Damage amount per square moved
