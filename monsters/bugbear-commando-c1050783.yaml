@@ -277,57 +277,43 @@ info:
       categorization: Ability
       description: The target is vertical pushed up to 5 squares. An ally doesn't take damage from being force moved this way.
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Vertical Push
-        customAbility:
-          __typeName: ActivatedAbility
-          targetType: self
-          abilityType: none
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        filterTarget: Friends(Caster, Target)
+        momentaryEffect:
+          id: c9fd5594-0e24-46f0-a089-080142ecbc0a
+          name: No Forced Damage
           description: ""
-          iconid: ui-icons/skills/1.png
-          categorization: Hidden
-          range: ""
+          __typeName: CharacterOngoingEffect
           display:
             bgcolor: "#ffffffff"
-            saturation: 1
             brightness: 1
             hueshift: 0
-          behaviors:
-          - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-            momentaryEffect:
-              __typeName: CharacterOngoingEffect
-              name: NoDamage
-              modifiers:
-              - __typeName: CharacterModifier
-                attribute: f97461b9-3424-4479-8c46-e48c835c5d68
-                behavior: attribute
-                guid: 66406b96-9fc0-4cfd-8ef8-6df7608c8693
-                description: Allies do not take forced movement damage
-                name: NoDamage
-                source: Ongoing Effect
-                sourceguid: 0c741d0c-0b74-4218-8844-41a74706f5f2
-                value: 1
-              iconid: ui-icons/skills/1.png
-              description: Allies do not take forced movement damage
-              id: 0c741d0c-0b74-4218-8844-41a74706f5f2
-              source: Ongoing Effect
-              guid: 0c741d0c-0b74-4218-8844-41a74706f5f2
-              display:
-                bgcolor: "#ffffffff"
-                saturation: 1
-                brightness: 1
-                hueshift: 0
-            name: Ability Duration Effect
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            rule: vertical push 5
-          repeatTargets: false
-          modifiers: []
-          guid: b9bdba1b-3940-4892-8fce-c432d9ba6633
-          name: Invoked Ability
-          strain: []
-          persistence: []
-          numTargets: "1"
-        targeting: inherit
+            saturation: 1
+          guid: c9fd5594-0e24-46f0-a089-080142ecbc0a
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: No Forced Damage
+            description: ""
+            __typeName: CharacterModifier
+            attribute: f97461b9-3424-4479-8c46-e48c835c5d68
+            behavior: attribute
+            guid: 0a1851d4-ea6f-4f94-b70e-da630aae4219
+            source: Ongoing Effect
+            sourceguid: c9fd5594-0e24-46f0-a089-080142ecbc0a
+            value: 1
+          - name: No Forced Damage
+            description: ""
+            __typeName: CharacterModifier
+            attribute: 452b89e8-70cb-467e-a71a-33bd2d137388
+            behavior: attribute
+            guid: 7c9f5447-81fd-4c4e-b828-37482b9c8794
+            source: Ongoing Effect
+            sourceguid: c9fd5594-0e24-46f0-a089-080142ecbc0a
+            value: 1
+          source: Ongoing Effect
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: vertical push 5; allies ignore stability
       repeatTargets: false
       modifiers: []
       strain: []
