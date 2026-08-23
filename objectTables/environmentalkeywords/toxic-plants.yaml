@@ -1,73 +1,75 @@
-__typeName: EnvironmentalKeyword
-name: Toxic Plants
-description: "Colorful mushrooms or flowering plants release sleep-inducing spores when disturbed. A creature that starts their turn in the Toxic Plants, or enters a square without shifting, is targeted by Sleep Spores, a Magic Melee Strike free triggered action. While dazed this way, a creature that starts their turn in the Toxic Plants falls prone and can't stand."
-source: Environmental Keyword
-iconid: ui-icons/skills/1.png
-guid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
 id: cdfccc35-51e2-4c66-ae30-a886c2936969
-implementation: 2
+name: Toxic Plants
+description: Colorful mushrooms or flowering plants release sleep-inducing spores when disturbed. A creature that starts their turn in the Toxic Plants, or enters a square without shifting, is targeted by Sleep Spores, a Magic Melee Strike free triggered action. While dazed this way, a creature that starts their turn in the Toxic Plants falls prone and can't stand.
+_table: environmentalKeywords
+__typeName: EnvironmentalKeyword
 defaultHeight: 0
-powerRollEnabled: true
-powerRollBonus: 2
-powerRollShiftEntryMode: ignore
-powerRollTiers:
-  - "M<0 dazed with Toxic Plants (save ends)"
-  - "M<1 dazed with Toxic Plants (save ends)"
-  - "M<2 dazed with Toxic Plants (save ends)"
-modifiers:
-  - __typeName: CharacterModifier
-    behavior: trigger
-    name: Toxic Plants
-    description: A creature dazed by Toxic Plants falls prone at the start of their turn while in the zone.
-    source: Environmental Keyword
-    sourceguid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
-    guid: a766a3f3-534e-46bb-b5af-b018b93cf9c7
-    domains:
-      EnvironmentalKeyword:3c239d5e-5846-4f5c-843f-1f7225bc2685: true
-    filterCondition: 'IncludesConditionRider("Dazed", "with Toxic Plants")'
-    triggeredAbility:
-      __typeName: TriggeredAbility
-      name: Sleep Spores
-      description: A creature dazed by Toxic Plants falls prone when they start their turn in the zone.
-      guid: 3a6dcb24-1c7c-4d6d-92e8-9bac0cd5b20f
-      trigger: beginturn
-      mandatory: true
-      castImmediately: true
-      subject: self
-      targetType: self
-      range: "0"
-      numTargets: "1"
-      abilityType: none
-      repeatTargets: false
-      modifiers: []
-      persistence: []
-      strain: []
-      iconid: ui-icons/skills/1.png
-      display:
-        bgcolor: "#ffffffff"
-        hueshift: 0
-        brightness: 1
-        saturation: 1
-      behaviors:
-        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-          rule: prone
-          applyto: targets
-  - __typeName: CharacterModifier
-    behavior: attribute
-    name: Toxic Plants
-    description: A creature dazed by Toxic Plants can't stand while in the zone.
-    source: Environmental Keyword
-    sourceguid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
-    guid: 4a672255-6e7b-4816-a9b4-f935f1c4f8df
-    domains:
-      EnvironmentalKeyword:3c239d5e-5846-4f5c-843f-1f7225bc2685: true
-    filterCondition: 'IncludesConditionRider("Dazed", "with Toxic Plants")'
-    attribute: 207ef4f5-948b-44b1-b3c8-feae6b14e5ce
-    operation: set
-    value: 1
+defaultPlayerVisible: false
 display:
   bgcolor: "#739b45"
+  brightness: 1
   hueshift: 0
   saturation: 1
-  brightness: 1
-_table: environmentalKeywords
+guid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
+iconid: ui-icons/skills/1.png
+implementation: 2
+modifiers:
+- name: Toxic Plants
+  description: A creature dazed by Toxic Plants falls prone at the start of their turn while in the zone.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    EnvironmentalKeyword:3c239d5e-5846-4f5c-843f-1f7225bc2685: true
+  filterCondition: IncludesConditionRider("Dazed", "with Toxic Plants")
+  guid: a766a3f3-534e-46bb-b5af-b018b93cf9c7
+  source: Environmental Keyword
+  sourceguid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
+  triggeredAbility:
+    name: Sleep Spores
+    description: A creature dazed by Toxic Plants falls prone when they start their turn in the zone.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: prone
+    castImmediately: true
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 3a6dcb24-1c7c-4d6d-92e8-9bac0cd5b20f
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: "0"
+    repeatTargets: false
+    strain: []
+    subject: self
+    targetType: self
+    trigger: beginturn
+- name: Toxic Plants
+  description: A creature dazed by Toxic Plants can't stand while in the zone.
+  __typeName: CharacterModifier
+  attribute: 207ef4f5-948b-44b1-b3c8-feae6b14e5ce
+  behavior: attribute
+  domains:
+    EnvironmentalKeyword:3c239d5e-5846-4f5c-843f-1f7225bc2685: true
+  filterCondition: IncludesConditionRider("Dazed", "with Toxic Plants")
+  guid: 4a672255-6e7b-4816-a9b4-f935f1c4f8df
+  operation: set
+  source: Environmental Keyword
+  sourceguid: 3c239d5e-5846-4f5c-843f-1f7225bc2685
+  value: 1
+mtime: 1787516595595
+powerRollBonus: 2
+powerRollEnabled: true
+powerRollShiftEntryMode: ignore
+powerRollTiers:
+- M<0 dazed with Toxic Plants (save ends)
+- M<1 dazed with Toxic Plants (save ends)
+- M<2 dazed with Toxic Plants (save ends)
+source: Environmental Keyword
