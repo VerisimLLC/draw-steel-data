@@ -17,6 +17,15 @@ These errors have been discovered through testing. Read this section BEFORE crea
 1. **Table names are case-sensitive.** Use the exact names from `_manifest.yaml`.
    `characterOngoingEffects` is correct; `CharacterOngoingEffects` will fail silently.
 
+1b. **Write GoblinScript identifiers WITHOUT spaces.** Symbol lookup strips spaces and
+   case, so `MaximumStamina` equals `Maximum Stamina` -- but the spaced spelling silently
+   mis-parses whenever a word collides with a reserved operator (`has`, `is`, `not`,
+   `and`, `or`, `when`, `where`, `else`): `Has Cover > 0` compiles into a containment
+   test and never resolves the attribute. Spaced identifiers in existing content are
+   legacy; all NEW formulas use space-less spellings (`HasCover > 0`,
+   `CoverFromAllEnemies`). Never name a new symbol or custom attribute with a reserved
+   word in it.
+
 2. **`stability` is NOT a valid attribute ID.** The correct ID is `forcedmoveresistance`.
    Using `attribute: stability` on a CharacterModifier will do nothing.
 
