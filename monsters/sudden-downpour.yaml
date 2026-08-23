@@ -166,7 +166,7 @@ info:
           CharacterFeature:2d8ca7d4-bb08-4e15-b2b1-abc89bd9ad70: true
           CharacterFeature:3d752deb-6aed-4e57-884a-675d5a5d29ec: true
         description: The downpour ignores difficult terrain and can move on top of water as if it were solid ground.
-      implementation: 3
+      implementation: 4
       guid: 2d8ca7d4-bb08-4e15-b2b1-abc89bd9ad70
       source: Monster Trait
       description: The downpour ignores difficult terrain and can move on top of water as if it were solid ground.
@@ -202,7 +202,7 @@ info:
         description: While adjacent to any ally, the downpour can't be flanked or made frightened.
         conditions:
         - 1211270f-bfce-45a6-b937-d72f0e8a06a8
-      implementation: 3
+      implementation: 4
       guid: 982bef8a-ad72-4def-8578-968b0cbdef5f
       source: Monster Trait
       description: While adjacent to any ally, the downpour can't be flanked or made frightened.
@@ -320,9 +320,10 @@ info:
             saturation: 1
             bgcolor: "#ffffffff"
           numTargets: "1"
-          implementation: 3
+          implementation: 4
           guid: eff67fbd-f078-4d69-9657-97cce610e47f
           description: The downpour turns invisible until the end of their turn. This effect ends early if the downpour takes damage or uses an ability.
+          resourceNumber: "1"
           resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
         behavior: activated
         guid: fd97a8e7-2ff1-466d-9f9d-29302e39ec54
@@ -332,7 +333,7 @@ info:
       domains:
         CharacterFeature:1c8c1337-7854-475b-84aa-1715a2209f19: true
       source: Character Feature
-      implementation: 3
+      implementation: 4
     - __typeName: CharacterFeature
       name: Water Weird
       domains:
@@ -353,32 +354,10 @@ info:
           __typeName: ActivatedAbility
           castImmediately: true
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
-            standardAbilityParams:
-              range: "5"
-            abilityType: standard
-            customAbility:
-              __typeName: ActivatedAbility
-              behaviors: []
-              modifiers: []
-              guid: 31089149-4c73-4eee-bdab-0fda85fef0c7
-              targetType: self
-              iconid: ui-icons/skills/1.png
-              repeatTargets: false
-              display:
-                hueshift: 0
-                brightness: 1
-                saturation: 1
-                bgcolor: "#ffffffff"
-              numTargets: "1"
-              name: Invoked Ability
-              range: 1
-              description: ""
-              abilityType: none
-            promptText: The target square must be adjacent to a body of water. Another water elemental can be treated as a body of water for this ability.
-            applyto: targets
-            runOnController: true
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+          abilityFilters:
+          - reason: The caster must be adjacent to a body of water or another water elemental
+            formula: self.AdjacentToWater
           abilityType: none
           guid: 7ec0660e-c126-4e25-b37e-5f652635d5b3
           strain: []
@@ -386,7 +365,7 @@ info:
           description: ""
           categorization: Signature Ability
           numTargets: "1"
-          targetFilter: Self
+          targetFilter: target.AdjacentToWater
           repeatTargets: false
           domains:
             CharacterFeature:3969e291-76ee-4a64-936b-9987a37595d8: true
@@ -397,7 +376,7 @@ info:
           range: "5"
           preDescription: Once on their turn as a free maneuver, the flow can enter an adjacent body of water and reappear in an unoccupied space adjacent to another body of water within 5 squares. Any other water elemental can be treated as a body of water for the purpose of using this ability
           reasonedFilters: []
-          targetType: self
+          targetType: emptyspace
           iconid: 98e46b21-b1bb-4899-bd9c-ac1ee95f7239
           sourceReference:
             __typeName: SourceReference
@@ -413,7 +392,6 @@ info:
               s: 0.903710961341858
               v: 0.883498311042786
               a: 1
-          selfTarget: true
           name: Water Weird
           targetTextOverride: 1 unoccupied space adjacent to water
           actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
@@ -422,7 +400,7 @@ info:
         guid: 8090ac66-c914-43ef-87ad-7a5f39ee5fd3
         source: Monster Trait
         name: Water Weird
-      implementation: 3
+      implementation: 4
       guid: 3969e291-76ee-4a64-936b-9987a37595d8
       source: Monster Trait
       description: Once on their turn as a free maneuver, the downpour can enter an adjacent body of water and reappear in an unoccupied space adjacent to another body of water within 5 squares. Any other water elemental can be treated as a body of water for the purpose of using this ability.
@@ -524,7 +502,7 @@ info:
           v: 0.67504221200943
           a: 1
       numTargets: "1"
-      implementation: 3
+      implementation: 4
       targetTextOverride: One creature or object
       repeatTargets: false
       persistence: []

@@ -81,7 +81,7 @@ maliceAbilities:
   range: "5"
   name: Change Course
 - __typeName: MaliceAbility
-  implementation: 3
+  implementation: 4
   strain: []
   channeledResource: none
   behaviors:
@@ -146,9 +146,9 @@ maliceAbilities:
           name: Invoked Ability
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        promptText: This ability only allows shifting up to the creatures Movement Speed. If they have already shifted their movement speed before using Water Weird, this Shift should be skipped.
+        promptText: This ability only allows shifting up to the creatures Movement Speed. This Shift is limited to whatever movement the creature has not already used during this use of Pack Formation.
         standardAbilityParams:
-          distance: Movement Speed
+          distance: Max(0, Movement Speed - {Cast.SpacesMovedThisInvocation})
         guid: da89890f-2a71-47b0-93f3-ed3c3ccc0745
         customAbility:
           __typeName: ActivatedAbility
@@ -209,7 +209,7 @@ maliceAbilities:
   range: 1
   name: Pack Formation
 - __typeName: MaliceAbility
-  implementation: 3
+  implementation: 4
   strain: []
   targetType: map
   behaviors:
