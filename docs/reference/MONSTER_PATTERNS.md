@@ -647,7 +647,7 @@ House Call (Hag -- summons hut), various hero class abilities
 ```yaml
 - __typeName: ActivatedAbilitySummonBehavior
   bestiaryFilter: Beast.Name = Invoker.Name
-  groupInitiativeWithCaster: false
+  groupInitiativeWithCaster: true
   casterControls: false
 ```
 
