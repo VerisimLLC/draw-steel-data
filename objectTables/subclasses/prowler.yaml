@@ -1,74 +1,63 @@
-__typeName: Class
-primaryClassId: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
-isSubclass: true
-details: An unseen ambusher from the shadows. You have the Hide skill.
-name: Prowler
-heroicResourceChecklist: []
 id: 644b71de-95c8-41ee-be37-b3556b424990
+name: Prowler
+_table: subclasses
+__typeName: Class
+details: An unseen ambusher from the shadows. You have the Hide skill.
+heroicResourceChecklist: []
+isSubclass: true
 levels:
-  primary:
+  level-1:
     __typeName: ClassLevel
-    features: []
     domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  tutoriallevel-4:
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
+  level-10:
     __typeName: ClassLevel
-    features: []
     domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
   level-2:
     __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
     features:
-    - __typeName: CharacterFeatureChoice
+    - name: 2nd-Level Prowler Wild Nature Ability
       description: Choose a 2nd-level Prowler Wild Nature ability.
-      numChoices: 1
+      __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
       classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: 2nd-Level Prowler Wild Nature Ability
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: 7e2c4f81-9a3b-4d68-b517-2e6c8d4a1f73
+      numChoices: 1
       options:
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: Jump Scare
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      - name: Jump Scare
         description: Surprised to see me?
-        source: Prowler Class Feature
-        implementation: 2
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
         guid: 8f3d5e92-ab4c-4e79-c628-3f7d9e5b2a84
-        tags:
-          Ability: true
+        implementation: 2
         modifiers:
-        - __typeName: CharacterModifier
-          sourceguid: 8f3d5e92-ab4c-4e79-c628-3f7d9e5b2a84
-          source: Prowler Class Feature
+        - name: Jump Scare
+          description: Surprised to see me?
+          __typeName: CharacterModifier
           activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
             name: Jump Scare
-            keywords:
-              Area: true
-              Companion: true
-              Magic: true
-            repeatTargets: false
-            range: 1
-            targetType: self
-            modifiers: []
-            flavor: Surprised to see me?
-            guid: ab5f70b4-cd6e-4a9b-e84a-5b9f1a7d4ca6
-            strain: []
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            castImmediately: true
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            numTargets: "1"
+            description: |-
+              Your companion shifts up to a number of squares equal to their Intuition score. During this movement, they are invisible. They then make the following power roll against each enemy in the 2 burst.
+
+              Special: Targets only enemies with line of effect to your companion.
+            __typeName: ActivatedAbility
             abilityType: none
-            persistence: []
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               filterTarget: 0 {Display only - real roll runs inside the burst sub-ability.}
@@ -81,29 +70,12 @@ levels:
               applyto: caster
               rule: shift {Intuition}
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              promptText: Resolve the 2 burst against each enemy in the area around the companion.
               abilityType: custom
-              inheritKeywords: true
+              applyto: caster
               customAbility:
-                __typeName: ActivatedAbility
-                iconid: ui-icons/skills/1.png
                 name: Jump Scare Burst
-                keywords:
-                  Area: true
-                  Companion: true
-                  Magic: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                range: 2
-                targetType: all
-                targetTextOverride: Each enemy in the area
-                reasonedFilters:
-                - formula: "1"
-                  reason: This ability can only target enemies with line of effect to your companion.
-                numTargets: "1"
+                description: ""
+                __typeName: ActivatedAbility
                 abilityType: none
                 behaviors:
                 - __typeName: ActivatedAbilityPowerRollBehavior
@@ -112,93 +84,101 @@ levels:
                   - 4 damage; P < Weak, frightened (save ends)
                   - 6 damage; P < Average, frightened (save ends)
                   - 10 damage; P < Strong, frightened (save ends)
-                repeatTargets: false
-                description: ""
-                guid: cd7192d6-ef8a-4cbd-a06c-7dc13c9f6ec8
-                rangeTextOverride: 2 burst
                 categorization: Hidden
-                targetAllegiance: enemy
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: cd7192d6-ef8a-4cbd-a06c-7dc13c9f6ec8
+                iconid: ui-icons/skills/1.png
+                keywords:
+                  Area: true
+                  Companion: true
+                  Magic: true
                 modifiers: []
-              applyto: caster
-            resourceNumber: "5"
-            description: |-
-              Your companion shifts up to a number of squares equal to their Intuition score. During this movement, they are invisible. They then make the following power roll against each enemy in the 2 burst.
-
-              Special: Targets only enemies with line of effect to your companion.
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            implementationDetails: Companion invisibility during the shift is not automated (the shift is a normal shift). Burst origin is the companion's post-shift space; the line-of-effect-to-companion targeting restriction is not enforced and is shown only as a reasoned filter note.
-            rangeTextOverride: 2 burst
-            categorization: Heroic Ability
-            targetTextOverride: Each enemy in the area
-            implementation: 2
-          name: Jump Scare
-          behavior: activated
-          description: Surprised to see me?
-          guid: 9a4e6fa3-bc5d-4f8a-d739-4a8e0f6c3b95
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: On You Like Your Shadow
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Your companion darts around their target, staying out of reach and using them as a shield.
-        source: Prowler Class Feature
-        implementation: 2
-        guid: de82a3e7-fa9b-4dce-b17d-8ed24daa7fd9
-        tags:
-          Ability: true
-        modifiers:
-        - __typeName: CharacterModifier
-          description: Your companion darts around their target, staying out of reach and using them as a shield.
-          source: Prowler Class Feature
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          name: On You Like Your Shadow
-          behavior: activated
-          sourceguid: de82a3e7-fa9b-4dce-b17d-8ed24daa7fd9
-          guid: ef93b4f8-ab0c-4edf-c28e-9fe35beb8a0a
-          activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
-            name: On You Like Your Shadow
-            keywords:
-              Strike: true
-              Melee: true
-              Weapon: true
-              Charge: true
-              Companion: true
-            repeatTargets: false
-            objectTarget: true
-            targetType: target
-            flavor: Your companion darts around their target, staying out of reach and using them as a shield.
-            guid: fa04c509-bc1d-4fa0-d39f-a0f46cfc9b1b
-            implementation: 2
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+                numTargets: "1"
+                range: 2
+                rangeTextOverride: 2 burst
+                reasonedFilters:
+                - formula: "1"
+                  reason: This ability can only target enemies with line of effect to your companion.
+                repeatTargets: false
+                targetAllegiance: enemy
+                targetTextOverride: Each enemy in the area
+                targetType: all
+              inheritKeywords: true
+              promptText: Resolve the 2 burst against each enemy in the area around the companion.
             castImmediately: true
-            strain: []
-            numTargets: "1"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            persistence: []
-            abilityType: none
-            resourceNumber: "5"
-            description: Your companion enters the target's space. Until your companion is no longer in the target's space, they can end their turn in that space, strikes against them also affect the target, and your strikes against the target gain an edge.
+            categorization: Heroic Ability
             display:
-              hueshift: 0
-              brightness: 1
               bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
               saturation: 1
             domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
               class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            implementationDetails: Power roll and damage are automated. Companion entering the target's space is approximated by teleporting the companion adjacent to the target (Draw Steel does not allow two creatures to share a space by default). The persistent shared-space rider (strikes against companion also affect target, your strikes vs target gain an edge, companion can end turn in target's space) is not automated.
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: Surprised to see me?
+            guid: ab5f70b4-cd6e-4a9b-e84a-5b9f1a7d4ca6
+            iconid: ui-icons/skills/1.png
+            implementation: 2
+            implementationDetails: Companion invisibility during the shift is not automated (the shift is a normal shift). Burst origin is the companion's post-shift space; the line-of-effect-to-companion targeting restriction is not enforced and is shown only as a reasoned filter note.
+            keywords:
+              Area: true
+              Companion: true
+              Magic: true
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            rangeTextOverride: 2 burst
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "5"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 27
+              type: pdf
+            strain: []
+            targetTextOverride: Each enemy in the area
+            targetType: self
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 9a4e6fa3-bc5d-4f8a-d739-4a8e0f6c3b95
+          source: Prowler Class Feature
+          sourceguid: 8f3d5e92-ab4c-4e79-c628-3f7d9e5b2a84
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 27
+          type: pdf
+        tags:
+          Ability: true
+      - name: On You Like Your Shadow
+        description: Your companion darts around their target, staying out of reach and using them as a shield.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: de82a3e7-fa9b-4dce-b17d-8ed24daa7fd9
+        implementation: 2
+        modifiers:
+        - name: On You Like Your Shadow
+          description: Your companion darts around their target, staying out of reach and using them as a shield.
+          __typeName: CharacterModifier
+          activatedAbility:
+            name: On You Like Your Shadow
+            description: Your companion enters the target's space. Until your companion is no longer in the target's space, they can end their turn in that space, strikes against them also affect the target, and your strikes against the target gain an edge.
+            __typeName: ActivatedAbility
+            abilityType: none
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
             - __typeName: ActivatedAbilityPowerRollBehavior
               roll: 2d10 + Might
@@ -206,148 +186,1090 @@ levels:
               - 5 + M damage
               - 8 + M damage
               - 12 + M damage
+            castImmediately: true
             categorization: Heroic Ability
-            range: 1
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: Your companion darts around their target, staying out of reach and using them as a shield.
+            guid: fa04c509-bc1d-4fa0-d39f-a0f46cfc9b1b
+            iconid: ui-icons/skills/1.png
+            implementation: 2
+            implementationDetails: Power roll and damage are automated. Companion entering the target's space is approximated by teleporting the companion adjacent to the target (Draw Steel does not allow two creatures to share a space by default). The persistent shared-space rider (strikes against companion also affect target, your strikes vs target gain an edge, companion can end turn in target's space) is not automated.
+            keywords:
+              Charge: true
+              Companion: true
+              Melee: true
+              Strike: true
+              Weapon: true
             modifiers: []
-      allowDuplicateChoices: false
-      guid: 7e2c4f81-9a3b-4d68-b517-2e6c8d4a1f73
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    - __typeName: CharacterFeature
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: 2nd-Level Wild Nature Features
-      canHavePrerequisites: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            numTargets: "1"
+            objectTarget: true
+            persistence: []
+            range: 1
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "5"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 27
+              type: pdf
+            strain: []
+            targetType: target
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: ef93b4f8-ab0c-4edf-c28e-9fe35beb8a0a
+          source: Prowler Class Feature
+          sourceguid: de82a3e7-fa9b-4dce-b17d-8ed24daa7fd9
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 27
+          type: pdf
+        tags:
+          Ability: true
+    - name: 2nd-Level Wild Nature Features
       description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
-      source: Prowler Class Feature
-      implementation: 4
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
       guid: ef9f4f71-b510-4848-b3f0-c7cff47c84bb
+      implementation: 4
+      modifiers:
+      - name: 2nd-Level Wild Nature Features
+        description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
+        __typeName: CharacterModifier
+        behavior: modcompanion
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        feature:
+          name: Supersniffer
+          description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
+          __typeName: CharacterFeature
+          guid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
+          implementation: 4
+          modifiers:
+          - name: Supersniffer
+            description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
+            __typeName: CharacterModifier
+            attribute: e354ecc7-888f-48fc-a248-7a277252675e
+            behavior: attribute
+            guid: 3d5ca65e-db6f-4e10-89dd-48f0a388c1af
+            source: Beastheart
+            sourceguid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
+            value: 1
+          - name: Supersniffer
+            description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
+            __typeName: CharacterModifier
+            attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+            behavior: attribute
+            guid: bdea30ff-e147-4204-ba88-92f2ecc97977
+            source: Beastheart
+            sourceguid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
+            value: 1
+          source: Beastheart
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 26
+            type: pdf
+        guid: 7d7e0542-281f-4c95-ac14-5915412945a4
+        source: Prowler Class Feature
+        sourceguid: ef9f4f71-b510-4848-b3f0-c7cff47c84bb
+      source: Prowler Class Feature
       tags:
         Combat: true
         Exploration: true
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: ef9f4f71-b510-4848-b3f0-c7cff47c84bb
-        source: Prowler Class Feature
-        feature:
-          __typeName: CharacterFeature
-          description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
-          source: Beastheart
-          name: Supersniffer
-          implementation: 4
-          guid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
-          modifiers:
-          - __typeName: CharacterModifier
-            attribute: e354ecc7-888f-48fc-a248-7a277252675e
-            source: Beastheart
-            description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
-            name: Supersniffer
-            behavior: attribute
-            sourceguid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
-            guid: 3d5ca65e-db6f-4e10-89dd-48f0a388c1af
-            value: 1
-          - __typeName: CharacterModifier
-            attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
-            source: Beastheart
-            description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
-            name: Supersniffer
-            behavior: attribute
-            sourceguid: 58033367-d7fc-49a8-afc8-12f1e263dfe9
-            guid: bdea30ff-e147-4204-ba88-92f2ecc97977
-            value: 1
-        name: 2nd-Level Wild Nature Features
-        behavior: modcompanion
-        description: While a creature is adjacent to your companion, that creature can’t be hidden or have concealment from your companion.
-        guid: 7d7e0542-281f-4c95-ac14-5915412945a4
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+  level-3:
+    __typeName: ClassLevel
     domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
+  level-4:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
+  level-5:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features:
+    - name: Melt Away
+      description: You or your companion can use your Shadow in the Mist ability even when targeted by the triggering ability.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
+      implementation: 4
+      modifiers:
+      - name: Melt Away
+        description: When an enemy within 10 squares deals damage to you, you become invisible and gain a quick reposition.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 5f040101-0004-4096-bcde-7d8e9f0a1b2c
+        source: Prowler Class Feature
+        sourceguid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
+        triggeredAbility:
+          name: Shadow in the Mist
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: end_of_next_turn
+            ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+            ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: named
+            applyto: caster
+            invokeOnCaster: true
+            namedAbility: Hide
+            promptText: Use the Hide maneuver (allowed even while observed)
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            modesSelected:
+            - 1
+            rule: shift {Intuition}
+          - name: Ability Duration Effect
+            __typeName: ActivatedAbilityApplyAbilityDurationEffect
+            applyto: caster
+            modesSelected:
+            - 2
+            momentaryEffect:
+              id: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
+              name: Ignore Difficult Terrain
+              description: ""
+              __typeName: CharacterOngoingEffect
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
+              iconid: ui-icons/skills/1.png
+              modifiers:
+              - name: Ignore Difficult Terrain
+                description: ""
+                __typeName: CharacterModifier
+                attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                behavior: attribute
+                guid: 5f040103-0004-4096-bcde-7d8e9f0a1b2c
+                source: Ongoing Effect
+                sourceguid: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
+                value: 1
+              source: Ongoing Effect
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            modesSelected:
+            - 2
+            rule: shift {Intuition * 2}
+          - __typeName: ActivatedAbilityReplenishBehavior
+            applyto: caster
+            chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
+            mode: expend
+            modesSelected:
+            - 2
+            quantity: "1"
+            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          conditionFormula: HasAttacker and (not Friends(Self, Attacker))
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 5f040102-0004-4096-bcde-7d8e9f0a1b2c
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modeList:
+          - text: Activate
+          - condition: Resources.Heroic Resource > 0
+            rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
+            text: 1 Ferocity
+          modifiers: []
+          multipleModes: true
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          selfTarget: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 22
+            type: pdf
+          strain: []
+          subject: self
+          subjectRange: "10"
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
+      - name: Melt Away (Companion)
+        description: Companion can use the Shadow in the Mist triggered action even when targeted by the triggering ability.
+        __typeName: CharacterModifier
+        behavior: modcompanion
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        feature:
+          name: Melt Away
+          description: ""
+          __typeName: CharacterFeature
+          guid: 5f040105-0004-4096-bcde-7d8e9f0a1b2c
+          modifiers:
+          - name: Shadow in the Mist
+            __typeName: CharacterModifier
+            behavior: trigger
+            guid: 5f040106-0004-4096-bcde-7d8e9f0a1b2c
+            source: Beastheart
+            triggeredAbility:
+              name: Shadow in the Mist
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                applyto: caster
+                duration: end_of_next_turn
+                ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+                ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                abilityType: named
+                applyto: caster
+                invokeOnCaster: true
+                namedAbility: Hide
+                promptText: Use the Hide maneuver (allowed even while observed)
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
+                modesSelected:
+                - 1
+                rule: shift {Intuition}
+              - name: Ability Duration Effect
+                __typeName: ActivatedAbilityApplyAbilityDurationEffect
+                applyto: caster
+                modesSelected:
+                - 2
+                momentaryEffect:
+                  id: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
+                  name: Ignore Difficult Terrain
+                  description: ""
+                  __typeName: CharacterOngoingEffect
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
+                  guid: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
+                  iconid: ui-icons/skills/1.png
+                  modifiers:
+                  - name: Ignore Difficult Terrain
+                    description: ""
+                    __typeName: CharacterModifier
+                    attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                    behavior: attribute
+                    guid: 5f040109-0004-4096-bcde-7d8e9f0a1b2c
+                    source: Ongoing Effect
+                    sourceguid: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
+                    value: 1
+                  source: Ongoing Effect
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
+                modesSelected:
+                - 2
+                rule: shift {Intuition * 2}
+              - __typeName: ActivatedAbilityReplenishBehavior
+                applyto: caster
+                chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
+                mode: expend
+                modesSelected:
+                - 2
+                quantity: "1"
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              conditionFormula: HasAttacker and (not Friends(Self, Attacker))
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 5f040107-0004-4096-bcde-7d8e9f0a1b2c
+              hasManualVersion: true
+              iconid: ui-icons/skills/1.png
+              mandatory: false
+              modeList:
+              - text: Activate
+              - condition: Resources.Heroic Resource > 0
+                rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
+                text: 1 Ferocity
+              modifiers: []
+              multipleModes: true
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              selfTarget: true
+              sourceReference:
+                __typeName: SourceReference
+                docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+                page: 22
+                type: pdf
+              strain: []
+              subject: self
+              subjectRange: "10"
+              targetType: self
+              trigger: losehitpoints
+              triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
+          source: Beastheart
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 30
+            type: pdf
+        guid: 5f040108-0004-4096-bcde-7d8e9f0a1b2c
+        source: Prowler Class Feature
+        sourceguid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 30
+        type: pdf
+      tags:
+        Combat: true
+  level-6:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features:
+    - name: 6th-Level Prowler Abilities
+      description: Choose one of the following abilities.
+      __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      guid: 3b7be58b-4b6f-4e52-8bfd-fcc90988cadb
+      numChoices: 1
+      options:
+      - name: Soft Underbelly
+        description: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: f50b08f3-f6cb-46ca-bbad-3b42133a73c4
+        implementation: 4
+        modifiers:
+        - name: Soft Underbelly
+          description: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
+          __typeName: CharacterModifier
+          activatedAbility:
+            name: Soft Underbelly
+            description: While bleeding this way, the target has damage weakness 5.
+            __typeName: ActivatedAbility
+            abilityType: none
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + Might
+              tiers:
+              - 10 + M damage; A < weak bleeding (save ends)
+              - 15 + M damage; A < Average bleeding (save ends)
+              - 20 + M damage; A < Strong bleeding (save ends)
+            - __typeName: ActivatedAbilityApplyRidersBehavior
+              conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+              riderid: b5e1c9a4-2f7d-4a63-9c18-6d3e8f0a5b72
+            categorization: Heroic Ability
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
+            guid: a49e3947-5c35-4b1b-abce-29546c56e16d
+            iconid: ui-icons/skills/1.png
+            implementation: 4
+            keywords:
+              Companion: true
+              Melee: true
+              Strike: true
+              Weapon: true
+            modifiers: []
+            numTargets: "1"
+            objectTarget: false
+            range: "2"
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "9"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 31
+              type: pdf
+            strain: []
+            targetType: target
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 24d028eb-c905-48ea-afea-2beaec48341c
+          source: Prowler Class Feature
+          sourceguid: f50b08f3-f6cb-46ca-bbad-3b42133a73c4
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 31
+          type: pdf
+        tags:
+          Ability: true
+      - name: Wraith Heart
+        description: You and your companion become soul-freezing wraiths.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 5b2e7956-43b3-41c2-922b-368908d427d8
+        implementation: 3
+        modifiers:
+        - name: Wraith Heart
+          description: You and your companion become soul-freezing wraiths.
+          __typeName: CharacterModifier
+          activatedAbility:
+            name: Wraith Heart
+            description: You and your companion shift up to your speeds. During this movement, you are both invisible, can move through enemies and objects, and ignore difficult terrain. You each deal corruption damage equal to your own Intuition score to each enemy you pass through during this movement. You can both damage each enemy once this way.
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors:
+            - name: Wraith Heart (Self)
+              __typeName: ActivatedAbilityApplyAbilityDurationEffect
+              applyto: caster
+              momentaryEffect:
+                id: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                name: Wraith Heart
+                description: ""
+                __typeName: CharacterOngoingEffect
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                iconid: ui-icons/skills/1.png
+                modifiers:
+                - name: Move Through Enemies
+                  description: ""
+                  __typeName: CharacterModifier
+                  attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+                  behavior: attribute
+                  guid: 7c1a0011-9d2b-4e58-b164-3f8a6c5d2e11
+                  source: Ongoing Effect
+                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                  value: 1
+                - name: Move Through Objects
+                  description: ""
+                  __typeName: CharacterModifier
+                  attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
+                  behavior: attribute
+                  guid: 7c1a0012-9d2b-4e58-b164-3f8a6c5d2e12
+                  source: Ongoing Effect
+                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                  value: 1
+                - name: Ignore Difficult Terrain
+                  description: ""
+                  __typeName: CharacterModifier
+                  attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                  behavior: attribute
+                  guid: 7c1a0013-9d2b-4e58-b164-3f8a6c5d2e13
+                  source: Ongoing Effect
+                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                  value: 1
+                - name: Wraith Heart Passthrough
+                  description: ""
+                  __typeName: CharacterModifier
+                  behavior: trigger
+                  guid: 7c1a0014-9d2b-4e58-b164-3f8a6c5d2e14
+                  source: Ongoing Effect
+                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
+                  triggeredAbility:
+                    name: Wraith Heart Passthrough
+                    description: ""
+                    __typeName: TriggeredAbility
+                    abilityType: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                      applyto: targets
+                      rule: "{Caster.Intuition} corruption damage"
+                    conditionFormula: not Friends(Self, Target)
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    guid: 7c1a0015-9d2b-4e58-b164-3f8a6c5d2e15
+                    iconid: ui-icons/skills/1.png
+                    mandatory: true
+                    modifiers: []
+                    numTargets: "1"
+                    persistence: []
+                    range: 1
+                    repeatTargets: false
+                    strain: []
+                    subject: self
+                    targetAllegiance: enemy
+                    targetType: target
+                    trigger: movethrough
+                source: Ongoing Effect
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              applyto: caster
+              promptText: Shift up to your speed. You can move through enemies and objects and ignore difficult terrain.
+              rule: shift {Movement Speed}
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              applyto: caster_companion
+              customAbility:
+                name: Wraith Heart (Companion)
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - name: Wraith Heart (Companion)
+                  __typeName: ActivatedAbilityApplyAbilityDurationEffect
+                  applyto: caster
+                  momentaryEffect:
+                    id: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                    name: Wraith Heart
+                    description: ""
+                    __typeName: CharacterOngoingEffect
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    guid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                    iconid: ui-icons/skills/1.png
+                    modifiers:
+                    - name: Move Through Enemies
+                      description: ""
+                      __typeName: CharacterModifier
+                      attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+                      behavior: attribute
+                      guid: 7c1a0031-9d2b-4e58-b164-3f8a6c5d2e31
+                      source: Ongoing Effect
+                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                      value: 1
+                    - name: Move Through Objects
+                      description: ""
+                      __typeName: CharacterModifier
+                      attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
+                      behavior: attribute
+                      guid: 7c1a0032-9d2b-4e58-b164-3f8a6c5d2e32
+                      source: Ongoing Effect
+                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                      value: 1
+                    - name: Ignore Difficult Terrain
+                      description: ""
+                      __typeName: CharacterModifier
+                      attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                      behavior: attribute
+                      guid: 7c1a0033-9d2b-4e58-b164-3f8a6c5d2e33
+                      source: Ongoing Effect
+                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                      value: 1
+                    - name: Wraith Heart Passthrough
+                      description: ""
+                      __typeName: CharacterModifier
+                      behavior: trigger
+                      guid: 7c1a0034-9d2b-4e58-b164-3f8a6c5d2e34
+                      source: Ongoing Effect
+                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
+                      triggeredAbility:
+                        name: Wraith Heart Passthrough
+                        description: ""
+                        __typeName: TriggeredAbility
+                        abilityType: none
+                        behaviors:
+                        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                          applyto: targets
+                          rule: "{Caster.Intuition} corruption damage"
+                        conditionFormula: not Friends(Self, Target)
+                        display:
+                          bgcolor: "#ffffffff"
+                          brightness: 1
+                          hueshift: 0
+                          saturation: 1
+                        guid: 7c1a0035-9d2b-4e58-b164-3f8a6c5d2e35
+                        iconid: ui-icons/skills/1.png
+                        mandatory: true
+                        modifiers: []
+                        numTargets: "1"
+                        persistence: []
+                        range: 1
+                        repeatTargets: false
+                        strain: []
+                        subject: self
+                        targetAllegiance: enemy
+                        targetType: target
+                        trigger: movethrough
+                    source: Ongoing Effect
+                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                  promptText: Your companion shifts up to its speed, phasing through enemies and objects.
+                  rule: shift {Movement Speed}
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 7c1a0020-9d2b-4e58-b164-3f8a6c5d2e20
+                iconid: ui-icons/skills/1.png
+                keywords:
+                  Companion: true
+                  Magic: true
+                modifiers: []
+                numTargets: "1"
+                persistence: []
+                range: 1
+                repeatTargets: false
+                strain: []
+                targetType: self
+              inheritKeywords: true
+              promptText: Your companion shifts up to its speed, phasing through enemies and objects.
+            categorization: Move
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: You and your companion become soul-freezing wraiths.
+            guid: 7c1a0002-9d2b-4e58-b164-3f8a6c5d2e02
+            iconid: ui-icons/skills/1.png
+            implementation: 3
+            implementationDetails: " Invisibility is modeled as a shift, which prevents opportunity attacks."
+            keywords:
+              Magic: true
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            rangeTextOverride: Self
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "9"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 31
+              type: pdf
+            strain: []
+            targetTextOverride: Self and companion
+            targetType: self
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 7c1a0001-9d2b-4e58-b164-3f8a6c5d2e01
+          source: Prowler Class Feature
+          sourceguid: 5b2e7956-43b3-41c2-922b-368908d427d8
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 31
+          type: pdf
+        tags:
+          Ability: true
+  level-7:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
+  level-8:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features:
+    - name: Born to Run
+      description: You and your companion gain a +2 bonus to speed.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
+      implementation: 4
+      modifiers:
+      - name: Born to Run
+        description: +2 bonus to speed.
+        __typeName: CharacterModifier
+        attribute: speed
+        behavior: attribute
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: f6c9b9e6-778f-49cc-9213-4fb40451ba22
+        operation: add
+        source: Prowler Class Feature
+        sourceguid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
+        value: "2"
+      - name: Born to Run
+        description: Your companion gains a +2 bonus to speed.
+        __typeName: CharacterModifier
+        behavior: modcompanion
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        feature:
+          name: Born to Run
+          description: Your companion gains a +2 bonus to speed.
+          __typeName: CharacterFeature
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: c17acd74-998e-439e-a989-116e8ffd9c23
+          implementation: 4
+          modifiers:
+          - name: Born to Run
+            description: +2 bonus to speed.
+            __typeName: CharacterModifier
+            attribute: speed
+            behavior: attribute
+            guid: 1e570bee-f375-456d-96e6-6cc6285ba356
+            operation: add
+            source: Beastheart
+            sourceguid: c17acd74-998e-439e-a989-116e8ffd9c23
+            value: "2"
+          source: Beastheart
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 34
+            type: pdf
+        guid: 8b71e490-840c-479c-8b4f-bb356ed71100
+        source: Prowler Class Feature
+        sourceguid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 34
+        type: pdf
+  level-9:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features:
+    - name: 9th-Level Prowler Abilities
+      description: Choose one of the following abilities.
+      __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      guid: 507693a6-867e-48cc-bc67-b52f9e98cfb0
+      numChoices: 1
+      options:
+      - name: Behold the Face of Chaos
+        description: Your companion teleports up to its speed, then makes a psychic melee strike that frightens (save ends).
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 8dcbeca5-29f7-4f15-b763-c454f7a66590
+        implementation: 3
+        modifiers:
+        - name: Behold the Face of Chaos
+          description: Your companion teleports and strikes with a nightmare visage.
+          __typeName: CharacterModifier
+          activatedAbility:
+            name: Behold the Face of Chaos
+            description: "Effect: Your companion teleports up to their speed. Then Power Roll + Intuition (Melee 1, one creature): psychic damage and frightened (save ends)."
+            __typeName: ActivatedAbility
+            abilityType: none
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            behaviors:
+            - __typeName: ActivatedAbilityRelocateCreatureBehavior
+              movementType: teleport
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              applyto: caster
+              autoTarget: false
+              customAbility:
+                name: Behold the Face of Chaos (Strike)
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  roll: 2d10 + Intuition
+                  tiers:
+                  - 13 + I psychic damage; P < weak, frightened (save ends)
+                  - 20 + I psychic damage; P < average, frightened (save ends)
+                  - 27 + I psychic damage; P < strong, frightened (save ends)
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: cd6e0ce7-b54b-405c-8faf-aa838d1e2648
+                iconid: ui-icons/skills/1.png
+                keywords:
+                  Magic: true
+                  Melee: true
+                  Strike: true
+                  Weapon: true
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetAllegiance: enemy
+                targetType: target
+              promptText: Strike an adjacent creature.
+            categorization: Heroic Ability
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: Your companion appears next to their victim in the guise of a heart-stopping nightmare.
+            guid: 3935d447-e12a-439c-a1da-4257468edca5
+            iconid: ui-icons/skills/1.png
+            implementation: 3
+            keywords:
+              Companion: true
+              Magic: true
+              Melee: true
+              Strike: true
+              Weapon: true
+            modifiers: []
+            numTargets: "1"
+            range: Walking Speed
+            rangeTextOverride: Melee 1
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "11"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 35
+              type: pdf
+            targetAllegiance: enemy
+            targetTextOverride: One creature
+            targetType: emptyspace
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 12908dfd-9d5e-4ea2-9d02-2b66fa88541d
+          source: Prowler Class Feature
+          sourceguid: 8dcbeca5-29f7-4f15-b763-c454f7a66590
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 35
+          type: pdf
+        tags:
+          Ability: true
+      - name: Let's Take This Outside
+        description: Isolate you, your companion, and a target foe from all other creatures; the target takes 20 elemental damage on your turns.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        classid: 644b71de-95c8-41ee-be37-b3556b424990
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 52ae63fc-b926-454a-b002-92de2ee7d236
+        implementation: 3
+        modifiers:
+        - name: Let's Take This Outside
+          description: Isolate you, your companion, and a foe.
+          __typeName: CharacterModifier
+          activatedAbility:
+            name: Let's Take This Outside
+            description: "Effect: You, your companion, and the target are isolated - the three of you can only affect and be affected by each other. The target takes 5 cold, 5 fire, 5 lightning, and 5 sonic damage at the start of each of your turns. Ends if one of you dies, if you end it (free maneuver), or if the target saves at the end of its turn."
+            __typeName: ActivatedAbility
+            abilityType: none
+            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+            behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              applyto: targets
+              duration: save_ends
+              ongoingEffect: 48f1fc52-ca2d-46a8-9749-9ad39dbfa572
+              ongoingEffectCustom: 48f1fc52-ca2d-46a8-9749-9ad39dbfa572
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              applyto: caster
+              duration: eoe
+              ongoingEffect: eab14011-bed7-4919-9391-2eb3294b38d0
+              ongoingEffectCustom: eab14011-bed7-4919-9391-2eb3294b38d0
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              applyto: caster_summoner
+              duration: eoe
+              ongoingEffect: eab14011-bed7-4919-9391-2eb3294b38d0
+              ongoingEffectCustom: eab14011-bed7-4919-9391-2eb3294b38d0
+            categorization: Heroic Ability
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+              class:644b71de-95c8-41ee-be37-b3556b424990: true
+            flavor: Your companion drags your chosen foe into storms of the Primordial Plane.
+            guid: 763bc575-a0b2-4c4e-989c-85888d223329
+            iconid: ui-icons/skills/1.png
+            implementation: 3
+            keywords:
+              Companion: true
+              Magic: true
+            modifiers: []
+            numTargets: "1"
+            range: 1
+            rangeTextOverride: Melee 1
+            repeatTargets: false
+            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+            resourceNumber: "11"
+            sourceReference:
+              __typeName: SourceReference
+              docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+              page: 35
+              type: pdf
+            targetAllegiance: enemy
+            targetType: target
+          behavior: activated
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 205f206c-bc8b-4624-88df-d4f740845bd3
+          source: Prowler Class Feature
+          sourceguid: 52ae63fc-b926-454a-b002-92de2ee7d236
+        source: Prowler Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+          page: 35
+          type: pdf
+        tags:
+          Ability: true
+  multiclass:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
+  primary:
+    __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
+    features: []
   tutoriallevel-1:
     __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
     features:
-    - __typeName: CharacterFeature
+    - name: Wild Nature
       description: An unseen ambusher from the shadows. You have the Hide skill.
-      source: Prowler Class Feature
+      __typeName: CharacterFeature
       classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: Wild Nature
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: 8d2c5e74-3f1b-4a96-b528-7c4d6e1f9a83
+      implementation: 3
       modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 4c9f1e83-7d2b-4a56-b148-3e6c1d8f5a92
-        equate: false
-        skills:
-          fdd43bde-6062-484d-aea6-3803d396ea8e: true
-        name: Wild Nature
+      - name: Wild Nature
+        description: An unseen ambusher from the shadows. You have the Hide skill.
+        __typeName: CharacterModifier
         behavior: proficiency
         domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: An unseen ambusher from the shadows. You have the Hide skill.
-        subtype: skill
-        proficiency: proficient
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        equate: false
         guid: 1e7c4f93-5b8d-4a26-c138-9f3e6c1d5a82
+        proficiency: proficient
+        skills:
+          fdd43bde-6062-484d-aea6-3803d396ea8e: true
         source: Prowler Class Feature
-      implementation: 3
-      guid: 8d2c5e74-3f1b-4a96-b528-7c4d6e1f9a83
+        sourceguid: 4c9f1e83-7d2b-4a56-b148-3e6c1d8f5a92
+        subtype: skill
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 4
+        type: pdf
       tags:
         Hidden: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    - __typeName: CharacterFeature
+    - name: Feral Strike
       description: Your companion can use the following signature ability.
-      source: Prowler Class Feature
+      __typeName: CharacterFeature
       classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: Feral Strike
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: 8e3c5d72-2b1f-4a86-b549-7c1d6e3f5a82
+      implementation: 3
       modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 8e3c5d72-2b1f-4a86-b549-7c1d6e3f5a82
-        source: Prowler Class Feature
+      - name: Ability
+        description: Your companion can use the following signature ability.
+        __typeName: CharacterModifier
         activatedAbility:
-          __typeName: ActivatedAbility
-          iconid: a393d50b-bef4-4a90-a1bf-767971ef2117
           name: Feral Strike
-          keywords:
-            Strike: true
-            Area: true
-            Melee: true
-            Weapon: true
-            Companion: true
-          repeatTargets: false
-          categorization: Signature Ability
-          targetType: self
-          flavor: Your companion lunges into the fray, attacking wildly with teeth, claws, or other weapons.
-          targetTextOverride: Each creature in the area
-          implementation: 3
-          castImmediately: true
-          strain: []
-          numTargets: "1"
-          abilityType: none
-          persistence: []
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
           description: |-
             Your companion moves up to a number of squares equal to their Intuition score straight toward the closest enemy they are aware of, avoiding damaging terrain, ending the movement when adjacent to that enemy. Your companion then makes the following power roll against each creature in the area.
 
             Each enemy target is weakened until the start of your next turn.
-          guid: 1f7c2e84-3b6d-4a96-b218-9e4c1d3f7a82
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
-          sourceReference:
-            __typeName: SourceReference
-            page: 20
-            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
-          rangeTextOverride: 1 burst
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
             filterTarget: 0 {Display only - real roll runs inside the burst sub-ability.}
@@ -358,53 +1280,38 @@ levels:
             - 4 + M damage; weakened (EoT)
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
-            promptText: Move up to your Intuition in a straight line toward the closest enemy.
+            applyto: caster
             customAbility:
-              __typeName: ActivatedAbility
-              iconid: ui-icons/skills/1.png
-              numTargets: "1"
-              abilityType: none
-              range: Intuition
               name: Feral Strike Approach
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityRelocateCreatureBehavior
                 movementType: move
-              repeatTargets: false
               categorization: Hidden
-              targetType: emptyspace
-              description: ""
-              targeting: straightpath
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
               guid: 2c5e8d41-3b7f-4a96-b528-9c1d6e3f7a82
-              modifiers: []
-            applyto: caster
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: Resolve the burst against each enemy in the area.
-            abilityType: custom
-            inheritKeywords: true
-            customAbility:
-              __typeName: ActivatedAbility
               iconid: ui-icons/skills/1.png
-              name: Feral Strike Burst
-              keywords:
-                Strike: true
-                Area: true
-                Melee: true
-                Weapon: true
-                Companion: true
-              repeatTargets: false
-              range: 1
-              targetType: all
-              guid: 8a3e6c92-1d4f-4b78-a916-2c5d8e7f6b41
-              numTargets: "1"
-              abilityType: none
-              strain: []
               modifiers: []
+              numTargets: "1"
+              range: Intuition
+              repeatTargets: false
+              targetType: emptyspace
+              targeting: straightpath
+            promptText: Move up to your Intuition in a straight line toward the closest enemy.
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Feral Strike Burst
               description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityPowerRollBehavior
                 roll: 2d10 + Might
@@ -412,1352 +1319,586 @@ levels:
                 - 1 + M damage; weakened (EoT)
                 - 3 + M damage; weakened (EoT)
                 - 4 + M damage; weakened (EoT)
-              targetTextOverride: Each creature in the area
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              rangeTextOverride: 1 burst
               categorization: Hidden
-              objectTarget: false
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 8a3e6c92-1d4f-4b78-a916-2c5d8e7f6b41
+              iconid: ui-icons/skills/1.png
               implementation: 3
-            applyto: caster
-          range: 1
-          modifiers: []
-        name: Ability
-        behavior: activated
-        description: Your companion can use the following signature ability.
-        guid: d6c2e7f4-8b3a-4d96-b148-1c5e2d8f7a63
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      implementation: 3
-      guid: 8e3c5d72-2b1f-4a86-b549-7c1d6e3f5a82
-      tags:
-        Ability: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    - __typeName: CharacterFeature
-      description: You summon a lightning bolt and ride it into battle.
-      source: Prowler Class Feature
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: Lightning Leap
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a82
-        source: Prowler Class Feature
-        activatedAbility:
-          __typeName: ActivatedAbility
-          iconid: ui-icons/skills/1.png
-          name: Lightning Leap
-          keywords:
-            Melee: true
-            Weapon: true
-            Beastheart: true
-          repeatTargets: false
-          range: 1
-          targetType: self
-          flavor: You summon a lightning bolt and ride it into battle.
-          targetTextOverride: One creature
+              keywords:
+                Area: true
+                Companion: true
+                Melee: true
+                Strike: true
+                Weapon: true
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              range: 1
+              rangeTextOverride: 1 burst
+              repeatTargets: false
+              strain: []
+              targetTextOverride: Each creature in the area
+              targetType: all
+            inheritKeywords: true
+            promptText: Resolve the burst against each enemy in the area.
           castImmediately: true
+          categorization: Signature Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          flavor: Your companion lunges into the fray, attacking wildly with teeth, claws, or other weapons.
+          guid: 1f7c2e84-3b6d-4a96-b218-9e4c1d3f7a82
+          iconid: a393d50b-bef4-4a90-a1bf-767971ef2117
+          implementation: 3
+          keywords:
+            Area: true
+            Companion: true
+            Melee: true
+            Strike: true
+            Weapon: true
           modifiers: []
           numTargets: "1"
-          abilityType: none
           persistence: []
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            targeting: prompt
-            autoTarget: false
-            abilityType: custom
-            promptText: Jump up to your Intuition squares in a straight line.
-            customAbility:
-              __typeName: ActivatedAbility
-              modifiers: []
-              iconid: ui-icons/skills/1.png
-              repeatTargets: false
-              numTargets: "1"
-              abilityType: none
-              multipleModes: true
-              keywords:
-                Melee: true
-                Weapon: true
-                Beastheart: true
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              behaviors:
-              - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                name: Lightning Leap Duration
-                instant: true
-                momentaryEffect:
-                  __typeName: CharacterOngoingEffect
-                  description: While riding the lightning, you ignore difficult terrain.
-                  iconid: ui-icons/skills/1.png
-                  display:
-                    hueshift: 0
-                    brightness: 1
-                    bgcolor: "#ffffffff"
-                    saturation: 1
-                  name: Lightning Leap
-                  source: Ongoing Effect
-                  id: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
-                  guid: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
-                  modifiers:
-                  - __typeName: CharacterModifier
-                    attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
-                    source: Ongoing Effect
-                    sourceguid: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
-                    name: Lightning Leap - Ignore Difficult Terrain
-                    behavior: attribute
-                    description: Ignore difficult terrain during the jump.
-                    guid: 1c8b4a63-7e2f-49d5-a738-5d6c1f3b9e74
-                    value: 1
-                applyto: targets
-              - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                momentaryEffect:
-                  __typeName: CharacterOngoingEffect
-                  description: Your jump doesn't provoke opportunity attacks.
-                  iconid: ui-icons/skills/1.png
-                  display:
-                    hueshift: 0
-                    brightness: 1
-                    bgcolor: "#ffffffff"
-                    saturation: 1
-                  name: Lightning Leap (OA Immune)
-                  source: Ongoing Effect
-                  id: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
-                  guid: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
-                  modifiers:
-                  - __typeName: CharacterModifier
-                    attribute: e2773895-411c-404e-a7f4-1aa50cd87710
-                    source: Ongoing Effect
-                    sourceguid: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
-                    name: Lightning Leap - OA Immunity
-                    behavior: attribute
-                    description: Immune to opportunity attacks during the jump.
-                    guid: 5e2c8d41-3f7b-4a96-b528-9c1d6e3f7a85
-                    value: 1
-                name: Lightning Leap OA Immunity
-                modesSelected:
-                - 2
-                instant: true
-                applyto: targets
-              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                rule: jump {Intuition}
-                applyto: caster
-              - __typeName: ActivatedAbilityReplenishBehavior
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                modesSelected:
-                - 2
-                mode: expend
-                chatMessage: Lightning Leap - Spend Ferocity
-                applyto: caster
-              name: Lightning Leap (Jump)
-              categorization: Hidden
-              targetType: self
-              range: 1
-              description: ""
-              guid: 7c4e1d83-5b6f-4a96-b218-3d5c1e6f7a92
-              modeList:
-              - rules: Jump up to Intuition squares in a straight line
-                text: Normal
-              - text: Spend 1 Ferocity
-                rules: Jump up to Intuition; jump doesn't provoke opportunity attacks
-                condition: Heroic Resources Available to Spend >= 1
-            applyto: caster
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            chatMessage: Lightning Leap - Spend Ferocity
-            autoTarget: false
-            abilityType: custom
-            customAbility:
-              __typeName: ActivatedAbility
-              repeatTargets: false
-              iconid: ui-icons/skills/1.png
-              targetTextOverride: One creature
-              numTargets: "1"
-              abilityType: none
-              name: Lightning Leap
-              keywords:
-                Melee: true
-                Weapon: true
-                Beastheart: true
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              behaviors:
-              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                rule: "{3 + Might} damage; {Cast.Spaces Moved} lightning damage"
-                applyto: targets
-              range: 1
-              categorization: Hidden
-              targetType: target
-              rangeTextOverride: Melee 1
-              description: ""
-              guid: 6e3c8d92-4b1f-4a87-c528-9d1e7f3c5a84
-              modifiers: []
-            promptText: Choose the target of the strike.
-            applyto: caster
+          range: 1
+          rangeTextOverride: 1 burst
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 4
+            type: pdf
           strain: []
-          guid: 9d6c2e83-3b1f-4a87-b328-5e1d7c3f6a92
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
-          rangeTextOverride: Melee 1
+          targetTextOverride: Each creature in the area
+          targetType: self
+        behavior: activated
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: d6c2e7f4-8b3a-4d96-b148-1c5e2d8f7a63
+        source: Prowler Class Feature
+        sourceguid: 8e3c5d72-2b1f-4a86-b549-7c1d6e3f5a82
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 4
+        type: pdf
+      tags:
+        Ability: true
+    - name: Lightning Leap
+      description: You summon a lightning bolt and ride it into battle.
+      __typeName: CharacterFeature
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
+      guid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a82
+      implementation: 3
+      modifiers:
+      - name: Ability
+        description: You summon a lightning bolt and ride it into battle.
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Lightning Leap
           description: |-
             Target takes {3 + Might} damage.
 
             Before you use this ability, you can jump up to a number of squares equal to your Intuition score in a straight line. During this jump, enemies' spaces don't count as difficult terrain. The target takes extra lightning damage equal to the number of squares you jumped this way.
 
             **Spend 1 Ferocity:** Your jump doesn't provoke opportunity attacks.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            autoTarget: false
+            customAbility:
+              name: Lightning Leap (Jump)
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - name: Lightning Leap Duration
+                __typeName: ActivatedAbilityApplyAbilityDurationEffect
+                applyto: targets
+                instant: true
+                momentaryEffect:
+                  id: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
+                  name: Lightning Leap
+                  description: While riding the lightning, you ignore difficult terrain.
+                  __typeName: CharacterOngoingEffect
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
+                  guid: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
+                  iconid: ui-icons/skills/1.png
+                  modifiers:
+                  - name: Lightning Leap - Ignore Difficult Terrain
+                    description: Ignore difficult terrain during the jump.
+                    __typeName: CharacterModifier
+                    attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                    behavior: attribute
+                    guid: 1c8b4a63-7e2f-49d5-a738-5d6c1f3b9e74
+                    source: Ongoing Effect
+                    sourceguid: 4d6c2e83-7b1f-4a96-b528-3c1d8e3f5a92
+                    value: 1
+                  source: Ongoing Effect
+              - name: Lightning Leap OA Immunity
+                __typeName: ActivatedAbilityApplyAbilityDurationEffect
+                applyto: targets
+                instant: true
+                modesSelected:
+                - 2
+                momentaryEffect:
+                  id: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
+                  name: Lightning Leap (OA Immune)
+                  description: Your jump doesn't provoke opportunity attacks.
+                  __typeName: CharacterOngoingEffect
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
+                  guid: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
+                  iconid: ui-icons/skills/1.png
+                  modifiers:
+                  - name: Lightning Leap - OA Immunity
+                    description: Immune to opportunity attacks during the jump.
+                    __typeName: CharacterModifier
+                    attribute: e2773895-411c-404e-a7f4-1aa50cd87710
+                    behavior: attribute
+                    guid: 5e2c8d41-3f7b-4a96-b528-9c1d6e3f7a85
+                    source: Ongoing Effect
+                    sourceguid: 8a3c5e74-2b1f-4a96-b428-7c1d6e3f5a92
+                    value: 1
+                  source: Ongoing Effect
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
+                rule: jump {Intuition}
+              - __typeName: ActivatedAbilityReplenishBehavior
+                applyto: caster
+                chatMessage: Lightning Leap - Spend Ferocity
+                mode: expend
+                modesSelected:
+                - 2
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 7c4e1d83-5b6f-4a96-b218-3d5c1e6f7a92
+              iconid: ui-icons/skills/1.png
+              keywords:
+                Beastheart: true
+                Melee: true
+                Weapon: true
+              modeList:
+              - rules: Jump up to Intuition squares in a straight line
+                text: Normal
+              - condition: Heroic Resources Available to Spend >= 1
+                rules: Jump up to Intuition; jump doesn't provoke opportunity attacks
+                text: Spend 1 Ferocity
+              modifiers: []
+              multipleModes: true
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            promptText: Jump up to your Intuition squares in a straight line.
+            targeting: prompt
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            autoTarget: false
+            chatMessage: Lightning Leap - Spend Ferocity
+            customAbility:
+              name: Lightning Leap
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: "{3 + Might} damage; {Cast.Spaces Moved} lightning damage"
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 6e3c8d92-4b1f-4a87-c528-9d1e7f3c5a84
+              iconid: ui-icons/skills/1.png
+              keywords:
+                Beastheart: true
+                Melee: true
+                Weapon: true
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              rangeTextOverride: Melee 1
+              repeatTargets: false
+              sourceReference:
+                __typeName: SourceReference
+                docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+                page: 22
+                type: pdf
+              targetTextOverride: One creature
+              targetType: target
+            promptText: Choose the target of the strike.
+          castImmediately: true
           categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          flavor: You summon a lightning bolt and ride it into battle.
+          guid: 9d6c2e83-3b1f-4a87-b328-5e1d7c3f6a92
+          iconid: ui-icons/skills/1.png
           implementation: 3
-        name: Ability
+          keywords:
+            Beastheart: true
+            Melee: true
+            Weapon: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          rangeTextOverride: Melee 1
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 22
+            type: pdf
+          strain: []
+          targetTextOverride: One creature
+          targetType: self
         behavior: activated
-        description: You summon a lightning bolt and ride it into battle.
-        guid: a7f3c8d1-5b2e-4f96-b428-9c1d5e8a4f73
         domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      implementation: 3
-      guid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a82
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: a7f3c8d1-5b2e-4f96-b428-9c1d5e8a4f73
+        source: Prowler Class Feature
+        sourceguid: 5b8c2e93-3f1d-4a76-b248-7c1e6d3f5a82
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 22
+        type: pdf
       tags:
         Ability: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    - __typeName: CharacterFeature
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
+    - id: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
       name: Shadow in the Mist
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
       description: ""
-      source: Prowler Class Feature
-      implementation: 3
-      id: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
+      __typeName: CharacterFeature
+      classid: 644b71de-95c8-41ee-be37-b3556b424990
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        class:644b71de-95c8-41ee-be37-b3556b424990: true
       guid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
-      tags:
-        Trigger: true
+      implementation: 3
       modifiers:
-      - __typeName: CharacterModifier
+      - name: Shadow in the Mist
         description: When an enemy within 10 squares deals damage to a creature other than you, you become invisible and gain a quick reposition.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 5f040002-0004-4096-bcde-7d8e9f0a1b2c
         source: Prowler Class Feature
         sourceguid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
-        name: Shadow in the Mist
-        behavior: trigger
         triggeredAbility:
-          __typeName: TriggeredAbility
-          iconid: ui-icons/skills/1.png
-          conditionFormula: HasAttacker and (not Friends(Self, Attacker))
           name: Shadow in the Mist
-          subject: other
-          repeatTargets: false
-          trigger: losehitpoints
-          range: 1
-          targetType: self
-          guid: 5f040003-0004-4096-bcde-7d8e9f0a1b2c
-          modeList:
-          - text: Activate
-          - text: 1 Ferocity
-            rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
-            condition: Resources.Heroic Resource > 0
-          persistence: []
-          subjectRange: "10"
-          strain: []
-          numTargets: "1"
+          description: ""
+          __typeName: TriggeredAbility
           abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-          triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: ""
-          multipleModes: true
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
-          mandatory: false
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: end_of_next_turn
-            ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
             applyto: caster
+            duration: end_of_next_turn
             ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+            ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            invokeOnCaster: true
             abilityType: named
+            applyto: caster
+            invokeOnCaster: true
             namedAbility: Hide
             promptText: Use the Hide maneuver (allowed even while observed)
-            applyto: caster
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
             modesSelected:
             - 1
-            applyto: caster
             rule: shift {Intuition}
-          - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-            name: Ability Duration Effect
+          - name: Ability Duration Effect
+            __typeName: ActivatedAbilityApplyAbilityDurationEffect
+            applyto: caster
             modesSelected:
             - 2
             momentaryEffect:
-              __typeName: CharacterOngoingEffect
-              description: ""
-              iconid: ui-icons/skills/1.png
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              name: Ignore Difficult Terrain
-              source: Ongoing Effect
               id: 5f040060-0004-4096-bcde-7d8e9f0a1b2c
+              name: Ignore Difficult Terrain
+              description: ""
+              __typeName: CharacterOngoingEffect
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
               guid: 5f040060-0004-4096-bcde-7d8e9f0a1b2c
+              iconid: ui-icons/skills/1.png
               modifiers:
-              - __typeName: CharacterModifier
+              - name: Ignore Difficult Terrain
+                description: ""
+                __typeName: CharacterModifier
                 attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                behavior: attribute
+                guid: 5f040061-0004-4096-bcde-7d8e9f0a1b2c
                 source: Ongoing Effect
                 sourceguid: 5f040060-0004-4096-bcde-7d8e9f0a1b2c
-                name: Ignore Difficult Terrain
-                behavior: attribute
-                description: ""
-                guid: 5f040061-0004-4096-bcde-7d8e9f0a1b2c
                 value: 1
-            applyto: caster
+              source: Ongoing Effect
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
             modesSelected:
             - 2
-            applyto: caster
             rule: shift {Intuition * 2}
           - __typeName: ActivatedAbilityReplenishBehavior
-            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            modesSelected:
-            - 2
+            applyto: caster
             chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
             mode: expend
+            modesSelected:
+            - 2
             quantity: "1"
-            applyto: caster
-          selfTarget: true
+            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          conditionFormula: HasAttacker and (not Friends(Self, Attacker))
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+            class:644b71de-95c8-41ee-be37-b3556b424990: true
+          guid: 5f040003-0004-4096-bcde-7d8e9f0a1b2c
           hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modeList:
+          - text: Activate
+          - condition: Resources.Heroic Resource > 0
+            rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
+            text: 1 Ferocity
           modifiers: []
-        guid: 5f040002-0004-4096-bcde-7d8e9f0a1b2c
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      - __typeName: CharacterModifier
-        sourceguid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
-        source: Prowler Class Feature
+          multipleModes: true
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          selfTarget: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 22
+            type: pdf
+          strain: []
+          subject: other
+          subjectRange: "10"
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
+      - name: Shadow in the Mist
+        __typeName: CharacterModifier
         ability:
+          name: Shadow in the Mist
           __typeName: TriggeredAbilityDisplay
-          keywords:
-            Magic: true
-          trigger: An enemy within 10 squares deals damage to a creature other than you.
+          distance: Self
           effect: |-
             You become invisible until the end of your next turn or you deal damage. You can then use the Hide maneuver even if you are observed and can move up to a number of squares equal to your Intuition score before or after using that maneuver.
             <b>Spend 1 Ferocity:</b> You can move up to twice your Intuition and ignore difficult terrain during this movement.
-          name: Shadow in the Mist
-          target: Self
           flavor: While everyone's eyes are drawn to your foe, you wreathe yourself in obscuring mist.
           guid: 5f040009-0004-4096-bcde-7d8e9f0a1b2c
-          distance: Self
+          keywords:
+            Magic: true
+          target: Self
+          trigger: An enemy within 10 squares deals damage to a creature other than you.
         behavior: triggerdisplay
-        name: Shadow in the Mist
-        guid: 5f040008-0004-4096-bcde-7d8e9f0a1b2c
         domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
           class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      - __typeName: CharacterModifier
-        sourceguid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
+        guid: 5f040008-0004-4096-bcde-7d8e9f0a1b2c
         source: Prowler Class Feature
+        sourceguid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
+      - name: Shadow in the Mist (Companion)
+        description: Companion can use the Shadow in the Mist triggered action.
+        __typeName: CharacterModifier
+        behavior: modcompanion
+        domains:
+          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+          class:644b71de-95c8-41ee-be37-b3556b424990: true
         feature:
-          __typeName: CharacterFeature
-          description: ""
-          source: Beastheart
           name: Shadow in the Mist
+          description: ""
+          __typeName: CharacterFeature
           guid: 5f04000b-0004-4096-bcde-7d8e9f0a1b2c
           modifiers:
-          - __typeName: CharacterModifier
-            source: Beastheart
-            name: Shadow in the Mist
+          - name: Shadow in the Mist
+            __typeName: CharacterModifier
             behavior: trigger
+            guid: 5f04000c-0004-4096-bcde-7d8e9f0a1b2c
+            source: Beastheart
             triggeredAbility:
-              __typeName: TriggeredAbility
-              iconid: ui-icons/skills/1.png
-              conditionFormula: HasAttacker and (not Friends(Self, Attacker))
               name: Shadow in the Mist
-              subject: other
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              trigger: losehitpoints
-              range: 1
-              targetType: self
-              guid: 5f04000d-0004-4096-bcde-7d8e9f0a1b2c
-              modeList:
-              - text: Activate
-              - text: 1 Ferocity
-                rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
-                condition: Resources.Heroic Resource > 0
-              mandatory: false
-              hasManualVersion: true
-              numTargets: "1"
-              abilityType: none
-              persistence: []
-              actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-              selfTarget: true
               description: ""
-              strain: []
-              multipleModes: true
-              repeatTargets: false
-              triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
+              __typeName: TriggeredAbility
+              abilityType: none
+              actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
               behaviors:
               - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                duration: end_of_next_turn
-                ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
                 applyto: caster
+                duration: end_of_next_turn
                 ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+                ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                invokeOnCaster: true
                 abilityType: named
+                applyto: caster
+                invokeOnCaster: true
                 namedAbility: Hide
                 promptText: Use the Hide maneuver (allowed even while observed)
-                applyto: caster
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
                 modesSelected:
                 - 1
-                applyto: caster
                 rule: shift {Intuition}
-              - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                name: Ability Duration Effect
+              - name: Ability Duration Effect
+                __typeName: ActivatedAbilityApplyAbilityDurationEffect
+                applyto: caster
                 modesSelected:
                 - 2
                 momentaryEffect:
-                  __typeName: CharacterOngoingEffect
-                  description: ""
-                  iconid: ui-icons/skills/1.png
-                  display:
-                    hueshift: 0
-                    brightness: 1
-                    bgcolor: "#ffffffff"
-                    saturation: 1
-                  name: Ignore Difficult Terrain
-                  source: Ongoing Effect
                   id: 5f040062-0004-4096-bcde-7d8e9f0a1b2c
+                  name: Ignore Difficult Terrain
+                  description: ""
+                  __typeName: CharacterOngoingEffect
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
                   guid: 5f040062-0004-4096-bcde-7d8e9f0a1b2c
+                  iconid: ui-icons/skills/1.png
                   modifiers:
-                  - __typeName: CharacterModifier
+                  - name: Ignore Difficult Terrain
+                    description: ""
+                    __typeName: CharacterModifier
                     attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+                    behavior: attribute
+                    guid: 5f040063-0004-4096-bcde-7d8e9f0a1b2c
                     source: Ongoing Effect
                     sourceguid: 5f040062-0004-4096-bcde-7d8e9f0a1b2c
-                    name: Ignore Difficult Terrain
-                    behavior: attribute
-                    description: ""
-                    guid: 5f040063-0004-4096-bcde-7d8e9f0a1b2c
                     value: 1
-                applyto: caster
+                  source: Ongoing Effect
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
                 modesSelected:
                 - 2
-                applyto: caster
                 rule: shift {Intuition * 2}
               - __typeName: ActivatedAbilityReplenishBehavior
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                modesSelected:
-                - 2
+                applyto: caster
                 chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
                 mode: expend
+                modesSelected:
+                - 2
                 quantity: "1"
-                applyto: caster
-              subjectRange: "10"
-              modifiers: []
-            guid: 5f04000c-0004-4096-bcde-7d8e9f0a1b2c
-        name: Shadow in the Mist (Companion)
-        behavior: modcompanion
-        description: Companion can use the Shadow in the Mist triggered action.
-        guid: 5f04000a-0004-4096-bcde-7d8e9f0a1b2c
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  tutoriallevel-3:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  multiclass:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-4:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-5:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeature
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: Melt Away
-      canHavePrerequisites: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      description: You or your companion can use your Shadow in the Mist ability even when targeted by the triggering ability.
-      source: Prowler Class Feature
-      implementation: 4
-      guid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
-      tags:
-        Combat: true
-      modifiers:
-      - __typeName: CharacterModifier
-        description: When an enemy within 10 squares deals damage to you, you become invisible and gain a quick reposition.
-        source: Prowler Class Feature
-        sourceguid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
-        name: Melt Away
-        behavior: trigger
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          iconid: ui-icons/skills/1.png
-          conditionFormula: HasAttacker and (not Friends(Self, Attacker))
-          name: Shadow in the Mist
-          subject: self
-          repeatTargets: false
-          trigger: losehitpoints
-          range: 1
-          targetType: self
-          guid: 5f040102-0004-4096-bcde-7d8e9f0a1b2c
-          modeList:
-          - text: Activate
-          - text: 1 Ferocity
-            rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
-            condition: Resources.Heroic Resource > 0
-          persistence: []
-          subjectRange: "10"
-          strain: []
-          numTargets: "1"
-          abilityType: none
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-          triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          description: ""
-          multipleModes: true
-          display:
-            hueshift: 0
-            brightness: 1
-            bgcolor: "#ffffffff"
-            saturation: 1
-          mandatory: false
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: end_of_next_turn
-            ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
-            applyto: caster
-            ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            namedAbility: Hide
-            abilityType: named
-            invokeOnCaster: true
-            promptText: Use the Hide maneuver (allowed even while observed)
-            applyto: caster
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            modesSelected:
-            - 1
-            applyto: caster
-            rule: shift {Intuition}
-          - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-            name: Ability Duration Effect
-            modesSelected:
-            - 2
-            momentaryEffect:
-              __typeName: CharacterOngoingEffect
-              description: ""
-              iconid: ui-icons/skills/1.png
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              name: Ignore Difficult Terrain
-              source: Ongoing Effect
-              id: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
-              guid: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
-              modifiers:
-              - __typeName: CharacterModifier
-                attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
-                source: Ongoing Effect
-                sourceguid: 5f040104-0004-4096-bcde-7d8e9f0a1b2c
-                name: Ignore Difficult Terrain
-                behavior: attribute
-                description: ""
-                guid: 5f040103-0004-4096-bcde-7d8e9f0a1b2c
-                value: 1
-            applyto: caster
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            modesSelected:
-            - 2
-            applyto: caster
-            rule: shift {Intuition * 2}
-          - __typeName: ActivatedAbilityReplenishBehavior
-            resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            modesSelected:
-            - 2
-            chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
-            mode: expend
-            quantity: "1"
-            applyto: caster
-          selfTarget: true
-          hasManualVersion: true
-          modifiers: []
-        guid: 5f040101-0004-4096-bcde-7d8e9f0a1b2c
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      - __typeName: CharacterModifier
-        sourceguid: cb92c7eb-0e04-423c-bf40-8f3c66ccb578
-        source: Prowler Class Feature
-        feature:
-          __typeName: CharacterFeature
-          description: ""
-          source: Beastheart
-          name: Melt Away
-          guid: 5f040105-0004-4096-bcde-7d8e9f0a1b2c
-          modifiers:
-          - __typeName: CharacterModifier
-            source: Beastheart
-            name: Shadow in the Mist
-            behavior: trigger
-            triggeredAbility:
-              __typeName: TriggeredAbility
-              iconid: ui-icons/skills/1.png
+                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
               conditionFormula: HasAttacker and (not Friends(Self, Attacker))
-              name: Shadow in the Mist
-              subject: self
               display:
-                hueshift: 0
-                brightness: 1
                 bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
                 saturation: 1
-              trigger: losehitpoints
-              range: 1
-              targetType: self
-              guid: 5f040107-0004-4096-bcde-7d8e9f0a1b2c
+              guid: 5f04000d-0004-4096-bcde-7d8e9f0a1b2c
+              hasManualVersion: true
+              iconid: ui-icons/skills/1.png
+              mandatory: false
               modeList:
               - text: Activate
-              - text: 1 Ferocity
+              - condition: Resources.Heroic Resource > 0
                 rules: You can move up to twice your Intuition and ignore difficult terrain during this movement.
-                condition: Resources.Heroic Resource > 0
-              mandatory: false
-              hasManualVersion: true
-              numTargets: "1"
-              abilityType: none
-              persistence: []
-              actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-              selfTarget: true
-              description: ""
-              strain: []
-              multipleModes: true
-              repeatTargets: false
-              triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
-              behaviors:
-              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                duration: end_of_next_turn
-                ongoingEffectCustom: 6b9ea931-b803-4811-8086-c1590a2195e5
-                applyto: caster
-                ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
-              - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                invokeOnCaster: true
-                abilityType: named
-                namedAbility: Hide
-                promptText: Use the Hide maneuver (allowed even while observed)
-                applyto: caster
-              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                modesSelected:
-                - 1
-                applyto: caster
-                rule: shift {Intuition}
-              - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                name: Ability Duration Effect
-                modesSelected:
-                - 2
-                momentaryEffect:
-                  __typeName: CharacterOngoingEffect
-                  description: ""
-                  iconid: ui-icons/skills/1.png
-                  display:
-                    hueshift: 0
-                    brightness: 1
-                    bgcolor: "#ffffffff"
-                    saturation: 1
-                  name: Ignore Difficult Terrain
-                  source: Ongoing Effect
-                  id: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
-                  guid: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
-                  modifiers:
-                  - __typeName: CharacterModifier
-                    attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
-                    source: Ongoing Effect
-                    sourceguid: 5f04010a-0004-4096-bcde-7d8e9f0a1b2c
-                    name: Ignore Difficult Terrain
-                    behavior: attribute
-                    description: ""
-                    guid: 5f040109-0004-4096-bcde-7d8e9f0a1b2c
-                    value: 1
-                applyto: caster
-              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                modesSelected:
-                - 2
-                applyto: caster
-                rule: shift {Intuition * 2}
-              - __typeName: ActivatedAbilityReplenishBehavior
-                resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-                modesSelected:
-                - 2
-                chatMessage: Shadow in the Mist - Spend 1 Ferocity for boosted shift
-                mode: expend
-                quantity: "1"
-                applyto: caster
-              subjectRange: "10"
+                text: 1 Ferocity
               modifiers: []
-            guid: 5f040106-0004-4096-bcde-7d8e9f0a1b2c
-        name: Melt Away (Companion)
-        behavior: modcompanion
-        description: Companion can use the Shadow in the Mist triggered action even when targeted by the triggering ability.
-        guid: 5f040108-0004-4096-bcde-7d8e9f0a1b2c
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-1:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-9:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeatureChoice
-      description: Choose one of the following abilities.
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: 9th-Level Prowler Abilities
-      options:
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: Behold the Face of Chaos
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Your companion teleports up to its speed, then makes a psychic melee strike that frightens (save ends).
+              multipleModes: true
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              selfTarget: true
+              sourceReference:
+                __typeName: SourceReference
+                docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+                page: 22
+                type: pdf
+              strain: []
+              subject: other
+              subjectRange: "10"
+              targetType: self
+              trigger: losehitpoints
+              triggerPrompt: Become invisible until EoT (or you deal damage) and shift up to your Intuition.
+          source: Beastheart
+          sourceReference:
+            __typeName: SourceReference
+            docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+            page: 22
+            type: pdf
+        guid: 5f04000a-0004-4096-bcde-7d8e9f0a1b2c
         source: Prowler Class Feature
-        implementation: 3
-        guid: 8dcbeca5-29f7-4f15-b763-c454f7a66590
-        tags:
-          Ability: true
-        modifiers:
-        - __typeName: CharacterModifier
-          description: Your companion teleports and strikes with a nightmare visage.
-          source: Prowler Class Feature
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          name: Behold the Face of Chaos
-          behavior: activated
-          sourceguid: 8dcbeca5-29f7-4f15-b763-c454f7a66590
-          guid: 12908dfd-9d5e-4ea2-9d02-2b66fa88541d
-          activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
-            name: Behold the Face of Chaos
-            keywords:
-              Strike: true
-              Magic: true
-              Melee: true
-              Weapon: true
-              Companion: true
-            repeatTargets: false
-            range: Walking Speed
-            targetType: emptyspace
-            flavor: Your companion appears next to their victim in the guise of a heart-stopping nightmare.
-            targetTextOverride: One creature
-            implementation: 3
-            domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            numTargets: "1"
-            abilityType: none
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            resourceNumber: "11"
-            behaviors:
-            - __typeName: ActivatedAbilityRelocateCreatureBehavior
-              movementType: teleport
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              autoTarget: false
-              abilityType: custom
-              promptText: Strike an adjacent creature.
-              customAbility:
-                __typeName: ActivatedAbility
-                iconid: ui-icons/skills/1.png
-                repeatTargets: false
-                numTargets: "1"
-                abilityType: none
-                targetAllegiance: enemy
-                keywords:
-                  Melee: true
-                  Weapon: true
-                  Strike: true
-                  Magic: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                behaviors:
-                - __typeName: ActivatedAbilityPowerRollBehavior
-                  roll: 2d10 + Intuition
-                  tiers:
-                  - 13 + I psychic damage; P < weak, frightened (save ends)
-                  - 20 + I psychic damage; P < average, frightened (save ends)
-                  - 27 + I psychic damage; P < strong, frightened (save ends)
-                name: Behold the Face of Chaos (Strike)
-                categorization: Hidden
-                targetType: target
-                description: ""
-                range: 1
-                guid: cd6e0ce7-b54b-405c-8faf-aa838d1e2648
-                modifiers: []
-              applyto: caster
-            guid: 3935d447-e12a-439c-a1da-4257468edca5
-            description: "Effect: Your companion teleports up to their speed. Then Power Roll + Intuition (Melee 1, one creature): psychic damage and frightened (save ends)."
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            rangeTextOverride: Melee 1
-            categorization: Heroic Ability
-            targetAllegiance: enemy
-            modifiers: []
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: Let's Take This Outside
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Isolate you, your companion, and a target foe from all other creatures; the target takes 20 elemental damage on your turns.
-        source: Prowler Class Feature
-        implementation: 3
-        guid: 52ae63fc-b926-454a-b002-92de2ee7d236
-        tags:
-          Ability: true
-        modifiers:
-        - __typeName: CharacterModifier
-          sourceguid: 52ae63fc-b926-454a-b002-92de2ee7d236
-          source: Prowler Class Feature
-          activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
-            name: Let's Take This Outside
-            keywords:
-              Magic: true
-              Companion: true
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            range: 1
-            targetType: target
-            flavor: Your companion drags your chosen foe into storms of the Primordial Plane.
-            guid: 763bc575-a0b2-4c4e-989c-85888d223329
-            implementation: 3
-            numTargets: "1"
-            abilityType: none
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            resourceNumber: "11"
-            description: "Effect: You, your companion, and the target are isolated - the three of you can only affect and be affected by each other. The target takes 5 cold, 5 fire, 5 lightning, and 5 sonic damage at the start of each of your turns. Ends if one of you dies, if you end it (free maneuver), or if the target saves at the end of its turn."
-            repeatTargets: false
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            behaviors:
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              duration: save_ends
-              ongoingEffectCustom: 48f1fc52-ca2d-46a8-9749-9ad39dbfa572
-              applyto: targets
-              ongoingEffect: 48f1fc52-ca2d-46a8-9749-9ad39dbfa572
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              duration: eoe
-              ongoingEffectCustom: eab14011-bed7-4919-9391-2eb3294b38d0
-              applyto: caster
-              ongoingEffect: eab14011-bed7-4919-9391-2eb3294b38d0
-            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-              duration: eoe
-              ongoingEffectCustom: eab14011-bed7-4919-9391-2eb3294b38d0
-              applyto: caster_summoner
-              ongoingEffect: eab14011-bed7-4919-9391-2eb3294b38d0
-            rangeTextOverride: Melee 1
-            categorization: Heroic Ability
-            targetAllegiance: enemy
-            modifiers: []
-          name: Let's Take This Outside
-          behavior: activated
-          description: Isolate you, your companion, and a foe.
-          guid: 205f206c-bc8b-4624-88df-d4f740845bd3
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      numChoices: 1
-      guid: 507693a6-867e-48cc-bc67-b52f9e98cfb0
-      allowDuplicateChoices: false
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+        sourceguid: 5f040001-0004-4096-bcde-7d8e9f0a1b2c
+      source: Prowler Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: d04b544a-5144-4c0f-bd3d-2e9fc27e3bc4
+        page: 22
+        type: pdf
+      tags:
+        Trigger: true
   tutoriallevel-2:
     __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
     features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-7:
+  tutoriallevel-3:
     __typeName: ClassLevel
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
     features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-8:
+  tutoriallevel-4:
     __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeature
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: Born to Run
-      canHavePrerequisites: true
-      domains:
-        class:644b71de-95c8-41ee-be37-b3556b424990: true
-        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      description: You and your companion gain a +2 bonus to speed.
-      source: Prowler Class Feature
-      implementation: 4
-      guid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: speed
-        name: Born to Run
-        behavior: attribute
-        operation: add
-        description: +2 bonus to speed.
-        source: Prowler Class Feature
-        sourceguid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        guid: f6c9b9e6-778f-49cc-9213-4fb40451ba22
-        value: "2"
-      - __typeName: CharacterModifier
-        sourceguid: ea065cc5-e0fb-414b-8a4a-bee1344f9bfc
-        source: Prowler Class Feature
-        feature:
-          __typeName: CharacterFeature
-          description: Your companion gains a +2 bonus to speed.
-          source: Beastheart
-          name: Born to Run
-          implementation: 4
-          modifiers:
-          - __typeName: CharacterModifier
-            attribute: speed
-            name: Born to Run
-            behavior: attribute
-            operation: add
-            description: +2 bonus to speed.
-            source: Beastheart
-            sourceguid: c17acd74-998e-439e-a989-116e8ffd9c23
-            guid: 1e570bee-f375-456d-96e6-6cc6285ba356
-            value: "2"
-          guid: c17acd74-998e-439e-a989-116e8ffd9c23
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        name: Born to Run
-        behavior: modcompanion
-        description: Your companion gains a +2 bonus to speed.
-        guid: 8b71e490-840c-479c-8b4f-bb356ed71100
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-10:
-    __typeName: ClassLevel
+      class:644b71de-95c8-41ee-be37-b3556b424990: true
     features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-3:
-    __typeName: ClassLevel
-    features: []
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-  level-6:
-    __typeName: ClassLevel
-    features:
-    - __typeName: CharacterFeatureChoice
-      description: Choose one of the following abilities.
-      classid: 644b71de-95c8-41ee-be37-b3556b424990
-      name: 6th-Level Prowler Abilities
-      options:
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: Soft Underbelly
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
-        source: Prowler Class Feature
-        implementation: 4
-        guid: f50b08f3-f6cb-46ca-bbad-3b42133a73c4
-        tags:
-          Ability: true
-        modifiers:
-        - __typeName: CharacterModifier
-          description: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
-          source: Prowler Class Feature
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-          name: Soft Underbelly
-          behavior: activated
-          sourceguid: f50b08f3-f6cb-46ca-bbad-3b42133a73c4
-          guid: 24d028eb-c905-48ea-afea-2beaec48341c
-          activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
-            name: Soft Underbelly
-            keywords:
-              Melee: true
-              Weapon: true
-              Strike: true
-              Companion: true
-            repeatTargets: false
-            range: "2"
-            targetType: target
-            flavor: Your companion ducks under your enemy’s guard and rakes open their soft vitals, leaving them vulnerable.
-            guid: a49e3947-5c35-4b1b-abce-29546c56e16d
-            implementation: 4
-            numTargets: "1"
-            abilityType: none
-            actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-            resourceNumber: "9"
-            domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              roll: 2d10 + Might
-              tiers:
-              - 10 + M damage; A < weak bleeding (save ends)
-              - 15 + M damage; A < Average bleeding (save ends)
-              - 20 + M damage; A < Strong bleeding (save ends)
-            - __typeName: ActivatedAbilityApplyRidersBehavior
-              riderid: b5e1c9a4-2f7d-4a63-9c18-6d3e8f0a5b72
-              conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
-            strain: []
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            description: While bleeding this way, the target has damage weakness 5.
-            categorization: Heroic Ability
-            objectTarget: false
-            modifiers: []
-      - __typeName: CharacterFeature
-        classid: 644b71de-95c8-41ee-be37-b3556b424990
-        name: Wraith Heart
-        canHavePrerequisites: true
-        domains:
-          class:644b71de-95c8-41ee-be37-b3556b424990: true
-          class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-        description: You and your companion become soul-freezing wraiths.
-        source: Prowler Class Feature
-        implementation: 3
-        guid: 5b2e7956-43b3-41c2-922b-368908d427d8
-        tags:
-          Ability: true
-        modifiers:
-        - __typeName: CharacterModifier
-          sourceguid: 5b2e7956-43b3-41c2-922b-368908d427d8
-          source: Prowler Class Feature
-          activatedAbility:
-            __typeName: ActivatedAbility
-            iconid: ui-icons/skills/1.png
-            name: Wraith Heart
-            keywords:
-              Magic: true
-            display:
-              hueshift: 0
-              brightness: 1
-              bgcolor: "#ffffffff"
-              saturation: 1
-            range: 1
-            targetType: self
-            flavor: You and your companion become soul-freezing wraiths.
-            guid: 7c1a0002-9d2b-4e58-b164-3f8a6c5d2e02
-            implementation: 3
-            resourceNumber: "9"
-            resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
-            numTargets: "1"
-            abilityType: none
-            persistence: []
-            behaviors:
-            - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-              applyto: caster
-              momentaryEffect:
-                __typeName: CharacterOngoingEffect
-                description: ""
-                iconid: ui-icons/skills/1.png
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                name: Wraith Heart
-                source: Ongoing Effect
-                id: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-                guid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-                modifiers:
-                - __typeName: CharacterModifier
-                  attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
-                  source: Ongoing Effect
-                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-                  name: Move Through Enemies
-                  behavior: attribute
-                  description: ""
-                  guid: 7c1a0011-9d2b-4e58-b164-3f8a6c5d2e11
-                  value: 1
-                - __typeName: CharacterModifier
-                  attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
-                  source: Ongoing Effect
-                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-                  name: Move Through Objects
-                  behavior: attribute
-                  description: ""
-                  guid: 7c1a0012-9d2b-4e58-b164-3f8a6c5d2e12
-                  value: 1
-                - __typeName: CharacterModifier
-                  attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
-                  source: Ongoing Effect
-                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-                  name: Ignore Difficult Terrain
-                  behavior: attribute
-                  description: ""
-                  guid: 7c1a0013-9d2b-4e58-b164-3f8a6c5d2e13
-                  value: 1
-                - __typeName: CharacterModifier
-                  description: ""
-                  source: Ongoing Effect
-                  name: Wraith Heart Passthrough
-                  behavior: trigger
-                  triggeredAbility:
-                    __typeName: TriggeredAbility
-                    iconid: ui-icons/skills/1.png
-                    conditionFormula: not Friends(Self, Target)
-                    name: Wraith Heart Passthrough
-                    subject: self
-                    display:
-                      hueshift: 0
-                      brightness: 1
-                      bgcolor: "#ffffffff"
-                      saturation: 1
-                    trigger: movethrough
-                    range: 1
-                    targetType: target
-                    guid: 7c1a0015-9d2b-4e58-b164-3f8a6c5d2e15
-                    mandatory: true
-                    numTargets: "1"
-                    abilityType: none
-                    strain: []
-                    behaviors:
-                    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                      rule: "{Caster.Intuition} corruption damage"
-                      applyto: targets
-                    repeatTargets: false
-                    description: ""
-                    persistence: []
-                    targetAllegiance: enemy
-                    modifiers: []
-                  guid: 7c1a0014-9d2b-4e58-b164-3f8a6c5d2e14
-                  sourceguid: 7c1a0010-9d2b-4e58-b164-3f8a6c5d2e10
-              name: Wraith Heart (Self)
-            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-              rule: shift {Movement Speed}
-              promptText: Shift up to your speed. You can move through enemies and objects and ignore difficult terrain.
-              applyto: caster
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              promptText: Your companion shifts up to its speed, phasing through enemies and objects.
-              abilityType: custom
-              inheritKeywords: true
-              customAbility:
-                __typeName: ActivatedAbility
-                repeatTargets: false
-                iconid: ui-icons/skills/1.png
-                description: ""
-                numTargets: "1"
-                abilityType: none
-                persistence: []
-                keywords:
-                  Magic: true
-                  Companion: true
-                display:
-                  hueshift: 0
-                  brightness: 1
-                  bgcolor: "#ffffffff"
-                  saturation: 1
-                behaviors:
-                - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-                  applyto: caster
-                  momentaryEffect:
-                    __typeName: CharacterOngoingEffect
-                    description: ""
-                    iconid: ui-icons/skills/1.png
-                    display:
-                      hueshift: 0
-                      brightness: 1
-                      bgcolor: "#ffffffff"
-                      saturation: 1
-                    name: Wraith Heart
-                    source: Ongoing Effect
-                    id: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                    guid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                    modifiers:
-                    - __typeName: CharacterModifier
-                      attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
-                      source: Ongoing Effect
-                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                      name: Move Through Enemies
-                      behavior: attribute
-                      description: ""
-                      guid: 7c1a0031-9d2b-4e58-b164-3f8a6c5d2e31
-                      value: 1
-                    - __typeName: CharacterModifier
-                      attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
-                      source: Ongoing Effect
-                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                      name: Move Through Objects
-                      behavior: attribute
-                      description: ""
-                      guid: 7c1a0032-9d2b-4e58-b164-3f8a6c5d2e32
-                      value: 1
-                    - __typeName: CharacterModifier
-                      attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
-                      source: Ongoing Effect
-                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                      name: Ignore Difficult Terrain
-                      behavior: attribute
-                      description: ""
-                      guid: 7c1a0033-9d2b-4e58-b164-3f8a6c5d2e33
-                      value: 1
-                    - __typeName: CharacterModifier
-                      description: ""
-                      source: Ongoing Effect
-                      name: Wraith Heart Passthrough
-                      behavior: trigger
-                      triggeredAbility:
-                        __typeName: TriggeredAbility
-                        iconid: ui-icons/skills/1.png
-                        conditionFormula: not Friends(Self, Target)
-                        name: Wraith Heart Passthrough
-                        subject: self
-                        display:
-                          hueshift: 0
-                          brightness: 1
-                          bgcolor: "#ffffffff"
-                          saturation: 1
-                        trigger: movethrough
-                        range: 1
-                        targetType: target
-                        guid: 7c1a0035-9d2b-4e58-b164-3f8a6c5d2e35
-                        mandatory: true
-                        numTargets: "1"
-                        abilityType: none
-                        strain: []
-                        behaviors:
-                        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                          rule: "{Caster.Intuition} corruption damage"
-                          applyto: targets
-                        repeatTargets: false
-                        description: ""
-                        persistence: []
-                        targetAllegiance: enemy
-                        modifiers: []
-                      guid: 7c1a0034-9d2b-4e58-b164-3f8a6c5d2e34
-                      sourceguid: 7c1a0030-9d2b-4e58-b164-3f8a6c5d2e30
-                  name: Wraith Heart (Companion)
-                - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                  promptText: Your companion shifts up to its speed, phasing through enemies and objects.
-                  rule: shift {Movement Speed}
-                name: Wraith Heart (Companion)
-                categorization: Hidden
-                targetType: self
-                strain: []
-                range: 1
-                guid: 7c1a0020-9d2b-4e58-b164-3f8a6c5d2e20
-                modifiers: []
-              applyto: caster_companion
-            domains:
-              class:644b71de-95c8-41ee-be37-b3556b424990: true
-              class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-            description: You and your companion shift up to your speeds. During this movement, you are both invisible, can move through enemies and objects, and ignore difficult terrain. You each deal corruption damage equal to your own Intuition score to each enemy you pass through during this movement. You can both damage each enemy once this way.
-            repeatTargets: false
-            strain: []
-            implementationDetails: " Invisibility is modeled as a shift, which prevents opportunity attacks."
-            rangeTextOverride: Self
-            categorization: Move
-            targetTextOverride: Self and companion
-            modifiers: []
-          name: Wraith Heart
-          behavior: activated
-          description: You and your companion become soul-freezing wraiths.
-          guid: 7c1a0001-9d2b-4e58-b164-3f8a6c5d2e01
-          domains:
-            class:644b71de-95c8-41ee-be37-b3556b424990: true
-            class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-      numChoices: 1
-      guid: 3b7be58b-4b6f-4e52-8bfd-fcc90988cadb
-      allowDuplicateChoices: false
-    domains:
-      class:644b71de-95c8-41ee-be37-b3556b424990: true
-      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
-mtime: 1786316712416
-_table: subclasses
+mtime: 1787612269219
+primaryClassId: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2

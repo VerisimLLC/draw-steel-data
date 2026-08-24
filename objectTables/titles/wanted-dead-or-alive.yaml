@@ -1,87 +1,102 @@
-__typeName: Title
 id: 9972c25e-d691-474d-893b-001790061d0a
-prerequisite: You are declared an outlaw by a governmental authority.
-mtime: 1773772202269
-effect: "Choose one of the following benefits:"
-ctime: 1762351099195
+name: Wanted Dead or Alive
 description: A hundred silver?! An insult! I turned my father in for fifty golden crowns. And he was innocent!
+_table: titles
+__typeName: Title
+ctime: 1762351099195
+effect: "Choose one of the following benefits:"
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeatureChoice
-    allowDuplicateChoices: false
-    numChoices: 1
+  - name: Wanted Dead or Alive Benefit
     description: "Choose one of the following benefits:"
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: fbabe6e8-ccb5-4f8c-b0f1-c8ee02e3ced0
+    numChoices: 1
     options:
-    - __typeName: CharacterFeature
-      implementation: 3
+    - name: Honor Among Thieves
+      description: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
       guid: f3ca1b47-30e7-406f-b848-b5be4a1c787c
+      implementation: 3
+      modifiers:
+      - name: Honor Among Thieves
+        description: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
+        __typeName: CharacterModifier
+        behavior: movementtext
+        color: white
+        guid: b83f0b8e-5cd9-4851-b4b9-81a613ddeca3
+        source: Feat
+        sourceguid: f3ca1b47-30e7-406f-b848-b5be4a1c787c
+        text: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
+        texttype: negotiation
+      source: Feat
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 342
+        type: pdf
       tags:
         Negotiation: true
-      canHavePrerequisites: true
-      description: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
-      modifiers:
-      - __typeName: CharacterModifier
-        color: white
-        texttype: negotiation
-        sourceguid: f3ca1b47-30e7-406f-b848-b5be4a1c787c
-        guid: b83f0b8e-5cd9-4851-b4b9-81a613ddeca3
-        name: Honor Among Thieves
-        description: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
-        source: Feat
-        text: When negotiating with criminals, your Renown score is considered to be 2 higher than usual.
-        behavior: movementtext
-      source: Feat
-      name: Honor Among Thieves
-    - __typeName: CharacterFeature
-      implementation: 3
-      guid: b95eb25b-decc-4eb2-a0c9-eda03cb2c7b7
-      tags:
-        Combat: true
-      canHavePrerequisites: true
+    - name: Minion Mower
       description: When you make a melee strike that targets a minion and at least one more minion is within distance of the strike, the strike gains a +3 damage bonus.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: b95eb25b-decc-4eb2-a0c9-eda03cb2c7b7
+      implementation: 3
       modifiers:
-      - __typeName: CharacterModifier
-        modtype: none
-        rollType: ability_power_roll
+      - name: Minion Mower
         description: When you make a melee strike that targets a minion and at least one more minion is within distance of the strike, the strike gains a +3 damage bonus.
+        __typeName: CharacterModifier
+        activationCondition: Target.Minion and (Count Nearby Enemies(Reach, "Minion") > 1)
+        behavior: power
         damageModifier: "3"
-        sourceguid: df92f069-821d-49ad-9586-a48dda15b515
-        guid: 81804661-85f1-4908-b617-30e2426958cc
         displayCondition: Target.Minion and (Count Nearby Enemies(Reach, "Minion") > 1)
-        name: Minion Mower
+        guid: 81804661-85f1-4908-b617-30e2426958cc
         keywords:
           Melee: true
           Strike: true
+        modtype: none
+        rollType: ability_power_roll
         source: Feat
-        activationCondition: Target.Minion and (Count Nearby Enemies(Reach, "Minion") > 1)
-        behavior: power
+        sourceguid: df92f069-821d-49ad-9586-a48dda15b515
       source: Feat
-      name: Minion Mower
-    - __typeName: CharacterFeature
-      implementation: 3
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 342
+        type: pdf
+      tags:
+        Combat: true
+    - name: No, You’re Under Arrest!
+      description: You gain an edge on the Escape Grab maneuver. Additionally, when you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
       guid: 19c662ee-1d2c-4d5c-a923-3279d97efa16
+      implementation: 3
+      modifiers:
+      - name: No, You’re Under Arrest!
+        description: You gain an edge on the Escape Grab maneuver. Additionally, when you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.
+        __typeName: CharacterModifier
+        activationCondition: Ability.Name = "Escape Grab"
+        behavior: power
+        displayCondition: Ability.Name = "Escape Grab"
+        guid: 0cc8b586-7a07-4e5e-85e7-87d562b7c3ed
+        keywords: []
+        modtype: edge
+        rollType: ability_power_roll
+        source: Feat
+        sourceguid: 19c662ee-1d2c-4d5c-a923-3279d97efa16
+      source: Feat
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 342
+        type: pdf
       tags:
         Combat: true
         Exploration: true
-      canHavePrerequisites: true
-      description: You gain an edge on the Escape Grab maneuver. Additionally, when you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.
-      modifiers:
-      - __typeName: CharacterModifier
-        modtype: edge
-        rollType: ability_power_roll
-        displayCondition: Ability.Name = "Escape Grab"
-        name: No, You’re Under Arrest!
-        guid: 0cc8b586-7a07-4e5e-85e7-87d562b7c3ed
-        keywords: []
-        sourceguid: 19c662ee-1d2c-4d5c-a923-3279d97efa16
-        description: You gain an edge on the Escape Grab maneuver. Additionally, when you succeed on a test to escape bonds or manacles, as part of the same maneuver, you can transfer the bonds or manacles to an adjacent creature of the same size without them immediately noticing.
-        source: Feat
-        activationCondition: Ability.Name = "Escape Grab"
-        behavior: power
-      source: Feat
-      name: No, You’re Under Arrest!
-    guid: fbabe6e8-ccb5-4f8c-b0f1-c8ee02e3ced0
-    name: Wanted Dead or Alive Benefit
-name: Wanted Dead or Alive
-_table: titles
+mtime: 1787612321601
+prerequisite: You are declared an outlaw by a governmental authority.
