@@ -1,210 +1,214 @@
-__typeName: CharacterTemplate
-name: Kobold Shieldbearer
-tag: retainer
 id: e2e32ffe-bb9b-4121-8741-19e995abf7ea
-mtime: 1786371643323
-prerequisite: Retainer
+name: Kobold Shieldbearer
+_table: creatureTemplates
+__typeName: CharacterTemplate
+ctime: 1786371643323
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeatureChoice
-    numChoices: 1
-    guid: 8505d3ba-e8d0-42b3-a432-d31207052be0
+  - name: Level 4 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
     allowDuplicateChoices: false
+    guid: 8505d3ba-e8d0-42b3-a432-d31207052be0
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/1
+      targetTable: creatureTemplates
+      targetid: 7d09d0aa-f87c-40bd-8bf9-798b376b3fe5
+    numChoices: 1
     options:
-    - __typeName: CharacterFeature
+    - name: Shield Block
+      description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+      __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
       implementation: 4
-      description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
-      name: Shield Block
       modifiers:
-      - __typeName: CharacterModifier
-        targetFilter: Target = Caster.Mentor
-        trigger: takedamage
-        rules: The strike's damage is halved and its potency is reduced by 1.
-        name: Shield Block
-        type: trigger
-        behavior: powertabletrigger
-        targetType: ally
-        guid: 630bc576-1408-44a0-881f-3390f481b528
+      - name: Shield Block
+        description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+        __typeName: CharacterModifier
         abilityFilter: Ability.Keywords has "strike"
-        description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+        behavior: powertabletrigger
+        guid: 630bc576-1408-44a0-881f-3390f481b528
         powerRollModifier:
-          __typeName: CharacterModifier
-          adjustments: []
-          damageMultiplier: half
-          rules: ""
-          resourceRefreshType: encounter
           name: Shield Block
-          modtype: none
-          behavior: power
-          keywords: []
-          guid: 31842dd3-15f1-4542-94d4-e06be52a7e61
-          rollType: ability_power_roll
           description: The strike's damage is halved and its potency is reduced by 1.
-          potencymod: "-1"
-          activationCondition: true
+          __typeName: CharacterModifier
           activationAfterRoll: false
+          activationCondition: true
+          adjustments: []
+          behavior: power
+          damageMultiplier: half
+          guid: 31842dd3-15f1-4542-94d4-e06be52a7e61
+          keywords: []
+          modtype: none
+          potencymod: "-1"
+          resourceRefreshType: encounter
+          rollType: ability_power_roll
+          rules: ""
           source: Trigger
-        sourceguid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
         range: 5
+        rules: The strike's damage is halved and its potency is reduced by 1.
         source: Creature Template
-      - __typeName: CharacterModifier
-        guid: 253e90eb-ba37-48fe-9138-40c82787b712
-        behavior: triggerdisplay
-        description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
         sourceguid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
-        name: Shield Block
+        targetFilter: Target = Caster.Mentor
+        targetType: ally
+        trigger: takedamage
+        type: trigger
+      - name: Shield Block
+        description: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+        __typeName: CharacterModifier
         ability:
-          __typeName: TriggeredAbilityDisplay
-          target: The shieldbearer's mentor
-          guid: 05fbdab2-dc18-47ce-8e04-a29273e7b8cf
-          trigger: The mentor takes damage from a strike while within distance.
-          distance: Ranged 5
-          implementationNotes: ""
           name: Shield Block
+          __typeName: TriggeredAbilityDisplay
+          distance: Ranged 5
           effect: The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor's space. The triggering strike's damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.
+          guid: 05fbdab2-dc18-47ce-8e04-a29273e7b8cf
+          implementationNotes: ""
           keywords:
             Ranged: true
+          target: The shieldbearer's mentor
+          trigger: The mentor takes damage from a strike while within distance.
+        behavior: triggerdisplay
+        guid: 253e90eb-ba37-48fe-9138-40c82787b712
         source: Creature Template
+        sourceguid: 8e0fd0f5-9ce6-4f80-8f8c-50673d2271f2
       source: Creature Template
-    name: Level 4 Retainer Advancement Ability
     prerequisites:
     - __typeName: CharacterPrerequisite
-      skill: "4"
       guid: c50f39ff-a5fa-4430-8a61-d5937e63e766
+      skill: "4"
       type: levelGained
+  - name: Level 7 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: 678bcdfd-b8e9-4b39-90f6-cf855ecdeacd
     inheritChoice:
     - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/2
       targetTable: creatureTemplates
-      targetPath: modifierInfo/features/1
       targetid: 7d09d0aa-f87c-40bd-8bf9-798b376b3fe5
-  - __typeName: CharacterFeatureChoice
     numChoices: 1
-    guid: 678bcdfd-b8e9-4b39-90f6-cf855ecdeacd
-    allowDuplicateChoices: false
     options:
-    - __typeName: CharacterFeature
+    - name: Living Backpack
+      description: ""
+      __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 17c25289-731c-4e00-9f14-fea8846547ab
       implementation: 3
-      description: ""
-      name: Living Backpack
       modifiers:
-      - __typeName: CharacterModifier
-        behavior: activated
-        guid: c86dbe63-e0a3-490e-9f26-80fbfb85476a
-        sourceguid: bcaf5708-e743-4b50-87cd-ab255a47a818
+      - name: Living Backpack
         description: ""
-        domains:
-          CharacterFeature:bcaf5708-e743-4b50-87cd-ab255a47a818: true
+        __typeName: CharacterModifier
         activatedAbility:
-          __typeName: ActivatedAbility
-          implementationDetails: ""
-          range: 1
-          objectTarget: false
-          behaviors:
-          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
-            chatMessage: Living Backpack
-            stamina: "10"
-            applyto: caster
-          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
-            chatMessage: Living Backpack
-            stamina: "10"
-            applyto: targets
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffectCustom: 3a84d56d-2c01-4041-b16f-327fb88f058b
-            ongoingEffect: 3a84d56d-2c01-4041-b16f-327fb88f058b
-            duration: eoe
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: Climb onto Mentor
-            applyto: caster
-            customAbility:
-              __typeName: ActivatedAbility
-              range: 1
-              modifiers: []
-              abilityType: none
-              behaviors: []
-              targetType: self
-              guid: 36488d14-a215-432f-b3f4-68ddec48d4bb
-              name: Invoked Ability
-              description: ""
-              numTargets: "1"
-              iconid: ui-icons/skills/1.png
-              repeatTargets: false
-              display:
-                saturation: 1
-                brightness: 1
-                hueshift: 0
-                bgcolor: "#ffffffff"
-            abilityType: named
-            namedAbility: Climb Creature
-          targetType: target
-          guid: 9d917314-ff72-4995-870e-39b101d0a439
-          targetTextOverride: The shieldbearer's mentor
-          iconid: ui-icons/skills/1.png
-          display:
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-          targetFilter: Target = Caster.Mentor
-          modifiers: []
-          categorization: Ability
-          domains:
-            CharacterFeature:bcaf5708-e743-4b50-87cd-ab255a47a818: true
-          sourceReference:
-            __typeName: SourceReference
-            page: 368
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-          abilityType: none
-          targetAllegiance: ally
-          implementation: 3
-          numTargets: "1"
           name: Living Backpack
           description: The shieldbearer straps their shield on their back and climbs onto their mentor's back, entering the mentor's space. While the shieldbearer is on their mentor's back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer's mentor. Additionally, the shieldbearer moves with the mentor, and they can't use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor's space when the effect ends, they move into an adjacent unoccupied space of their choice.
-          strain: []
+          __typeName: ActivatedAbility
+          abilityType: none
           actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          repeatTargets: false
+          behaviors:
+          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+            applyto: caster
+            chatMessage: Living Backpack
+            stamina: "10"
+          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+            applyto: targets
+            chatMessage: Living Backpack
+            stamina: "10"
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: eoe
+            ongoingEffect: 3a84d56d-2c01-4041-b16f-327fb88f058b
+            ongoingEffectCustom: 3a84d56d-2c01-4041-b16f-327fb88f058b
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: named
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 36488d14-a215-432f-b3f4-68ddec48d4bb
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            namedAbility: Climb Creature
+            promptText: Climb onto Mentor
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            CharacterFeature:bcaf5708-e743-4b50-87cd-ab255a47a818: true
+          guid: 9d917314-ff72-4995-870e-39b101d0a439
+          iconid: ui-icons/skills/1.png
+          implementation: 3
+          implementationDetails: ""
           keywords:
             Melee: true
-        name: Living Backpack
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          range: 1
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 368
+          strain: []
+          targetAllegiance: ally
+          targetFilter: Target = Caster.Mentor
+          targetTextOverride: The shieldbearer's mentor
+          targetType: target
+        behavior: activated
+        domains:
+          CharacterFeature:bcaf5708-e743-4b50-87cd-ab255a47a818: true
+        guid: c86dbe63-e0a3-490e-9f26-80fbfb85476a
         source: Creature Template
+        sourceguid: bcaf5708-e743-4b50-87cd-ab255a47a818
       source: Creature Template
-    name: Level 7 Retainer Advancement Ability
     prerequisites:
     - __typeName: CharacterPrerequisite
-      skill: "7"
       guid: 81e0c1a9-a425-4a86-845b-8b6c8a370b6d
+      skill: "7"
       type: levelGained
+  - name: Level 10 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: f60c0e82-2d5a-4dfc-b836-95c28bf19e37
     inheritChoice:
     - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/3
       targetTable: creatureTemplates
-      targetPath: modifierInfo/features/2
       targetid: 7d09d0aa-f87c-40bd-8bf9-798b376b3fe5
-  - __typeName: CharacterFeatureChoice
     numChoices: 1
-    guid: f60c0e82-2d5a-4dfc-b836-95c28bf19e37
-    allowDuplicateChoices: false
     options:
-    - __typeName: CharacterFeature
+    - name: Let's Go Sledding
+      description: ""
+      __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: eb0b1e08-370e-42ba-8b8b-67bdf687fca5
       implementation: 4
-      description: ""
-      name: Let's Go Sledding
       modifiers:
-      - __typeName: CharacterModifier
-        resourceRefreshType: encounter
-        guid: c15fef92-8c69-4f5b-95c1-937cb5e66a36
-        behavior: activated
+      - name: Let's Go Sledding
         description: ""
+        __typeName: CharacterModifier
         activatedAbility:
+          name: Let's Go Sledding
+          description: If this ability is used as part of the Charge main action, the shieldbearer gains 2 surges that can be used immediately.
           __typeName: ActivatedAbility
-          implementationDetails: ""
-          implementation: 4
-          objectTarget: false
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
             roll: 2d10 + Highest Characteristic
@@ -213,71 +217,68 @@ modifierInfo:
             - 10 damage; M < Average, prone
             - 14 damage; M < Strong, prone
           - __typeName: ActivatedAbilityModifyPowerRollBehavior
-            modifier:
-              __typeName: CharacterModifier
-              domains: []
-              surgesCanBeKept: true
-              filterCondition: Charging > 0
-              name: Charged
-              modtype: none
-              behavior: power
-              surges: "2"
-              guid: 3442199c-67f3-4329-bd26-f654aaf34afc
-              rollType: ability_power_roll
-              description: If this ability is part of the Charge action, the shieldbearer gains 2 surges
-              sourceguid: b273d4b6-63a5-455f-a69c-44d37e19de83
-              activationCondition: true
-              activationAfterRoll: false
-              keywords: []
             guid: b273d4b6-63a5-455f-a69c-44d37e19de83
-          targetType: target
-          guid: f10a0f89-1f97-4f4d-9326-c528ac14436e
-          targetTextOverride: Three enemies
-          iconid: ui-icons/skills/1.png
+            modifier:
+              name: Charged
+              description: If this ability is part of the Charge action, the shieldbearer gains 2 surges
+              __typeName: CharacterModifier
+              activationAfterRoll: false
+              activationCondition: true
+              behavior: power
+              domains: []
+              filterCondition: Charging > 0
+              guid: 3442199c-67f3-4329-bd26-f654aaf34afc
+              keywords: []
+              modtype: none
+              rollType: ability_power_roll
+              sourceguid: b273d4b6-63a5-455f-a69c-44d37e19de83
+              surges: "2"
+              surgesCanBeKept: true
+          categorization: Ability
           display:
-            saturation: 1
+            bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
-            bgcolor: "#ffffffff"
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          range: 1
-          sourceReference:
-            __typeName: SourceReference
-            page: 364
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            saturation: 1
           domains: []
-          name: Let's Go Sledding
-          abilityType: none
-          targetAllegiance: enemy
-          strain: []
-          modifiers: []
-          numTargets: "3"
-          description: If this ability is used as part of the Charge main action, the shieldbearer gains 2 surges that can be used immediately.
-          categorization: Ability
-          usageLimitOptions:
-            charges: "1"
-            resourceRefreshType: encounter
-            multicharge: false
-            resourceid: c15fef92-8c69-4f5b-95c1-937cb5e66a36
-          repeatTargets: false
+          guid: f10a0f89-1f97-4f4d-9326-c528ac14436e
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          implementationDetails: ""
           keywords:
-            Melee: true
             Charge: true
+            Melee: true
             Strike: true
             Weapon: true
-        sourceguid: eb0b1e08-370e-42ba-8b8b-67bdf687fca5
-        name: Let's Go Sledding
+          modifiers: []
+          numTargets: "3"
+          objectTarget: false
+          range: 1
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 364
+          strain: []
+          targetAllegiance: enemy
+          targetTextOverride: Three enemies
+          targetType: target
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: c15fef92-8c69-4f5b-95c1-937cb5e66a36
+        behavior: activated
+        guid: c15fef92-8c69-4f5b-95c1-937cb5e66a36
+        resourceRefreshType: encounter
         source: Creature Template
+        sourceguid: eb0b1e08-370e-42ba-8b8b-67bdf687fca5
       source: Creature Template
-    name: Level 10 Retainer Advancement Ability
     prerequisites:
     - __typeName: CharacterPrerequisite
-      skill: "10"
       guid: 6f0f199b-c0b5-4c12-a400-2c20d94cfbac
+      skill: "10"
       type: levelGained
-    inheritChoice:
-    - __typeName: CompendiumReference
-      targetTable: creatureTemplates
-      targetPath: modifierInfo/features/3
-      targetid: 7d09d0aa-f87c-40bd-8bf9-798b376b3fe5
-_table: creatureTemplates
+mtime: 1786371643323
+prerequisite: Retainer
+tag: retainer

@@ -1,66 +1,81 @@
-__typeName: CharacterOngoingEffect
 id: 7df58a49-107c-476c-b23f-4e85636df4b7
-custom: true
+name: Blitz Tactics
+description: ""
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
 association: []
-mtime: 1780452902882
+buffType: buff
+ctime: 1780452902882
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:7df58a49-107c-476c-b23f-4e85636df4b7: true
+guid: 7df58a49-107c-476c-b23f-4e85636df4b7
+hiddenOnToken: true
+iconid: ui-icons/skills/1.png
 modifiers:
-- __typeName: CharacterModifier
-  mode: summons
-  sourceguid: 7df58a49-107c-476c-b23f-4e85636df4b7
-  guid: 0d9dc41a-5f00-4c78-acb4-157d6083bb1e
+- name: Blitz Tactics
+  description: ""
+  __typeName: CharacterModifier
+  behavior: modsummoner
+  domains:
+    CharacterOngoingEffect:7df58a49-107c-476c-b23f-4e85636df4b7: true
   feature:
+    name: Summoner
+    description: Modify the Summoner's Summons
     __typeName: CharacterFeature
     guid: 5d8411b5-9ddd-4ce4-8104-899bc775ebd1
-    description: Modify the Summoner's Summons
     modifiers:
-    - __typeName: CharacterModifier
+    - name: Summoner
+      description: Modify the Summoner's Summons
+      __typeName: CharacterModifier
+      behavior: trigger
       guid: a5e2e16c-e444-4f2b-8963-27b98babafdb
+      source: Summoner
+      sourceguid: 5d8411b5-9ddd-4ce4-8104-899bc775ebd1
       triggeredAbility:
+        name: Summoner
+        description: ""
         __typeName: TriggeredAbility
-        repeatTargets: false
         abilityType: none
-        objectTarget: false
-        strain: []
-        targetType: target
-        conditionFormula: Subject.Ongoing Effects has not "BlitzUsed"
         behaviors:
         - __typeName: ActivatedAbilityInvokeAbilityBehavior
-          standardAbilityParams:
-            CasterAverage: "<<Caster.Average>>"
-            CasterWeak: "<<Caster.Weak>>"
-            CasterSize: "<<Caster.Size>>"
           customAbility:
+            name: Blitz Tactics
+            description: You may shift 1 square or be M < Weak knocked prone
             __typeName: ActivatedAbility
-            implementation: 3
-            strain: []
-            targetType: self
+            abilityType: none
             behaviors:
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-              promptText: Shift 1 Square
               abilityType: standard
-              standardAbilityParams:
-                distance: "1"
               customAbility:
-                __typeName: ActivatedAbility
-                repeatTargets: false
-                abilityType: none
-                numTargets: "1"
-                targetType: self
-                modifiers: []
-                behaviors: []
-                iconid: ui-icons/skills/1.png
-                guid: 67d58470-40bf-4a62-9e8b-f9a80e373b17
+                name: Invoked Ability
                 description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors: []
                 display:
+                  bgcolor: "#ffffffff"
                   brightness: 1
                   hueshift: 0
-                  bgcolor: "#ffffffff"
                   saturation: 1
+                guid: 67d58470-40bf-4a62-9e8b-f9a80e373b17
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
                 range: 1
-                name: Invoked Ability
+                repeatTargets: false
+                targetType: self
               modesSelected:
               - 1
+              promptText: Shift 1 Square
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: "1"
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
               filterTarget: "<<CasterSize>> > Target.Size"
               modesSelected:
@@ -69,78 +84,63 @@ modifiers:
             - __typeName: ActivatedAbilityDrawSteelCommandBehavior
               filterTarget: "<<CasterSize>> <= Target.Size"
               guid: 0bfac918-91fa-4350-98c1-8734372b2df5
-              rule: M < {<<CasterWeak>>  + Target.Stacks("BlitzTracking")}, prone
               modesSelected:
               - 2
+              rule: M < {<<CasterWeak>>  + Target.Stacks("BlitzTracking")}, prone
             categorization: Hidden
-            multipleModes: true
-            repeatTargets: false
-            abilityType: none
-            numTargets: "1"
-            modifiers: []
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: ab04d4c6-ef1a-400b-b598-46933cc8c548
             iconid: ui-icons/skills/1.png
+            implementation: 3
             modeList:
             - text: Shift 1 Square
             - text: Prone
-            display:
-              brightness: 1
-              hueshift: 0
-              bgcolor: "#ffffffff"
-              saturation: 1
-            description: You may shift 1 square or be M < Weak knocked prone
-            guid: ab04d4c6-ef1a-400b-b598-46933cc8c548
+            modifiers: []
+            multipleModes: true
+            numTargets: "1"
             range: 1
-            name: Blitz Tactics
+            repeatTargets: false
+            strain: []
+            targetType: self
           promptText: You may shift 1 square or potentially be knocked prone
+          standardAbilityParams:
+            CasterAverage: "<<Caster.Average>>"
+            CasterSize: "<<Caster.Size>>"
+            CasterWeak: "<<Caster.Weak>>"
         - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-          ongoingEffectCustom: 3edf4d63-a8be-4829-a287-385d56da1eb0
+          duration: 0
           guid: 9503ab87-a9c5-429c-92dc-9a441bc14242
           ongoingEffect: 3edf4d63-a8be-4829-a287-385d56da1eb0
-          duration: 0
+          ongoingEffectCustom: 3edf4d63-a8be-4829-a287-385d56da1eb0
         - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-          duration: 0
           applyto: caster
+          duration: 0
           ongoingEffect: 149997f7-d757-4716-8a09-2736a78db2d9
           ongoingEffectCustom: 149997f7-d757-4716-8a09-2736a78db2d9
+        conditionFormula: Subject.Ongoing Effects has not "BlitzUsed"
         display:
+          bgcolor: "#ffffffff"
           brightness: 1
           hueshift: 0
-          bgcolor: "#ffffffff"
           saturation: 1
-        iconid: ui-icons/skills/1.png
         guid: 370a20bf-ad9a-403d-8d67-e11b4353fe8a
-        numTargets: "1"
-        trigger: movethrough
-        description: ""
+        iconid: ui-icons/skills/1.png
         modifiers: []
+        numTargets: "1"
+        objectTarget: false
         range: 1
-        name: Summoner
-      behavior: trigger
-      description: Modify the Summoner's Summons
-      source: Summoner
-      name: Summoner
-      sourceguid: 5d8411b5-9ddd-4ce4-8104-899bc775ebd1
+        repeatTargets: false
+        strain: []
+        targetType: target
+        trigger: movethrough
     source: Summoner
-    name: Summoner
-  domains:
-    CharacterOngoingEffect:7df58a49-107c-476c-b23f-4e85636df4b7: true
-  description: ""
+  guid: 0d9dc41a-5f00-4c78-acb4-157d6083bb1e
+  mode: summons
   source: Ongoing Effect
-  behavior: modsummoner
-  name: Blitz Tactics
-display:
-  brightness: 1
-  hueshift: 0
-  bgcolor: "#ffffffff"
-  saturation: 1
-hiddenOnToken: true
-iconid: ui-icons/skills/1.png
-guid: 7df58a49-107c-476c-b23f-4e85636df4b7
-buffType: buff
-domains:
-  CharacterOngoingEffect:7df58a49-107c-476c-b23f-4e85636df4b7: true
-description: ""
+  sourceguid: 7df58a49-107c-476c-b23f-4e85636df4b7
+mtime: 1780452902882
 source: Ongoing Effect
-ctime: 1779936683258
-name: Blitz Tactics
-_table: characterOngoingEffects

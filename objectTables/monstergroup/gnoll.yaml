@@ -1,346 +1,347 @@
+id: 6e337f82-9186-4167-9142-0e4cd33a862b
+name: Gnoll
+_table: MonsterGroup
 __typeName: MonsterGroup
 attacks: []
-name: Gnoll
-traits: []
-id: 6e337f82-9186-4167-9142-0e4cd33a862b
+ctime: 1785377213966
 maliceAbilities:
-- __typeName: MaliceAbility
-  sourceReference:
-    __typeName: SourceReference
-    docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-    page: 153
-  abilityType: none
-  iconid: 68a50a43-9131-4592-b267-4cf53d26eb40
-  repeatTargets: false
-  display:
-    saturation: 1
-    brightness: 1
-    hueshift: 0
-    bgcolor:
-      __usertype: LuaColor
-      h: 0.0900003015995026
-      s: 0.536523222923279
-      v: 0.516510784626007
-      a: 1
-  implementation: 3
-  resourceNumber: "3"
-  targetType: cube
-  actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-  name: Iron Jaws
-  range: "3"
-  behaviors:
-  - __typeName: ActivatedAbilityAuraBehavior
-    applyto: targets
-    duration: none
-    guid: 44ade926-1105-4b1a-9b23-152e7835f88c
-    aura:
-      __typeName: Aura
-      display:
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-      applyto: enemies
-      triggers:
-      - trigger: onenter
-        ability:
-          __typeName: TriggeredAbility
-          range: "1"
-          abilityType: none
-          iconid: ui-icons/skills/1.png
-          repeatTargets: false
-          strain: []
-          trigger: onenter
-          numTargets: "1"
-          name: Iron Jaws Trigger
-          behaviors:
-          - __typeName: ActivatedAbilityPowerRollBehavior
-            tiers:
-            - 6 damage; bleeding (save ends)
-            - 4 damage; bleeding (Eot)
-            - No effect
-            applyto: subject
-            isTest: true
-            resistanceRoll: false
-            modifiers:
-            - text: Iron Jaws Trap
-              details: ""
-              type: bane
-              condition: ""
-            attrid: agl
-            roll: 2d10 + Agility
-          - __typeName: ActivatedAbilityApplyRidersBehavior
-            riderid: 8c44db9c-0166-4752-ae57-883630579ed4
-            conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
-            tiersSelected:
-            - 1
-            - 2
-          - __typeName: ActivatedAbilityModifyPowerRollBehavior
-            modifier:
-              __typeName: CharacterModifier
-              name: Unaware of Snare
-              behavior: power
-              rollType: test_power_roll
-              activationCondition: true
-              modtype: bane
-              keywords: []
-              sourceguid: b32ea77a-03a1-49f3-b87c-c42667c066f5
-              guid: df9eed08-dd07-4057-8218-bad968ea42d6
-              attribute: agl
-              domains: []
-              description: Target is unaware of the snare
-            guid: b32ea77a-03a1-49f3-b87c-c42667c066f5
-          targetType: target
-          display:
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-          silent: true
-          persistence: []
-          targetAllegiance: enemy
-          objectTarget: false
-          modifiers: []
-          guid: 4a422a2d-f51f-4c1b-a694-01551bbd683e
-          radius: 0
-          description: ""
-        destroyaura: true
-      modifiers: []
-      guid: 31cb387b-75d8-4606-b9c3-ab8fc8c6f66f
-      objectid: b664935b-be11-4a95-ab82-28fa42260de1
-      implementation: 3
-    aliveafterdeath: true
-  objectTarget: false
-  persistence: []
-  numTargets: "1"
-  strain: []
-  keywords:
-    Area: true
-    Weapon: true
-    Ranged: true
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  modifiers: []
-  guid: 74cf7dae-fbaa-4187-81c1-f54a74b7e2da
-  radius: "1"
+- name: Iron Jaws
   description: |
     Area, Ranged, Weapon. Maneuver. 1 cube within 3. A gnoll acting this turn drops an iron-jawed snare into the area. The first time any enemy moves into a square with a snare, they make an Agility test. If they were unaware of the snare, the test takes a bane.
     - Tier 1 (<=11): 6 damage; bleeding (save ends)
     - Tier 2 (12-16): 4 damage; bleeding (EoT)
     - Tier 3 (17+): No effect.
     Effect: While an enemy is bleeding this way, each gnoll in the encounter gains an edge on strikes made against them.
-- __typeName: MaliceAbility
-  range: "99"
+  __typeName: MaliceAbility
   abilityType: none
-  iconid: ui-icons/skills/1.png
-  repeatTargets: false
-  strain: []
-  implementation: 1
-  name: Bloodpool
-  resourceNumber: "5"
-  display:
-    saturation: 1
-    brightness: 1
-    hueshift: 0
-    bgcolor: "#ffffffff"
-  targetFilter: target.type="Gnoll" and Minion
+  actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
   behaviors:
-  - __typeName: ActivatedAbilityInvokeAbilityBehavior
-    customAbility:
-      __typeName: ActivatedAbility
-      numTargets: "1"
-      targetType: all
-      abilityType: none
-      iconid: ui-icons/skills/1.png
-      behaviors:
-      - __typeName: ActivatedAbilityAuraBehavior
-        aliveafterdeath: true
-        guid: 4b9a6c78-dab1-4bbd-ad89-f70960ec8f8e
-        aura:
-          __typeName: Aura
-          display:
-            saturation: 1
-            brightness: 1
-            hueshift: 0
-            bgcolor: "#ffffffff"
-          applyto: selfandfriends
-          objectid: 92c156f1-fd26-4ffd-a3b4-43ad7e29dae6
-          triggers: []
-          guid: b0c03bc7-00eb-4ead-bfa0-85c1e3b9cec5
-          modifiers:
-          - __typeName: CharacterModifier
-            name: Bloodpool
-            behavior: power
-            source: Aura
-            damageModifier: "5"
-            activationCondition: true
-            modtype: none
-            keywords:
-              Strike: true
-            sourceguid: b0c03bc7-00eb-4ead-bfa0-85c1e3b9cec5
-            resourceRefreshType: turn
-            guid: a3913041-a4a3-45cc-838e-0a5619c18706
-            rollType: ability_power_roll
-            description: ""
-          name: Bloodpool
-        duration: eoe
-      repeatTargets: false
-      range: "7"
-      name: Invoked Ability
-      strain: []
+  - __typeName: ActivatedAbilityAuraBehavior
+    aliveafterdeath: true
+    applyto: targets
+    aura:
+      __typeName: Aura
+      applyto: enemies
       display:
-        saturation: 1
+        bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
-        bgcolor: "#ffffffff"
-      targetAllegiance: ally
-      objectTarget: false
+        saturation: 1
+      guid: 31cb387b-75d8-4606-b9c3-ab8fc8c6f66f
+      implementation: 3
       modifiers: []
-      guid: e5f82869-94a2-47df-be3d-1ad5f04f94d8
-      persistence: []
-      description: ""
-  - __typeName: ActivatedAbilityRemoveCreatureBehavior
-    applyto: targets
-    waitForAbilitiesToFinish: false
+      objectid: b664935b-be11-4a95-ab82-28fa42260de1
+      triggers:
+      - ability:
+          name: Iron Jaws Trigger
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            applyto: subject
+            attrid: agl
+            isTest: true
+            modifiers:
+            - condition: ""
+              details: ""
+              text: Iron Jaws Trap
+              type: bane
+            resistanceRoll: false
+            roll: 2d10 + Agility
+            tiers:
+            - 6 damage; bleeding (save ends)
+            - 4 damage; bleeding (Eot)
+            - No effect
+          - __typeName: ActivatedAbilityApplyRidersBehavior
+            conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+            riderid: 8c44db9c-0166-4752-ae57-883630579ed4
+            tiersSelected:
+            - 1
+            - 2
+          - __typeName: ActivatedAbilityModifyPowerRollBehavior
+            guid: b32ea77a-03a1-49f3-b87c-c42667c066f5
+            modifier:
+              name: Unaware of Snare
+              description: Target is unaware of the snare
+              __typeName: CharacterModifier
+              activationCondition: true
+              attribute: agl
+              behavior: power
+              domains: []
+              guid: df9eed08-dd07-4057-8218-bad968ea42d6
+              keywords: []
+              modtype: bane
+              rollType: test_power_roll
+              sourceguid: b32ea77a-03a1-49f3-b87c-c42667c066f5
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4a422a2d-f51f-4c1b-a694-01551bbd683e
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          radius: 0
+          range: "1"
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetAllegiance: enemy
+          targetType: target
+          trigger: onenter
+        destroyaura: true
+        trigger: onenter
+    duration: none
+    guid: 44ade926-1105-4b1a-9b23-152e7835f88c
+  display:
+    bgcolor:
+      __usertype: LuaColor
+      a: 1
+      h: 0.0900003015995026
+      s: 0.536523222923279
+      v: 0.516510784626007
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: 74cf7dae-fbaa-4187-81c1-f54a74b7e2da
+  iconid: 68a50a43-9131-4592-b267-4cf53d26eb40
+  implementation: 3
+  keywords:
+    Area: true
+    Ranged: true
+    Weapon: true
   modifiers: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   numTargets: "1"
-  targetType: target
-  persistence: []
   objectTarget: false
-  selfTarget: true
-  guid: 3828dd0f-c687-419e-b032-87a64bc108b9
-  radius: "7"
-  description: |
-    One gnoll minion suddenly explodes into a pool of blood, splattering the area within 3 squares of them. Any gnoll who starts their turn in this area deals an extra 5 damage on their next strike before the end of their turn. Once per round, an abyssal hyena who starts their turn in the area turns into a gnoll marauder with 7 Stamina.
-- __typeName: MaliceAbility
-  range: 1
-  abilityType: none
-  iconid: 92a6d94b-65ab-49b6-b33e-0dae78f3a332
+  persistence: []
+  radius: "1"
+  range: "3"
   repeatTargets: false
-  targetFilter: Enemy
-  numTargets: "1"
-  name: Echoes of Laughter
-  description: Until the end of the encounter, the encounter map is encased in a soundscape of laughter and howling. Each enemy takes a bane on the first power roll they make each round. Whenever a gnoll is killed, this effect is suppressed until the start of the next round.
-  behaviors:
-  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-    ongoingEffect: 3c0e261c-528b-4855-acff-1d29c25ec4ab
-    ongoingEffectCustom: 3c0e261c-528b-4855-acff-1d29c25ec4ab
-    duration: eoe
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: "3"
   sourceReference:
     __typeName: SourceReference
     docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
     page: 153
+  strain: []
+  targetType: cube
+- name: Bloodpool
+  description: |
+    One gnoll minion suddenly explodes into a pool of blood, splattering the area within 3 squares of them. Any gnoll who starts their turn in this area deals an extra 5 damage on their next strike before the end of their turn. Once per round, an abyssal hyena who starts their turn in the area turns into a gnoll marauder with 7 Stamina.
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    customAbility:
+      name: Invoked Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        aura:
+          name: Bloodpool
+          __typeName: Aura
+          applyto: selfandfriends
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b0c03bc7-00eb-4ead-bfa0-85c1e3b9cec5
+          modifiers:
+          - name: Bloodpool
+            description: ""
+            __typeName: CharacterModifier
+            activationCondition: true
+            behavior: power
+            damageModifier: "5"
+            guid: a3913041-a4a3-45cc-838e-0a5619c18706
+            keywords:
+              Strike: true
+            modtype: none
+            resourceRefreshType: turn
+            rollType: ability_power_roll
+            source: Aura
+            sourceguid: b0c03bc7-00eb-4ead-bfa0-85c1e3b9cec5
+          objectid: 92c156f1-fd26-4ffd-a3b4-43ad7e29dae6
+          triggers: []
+        duration: eoe
+        guid: 4b9a6c78-dab1-4bbd-ad89-f70960ec8f8e
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: e5f82869-94a2-47df-be3d-1ad5f04f94d8
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: "7"
+      repeatTargets: false
+      strain: []
+      targetAllegiance: ally
+      targetType: all
+  - __typeName: ActivatedAbilityRemoveCreatureBehavior
+    applyto: targets
+    waitForAbilitiesToFinish: false
   display:
-    saturation: 1
+    bgcolor: "#ffffffff"
     brightness: 1
     hueshift: 0
+    saturation: 1
+  guid: 3828dd0f-c687-419e-b032-87a64bc108b9
+  iconid: ui-icons/skills/1.png
+  implementation: 1
+  modifiers: []
+  numTargets: "1"
+  objectTarget: false
+  persistence: []
+  radius: "7"
+  range: "99"
+  repeatTargets: false
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: "5"
+  selfTarget: true
+  strain: []
+  targetFilter: target.type="Gnoll" and Minion
+  targetType: target
+- name: Echoes of Laughter
+  description: Until the end of the encounter, the encounter map is encased in a soundscape of laughter and howling. Each enemy takes a bane on the first power roll they make each round. Whenever a gnoll is killed, this effect is suppressed until the start of the next round.
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    duration: eoe
+    ongoingEffect: 3c0e261c-528b-4855-acff-1d29c25ec4ab
+    ongoingEffectCustom: 3c0e261c-528b-4855-acff-1d29c25ec4ab
+  display:
     bgcolor:
       __usertype: LuaColor
+      a: 1
       h: 0.131249904632568
       s: 0.940820693969727
       v: 0.917003393173218
-      a: 1
-  implementation: 3
-  targetType: map
-  persistence: []
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  modifiers: []
+    brightness: 1
+    hueshift: 0
+    saturation: 1
   guid: 927d5327-341d-4b5c-897f-da49c71a0006
-  strain: []
+  iconid: 92a6d94b-65ab-49b6-b33e-0dae78f3a332
+  implementation: 3
+  modifiers: []
+  numTargets: "1"
+  persistence: []
+  range: 1
+  repeatTargets: false
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: "7"
-- __typeName: MaliceAbility
+  sourceReference:
+    __typeName: SourceReference
+    docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
+    page: 153
+  strain: []
+  targetFilter: Enemy
+  targetType: map
+- name: Blood Frenzy
+  description: ""
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    abilityType: standard
+    customAbility:
+      name: Invoked Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      behaviors: []
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: add18de5-c9c6-46f4-ab4c-767ff06e8800
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    promptWhenResolving: true
+    promptWhenResolvingText: Select the Gnolls in your preferred order to move and strike.
+    standardAbility: 1c423f02-73e6-4c44-8341-17d854f15fc5
+  channelIncrement: 3
+  channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  display:
+    bgcolor: "#ffffffff"
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  flavor: Up to two gnolls move up to their speed and make a free strike. For every 3 additional Malice spent on this feature, one additional gnoll can move and make a free strike.
+  guid: b6d92e5e-0d0f-4502-8dc5-7bdb087370b5
+  hasCustomIcon: true
+  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+  implementation: 4
+  modifiers: []
+  numTargets: 2 + 1*Charges
+  objectTarget: false
+  range: "99"
+  rangeTextOverride: Two Gnolls+ in the Encounter
+  repeatTargets: false
+  resourceCost: none
+  resourceNumber: 5 + 1*Charges
   sourceReference:
     __typeName: SourceReference
     docid: de3ec534-1487-4618-b70e-94f03c329edd
     page: 29
-  abilityType: none
-  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-  repeatTargets: false
-  display:
-    saturation: 1
-    brightness: 1
-    hueshift: 0
-    bgcolor: "#ffffffff"
-  resourceNumber: 5 + 1*Charges
-  rangeTextOverride: Two Gnolls+ in the Encounter
   strain: []
-  implementation: 4
-  channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  name: Blood Frenzy
-  targetType: target
-  resourceCost: none
-  range: "99"
-  behaviors:
-  - __typeName: ActivatedAbilityInvokeAbilityBehavior
-    customAbility:
-      __typeName: ActivatedAbility
-      name: Invoked Ability
-      abilityType: none
-      iconid: ui-icons/skills/1.png
-      repeatTargets: false
-      numTargets: "1"
-      display:
-        saturation: 1
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-      behaviors: []
-      targetType: self
-      modifiers: []
-      guid: add18de5-c9c6-46f4-ab4c-767ff06e8800
-      range: 1
-      description: ""
-    abilityType: standard
-    standardAbility: 1c423f02-73e6-4c44-8341-17d854f15fc5
-    promptWhenResolving: true
-    promptWhenResolvingText: Select the Gnolls in your preferred order to move and strike.
-  objectTarget: false
-  targetTextOverride: "2+"
   targetFilter: Target.Keywords has "Gnoll"
-  numTargets: 2 + 1*Charges
-  flavor: Up to two gnolls move up to their speed and make a free strike. For every 3 additional Malice spent on this feature, one additional gnoll can move and make a free strike.
-  hasCustomIcon: true
-  modifiers: []
-  guid: b6d92e5e-0d0f-4502-8dc5-7bdb087370b5
-  channelIncrement: 3
+  targetTextOverride: "2+"
+  targetType: target
+- name: Blood Rain
   description: ""
-- __typeName: MaliceAbility
-  range: 1
+  __typeName: MaliceAbility
   abilityType: none
-  iconid: ui-icons/skills/1.png
-  repeatTargets: false
-  strain: []
-  rangeTextOverride: All Enemies
-  implementation: 4
-  preDescription: Kis’sellak Pitchblood unleashes a torrent of blood that empowers his followers and hampers his enemies. All enemies make a **Presence test**.
-  resourceNumber: "7"
-  display:
-    saturation: 1
-    brightness: 1
-    hueshift: 0
-    bgcolor: "#ffffffff"
   behaviors:
   - __typeName: ActivatedAbilityPowerRollBehavior
-    resistanceAttr: prs
-    roll: 2d10 + Highest Characteristic
-    resistanceRoll: true
     isTest: false
+    resistanceAttr: prs
+    resistanceRoll: true
+    roll: 2d10 + Highest Characteristic
     tiers:
     - The target is weakened (save ends)
     - the target is weakened (EoT)
     - No effect.
-  targetFilter: Target = "Enemy"
-  targetTextOverride: Encounter Map
-  name: Blood Rain
+  display:
+    bgcolor: "#ffffffff"
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: 0ea923da-ace7-45fb-84b9-53f901536ad1
+  iconid: ui-icons/skills/1.png
+  implementation: 4
+  modifiers: []
+  numTargets: "1"
+  preDescription: Kis’sellak Pitchblood unleashes a torrent of blood that empowers his followers and hampers his enemies. All enemies make a **Presence test**.
+  range: 1
+  rangeTextOverride: All Enemies
+  repeatTargets: false
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: "7"
   sourceReference:
     __typeName: SourceReference
     docid: de3ec534-1487-4618-b70e-94f03c329edd
     page: 29
-  numTargets: "1"
-  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-  modifiers: []
-  guid: 0ea923da-ace7-45fb-84b9-53f901536ad1
+  strain: []
+  targetFilter: Target = "Enemy"
+  targetTextOverride: Encounter Map
   targetType: map
-  description: ""
-_table: MonsterGroup
 mtime: 1785377213966
+traits: []

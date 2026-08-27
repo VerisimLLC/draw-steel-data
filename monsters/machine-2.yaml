@@ -1,0 +1,259 @@
+id: f9166f6c-9975-45e2-89da-7bf4a1052b79
+description: Machine 2
+artist: null
+ctime: 1784227200000
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: e0946fe5-d98e-4543-bc4a-407534377572
+    portraitId: null
+    portraitOffset:
+      x: 0
+      y: 0
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: f9166f6c-9975-45e2-89da-7bf4a1052b79
+  createdTimestamp: 1784227200000
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: null
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 0
+    characterFeatures:
+    - name: Deactivate
+      description: Machine 2 must be completely destroyed. When it is, the Self Destruct ability is activated.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:fe2fd4af-3b8e-41cc-bbc8-7d3482739d78: true
+      guid: fe2fd4af-3b8e-41cc-bbc8-7d3482739d78
+      implementation: 0
+      implementationDetails: Reference text for the Director. The mechanical half of this (Self Destruct firing when Machine 2 is reduced to 0 Stamina) is automated by the Self Destruct trait below.
+      modifiers: []
+      source: Character Feature
+    - name: Self Destruct
+      description: When Machine 2 is destroyed, it uses its Self Destruct ability, which explodes in a 3 burst against each creature and object in the area.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:51073a9d-15dd-41e1-ac4b-57fb079a1fa6: true
+      guid: 51073a9d-15dd-41e1-ac4b-57fb079a1fa6
+      implementation: 3
+      implementationDetails: Fires automatically when Machine 2 drops to 0 Stamina, running the full Self Destruct power roll against everything in the 3 burst.
+      modifiers:
+      - name: Self Destruct
+        description: "**Trigger:** Machine 2 is destroyed."
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:51073a9d-15dd-41e1-ac4b-57fb079a1fa6: true
+        guid: 2fb723e8-e49e-4412-a0f4-b1f318d7eec3
+        source: Trait
+        sourceguid: 51073a9d-15dd-41e1-ac4b-57fb079a1fa6
+        triggeredAbility:
+          name: Self Destruct
+          description: "**Trigger:** Machine 2 is destroyed."
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + 2
+            tiers:
+            - 5 psychic damage
+            - 8 psychic damage
+            - 11 psychic damage
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            CharacterFeature:51073a9d-15dd-41e1-ac4b-57fb079a1fa6: true
+          guid: 03a65d06-426a-4581-a01b-ab0abf09ad07
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Area: true
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          persistence: []
+          range: 3
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: all
+          trigger: zerohitpoints
+    - name: Intel
+      description: A creature within 10 squares can spend 1 intel to know how the machine works.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:e74fef36-190b-4446-a748-87d5cc884998: true
+      guid: e74fef36-190b-4446-a748-87d5cc884998
+      implementation: 0
+      implementationDetails: Narrative. Intel is a party resource the Director tracks; there is no hook that lets a creature spend it against another creature's stat block to reveal information.
+      modifiers: []
+      source: Character Feature
+    cr: 3
+    creatureSize: "2"
+    damage_taken: 0
+    equipment: []
+    ev: 3
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Lifter
+      description: |-
+        An adjacent creature operates the machine as a maneuver.
+
+        **Effect:** The target is vertical slid 5.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: vertical slide 5
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 82aa7e4e-0adb-47f4-bf97-daa7b14ead55
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      implementationDetails: The whole effect is one rules-engine command, so the vertical slide is fully automated and respects stability and forced-movement restrictions. Note that the operator requirement (an adjacent creature spends their maneuver to work the controls) is not enforced - the Director activates the ability on the machine's own turn or on behalf of the operator.
+      keywords:
+        Psionic: true
+        Ranged: true
+      modifiers: []
+      numTargets: 1
+      objectTarget: true
+      range: 10
+      repeatTargets: false
+      targetTextOverride: One creature or object
+      targetType: target
+    - name: Self Destruct
+      description: |-
+        **Trigger:** Machine 2 is destroyed.
+
+        The machine detonates in a 3 burst.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 2
+        tiers:
+        - 5 psychic damage
+        - 8 psychic damage
+        - 11 psychic damage
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: ab25f5dc-af0d-4bdb-8b97-13bd9db0f3ea
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      implementationDetails: Manual copy of the trait-driven detonation, provided so the Director can fire the burst by hand if the machine is removed some other way. Area, power roll, and psychic damage are all automated.
+      keywords:
+        Area: true
+      modifiers: []
+      numTargets: 1
+      objectTarget: true
+      range: 3
+      repeatTargets: false
+      targetTextOverride: Each creature and object in the area
+      targetType: all
+    innateAttacks: []
+    keywords:
+      Object: true
+      Psionic: true
+    levelChoices: []
+    max_hitpoints: 20
+    max_hitpoints_roll: "20"
+    minion: false
+    monster_category: Monster
+    monster_type: Machine 2
+    movementSpeeds: []
+    notes:
+    - text: Machine 2 includes a seat and several large crystals, and is used for psionically lifting barrels.
+      title: Monster Notes
+    opportunityAttack: 0
+    resistances: []
+    resources: []
+    role: Fortification Controller
+    savingThrowRatings: []
+    skillRatings: []
+    stability: 0
+    traitNames: []
+    walkingSpeed: 0
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: 6eae8d38-4708-4d62-a75d-3395e45c848c
+mtime: 1785704793882
+ord: 0
+parentFolder: 718cecc3-3326-4c41-802b-eb492fbc1133

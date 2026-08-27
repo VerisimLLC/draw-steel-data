@@ -529,8 +529,11 @@ applyto: targets
 ```yaml
 __typeName: ActivatedAbilityInvokeAbilityBehavior
 applyto: targets
+rangeOrigin: parent_current_target  # Optional; center range on this squad attacker's parent target
 ```
 Contains an `AbilityInvocation` sub-object that specifies which ability to invoke and with what parameters. This is how abilities like "attack, then let an ally move and attack" are implemented.
+
+`rangeOrigin` can be `parent_primary_target` to center every nested invoke on the first parent target, or `parent_current_target` to center each nested invoke on the parent target paired with its current squad attacker. The latter falls back to the primary target outside a paired squad attack.
 
 #### ActivatedAbilityRelocateCreatureBehavior
 **Purpose**: Move/teleport a creature to a new location.

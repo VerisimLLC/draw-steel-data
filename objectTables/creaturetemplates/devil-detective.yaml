@@ -1,62 +1,37 @@
-__typeName: CharacterTemplate
 id: ef4a8f33-dc8a-430c-a80e-7104c849fae7
-tag: Retainer
 name: Devil Detective
+_table: creatureTemplates
+__typeName: CharacterTemplate
+ctime: 1786415818201
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeatureChoice
-    guid: 149d3c03-f90f-4cda-aa40-2fe7d2c1648c
+  - name: Level 4 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
     allowDuplicateChoices: false
-    name: Level 4 Retainer Advancement Ability
-    prerequisites:
-    - __typeName: CharacterPrerequisite
-      type: levelGained
-      guid: bf9d71ea-74d9-4d32-892a-3643c76db1b2
-      skill: "4"
+    guid: 149d3c03-f90f-4cda-aa40-2fe7d2c1648c
     inheritChoice:
     - __typeName: CompendiumReference
       targetPath: modifierInfo/features/1
-      targetid: 27b038d4-48f7-4792-b529-86518de6530d
       targetTable: creatureTemplates
+      targetid: 27b038d4-48f7-4792-b529-86518de6530d
     numChoices: 1
     options:
-    - __typeName: CharacterFeature
+    - name: Soul Sleuth
+      description: ""
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
       guid: cee441a0-e724-4b88-a6ea-38eab7959424
+      implementation: 4
       modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: cee441a0-e724-4b88-a6ea-38eab7959424
-        guid: 0c689896-05cb-4266-955e-c701838b02a3
-        behavior: activated
-        name: Soul Sleuth
-        resourceRefreshType: encounter
-        source: Creature Template
+      - name: Soul Sleuth
         description: ""
+        __typeName: CharacterModifier
         activatedAbility:
-          __typeName: ActivatedAbility
-          guid: cb86c018-e1d3-4205-9ea8-ac894652446c
-          targetType: cube
-          targetFilter: Enemy or object
-          keywords:
-            Area: true
-            Magic: true
-          range: "5"
-          sourceReference:
-            __typeName: SourceReference
-            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
-            page: 53
-          modifiers: []
-          description: Any enemy that was hiding in the area is revealed. The area is now difficult terrain for enemies
-          strain: []
-          radius: "4"
-          iconid: ui-icons/skills/1.png
-          domains: []
           name: Soul Sleuth
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
+          description: Any enemy that was hiding in the area is revealed. The area is now difficult terrain for enemies
+          __typeName: ActivatedAbility
+          abilityType: none
           actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
@@ -68,254 +43,242 @@ modifierInfo:
           - __typeName: ActivatedAbilityModifyPowerRollBehavior
             guid: 943f00c0-53e8-479d-b9f9-209be65f6e3f
             modifier:
+              name: Kill Minion
+              description: You may kill one or more of your minions to gain a double edge
               __typeName: CharacterModifier
-              guid: 6f5d97dc-0191-477f-b185-83d013ae93a8
+              activationCondition: false
+              behavior: power
               customTrigger:
-                __typeName: TriggeredAbility
-                guid: d4b91c2b-71b7-480a-999d-c001f119c26a
-                targetType: self
                 name: New Ability
-                iconid: ui-icons/skills/1.png
-                range: 1
-                repeatTargets: false
-                numTargets: "1"
                 description: ""
-                modifiers: []
-                trigger: d20roll
-                strain: []
+                __typeName: TriggeredAbility
                 abilityType: none
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
                 behaviors:
                 - __typeName: ActivatedAbilityAddNewTargetsBehavior
-                  targetMode: replace
                   promptText: Select one or more of your minions to kill
+                  targetMode: replace
                   targetingAbility:
+                    name: Choose Additional Targets
+                    description: ""
                     __typeName: ActivatedAbility
                     abilityType: none
-                    guid: c24c002d-7986-4bc9-8698-b716874af457
-                    targetType: target
-                    name: Choose Additional Targets
-                    objectTarget: false
-                    repeatTargets: false
-                    range: "50"
                     behaviors: []
-                    numTargets: Count Nearby Friends(50, "minion")
-                    description: ""
-                    modifiers: []
                     categorization: Hidden
-                    targetAllegiance: ally
-                    iconid: ui-icons/skills/1.png
                     display:
                       bgcolor: "#ffffffff"
                       brightness: 1
                       hueshift: 0
                       saturation: 1
+                    guid: c24c002d-7986-4bc9-8698-b716874af457
+                    iconid: ui-icons/skills/1.png
+                    modifiers: []
+                    numTargets: Count Nearby Friends(50, "minion")
+                    objectTarget: false
+                    range: "50"
+                    repeatTargets: false
+                    targetAllegiance: ally
                     targetFilter: Minion and Summoner = Caster
+                    targetType: target
                 - __typeName: ActivatedAbilityDestroyBehavior
-              name: Kill Minion
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: d4b91c2b-71b7-480a-999d-c001f119c26a
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                strain: []
+                targetType: self
+                trigger: d20roll
+              domains: []
+              guid: 6f5d97dc-0191-477f-b185-83d013ae93a8
+              hasCustomTrigger: true
               keywords: []
               modtype: double_edge
-              sourceguid: 943f00c0-53e8-479d-b9f9-209be65f6e3f
-              behavior: power
-              description: You may kill one or more of your minions to gain a double edge
               rollType: ability_power_roll
-              domains: []
-              activationCondition: false
-              hasCustomTrigger: true
+              sourceguid: 943f00c0-53e8-479d-b9f9-209be65f6e3f
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             conditions:
             - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
           - __typeName: ActivatedAbilityAuraBehavior
-            duration: eoe
             aura:
+              name: Soul Sleuth
+              description: The area if difficult terrain for enemies
               __typeName: Aura
+              applyto: enemies
               difficult_terrain: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
               guid: c945d4d5-1673-4713-81a9-c6fe8a53a854
               modifiers: []
-              applyto: enemies
-              name: Soul Sleuth
               objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              description: The area if difficult terrain for enemies
-          repeatTargets: false
-          numTargets: "1"
-          abilityType: none
-          usageLimitOptions:
-            resourceRefreshType: encounter
-            multicharge: false
-            charges: "1"
-            resourceid: 0c689896-05cb-4266-955e-c701838b02a3
-          implementation: 4
-          flavor: "**Special:** The detective can instantly kill one or more of their minions to give themself a double edge on the power roll."
-          targetTextOverride: Each enemy or object in the area
-          objectTarget: true
+            duration: eoe
           categorization: Ability
-      source: Creature Template
-      name: Soul Sleuth
-      description: ""
-      canHavePrerequisites: true
-      implementation: 4
-    - __typeName: CharacterFeature
-      guid: ac418491-0663-41ba-b179-2d691d33542a
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: ac418491-0663-41ba-b179-2d691d33542a
-        guid: 08b616f7-bba2-4abe-863b-50b7ac4ea377
-        behavior: activated
-        name: Summon Violents
-        resourceRefreshType: encounter
-        source: Creature Template
-        description: ""
-        activatedAbility:
-          __typeName: ActivatedAbility
-          guid: f0e07d50-5b9e-42d5-b9b1-4f4e6c881246
-          targetType: self
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains: []
+          flavor: "**Special:** The detective can instantly kill one or more of their minions to give themself a double edge on the power roll."
+          guid: cb86c018-e1d3-4205-9ea8-ac894652446c
+          iconid: ui-icons/skills/1.png
+          implementation: 4
           keywords:
+            Area: true
             Magic: true
-            Ranged: true
-          range: 1
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          radius: "4"
+          range: "5"
+          repeatTargets: false
           sourceReference:
             __typeName: SourceReference
             docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
             page: 53
-          modifiers: []
-          targetTextOverride: Special
           strain: []
-          iconid: ui-icons/skills/1.png
+          targetFilter: Enemy or object
+          targetTextOverride: Each enemy or object in the area
+          targetType: cube
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 0c689896-05cb-4266-955e-c701838b02a3
+        behavior: activated
+        guid: 0c689896-05cb-4266-955e-c701838b02a3
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: cee441a0-e724-4b88-a6ea-38eab7959424
+      source: Creature Template
+    - name: Summon Violents
+      description: ""
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: ac418491-0663-41ba-b179-2d691d33542a
+      implementation: 4
+      modifiers:
+      - name: Summon Violents
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
           name: Summon Violents
-          domains: []
-          rangeTextOverride: Ranged 10
           description: The detective summons 3 violents into unoccupied spaces within distance. On each of the detective’s turns, they direct the squad of violents to move and use a main action.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilitySummonBehavior
             allCreaturesTheSame: true
             bestiaryFilter: beast.name = "violents" and beast.Keywords has "summoner"
-            numSummons: "3"
-            shareSurgesWithSummoner: true
-            shareHeroicResourceWithSummoner: true
-            choosePlacement: true
             casterChoosesCreatures: false
+            choosePlacement: true
+            numSummons: "3"
+            shareHeroicResourceWithSummoner: true
+            shareSurgesWithSummoner: true
             summonRange: "10"
-          numTargets: "1"
           categorization: Ability
-          usageLimitOptions:
-            resourceRefreshType: encounter
-            multicharge: false
-            charges: "1"
-            resourceid: 08b616f7-bba2-4abe-863b-50b7ac4ea377
-          implementation: 4
-          abilityType: none
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          repeatTargets: false
-      source: Creature Template
-      name: Summon Violents
-      description: ""
-      canHavePrerequisites: true
-      implementation: 4
-  - __typeName: CharacterFeatureChoice
-    guid: 6a277e0b-15f4-4c2d-8369-ea46fff118d1
-    allowDuplicateChoices: false
-    name: Level 7 Retainer Advancement Ability
-    prerequisites:
-    - __typeName: CharacterPrerequisite
-      type: levelGained
-      guid: 6bb4f602-1290-45d2-9627-d73a02658498
-      skill: "7"
-    inheritChoice:
-    - __typeName: CompendiumReference
-      targetPath: modifierInfo/features/2
-      targetid: 27b038d4-48f7-4792-b529-86518de6530d
-      targetTable: creatureTemplates
-    numChoices: 1
-    options:
-    - __typeName: CharacterFeature
-      guid: f43d2e04-9024-4eb4-9faf-75cff7ade4dd
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: f43d2e04-9024-4eb4-9faf-75cff7ade4dd
-        guid: a54b57f4-9493-484b-b73c-91c39e6ced89
-        behavior: activated
-        name: Cleansing Flense
-        resourceRefreshType: encounter
-        source: Creature Template
-        description: ""
-        activatedAbility:
-          __typeName: ActivatedAbility
-          guid: 0def0257-3968-46ae-83b7-a4dd346b1ba6
-          targetType: all
-          targetFilter: Minion and Summoner = Caster
+          domains: []
+          guid: f0e07d50-5b9e-42d5-b9b1-4f4e6c881246
+          iconid: ui-icons/skills/1.png
+          implementation: 4
           keywords:
-            Area: true
             Magic: true
-          range: "5"
+            Ranged: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          rangeTextOverride: Ranged 10
+          repeatTargets: false
           sourceReference:
             __typeName: SourceReference
             docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
             page: 53
-          modifiers: []
-          categorization: Ability
           strain: []
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          targetTextOverride: Each of the detective’s minions in the area
-          domains: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          name: Cleansing Flense
-          iconid: ui-icons/skills/1.png
-          abilityType: none
-          numTargets: "1"
-          repeatTargets: false
+          targetTextOverride: Special
+          targetType: self
           usageLimitOptions:
-            resourceRefreshType: encounter
-            multicharge: false
             charges: "1"
-            resourceid: a54b57f4-9493-484b-b73c-91c39e6ced89
-          implementation: 3
-          targetAllegiance: ally
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 08b616f7-bba2-4abe-863b-50b7ac4ea377
+        behavior: activated
+        guid: 08b616f7-bba2-4abe-863b-50b7ac4ea377
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: ac418491-0663-41ba-b179-2d691d33542a
+      source: Creature Template
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      guid: bf9d71ea-74d9-4d32-892a-3643c76db1b2
+      skill: "4"
+      type: levelGained
+  - name: Level 7 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: 6a277e0b-15f4-4c2d-8369-ea46fff118d1
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/2
+      targetTable: creatureTemplates
+      targetid: 27b038d4-48f7-4792-b529-86518de6530d
+    numChoices: 1
+    options:
+    - name: Cleansing Flense
+      description: ""
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: f43d2e04-9024-4eb4-9faf-75cff7ade4dd
+      implementation: 3
+      modifiers:
+      - name: Cleansing Flense
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Cleansing Flense
           description: |-
             Each target moves up to their speed toward an ally. Each ally within line of effect of the detective can give one EoT or save ends effect they’re affected by to an adjacent minion and end that effect on themself.
             Until the end of the encounter, whenever an enemy kills a target and has P < Strong, they receive all EoT or save ends effects the target was affected by.
-          objectTarget: false
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            promptText: Move up to your speed towards an ally
-            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-            runOnController: true
+            abilityType: standard
             customAbility:
-              __typeName: ActivatedAbility
-              guid: 9c3d597d-530e-4eba-8d5b-67500751973e
-              targetType: self
               name: Invoked Ability
-              range: 1
-              repeatTargets: false
-              numTargets: "1"
-              modifiers: []
               description: ""
-              iconid: ui-icons/skills/1.png
+              __typeName: ActivatedAbility
               abilityType: none
+              behaviors: []
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              behaviors: []
-            abilityType: standard
+              guid: 9c3d597d-530e-4eba-8d5b-67500751973e
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            promptText: Move up to your speed towards an ally
+            runOnController: true
+            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             duration: eoe
             ongoingEffect: bcc9bf15-d0e6-4aad-a658-89c41943b8aa
@@ -323,137 +286,137 @@ modifierInfo:
           - __typeName: ActivatedAbilityAddNewTargetsBehavior
             targetMode: replace
             targetingAbility:
-              __typeName: ActivatedAbility
-              repeatTargets: false
-              guid: 9f18a8f0-bced-4d4e-80fb-ccebc6c33036
-              targetType: all
-              targetFilter: not Minion and ConditionCount > 0
-              objectTarget: false
-              abilityType: none
-              range: "1"
-              behaviors: []
-              numTargets: "1"
-              description: ""
-              modifiers: []
-              categorization: Hidden
-              targetAllegiance: ally
-              iconid: ui-icons/skills/1.png
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
               name: Choose Additional Targets
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            standardAbilityParams:
-              Summonerid: "<<Caster.Id>>"
-            promptText: You may confer an condition onto an adjacent minion
-            customAbility:
-              __typeName: ActivatedAbility
-              guid: fc79f328-2bf3-47a1-bfb1-4668aeb323cd
-              targetType: target
-              targetFilter: Minion and Summoner.id = <<Summonerid>>
-              range: 1
-              modifiers: []
-              categorization: Hidden
-              strain: []
-              iconid: ui-icons/skills/1.png
-              name: Invoked Ability
-              repeatTargets: false
-              numTargets: "1"
               description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              categorization: Hidden
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              targetAllegiance: ally
-              abilityType: none
+              guid: 9f18a8f0-bced-4d4e-80fb-ccebc6c33036
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
               objectTarget: false
+              range: "1"
+              repeatTargets: false
+              targetAllegiance: ally
+              targetFilter: not Minion and ConditionCount > 0
+              targetType: all
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityPurgeEffectsBehavior
-                mode: conditions_and_effects
-                conferTo: Target
-                targetDuration: save|eot
                 applyto: caster
                 conditions: []
+                conferTo: Target
+                mode: conditions_and_effects
                 purgeType: chosen
-      name: Cleansing Flense
-      implementation: 3
-      description: ""
-      canHavePrerequisites: true
-      source: Creature Template
-  - __typeName: CharacterFeatureChoice
-    guid: 8730a2d0-1607-4536-a491-27fa075112b6
-    allowDuplicateChoices: false
-    name: Level 10 Retainer Advancement Ability
-    prerequisites:
-    - __typeName: CharacterPrerequisite
-      type: levelGained
-      guid: eb3111c4-ecfd-4080-b1ea-3d96b8e15e2d
-      skill: "10"
-    inheritChoice:
-    - __typeName: CompendiumReference
-      targetPath: modifierInfo/features/3
-      targetid: 27b038d4-48f7-4792-b529-86518de6530d
-      targetTable: creatureTemplates
-    numChoices: 1
-    options:
-    - __typeName: CharacterFeature
-      guid: 690a5c34-5f23-4875-8e70-af21ee194121
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 690a5c34-5f23-4875-8e70-af21ee194121
-        guid: 86df1fcf-4b6e-4971-92a2-574761abe5ba
-        behavior: activated
-        name: Blightwash
-        resourceRefreshType: encounter
-        source: Creature Template
-        description: ""
-        activatedAbility:
-          __typeName: ActivatedAbility
-          guid: 2e591ada-952d-4043-b758-e60923b09a04
-          targetType: target
-          targetFilter: Minion and Summoner = Caster
-          keywords:
-            Area: true
-            Magic: true
-          range: "5"
-          sourceReference:
-            __typeName: SourceReference
-            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
-            page: 53
-          modifiers: []
+                targetDuration: save|eot
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: fc79f328-2bf3-47a1-bfb1-4668aeb323cd
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetAllegiance: ally
+              targetFilter: Minion and Summoner.id = <<Summonerid>>
+              targetType: target
+            promptText: You may confer an condition onto an adjacent minion
+            standardAbilityParams:
+              Summonerid: "<<Caster.Id>>"
           categorization: Ability
-          strain: []
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          domains: []
-          name: Blightwash
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          description: The area within 2 squares of the exploded minion is covered in blight until the end of the encounter. Abilities used against an enemy in the area have an edge.
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          usageLimitOptions:
-            resourceRefreshType: encounter
-            multicharge: false
-            charges: "1"
-            resourceid: 86df1fcf-4b6e-4971-92a2-574761abe5ba
-          preDescription: The minion explodes. Make a power roll, targeting each enemy within 2 squares of the target.
-          implementation: 4
-          targetAllegiance: ally
+          domains: []
+          guid: 0def0257-3968-46ae-83b7-a4dd346b1ba6
           iconid: ui-icons/skills/1.png
+          implementation: 3
+          keywords:
+            Area: true
+            Magic: true
+          modifiers: []
+          numTargets: "1"
           objectTarget: false
+          range: "5"
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
+            page: 53
+          strain: []
+          targetAllegiance: ally
+          targetFilter: Minion and Summoner = Caster
+          targetTextOverride: Each of the detective’s minions in the area
+          targetType: all
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: a54b57f4-9493-484b-b73c-91c39e6ced89
+        behavior: activated
+        guid: a54b57f4-9493-484b-b73c-91c39e6ced89
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: f43d2e04-9024-4eb4-9faf-75cff7ade4dd
+      source: Creature Template
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      guid: 6bb4f602-1290-45d2-9627-d73a02658498
+      skill: "7"
+      type: levelGained
+  - name: Level 10 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: 8730a2d0-1607-4536-a491-27fa075112b6
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/3
+      targetTable: creatureTemplates
+      targetid: 27b038d4-48f7-4792-b529-86518de6530d
+    numChoices: 1
+    options:
+    - name: Blightwash
+      description: ""
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: 690a5c34-5f23-4875-8e70-af21ee194121
+      implementation: 4
+      modifiers:
+      - name: Blightwash
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Blightwash
+          description: The area within 2 squares of the exploded minion is covered in blight until the end of the encounter. Abilities used against an enemy in the area have an edge.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
-            roll: 2d10 + Highest Characteristic
-            target_proximity_range: "2"
             applyto: proximity_only
             filterTarget: not Friends(Caster, Target)
+            roll: 2d10 + Highest Characteristic
+            target_proximity_range: "2"
             tiers:
             - 5 corruption damage; M < Weak, weakened (save ends)
             - 8 corruption damage; M < Average, weakened (save ends)
@@ -461,102 +424,139 @@ modifierInfo:
           - __typeName: ActivatedAbilityRemoveCreatureBehavior
             leavesCorpse: true
           - __typeName: ActivatedAbilityAuraBehavior
-            duration: eoe
             aliveafterdeath: true
-            grow: 2
             aura:
+              name: Blightwash
+              description: Abilities used against an enemy in the area have an edge.
               __typeName: Aura
+              applyto: enemies
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
               guid: f76a682d-e768-4e59-9749-788666c533da
               modifiers:
-              - __typeName: CharacterModifier
+              - name: Blightwash
+                description: Abilities used against an enemy in the area have an edge.
+                __typeName: CharacterModifier
+                activationAfterRoll: false
+                activationCondition: true
+                behavior: power
                 guid: 10e47c52-f762-41bd-a948-0114bc82e82e
-                name: Blightwash
                 keywords: []
                 modtype: edge
-                sourceguid: f76a682d-e768-4e59-9749-788666c533da
-                activationAfterRoll: false
-                behavior: power
-                source: Aura
                 rollType: enemy_ability_power_roll
-                description: Abilities used against an enemy in the area have an edge.
-                activationCondition: true
-              applyto: enemies
-              description: Abilities used against an enemy in the area have an edge.
+                source: Aura
+                sourceguid: f76a682d-e768-4e59-9749-788666c533da
               objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
-              display:
-                hueshift: 0
-                brightness: 1
-                bgcolor: "#ffffffff"
-                saturation: 1
-              name: Blightwash
-      implementation: 4
-      source: Creature Template
-      description: ""
-      canHavePrerequisites: true
-      name: Blightwash
-    - __typeName: CharacterFeature
-      guid: 61bd6fe9-8598-44db-8775-05d69ad3bfa3
-      modifiers:
-      - __typeName: CharacterModifier
-        sourceguid: 61bd6fe9-8598-44db-8775-05d69ad3bfa3
-        guid: d5e7e0ee-31f4-4596-959c-8d02c963475d
-        behavior: activated
-        name: Summon Gorrres
-        resourceRefreshType: encounter
-        source: Creature Template
-        description: ""
-        activatedAbility:
-          __typeName: ActivatedAbility
-          guid: ed4a3a48-a27f-443d-9ae0-bd1ad7838937
-          targetType: self
-          keywords:
-            Magic: true
-            Ranged: true
-          range: 1
-          sourceReference:
-            __typeName: SourceReference
-            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
-            page: 53
-          modifiers: []
+            duration: eoe
+            grow: 2
           categorization: Ability
-          strain: []
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          name: Summon Gorrres
-          domains: []
-          rangeTextOverride: Ranged 10
-          targetTextOverride: Special
-          repeatTargets: false
-          numTargets: "1"
-          description: The detective summons two gorrres into unoccupied spaces within distance. On each of the detective’s turns, they direct the squad of gorrres to move and use a main action.
-          usageLimitOptions:
-            resourceRefreshType: encounter
-            multicharge: false
-            charges: "1"
-            resourceid: d5e7e0ee-31f4-4596-959c-8d02c963475d
-          implementation: 4
-          behaviors:
-          - __typeName: ActivatedAbilitySummonBehavior
-            allCreaturesTheSame: true
-            bestiaryFilter: beast.name = "gorrres" and beast.Keywords has "summoner"
-            numSummons: "2"
-            shareSurgesWithSummoner: true
-            choosePlacement: true
-            summonRange: "10"
-            shareHeroicResourceWithSummoner: true
-            casterChoosesCreatures: false
-          iconid: ui-icons/skills/1.png
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          abilityType: none
-      implementation: 4
+          domains: []
+          guid: 2e591ada-952d-4043-b758-e60923b09a04
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          preDescription: The minion explodes. Make a power roll, targeting each enemy within 2 squares of the target.
+          range: "5"
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
+            page: 53
+          strain: []
+          targetAllegiance: ally
+          targetFilter: Minion and Summoner = Caster
+          targetType: target
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 86df1fcf-4b6e-4971-92a2-574761abe5ba
+        behavior: activated
+        guid: 86df1fcf-4b6e-4971-92a2-574761abe5ba
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: 690a5c34-5f23-4875-8e70-af21ee194121
       source: Creature Template
+    - name: Summon Gorrres
       description: ""
+      __typeName: CharacterFeature
       canHavePrerequisites: true
-      name: Summon Gorrres
-ctime: 1786414061203
-prerequisite: Retainer
+      guid: 61bd6fe9-8598-44db-8775-05d69ad3bfa3
+      implementation: 4
+      modifiers:
+      - name: Summon Gorrres
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Summon Gorrres
+          description: The detective summons two gorrres into unoccupied spaces within distance. On each of the detective’s turns, they direct the squad of gorrres to move and use a main action.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            allCreaturesTheSame: true
+            bestiaryFilter: beast.name = "gorrres" and beast.Keywords has "summoner"
+            casterChoosesCreatures: false
+            choosePlacement: true
+            numSummons: "2"
+            shareHeroicResourceWithSummoner: true
+            shareSurgesWithSummoner: true
+            summonRange: "10"
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains: []
+          guid: ed4a3a48-a27f-443d-9ae0-bd1ad7838937
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Magic: true
+            Ranged: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          rangeTextOverride: Ranged 10
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
+            page: 53
+          strain: []
+          targetTextOverride: Special
+          targetType: self
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: d5e7e0ee-31f4-4596-959c-8d02c963475d
+        behavior: activated
+        guid: d5e7e0ee-31f4-4596-959c-8d02c963475d
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: 61bd6fe9-8598-44db-8775-05d69ad3bfa3
+      source: Creature Template
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      guid: eb3111c4-ecfd-4080-b1ea-3d96b8e15e2d
+      skill: "10"
+      type: levelGained
 mtime: 1786415818201
-_table: creatureTemplates
+prerequisite: Retainer
+tag: Retainer

@@ -1,65 +1,67 @@
-__typeName: CharacterTemplate
-name: Vampire Rebel
-tag: retainer
 id: 8619cfe1-de9b-4ca2-9cb1-4a89b29700d7
+name: Vampire Rebel
+_table: creatureTemplates
+__typeName: CharacterTemplate
+ctime: 1786409392395
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeatureChoice
+  - name: Level 7 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    guid: e1cf6d6f-ef85-4229-a962-ec6cd33f7d10
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/2
+      targetTable: creatureTemplates
+      targetid: 364814a3-bf9d-47d8-8f33-ea4971bea180
+    numChoices: 1
     options:
-    - __typeName: CharacterFeature
-      source: Creature Template
-      name: Blood Surge
+    - name: Blood Surge
       description: ""
-      implementation: 4
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
       guid: 0ffb1228-7420-4175-9056-b68051bbf98c
+      implementation: 4
       modifiers:
-      - __typeName: CharacterModifier
-        source: Creature Template
-        sourceguid: 0ffb1228-7420-4175-9056-b68051bbf98c
-        name: Blood Surge
+      - name: Blood Surge
         description: ""
-        behavior: activated
-        guid: 50bc47d5-0603-48aa-a1c4-a530c7012e13
-        resourceRefreshType: encounter
+        __typeName: CharacterModifier
         activatedAbility:
+          name: Blood Surge
+          description: Before the strike, the vampire rebel shifts up to their speed. If the vampire rebel has temporary Stamina, they can expend it, dealing an extra 2 corruption damage for each point of temporary Stamina expended this way.
           __typeName: ActivatedAbility
-          categorization: Ability
-          usageLimitOptions:
-            multicharge: false
-            charges: "1"
-            resourceid: 50bc47d5-0603-48aa-a1c4-a530c7012e13
-            resourceRefreshType: encounter
-          targetType: emptyspace
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityRelocateCreatureBehavior
             movementType: shift
           - __typeName: ActivatedAbilityAddNewTargetsBehavior
-            targetMode: replace
             promptText: Select Target
+            targetMode: replace
             targetingAbility:
-              __typeName: ActivatedAbility
-              categorization: Hidden
-              repeatTargets: false
               name: Choose Additional Targets
               description: ""
-              modifiers: []
-              targetType: target
-              behaviors: []
+              __typeName: ActivatedAbility
               abilityType: none
+              behaviors: []
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 6ee7c11e-9a85-4e31-82ea-27f8dacab12b
               iconid: ui-icons/skills/1.png
               keywords:
                 Melee: true
-                Weapon: true
                 Strike: true
-              display:
-                saturation: 1
-                bgcolor: "#ffffffff"
-                hueshift: 0
-                brightness: 1
-              guid: 6ee7c11e-9a85-4e31-82ea-27f8dacab12b
-              range: "1"
+                Weapon: true
+              modifiers: []
               numTargets: "1"
+              range: "1"
+              repeatTargets: false
+              targetType: target
           - __typeName: ActivatedAbilityPowerRollBehavior
             roll: 2d10 + Highest Characteristic
             tiers:
@@ -67,117 +69,114 @@ modifierInfo:
             - 11 damage; M < Average, bleeding (save ends)
             - 16 damage; M < Strong, bleeding (save ends)
           - __typeName: ActivatedAbilityModifyPowerRollBehavior
+            guid: a37f31db-550c-4e8b-a8ec-c85a49ee5f12
             modifier:
-              __typeName: CharacterModifier
               name: Expend Temp Stamina
               description: Deal an extra 2 corruption damage for each point of temporary Stamina expended this way.
+              __typeName: CharacterModifier
+              activationCondition: false
+              behavior: power
               customTrigger:
-                __typeName: TriggeredAbility
-                repeatTargets: false
                 name: New Ability
                 description: ""
-                modifiers: []
-                targetType: self
+                __typeName: TriggeredAbility
                 abilityType: none
                 behaviors:
                 - __typeName: ActivatedAbilityDamageBehavior
                   roll: 1d6
-                range: 1
-                iconid: ui-icons/skills/1.png
-                numTargets: "1"
                 display:
-                  saturation: 1
                   bgcolor: "#ffffffff"
-                  hueshift: 0
                   brightness: 1
+                  hueshift: 0
+                  saturation: 1
                 guid: fa1ebbbd-5942-4b63-b527-3bdb92e4a3eb
-                trigger: d20roll
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
                 strain: []
-              activationCondition: false
-              behavior: power
+                targetType: self
+                trigger: d20roll
               damageModifier: Temporary Stamina * 2
-              hasCustomTrigger: true
-              modtype: none
-              domains: []
-              keywords: []
-              sourceguid: a37f31db-550c-4e8b-a8ec-c85a49ee5f12
-              guid: 003ed144-0a67-45e5-a9a9-c92ead0abe05
               damageModifierType: corruption
+              domains: []
+              guid: 003ed144-0a67-45e5-a9a9-c92ead0abe05
+              hasCustomTrigger: true
+              keywords: []
+              modtype: none
               rollType: ability_power_roll
-            guid: a37f31db-550c-4e8b-a8ec-c85a49ee5f12
-          numTargets: "1"
-          range: Walking Speed
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          strain: []
-          repeatTargets: false
-          name: Blood Surge
+              sourceguid: a37f31db-550c-4e8b-a8ec-c85a49ee5f12
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
           domains: []
-          abilityType: none
-          modifiers: []
           guid: ec8df43e-205b-4755-b48a-037c57e3b6db
+          iconid: ui-icons/skills/1.png
           implementation: 4
-          description: Before the strike, the vampire rebel shifts up to their speed. If the vampire rebel has temporary Stamina, they can expend it, dealing an extra 2 corruption damage for each point of temporary Stamina expended this way.
+          implementationDetails: ""
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          range: Walking Speed
+          repeatTargets: false
           sourceReference:
             __typeName: SourceReference
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
             page: 376
-          iconid: ui-icons/skills/1.png
-          keywords:
-            Melee: true
-            Weapon: true
-            Strike: true
-          display:
-            saturation: 1
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
+          strain: []
+          targetType: emptyspace
           targeting: pathfind
-          implementationDetails: ""
-          objectTarget: false
-      canHavePrerequisites: true
-    inheritChoice:
-    - __typeName: CompendiumReference
-      targetTable: creatureTemplates
-      targetid: 364814a3-bf9d-47d8-8f33-ea4971bea180
-      targetPath: modifierInfo/features/2
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: 50bc47d5-0603-48aa-a1c4-a530c7012e13
+        behavior: activated
+        guid: 50bc47d5-0603-48aa-a1c4-a530c7012e13
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: 0ffb1228-7420-4175-9056-b68051bbf98c
+      source: Creature Template
     prerequisites:
     - __typeName: CharacterPrerequisite
       guid: c56bb9bd-368e-4fb5-af0e-f4853c3d1a87
-      type: levelGained
       skill: "7"
-    numChoices: 1
-    guid: e1cf6d6f-ef85-4229-a962-ec6cd33f7d10
-    name: Level 7 Retainer Advancement Ability
+      type: levelGained
+  - name: Level 10 Retainer Advancement Ability
+    __typeName: CharacterFeatureChoice
     allowDuplicateChoices: false
-  - __typeName: CharacterFeatureChoice
+    guid: 66ab7503-f7e9-4e44-80ba-446c83fed744
+    inheritChoice:
+    - __typeName: CompendiumReference
+      targetPath: modifierInfo/features/3
+      targetTable: creatureTemplates
+      targetid: 364814a3-bf9d-47d8-8f33-ea4971bea180
+    numChoices: 1
     options:
-    - __typeName: CharacterFeature
-      source: Creature Template
-      name: Exsanguination
+    - name: Exsanguination
       description: ""
-      implementation: 4
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
       guid: bef43b31-b74b-4c08-9fb3-ba715a7c2321
+      implementation: 4
       modifiers:
-      - __typeName: CharacterModifier
-        source: Creature Template
-        sourceguid: bef43b31-b74b-4c08-9fb3-ba715a7c2321
-        name: Exsanguination
+      - name: Exsanguination
         description: ""
-        behavior: activated
-        guid: fe81815f-e482-4f19-85b9-04b3d9e78476
-        resourceRefreshType: encounter
+        __typeName: CharacterModifier
         activatedAbility:
+          name: Exsanguination
+          description: ""
           __typeName: ActivatedAbility
-          categorization: Ability
-          usageLimitOptions:
-            multicharge: false
-            charges: "1"
-            resourceid: fe81815f-e482-4f19-85b9-04b3d9e78476
-            resourceRefreshType: encounter
-          sourceReference:
-            __typeName: SourceReference
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-            page: 376
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
             roll: 2d10 + Highest Characteristic
@@ -185,47 +184,49 @@ modifierInfo:
             - 7 corruption damage; M < Weak, bleeding (save ends)
             - 11 corruption damage; M < Average, bleeding (save ends)
             - 16 corruption damage; M < Strong, bleeding (save ends)
-          numTargets: "1"
-          targetType: cube
-          range: 1
-          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-          targetTextOverride: Each enemy in the area
-          abilityType: none
-          name: Exsanguination
-          domains: []
-          radius: "3"
-          modifiers: []
-          implementation: 4
-          repeatTargets: false
-          targetAllegiance: enemy
-          description: ""
-          iconid: ui-icons/skills/1.png
-          keywords:
-            Magic: true
-            Area: true
+          categorization: Ability
           display:
-            saturation: 1
             bgcolor: "#ffffffff"
-            hueshift: 0
             brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains: []
           guid: c0c6968e-e00e-44f5-89b2-988458f637b0
-          strain: []
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
+          modifiers: []
+          numTargets: "1"
           objectTarget: false
-      canHavePrerequisites: true
-    inheritChoice:
-    - __typeName: CompendiumReference
-      targetTable: creatureTemplates
-      targetid: 364814a3-bf9d-47d8-8f33-ea4971bea180
-      targetPath: modifierInfo/features/3
+          radius: "3"
+          range: 1
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 376
+          strain: []
+          targetAllegiance: enemy
+          targetTextOverride: Each enemy in the area
+          targetType: cube
+          usageLimitOptions:
+            charges: "1"
+            multicharge: false
+            resourceRefreshType: encounter
+            resourceid: fe81815f-e482-4f19-85b9-04b3d9e78476
+        behavior: activated
+        guid: fe81815f-e482-4f19-85b9-04b3d9e78476
+        resourceRefreshType: encounter
+        source: Creature Template
+        sourceguid: bef43b31-b74b-4c08-9fb3-ba715a7c2321
+      source: Creature Template
     prerequisites:
     - __typeName: CharacterPrerequisite
       guid: 60da983b-e473-4119-95f8-21ff214d8688
-      type: levelGained
       skill: "10"
-    numChoices: 1
-    guid: 66ab7503-f7e9-4e44-80ba-446c83fed744
-    name: Level 10 Retainer Advancement Ability
-    allowDuplicateChoices: false
+      type: levelGained
 mtime: 1786409392395
 prerequisite: Retainer
-_table: creatureTemplates
+tag: retainer

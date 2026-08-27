@@ -1,69 +1,56 @@
+id: f0f55060-3831-4373-8dab-cf3fd0c55f9e
+description: Dwarf Engineer
+artist: null
+ctime: 1741590326899
+hidden: true
 info:
-  locInfo:
-    mountedOn: null
-    mountedOnObject: null
-    mountedSaddle: 0
-    floor: null
-    map: null
-    loc: []
-    pos:
-      x: 0
-      y: 0
-    path: null
-    summonLocCleared: null
-    summonLocId: null
-    summonLoc: []
-    teleportAnimId: null
-    teleportStyle: ""
-    updateid: 0
-    rotation: 0
   appearance:
-    portraitId: 9847441b-5155-4de5-9528-874c825d77a3
-    offtokenPortraitId: df1417bc-7b16-49de-a11b-66211c726f38
-    portraitFrameId: ac7e5d6a-bddf-43c3-83ee-f962e7094076
-    portraitRibbon: null
-    backgroundId: 0bbd339f-2a1e-4ea3-b61c-22b1caf7b1da
     anthem: null
     anthemVolume: 1
-    tokenScaling: 1
-    tokenZoom: 0.3440925
-    portraitOffset:
-      x: -0.04977894
-      y: 0.09952153
-    frameHueShift: 0.7027591
-    frameSaturation: 0.3420395
-    frameBrightness: 0.3357927
-    popoutScale: 0.49
+    backgroundId: 0bbd339f-2a1e-4ea3-b61c-22b1caf7b1da
     characterName: null
     characterNamePrivate: false
     flip: false
+    frameBrightness: 0.3357927
+    frameHueShift: 0.7027591
+    frameSaturation: 0.3420395
+    offtokenPortraitId: df1417bc-7b16-49de-a11b-66211c726f38
+    popoutScale: 0.49
+    portraitFrameId: ac7e5d6a-bddf-43c3-83ee-f962e7094076
+    portraitId: 9847441b-5155-4de5-9528-874c825d77a3
+    portraitOffset:
+      x: -0.04977894
+      y: 0.09952153
+    portraitRibbon: null
     saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 0.3440925
+  bestiaryId: f0f55060-3831-4373-8dab-cf3fd0c55f9e
+  createdTimestamp: 1726301040866
   disguise: null
-  settings:
-    canRotate: false
-    useLight: false
-    lightColor:
-      r: 1
-      g: 1
-      b: 1
-      a: 1
-    lightIntensity: 0.1
-    lightRadius: 10
-    lightFalloff: 0.1
-    lightAngle: 360
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
   mountedBy: {}
-  updateid: 4cb106ac-5b60-486a-b154-32a7f5ecb65d
+  ownerId: ""
+  partyid: null
   properties:
     __typeName: monster
-    monster_type: Dwarf Engineer
-    skillRatings: []
-    inflictedConditions: []
-    opportunityAttack: 3
-    max_hitpoints_roll: "36"
-    levelChoices: []
-    monster_category: Monster
-    movementSpeeds: []
-    innateAttacks: []
     attributes:
       agl:
         id: agl
@@ -71,30 +58,39 @@ info:
       inu:
         id: inu
         baseValue: 1
-      rea:
-        id: rea
+      mgt:
+        id: mgt
         baseValue: 0
       prs:
         id: prs
         baseValue: 0
-      mgt:
-        id: mgt
+      rea:
+        id: rea
         baseValue: 0
+    availableTriggers: []
     characterFeatures:
-    - __typeName: CharacterFeature
-      source: Trait
+    - name: We Have a Quota!
+      description: If the engineer applies the slowed condition to a target who is already slowed or grabbed, the target becomes restrained (EoT) and the slowed or grabbed condition ends.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:623c885f-8ff3-49f6-a092-fc3f2d9af5ae: true
+      guid: 623c885f-8ff3-49f6-a092-fc3f2d9af5ae
+      implementation: 3
       modifiers:
-      - __typeName: CharacterModifier
+      - name: We Have a Quota!
+        description: If a target made slowed by the reel winch is already grabbed or slowed, the grabbed and slowed conditions end and the target is restrained (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:623c885f-8ff3-49f6-a092-fc3f2d9af5ae: true
+        guid: efef7685-3778-4b24-bf4c-e4590537e665
         source: Trait
+        sourceguid: 623c885f-8ff3-49f6-a092-fc3f2d9af5ae
         triggeredAbility:
-          __typeName: TriggeredAbility
-          targetType: subject
-          repeatTargets: false
-          abilityType: none
           name: We Have a Quota!
-          subject: other
-          numTargets: "1"
-          persistence: []
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             chatMessage: Grabbed and Slowed ends
@@ -102,168 +98,34 @@ info:
             - 70504ebe-3899-41d3-9f60-74b52ce35e39
             - 68f455f5-135f-495c-822d-40d809d2b15f
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: save_ends
             ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
             ongoingEffectCustom: false
-            duration: save_ends
-          description: ""
           conditionFormula: target.Conditions has "slowed" or target.conditions has "grabbed" and ConditionCaster("slowed") = self
-          modifiers: []
           display:
-            hueshift: 0
             bgcolor: "#ffffffff"
-            saturation: 1
             brightness: 1
-          whenActive: combat
-          trigger: inflictcondition
-          subjectRange: "25"
-          strain: []
-          iconid: ui-icons/skills/1.png
+            hueshift: 0
+            saturation: 1
           guid: e3ee06c8-5a53-4aea-83cb-ae4a379cdd6b
-          range: 1
-        guid: efef7685-3778-4b24-bf4c-e4590537e665
-        behavior: trigger
-        name: We Have a Quota!
-        description: If a target made slowed by the reel winch is already grabbed or slowed, the grabbed and slowed conditions end and the target is restrained (save ends).
-        sourceguid: 623c885f-8ff3-49f6-a092-fc3f2d9af5ae
-        domains:
-          CharacterFeature:623c885f-8ff3-49f6-a092-fc3f2d9af5ae: true
-      implementation: 3
-      domains:
-        CharacterFeature:623c885f-8ff3-49f6-a092-fc3f2d9af5ae: true
-      description: If the engineer applies the slowed condition to a target who is already slowed or grabbed, the target becomes restrained (EoT) and the slowed or grabbed condition ends.
-      guid: 623c885f-8ff3-49f6-a092-fc3f2d9af5ae
-      name: We Have a Quota!
-    savingThrowRatings: []
-    availableTriggers: []
-    innateActivatedAbilities:
-    - __typeName: ActivatedAbility
-      targetType: target
-      repeatTargets: false
-      abilityType: none
-      keywords:
-        Weapon: true
-        Strike: true
-        Ranged: true
-      name: Snaring Crossbow
-      numTargets: 1
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        tiers:
-        - 3 damage
-        - 5 damage; slowed (EoT)
-        - 7 damage; restrained (EoT)
-        roll: 2d10 + 1
-      modifiers: []
-      categorization: Signature Ability
-      implementation: 4
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      guid: 7c7a371f-62c8-4a26-8f59-a026aada778d
-      flavor: ""
-      description: ""
-      iconid: ui-icons/skills/1.png
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 10
-    - __typeName: ActivatedAbility
-      display:
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
-        brightness: 1
-      repeatTargets: false
-      effectImplemented: false
-      abilityType: none
-      keywords:
-        Weapon: true
-        Ranged: true
-      name: Reel them In
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      implementation: 3
-      numTargets: 3
-      persistence: []
-      behaviors:
-      - __typeName: ActivatedAbilityApplyAbilityDurationEffect
-        name: Ability Duration Effect
-        filterTarget: target.conditions has "restrained" or target.Conditions has "slowed"
-        momentaryEffect:
-          __typeName: CharacterOngoingEffect
-          source: Ongoing Effect
-          display:
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-          description: If the target is Restrained or Slowed, an additional 2 is added to the forced movement of this ability.
-          modifiers:
-          - __typeName: CharacterModifier
-            source: Ongoing Effect
-            value: 2
-            attribute: ba15f0e1-b50c-4324-af08-ce8f2b8f2cf0
-            behavior: attribute
-            name: Increase Forced Movement
-            description: If the target is Restrained or Slowed, an additional 2 is added to the forced movement of this ability.
-            guid: 18a550d1-c5b9-43ad-9cbb-6b1f9ac618fb
-            sourceguid: 84005da1-96be-4bd7-b04c-bfe72cec3635
-          - __typeName: CharacterModifier
-            source: Ongoing Effect
-            behavior: attribute
-            description: If the target is Restrained or Slowed, an additional 2 is added to the forced movement of this ability.
-            filterCondition: ConditionCaster("Restrained").type = "Dwarf"
-            value: -1
-            attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
-            name: Increase Forced Movement
-            guid: c5ac43f7-df69-4c4b-9e90-b05b7559e875
-            sourceguid: 84005da1-96be-4bd7-b04c-bfe72cec3635
-          name: Increase Forced Movement
           iconid: ui-icons/skills/1.png
-          guid: 84005da1-96be-4bd7-b04c-bfe72cec3635
-          id: 84005da1-96be-4bd7-b04c-bfe72cec3635
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        filterTarget: ""
-        abilityType: standard
-        customAbility:
-          __typeName: ActivatedAbility
-          display:
-            hueshift: 0
-            bgcolor: "#ffffffff"
-            saturation: 1
-            brightness: 1
-          numTargets: "1"
-          repeatTargets: false
-          behaviors: []
           modifiers: []
-          abilityType: none
-          targetType: self
-          description: ""
-          name: Invoked Ability
-          iconid: ui-icons/skills/1.png
-          guid: 377117e8-0719-4e4c-85f9-fa21d3dad5fd
+          numTargets: "1"
+          persistence: []
           range: 1
-        standardAbility: 3ecc4aca-2df1-42d0-b535-8a943fa5f0e9
-        autoTarget: false
-        standardAbilityParams:
-          range: "8"
-        promptText: Choose which target to pull.
-        promptWhenResolving: true
-      modifiers: []
-      categorization: Heroic Ability
-      description: Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled this way.
-      flavor: ""
-      resourceNumber: 3
-      strain: []
-      targetType: target
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      guid: e03fedb0-9538-4885-ab77-1f01ed1fbd9e
-      range: 10
-    role: Support
-    resistances: []
-    max_hitpoints: 36
+          repeatTargets: false
+          strain: []
+          subject: other
+          subjectRange: "25"
+          targetType: subject
+          trigger: inflictcondition
+          whenActive: combat
+      source: Trait
+    cr: 1
+    damage_taken: 0
+    equipment: []
+    groupid: c3b6ed9f-70ee-469d-9415-190e1a920421
     import:
-      type: mcdm
       data: |+
         Dwarf Engineer	Level 1 Support
         Dwarf, Humanoid	EV 13
@@ -288,32 +150,232 @@ info:
         <b>We Have a Quota!</b>
         If the engineer applies the slowed condition to a target who is already slowed or grabbed, the target becomes restrained (EoT) and the slowed or grabbed condition ends.
 
-    stability: 2
-    groupid: c3b6ed9f-70ee-469d-9415-190e1a920421
-    walkingSpeed: 5
-    damage_taken: 0
-    minion: false
+      type: mcdm
+    inflictedConditions: []
+    initiativeGrouping: daef82d3-044a-4433-9b53-507b61ebbfbd
+    innateActivatedAbilities:
+    - name: Snaring Crossbow
+      description: A target restrained by a dwarf, including by this ability, can be pulled by the 5 Malice option. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        momentaryEffect:
+          id: 9d802a5b-2263-4706-ad92-496d34196d7b
+          name: Can Be Force Moved While Restrained
+          description: A target restrained by a dwarf can be force moved by this ability. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9d802a5b-2263-4706-ad92-496d34196d7b
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: Can Be Force Moved While Restrained
+            description: A target restrained by a dwarf can be force moved by this ability. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
+            __typeName: CharacterModifier
+            attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
+            behavior: attribute
+            filterCondition: ConditionCaster("Restrained").type = "Dwarf"
+            guid: d5f6399e-ed08-4c6a-9683-0e933349a1cb
+            operation: add
+            source: Ongoing Effect
+            sourceguid: 9d802a5b-2263-4706-ad92-496d34196d7b
+            value: -1
+          source: Ongoing Effect
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 1
+        tiers:
+        - 3 damage
+        - 5 damage; slowed (EoT)
+        - 7 damage; restrained (EoT)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: caster
+        autoTarget: false
+        customAbility:
+          name: Snaring Crossbow - 5 Malice Pull
+          description: Pull the target up to 5 squares.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: pull 5
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 468230b9-1a17-4b1e-990b-fa123a208ddf
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: 1
+          objectTarget: true
+          range: 10
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 5
+          targetType: target
+        filterTarget: Caster.Malice >= 5
+        invokeOnCaster: true
+        promptText: Spend 5 Malice to pull the target up to 5 squares.
+        targeting: inherit
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 7c7a371f-62c8-4a26-8f59-a026aada778d
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Ranged: true
+        Strike: true
+        Weapon: true
+      modifiers: []
+      numTargets: 1
+      objectTarget: true
+      range: 10
+      repeatTargets: false
+      targetType: target
+    - name: Reel them In
+      description: Pull 5. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled this way.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        filterTarget: target.conditions has "restrained" or target.Conditions has "slowed"
+        momentaryEffect:
+          id: 84005da1-96be-4bd7-b04c-bfe72cec3635
+          name: Increase Forced Movement
+          description: If the target is Restrained or Slowed, an additional 2 is added to the forced movement of this ability.
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 84005da1-96be-4bd7-b04c-bfe72cec3635
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: Increase Forced Movement
+            description: If the target is Restrained or Slowed, an additional 2 is added to the forced movement of this ability.
+            __typeName: CharacterModifier
+            attribute: ba15f0e1-b50c-4324-af08-ce8f2b8f2cf0
+            behavior: attribute
+            guid: 18a550d1-c5b9-43ad-9cbb-6b1f9ac618fb
+            source: Ongoing Effect
+            sourceguid: 84005da1-96be-4bd7-b04c-bfe72cec3635
+            value: 2
+          - name: Can Be Force Moved While Restrained
+            description: A target restrained by a dwarf can be force moved by this ability. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
+            __typeName: CharacterModifier
+            attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
+            behavior: attribute
+            filterCondition: ConditionCaster("Restrained").type = "Dwarf"
+            guid: c5ac43f7-df69-4c4b-9e90-b05b7559e875
+            operation: add
+            source: Ongoing Effect
+            sourceguid: 84005da1-96be-4bd7-b04c-bfe72cec3635
+            value: -1
+          source: Ongoing Effect
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 377117e8-0719-4e4c-85f9-fa21d3dad5fd
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        filterTarget: ""
+        promptText: Choose which target to pull.
+        promptWhenResolving: true
+        standardAbility: 3ecc4aca-2df1-42d0-b535-8a943fa5f0e9
+        standardAbilityParams:
+          range: "5"
+      categorization: Heroic Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: e03fedb0-9538-4885-ab77-1f01ed1fbd9e
+      iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
+      implementation: 4
+      keywords:
+        Ranged: true
+        Weapon: true
+      modifiers: []
+      numTargets: 3
+      persistence: []
+      range: 10
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 5
+      strain: []
+      targetType: target
+    innateAttacks: []
     keywords:
       Dwarf: true
       Humanoid: true
+    levelChoices: []
+    max_hitpoints: 36
+    max_hitpoints_roll: "36"
+    minion: false
+    monster_category: Monster
+    monster_type: Dwarf Engineer
+    movementSpeeds: []
+    opportunityAttack: 3
+    resistances: []
     resources: []
-    traitNames: []
-    cr: 1
+    role: Support
+    savingThrowRatings: []
     skillProficiencies: []
-    initiativeGrouping: daef82d3-044a-4433-9b53-507b61ebbfbd
-    equipment: []
-  tokenType: null
-  bestiaryId: f0f55060-3831-4373-8dab-cf3fd0c55f9e
-  summonerid: null
-  ownerId: ""
-  partyid: null
+    skillRatings: []
+    stability: 2
+    traitNames: []
+    walkingSpeed: 5
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
   size: 2
-  createdTimestamp: 1726301040866
-description: Dwarf Engineer
-parentFolder: 8e456dc2-a795-41ed-85c8-d1219c957c5e
-artist: null
-ord: 0
-ctime: 1741590326899
+  summonerid: null
+  tokenType: null
+  updateid: 4cb106ac-5b60-486a-b154-32a7f5ecb65d
 mtime: 1785866656966
-hidden: true
-id: f0f55060-3831-4373-8dab-cf3fd0c55f9e
+ord: 0
+parentFolder: 8e456dc2-a795-41ed-85c8-d1219c957c5e
