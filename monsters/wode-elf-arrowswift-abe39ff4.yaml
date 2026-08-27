@@ -86,14 +86,30 @@ info:
         keywords: []
         modtype: bane
         behavior: power
-        activationCondition: false
+        activationCondition: '(Target.HasCover or (Line of Sight(self, Target) < 1) or (Target.MovementType = "Burrow" and Target.DistanceBelowGround >= 1) or (Caster.MovementType = "Burrow" and Caster.DistanceBelowGround >= 1)) and Self.Ignore Cover <= 0'
+        description: Abilities targeting the arrowswift that would take a bane from cover or concealment have a double bane instead.
+      - __typeName: CharacterModifier
+        sourceguid: f636bcbf-af97-44f8-b968-c89f2db3f5fc
+        rollType: enemy_ability_power_roll
+        domains:
+          CharacterFeature:f636bcbf-af97-44f8-b968-c89f2db3f5fc: true
+        displayCondition: ""
+        source: Character Feature
+        name: Masking Glamor
+        guid: 7b1c04e2-93a5-4f60-8d1e-2a6f5c883d17
+        keywords:
+          Strike: true
+        modtype: bane
+        behavior: power
+        activationCondition: target.Concealed and (not caster.Ignore Concealment) and (caster.ignore Concealment Within Range <= 0 or Distance(caster,target) > caster.Ignore Concealment Within Range) and (not (caster.Ignore Darkness Concealment and (target.Environment has "Darkness") and (not target.Concealed Ignoring Darkness)))
         description: Abilities targeting the arrowswift that would take a bane from cover or concealment have a double bane instead.
       guid: f636bcbf-af97-44f8-b968-c89f2db3f5fc
       domains:
         CharacterFeature:f636bcbf-af97-44f8-b968-c89f2db3f5fc: true
       name: Masking Glamor
       source: Character Feature
-      implementation: 2
+      implementation: 4
+      implementationDetails: "Mirrors the Cover and Concealment global rule mods verbatim (data/objectTables/globalrulemods/cover.yaml, concealment.yaml) but on enemy_ability_power_roll, so it adds a SECOND bane exactly when the engine's own cover/concealment bane fires -- i.e. a double bane. Split into two modifiers because the Concealment mod is gated on the Strike keyword and the Cover mod is not."
       description: Abilities targeting the arrowswift that would take a bane from cover or concealment have a double bane instead.
     damage_taken: 0
     availableRolls: 0
