@@ -1,0 +1,108 @@
+id: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+name: Envy
+description: You hold envy, taken from a creature of a higher level than you. When a creature within 10 squares of you deals damage, you can expend this as a triggered action to deal that same damage to a creature adjacent to you. Lost at the end of the encounter.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+custom: true
+display:
+  bgcolor:
+    __usertype: LuaColor
+    a: 1
+    h: 0.280000001192093
+    s: 0.720000028610229
+    v: 0.850000023841858
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:4d1a7f92-3c86-4e05-9b73-8a2f610d54c7: true
+endTrigger: endcombat
+guid: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
+implementation: 4
+modifiers:
+- __typeName: CharacterModifier
+  __comment: Piece 1 - the opt-in. Shows in the roll dialog and arms Primed at roll-confirm.
+  guid: 8c2f5019-6b47-4e83-9a15-3d70e2ca41b6
+  name: Thief of Joy
+  description: Expend envy to deal the triggering damage to a creature adjacent to you.
+  rules: Expend envy to deal the triggering damage to a creature adjacent to you.
+  source: Ongoing Effect
+  sourceguid: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+  behavior: powertabletrigger
+  type: trigger
+  targetType: anycreature
+  trigger: dealdamage
+  range: 10
+  additionalCostModifiers: []
+  powerRollModifier:
+    __typeName: CharacterModifier
+    guid: a17f4c02-8d95-4b31-9e06-2c58f0741bd3
+    name: Thief of Joy - Envy
+    rules: Deal this damage to a creature adjacent to you.
+    description: Deal this damage to a creature adjacent to you.
+    source: Trigger
+    behavior: power
+    modtype: none
+    rollType: ability_power_roll
+    keywords: []
+    activationCondition: false
+    activationAfterRoll: false
+    hasTriggerBefore: false
+    armEffect: 91b4de70-2a58-4c63-8f09-547e1cb3a2df
+    armEffectApplyTo: self
+- __typeName: CharacterModifier
+  __comment: Piece 2 - capture. Mandatory; gated on Primed so it only runs when paid for.
+  guid: 3d75e8a1-4f26-4093-b7c5-08e1a6493f2b
+  name: Thief of Joy
+  description: Banks the triggering damage and delivers it.
+  source: Ongoing Effect
+  sourceguid: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+  behavior: trigger
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Expend Envy
+    guid: 5e01d7b3-9f26-4c58-b04a-71e3856cd29f
+    description: Deal the triggering damage to a creature adjacent to you.
+    trigger: losehitpoints
+    subject: other
+    subjectRange: "10"
+    targetType: self
+    numTargets: "1"
+    range: 1
+    mandatory: true
+    conditionFormula: (OngoingEffects has "Envy Primed") and HasAttacker
+    repeatTargets: false
+    abilityType: none
+    modifiers: []
+    strain: []
+    persistence: []
+    iconid: ui-icons/skills/1.png
+    display:
+      brightness: 1
+      hueshift: 0
+      bgcolor: "#ffffffff"
+      saturation: 1
+    behaviors:
+    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+      applyto: caster
+      ongoingEffectSource: specific
+      ongoingEffectCustom: false
+      ongoingEffect: ac93f501-7e62-4d18-b035-8c1746fa20e9
+      duration: endnextround
+      stacks: Damage
+    - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+      applyto: caster
+      ongoingEffectid: 91b4de70-2a58-4c63-8f09-547e1cb3a2df
+    - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+      applyto: caster
+      ongoingEffectid: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      applyto: caster
+      abilityType: named
+      namedAbility: Envy's Due
+      invokeOnCaster: true
+      runOnController: true
+      promptText: Choose the creature that takes the damage.
