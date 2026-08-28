@@ -1,0 +1,82 @@
+id: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
+name: Disdain
+description: You hold disdain, taken from a creature of your level or lower. When a creature within 10 squares of you deals damage, you can expend this as a triggered action to halve that damage. Lost at the end of the encounter.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+custom: true
+display:
+  bgcolor:
+    __usertype: LuaColor
+    a: 1
+    h: 0.920000016689301
+    s: 0.720000028610229
+    v: 0.850000023841858
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+endTrigger: endcombat
+guid: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
+iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
+implementation: 4
+modifiers:
+- __typeName: CharacterModifier
+  __comment: Lives on the effect itself, so the reaction only exists while you hold it.
+  guid: 2e6b91f4-7a03-4c58-9d21-b6437ec85a02
+  name: Thief of Joy
+  description: Expend disdain to halve the triggering damage.
+  source: Ongoing Effect
+  sourceguid: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
+  behavior: powertabletrigger
+  type: trigger
+  targetType: anycreature
+  trigger: dealdamage
+  range: 10
+  rules: Expend disdain to halve the triggering damage.
+  additionalCostModifiers: []
+  powerRollModifier:
+    __typeName: CharacterModifier
+    guid: f05c3d87-1e94-42a6-b738-5c09a1e6d24b
+    name: Thief of Joy - Disdain
+    rules: Expend disdain to halve the triggering damage.
+    description: Expend disdain to halve the triggering damage.
+    source: Trigger
+    behavior: power
+    modtype: none
+    rollType: ability_power_roll
+    keywords: []
+    activationCondition: false
+    activationAfterRoll: false
+    hasTriggerBefore: false
+    hasCustomTrigger: true
+    damageMultiplier: half
+    customTrigger:
+      __typeName: TriggeredAbility
+      name: Expend Disdain
+      guid: 9b1e7042-6c35-4d89-a017-3e52f8b64c1a
+      description: Expends the disdain granted by the torque.
+      abilityType: none
+      trigger: d20roll
+      targetType: self
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      mandatory: true
+      modifiers: []
+      strain: []
+      persistence: []
+      iconid: ui-icons/skills/1.png
+      display:
+        brightness: 1
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
+
+mtime: 1787755528933
+source: Ongoing Effect
+stackable: false
