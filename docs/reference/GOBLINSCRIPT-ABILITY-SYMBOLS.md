@@ -127,6 +127,9 @@ Symbols available on the cast object during and after ability execution. Accesse
 | `forcedmovementdistance` | number | The total distance of forced movement caused by this ability. |
 | `forcedmovementcollision` | boolean | True if any forced movement collided with a creature or object. |
 | `forcedmovementcreaturecount` | number | Number of unique creatures that were force moved (excludes resisted). |
+| `forcedmovementcreaturecollision` | boolean | True if forced movement caused at least one creature-to-creature collision. |
+| `forcedmovementcreaturecollisioncount` | number | Number of unique creatures involved in forced-movement creature collisions, including moved creatures. |
+| `wasinforcedmovementcreaturecollision` | function | Returns true if the given creature was involved in a forced-movement creature collision during this cast. Example: `Cast.WasInForcedMovementCreatureCollision(Target)` |
 
 **File:** `DMHub Game Rules/ActivatedAbilityCast.lua` (lines 52-471)
 

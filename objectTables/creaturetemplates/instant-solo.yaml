@@ -1,157 +1,157 @@
-__typeName: CharacterTemplate
 id: 231c3a1e-1292-4751-bc23-238b26531e61
+name: Instant Solo
+_table: creatureTemplates
+__typeName: CharacterTemplate
+ctime: 1781848417500
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeature
-    implementation: 4
-    modifiers:
-    - __typeName: CharacterModifier
-      operation: set
-      value: EV*3
-      behavior: attribute
-      sourceguid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
-      name: Stamina & EV
-      attribute: ev
-      guid: 50112624-9e42-435a-b8a1-9a58cf4032ce
-      source: Creature Template
-      description: ""
-    - __typeName: CharacterModifier
-      behavior: attribute
-      attribute: hitpoints
-      source: Creature Template
-      operation: set
-      value: floor(Maximum Stamina * 2.5)
-      guid: bbe79a7d-bc5b-471b-86cd-feaa136a80e1
-      sourceguid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
-      name: Stamina & EV
-      description: ""
+  - name: Stamina & EV
     description: ""
-    guid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
-    source: Creature Template
-    name: Stamina & EV
+    __typeName: CharacterFeature
     canHavePrerequisites: true
-  - __typeName: CharacterFeature
+    guid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
     implementation: 4
     modifiers:
-    - __typeName: CharacterModifier
-      guid: 0f510e33-9066-4749-add0-dce9aadc3057
-      attribute: extraturns
-      name: Solo Turns
-      value: 1
-      description: The creature can take two turns each round. They can't take turns consecutively.
-      sourceguid: a71b038e-bee7-4753-8c0f-5e8afa4fe4f9
-      source: Creature Template
+    - name: Stamina & EV
+      description: ""
+      __typeName: CharacterModifier
+      attribute: ev
       behavior: attribute
-    description: The creature can take two turns each round. They can't take turns consecutively.
-    guid: a71b038e-bee7-4753-8c0f-5e8afa4fe4f9
+      guid: 50112624-9e42-435a-b8a1-9a58cf4032ce
+      operation: set
+      source: Creature Template
+      sourceguid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
+      value: EV*3
+    - name: Stamina & EV
+      description: ""
+      __typeName: CharacterModifier
+      attribute: hitpoints
+      behavior: attribute
+      guid: bbe79a7d-bc5b-471b-86cd-feaa136a80e1
+      operation: set
+      source: Creature Template
+      sourceguid: 7c491a53-4e47-4e36-90a5-91c40c2b8a79
+      value: floor(Maximum Stamina * 2.5)
     source: Creature Template
-    name: Solo Turns
+  - name: Solo Turns
+    description: The creature can take two turns each round. They can't take turns consecutively.
+    __typeName: CharacterFeature
     canHavePrerequisites: true
-  - __typeName: CharacterFeature
+    guid: a71b038e-bee7-4753-8c0f-5e8afa4fe4f9
+    implementation: 4
+    modifiers:
+    - name: Solo Turns
+      description: The creature can take two turns each round. They can't take turns consecutively.
+      __typeName: CharacterModifier
+      attribute: extraturns
+      behavior: attribute
+      guid: 0f510e33-9066-4749-add0-dce9aadc3057
+      source: Creature Template
+      sourceguid: a71b038e-bee7-4753-8c0f-5e8afa4fe4f9
+      value: 1
+    source: Creature Template
+  - name: End Effect
+    description: At the end of each of their turns, the creature can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+    __typeName: CharacterFeature
+    domains:
+      CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
+      CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
+    guid: 8a778e31-5691-47ad-af7d-b97bd65c863a
     implementation: 3
     modifiers:
-    - __typeName: CharacterModifier
+    - name: End Effect
       description: At the end of each of their turns, the creature can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+      __typeName: CharacterModifier
+      behavior: trigger
+      domains:
+        CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
+        CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
+      filterCondition: not self has "end effect"
+      guid: e33ea2d9-6393-4e4a-93c5-af808f232588
+      source: Creature Template
       sourceguid: 58bdd65e-5a1b-4448-8a61-1b18d5171e7b
-      name: End Effect
       triggeredAbility:
-        __typeName: TriggeredAbility
-        triggerPrompt: End one save ends effect on self, take {Echelon * 5} damage.
-        modifiers: []
+        name: End Effect
         description: |
           At the end of each of their turns, the arixx can take 5 damage to end one effect on them that can be ended by a saving throw. 
           This damage can't be reduced in any way.
-        domains:
-          CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
-          CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
-        numTargets: "1"
-        guid: f2459800-5424-4e21-9879-b320a1a0b74e
-        range: 1
-        persistence: []
-        trigger: endturn
+        __typeName: TriggeredAbility
+        abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityPurgeEffectsBehavior
-          purgeType: one
-          mode: conditions_and_effects
-          targetDuration: save
-          damageToSelf: 5*Echelon
-          conditions: []
           chatMessage: End Effect
-        strain: []
-        name: End Effect
-        repeatTargets: false
-        targetType: self
-        hasManualVersion: true
+          conditions: []
+          damageToSelf: 5*Echelon
+          mode: conditions_and_effects
+          purgeType: one
+          targetDuration: save
+        castImmediately: true
         conditionFormula: SaveEndsEffects
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        domains:
+          CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
+          CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
+        guid: f2459800-5424-4e21-9879-b320a1a0b74e
+        hasManualVersion: true
         iconid: ui-icons/skills/1.png
         mandatory: false
-        abilityType: none
-        castImmediately: true
-        display:
-          hueshift: 0
-          brightness: 1
-          bgcolor: "#ffffffff"
-          saturation: 1
-      domains:
-        CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
-        CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
-      filterCondition: not self has "end effect"
-      guid: e33ea2d9-6393-4e4a-93c5-af808f232588
-      behavior: trigger
-      source: Creature Template
-    description: At the end of each of their turns, the creature can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
-    guid: 8a778e31-5691-47ad-af7d-b97bd65c863a
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        trigger: endturn
+        triggerPrompt: End one save ends effect on self, take {Echelon * 5} damage.
     source: Creature Template
-    name: End Effect
-    domains:
-      CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
-      CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
-  - __typeName: CharacterFeature
+  - name: Solo Action
+    description: The creature takes an additional main action on their turn. They can use this feature even if they are dazed.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: 6a039300-b5ec-44fc-bc73-92e184f15a4c
     implementation: 3
     modifiers:
-    - __typeName: CharacterModifier
-      guid: 5e30513e-1988-4f95-abfe-14aecc7e358b
-      source: Creature Template
-      behavior: activated
+    - name: Solo Action
       description: The creature takes an additional main action on their turn. They can use this feature even if they are dazed.
-      sourceguid: 6a039300-b5ec-44fc-bc73-92e184f15a4c
-      name: Solo Action
+      __typeName: CharacterModifier
       activatedAbility:
-        __typeName: ActivatedAbility
-        modifiers: []
+        name: Solo Action
         description: The creature takes an additional main action on their turn. They can use this feature even if they are dazed.
-        domains: []
-        numTargets: "1"
-        guid: 2420ab9a-68f0-47bd-9b56-0608e0936877
-        range: 1
+        __typeName: ActivatedAbility
         abilityType: none
+        actionResourceId: none
         behaviors:
         - __typeName: ActivatedAbilityReplenishBehavior
           chatMessage: Solo Action
           resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-        targetType: self
-        name: Solo Action
-        display:
-          hueshift: 0
-          brightness: 1
-          bgcolor: "#ffffffff"
-          saturation: 1
-        actionResourceId: none
-        resourceNumber: "5"
-        resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-        iconid: ui-icons/skills/1.png
-        strain: []
-        categorization: Malice
         castImmediately: true
+        categorization: Malice
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        domains: []
+        guid: 2420ab9a-68f0-47bd-9b56-0608e0936877
+        iconid: ui-icons/skills/1.png
+        modifiers: []
+        numTargets: "1"
+        range: 1
         repeatTargets: false
-    description: The creature takes an additional main action on their turn. They can use this feature even if they are dazed.
-    guid: 6a039300-b5ec-44fc-bc73-92e184f15a4c
+        resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+        resourceNumber: "5"
+        strain: []
+        targetType: self
+      behavior: activated
+      guid: 5e30513e-1988-4f95-abfe-14aecc7e358b
+      source: Creature Template
+      sourceguid: 6a039300-b5ec-44fc-bc73-92e184f15a4c
     source: Creature Template
-    name: Solo Action
-    canHavePrerequisites: true
-name: Instant Solo
-tag: instant solo
-_table: creatureTemplates
 mtime: 1781848417500
-ctime: 1781135034870
+tag: instant solo

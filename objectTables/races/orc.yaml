@@ -1,643 +1,13 @@
+id: af712d2e-8943-4757-8f14-7dd4967de0b6
+name: Orc
+_table: races
 __typeName: Race
-modifierInfo:
-  __typeName: ClassLevel
-  features:
-  - __typeName: CharacterFeature
-    implementation: 3
-    guid: 20f806e2-e84f-4130-85ed-b6f0c952a36f
-    tags:
-      Combat: true
-    domains:
-      race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-    description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
-    source: Orc Race Feature
-    modifiers:
-    - __typeName: CharacterModifier
-      sourceguid: dd8a4e36-0674-4ffb-b6b0-cca47c048ab2
-      guid: 078690b3-9dde-49a3-8d31-43e59b93ee1a
-      behavior: trigger
-      domains:
-        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-      description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
-      source: Orc Race Feature
-      name: "Signature Trait: Relentless"
-      triggeredAbility:
-        __typeName: TriggeredAbility
-        mandatory: false
-        triggerPrompt: "Relentless: you can make a free strike against any creature."
-        strain: []
-        targetType: self
-        behaviors:
-        - __typeName: ActivatedAbilityInvokeAbilityBehavior
-          targeting: prompt
-          promptText: "Orcish Relentless: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature."
-          customAbility:
-            __typeName: ActivatedAbility
-            repeatTargets: false
-            abilityType: none
-            objectTarget: false
-            strain: []
-            targetType: self
-            modifiers: []
-            behaviors:
-            - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-              modifier:
-                __typeName: CharacterModifier
-                attributes: []
-                cannotModifyAction: true
-                ability:
-                  __typeName: ActivatedAbility
-                  repeatTargets: false
-                  abilityType: none
-                  numTargets: "1"
-                  strain: []
-                  targetType: self
-                  modifiers: []
-                  behaviors:
-                  - __typeName: ActivatedAbilityHealBehavior
-                    filterTarget: (Cast.Primary Target.Stamina <= 0) and (Caster.Recoveries Available to Spend > 0)
-                    applyto: caster
-                    roll: Recovery Value
-                  - __typeName: ActivatedAbilityReplenishBehavior
-                    mode: expend
-                    chatMessage: "Orc Relentless: Target killed"
-                    resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
-                    applyto: caster
-                    filterTarget: (Cast.Primary Target.Stamina <= 0) and (Caster.Recoveries Available to Spend > 0)
-                  abilityModification: true
-                  iconid: ui-icons/skills/1.png
-                  guid: 6225413a-7c66-4f18-abfa-add4e899f9ae
-                  description: ""
-                  display:
-                    bgcolor: "#ffffffff"
-                    hueshift: 0
-                    brightness: 1
-                    saturation: 1
-                  range: 1
-                  name: New Ability
-                name: Modify Attack
-                guid: f2c96823-081b-4c9d-af56-6962ade61fa9
-                mustPayResourceCost: false
-                modifyDescription: ""
-                description: ""
-                source: ""
-                filterAbility: Ability.Free Strike
-                behavior: modifyability
-            categorization: Hidden
-            iconid: ui-icons/skills/1.png
-            guid: c7598848-6fda-41cb-bd53-34c00f2b02ec
-            numTargets: "1"
-            display:
-              bgcolor: "#ffffffff"
-              hueshift: 0
-              brightness: 1
-              saturation: 1
-            description: ""
-            persistence: []
-            range: ""
-            name: Relentless
-          autoTarget: false
-          applyto: caster
-          invokeOnCaster: true
-        persistence: []
-        display:
-          bgcolor: "#ffffffff"
-          hueshift: 0
-          brightness: 1
-          saturation: 1
-        abilityType: none
-        numTargets: "1"
-        modifiers: []
-        iconid: 6410c878-aa94-4ac6-9af1-c96c4a1f62a9
-        guid: 050e1b66-af92-4180-bf6b-838d91355f43
-        repeatTargets: false
-        trigger: dying
-        description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
-        range: 5
-        name: Relentless
-    - __typeName: CharacterModifier
-      sourceguid: 20f806e2-e84f-4130-85ed-b6f0c952a36f
-      guid: 9bde98e2-59a1-40b3-bfca-33a93246910e
-      name: "Signature Trait: Relentless"
-      domains:
-        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-      description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
-      source: Orc Race Feature
-      behavior: triggerdisplay
-      ability:
-        __typeName: TriggeredAbilityDisplay
-        distance: ""
-        guid: aff7d117-313b-403c-805f-a9120a0c8684
-        effect: |-
-          You can make a free strike against any creature.
-          If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
-        trigger: A creature deals damage to you that leaves you dying.
-        keywords: []
-        flavor: ""
-        name: Relentless (Orc Trait)
-    name: "Signature Trait: Relentless"
-  - __typeName: CharacterFeatureChoice
-    allowDuplicateChoices: false
-    guid: afaaa8bc-67a8-4c1b-badf-9c07bae452cd
-    costsPoints: true
-    description: You have 3 ancestry points to spend on the following traits.
-    options:
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: 49d5b7ac-4b1e-4af3-9ea1-ed4e57850629
-      tags:
-        Combat: true
-      source: Orc Race Feature
-      domains:
-        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-      description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
-      modifiers:
-      - __typeName: CharacterModifier
-        resourceRefreshType: round
-        sourceguid: 6956be16-c5c4-4f45-9448-5df4b93b1296
-        guid: 305810b6-2ed9-4ae5-94a7-753d1d5f7455
-        triggeredAbility:
-          __typeName: TriggeredAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          strain: []
-          targetType: self
-          modifiers: []
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: end_of_next_turn
-            ongoingEffect: 30c1329a-f11a-4519-9853-548786ae1a55
-            applyto: caster
-            ongoingEffectCustom: 30c1329a-f11a-4519-9853-548786ae1a55
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          iconid: 242eb406-3e1d-44d9-975c-b5fb6c3eb168
-          guid: c12e64fa-ee60-4679-8949-a23a2aac0f54
-          usageLimitOptions:
-            resourceid: 305810b6-2ed9-4ae5-94a7-753d1d5f7455
-            charges: "1"
-            resourceRefreshType: round
-          trigger: losehitpoints
-          description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
-          persistence: []
-          range: 5
-          name: Bloodfire Rush
-        domains:
-          race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-        description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
-        source: Orc Race Feature
-        behavior: trigger
-        name: Bloodfire Rush
-      pointsCost: 1
-      name: Bloodfire Rush
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: 0912b943-1522-4c36-aa18-106be6d2b975
-      tags:
-        Combat: true
-      source: Orc Race Feature
-      domains:
-        race:a9f3759d-be9f-4c40-b610-e7a656425303: true
-      description: The magic in your blood makes it difficult for others to move you. Your stability increases by 1.
-      modifiers:
-      - __typeName: CharacterModifier
-        attribute: forcedmoveresistance
-        value: 1
-        guid: b334433b-c8eb-40f6-97a8-deb4d874b2cd
-        behavior: attribute
-        domains:
-          race:a9f3759d-be9f-4c40-b610-e7a656425303: true
-        description: The magic in your blood makes it difficult for others to move you. Your stability increases by 1.
-        source: Orc Race Feature
-        sourceguid: 9b9f384b-56cc-475c-999b-1173f200068f
-        name: Grounded
-      pointsCost: 1
-      name: Grounded
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: 44c35813-1a78-46b8-8c99-65e24e2a4e79
-      tags:
-        Combat: true
-      pointsCost: 2
-      source: Orc Race Feature
-      description: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
-      modifiers:
-      - __typeName: CharacterModifier
-        attributes: []
-        sourceguid: 44c35813-1a78-46b8-8c99-65e24e2a4e79
-        ability:
-          __typeName: ActivatedAbility
-          repeatTargets: false
-          abilityType: none
-          numTargets: "1"
-          targetType: self
-          modifiers: []
-          behaviors: []
-          abilityModification: true
-          iconid: ui-icons/skills/1.png
-          guid: a9ec8f79-751b-4cec-a6a4-082bc031f7b3
-          description: ""
-          display:
-            bgcolor: "#ffffffff"
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          range: 1
-          name: New Ability
-        guid: d870288a-cc5e-4789-a7f4-89ace7ef30da
-        name: Glowing Recovery
-        modifyDescription: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
-        description: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
-        source: Orc Race Feature
-        filterAbility: Ability.name is Catch Breath
-        behavior: modifyability
-      - __typeName: CharacterModifier
-        sourceguid: 5df1bf0a-ba4b-4a0b-b13e-eaf034d4d47b
-        guid: 3e2d7ecb-33fc-4cd9-98da-5b9a4cef350e
-        behavior: activated
-        name: Catch Breath
-        description: 'By using the Catch Breath, maneuver, you spend a Recovery and regain Stamina in an amount equal to your recovery value. '
-        suppressOthers: true
-        source: Orc Race Feature
-        activatedAbility:
-          __typeName: ActivatedAbility
-          implementation: 3
-          strain: []
-          targetType: self
-          behaviors:
-          - __typeName: ActivatedAbilityHealBehavior
-            applyto: caster
-            roll: Recovery Value * Charges
-          abilityFilters:
-          - formula: resources.Recovery > 0	
-            reason: You do not have any recoveries.
-          - formula: not (Conditions has "dying")
-            reason: You cannot use Catch Breath when you are dying.
-          persistence: []
-          display:
-            bgcolor:
-              __usertype: LuaColor
-              h: 0.384999752044678
-              s: 0.952539682388306
-              v: 0.935618340969086
-              a: 1
-            hueshift: 0
-            brightness: 1
-            saturation: 1
-          abilityType: none
-          numTargets: "1"
-          reasonedFilters: []
-          modifiers: []
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-          repeatTargets: false
-          iconid: 12cdef25-2e5b-47e0-bccf-758198de8442
-          guid: cd1b1255-e64f-407b-adab-833a689a602f
-          channeledResource: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
-          domains: []
-          description: You regain stamina equal to your Recovery Value.
-          sourceReference:
-            __typeName: SourceReference
-            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-            page: 273
-          range: 1
-          name: Catch Breath
-      canHavePrerequisites: true
-      name: Glowing Recovery
-    - __typeName: CharacterFeature
-      implementation: 4
-      guid: 99fc8bf6-b7d2-4f13-a3e4-a26883bd739c
-      tags:
-        Combat: true
-      pointsCost: 2
-      source: Orc Race Feature
-      description: Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.
-      modifiers:
-      - __typeName: CharacterModifier
-        guid: fff806ea-771d-4ef6-b5fa-3942959f7ba0
-        sourceguid: 99fc8bf6-b7d2-4f13-a3e4-a26883bd739c
-        name: Nonstop
-        conditions:
-        - 68f455f5-135f-495c-822d-40d809d2b15f
-        source: Orc Race Feature
-        description: Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.
-        behavior: conditionimmunity
-      canHavePrerequisites: true
-      name: Nonstop
-    - __typeName: CharacterFeatureChoice
-      allowDuplicateChoices: false
-      guid: 0db89994-954b-4475-a335-95b639594bd7
-      pointsCost: 1
-      description: When you are stirred by a passion for creation, your bloodfire allows you to work longer and harder. When you gain your initial skills from your career, culture, class, or other source, choose two skills from the crafting skill group, whether you have those skills or not. Whenever you make a project roll for a crafting project that uses these skills, you gain a+2 bonus to the roll.
-      options:
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: f8043883-60ff-4d28-8129-0df6433c7a8f
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: cdae52cd-ef20-461d-ae18-253023cdb827
-        source: Orc Race Feature
-        description: Make bombs and potions
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Make bombs and potions
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Alchemy
-          skills:
-          - cdae52cd-ef20-461d-ae18-253023cdb827
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Alchemy
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 5cf0ca7b-096d-4654-af2c-3d85afc3ec2f
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 078b501f-e549-4725-993f-7ed8d57fc2ae
-        source: Orc Race Feature
-        description: Create buildings and vehicles
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Create buildings and vehicles
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Architecture
-          skills:
-          - 078b501f-e549-4725-993f-7ed8d57fc2ae
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Architecture
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: a32f0428-38f9-4ef6-8e73-01f6de303b81
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 50ca6145-2d22-4496-a355-c7b2df2cf0de
-        source: Orc Race Feature
-        description: Forge metal armor and weapons
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Forge metal armor and weapons
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Blacksmithing
-          skills:
-          - 50ca6145-2d22-4496-a355-c7b2df2cf0de
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Blacksmithing
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 458108c0-b223-4c1d-8635-ce0960007dbd
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 436ea6c1-6386-43b2-b074-020992cc73fd
-        source: Orc Race Feature
-        description: Create items out of wood
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Create items out of wood
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Carpentry
-          skills:
-          - 436ea6c1-6386-43b2-b074-020992cc73fd
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Carpentry
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 1fd51b23-ad10-4e7f-925a-6f0b4225adad
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: becbc5ec-de63-481b-8247-e62c2a6fd8cb
-        source: Orc Race Feature
-        description: Create delicious dishes
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Create delicious dishes
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Cooking
-          skills:
-          - becbc5ec-de63-481b-8247-e62c2a6fd8cb
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Cooking
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 2cad9846-1ae3-44cd-9a63-0e8d96aa0115
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 5ca5c242-fe6d-43b3-86b0-b5314a9fe39a
-        source: Orc Race Feature
-        description: Make ranged weapons and ammunition
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Make ranged weapons and ammunition
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Fletching
-          skills:
-          - 5ca5c242-fe6d-43b3-86b0-b5314a9fe39a
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Fletching
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: aa064ae9-3bdb-4d12-a2aa-528cce39e67d
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 75d64fef-b075-4221-8cbc-c6b6328ee22c
-        source: Orc Race Feature
-        description: Create false badges, documents, and other items
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Create false badges, documents, and other items
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Forgery
-          skills:
-          - 75d64fef-b075-4221-8cbc-c6b6328ee22c
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Forgery
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 7761069a-c78c-4a2d-a7c5-5e1032e155ea
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 192827b0-ef39-4d5f-840a-b3c654e7b158
-        source: Orc Race Feature
-        description: Create bracelets, crowns, rings, and other jewelry
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Create bracelets, crowns, rings, and other jewelry
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Jewelry
-          skills:
-          - 192827b0-ef39-4d5f-840a-b3c654e7b158
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Jewelry
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: 088026de-67ee-4031-a372-2ca3f545a860
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: ac718c6f-05e2-4301-997c-b1c54aad9250
-        source: Orc Race Feature
-        description: Build machines and clockwork items
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Build machines and clockwork items
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Mechanics
-          skills:
-          - ac718c6f-05e2-4301-997c-b1c54aad9250
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Mechanics
-      - __typeName: CharacterFeature
-        implementation: 3
-        guid: f3f94dce-3efc-48e6-b4c0-5854c6af1211
-        tags:
-          Hidden: true
-        prerequisites:
-        - __typeName: CharacterPrerequisite
-          type: skillProficiency
-          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
-          skill: 8b5a4de7-badf-4e23-8ff2-0f7a832ff754
-        source: Orc Race Feature
-        description: Craft clothing of cloth or leather
-        modifiers:
-        - __typeName: CharacterModifier
-          modtype: plustwo
-          rollType: test_power_roll
-          description: Craft clothing of cloth or leather
-          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
-          behavior: power
-          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
-          name: Tailoring
-          skills:
-          - 8b5a4de7-badf-4e23-8ff2-0f7a832ff754
-          keywords: []
-          source: Orc Race Feature
-          activationCondition: false
-          potencymod: none
-        canHavePrerequisites: true
-        name: Tailoring
-      numChoices: "2"
-      name: Passionate Artisan
-    numChoices: "3	"
-    name: Purchased Orc Traits
-  domains:
-    race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
-mtime: 1782737154372
+ctime: 1782737154372
 darkvision:
   range: 1000
-moveSpeeds:
-  walk: 5
-portraitid: 00a4c8df-b7f5-4cc0-834e-335d589cf399
+details: "An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors—a reputation that the peace-loving orcs find distasteful.  \n\nThe fifth of the speaking peoples, orcs arrived on Orden after humans and elves. They made their homes in the borderlands between those two cultures, preferring the natural forests and avoiding the elf-haunted wodes. For generations, this put them directly in the path of humans who cut down the trees and built roads and farms. \n\nEach orc has within them a fire that causes their veins to glow once blood is drawn. This anger propels them right to the edge of death. The dichotomy between their desire to be left alone and their zeal in battle is summarized in a dwarven proverb: \n\n“Be thankful orcs do not hold grudges.” "
 height: 5’6’’–6’6’’
 lifeSpan: 50–90
-ctime: 1700241934139
 lore: |-
   The orc pulled her greataxe from the split skull of the newly dead ogre. Prone heroes scrambled to their feet. Dazar healed the wounded.
 
@@ -764,9 +134,639 @@ lore: |-
   She looked at each hero then at John again.
 
   “Well,” she said. “What do we do next?”
+modifierInfo:
+  __typeName: ClassLevel
+  domains:
+    race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+  features:
+  - name: "Signature Trait: Relentless"
+    description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
+    __typeName: CharacterFeature
+    domains:
+      race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+    guid: 20f806e2-e84f-4130-85ed-b6f0c952a36f
+    implementation: 3
+    modifiers:
+    - name: "Signature Trait: Relentless"
+      description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
+      __typeName: CharacterModifier
+      behavior: trigger
+      domains:
+        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+      guid: 078690b3-9dde-49a3-8d31-43e59b93ee1a
+      source: Orc Race Feature
+      sourceguid: dd8a4e36-0674-4ffb-b6b0-cca47c048ab2
+      triggeredAbility:
+        name: Relentless
+        description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          applyto: caster
+          autoTarget: false
+          customAbility:
+            name: Relentless
+            description: ""
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+              modifier:
+                name: Modify Attack
+                description: ""
+                __typeName: CharacterModifier
+                ability:
+                  name: New Ability
+                  description: ""
+                  __typeName: ActivatedAbility
+                  abilityModification: true
+                  abilityType: none
+                  behaviors:
+                  - __typeName: ActivatedAbilityHealBehavior
+                    applyto: caster
+                    filterTarget: (Cast.Primary Target.Stamina <= 0) and (Caster.Recoveries Available to Spend > 0)
+                    roll: Recovery Value
+                  - __typeName: ActivatedAbilityReplenishBehavior
+                    applyto: caster
+                    chatMessage: "Orc Relentless: Target killed"
+                    filterTarget: (Cast.Primary Target.Stamina <= 0) and (Caster.Recoveries Available to Spend > 0)
+                    mode: expend
+                    resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
+                  guid: 6225413a-7c66-4f18-abfa-add4e899f9ae
+                  iconid: ui-icons/skills/1.png
+                  modifiers: []
+                  numTargets: "1"
+                  range: 1
+                  repeatTargets: false
+                  strain: []
+                  targetType: self
+                attributes: []
+                behavior: modifyability
+                cannotModifyAction: true
+                filterAbility: Ability.Free Strike
+                guid: f2c96823-081b-4c9d-af56-6962ade61fa9
+                modifyDescription: ""
+                mustPayResourceCost: false
+                source: ""
+            categorization: Hidden
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: c7598848-6fda-41cb-bd53-34c00f2b02ec
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            objectTarget: false
+            persistence: []
+            range: ""
+            repeatTargets: false
+            strain: []
+            targetType: self
+          invokeOnCaster: true
+          promptText: "Orcish Relentless: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature."
+          targeting: prompt
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        guid: 050e1b66-af92-4180-bf6b-838d91355f43
+        iconid: 6410c878-aa94-4ac6-9af1-c96c4a1f62a9
+        mandatory: false
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 5
+        repeatTargets: false
+        strain: []
+        targetType: self
+        trigger: dying
+        triggerPrompt: "Relentless: you can make a free strike against any creature."
+    - name: "Signature Trait: Relentless"
+      description: Whenever a creature deals damage to you that leaves you dying, you can make a free strike against any creature. If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
+      __typeName: CharacterModifier
+      ability:
+        name: Relentless (Orc Trait)
+        __typeName: TriggeredAbilityDisplay
+        distance: ""
+        effect: |-
+          You can make a free strike against any creature.
+          If the creature is reduced to 0 Stamina by your strike, you can spend a Recovery.
+        flavor: ""
+        guid: aff7d117-313b-403c-805f-a9120a0c8684
+        keywords: []
+        trigger: A creature deals damage to you that leaves you dying.
+      behavior: triggerdisplay
+      domains:
+        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+      guid: 9bde98e2-59a1-40b3-bfca-33a93246910e
+      source: Orc Race Feature
+      sourceguid: 20f806e2-e84f-4130-85ed-b6f0c952a36f
+    source: Orc Race Feature
+    tags:
+      Combat: true
+  - name: Purchased Orc Traits
+    description: You have 3 ancestry points to spend on the following traits.
+    __typeName: CharacterFeatureChoice
+    allowDuplicateChoices: false
+    costsPoints: true
+    guid: afaaa8bc-67a8-4c1b-badf-9c07bae452cd
+    numChoices: "3	"
+    options:
+    - name: Bloodfire Rush
+      description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
+      __typeName: CharacterFeature
+      domains:
+        race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+      guid: 49d5b7ac-4b1e-4af3-9ea1-ed4e57850629
+      implementation: 4
+      modifiers:
+      - name: Bloodfire Rush
+        description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          race:af712d2e-8943-4757-8f14-7dd4967de0b6: true
+        guid: 305810b6-2ed9-4ae5-94a7-753d1d5f7455
+        resourceRefreshType: round
+        source: Orc Race Feature
+        sourceguid: 6956be16-c5c4-4f45-9448-5df4b93b1296
+        triggeredAbility:
+          name: Bloodfire Rush
+          description: When you take damage, your speed increases by 2 until the end of your next turn. You can only benefit from this feature once each round.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: end_of_next_turn
+            ongoingEffect: 30c1329a-f11a-4519-9853-548786ae1a55
+            ongoingEffectCustom: 30c1329a-f11a-4519-9853-548786ae1a55
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c12e64fa-ee60-4679-8949-a23a2aac0f54
+          iconid: 242eb406-3e1d-44d9-975c-b5fb6c3eb168
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: losehitpoints
+          usageLimitOptions:
+            charges: "1"
+            resourceRefreshType: round
+            resourceid: 305810b6-2ed9-4ae5-94a7-753d1d5f7455
+      pointsCost: 1
+      source: Orc Race Feature
+      tags:
+        Combat: true
+    - name: Grounded
+      description: The magic in your blood makes it difficult for others to move you. Your stability increases by 1.
+      __typeName: CharacterFeature
+      domains:
+        race:a9f3759d-be9f-4c40-b610-e7a656425303: true
+      guid: 0912b943-1522-4c36-aa18-106be6d2b975
+      implementation: 4
+      modifiers:
+      - name: Grounded
+        description: The magic in your blood makes it difficult for others to move you. Your stability increases by 1.
+        __typeName: CharacterModifier
+        attribute: forcedmoveresistance
+        behavior: attribute
+        domains:
+          race:a9f3759d-be9f-4c40-b610-e7a656425303: true
+        guid: b334433b-c8eb-40f6-97a8-deb4d874b2cd
+        source: Orc Race Feature
+        sourceguid: 9b9f384b-56cc-475c-999b-1173f200068f
+        value: 1
+      pointsCost: 1
+      source: Orc Race Feature
+      tags:
+        Combat: true
+    - name: Glowing Recovery
+      description: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: 44c35813-1a78-46b8-8c99-65e24e2a4e79
+      implementation: 4
+      modifiers:
+      - name: Glowing Recovery
+        description: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
+        __typeName: CharacterModifier
+        ability:
+          name: New Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a9ec8f79-751b-4cec-a6a4-082bc031f7b3
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        attributes: []
+        behavior: modifyability
+        filterAbility: Ability.name is Catch Breath
+        guid: d870288a-cc5e-4789-a7f4-89ace7ef30da
+        modifyDescription: Your bloodfire allows you to regain your strength quicker than others. When you can take the Catch Breath maneuver, you can spend as many Recoveries as you like instead of just one.
+        source: Orc Race Feature
+        sourceguid: 44c35813-1a78-46b8-8c99-65e24e2a4e79
+      - name: Catch Breath
+        description: 'By using the Catch Breath, maneuver, you spend a Recovery and regain Stamina in an amount equal to your recovery value. '
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Catch Breath
+          description: You regain stamina equal to your Recovery Value.
+          __typeName: ActivatedAbility
+          abilityFilters:
+          - formula: resources.Recovery > 0
+            reason: You do not have any recoveries.
+          - formula: not (Conditions has "dying")
+            reason: You cannot use Catch Breath when you are dying.
+          abilityType: none
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            roll: Recovery Value * Charges
+          channeledResource: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+          display:
+            bgcolor:
+              __usertype: LuaColor
+              a: 1
+              h: 0.384999752044678
+              s: 0.952539682388306
+              v: 0.935618340969086
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains: []
+          guid: cd1b1255-e64f-407b-adab-833a689a602f
+          iconid: 12cdef25-2e5b-47e0-bccf-758198de8442
+          implementation: 3
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          reasonedFilters: []
+          repeatTargets: false
+          sourceReference:
+            __typeName: SourceReference
+            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+            page: 273
+          strain: []
+          targetType: self
+        behavior: activated
+        guid: 3e2d7ecb-33fc-4cd9-98da-5b9a4cef350e
+        source: Orc Race Feature
+        sourceguid: 5df1bf0a-ba4b-4a0b-b13e-eaf034d4d47b
+        suppressOthers: true
+      pointsCost: 2
+      source: Orc Race Feature
+      tags:
+        Combat: true
+    - name: Nonstop
+      description: Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: 99fc8bf6-b7d2-4f13-a3e4-a26883bd739c
+      implementation: 4
+      modifiers:
+      - name: Nonstop
+        description: Your bloodfire supplies you with a constant rush of adrenaline. You can’t be slowed.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        guid: fff806ea-771d-4ef6-b5fa-3942959f7ba0
+        source: Orc Race Feature
+        sourceguid: 99fc8bf6-b7d2-4f13-a3e4-a26883bd739c
+      pointsCost: 2
+      source: Orc Race Feature
+      tags:
+        Combat: true
+    - name: Passionate Artisan
+      description: When you are stirred by a passion for creation, your bloodfire allows you to work longer and harder. When you gain your initial skills from your career, culture, class, or other source, choose two skills from the crafting skill group, whether you have those skills or not. Whenever you make a project roll for a crafting project that uses these skills, you gain a+2 bonus to the roll.
+      __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
+      guid: 0db89994-954b-4475-a335-95b639594bd7
+      numChoices: "2"
+      options:
+      - name: Alchemy
+        description: Make bombs and potions
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        implementation: 3
+        modifiers:
+        - name: Alchemy
+          description: Make bombs and potions
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - cdae52cd-ef20-461d-ae18-253023cdb827
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: cdae52cd-ef20-461d-ae18-253023cdb827
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Architecture
+        description: Create buildings and vehicles
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 5cf0ca7b-096d-4654-af2c-3d85afc3ec2f
+        implementation: 3
+        modifiers:
+        - name: Architecture
+          description: Create buildings and vehicles
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 078b501f-e549-4725-993f-7ed8d57fc2ae
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 078b501f-e549-4725-993f-7ed8d57fc2ae
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Blacksmithing
+        description: Forge metal armor and weapons
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: a32f0428-38f9-4ef6-8e73-01f6de303b81
+        implementation: 3
+        modifiers:
+        - name: Blacksmithing
+          description: Forge metal armor and weapons
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 50ca6145-2d22-4496-a355-c7b2df2cf0de
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 50ca6145-2d22-4496-a355-c7b2df2cf0de
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Carpentry
+        description: Create items out of wood
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 458108c0-b223-4c1d-8635-ce0960007dbd
+        implementation: 3
+        modifiers:
+        - name: Carpentry
+          description: Create items out of wood
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 436ea6c1-6386-43b2-b074-020992cc73fd
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 436ea6c1-6386-43b2-b074-020992cc73fd
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Cooking
+        description: Create delicious dishes
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 1fd51b23-ad10-4e7f-925a-6f0b4225adad
+        implementation: 3
+        modifiers:
+        - name: Cooking
+          description: Create delicious dishes
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - becbc5ec-de63-481b-8247-e62c2a6fd8cb
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: becbc5ec-de63-481b-8247-e62c2a6fd8cb
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Fletching
+        description: Make ranged weapons and ammunition
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 2cad9846-1ae3-44cd-9a63-0e8d96aa0115
+        implementation: 3
+        modifiers:
+        - name: Fletching
+          description: Make ranged weapons and ammunition
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 5ca5c242-fe6d-43b3-86b0-b5314a9fe39a
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 5ca5c242-fe6d-43b3-86b0-b5314a9fe39a
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Forgery
+        description: Create false badges, documents, and other items
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: aa064ae9-3bdb-4d12-a2aa-528cce39e67d
+        implementation: 3
+        modifiers:
+        - name: Forgery
+          description: Create false badges, documents, and other items
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 75d64fef-b075-4221-8cbc-c6b6328ee22c
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 75d64fef-b075-4221-8cbc-c6b6328ee22c
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Jewelry
+        description: Create bracelets, crowns, rings, and other jewelry
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 7761069a-c78c-4a2d-a7c5-5e1032e155ea
+        implementation: 3
+        modifiers:
+        - name: Jewelry
+          description: Create bracelets, crowns, rings, and other jewelry
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 192827b0-ef39-4d5f-840a-b3c654e7b158
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 192827b0-ef39-4d5f-840a-b3c654e7b158
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Mechanics
+        description: Build machines and clockwork items
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 088026de-67ee-4031-a372-2ca3f545a860
+        implementation: 3
+        modifiers:
+        - name: Mechanics
+          description: Build machines and clockwork items
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - ac718c6f-05e2-4301-997c-b1c54aad9250
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: ac718c6f-05e2-4301-997c-b1c54aad9250
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      - name: Tailoring
+        description: Craft clothing of cloth or leather
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: f3f94dce-3efc-48e6-b4c0-5854c6af1211
+        implementation: 3
+        modifiers:
+        - name: Tailoring
+          description: Craft clothing of cloth or leather
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          guid: 93a80837-511e-4a69-ac25-64c50b70d3cf
+          keywords: []
+          modtype: plustwo
+          potencymod: none
+          rollType: test_power_roll
+          skills:
+          - 8b5a4de7-badf-4e23-8ff2-0f7a832ff754
+          source: Orc Race Feature
+          sourceguid: f8043883-60ff-4d28-8129-0df6433c7a8f
+        prerequisites:
+        - __typeName: CharacterPrerequisite
+          guid: 0635f82b-e094-4664-ae15-8cb89fe8f0f7
+          skill: 8b5a4de7-badf-4e23-8ff2-0f7a832ff754
+          type: skillProficiency
+        source: Orc Race Feature
+        tags:
+          Hidden: true
+      pointsCost: 1
+moveSpeeds:
+  walk: 5
+mtime: 1782737154372
 nameGenerator: b5ef575c-9574-415c-a419-94598f83f37b
-details: "An anger that cannot be hidden. A fury that drives them in battle. Orcs are famed throughout the world as consummate warriors—a reputation that the peace-loving orcs find distasteful.  \n\nThe fifth of the speaking peoples, orcs arrived on Orden after humans and elves. They made their homes in the borderlands between those two cultures, preferring the natural forests and avoiding the elf-haunted wodes. For generations, this put them directly in the path of humans who cut down the trees and built roads and farms. \n\nEach orc has within them a fire that causes their veins to glow once blood is drawn. This anger propels them right to the edge of death. The dichotomy between their desire to be left alone and their zeal in battle is summarized in a dwarven proverb: \n\n“Be thankful orcs do not hold grudges.” "
+portraitid: 00a4c8df-b7f5-4cc0-834e-335d589cf399
 weight: 150–300
-id: af712d2e-8943-4757-8f14-7dd4967de0b6
-name: Orc
-_table: races

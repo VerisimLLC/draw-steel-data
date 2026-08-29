@@ -1,117 +1,117 @@
-__typeName: CharacterOngoingEffect
+id: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
 name: Malign Thicket Domain
+description: 'Until the end of the encounter, any creature force moved by the dragon takes 1d3 poison damage, and if they have M<2, they are weakened (save ends). Additionally, any creature other than the dragon who starts their turn on the encounter map takes 1d3 poison damage. '
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
 association: []
+ctime: 1785661850981
+custom: true
 display:
-  saturation: 1
-  hueshift: 0
   bgcolor:
     __usertype: LuaColor
+    a: 1
     h: 0
     s: 1.00208115577698
     v: 0.742071151733398
-    a: 1
   brightness: 1
-description: 'Until the end of the encounter, any creature force moved by the dragon takes 1d3 poison damage, and if they have M<2, they are weakened (save ends). Additionally, any creature other than the dragon who starts their turn on the encounter map takes 1d3 poison damage. '
+  hueshift: 0
+  saturation: 1
 domains:
   CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
+guid: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
+iconid: 6d6770f0-ca18-4f66-9f91-ef3f624a538d
+implementation: 4
 modifiers:
-- __typeName: CharacterModifier
+- name: Malign Thicket Domain
+  description: 'If the Thorn Dragon’s Domain trait is in effect, any creature other than the dragon who starts their turn on the encounter map takes 1d3 poison damage. '
+  __typeName: CharacterModifier
+  behavior: trigger
   domains:
     CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
+  guid: af582f4d-8522-4b35-b319-1ac95e3b0f90
+  source: Ongoing Effect
+  sourceguid: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
   triggeredAbility:
-    __typeName: TriggeredAbility
     name: Malign Thicket Domain
-    numTargets: "1"
     description: ""
-    conditionFormula: ""
-    mandatory: true
-    triggerPrompt: At the start of your turn you take 1d3 poison damage.
-    implementation: 4
-    domains:
-      CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
-    range: 1
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      chatMessage: Malign Thicket Domain
+      damageType: poison
+      roll: 1d3
     castImmediately: true
-    persistence: []
-    repeatTargets: false
+    conditionFormula: ""
     display:
-      saturation: 1
-      hueshift: 0
       bgcolor:
         __usertype: LuaColor
+        a: 1
         h: 0
         s: 1.00208115577698
         v: 0.76165783405304
-        a: 1
       brightness: 1
-    modifiers: []
+      hueshift: 0
+      saturation: 1
+    domains:
+      CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
     guid: 5a508a6f-a3b3-4352-b583-58ef109ed48a
+    iconid: 39d88090-e456-4d36-b141-87e933ac8d06
+    implementation: 4
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
     trigger: beginturn
+    triggerPrompt: At the start of your turn you take 1d3 poison damage.
+- name: Malign Thicket
+  description: Until the end of the encounter, any creature force moved by the dragon takes 1d3 poison damage, and if they have M<2, they are weakened (save ends).
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
+  guid: 01af4f46-ff99-444e-8b71-fa00664eac53
+  source: Ongoing Effect
+  sourceguid: 42cb033b-1515-4f5a-b757-73a99e2f6db8
+  triggeredAbility:
+    name: Malign Thicket
+    description: ""
+    __typeName: TriggeredAbility
     abilityType: none
     behaviors:
     - __typeName: ActivatedAbilityDamageBehavior
+      chatMessage: Malign Thicket
       damageType: poison
-      chatMessage: Malign Thicket Domain
       roll: 1d3
-    strain: []
-    targetType: self
-    iconid: 39d88090-e456-4d36-b141-87e933ac8d06
-  name: Malign Thicket Domain
-  guid: af582f4d-8522-4b35-b319-1ac95e3b0f90
-  description: 'If the Thorn Dragon’s Domain trait is in effect, any creature other than the dragon who starts their turn on the encounter map takes 1d3 poison damage. '
-  behavior: trigger
-  source: Ongoing Effect
-  sourceguid: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
-- __typeName: CharacterModifier
-  domains:
-    CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
-  triggeredAbility:
-    __typeName: TriggeredAbility
-    persistence: []
-    implementation: 4
-    domains:
-      CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
-    name: Malign Thicket
-    numTargets: "1"
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: M<2 weakened (save ends)
+    conditionFormula: Attacker.Keywords has "Dragon"
     display:
-      saturation: 1
-      hueshift: 0
       bgcolor:
         __usertype: LuaColor
+        a: 1
         h: 0.320749998092651
         s: 1.00208115577698
         v: 0.632008850574493
-        a: 1
       brightness: 1
-    description: ""
+      hueshift: 0
+      saturation: 1
+    domains:
+      CharacterOngoingEffect:4ae0abcb-aa88-491c-aeba-62b273fe9d06: true
+    guid: 323fe211-97cb-433c-8492-7a50b04ce6d1
+    iconid: 39d88090-e456-4d36-b141-87e933ac8d06
+    implementation: 4
     modifiers: []
-    conditionFormula: Attacker.Keywords has "Dragon"
+    numTargets: "1"
+    persistence: []
+    range: 1
     repeatTargets: false
-    abilityType: none
     strain: []
     targetType: self
-    range: 1
-    behaviors:
-    - __typeName: ActivatedAbilityDamageBehavior
-      roll: 1d3
-      damageType: poison
-      chatMessage: Malign Thicket
-    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-      rule: M<2 weakened (save ends)
-    iconid: 39d88090-e456-4d36-b141-87e933ac8d06
-    guid: 323fe211-97cb-433c-8492-7a50b04ce6d1
     trigger: forcemove
-  name: Malign Thicket
-  guid: 01af4f46-ff99-444e-8b71-fa00664eac53
-  description: Until the end of the encounter, any creature force moved by the dragon takes 1d3 poison damage, and if they have M<2, they are weakened (save ends).
-  sourceguid: 42cb033b-1515-4f5a-b757-73a99e2f6db8
-  source: Ongoing Effect
-  behavior: trigger
-implementation: 4
-source: Ongoing Effect
-ctime: 1770200731837
-custom: true
 mtime: 1785661850981
-id: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
-iconid: 6d6770f0-ca18-4f66-9f91-ef3f624a538d
-guid: 4ae0abcb-aa88-491c-aeba-62b273fe9d06
-_table: characterOngoingEffects
+source: Ongoing Effect

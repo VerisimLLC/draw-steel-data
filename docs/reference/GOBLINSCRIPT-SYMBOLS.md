@@ -131,6 +131,8 @@ Movement speed symbols are generated dynamically from `creature.movementTypeInfo
 | Height | number | Stature of the creature in tiles. | Creature.lua (helpSymbols) |
 | Altitude | number | Altitude in tiles above ground zero. | Creature.lua (helpSymbols) |
 | AltitudeInDeciTiles | number | Altitude in tenths of a tile above ground zero. | Creature.lua (helpSymbols) |
+| AdjacentToWall | boolean | True if the creature is adjacent to wall collision on its current floor and at its current altitude. Example: `Target.AdjacentToWall`. | MCDMCreature.lua |
+| AdjacentToTargetableObject | boolean | True if the creature is within 1 square of a live, attackable map object with a Targetable component on the same actual floor. Uses footprint-aware engine token distance; no separate elevation-difference test is added. Example: `Target.AdjacentToTargetableObject`. | MCDMCreature.lua |
 | SizeWhenForceMoved | number | Effective size of the creature when being force moved. | MCDMCreature.lua |
 | Reach | number | The reach of the creature in squares. | MCDMCreature.lua |
 | Weight | number | The weight of the creature (modifiable attribute). | MCDMCreature.lua |
@@ -157,6 +159,7 @@ Movement speed symbols are generated dynamically from `creature.movementTypeInfo
 | Immunities | function | `Immunities("Fire")` -- returns total immunity/weakness for a damage type. | MCDMCreature.lua |
 | Save Ends Effects | boolean | Does this creature have any save ends effects? | MCDMCreature.lua |
 | Number of Creatures Grabbed | number | The number of creatures currently grabbed by this creature. | Creature.lua (helpSymbols) |
+| Grabbed Creatures | CreatureSet | The live creatures currently carrying the Grabbed condition applied by this creature. Example: `GrabbedCreatures.Highest("Size") >= 2`. | Creature.lua (helpSymbols) |
 
 ---
 

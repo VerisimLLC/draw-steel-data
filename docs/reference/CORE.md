@@ -364,6 +364,9 @@ behavior GoblinScript contexts (DrawSteelCommandBehavior rules, filterTarget, et
 | `Cast.ForcedMovementDistance` | Number | Total forced movement distance |
 | `Cast.ForcedMovementCollision` | Boolean | Whether collision occurred |
 | `Cast.ForcedMovementCreatureCount` | Number | Creatures force moved |
+| `Cast.ForcedMovementCreatureCollision` | Boolean | Whether forced movement caused at least one creature-to-creature collision |
+| `Cast.ForcedMovementCreatureCollisionCount` | Number | Unique creatures involved in forced-movement creature collisions, including moved creatures |
+| `Cast.WasInForcedMovementCreatureCollision(creature)` | Function | Whether a creature was involved in a forced-movement creature collision during this cast |
 
 **Resources and Conditions:**
 | Field | Type | Description |

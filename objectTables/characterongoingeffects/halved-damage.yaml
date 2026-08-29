@@ -1,94 +1,102 @@
+id: 4662f981-cfc4-4610-80e1-385c4ec330e6
+name: Halved Damage
+description: For the rest of the round, all damage you take is halved.
+_table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1776700820201
+custom: true
 display:
   bgcolor:
     __usertype: LuaColor
+    a: 1
     h: 0.680125296115875
     s: 0.696777582168579
     v: 0.987014651298523
-    a: 1
-  hueshift: 0
   brightness: 1
+  hueshift: 0
   saturation: 1
-custom: true
 endTrigger: beginround
-mtime: 1776700820201
+guid: 4662f981-cfc4-4610-80e1-385c4ec330e6
+iconid: f9a55ec7-e72f-45b3-acff-d07a91d91c77
+implementation: 4
 modifiers:
-- __typeName: CharacterModifier
-  name: Withdraw
-  source: Null Class Feature
-  targetType: self
-  rules: You halve damage taken for the rest of the round.
+- name: Withdraw
   description: For the rest of the round, all damage you take is halved.
-  sourceguid: 72ab9db7-158a-4a19-97e9-062426ba4d82
+  __typeName: CharacterModifier
   additionalCostModifiers: []
-  guid: ea2927fd-facd-428c-be9e-0304bedf4776
-  type: free
+  behavior: powertabletrigger
   domains:
     class:4203e447-4531-467b-b270-c952806ce67f: true
-  trigger: takedamage
+  guid: ea2927fd-facd-428c-be9e-0304bedf4776
   powerRollModifier:
+    name: Withdraw
+    description: You halve damage taken for the rest of the round.
     __typeName: CharacterModifier
-    hasTriggerBefore: false
-    rules: ""
-    keywords: []
-    source: Trigger
-    hasCustomTrigger: false
-    modtype: none
-    rollType: ability_power_roll
+    activationAfterRoll: false
+    activationCondition: true
+    behavior: power
     customTrigger:
+      name: New Ability
+      description: ""
       __typeName: TriggeredAbility
-      display:
-        brightness: 1
-        hueshift: 0
-        bgcolor: "#ffffffff"
-        saturation: 1
       abilityType: none
-      numTargets: "1"
-      strain: []
-      targetType: self
-      modifiers: []
       behaviors:
       - __typeName: ActivatedAbilityCustomTriggerBehavior
-        triggerName: Used Inertial Shield
         applyto: caster
+        triggerName: Used Inertial Shield
         value: ""
-      iconid: ui-icons/skills/1.png
-      guid: cdde30d5-46fc-4401-baf8-580366fbcc22
-      repeatTargets: false
-      trigger: d20roll
-      description: ""
-      persistence: []
-      range: 1
-      name: New Ability
-    triggerBefore:
-      __typeName: TriggeredAbility
       display:
+        bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
-        bgcolor: "#ffffffff"
         saturation: 1
-      abilityType: none
+      guid: cdde30d5-46fc-4401-baf8-580366fbcc22
+      iconid: ui-icons/skills/1.png
+      modifiers: []
       numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
       strain: []
       targetType: self
-      modifiers: []
+      trigger: d20roll
+    damageMultiplier: half
+    guid: 2885db7e-80f8-4556-9e9b-69fabe262b99
+    hasCustomTrigger: false
+    hasTriggerBefore: false
+    keywords: []
+    modtype: none
+    rollType: ability_power_roll
+    rules: ""
+    source: Trigger
+    triggerBefore:
+      name: Elemental Absorption
+      description: Whenever you use your Inertial Shield triggered action, you gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.
+      __typeName: TriggeredAbility
+      abilityType: none
       behaviors:
-      - __typeName: ActivatedAbilityApplyAbilityDurationEffect
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
         lingerTime: 3
         momentaryEffect:
+          id: e272c345-1884-45e3-9abf-bd6757000931
+          name: Elemental Absorption
+          description: ""
           __typeName: CharacterOngoingEffect
           display:
+            bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
-            bgcolor: "#ffffffff"
             saturation: 1
           guid: e272c345-1884-45e3-9abf-bd6757000931
           iconid: ui-icons/skills/1.png
-          id: e272c345-1884-45e3-9abf-bd6757000931
-          description: ""
-          source: Ongoing Effect
           modifiers:
-          - __typeName: CharacterModifier
+          - name: Elemental Absorption
+            description: ""
+            __typeName: CharacterModifier
+            behavior: resistance
             guid: 9c59cd58-6260-4c87-9937-cb6b4cfeb62b
             resistances:
             - __typeName: ResistanceEntry
@@ -119,67 +127,59 @@ modifiers:
               apply: Damage Reduction
               damageType: sonic
               dr: "100"
-            sourceguid: e272c345-1884-45e3-9abf-bd6757000931
-            description: ""
             source: Ongoing Effect
-            name: Elemental Absorption
-            behavior: resistance
-          name: Elemental Absorption
-        name: Ability Duration Effect
-      iconid: ui-icons/skills/1.png
+            sourceguid: e272c345-1884-45e3-9abf-bd6757000931
+          source: Ongoing Effect
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
       guid: 41ab70da-37d4-41b6-884c-bb63d4f8b158
-      repeatTargets: false
-      trigger: d20roll
-      description: Whenever you use your Inertial Shield triggered action, you gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
       persistence: []
       range: 1
-      name: Elemental Absorption
-    description: You halve damage taken for the rest of the round.
-    guid: 2885db7e-80f8-4556-9e9b-69fabe262b99
-    activationAfterRoll: false
-    behavior: power
-    damageMultiplier: half
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: d20roll
     triggerBeforeCondition: Level >= 6
-    activationCondition: true
-    name: Withdraw
   range: 10
-  behavior: powertabletrigger
-- __typeName: CharacterModifier
-  guid: c08abbb5-ab43-42b7-a8a8-4c189e5e6093
-  sourceguid: 4662f981-cfc4-4610-80e1-385c4ec330e6
-  name: Halved Damage
+  rules: You halve damage taken for the rest of the round.
+  source: Null Class Feature
+  sourceguid: 72ab9db7-158a-4a19-97e9-062426ba4d82
+  targetType: self
+  trigger: takedamage
+  type: free
+- name: Halved Damage
   description: For the rest of the round, all damage you take is halved.
+  __typeName: CharacterModifier
+  behavior: trigger
+  guid: c08abbb5-ab43-42b7-a8a8-4c189e5e6093
   source: Ongoing Effect
+  sourceguid: 4662f981-cfc4-4610-80e1-385c4ec330e6
   triggeredAbility:
+    name: Halved Damage
+    description: ""
     __typeName: TriggeredAbility
+    abilityType: none
+    behaviors: []
     display:
+      bgcolor: "#ffffffff"
       brightness: 1
       hueshift: 0
-      bgcolor: "#ffffffff"
       saturation: 1
-    abilityType: none
-    numTargets: "1"
-    strain: []
-    targetType: self
-    modifiers: []
-    behaviors: []
-    iconid: ui-icons/skills/1.png
     guid: 34c4ab3f-1c1e-48f6-9e6a-7f1f294d76d0
-    trigger: losehitpoints
-    repeatTargets: false
-    description: ""
+    iconid: ui-icons/skills/1.png
+    modifiers: []
+    numTargets: "1"
     persistence: []
     range: 1
-    name: Halved Damage
-  behavior: trigger
-ctime: 1776700406567
-id: 4662f981-cfc4-4610-80e1-385c4ec330e6
-iconid: f9a55ec7-e72f-45b3-acff-d07a91d91c77
-guid: 4662f981-cfc4-4610-80e1-385c4ec330e6
-buffType: buff
-implementation: 4
-description: For the rest of the round, all damage you take is halved.
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: losehitpoints
+mtime: 1776700820201
 source: Ongoing Effect
-association: []
-name: Halved Damage
-_table: characterOngoingEffects
