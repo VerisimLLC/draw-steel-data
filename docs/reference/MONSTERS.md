@@ -460,31 +460,21 @@ by potency (e.g., "I<2 cursed (save ends)"), use the two-part pattern:
    effect names (like "cursed" or "hexed") the tier text is display-only.
 
 2. **`ApplyOngoingEffectBehavior` handles actual application.** There is NO
-   `potencyAttr` field (it does not exist in the engine -- live-tested 2026-07:
-   an ApplyOngoingEffectBehavior carrying it applies to every target
-   unconditionally). Gate each tier's application with a `filterTarget`
-   GoblinScript check against the target's potency resistance, one behavior per
-   tier:
+   `potencyAttr` field -- it does not exist in the engine (live-tested 2026-07: a
+   behavior carrying it applies to every target, with no validation error). Gate
+   application with `filterTarget` instead, one behavior per tier:
    ```yaml
    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
      ongoingEffect: <effect-uuid>
      duration: save_ends
-     tiersSelected: [1]
-     filterTarget: Intuition Potency Resistance < 1
-   - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-     ongoingEffect: <effect-uuid>
-     duration: save_ends
      tiersSelected: [2]
-     filterTarget: Intuition Potency Resistance < 2
-   - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-     ongoingEffect: <effect-uuid>
-     duration: save_ends
-     tiersSelected: [3]
-     filterTarget: Intuition Potency Resistance < 3
+     filterTarget: not Cast.PassesPotency(Target, "I", "Average")
    ```
-   The potency-resistance symbols are `Might/Agility/Reason/Intuition/Presence
-   Potency Resistance` (base value = the characteristic, modified by potency
-   resistance attributes).
+   `Cast.PassesPotency(Target, "<M|A|R|I|P>", "<Weak|Average|Strong>")` returns true
+   when the target RESISTS, so the gate is nearly always negated -- un-negated it
+   silently hits the wrong creatures. Omit the third argument to take the threshold
+   from the rolled tier. `filterTarget` is a base field on every behavior; see
+   IMPLEMENTATION-PATTERNS.md, "Forced Movement with Potency Check".
 
 **`tiersSelected`:** Controls which power roll tiers trigger this behavior. Values are
 **1-indexed**: `[1]` = Tier 1 only, `[1, 2]` = Tiers 1 and 2, `[1, 2, 3]` = all tiers.
