@@ -79,7 +79,7 @@ info:
       domains:
         CharacterFeature:57d27e3f-af22-4a65-bd90-051389ef815c: true
       guid: 57d27e3f-af22-4a65-bd90-051389ef815c
-      implementation: 1
+      implementation: 4
       modifiers:
       - name: Chain Link
         description: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance towards the chainlock.
@@ -95,8 +95,12 @@ info:
           description: ""
           __typeName: TriggeredAbility
           abilityType: none
-          behaviors: []
-          conditionFormula: ""
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            guid: 6b2fb1ce-9a04-4f2b-8c37-0d5a1e7c4b82
+            rule: pull {Distance}
+          conditionFormula: Melee and HasAttacker and Distance > 0
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -104,12 +108,17 @@ info:
             saturation: 1
           guid: aa20b0b5-4b2d-4b17-b19a-1427616e3dee
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          implementationDetails: ""
+          mandatory: false
           modifiers: []
           numTargets: "1"
-          range: 1
+          range: "100"
           repeatTargets: false
-          targetType: self
+          strain: []
+          targetType: attacker
           trigger: forcemove
+          triggerPrompt: Whenever the chainlock is force moved by a creature's melee ability, the creature is pulled the same distance toward the chainlock after the forced movement is resolved.
       source: Trait
     - name: Relentless
       description: If the chainlock is reduced to 0 Stamina, they can make a free strike before dying. If the target of the free strike is reduced to 0 Stamina, the chainlock is reduced to 1 Stamina instead.
@@ -300,14 +309,14 @@ info:
         - 9 damage; pull 3; M<2 hooked (save ends)
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: save_ends
-        filterTarget: Target.Might < 0
+        filterTarget: not Cast.PassesPotency(Target,"M",0)
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         tiersSelected:
         - 1
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: save_ends
-        filterTarget: Target.Might < 1
+        filterTarget: not Cast.PassesPotency(Target,"M",1)
         guid: 475b49be-ef7a-4778-8f1c-148935bb6740
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
@@ -315,7 +324,7 @@ info:
         - 2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: save_ends
-        filterTarget: Target.Might < 2
+        filterTarget: not Cast.PassesPotency(Target,"M",2)
         guid: 926b9ee4-8036-4ed7-b6d7-ed4a5ea21d8e
         ongoingEffect: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
         ongoingEffectCustom: 969f6b0b-316d-4ec9-8ca7-c02c8a714236
@@ -334,8 +343,8 @@ info:
       flavor: ""
       guid: d11b225d-907a-461d-86e0-0b7c3ef5a00c
       iconid: ui-icons/skills/1.png
-      implementation: 2
-      implementationDetails: Hooked target's movement restriction uses reminder text to prompt the player's movement.
+      implementation: 4
+      implementationDetails: The Hooked ongoing effect leashes the target's movement to within 3 squares of where the chainlock stood when the ability was used.
       keywords:
         Melee: true
         Strike: true
@@ -396,6 +405,9 @@ info:
     monster_category: Monster
     monster_type: Orc Chainlock
     movementSpeeds: []
+    notes:
+    - text: ""
+      title: Monster Notes
     opportunityAttack: 3
     resistances: []
     resources: []
@@ -422,7 +434,7 @@ info:
   size: 3
   summonerid: null
   tokenType: null
-  updateid: 569f12a4-f4bb-480d-b55a-ec032c90df54
+  updateid: 384c5b94-6c5e-405c-8582-19548d98cf08
 mtime: 1786704682519
 ord: 0
 parentFolder: f43667d5-4db9-4db9-8378-2563caa1fbc0

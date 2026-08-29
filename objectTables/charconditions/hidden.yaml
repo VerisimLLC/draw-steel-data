@@ -1,101 +1,104 @@
-id: 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
-name: Hidden
-description: You are hidden. While you are hidden from another creature, you gain an edge on ability rolls made against that creature. When you use an ability or interact with an enemy you are no longer hidden.
-_table: charConditions
 __typeName: CharacterCondition
-ctime: 1785635880193
-display:
-  bgcolor:
-    __usertype: LuaColor
-    a: 1
-    h: 0.73584908246994
-    s: -0.00267505645751953
-    v: 1.00306558609009
-  hueshift: 0
 domains:
   CharacterCondition:31daf7f6-f77c-4f73-8eab-43e2d0f123c0: true
 guid: be0cab3d-7c53-4c88-a21c-3256593f3b5e
-iconid: 4e33ea10-fa08-4e8c-bdfb-510bad80d0ee
+display:
+  bgcolor:
+    __usertype: LuaColor
+    h: 0.73584908246994
+    s: -0.00267505645751953
+    v: 1.00306558609009
+    a: 1
+  hueshift: 0
 implementation: 2
-indefiniteDuration: true
+iconid: 4e33ea10-fa08-4e8c-bdfb-510bad80d0ee
+description: |-
+  While you are hidden from another creature, that creature can’t target you with abilities that don’t have the Area keyword. You also gain an edge on ability rolls made against that creature, and that edge lasts until the end of the turn in which you are no longer hidden.
+
+  You are no longer hidden from a creature if you don’t have cover or concealment from them. If you use an ability, interact with an enemy, move without sneaking, or otherwise make noise or reveal yourself, you stop being hidden once the activity that reveals you resolves. A creature can also search for you with a maneuver, using an opposed test to end the condition.
 modifiers:
-- name: Hidden
-  description: You are hidden. You have an edge on strikes.
-  __typeName: CharacterModifier
-  behavior: trigger
+- __typeName: CharacterModifier
+  triggeredAbility:
+    __typeName: TriggeredAbility
+    name: Hiding
+    numTargets: "1"
+    description: ""
+    conditionFormula: not Used Ability.Remain Hidden
+    range: 5
+    persistence: []
+    domains:
+      CharacterOngoingEffect:13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6: true
+    repeatTargets: false
+    display:
+      saturation: 1
+      hueshift: 0
+      brightness: 1
+      bgcolor: "#ffffffff"
+    modifiers: []
+    guid: 9bc28bc4-2d96-4b3b-8b97-45e150847cc3
+    trigger: attack
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions:
+      - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+      purgeType: all
+      mode: conditions
+      ongoingEffect: 13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6
+    targetType: self
+    strain: []
+    iconid: ui-icons/skills/1.png
   domains:
     CharacterOngoingEffect:13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6: true
   guid: d2ac0082-1eb1-4f7d-aa89-874d3212df4f
   source: Ongoing Effect
+  description: You are hidden. You have an edge on strikes.
   sourceguid: 13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6
+  behavior: trigger
+  name: Hidden
+- __typeName: CharacterModifier
   triggeredAbility:
-    name: Hiding
-    description: ""
     __typeName: TriggeredAbility
-    abilityType: none
+    persistence: []
+    name: Hidden
+    numTargets: "1"
+    display:
+      saturation: 1
+      hueshift: 0
+      brightness: 1
+      bgcolor: "#ffffffff"
+    description: ""
+    modifiers: []
+    conditionFormula: not Used Ability.Remain Hidden
+    trigger: useability
+    repeatTargets: false
+    guid: 4e98ee8c-e4ac-407b-bdb6-2bc88fe8f40f
     behaviors:
     - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      purgeType: all
+      guid: 2e50870e-2dcc-47dd-97fa-dd845bd11a12
+      ongoingEffect: 13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6
       conditions:
       - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
       mode: conditions
-      ongoingEffect: 13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6
-      purgeType: all
-    conditionFormula: not Used Ability.Remain Hidden
-    display:
-      bgcolor: "#ffffffff"
-      brightness: 1
-      hueshift: 0
-      saturation: 1
-    domains:
-      CharacterOngoingEffect:13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6: true
-    guid: 9bc28bc4-2d96-4b3b-8b97-45e150847cc3
-    iconid: ui-icons/skills/1.png
-    modifiers: []
-    numTargets: "1"
-    persistence: []
-    range: 5
-    repeatTargets: false
-    strain: []
+    abilityType: none
     targetType: self
-    trigger: attack
-- name: Hidden
-  description: You are hidden.
-  __typeName: CharacterModifier
-  behavior: trigger
+    range: 1
+    strain: []
+    iconid: ui-icons/skills/1.png
   domains:
     CharacterCondition:31daf7f6-f77c-4f73-8eab-43e2d0f123c0: true
   guid: 0f7357b8-b192-43d5-af05-c148e0183fe5
   source: Condition
+  description: You are hidden.
   sourceguid: be0cab3d-7c53-4c88-a21c-3256593f3b5e
-  triggeredAbility:
-    name: Hidden
-    description: ""
-    __typeName: TriggeredAbility
-    abilityType: none
-    behaviors:
-    - __typeName: ActivatedAbilityPurgeEffectsBehavior
-      conditions:
-      - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
-      guid: 2e50870e-2dcc-47dd-97fa-dd845bd11a12
-      mode: conditions
-      ongoingEffect: 13fbb977-7be0-4d9b-b3b8-9d22c35e0ba6
-      purgeType: all
-    conditionFormula: not Used Ability.Remain Hidden
-    display:
-      bgcolor: "#ffffffff"
-      brightness: 1
-      hueshift: 0
-      saturation: 1
-    guid: 4e98ee8c-e4ac-407b-bdb6-2bc88fe8f40f
-    iconid: ui-icons/skills/1.png
-    modifiers: []
-    numTargets: "1"
-    persistence: []
-    range: 1
-    repeatTargets: false
-    strain: []
-    targetType: self
-    trigger: useability
+  behavior: trigger
+  name: Hidden
 mtime: 1785635880193
-powertable: true
+ctime: 1709620377545
+indefiniteDuration: true
 showInMenus: true
+id: 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+powertable: true
+name: Hidden
+_table: charConditions

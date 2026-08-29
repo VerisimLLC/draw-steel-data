@@ -1,18 +1,92 @@
+__typeName: equipment
+implementation: 3
+level5: The torque’s bonus to Stamina increases to three times your highest characteristic score. Additionally, when you use the torque’s maneuver and the target creature is the same level as you, you gain your choice of envy or disdain.
+flavor: This burnished copper torque thrums with a sense of judgment.
+level9: The torque’s bonus to Stamina increases to five times your highest characteristic score. Additionally, you can have multiple instances of envy and disdain, with no limit on either.
+type: Gear
+specialDescription: ""
 id: a7ecf6c4-7fe8-45d8-a330-3ae04ad26a5c
 name: Thief of Joy
+mtime: 1777282283370
 description: |-
   While you wear this torque, you gain a bonus to Stamina equal to twice your highest characteristic score. Additionally, you can use a maneuver to choose a creature in your line of effect and learn their level. If their level is higher than yours, the torque grants you envy. If their level is equal to or lower than yours, the torque grants you disdain. You can have both envy and disdain from different creatures, but not more than one instance of either.
 
   Whenever a creature within 10 squares of you deals damage to another creature, you can use a triggered action to expend your envy or disdain. If you expend envy, you deal damage equal to the triggering damage to a creature adjacent to you. If you expend disdain, you reduce the triggering damage by half. At the end of the encounter, you lose any envy or disdain granted by the torque.
-_table: tbl_Gear
-__typeName: equipment
-category: Gear
-ctime: 1777282283370
-domains:
-  item:a7ecf6c4-7fe8-45d8-a330-3ae04ad26a5c: true
-equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+weight: 1
+projectSource: Texts or lore in Anjali
+projectGoal: "450"
 features:
-- name: Thief of Joy Stamina Increase
+- __typeName: CharacterFeature
+  implementation: 3
+  guid: 7a4e93c1-2b58-4d70-9e36-c8150f2a6b4d
+  itemAttached: true
+  addText: Add Magical Property
+  name: Thief of Joy
+  source: Item
+  description: Use a maneuver to choose a creature in your line of effect and learn their level. If their level is higher than yours the torque grants you envy; if it is equal to or lower than yours it grants you disdain.
+  modifiers:
+  - __typeName: CharacterModifier
+    guid: 5c8d21b6-4f39-4a82-b715-9e036d4a7c28
+    name: Thief of Joy
+    sourceguid: 7a4e93c1-2b58-4d70-9e36-c8150f2a6b4d
+    source: Item
+    behavior: activated
+    description: Use a maneuver to choose a creature in your line of effect and learn their level. If their level is higher than yours the torque grants you envy; if it is equal to or lower than yours it grants you disdain.
+    activatedAbility:
+      __typeName: ActivatedAbility
+      name: Thief of Joy
+      guid: e21f7b05-9a46-4c38-8d92-3b7e5104fa6c
+      implementation: 3
+      description: Choose a creature in your line of effect and learn their level. Pick the mode matching what you learn - envy if they are a higher level than you, disdain if they are your level or lower. At 5th level, if the creature is the same level as you, either mode is a legal choice.
+      flavor: The torque weighs them against you, and always finds one of you wanting.
+      categorization: Ability
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      targetType: target
+      numTargets: "1"
+      range: "10"
+      repeatTargets: false
+      attributeOverride: no_attribute
+      iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
+      keywords:
+        Psionic: true
+      multipleModes: true
+      modeList:
+      - text: Envy
+        rules: The creature is a higher level than you.
+      - text: Disdain
+        rules: The creature is your level or lower.
+      strain: []
+      persistence: []
+      modifiers: []
+      domains: []
+      display:
+        hueshift: 0
+        bgcolor: "#ffffffff"
+        brightness: 1
+        saturation: 1
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectSource: specific
+        ongoingEffectCustom: false
+        ongoingEffect: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
+        duration: eoe
+        modesSelected:
+          1: 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectSource: specific
+        ongoingEffectCustom: false
+        ongoingEffect: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
+        duration: eoe
+        modesSelected:
+          1: 2
+- __typeName: CharacterFeature
+  implementation: 4
+  guid: dc75478c-41a9-4b83-9ac1-13ca00930612
+  itemAttached: true
+  addText: Add Magical Property
   description: |-
     While you wear this torque, you gain a bonus to Stamina equal to twice your highest characteristic score.
 
@@ -21,32 +95,15 @@ features:
     9th Level: The torque’s bonus to Stamina increases to five times your highest characteristic score. 
 
     5*Strong when Level >= 9 else 3*Strong when Level >= 5 else 2*Strong is added to your Stamina
-  __typeName: CharacterFeature
-  addText: Add Magical Property
-  guid: dc75478c-41a9-4b83-9ac1-13ca00930612
-  implementation: 4
-  itemAttached: true
+  source: Item
   modifiers:
-  - name: Thief of Joy Stamina Increase
-    description: |-
-      While you wear this torque, you gain a bonus to Stamina equal to twice your highest characteristic score.
-
-      5th Level: The torque’s bonus to Stamina increases to three times your highest characteristic score.
-
-      9th Level: The torque’s bonus to Stamina increases to five times your highest characteristic score. 
-
-      5*Strong when Level >= 9 else 3*Strong when Level >= 5 else 2*Strong is added to your Stamina
-    __typeName: CharacterModifier
+  - __typeName: CharacterModifier
     attribute: hitpoints
-    behavior: attribute
-    guid: e6132881-1ca4-4e55-b97a-a7778f688bf0
-    keyword: Treasure
-    source: Item
     sourceguid: dc75478c-41a9-4b83-9ac1-13ca00930612
+    guid: e6132881-1ca4-4e55-b97a-a7778f688bf0
     value:
-      id: table
       __typeName: GoblinScriptTable
-      editableField: true
+      id: table
       entries:
       - script: 2*Strong
         threshold: 1
@@ -55,23 +112,32 @@ features:
       - script: 5*Strong
         threshold: 9
       field: Level
-  source: Item
-flavor: This burnished copper torque thrums with a sense of judgment.
+      editableField: true
+    behavior: attribute
+    description: |-
+      While you wear this torque, you gain a bonus to Stamina equal to twice your highest characteristic score.
+
+      5th Level: The torque’s bonus to Stamina increases to three times your highest characteristic score.
+
+      9th Level: The torque’s bonus to Stamina increases to five times your highest characteristic score. 
+
+      5*Strong when Level >= 9 else 3*Strong when Level >= 5 else 2*Strong is added to your Stamina
+    source: Item
+    keyword: Treasure
+    name: Thief of Joy Stamina Increase
+  name: Thief of Joy Stamina Increase
 iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
-implementation: 3
-itemPrerequisite: A pound of feathers, a pound of bricks from the Seven Cities of Hell
+projectRollCharacteristic:
+  rea: true
+  prs: true
+  mgt: true
 keywords:
   Neck: true
   Psionic: true
-level5: The torque’s bonus to Stamina increases to three times your highest characteristic score. Additionally, when you use the torque’s maneuver and the target creature is the same level as you, you gain your choice of envy or disdain.
-level9: The torque’s bonus to Stamina increases to five times your highest characteristic score. Additionally, you can have multiple instances of envy and disdain, with no limit on either.
-mtime: 1777282283370
-projectGoal: "450"
-projectRollCharacteristic:
-  mgt: true
-  prs: true
-  rea: true
-projectSource: Texts or lore in Anjali
-specialDescription: ""
-type: Gear
-weight: 1
+domains:
+  item:a7ecf6c4-7fe8-45d8-a330-3ae04ad26a5c: true
+ctime: 1759399873656
+itemPrerequisite: A pound of feathers, a pound of bricks from the Seven Cities of Hell
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+category: Gear
+_table: tbl_Gear

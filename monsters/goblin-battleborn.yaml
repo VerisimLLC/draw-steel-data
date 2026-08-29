@@ -78,7 +78,7 @@ info:
       domains:
         CharacterFeature:66ef4cb2-cbf0-42ed-bb20-a9acb42d3974: true
       guid: 66ef4cb2-cbf0-42ed-bb20-a9acb42d3974
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Cunning
         description: The battleborn doesn't provoke opportunity attacks by moving. Whenever the battleborn is adjacent to an enemy and willingly moves to be no longer adjacent to that enemy, the battleborn can use a triggered action to make an opportunity attack against the enemy.
@@ -94,10 +94,19 @@ info:
       - name: Cunning
         description: The battleborn doesn't provoke opportunity attacks by moving. Whenever the battleborn is adjacent to an enemy and willingly moves to be no longer adjacent to that enemy, the battleborn can use a triggered action to make an opportunity attack against the enemy.
         __typeName: CharacterModifier
-        behavior: trigger
+        behavior: movementtext
+        color: green
         domains:
-          CharacterFeature:66ef4cb2-cbf0-42ed-bb20-a9acb42d3974: true
-        guid: 07476b5e-cc3f-4c06-b078-91d1ecf4b4aa
+          CharacterFeature:eb8173bb-7eb1-49fe-9abc-3289a49ddc93: true
+        guid: e3d5a9ea-52e1-4b84-9530-de34c32a91fe
+        source: Trait
+        sourceguid: 66ef4cb2-cbf0-42ed-bb20-a9acb42d3974
+        text: "Cunning: you do not provoke opportunity attacks while moving. If you willingly move away from an adjacent enemy, you can use a triggered action to make an opportunity attack against that enemy."
+      - name: Cunning
+        description: The battleborn doesn't provoke opportunity attacks by moving. Whenever the battleborn is adjacent to an enemy and willingly moves to be no longer adjacent to that enemy, the battleborn can use a triggered action to make an opportunity attack against the enemy.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 8d507ce9-ca23-45bb-9ae6-3b89a1ebfeb8
         source: Trait
         sourceguid: 66ef4cb2-cbf0-42ed-bb20-a9acb42d3974
         triggeredAbility:
@@ -110,52 +119,27 @@ info:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: standard
             applyto: caster
-            autoTarget: false
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors: []
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: a1a80dd8-5da9-47b7-b947-5701956354c7
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              range: 1
-              repeatTargets: false
-              targetType: self
+            autoTarget: true
             invokeOnCaster: false
-            promptText: The battleborn makes an opportunity attack (free strike) against the enemy they are moving away from.
+            promptText: The battleborn makes an opportunity attack (free strike) against the enemy it moved away from.
             runOnController: true
             standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
-          conditionFormula: (Count Nearby Enemies(1)) > 0
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 9d466f98-b96e-4aff-9abf-50945747a411
+          guid: d87c35b6-92c6-46d8-9242-f07ff5bc9c9d
           iconid: ui-icons/skills/1.png
           mandatory: false
           modifiers: []
           numTargets: "1"
-          persistence: []
           range: 1
           repeatTargets: false
-          sourceReference:
-            __typeName: SourceReference
-            docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
-            page: 96
-          strain: []
           subject: self
-          targetType: self
-          trigger: move
-          triggerPrompt: "Cunning: if the battleborn is willingly moving away from an adjacent enemy, they can use a triggered action to make an opportunity attack against that enemy (resolve the free strike before completing the move)."
+          targetType: departedcreature
+          trigger: departadjacent
+          triggerPrompt: "Cunning: the battleborn makes an opportunity attack against the enemy it moved away from."
       source: Trait
     cr: 2
     creatureSize: 1L
@@ -369,6 +353,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: c9d2d358-a368-4950-bb45-720a52b7abde
-mtime: 1787443757438
+mtime: 1787796085855
 ord: 0
 parentFolder: 3f8a2c61-7d94-4e05-b6a8-1c2e9f504d73
