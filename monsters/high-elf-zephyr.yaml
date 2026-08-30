@@ -296,85 +296,135 @@ info:
     initiativeGrouping: e547b39b-f08f-46cf-bc0a-25b1d7268041
     innateActivatedAbilities:
     - name: Sweeping Blade
-      description: Shift 2.
+      description: On a tier 3 outcome, the zephyr can make a free strike against a creature adjacent to the target. If that creature and the target both have A<2, both of them are knocked prone. On any tier outcome, the zephyr can then shift up to 2 squares.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Agility
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 5 damage
         - 7 damage
         - 9 damage
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
-        ongoingEffect: 5e6b4fd9-fc40-4e26-994b-43d1f3a16c1f
-        ongoingEffectCustom: e29284de-2c5a-4b4c-9494-7c7ab3bc21b0
-        tiersSelected:
-        - 3
+      # Tier 3 only. rangeOrigin anchors the range-1 pick on the creature that was
+      # struck rather than on the zephyr, which is what "adjacent to the target"
+      # means -- the strict targeting block measures from GetRangeSource, so this
+      # is genuinely enforced, not just advisory. The two params carry the struck
+      # target's id and Agility down into every nested level of the ability below.
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        applyto: caster
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 291b788d-2ceb-4260-ae9a-fe433a898fe9
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
+        applyto: targets
         invokeOnCaster: true
-        promptText: Make Free Strike against adjacent creature to the target. If that creature and the target both have A<2, the creature and the target are both prone.
-        standardAbility: 3d8ddf2c-ec14-48ff-adaa-8fcc5794b7e9
+        rangeOrigin: parent_primary_target
         tiersSelected:
         - 3
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: all_creatures
+        promptText: Make a free strike against a creature adjacent to the target. If that creature and the target both have A<2, both of them are knocked prone.
+        standardAbilityParams:
+          targetid: "<<Target.ID>>"
+          primaryagility: "<<Target.Agility>>"
         customAbility:
-          name: Invoked Ability
+          name: Sweeping Blade Free Strike
           description: ""
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: c885a4ba-bb51-4676-977d-95df9aa19d85
-            ongoingEffectCustom: false
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            invokeOnCaster: true
+            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+            standardAbilityParams:
+              targetid: "<<Cast.PrimaryTarget.id>>"
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: be0fe546-18d1-44d9-8360-371ba00e0351
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+          # Both prones share one coupled test, so neither creature falls unless BOTH
+          # have Agility < 2. Here Target is the adjacent creature just free struck,
+          # and primaryagility is the originally struck target's score.
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: prone
+            applyto: targets
+            filterTarget: Target.Agility < 2 and <<primaryagility>> < 2
+          # Prone the originally struck target. NOTE: applyto "all_creatures" only
+          # covers creatures in the initiative queue, which does NOT include the
+          # heroes -- so it can never reach a hero target. Instead invoke a tiny
+          # ability with targetType "all", which scans every token in range and
+          # picks the struck creature out by id.
+          # The coupled "both must be A<2" test lives on filterTarget here, the one
+          # place both scores are known: Target is the adjacent creature just struck,
+          # and primaryagility is the originally struck target's score.
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: targets
+            invokeOnCaster: true
+            filterTarget: Target.Agility < 2 and <<primaryagility>> < 2
+            customAbility:
+              name: Sweeping Blade Prone Struck Target
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: prone
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 4e04a53a-f734-4d81-9049-2dbb615ae847
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 10
+              repeatTargets: false
+              strain: []
+              targetFilter: Target.ID = <<targetid>>
+              targetType: all
+          categorization: Hidden
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: a1252eb3-093a-4db2-adfc-8fc2353d2166
+          guid: c2f3199b-7f21-4e2c-bf2e-55b8113bc5f7
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
+          objectTarget: false
           persistence: []
           range: 1
           repeatTargets: false
           strain: []
-          targetType: self
-        filterTarget: target.Agility < 2 and Ongoing Effects has "Sweeping Blade"
-        promptText: If both targets taking Damage from Sweeping Blade have A<2, they will be made prone.
-        tiersSelected:
-        - 3
+          targetFilter: not (Target.ID = <<targetid>>)
+          targetType: target
+      # "On any tier outcome, the zephyr can then shift up to 2 squares" -- no
+      # tiersSelected, so this runs on a miss as well as a hit.
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: shift 2
+        applyto: caster
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: d525247e-2544-459b-b273-08116aaf84e0
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
@@ -435,7 +485,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: 76dbe2c9-71df-473d-8bea-52e70e142c63
+  updateid: 746f3d26-9ea1-44f1-871b-2e55865edd19
 mtime: 1785883085659
 ord: 0
 parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d
