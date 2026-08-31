@@ -70,21 +70,13 @@ info:
         id: rea
         baseValue: -2
     characterFeatures:
-    - name: Trample
-      description: The predator can move through enemies and objects at normal speed. When the predator enters a creature's space for the first time on their turn, the creature takes 3 damage.
-      __typeName: CharacterFeature
-      domains:
-        CharacterFeature:0b91e380-34e5-4f38-a9ea-b8e940831fd9: true
-      guid: 0b91e380-34e5-4f38-a9ea-b8e940831fd9
-      modifiers: []
-      source: Trait
     - name: Nature's Spirit
       description: While outdoors or in a natural environment, the predator can negate a bane on their abilities or turn a double bane into a bane.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:96894e65-7299-448f-8de2-18796c85d9bf: true
       guid: 96894e65-7299-448f-8de2-18796c85d9bf
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Nature's Spirit
         description: While outdoors or in a natural environment, the predator can negate a bane on their abilities or turn a double bane into a bane.
@@ -121,9 +113,184 @@ info:
           strain: []
           targetType: self
           trigger: rollinitiative
-          triggerPrompt: Select confirm if the creature is outside or in a natural environment this encounter, select skip if not.
+          triggerPrompt: Activate this trigger if the creature is outside or in a natural environment this encounter, select 'Dismiss' if not.
           whenActive: combat
       source: Trait
+    - name: Quick Strike
+      description: |-
+        Trigger: A creature or object comes within distance.
+
+        Effect: The predator makes a free strike against the target. If the predator was hidden from the target, the strike deals an extra 3 damage.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+      guid: c3022283-27ae-4c2b-8847-64af7f986ea4
+      implementation: 4
+      modifiers:
+      - name: Quick Strike
+        description: The predator makes a free strike against a creature or object that moves within reach.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+        guid: 9ace98be-ee4f-4bd3-b834-001585948b47
+        source: Character Feature
+        sourceguid: c3022283-27ae-4c2b-8847-64af7f986ea4
+        triggeredAbility:
+          name: Quick Strike
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            autoTarget: true
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 8f965da2-853c-4b9c-8b58-b9e7cfc79b57
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            promptText: "Quick Strike: make a free strike against the creature that moved within reach."
+            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+          conditionFormula: not self.Conditions has "hidden"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+          guid: da6bf6cf-179c-4f66-8651-33c5da5234eb
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: other
+          subjectRange: "1"
+          targetType: self
+          trigger: finishmove
+          triggerPrompt: A creature or object came within distance. The predator can make a free strike against it.
+          whenActive: combat
+      - name: Quick Strike
+        description: While hidden, the predator's Quick Strike free strike deals an extra 3 damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+        guid: 249b4882-7caf-4799-a3ca-702fe6a09ad4
+        source: Character Feature
+        sourceguid: c3022283-27ae-4c2b-8847-64af7f986ea4
+        triggeredAbility:
+          name: Quick Strike
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            autoTarget: true
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: e70d7fe3-7dd1-475a-8787-89e092b611e1
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            promptText: "Quick Strike: make a free strike against the creature that moved within reach."
+            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+          - __typeName: ActivatedAbilityDamageBehavior
+            applyto: subject
+            chatMessage: "Quick Strike: hidden predator deals an extra 3 damage."
+            damageType: untyped
+            roll: "3"
+            titleText: Quick Strike
+          conditionFormula: self.Conditions has "hidden"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+          guid: 3d55ff80-edc5-4fb8-8a74-2e9fad8b2c45
+          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: other
+          subjectRange: "1"
+          targetType: self
+          trigger: finishmove
+          triggerPrompt: A creature or object came within distance. The hidden predator can make a free strike against it for an extra 3 damage.
+          whenActive: combat
+      - name: Quick Strike
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Melee 1
+          effect: The predator makes a free strike against the target. If the predator was hidden from the target, the strike deals an extra 3 damage.
+          guid: 33d1306e-e12c-43ba-9f70-d0f5b030711e
+          keywords:
+            Melee: true
+            Strike: true
+            Weapon: true
+          trigger: A creature or object comes within distance
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:c3022283-27ae-4c2b-8847-64af7f986ea4: true
+        guid: e3983b25-a57f-47db-9749-576151879d63
+        source: Character Feature
+        sourceguid: c3022283-27ae-4c2b-8847-64af7f986ea4
+      source: Character Feature
+      tags:
+        Trigger: true
     cr: 1
     creatureSize: "2"
     creatureTemplates:
@@ -140,7 +307,12 @@ info:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        ongoingEffect: 21827a29-9af8-46ac-86a0-fc74841584a8
+        ongoingEffectCustom: 840e61d7-6c33-497a-a4a1-3dcf2079c3c3
+        ongoingEffectSource: specific
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -151,38 +323,17 @@ info:
       flavor: ""
       guid: 188c6f8b-508f-42d1-97b6-27990a9925d6
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: 1
       range: 1
       repeatTargets: false
-      targetType: self
-    - name: 'Quick Strike '
-      description: The predator makes a free strike against the target. The predator deals an additional 3 damage if they were hidden from the target.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 00d9b77b-5bc5-43b6-8ed1-4eacc605363b
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Melee: true
-        Strike: true
-        Weapon: true
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 43
+      strain: []
       targetType: self
     - name: Natural Weapon
       description: ""
@@ -216,61 +367,6 @@ info:
       repeatTargets: false
       strain: []
       targetType: target
-    - name: Wild Swing
-      description: The predator uses their weapons in a wanton flurry.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
-        tiers:
-        - 3 damage
-        - 6 damage
-        - 8 damage; A<2 bleeding (save ends)
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: a6c58eb8-0bb8-43c9-b56c-8b4d9c8c9a58
-      iconid: ui-icons/skills/1.png
-      implementation: 3
-      keywords:
-        Area: true
-        Melee: true
-        Weapon: true
-      modifiers: []
-      numTargets: "1"
-      range: 1
-      repeatTargets: false
-      targetType: self
-    - name: Swat
-      description: Push 5.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: e8abfaa1-1668-4ee8-9acd-52dadd216a5a
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: "1"
-      range: 1
-      repeatTargets: false
-      targetType: self
     innateAttacks: []
     keywords:
       Animal: true
@@ -307,7 +403,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: 446d5200-37cc-4211-8a5b-cdb1a5854229
+  updateid: 9f6a23d4-2543-49b0-b38e-f1da7d482059
 mtime: 1786704871682
 ord: 4
 parentFolder: 4b3931af-633a-4d06-a87c-a4139290d258
