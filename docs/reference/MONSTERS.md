@@ -344,6 +344,8 @@ Built-in values (always available):
 - `caster` -- The caster only
 - `caster_and_targets` -- Caster and all targets
 - `caster_riders` -- Creatures riding the caster
+- `caster_summoner` -- The caster's summoner
+- `caster_companion` -- The caster's companion
 - `caster_including_squad` -- Caster and their squad
 - `caster_minions` -- Caster's minions
 - `first_target` -- Only the first target
@@ -354,15 +356,8 @@ Built-in values (always available):
 - `subject` -- Trigger subject
 - `winner_opposed` -- Winner of an opposed roll
 - `none` -- Nobody
-
-Draw Steel additional values:
-- `selfandheroallies` -- Self and hero allies
-- `heroallies` -- Hero allies only
-- `all` -- All creatures
-- `allother` -- All other creatures
-- `selfandfriends` -- Self and friends
-- `friends` -- Friends only
-- `enemies` -- Enemies only
+- `all_creatures` -- All creatures **in the initiative queue**
+- `caster_mentor` -- The caster's mentor
 
 ### Core Behaviors
 
