@@ -14,6 +14,7 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: abc5e471-1fab-4831-bc13-6b305ae83db2
+  implementation: 4
   itemAttached: true
   modifiers:
   - name: Executioner's Blade Extra Damage
@@ -42,7 +43,7 @@ features:
             saturation: 1
           guid: cc9b968e-9ab9-4f58-beec-9e8dd827c6b7
           iconid: ui-icons/skills/1.png
-          implementation: 3
+          implementation: 4
           modifiers:
           - name: Executioner's Blade
             description: ""
@@ -82,6 +83,38 @@ features:
               strain: []
               targetType: self
               trigger: dealdamage
+          - name: Executioner's Blade
+            description: ""
+            __typeName: CharacterModifier
+            behavior: trigger
+            guid: 7aa3087f-a30c-4fe0-85b9-ee8aa4e797cd
+            source: Ongoing Effect
+            sourceguid: cc9b968e-9ab9-4f58-beec-9e8dd827c6b7
+            triggeredAbility:
+              name: Executioner's Blade Surges
+              description: At 5th level, whenever the wielder causes an enemy to become winded with an ability using this weapon, they gain 2 surges.
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: caster
+                rule: target gains 2 surges
+              conditionFormula: self.level >= 5 and target.winded and ((target.stamina+damage) > target.maximumStamina/2)
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 62393070-8792-4118-b55d-30cb7cc9a930
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              trigger: dealdamage
           source: Ongoing Effect
       castImmediately: true
       display:
@@ -91,6 +124,7 @@ features:
         saturation: 1
       guid: 1cdacd2f-9876-4b0c-bd13-03a0864eb1fc
       iconid: ui-icons/skills/1.png
+      modifierCustomTrigger: true
       modifiers: []
       numTargets: "1"
       persistence: []
@@ -123,15 +157,39 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Executioner's Blade Edge
+  description: At 9th level, you gain an edge on any ability using the weapon against a winded target.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 506a3044-2ca4-43c4-b9ae-c01faff2535f
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Executioner's Blade Edge
+    description: You gain an edge on abilities using this weapon against winded targets.
+    __typeName: CharacterModifier
+    activationCondition: 'Target.Winded and Level >= 9'
+    behavior: power
+    damageModifier: ""
+    guid: e7a11085-d795-44b0-acd3-f925614eb361
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: edge
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 506a3044-2ca4-43c4-b9ae-c01faff2535f
+  source: Item
 flavor: This blade exudes a faint hum that grows louder as its quarry weakens.
 iconid: bf0ffb54-7fa8-4e61-8684-7965d9ece257
+implementation: 4
 itemPrerequisite: The skull of a convicted criminal
 keywords:
   Heavy Weapon: true
   Psionic: true
 level5: The weapon’s extra psychic damage increases to 2, or to 4 if the target is winded. Additionally, whenever you cause an enemy to become winded with an ability using the weapon, you gain 2 surges that you can immediately spend.
 level9: The weapon’s extra psychic damage increases to 3, or to 6 if the target is winded. Additionally, you gain an edge on any ability using the weapon against a winded target.
-mtime: 1776470530321
+mtime: 1788146190165
 projectGoal: "450"
 projectRollCharacteristic:
   inu: true
