@@ -547,8 +547,15 @@ replaceCaster: false
 casterControls: true
 casterChoosesCreatures: true
 groupInitiativeWithCaster: true
+chooseSquad: false
 applyto: targets
 ```
+
+Set `chooseSquad: true` to prompt for an existing live same-type minion squad
+or a New Squad during the cast, even when the caster is not a rules-level
+Summoner. This only assigns the summons' squad: it does not grant Summoner
+limits or add them to Summoner roster bookkeeping. With
+`allCreaturesTheSame: true`, every summon in the cast shares the chosen squad.
 
 **Placement modes** (pick one; if neither is set, summons spawn at each target's
 location, nudged to the nearest free squares):
