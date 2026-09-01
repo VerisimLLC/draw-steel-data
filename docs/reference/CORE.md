@@ -78,6 +78,22 @@ These errors have been discovered through testing. Read this section BEFORE crea
     `HighestCharacteristic`. This is the safest approach. Never guess symbol names --
     always verify against `GOBLINSCRIPT-SYMBOLS.md`.
 
+12. **Never rewrite book power-roll tier text to make an effect resolve.** Tier strings
+    stay verbatim from the book. Attach unparsed mechanics with per-tier behaviors instead
+    (`tiersSelected` + `filterTarget: not Cast.PassesPotency(Target, "R", "Average")`).
+    See "Power Roll Tier Text Auto-Parsing" in `MONSTER_PATTERNS.md`.
+
+13. **Braces in `description` fields compile as GoblinScript.** Ability/feature descriptions
+    are string-interpolated at render, so `{Implementation Status: ...}` notes can crash the
+    stat block. Put implementation notes in the ability's `implementationDetails` field
+    (shown in the implementation-diamond tooltip), never in braces in `description`.
+
+14. **`losehitpoints` triggers need net damage; hero death events differ from monsters.**
+    Damage fully absorbed by immunity/DR never fires `losehitpoints`. And heroes at 0
+    Stamina are dying, not dead: `zerohitpoints`/`creaturedeath`/`kill` fire only at their
+    negative bloodied threshold -- use the `dying` trigger for "hero reduced to 0" effects.
+    Details in `MONSTER_PATTERNS.md` "Triggered Reactions".
+
 ---
 
 ## ASCII-Only Rule

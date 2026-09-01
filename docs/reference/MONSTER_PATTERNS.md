@@ -309,6 +309,7 @@ The engine supports 30+ trigger types. The most useful for monster abilities:
 | Trigger ID | Fires When | Key Symbols |
 |------------|-----------|-------------|
 | `losehitpoints` | Creature takes damage | `damage`, `damagetype`, `keywords`, `attacker` |
+| `dying` | HERO drops to 0 stamina (heroes only) | `attacker`, `damage` |
 | `attacked` | Creature is attacked | `outcome`, `attacker` |
 | `targetwithability` | Creature is targeted by an ability | `Used Ability` (ability object) |
 | `move` | Creature begins movement | -- |
@@ -325,6 +326,21 @@ The engine supports 30+ trigger types. The most useful for monster abilities:
 | `dealdamage` | Creature deals damage to another | -- |
 | `winded` | Creature becomes winded | -- |
 | `collide` | Creature collides with object/creature | `speed`, `movementtype` |
+
+**`losehitpoints` needs net damage.** It only dispatches when the final damage amount is
+greater than 0. Damage fully absorbed by damage reduction / immunity never fires it, so a
+"retaliates when hit" trait on a damage-immune creature silently does nothing (live-tested
+2026-09). Give the creature real stamina instead of immunity when its damage trigger must fire.
+
+**Death events split by hero vs monster.** `zerohitpoints`, `creaturedeath`, and the
+killer-side `kill` event all gate on `IsDead()`. Monsters die at 0 so all three fire at 0;
+HEROES at 0 are dying (dead only at negative bloodied), so NONE of those fire when a hero
+hits 0 -- only `dying` does. Any "when reduced to 0 Stamina" mechanic that must work against
+heroes needs a `dying` trigger alongside the `creaturedeath`/`zerohitpoints` one.
+
+**Gate a retaliation to melee strikes** with a conditionFormula on the triggered ability,
+e.g. `conditionFormula: Ability.Keywords has "Melee" and Ability.Keywords has "Strike"`
+(losehitpoints exposes the damaging ability). Pair with `targetType: attacker` to hit back.
 
 ### Reactive damage when targeted by melee (Toxiferous pattern)
 
@@ -524,6 +540,54 @@ All `trigger: creaturedeath` abilities fire BEFORE the creature is removed from 
 The global Monster Death rule has a built-in delay (~1 second for non-minions) plus a
 `proceedCondition: Cannot be Removed = 0` gate. This gives death triggers time to resolve.
 
+### On-kill effect scoped to ONE ability (hidden effect on the target)
+
+"If this ability reduces the target to 0 Stamina, X happens" (Archivist's Blow Your Top:
+brain explodes, 5 fire burst 2). A killer-side `kill` trigger with
+`conditionFormula: Used Ability.Name is "..."` fails against heroes (see the hero/monster
+death-event split above). Instead, scope by EFFECT LIFETIME: the ability applies a
+bookkeeping ongoing effect to the target before its power roll; the effect's own death
+triggers do the work, no ability-name condition needed.
+
+```yaml
+# On the ability, BEFORE the power roll behavior:
+- __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+  duration: endround              # natural expiry is the cleanup backstop
+  ongoingEffect: <effect-uuid>
+```
+
+The effect (`statusEffect: false` -- the editor's "Hidden" checkbox, NOT the soft-delete
+`hidden` flag) carries TWO trigger modifiers, `creaturedeath` (monsters) and `dying`
+(heroes), each:
+
+```yaml
+  triggeredAbility:
+    trigger: creaturedeath        # second copy uses trigger: dying
+    hostile: true                 # red prompt, never ages out
+    mandatory: false              # table confirms the rules condition (has a brain?)
+    targetType: all
+    range: 2
+    objectTarget: true
+    filterTarget: not (Self = Caster)   # dying hero doesn't take its own burst
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      damageType: fire
+      roll: "5"
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior    # self-cleanup on answer
+      applyto: caster
+      mode: effect
+      ongoingEffect: <effect-uuid>
+      purgeType: all
+      runOnDismiss: true          # runs on Activate AND Dismiss (runOnAccept defaults true)
+```
+
+Do NOT purge the effect from the casting ability after the power roll -- trigger prompts
+resolve async on another client, and the purge would strip the effect (killing the pending
+prompt) before it is answered. The `runOnDismiss` purge plus the `endround` duration cover
+cleanup instead.
+
+**Used by**: Blow Your Top (Voiceless Talker Archivist, Condemned)
+
 ---
 
 ## Recurring Per-Turn Effects
@@ -652,6 +716,66 @@ House Call (Hag -- summons hut), various hero class abilities
 ```
 
 **Used by**: Creeping Sludge, Gummy Ball, Imit Putty (Split)
+
+### Illusory double / decoy (summoned copy of the caster)
+
+For "projects an illusory double" abilities (Gloom Dragon's Absence of All Light,
+Voiceless Talker Archivist's Phantom Pain). The double is a separate bestiary monster,
+disguised via the token layer, wired up by an ongoing effect applied right after the summon.
+
+**The double's monster file:**
+- `monster_type` stays DISTINCT (e.g. "Gloom Dragon Illusion") -- players never see it.
+  The on-map disguise is `info.appearance.characterName: <real monster's name>` with
+  `characterNamePrivate: false`. Copy the real monster's `portraitId`/`portraitFrameId`.
+- Match the real monster's `max_hitpoints`/stats so inspection doesn't give it away. Do
+  NOT use damage immunity to make it unkillable -- absorbed damage kills its own
+  `losehitpoints` triggers (see Triggered Reactions notes) and 0-damage floaters
+  telegraph the illusion.
+- "Can't move or act": `walkingSpeed: 0` plus `behavior: resource` modifiers with
+  `num: "-1"` for main action (`d19658a2-4d7b-4504-af9e-1a5410fb17fd`) and maneuver
+  (`a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b`).
+- Self-cleanup triggers (silent RemoveCreatureBehavior on `zerohitpoints` and `endcombat`),
+  per the Gloom Dragon Illusion.
+
+**Summon + wiring in the ability** -- the summon behavior replaces the cast's targets with
+the summoned tokens, so an apply behavior placed AFTER it lands on the double:
+
+```yaml
+- __typeName: ActivatedAbilitySummonBehavior
+  monsterType: <double-uuid>
+  numSummons: "1"
+  casterControls: true
+  groupInitiativeWithCaster: true
+- __typeName: ActivatedAbilityApplyOngoingEffectBehavior   # lands on the summoned double
+  duration: eoe
+  ongoingEffect: <double-effect-uuid>
+```
+
+**The double's ongoing effect** (`statusEffect: false` so no badge reveals it) carries:
+- `behavior: castingorigin` with `filterCondition: Ongoing Effect.Caster.id = Caster.id`
+  and a `keywordFilter` -- the summoner can cast matching abilities as if from the
+  double's square (range and shapes union both origins). See afterimage.yaml.
+- A trigger that removes the double when the SUMMONER is damaged:
+
+```yaml
+  triggeredAbility:
+    trigger: losehitpoints
+    subject: other
+    conditionFormula: Subject = Self.Summoner
+    targetType: self
+    mandatory: true
+    silent: true
+    behaviors:
+    - __typeName: ActivatedAbilityRemoveCreatureBehavior
+      leavesCorpse: false
+```
+
+There is no summons-targeting applyto on triggers, so removal always lives on the summon
+listening for the summoner's event (afterimage.yaml precedent), never the reverse.
+Any effect badge on the REAL monster (e.g. its invisibility) should set
+`hiddenFromEnemies: true` so players can't use it to pick out the original.
+
+**Used by**: Gloom Dragon Illusion, Archivist's Double (Condemned), Afterimage
 
 ### Transform creature (swap stat block)
 
@@ -920,6 +1044,21 @@ Use `#` to mark unimplemented text that should display but not execute:
 ```
 8 damage; push 3 # and the target drops whatever it's holding
 ```
+
+**NEVER rewrite book tier text to make an effect resolve.** The power-roll text a player
+reads must stay verbatim from the book. To attach a custom ongoing effect (or any
+unparsed mechanic) to a tier, keep the book text and add per-tier behaviors instead:
+
+```yaml
+- __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+  duration: save_ends
+  ongoingEffect: <effect-uuid>
+  tiersSelected: [2]
+  filterTarget: not Cast.PassesPotency(Target, "R", "Average")   # tier 3 copy uses "Strong"
+```
+
+`Cast.PassesPotency` returns true when the target RESISTS, so the gate is negated. One
+behavior per tier when the potency threshold differs.
 
 ---
 
