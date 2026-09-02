@@ -129,12 +129,13 @@ info:
         text: Hrraaaaaagh!
     characterFeatures:
     - name: Destructive Path
-      description: The juggernaut automatically destroys unattended, mundane size 1 objects in their path during their movement. They can break through any mundane wall made of wood, stone, or a similarly sturdy material in this way, so long as the wall is no more than 1 square thick.
+      description: The juggernaut automatically destroys any mundane size 1 objects in their path when they move or are force moved. They can break through any mundane wall made of wood, stone, or a similarly sturdy material this way as long as the wall is 2 squares thick or less.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:021e4240-6bf9-4a8e-b984-1fa3b0d15415: true
       guid: 021e4240-6bf9-4a8e-b984-1fa3b0d15415
       implementation: 1
+      implementationDetails: "RED: The rules text is present, but automatically destroying objects and qualifying walls during voluntary or forced movement is not supported by YAML."
       modifiers: []
       source: Trait
     - name: Defiant Anger
@@ -144,6 +145,7 @@ info:
         CharacterFeature:28a90f57-a1cd-4dec-adfd-466b6f273cb0: true
       guid: 28a90f57-a1cd-4dec-adfd-466b6f273cb0
       implementation: 4
+      implementationDetails: Damage immunity 2 is applied automatically while the juggernaut is winded.
       modifiers:
       - name: Defiant Anger
         description: The juggernaut has damage immunity 2 while they are winded.
@@ -176,6 +178,7 @@ info:
         CharacterFeature:8d3554ab-c10d-4958-8c73-b3f3cd4de8c2: true
       guid: 8d3554ab-c10d-4958-8c73-b3f3cd4de8c2
       implementation: 4
+      implementationDetails: Taking damage offers the free triggered action, spends 1 Malice, and invokes the standard move-up-to-Speed-and-free-strike sequence.
       modifiers:
       - name: Hrraaaaaagh!
         description: ""
@@ -357,6 +360,7 @@ info:
       guid: 9196c365-e073-43ef-bbdb-4cf13cf1aed7
       iconid: c4893538-9809-4de1-8ef9-2fa83a84fe2b
       implementation: 4
+      implementationDetails: The two-target power roll, vertical forced movement, and optional 1 Malice bleeding rider are automated.
       keywords:
         Charge: true
         Melee: true
@@ -375,7 +379,7 @@ info:
         page: 210
       strain: []
       targetType: target
-    - name: Earth Breaking Jump
+    - name: Earth-Breaking Jump
       description: The juggernaut jumps up to 6 squares before using this ability.
       __typeName: ActivatedAbility
       abilityType: none
@@ -442,13 +446,13 @@ info:
         applyto: none
         promptWhenResolving: true
         promptWhenResolvingText: Select targets to push in your preferred order.
-        roll: 2d10 + Might or Agility
+        roll: 2d10 + 2
         tiers:
         - 4 damage
         - 6 damage; push 2; M<1 prone
         - 9 damage; push 4; M<2 prone
       castImmediately: true
-      categorization: Signature Ability
+      categorization: Ability
       display:
         bgcolor:
           __usertype: LuaColor
@@ -459,11 +463,11 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 7d3e1744-5ae0-4f95-ac0b-7f93c2276350
       iconid: a337f5b1-3990-4565-8be2-c7861fb28d10
       implementation: 4
+      implementationDetails: The jump is resolved before the burst, then one power roll applies the tier damage, forced movement, and potency-based prone effects to all creatures in the area.
       keywords:
         Area: true
         Weapon: true
@@ -487,7 +491,7 @@ info:
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10
+        roll: 2d10 + 2
         tiers:
         - I<0 frightened (save ends)
         - I<1 frightened (save ends)
@@ -507,11 +511,11 @@ info:
         hueshift: 0
         saturation: 1
       displayOrder: 210
-      effectImplemented: false
       flavor: ""
       guid: 22b45b76-168a-4ee8-a784-0d92c688e497
       iconid: 92a6d94b-65ab-49b6-b33e-0dae78f3a332
       implementation: 4
+      implementationDetails: The power roll and frightened conditions are automated, and the linked rider grants every ogre an edge only on strikes against a creature frightened this way.
       keywords:
         Area: true
       modifiers: []

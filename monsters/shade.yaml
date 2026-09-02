@@ -120,15 +120,16 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: Shadow Phasing
-      description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+      description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:2a43fffb-7e1a-4a09-a162-230cc8b6ff27: true
       guid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
       implementation: 3
+      implementationDetails: Movement through creatures and objects, normal movement cost, forced-movement collision immunity, and the once-per-round corruption damage are automated. The VTT does not prevent the shade from ending their turn inside a creature or object.
       modifiers:
       - name: Shadow Phasing
-        description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
         __typeName: CharacterModifier
         attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
         behavior: attribute
@@ -140,7 +141,7 @@ info:
         sourceguid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
         value: 1
       - name: Shadow Phasing
-        description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
         __typeName: CharacterModifier
         attribute: 9148519f-9fb4-4b2b-9d3e-98f88c56bab8
         behavior: attribute
@@ -151,7 +152,7 @@ info:
         sourceguid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
         value: 1
       - name: Shadow Phasing
-        description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
         __typeName: CharacterModifier
         attribute: 8e55aa4a-aae4-4df7-85b7-07ce1b93a6c9
         behavior: attribute
@@ -162,7 +163,7 @@ info:
         sourceguid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
         value: 1
       - name: Shadow Phasing
-        description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
         __typeName: CharacterModifier
         attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
         behavior: attribute
@@ -174,7 +175,7 @@ info:
         sourceguid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
         value: 1
       - name: Shadow Phasing
-        description: The shade can move through other creatures and objects at normal speed. The first time in a round that the shade passes through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn't take damage from being force moved into objects.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -213,7 +214,41 @@ info:
             charges: "1"
             resourceRefreshType: round
             resourceid: 91a78ee3-31d5-43bc-be05-1b765bee9979
+      - name: Shadow Phasing
+        description: The shade can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object.
+        __typeName: CharacterModifier
+        behavior: movementtext
+        color: green
+        domains:
+          CharacterFeature:2a43fffb-7e1a-4a09-a162-230cc8b6ff27: true
+        guid: 6f783b35-1cd5-481f-86a7-c13926b8f258
+        source: Trait
+        sourceguid: 2a43fffb-7e1a-4a09-a162-230cc8b6ff27
+        text: This creature can move through creatures and objects, but can't end their turn inside a creature or object.
       source: Trait
+    - name: Hover
+      description: The shade can hover.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:59e5b694-1957-48b9-b419-710c31e612a6: true
+      guid: 59e5b694-1957-48b9-b419-710c31e612a6
+      implementation: 4
+      implementationDetails: Hover is fully automated by the canonical hover attribute.
+      modifiers:
+      - name: Hover
+        description: The shade can hover.
+        __typeName: CharacterModifier
+        attribute: fb37652f-d640-4a53-9392-0930dcb30eab
+        behavior: attribute
+        domains:
+          CharacterFeature:59e5b694-1957-48b9-b419-710c31e612a6: true
+        guid: 89b7cf34-1184-424e-b057-e7f5bad60d60
+        source: Trait
+        sourceguid: 59e5b694-1957-48b9-b419-710c31e612a6
+        value: 1
+      source: Trait
+      tags:
+        Hidden: true
     cr: 1
     creatureSize: 1M
     damageEntries:
@@ -299,13 +334,15 @@ info:
       flavor: ""
       guid: 5a820cdb-0cf4-4309-84b6-e8834d10b2c7
       iconid: 6fb55862-4058-48ee-9915-ba03ddf5ec28
-      implementation: 4
+      implementation: 3
+      implementationDetails: Damage and the tier 3 compelled move are automated, but the restriction that the target can't end closer to any shade is prompt-only and must be adjudicated manually.
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false

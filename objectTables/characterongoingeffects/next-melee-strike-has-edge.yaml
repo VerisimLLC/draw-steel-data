@@ -6,6 +6,7 @@ __typeName: CharacterOngoingEffect
 association: []
 categorization: common
 ctime: 1760065643557
+custom: true
 display:
   bgcolor:
     __usertype: LuaColor
@@ -18,21 +19,46 @@ display:
   saturation: 1
 domains:
   CharacterOngoingEffect:8e8520b4-cf41-42b4-8197-2e4fa038c5f7: true
-  CharacterOngoingEffect:a9ef06ef-c643-4316-a177-b9f45291461e: true
-endTrigger: attack
 guid: 1e585796-8497-405b-b5c0-a1e65ffb0701
 iconid: 31f05982-a8cd-4fc1-8488-30240ee44e5e
-implementation: 3
+implementation: 4
+implementationDetails: The edge is limited to melee strikes and the effect is purged automatically after the creature uses one.
 modifiers:
 - name: Next Melee Strike Has Edge
   description: The next melee strike this creature makes has an Edge
   __typeName: CharacterModifier
   activationCondition: true
   behavior: power
+  customTrigger:
+    name: End Next Melee Strike Has Edge
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      mode: effect
+      ongoingEffect: 8e8520b4-cf41-42b4-8197-2e4fa038c5f7
+    conditionFormula: Used Ability.Keywords has "Melee" and Used Ability.Keywords has "Strike"
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: ae9172b7-4710-4c23-9526-1282748b32be
+    iconid: ui-icons/skills/1.png
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: useability
   domains:
     CharacterOngoingEffect:8e8520b4-cf41-42b4-8197-2e4fa038c5f7: true
-    CharacterOngoingEffect:a9ef06ef-c643-4316-a177-b9f45291461e: true
   guid: 204e80fe-9793-4260-8915-05a27dcb579d
+  hasCustomTrigger: true
   keywords:
     Melee: true
     Strike: true
@@ -40,7 +66,6 @@ modifiers:
   rollType: ability_power_roll
   source: Ongoing Effect
   sourceguid: 1e585796-8497-405b-b5c0-a1e65ffb0701
-  surges: stacks
 mtime: 1760065643557
 source: Ongoing Effect
-stackable: true
+stackable: false

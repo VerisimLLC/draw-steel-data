@@ -159,7 +159,7 @@ info:
           CharacterFeature:1f85f8a1-e840-4fbd-a21f-beb9858a2b77: true
         guid: 5f6dc5e3-e640-4c30-9948-58d27d598bda
         source: Trait
-        sourceguid: 37e008e8-005a-433b-b273-eef5f201e287
+        sourceguid: 1f85f8a1-e840-4fbd-a21f-beb9858a2b77
         value: 1
       - name: Crafty
         description: The monarch doesn't provoke opportunity attacks by moving.
@@ -171,7 +171,7 @@ info:
           CharacterFeature:eae4d953-c53f-41d8-aae3-cc9de122b1f8: true
         guid: 04a742ac-8dbe-4916-a2fd-c95b2c3a255b
         source: Trait
-        sourceguid: eae4d953-c53f-41d8-aae3-cc9de122b1f8
+        sourceguid: 1f85f8a1-e840-4fbd-a21f-beb9858a2b77
         text: "Crafty: you do not provoke opportunity attacks while moving."
       source: Trait
     - name: Meat Shield
@@ -373,6 +373,7 @@ info:
       meleeRange: 1
       modifiers: []
       numTargets: 2
+      objectTarget: true
       persistence: []
       range: 5
       repeatTargets: false
@@ -451,7 +452,8 @@ info:
       flavor: ""
       guid: 9769d545-1986-4e16-97d6-5e089a5d8789
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 3
+      implementation: 4
+      implementationDetails: The area selects each ally in the burst, then the canonical Move Speed or Make Free Strike ability lets each target's controller resolve the rules choice.
       keywords:
         Area: true
       modifiers: []
@@ -466,7 +468,11 @@ info:
       strain: []
       targetFilter: not Enemy
       targetType: all
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'f04bb57a-3386-421c-b45"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: f04bb57a-3386-421c-b453-c050cee0b0db
       villainAction: Villain Action 1
     - name: Focus Fire
       description: Each ally within 10 squares of the target can move up to their speed toward the target.
@@ -520,7 +526,7 @@ info:
           range: "10"
           repeatTargets: false
           strain: []
-          targetFilter: enemy
+          targetFilter: Friends(Invoker, Target) and Invoker != Target
           targetType: all
         promptText: Each ally within 10 squares of the target can move up to their speed toward the target.
         promptWhenResolving: false
@@ -538,13 +544,18 @@ info:
       keywords: []
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 10
       repeatTargets: false
       strain: []
-      targetFilter: Enemy
+      targetFilter: Enemy or Target.Object
       targetType: target
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'bf939a61-03f1-49fe-b4e"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: bf939a61-03f1-49fe-b4e5-38f41177c836
       villainAction: Villain Action 2
     - name: Kill!
       description: Each enemy in the encounter takes 2 damage for each goblin adjacent to them.
@@ -565,7 +576,8 @@ info:
       flavor: ""
       guid: f742e90b-fe14-4972-b2f4-40608b9c35e9
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 2
+      implementation: 4
+      implementationDetails: Each enemy is selected across the encounter and separateRolls evaluates the documented adjacent-goblin count independently for that target.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -575,7 +587,11 @@ info:
       strain: []
       targetFilter: enemy
       targetType: map
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'e3273cf8-648f-49c1-8fe"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: e3273cf8-648f-49c1-8fed-e8bcd93083d5
       villainAction: Villain Action 3
     innateAttacks: []
     innateLanguages:

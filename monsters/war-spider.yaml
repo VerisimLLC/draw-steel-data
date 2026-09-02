@@ -157,7 +157,8 @@ info:
       domains:
         CharacterFeature:d5b476d1-467b-45d7-8e95-ef079b2bb390: true
       guid: d5b476d1-467b-45d7-8e95-ef079b2bb390
-      implementation: 3
+      implementation: 4
+      implementationDetails: Mounted allies gain an automated jump that suppresses fall damage during the jump and grants an edge to their next melee strike that turn.
       modifiers:
       - name: Ride Launcher
         description: An ally who leaps off the back of the spider can jump up to 6 squares without a test, and takes no damage if they fall during the jump. After the jump, the first melee strike an ally makes on the same turn gains an edge.
@@ -170,7 +171,8 @@ info:
           description: Modify the riders of a mount
           __typeName: CharacterFeature
           guid: bf2152ab-d456-4319-a57b-2cf4f0c89ee2
-          implementation: 3
+          implementation: 4
+          implementationDetails: The rider ability automates the jump, temporary fall protection, and next-melee-strike edge.
           modifiers:
           - name: Mount Riders
             description: Modify the riders of a mount
@@ -182,8 +184,20 @@ info:
               abilityType: none
               actionResourceId: none
               behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                applyto: caster
+                duration: 0
+                ongoingEffect: d20a64b2-59ea-496b-9f45-806cc58cf722
+                ongoingEffectCustom: false
               - __typeName: ActivatedAbilityRelocateCreatureBehavior
                 movementType: jump
+              - __typeName: ActivatedAbilityDelayBehavior
+                delay: "0.2"
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                applyto: caster
+                conditions: []
+                mode: effect
+                ongoingEffect: d20a64b2-59ea-496b-9f45-806cc58cf722
               - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
                 applyto: caster
                 duration: 0
@@ -198,6 +212,8 @@ info:
               domains: []
               guid: 8032bc95-2320-4b86-9391-ad8e86d3d40b
               iconid: 68a50a43-9131-4592-b267-4cf53d26eb40
+              implementation: 4
+              implementationDetails: Jumps the rider up to 6 squares, suppresses fall damage during that jump, and grants an edge to the rider's next melee strike this turn.
               modifiers: []
               numTargets: "1"
               range: "6"
@@ -227,7 +243,8 @@ info:
       domains:
         CharacterFeature:1ed24333-9f3e-4198-9adf-72a412f08427: true
       guid: 1ed24333-9f3e-4198-9adf-72a412f08427
-      implementation: 3
+      implementation: 4
+      implementationDetails: The damage trigger applies to the spider or a same-space rider, halves the damage, and offers the spider a shift of up to 2 squares after resolution.
       modifiers:
       - name: Skitter
         description: ""
@@ -336,7 +353,7 @@ info:
     equipment: []
     ev: 12
     groupid: 4ac19688-1ab4-40a0-a440-708c0fe6d9f5
-    implementation: 3
+    implementation: 4
     import:
       data: |+
         War Spider	Level 1 Elite Mount
@@ -470,6 +487,7 @@ info:
         Weapon: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
       range: 1
       repeatTargets: false
       targetType: target
@@ -512,11 +530,11 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 9f2a7a7a-1df8-404c-a69a-761b9b925dc9
       iconid: d2035312-afaa-4011-a88e-d812fc56cac3
-      implementation: 3
+      implementation: 4
+      implementationDetails: The spider shifts along a chosen path and Leg Blade automatically inherits every creature that came adjacent during the move, using one shared power roll.
       keywords: []
       modifiers: []
       numTargets: 1

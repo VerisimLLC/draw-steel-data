@@ -76,9 +76,9 @@ info:
       __typeName: CharacterFeature
       domains:
         CharacterFeature:03d6d373-36c8-4559-b50f-0166af9ad568: true
-        CharacterFeature:3146422c-eb42-4160-ae0e-642168383dc6: true
       guid: 03d6d373-36c8-4559-b50f-0166af9ad568
-      implementation: 3
+      implementation: 4
+      implementationDetails: Rolling initiative prompts the null to choose a creature within line of effect, applies Rivalry to both creatures for the encounter, and offers the optional d3 only on power rolls they make against each other.
       modifiers:
       - name: Rivalry
         description: The null selects one creature within line of effect at the start of an encounter. Both the null and the creature can add a 1d3 to all power rolls made against each other.
@@ -86,10 +86,9 @@ info:
         behavior: trigger
         domains:
           CharacterFeature:03d6d373-36c8-4559-b50f-0166af9ad568: true
-          CharacterFeature:3146422c-eb42-4160-ae0e-642168383dc6: true
         guid: 6fc99f50-afce-47f7-b90f-464a3b25089f
         source: Trait
-        sourceguid: 3146422c-eb42-4160-ae0e-642168383dc6
+        sourceguid: 03d6d373-36c8-4559-b50f-0166af9ad568
         triggeredAbility:
           name: Rivalry
           description: ""
@@ -110,7 +109,7 @@ info:
               - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
                 duration: eoe
                 ongoingEffect: e349e64f-4422-4fa9-995b-130c492a473a
-                ongoingEffectCustom: e349e64f-4422-4fa9-995b-130c492a473a
+                ongoingEffectCustom: false
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
@@ -118,23 +117,23 @@ info:
                 saturation: 1
               guid: c4193d77-d471-4d84-8d0b-925f72f62cac
               iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-              implementation: 3
+              implementation: 4
+              implementationDetails: The selected creature receives the Rivalry effect until the end of the encounter.
               modifiers: []
               numTargets: "1"
               objectTarget: false
               persistence: []
-              range: "50"
+              range: "100"
               repeatTargets: false
               sourceReference:
                 __typeName: SourceReference
                 docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
                 page: 240
               strain: []
-              targetAllegiance: enemy
               targetTextOverride: Choose a creature as the target for your Rivalry
               targetType: target
             invokeOnCaster: false
-            promptText: Choose a player Hero as the target for your Rivalry.
+            promptText: Choose a creature as the target for your Rivalry.
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             applyto: caster
             duration: eoe
@@ -147,7 +146,6 @@ info:
             saturation: 1
           domains:
             CharacterFeature:03d6d373-36c8-4559-b50f-0166af9ad568: true
-            CharacterFeature:3146422c-eb42-4160-ae0e-642168383dc6: true
           guid: c171ef5c-50db-42ed-93a9-9c72ad7ea4bc
           hasManualVersion: false
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
@@ -166,7 +164,8 @@ info:
       domains:
         CharacterFeature:d6c21802-73fe-4682-8251-6746b2ae4c27: true
       guid: d6c21802-73fe-4682-8251-6746b2ae4c27
-      implementation: 3
+      implementation: 4
+      implementationDetails: The first qualifying damage-dealing strike each round is detected and its damage is halved automatically.
       modifiers:
       - name: Inertial Shield
         description: The first time each round that the null is targeted by a damage-dealing strike, they halve the damage.
@@ -179,7 +178,7 @@ info:
           name: Inertial Shield
           description: The first time each round that the null is targeted by a damage-dealing strike, they halve the damage.
           __typeName: CharacterModifier
-          activationCondition: Ability.Keywords has "strike"
+          activationCondition: Ability.Keywords has "Strike"
           behavior: power
           damageMultiplier: half
           guid: 81b29066-1626-4813-8442-fa76d7867238
@@ -324,14 +323,15 @@ info:
         saturation: 1
       guid: 2164ee7d-1fdb-4790-b62a-137d0c03aeb7
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
-      implementation: 3
+      implementation: 4
+      implementationDetails: The two-target power roll and tier-based shift are automated.
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: "2"
-      objectTarget: false
+      objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false
@@ -364,6 +364,7 @@ info:
       guid: ea277789-26e8-4b5f-a460-8faf1ece2f77
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       implementation: 4
+      implementationDetails: The damage and tier-based potency conditions are automated, including the 2 Malice cost.
       keywords:
         Melee: true
         Psionic: true

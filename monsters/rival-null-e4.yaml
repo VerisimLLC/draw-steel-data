@@ -77,9 +77,9 @@ info:
       __typeName: CharacterFeature
       domains:
         CharacterFeature:b9c1d2e3-f4a5-4b6c-d7e8-f9a1b2c3d4e5: true
-        CharacterFeature:c1d2e3f4-a5b6-4c7d-e8f9-a1b2c3d4e5f6: true
       guid: b9c1d2e3-f4a5-4b6c-d7e8-f9a1b2c3d4e5
-      implementation: 3
+      implementation: 4
+      implementationDetails: Rolling initiative prompts the null to choose a creature within line of effect, applies Rivalry to both creatures for the encounter, and offers the optional d3 only on power rolls they make against each other.
       modifiers:
       - name: Rivalry
         description: The null selects one creature within line of effect at the start of an encounter. Both the null and the creature can add a 1d3 to all power rolls made against each other.
@@ -87,10 +87,9 @@ info:
         behavior: trigger
         domains:
           CharacterFeature:b9c1d2e3-f4a5-4b6c-d7e8-f9a1b2c3d4e5: true
-          CharacterFeature:c1d2e3f4-a5b6-4c7d-e8f9-a1b2c3d4e5f6: true
         guid: d2e3f4a5-b6c7-4d8e-f9a1-b2c3d4e5f6a7
         source: Trait
-        sourceguid: c1d2e3f4-a5b6-4c7d-e8f9-a1b2c3d4e5f6
+        sourceguid: b9c1d2e3-f4a5-4b6c-d7e8-f9a1b2c3d4e5
         triggeredAbility:
           name: Rivalry
           description: ""
@@ -111,7 +110,7 @@ info:
               - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
                 duration: eoe
                 ongoingEffect: e349e64f-4422-4fa9-995b-130c492a473a
-                ongoingEffectCustom: e349e64f-4422-4fa9-995b-130c492a473a
+                ongoingEffectCustom: false
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
@@ -119,23 +118,23 @@ info:
                 saturation: 1
               guid: f4a5b6c7-d8e9-4f1a-b2c3-d4e5f6a7b8ca
               iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-              implementation: 3
+              implementation: 4
+              implementationDetails: The selected creature receives the Rivalry effect until the end of the encounter.
               modifiers: []
               numTargets: "1"
               objectTarget: false
               persistence: []
-              range: "50"
+              range: "100"
               repeatTargets: false
               sourceReference:
                 __typeName: SourceReference
                 docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
                 page: 240
               strain: []
-              targetAllegiance: enemy
               targetTextOverride: Choose a creature as the target for your Rivalry
               targetType: target
             invokeOnCaster: false
-            promptText: Choose a player Hero as the target for your Rivalry.
+            promptText: Choose a creature as the target for your Rivalry.
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             applyto: caster
             duration: eoe
@@ -148,7 +147,6 @@ info:
             saturation: 1
           domains:
             CharacterFeature:b9c1d2e3-f4a5-4b6c-d7e8-f9a1b2c3d4e5: true
-            CharacterFeature:c1d2e3f4-a5b6-4c7d-e8f9-a1b2c3d4e5f6: true
           guid: e3f4a5b6-c7d8-4e9f-a1b2-c3d4e5f6a7b9
           hasManualVersion: false
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
@@ -167,7 +165,8 @@ info:
       domains:
         CharacterFeature:a5b6c7d8-e9f1-4a2b-c3d4-e5f6a7b8c9d2: true
       guid: a5b6c7d8-e9f1-4a2b-c3d4-e5f6a7b8c9d2
-      implementation: 2
+      implementation: 4
+      implementationDetails: The first qualifying strike each round takes a bane and has its damage halved; after that strike resolves, its caster automatically takes 10 damage.
       modifiers:
       - name: Energy Conservation
         description: The first time each round that the null is targeted by a strike, it takes a bane and the null halves the damage from it. The creature making the strike takes 10 damage.
@@ -180,7 +179,7 @@ info:
           name: Energy Conservation
           description: The first time each round that the null is targeted by a strike, it takes a bane and the null halves the damage from it. The creature making the strike takes 10 damage.
           __typeName: CharacterModifier
-          activationCondition: Ability.Keywords has "strike"
+          activationCondition: Ability.Keywords has "Strike"
           behavior: power
           changeTarget: false
           customTrigger:
@@ -188,7 +187,10 @@ info:
             description: ""
             __typeName: TriggeredAbility
             abilityType: none
-            behaviors: []
+            behaviors:
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: Energy Conservation
+              roll: "10"
             display:
               bgcolor: "#ffffffff"
               brightness: 1
@@ -196,12 +198,13 @@ info:
               saturation: 1
             guid: 3c7a6388-6d2f-4a22-80f6-aebad0e70302
             iconid: ui-icons/skills/1.png
+            modifierCustomTrigger: true
             modifiers: []
             numTargets: "1"
             range: 1
             repeatTargets: false
-            targetType: self
-            trigger: d20roll
+            targetType: abilitycaster
+            trigger: custom
           damageMultiplier: half
           guid: b6c7d8e9-f1a2-4b3c-d4e5-f6a7b8c9d1e3
           hasCustomTrigger: true
@@ -347,13 +350,14 @@ info:
       guid: d8e9f1a2-b3c4-4d5e-f6a7-b8c9d1e2f3a5
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       implementation: 4
+      implementationDetails: The two-target power roll, tier-based shift, and Agility-potency damage are automated.
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: "2"
-      objectTarget: false
+      objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false
@@ -386,6 +390,7 @@ info:
       guid: b3c4d5e6-f7a8-4b9c-d1e2-f3a4b5c6d7e9
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       implementation: 4
+      implementationDetails: The two-target damage and tier-based save-ends conditions are automated, including the 5 Malice cost.
       keywords:
         Melee: true
         Psionic: true

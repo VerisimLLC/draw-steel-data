@@ -180,12 +180,13 @@ info:
       tags:
         Ability: true
     - name: Curse for the Defilers
-      description: ""
+      description: A creature or object deals damage to the tomb horror or a casket or relic within distance that the tomb horror was feeding on. If the target has P<2, they are slowed (save ends). The tomb horror then moves up to their speed toward the target.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:8ccd6d7e-9586-41cb-9fda-446770c3c18c: true
       guid: 8ccd6d7e-9586-41cb-9fda-446770c3c18c
       implementation: 3
+      implementationDetails: Damage to the tomb horror can trigger the automated potency-gated slowed effect and movement. Damage to a specific casket or relic must use the manual version, and movement toward the target is prompted rather than enforced.
       modifiers:
       - name: Curse for the Defilers
         description: ""
@@ -283,14 +284,15 @@ info:
         CharacterFeature:f7089f53-c29f-4f9e-bd4f-cdb3753a29df: true
       guid: f7089f53-c29f-4f9e-bd4f-cdb3753a29df
       implementation: 4
+      implementationDetails: An adjacent creature other than the tomb horror automatically takes 5 corruption damage at the start of their turn and is frightened through the end of their next turn on a failed I<1 potency check.
       modifiers:
       - name: Enervating Horror
         description: Any creature who starts their turn adjacent to the tomb horror takes 5 corruption damage, and if they have I<1, they are frightened until the end of their next turn.
         __typeName: CharacterModifier
         aura:
           __typeName: Aura
-          applyto: enemies
-          creatureFilter: ""
+          applyto: all
+          creatureFilter: not (Self = Caster)
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -382,7 +384,8 @@ info:
         saturation: 1
       guid: c2c95e60-c736-4e76-b88d-6837f64e1ba5
       iconid: 5293ceb6-8d63-46c1-8d8f-26e8f319a41c
-      implementation: 3
+      implementation: 4
+      implementationDetails: The area power roll automatically applies damage, the tier-specific restrained condition, and damage weakness 2 for the duration of that restrained condition.
       keywords:
         Area: true
         Weapon: true
@@ -442,6 +445,7 @@ info:
       guid: f5911391-407e-4248-9396-8c51e0ed4bd5
       iconid: 8b978d57-497d-4cc8-ac3c-c0fd43756786
       implementation: 3
+      implementationDetails: Invokes a shift up to the tomb horror's speed. Vertical movement and the requirement to end on a solid surface are presented in the ability text but are not enforced.
       modifiers: []
       numTargets: "1"
       persistence: []

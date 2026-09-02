@@ -14,7 +14,7 @@ maliceAbilities:
   - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
     duration: endround
     ongoingEffect: 5646898c-0c0e-4973-823e-13172eaaaba2
-    ongoingEffectCustom: 5646898c-0c0e-4973-823e-13172eaaaba2
+    ongoingEffectCustom: false
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -87,7 +87,7 @@ maliceAbilities:
     filterTarget: ""
     resistanceAttr: mgt
     resistanceRoll: true
-    roll: 2d10 + Might or Agility
+    roll: 2d10 + Might
     tiers:
     - 5 poison damage; weakened until mist disappears
     - weakened until mist disappears
@@ -102,7 +102,8 @@ maliceAbilities:
     aura:
       name: Swamp Stink
       __typeName: Aura
-      applyto: othertype
+      applyto: all
+      creatureFilter: not (Keywords has "Goblin")
       difficult_terrain: true
       display:
         bgcolor: "#ffffffff"
@@ -110,7 +111,8 @@ maliceAbilities:
         hueshift: 0
         saturation: 1
       guid: 4c4d1ff0-409f-4708-8625-5af15fe27ba0
-      implementation: 3
+      implementation: 4
+      implementationDetails: The aura makes the map difficult terrain only for non-goblins and lasts until the end of the round.
       modifiers: []
       objectid: 11fda0d0-acb8-434e-bfed-16b4e25dc35a
       source: Goblin Malice
@@ -123,6 +125,7 @@ maliceAbilities:
   guid: 2b213b4b-43cd-4c08-bc17-d047e84765f4
   iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
   implementation: 4
+  implementationDetails: Rolls the required Might test for every non-goblin, applies damage and weakened by tier, and creates non-goblin-only difficult terrain until the end of the round.
   modifiers: []
   numTargets: "1"
   persistence: []
@@ -135,7 +138,7 @@ maliceAbilities:
     docid: cc66844a-04d0-49a0-8687-65ef83b15363
     page: 160
   strain: []
-  targetFilter: Target.Keywords has not "goblin"
+  targetFilter: not (Target.Keywords has "Goblin")
   targetType: map
 mtime: 1778651669931
 traits: []

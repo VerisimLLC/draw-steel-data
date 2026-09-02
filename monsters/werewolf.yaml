@@ -116,15 +116,16 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: Shapeshifter
-      description: The werewolf enters combat in their hybrid humanoid form. Their shape can’t be changed by any external effect.
+      description: The werewolf enters combat in their hybrid humanoid form. Their shape can't be changed by any external effect.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:a0c54684-c32b-4b05-b656-b679cc517161: true
       guid: a0c54684-c32b-4b05-b656-b679cc517161
       implementation: 3
+      implementationDetails: Entering combat produces a hybrid-form reminder. Preventing external shape changes requires manual adjudication.
       modifiers:
       - name: Shapeshifter
-        description: The werewolf enters combat in their hybrid humanoid form. Their shape can’t be changed by any external effect.
+        description: The werewolf enters combat in their hybrid humanoid form. Their shape can't be changed by any external effect.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -134,7 +135,7 @@ info:
         sourceguid: a0c54684-c32b-4b05-b656-b679cc517161
         triggeredAbility:
           name: Shapeshifter
-          description: The werewolf enters combat in their hybrid humanoid form. Their shape can’t be changed by any external effect.
+          description: The werewolf enters combat in their hybrid humanoid form. Their shape can't be changed by any external effect.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors: []
@@ -158,15 +159,16 @@ info:
           whenActive: combat
       source: Trait
     - name: Accursed Rage
-      description: The werewolf’s ferocity is expressed through rage, and their abilities can inflict rage points on any enemy except a stormwight fury. A creature who starts their turn with 10 or more rage expends their rage. Then before taking their turn, they must shift up to their speed toward the nearest creature and make a melee free strike against them. A creature who takes damage from this free strike gains 1 rage. Accumulated rage disappears after a character finishes a respite.
+      description: The werewolf's ferocity is expressed through rage, and their abilities can inflict rage points on any enemy except a stormwight fury. A creature who starts their turn with 10 or more rage expends their rage. Then before taking their turn, they must shift up to their speed toward the nearest creature and make a melee free strike against them. A creature who takes damage from this free strike gains 1 rage. Accumulated rage disappears after a character finishes a respite.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:0610ca2d-5156-46b7-8c55-98916db018fd: true
       guid: 0610ca2d-5156-46b7-8c55-98916db018fd
       implementation: 3
+      implementationDetails: The 10-rage start-of-turn trigger, rage expenditure, shift, free strike, and added rage are automated. Choosing the nearest creature and enforcing movement toward it require manual adjudication.
       modifiers:
       - name: Accursed Rage
-        description: The werewolf’s ferocity is expressed through rage, and their abilities can inflict rage points on any enemy except a stormwight fury. A creature who starts their turn with 10 or more rage expends their rage. Then before taking their turn, they must shift up to their speed toward the nearest creature and make a melee free strike against them. A creature who takes damage from this free strike gains 1 rage. Accumulated rage disappears after a character finishes a respite.
+        description: The werewolf's ferocity is expressed through rage, and their abilities can inflict rage points on any enemy except a stormwight fury. A creature who starts their turn with 10 or more rage expends their rage. Then before taking their turn, they must shift up to their speed toward the nearest creature and make a melee free strike against them. A creature who takes damage from this free strike gains 1 rage. Accumulated rage disappears after a character finishes a respite.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -202,7 +204,9 @@ info:
               repeatTargets: false
               strain: []
               targetType: self
-            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+            standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+            standardAbilityParams:
+              distance: Movement Speed
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
             customAbility:
@@ -224,6 +228,7 @@ info:
                     abilityType: none
                     behaviors:
                     - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                      filterTarget: not Subclasses has "Stormwight"
                       ongoingEffect: bf68d026-4fd0-4280-9dba-5756f2e45b51
                       ongoingEffectCustom: false
                     display:
@@ -291,7 +296,8 @@ info:
       domains:
         CharacterFeature:eaf33011-e2e0-48d2-88b7-f283df8628f4: true
       guid: eaf33011-e2e0-48d2-88b7-f283df8628f4
-      implementation: 3
+      implementation: 4
+      implementationDetails: Ignore Difficult Terrain is applied as a movement attribute.
       modifiers:
       - name: Vukenstep
         description: The werewolf ignores difficult terrain.
@@ -312,6 +318,7 @@ info:
         CharacterFeature:467046dd-1d21-43b3-95ac-214405b4a5ea: true
       guid: 467046dd-1d21-43b3-95ac-214405b4a5ea
       implementation: 3
+      implementationDetails: Charges ending adjacent to the werewolf automatically offer the damage-and-prone trigger. Non-charge straight-line movement and the Malice cost require manual adjudication.
       modifiers:
       - name: Facepalm and Head Slam
         description: ""
@@ -379,7 +386,8 @@ info:
       domains:
         CharacterFeature:595bcbeb-37cb-4eec-ac99-e27754b0fa3d: true
       guid: 595bcbeb-37cb-4eec-ac99-e27754b0fa3d
-      implementation: 3
+      implementation: 4
+      implementationDetails: Holy damage automatically suppresses Blood In Their Eyes through the end of the werewolf's next turn.
       modifiers:
       - name: Holy Damage Taken
         description: ""
@@ -427,7 +435,8 @@ info:
       domains:
         CharacterFeature:eb74ff47-c84a-4f45-9e29-97cb5d1f2945: true
       guid: eb74ff47-c84a-4f45-9e29-97cb5d1f2945
-      implementation: 3
+      implementation: 4
+      implementationDetails: The extra solo turn and optional end-of-turn damage to purge one save-ends effect are automated.
       modifiers:
       - name: End Effect
         description: ""
@@ -435,7 +444,7 @@ info:
         behavior: trigger
         guid: 6bc30a1d-ef1b-4309-81c0-a92e384ce6b3
         source: Trait
-        sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
+        sourceguid: eb74ff47-c84a-4f45-9e29-97cb5d1f2945
         triggeredAbility:
           name: End Effect
           description: ""
@@ -592,7 +601,7 @@ info:
     initiativeGrouping: 63317e3c-ccf0-420a-8fab-29756e22210a
     innateActivatedAbilities:
     - name: Accursed Bite
-      description: "2 Malice: If the target has P<0 they are afflicted with lycanthropy. Each time the target is unaffected by the potency effect, the potency increases by 1 the next time the werewolf uses the ability against the same target. A creature afflicted with lycanthropy gains 2 rage at the end of each of their turns whenever they’re in combat. Their rage doesn’t disappear after finishing a respite, and they must complete the Find a Cure downtime project in Draw Steel: Heroes to end this effect."
+      description: "2 Malice: If the target has P<0 they are afflicted with lycanthropy. Each time the target is unaffected by the potency effect, the potency increases by 1 the next time the werewolf uses the ability against the same target. A creature afflicted with lycanthropy gains 2 rage at the end of each of their turns whenever they're in combat. Their rage doesn't disappear after finishing a respite, and they must complete the Find a Cure downtime project in Draw Steel: Heroes to end this effect."
       __typeName: ActivatedAbility
       abilityFilters: []
       abilityType: none
@@ -969,6 +978,7 @@ info:
       guid: 9bd89e84-6bbb-4760-abd4-5892953538a2
       iconid: fbfb413b-5378-48cc-9a8d-44af9bddd71c
       implementation: 3
+      implementationDetails: Both jumps and the modified melee free strike are automated. Determining whether the first jump ended at a wall remains a manual choice.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -990,7 +1000,7 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         isTest: false
         resistanceRoll: true
-        roll: 2d10 + Might or Agility
+        roll: 2d10 + Intuition
         tiers:
         - The target must move their speed in a straight line away from the werewolf; frightened (save ends)
         - Frightened (EoT)
@@ -1047,6 +1057,7 @@ info:
       guid: 34be4019-b39b-4058-b67e-cd34242c1cea
       iconid: 92a6d94b-65ab-49b6-b33e-0dae78f3a332
       implementation: 3
+      implementationDetails: The Intuition test, frightened effects, and rage gain are automated for selected targets. Tier 1 movement must be directed manually, and rage-bearing enemies outside the burst must be added manually.
       keywords:
         Area: true
       modifiers: []
@@ -1063,7 +1074,7 @@ info:
       targetType: all
       usageLimitOptions: "{'multicharge': False, 'resourceid': '4be40fa8-6ab0-4463-854"
       villainAction: Villain Action 1
-    - name: 'Full Wolf '
+    - name: Full Wolf
       description: The werewolf transforms into a massive wolf of size 3 until they die or until the end of the encounter. They move to a space that can accommodate their new size and push adjacent creatures out of their way. While in wolf form, they have speed 10 and stability 2, their strikes gain a +2 damage bonus and bestow an additional 1 rage, and the potency of Accursed Bite increases by 1.
       __typeName: ActivatedAbility
       abilityType: none
@@ -1090,6 +1101,7 @@ info:
       guid: 132d3c01-8e3c-4301-85f4-03e31bdaf76d
       iconid: d2035312-afaa-4011-a88e-d812fc56cac3
       implementation: 3
+      implementationDetails: Size, speed, stability, strike damage, strike rage, free-strike damage, and Accursed Bite potency are automated. Moving to a valid larger space and pushing adjacent creatures require manual adjudication.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -1165,7 +1177,7 @@ info:
           modifiers: []
           numTargets: "1"
           persistence: []
-          range: "3"
+          range: "2"
           repeatTargets: false
           strain: []
           targetType: all
@@ -1209,7 +1221,8 @@ info:
       flavor: ""
       guid: 9c3698b2-9cad-4ef4-bc05-a71e4cb42b2d
       iconid: 0e377747-2985-47cb-87aa-52e6563a1230
-      implementation: 3
+      implementation: 4
+      implementationDetails: Both shifts, the burst power roll, damage, rage, and bleeding are automated.
       keywords:
         Area: true
         Melee: true

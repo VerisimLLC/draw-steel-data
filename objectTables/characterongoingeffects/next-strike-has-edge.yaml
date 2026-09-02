@@ -4,8 +4,10 @@ description: The next strike this creature makes has an Edge
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
+buffType: buff
 categorization: common
 ctime: 1760065700520
+custom: true
 display:
   bgcolor:
     __usertype: LuaColor
@@ -17,27 +19,53 @@ display:
   hueshift: 0
   saturation: 1
 domains:
-  CharacterOngoingEffect:a9ef06ef-c643-4316-a177-b9f45291461e: true
-endTrigger: attack
+  CharacterOngoingEffect:fab3c9a5-f7c1-488c-98a7-79dc269a5e3b: true
 guid: 1e585796-8497-405b-b5c0-a1e65ffb0701
 iconid: 31f05982-a8cd-4fc1-8488-30240ee44e5e
-implementation: 3
+implementation: 4
+implementationDetails: The edge is limited to strikes and the effect is purged automatically after the creature uses a strike.
 modifiers:
 - name: Next Strike Has Edge
   description: The next strike this creature makes has an Edge
   __typeName: CharacterModifier
   activationCondition: true
   behavior: power
+  customTrigger:
+    name: End Next Strike Has Edge
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      mode: effect
+      ongoingEffect: fab3c9a5-f7c1-488c-98a7-79dc269a5e3b
+    conditionFormula: Used Ability.Keywords has "strike"
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: e95f80eb-6b31-44bb-bb56-0c141720e667
+    iconid: ui-icons/skills/1.png
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: useability
   domains:
-    CharacterOngoingEffect:a9ef06ef-c643-4316-a177-b9f45291461e: true
+    CharacterOngoingEffect:fab3c9a5-f7c1-488c-98a7-79dc269a5e3b: true
   guid: 204e80fe-9793-4260-8915-05a27dcb579d
+  hasCustomTrigger: true
   keywords:
     Strike: true
   modtype: edge
   rollType: ability_power_roll
   source: Ongoing Effect
   sourceguid: 1e585796-8497-405b-b5c0-a1e65ffb0701
-  surges: stacks
 mtime: 1760065700520
 source: Ongoing Effect
-stackable: true
+stackable: false

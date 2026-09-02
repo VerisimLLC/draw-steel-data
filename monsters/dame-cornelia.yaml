@@ -143,7 +143,7 @@ info:
       domains:
         CharacterFeature:8964ee25-327a-45bf-bdc6-176d6e32331d: true
       guid: 8964ee25-327a-45bf-bdc6-176d6e32331d
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Death Void
         description: When Cornelia is reduced to 0 Stamina, each enemy within 2 squares of her takes 5 corruption damage.
@@ -190,7 +190,7 @@ info:
       domains:
         CharacterFeature:422326ac-8bc4-47d6-8299-aac59f413034: true
       guid: 422326ac-8bc4-47d6-8299-aac59f413034
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Parry!
         description: ""
@@ -235,7 +235,7 @@ info:
         source: Character Feature
         sourceguid: 422326ac-8bc4-47d6-8299-aac59f413034
         targetType: selforally
-        trigger: takedamage
+        trigger: strike
         type: trigger
       source: Character Feature
       tags:
@@ -387,17 +387,12 @@ info:
         modesSelected:
         - 2
         promptText: Select  ally to use a signature ability
-      - __typeName: ActivatedAbilityReplenishBehavior
-        applyto: caster
-        mode: expend
-        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: ac3274b4-5799-4395-93a8-309063d45f3e
       hasCustomIcon: true
@@ -405,7 +400,6 @@ info:
       implementation: 4
       keywords:
         Area: true
-        Melee: true
         Weapon: true
       modeList:
       - rules: One ally within 10 squares can make a free strike.
@@ -419,6 +413,8 @@ info:
       persistence: []
       range: 1
       repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 1 when mode = 2 else 0
       sourceReference:
         __typeName: SourceReference
         docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
@@ -445,7 +441,6 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: e89b6461-7b0c-459d-9cb0-70776d4a2624
       hasCustomIcon: true
@@ -474,9 +469,31 @@ info:
       abilityType: none
       actionResourceId: none
       behaviors:
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        applyto: caster
-        rule: shift {Movement Speed}
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 5c32baab-2ff0-4f50-9818-3c6ab7a31cd9
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        promptText: Shift before the first Glaive Swing, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<MovementSpeed>>
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         customAbility:
@@ -500,6 +517,33 @@ info:
         invokeOnCaster: false
         namedAbility: Glaive Swing
         promptText: First Glaive Swing
+        suppressInvokedActionCost: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 953f15d1-88f4-4143-ac29-6f7b68a56c87
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        promptText: Continue shifting before the second Glaive Swing, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, MovementSpeed - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < MovementSpeed
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         customAbility:
@@ -523,6 +567,33 @@ info:
         guid: c370a587-c056-437d-9159-842b33750201
         namedAbility: Glaive Swing
         promptText: Second Glaive Swing
+        suppressInvokedActionCost: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9e409e1a-4dd0-4732-a72f-fda8ebfb52dd
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        promptText: Finish any remaining shift after the second Glaive Swing.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, MovementSpeed - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < MovementSpeed
       castImmediately: true
       categorization: Villain Action
       display:
@@ -530,12 +601,12 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: d2c90b93-c145-4235-ba46-ce2753b5ec5c
       hasCustomIcon: true
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 3
+      implementation: 4
+      implementationDetails: The three shift prompts share the cast's movement total, allowing Cornelia to divide one shift up to her speed before, between, and after two free Glaive Swing uses.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -596,7 +667,7 @@ info:
         - 8 damage; M<3, slowed (save ends)
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
-        applyto: targets
+        applyto: proximity_only
         autoTarget: false
         customAbility:
           name: Invoked Ability
@@ -616,14 +687,14 @@ info:
           range: 1
           repeatTargets: false
           targetType: self
-        invokeOnCaster: true
-        promptText: Each ally within 5 squares of the area can make a free strike against a target (one target per ally). Choose allies to free strike this target.
-        standardAbility: 7cb2aa05-2a8d-42ed-acd0-e1086e87beb0
-        standardAbilityParams:
-          range: "999"
-          targetcount: "999"
-          targetid: "<<target.id>>"
-        targeting: prompt
+        filterTarget: Friends(Self, Caster) and not (Self = Caster)
+        promptText: Make a free strike against one target of Cornelia's Glaive Swing.
+        promptWhenResolving: true
+        promptWhenResolvingText: Choose allies within 5 squares of the area to make one free strike each.
+        runOnController: true
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+        target_proximity_range: "5"
+        targeting: prompt_inherit
       categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
@@ -633,6 +704,7 @@ info:
       guid: ac606cde-56d8-4de1-b229-7c619f8bf8b1
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
       implementation: 4
+      implementationDetails: Allies within 5 squares of the area are collected once. Each selected ally can make one free strike against one of the original targets.
       keywords:
         Area: true
         Magic: true

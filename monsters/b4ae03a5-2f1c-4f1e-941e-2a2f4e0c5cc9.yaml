@@ -100,7 +100,7 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: End Effect
-      description: At the end of their turn, the monarch can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
+      description: At the end of each of her turns, Queen Bargnot can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:a3c8ca3a-6be8-463b-9d00-bdc7e380fc37: true
@@ -109,7 +109,7 @@ info:
       implementationDetails: "'Can't be reduced in any way' is satisfied by construction: PurgeEffectsBehavior damageToSelf calls creature:TakeDamage directly (AbilityPurgeEffects.lua:483), which is the raw stamina path - it never goes through InflictDamageInstance, so no damage immunity, weakness or resistance is applied. The 5 damage also only fires when an effect was actually purged."
       modifiers:
       - name: End Effect
-        description: At the end of their turn, the monarch can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
+        description: At the end of each of her turns, Queen Bargnot can take 5 damage to end one effect on her that can be ended by a saving throw. This damage can't be reduced in any way.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -126,17 +126,22 @@ info:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             conditions: []
             damageToSelf: "5"
+            mode: conditions_and_effects
             purgeType: one
             targetDuration: save
+          conditionFormula: Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: c4b2865b-d88b-4186-9739-cb9b2d0d8b4f
+          hasManualVersion: true
           iconid: ui-icons/skills/1.png
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          persistence: []
           range: 1
           repeatTargets: false
           sourceReference:
@@ -146,6 +151,8 @@ info:
           strain: []
           targetType: self
           trigger: endturn
+          triggerPrompt: Take 5 damage to end one effect that can be ended by a saving throw. This damage can't be reduced in any way.
+          whenActive: combat
       source: Trait
     - name: Show Them Your Might!
       description: "Trigger: A creature targets Queen Bargnot with a strike. Effect: The target of this ability becomes the target of the triggering strike, and Queen Bargnot can shift 1 square."
@@ -153,7 +160,8 @@ info:
       domains:
         CharacterFeature:dfcbaede-65f4-4ec2-b340-cf6aab6f5254: true
       guid: dfcbaede-65f4-4ec2-b340-cf6aab6f5254
-      implementation: 3
+      implementation: 4
+      implementationDetails: The triggered-action power-roll modifier retargets the strike to one adjacent ally of Queen Bargnot, then offers her optional shift after the triggering strike resolves.
       modifiers:
       - name: Show Them Your Might!
         description: ""
@@ -169,16 +177,66 @@ info:
           behavior: power
           changeTarget: true
           changeTargetDistance: 1
-          changeTargetFilter: Friends(triggerer, target)
+          changeTargetFilter: Friends(Triggerer, Target) and (not (Target = Triggerer)) and Distance(Triggerer) <= 1
           changeTargetRange: distance
+          customTrigger:
+            name: Show Them Your Might!
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: standard
+              autoTarget: false
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 6bf58633-2836-4dd7-9068-5f5c64b6bb0e
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetType: self
+              invokeOnCaster: false
+              promptText: Queen Bargnot can shift 1 square.
+              runOnController: true
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: "1"
+            castImmediately: true
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: eba14a6d-4170-4a67-95c7-01659337c0de
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            strain: []
+            targetType: self
+            trigger: d20roll
           guid: 75b54716-d80e-454b-83fc-c4bba89705a7
+          hasCustomTrigger: true
           keywords: []
           modtype: none
           rollType: ability_power_roll
           rules: ""
           source: Trigger
         range: 10
-        rules: Choose an ally to become the target of the triggering strike. Queen Bargnot can then shift 1 square (move her token).
+        rules: Choose an ally to become the target of the triggering strike. Queen Bargnot can then shift 1 square.
         source: Character Feature
         sourceguid: dfcbaede-65f4-4ec2-b340-cf6aab6f5254
         targetType: self
@@ -401,7 +459,6 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 77e18d3a-3a1a-46ab-80fa-26dd661c4e29
       iconid: d15fe212-5892-433b-869f-4778a5a9604d
@@ -414,6 +471,7 @@ info:
       meleeRange: 1
       modifiers: []
       numTargets: 2
+      objectTarget: true
       persistence: []
       range: 5
       repeatTargets: false
@@ -475,7 +533,7 @@ info:
           range: "10"
           repeatTargets: false
           strain: []
-          targetFilter: enemy
+          targetFilter: Friends(Invoker, Target) and Invoker != Target
           targetType: all
         promptText: Each ally within 10 squares of the target can move up to their speed toward the target.
         promptWhenResolving: false
@@ -485,14 +543,15 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 01328aa0-a427-4d32-a228-1c599400847c
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 4
+      implementation: 3
+      implementationDetails: The selected enemy or object is the range origin and every ally of Queen Bargnot within 10 squares is offered their Move Speed ability, but movement toward the target must be adjudicated manually.
       keywords: []
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 10
       repeatTargets: false
@@ -501,9 +560,13 @@ info:
         docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
         page: 96
       strain: []
-      targetFilter: Enemy
+      targetFilter: Enemy or Target.Object
       targetType: target
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'bf939a61-03f1-49fe-b4e"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: bf939a61-03f1-49fe-b4e5-38f41177c836
       villainAction: Villain Action 1
     - name: Kill Them All!
       description: Each enemy in the encounter takes 2 damage for each goblin adjacent to them, or 4 damage for each mystic goblin adjacent to them.
@@ -550,7 +613,6 @@ info:
       actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        resistanceRoll: true
         roll: 2d10 + 3
         tiers:
         - 3 damage; push 3 or M<1 prone
@@ -597,7 +659,7 @@ info:
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        rule: slide 5
+        rule: slide 5, ignoring stability if the target is an ally
         applyto: targets
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
@@ -622,7 +684,7 @@ info:
           repeatTargets: false
           targetType: self
         promptText: The ally can make a melee free strike when they land.
-        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+        standardAbility: 9b123334-6d7c-4848-8b17-db3255c4012c
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
@@ -631,8 +693,8 @@ info:
         saturation: 1
       guid: 9b3d6f17-58cd-4503-95a0-7af58e7fdb52
       iconid: ui-icons/skills/1.png
-      implementation: 4
-      implementationDetails: "The throw is now forced movement (slide 5, applyto targets), matching the rules. The landing free strike is an optional prompt (a genuine rules choice). Not modelled: 'takes no falling damage' -- the engine has no vertical displacement here, so no falling damage can occur anyway."
+      implementation: 3
+      implementationDetails: The willing ally is slid up to 5 squares without losing distance to stability and is offered a melee-only free strike. YAML cannot scope fall-damage immunity to only this throw, so that exemption still requires manual adjudication if the destination causes a fall.
       keywords:
         Melee: true
       modifiers: []
@@ -662,7 +724,7 @@ info:
       Mystic Goblin: true
     levelChoices: []
     max_hitpoints: 120
-    max_hitpoints_roll: "80"
+    max_hitpoints_roll: "120"
     minion: false
     monster_category: Monster
     monster_type: Mystic Queen Bargnot

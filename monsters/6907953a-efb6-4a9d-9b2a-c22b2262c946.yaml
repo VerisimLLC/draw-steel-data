@@ -77,15 +77,16 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: Creeper
-      description: If the memorial ivy is climbing a willing ally or an enemy who has I<1 , they can compel that creature to move up to their speed.
+      description: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:badb6f1e-facb-473f-8580-1df14caebe1e: true
       guid: badb6f1e-facb-473f-8580-1df14caebe1e
-      implementation: 3
+      implementation: 4
+      implementationDetails: Restricts the target to the creature the ivy is climbing, enforces the enemy Intuition requirement, and invokes Move Speed for that creature.
       modifiers:
       - name: Creeper
-        description: If the memorial ivy is climbing a willing ally or an enemy who has I<1 , they can compel that creature to move up to their speed.
+        description: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
         __typeName: CharacterModifier
         activatedAbility:
           name: Creeper
@@ -143,7 +144,7 @@ info:
             docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
             page: 31
           strain: []
-          targetFilter: target.Intuition < 1 or not Enemy
+          targetFilter: Caster.Mounted and Caster.Mount.id = Target.id and (not Enemy or Target.Intuition < 1)
           targetType: target
         behavior: activated
         domains:
@@ -183,7 +184,8 @@ info:
         saturation: 1
       guid: ac3b7de3-9a50-4c64-8b5c-a677a096ee03
       iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
-      implementation: 3
+      implementation: 4
+      implementationDetails: Automates the damage roll and each tier's pull distance for the selected creature or object.
       keywords:
         Ranged: true
         Strike: true

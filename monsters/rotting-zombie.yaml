@@ -105,15 +105,16 @@ info:
         __typeName: CharacterAttribute
     characterFeatures:
     - name: Death Grasp
-      description: 'When the rotting zombie is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends. '
+      description: When the rotting zombie is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:2d9de553-c63d-4ffe-8714-02ebd572aa5b: true
       guid: 2d9de553-c63d-4ffe-8714-02ebd572aa5b
-      implementation: 3
+      implementation: 4
+      implementationDetails: Creates a persistent difficult-terrain space when the zombie dies, then slows the first entering enemy who fails the Might potency and removes the entire effect.
       modifiers:
       - name: Death Grasp
-        description: 'When the rotting zombie is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends. '
+        description: When the rotting zombie is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -133,8 +134,8 @@ info:
               name: Death Grasp
               description: The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends.
               __typeName: Aura
-              applyto: enemies
-              creatureFilter: Might Potency Resistance < 2
+              applyto: all
+              creatureFilter: ""
               difficult_terrain: true
               display:
                 bgcolor: "#ffffffff"
@@ -146,34 +147,44 @@ info:
               modifiers: []
               objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
               source: Death Grasp
-              triggers:
-              - ability:
-                  name: Death Grasp
-                  description: ""
-                  __typeName: TriggeredAbility
-                  abilityType: none
-                  behaviors:
-                  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-                    rule: Slowed (save ends)
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: 25fcb7b2-f467-47ab-ae96-ed8ce0725b7f
-                  iconid: ui-icons/skills/1.png
-                  modifiers: []
-                  numTargets: "1"
-                  persistence: []
-                  radius: 0
-                  range: 5
-                  repeatTargets: false
-                  silent: true
-                  strain: []
-                  targetType: self
+              subauras:
+              - name: Death Grasp (Snare)
+                description: The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends.
+                __typeName: Aura
+                applyto: enemies
+                creatureFilter: Might Potency Resistance < 2
+                guid: b3773178-1be4-4841-9255-105679a07db1
+                modifiers: []
+                source: Death Grasp
+                triggers:
+                - ability:
+                    name: Death Grasp
+                    description: ""
+                    __typeName: TriggeredAbility
+                    abilityType: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                      rule: Slowed (save ends)
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    guid: 25fcb7b2-f467-47ab-ae96-ed8ce0725b7f
+                    iconid: ui-icons/skills/1.png
+                    modifiers: []
+                    numTargets: "1"
+                    persistence: []
+                    radius: 0
+                    range: 5
+                    repeatTargets: false
+                    silent: true
+                    strain: []
+                    targetType: self
+                    trigger: onenter
+                  destroyaura: true
                   trigger: onenter
-                destroyaura: true
-                trigger: onenter
+              triggers: []
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -220,7 +231,7 @@ info:
     initiativeGrouping: 409745f7-bb33-42c1-a662-e99e1a3e6e41
     innateActivatedAbilities:
     - name: Rotting Fist
-      description: "On a Tier 3 result: M<2 prone if size 1, or slowed (save ends) otherwise. "
+      description: "On a Tier 3 result: M<2 prone if size 1, or slowed (save ends) otherwise."
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -232,12 +243,12 @@ info:
         - 4 damage
         - 5 damage; M<2 prone if size 1, or slowed (save ends) otherwise
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        filterTarget: Size < 5
+        filterTarget: Size = 1
         rule: M<2 prone
         tiersSelected:
         - 3
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        filterTarget: Size > 4
+        filterTarget: Size != 1
         rule: M<2 slowed (save ends)
         tiersSelected:
         - 3
@@ -251,12 +262,14 @@ info:
       guid: 30f927af-13de-480d-a406-f9bd5cc42877
       iconid: b67b89e6-cc8a-40bd-848b-37aef0455137
       implementation: 4
+      implementationDetails: Automates the damage roll and applies the tier 3 Might-potency result as prone to size 1 targets or slowed (save ends) to other sizes.
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence:
         enabled: true
       range: 1

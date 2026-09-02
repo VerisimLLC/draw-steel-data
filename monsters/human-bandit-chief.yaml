@@ -209,7 +209,7 @@ info:
 
         *2 Malice:* This ability targets one additional target.
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 2
+      range: 1
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -235,7 +235,8 @@ info:
         damageType: corruption
       modeList:
       - text: Normal
-      - rules: This ability targets one additional target.
+      - condition: Malice >= 2
+        rules: This ability targets one additional target.
         text: 2 Malice
       keywords:
         Weapon: true
@@ -248,16 +249,17 @@ info:
       multipleModes: true
       objectTarget: true
       abilityType: none
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when Mode = 2 else 0
       targetTextOverride: " Two enemies or objects"
       sourceReference:
         __typeName: SourceReference
-        page: 191
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-      implementation: 3
+        page: 54
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+      implementation: 4
       persistence: []
       name: Whip & Magic Longsword
       iconid: ui-icons/skills/1.png
-      effectImplemented: false
       targetFilter: Enemy
     - __typeName: ActivatedAbility
       modifiers: []
@@ -309,7 +311,7 @@ info:
             modesSelected:
             - 1
             guid: 44f61936-4aea-43ed-b7c8-ad5a8e953f5d
-            roll: 2d10
+            roll: 2d10 + 3
           keywords:
             Area: true
           repeatTargets: false
@@ -321,7 +323,8 @@ info:
           objectTarget: false
       modeList:
       - text: Normal
-      - rules: The ability takes the Area keyword, loses the Melee keyword, and is a 1 burst that targets each enemy in the area.
+      - condition: Malice >= 2
+        rules: The ability takes the Area keyword, loses the Melee keyword, and is a 1 burst that targets each enemy in the area.
         text: Malice 2
       keywords:
         Melee: true
@@ -332,11 +335,13 @@ info:
       targetTextOverride: One enemy
       abilityType: none
       numTargets: 1
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when Mode = 2 else 0
       sourceReference:
         __typeName: SourceReference
-        page: 191
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-      implementation: 3
+        page: 54
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+      implementation: 4
       targetAllegiance: enemy
       categorization: Signature Ability
       iconid: ui-icons/skills/1.png
@@ -360,7 +365,7 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         runOnController: true
-        standardAbility: 0ca5fc04-6068-4f47-b5c6-936d3a595f24
+        standardAbility: aba67409-be3e-4ba9-8a99-0c01df37a34b
         customAbility:
           __typeName: ActivatedAbility
           modifiers: []
@@ -389,16 +394,19 @@ info:
       categorization: Villain Action
       objectTarget: false
       abilityType: none
-      effectImplemented: false
       sourceReference:
         __typeName: SourceReference
-        page: 191
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-      implementation: 3
+        page: 54
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+      implementation: 4
       targetAllegiance: ally
       villainAction: Villain Action 1
       iconid: ui-icons/skills/1.png
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '99bc4a02-a028-4fbc-b65"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: a9914de4-50de-436e-8046-29b7f286c189
       targetFilter: role is artillery
     - __typeName: ActivatedAbility
       modifiers: []
@@ -419,7 +427,6 @@ info:
       keywords:
         Area: true
       actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
-      effectImplemented: true
       repeatTargets: false
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
@@ -455,13 +462,17 @@ info:
       persistence: []
       sourceReference:
         __typeName: SourceReference
-        page: 184
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-      implementation: 3
+        page: 54
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+      implementation: 4
       targetAllegiance: ally
       villainAction: Villain Action 2
       iconid: ui-icons/skills/1.png
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '63549116-6e8b-4af2-b7e"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 63549116-6e8b-4af2-b7e1-7a1dec22d41b
       objectTarget: false
     - __typeName: ActivatedAbility
       modifiers: []
@@ -511,7 +522,7 @@ info:
           guid: 29d0d52e-4c31-4cf7-bdec-ef6547615b07
           description: ""
           name: Whip and Magic Longsword
-          range: "2"
+          range: "1"
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
@@ -534,6 +545,13 @@ info:
             - 15 damage; pull 3
             guid: 619d9153-7a97-441a-887e-d182766c379d
             roll: 2d10 + 3
+          - __typeName: ActivatedAbilityDamageBehavior
+            applyto: targets
+            chatMessage: Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.
+            damageType: corruption
+            filterTarget: Target.Distance(caster) < 2
+            roll: "3"
+            titleText: Whip and Magic Longsword
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             standardAbility: e19f1d97-6e44-4366-8f35-418bd5c5ab8e
             customAbility:
@@ -596,12 +614,16 @@ info:
       actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
       sourceReference:
         __typeName: SourceReference
-        page: 191
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
+        page: 54
+        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
       implementation: 3
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '4b4d593b-a0af-4e06-a13"
+      implementationDetails: The shift, attacks, corruption damage, and adjacent ally free strikes are automated. The attacks resolve after the shift; DMHub can't interleave them during movement.
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 4b4d593b-a0af-4e06-a131-98b55cba8fc4
       categorization: Villain Action
-      effectImplemented: false
       iconid: ui-icons/skills/1.png
       villainAction: Villain Action 3
     monster_type: Human Bandit Chief
@@ -627,7 +649,7 @@ info:
       source: Trait
       domains:
         CharacterFeature:1358be98-eae0-4ce7-8221-b853982624f7: true
-      implementation: 3
+      implementation: 4
       guid: 1358be98-eae0-4ce7-8221-b853982624f7
       modifiers:
       - __typeName: CharacterModifier
@@ -653,14 +675,17 @@ info:
           numTargets: "1"
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            mode: conditions
+            mode: conditions_and_effects
             purgeType: one
             conditions: []
             targetDuration: save
             damageToSelf: "5"
+          conditionFormula: Save Ends Effects
+          hasManualVersion: true
           mandatory: false
           repeatTargets: false
           trigger: endturn
+          triggerPrompt: Take 5 damage to end one effect that can be ended by a saving throw. This damage can't be reduced in any way.
           iconid: ui-icons/skills/1.png
           strain: []
           persistence: []
@@ -675,6 +700,7 @@ info:
       domains:
         CharacterFeature:caa71856-39f2-4438-b753-894fcf1f85c3: true
       implementation: 3
+      implementationDetails: The tier increase and self-damage are automated. Accept the follow-up trigger prompt after selecting Bloodstones so its triggered-action cost is paid.
       guid: caa71856-39f2-4438-b753-894fcf1f85c3
       tags:
         Trigger: true
@@ -686,6 +712,7 @@ info:
           CharacterFeature:caa71856-39f2-4438-b753-894fcf1f85c3: true
         customTrigger:
           __typeName: TriggeredAbility
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           trigger: d20roll
           modifiers: []
           strain: []
@@ -705,9 +732,6 @@ info:
           iconid: ui-icons/skills/1.png
           numTargets: "1"
           behaviors:
-          - __typeName: ActivatedAbilityReplenishBehavior
-            quantity: "-1"
-            resourceid: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           - __typeName: ActivatedAbilityDamageBehavior
             cannotBeReduced: true
             chatMessage: Bloodstones

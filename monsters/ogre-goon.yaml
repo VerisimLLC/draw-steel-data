@@ -143,7 +143,8 @@ info:
       domains:
         CharacterFeature:ce54c4b5-dfa8-4d0b-8c94-46f1d58c07b6: true
       guid: ce54c4b5-dfa8-4d0b-8c94-46f1d58c07b6
-      implementation: 3
+      implementation: 4
+      implementationDetails: Automatically grants damage immunity 2 while the goon is winded and removes it when they are no longer winded.
       modifiers:
       - name: Defiant Anger
         description: While winded, the goon has damage immunity 2.
@@ -158,19 +159,20 @@ info:
         - __typeName: ResistanceEntry
           apply: Damage Reduction
           damageType: all
-          dr: " 2"
+          dr: "2"
           stacks: false
         source: Trait
         sourceguid: ce54c4b5-dfa8-4d0b-8c94-46f1d58c07b6
         statusIcon: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
       source: Trait
     - name: Swat the Fly
-      description: ""
+      description: When an adjacent creature or object moves or shifts away from the goon, the goon can slide that target up to 5 squares.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
       guid: ac370b61-a980-413a-8bbb-c692cfb8c2a1
       implementation: 3
+      implementationDetails: Creature departures trigger automatically and spend the once-per-round triggered action. Object departures require the manual fallback because movement triggers are only dispatched for creatures.
       modifiers:
       - name: Swat the Fly
         description: ""
@@ -259,11 +261,13 @@ info:
           flavor: ""
           guid: 51f74385-f7e4-4d75-8c1c-5b9cc4cead51
           iconid: ui-icons/skills/1.png
-          implementation: 3
+          implementation: 4
+          implementationDetails: Manual fallback that spends the triggered action and slides the selected adjacent creature or object 5 squares.
           keywords:
             Melee: true
           modifiers: []
           numTargets: 1
+          objectTarget: true
           range: 1
           repeatTargets: false
           sourceReference:
@@ -342,7 +346,7 @@ info:
     initiativeGrouping: 5f7c9488-8171-430e-a662-a5eb646f1e7d
     innateActivatedAbilities:
     - name: Club Swing
-      description: Any target who takes damage from this forced movement takes an extra 4 damage.
+      description: This attack deals an additional 4 damage to each creature and object that takes damage from any force movement it causes.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -388,11 +392,11 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: ac29a390-ba3c-4024-940a-6532e7768dba
       iconid: 1a65af40-be30-4586-80b4-400f66452807
-      implementation: 4
+      implementation: 3
+      implementationDetails: Automates the damage, push, prone result, and additional collision damage for the force-moved targets. A non-target creature or object struck by the forced movement does not automatically take the additional 4 damage.
       keywords:
         Melee: true
         Strike: true
@@ -410,7 +414,10 @@ info:
       strain: []
       targetType: target
     - name: Grabby Hand
-      description: A target grabbed this way takes a bane on the Escape Grab maneuver.
+      description: |-
+        The goon can only have one target grabbed at a time.
+
+        *1 Malice:* The target has a bane on escaping the grab while the goon crushes the target in their hand.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -423,29 +430,43 @@ info:
         - 14 damage; grabbed
       - __typeName: ActivatedAbilityApplyRidersBehavior
         conditionid: 70504ebe-3899-41d3-9f60-74b52ce35e39
+        modesSelected:
+        - 2
         riderid: 6906316a-26fe-4101-9a4b-60192b77c270
+      - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        mode: expend
+        modesSelected:
+        - 2
+        quantity: "1"
+        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 30aa9cbc-5042-499a-9078-24287dad6548
       iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
-      implementation: 3
+      implementation: 4
+      implementationDetails: Automates damage and grabbed outcomes, relies on the global one-target grab limit, and offers an optional 1 Malice mode that applies the Escape Grab bane rider and spends the resource.
       keywords:
         Melee: true
         Strike: true
         Weapon: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: Heroic Resources Available to Spend >= 1
+        text: 1 Malice
       modifiers: []
+      multipleModes: true
       numTargets: 1
       objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
@@ -456,15 +477,15 @@ info:
       description: The goon hurls what's in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goon's choice).
       __typeName: ActivatedAbility
       abilityFilters:
-      - formula: self.Number of Creatures Grabbed = 1
-        reason: Must Have Creature Grabbed
+      - formula: self.Number of Creatures Grabbed = 1 and self.GrabbedCreatures.Highest("Size") = 1
+        reason: The goon must be grabbing a Size 1 creature.
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         filterTarget: not ConditionCaster("Grabbed") = Caster
         guid: 8a03bae9-fffd-4961-b5a5-1b4f8dae162f
-        roll: 2d10
+        roll: 2d10 + 3
         tiers:
         - 5 damage
         - 9 damage
@@ -518,7 +539,7 @@ info:
               range: "7"
           - __typeName: ActivatedAbilityDamageBehavior
             guid: 3093d888-87d2-4977-bb3c-e848f4ef2b8c
-            roll: 5 damage when Cast.Tier = 1 else 9 damage when Cast.Tier = 2 else 12 damage when Cast.Tier = 3
+            roll: 5 when Cast.Tier = 1 else 9 when Cast.Tier = 2 else 12
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             filterTarget: Cast.Tier = 3
             rule: Prone
@@ -532,20 +553,20 @@ info:
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
-          objectTarget: false
+          objectTarget: true
           persistence: []
           range: "1"
           repeatTargets: false
           strain: []
-          targetFilter: Conditions has "Grabbed"
+          targetFilter: ConditionCaster("Grabbed") = Caster and Size = 1
           targetType: target
         filterTarget: ""
         guid: ec827b73-d84d-408d-ae31-40ee246c0181
         inheritRange: true
-        promptText: Select the grabbed creature and then select the  last square in the line of People Bowling
+        promptText: Select the grabbed creature and then select the last square in the line of People Bowling.
         standardAbility: 4963b93d-cb3a-409b-a0df-4d8b9bdeeeb8
         standardAbilityParams:
-          targetfilter: Conditions has "Grabbed"
+          targetfilter: ConditionCaster("Grabbed") = Caster and Size = 1
       castImmediately: true
       categorization: Signature Ability
       display:
@@ -553,11 +574,11 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 2437d269-6626-4d1e-9662-e58d121ea626
       iconid: 98e46b21-b1bb-4899-bd9c-ac1ee95f7239
       implementation: 3
+      implementationDetails: Automates the 3 Malice cost, line power roll, damage and prone outcome for all line targets, then prompts to teleport a grabbed Size 1 creature and applies the same tier outcome. The endpoint is not constrained to the final line square, and the prerequisite cannot detect a grabbed object.
       keywords:
         Area: true
         Melee: true
@@ -573,8 +594,8 @@ info:
       resourceNumber: 3
       sourceReference:
         __typeName: SourceReference
-        docid: 40e59097-9de3-4f9d-920a-aae355de9f5c
-        page: 209
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 210
       strain: []
       targetType: line
     innateAttacks: []

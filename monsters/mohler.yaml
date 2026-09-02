@@ -126,6 +126,7 @@ info:
         CharacterFeature:2481a92b-7fff-4368-9d07-d9515c08b2f6: true
       guid: 2481a92b-7fff-4368-9d07-d9515c08b2f6
       implementation: 2
+      implementationDetails: "BRONZE: The start-of-encounter Dig option is automated. A conditional difficult-terrain aura approximates the disturbed ground while burrowing, but it cannot precisely project only onto the ground above a mohler burrowing within 1 square of the surface."
       modifiers:
       - name: Ground Grinder
         description: The mohler can use the Dig maneuver at the start of the encounter. Additionally, while the mohler burrows within 1 square below the ground, the ground above where they burrow is difficult terrain.
@@ -188,6 +189,7 @@ info:
               repeatTargets: false
               targetType: self
             namedAbility: Dig
+          conditionFormula: Combat Round = 1
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -219,6 +221,7 @@ info:
         CharacterFeature:dbfe0c08-8529-4104-8930-c8ce544cd18e: true
       guid: dbfe0c08-8529-4104-8930-c8ce544cd18e
       implementation: 3
+      implementationDetails: "SILVER: Line of effect is ignored automatically, and the power-roll UI warns when the selected target is not using ground movement. The engine cannot conditionally restore line of effect for every possible way a target might not be touching the ground."
       modifiers:
       - name: Seismic Sense
         description: The mohler doesn't need line of effect to use abilities against creatures or objects touching the ground.
@@ -299,7 +302,7 @@ info:
         - 4 damage
         - 5 damage
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-        filterTarget: caster.Movement Type = "Burrow" and caster.altitude < Altitude
+        filterTarget: caster.altitude < Altitude
         rule: M<1 prone
       categorization: Signature Ability
       display:
@@ -307,11 +310,11 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 720e3f65-0d0a-482c-8fde-e62ac89436ef
       iconid: d20a12c1-a699-44bd-bf88-622413ddbd48
       implementation: 4
+      implementationDetails: The power roll and damage are automated. The range is always increased to melee 2, and a target with M < 1 is knocked prone when the mohler starts at a lower altitude.
       keywords:
         Melee: true
         Strike: true
@@ -322,7 +325,7 @@ info:
       numTargets: 1
       objectTarget: true
       persistence: []
-      range: 2 when self.Movement Type = "Burrow" else 1
+      range: 2
       reasonedFilters: []
       repeatTargets: false
       sourceReference:
