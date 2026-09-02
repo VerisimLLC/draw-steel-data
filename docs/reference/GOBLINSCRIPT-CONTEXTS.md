@@ -243,6 +243,7 @@ ExecuteGoblinScript(filter, targetToken.properties:LookupSymbol(symbols), ...)
 - Caster (creature) -- the creature using the ability (via symbols)
 - Ability (ability) -- in some contexts
 - Cast (spellcast) -- in some contexts
+- ParentTarget (creature) -- the parent ability's target paired with this invocation, for invoked abilities
 
 Note: For `ActivatedAbility.lua:1112` (targetFilter for location), Self is the **caster**, with `target = location`.
 
@@ -1222,6 +1223,7 @@ ability casting. The typical contents include:
 | `cast` | spellcast (via GenerateSymbols) | The ActivatedAbilityCast tracking object |
 | `caster` | creature (via GenerateSymbols) | The casting creature |
 | `target` | creature (via GenerateSymbols) | The current target (when iterating targets) |
+| `parenttarget` | creature (via GenerateSymbols) | The parent ability's target paired with this invocation (invoked abilities only) |
 
 ---
 

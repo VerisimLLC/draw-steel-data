@@ -177,7 +177,7 @@ info:
         CharacterFeature:2d9de553-c63d-4ffe-8714-02ebd572aa5b: true
         CharacterFeature:f6155171-5f3e-4669-a5a7-efcbecbd4b2e: true
       guid: f6155171-5f3e-4669-a5a7-efcbecbd4b2e
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Bonetrops
         description: When the decrepit skeleton is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy enters this space, they take 1 damage and the effect ends.
@@ -188,7 +188,7 @@ info:
           CharacterFeature:f6155171-5f3e-4669-a5a7-efcbecbd4b2e: true
         guid: f79de82a-7d9a-48be-8dbb-a1f02a6b250a
         source: Character Feature
-        sourceguid: 2d9de553-c63d-4ffe-8714-02ebd572aa5b
+        sourceguid: f6155171-5f3e-4669-a5a7-efcbecbd4b2e
         triggeredAbility:
           name: Bonetrops
           description: ""
@@ -199,7 +199,7 @@ info:
             aliveafterdeath: true
             aura:
               name: Bonetrops
-              description: The first time any enemy who has M<2 enters this space, they are slowed (save ends) and the effect ends.
+              description: The first time any enemy enters this space, they take 1 damage and the effect ends.
               __typeName: Aura
               applyto: enemies
               creatureFilter: ""
@@ -347,7 +347,7 @@ info:
         - 4 damage
         - 5 damage
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
+        applyto: caster_including_squad
         autoTarget: false
         customAbility:
           name: Invoked Ability
@@ -364,16 +364,21 @@ info:
             saturation: 1
           guid: 04354693-6fec-486b-a410-357e3ba08630
           iconid: ui-icons/skills/1.png
+          implementation: 4
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: "10"
+          reasonedFilters:
+          - reason: Bone Bow's additional damage must target a different creature or object.
+            formula: Target != ParentTarget
           repeatTargets: false
           strain: []
           targetType: target
         guid: 0036ed71-c803-4dc9-81bf-d04489a68c64
         inheritRange: true
-        invokeOnCaster: false
+        invokeOnCaster: true
         promptText: The decrepit skeleton chooses one other target within distance to take 1 damage.
       categorization: Signature Ability
       display:
@@ -392,6 +397,7 @@ info:
         Weapon: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 10
       repeatTargets: false

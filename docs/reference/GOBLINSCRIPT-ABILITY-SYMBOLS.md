@@ -49,8 +49,10 @@ is being cast.
 | `mode` | number | Which mode the player chose (1-indexed). Always 1 for non-modal abilities. |
 | `cast` | spellcast | Information about what has happened while casting (see ActivatedAbilityCast below). |
 | `invoker` | creature | The creature that caused this ability to be invoked (only valid for invoked abilities). |
+| `parenttarget` | creature | The target of the parent ability paired with this invocation. In a squad invoke, each acting minion receives its own paired target. Only valid for invoked abilities. Example: `Target != ParentTarget` |
 
-**File:** `DMHub Game Rules/ActivatedAbility.lua` (lines 4849-4871)
+**Files:** `DMHub Game Rules/ActivatedAbility.lua` (base casting symbols) and
+`DMHub Game Rules/AbilityInvokeAbility.lua` (`ParentTarget` for invoked abilities)
 
 ### Draw Steel Symbols (Draw Steel Core Rules/MCDMActivatedAbility.lua)
 
