@@ -804,6 +804,22 @@ levels:
     domains:
       class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
     features:
+    - name: Unleash the Beast
+      description: |-
+        The first time each combat round that a creature adjacent to your companion takes damage, you gain 3 ferocity instead of 2 ferocity.
+
+        *Implemented under the Ferocity class feature's Adjacent to Companion Damaged trigger*
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
+      domains:
+        class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+      guid: 4a1f7e26-9c3b-4d58-8e07-2b6f5a9d31c4
+      implementation: 4
+      modifiers: []
+      source: Beastheart Class Feature
+      tags:
+        Combat: true
     - name: Characteristic Increase
       description: Your and your companion’s Might and Intuition scores increase to 3.
       __typeName: CharacterFeature
@@ -2152,7 +2168,7 @@ levels:
       description: |-
         Within the heat of battle, your fierce bond with your companion fuels a Heroic Resource called ferocity.
 
-        At the start of a combat encounter, you gain ferocity equal to your Victories. At the start of each of your turns, you gain 1d3 ferocity. Additionally, the first time each combat round that a creature adjacent to your companion takes damage, you gain 2 ferocity. You lose any remaining ferocity at the end of the encounter.
+        At the start of a combat encounter, you gain ferocity equal to your Victories. At the start of each of your turns, you gain 1d3 ferocity. Additionally, the first time each combat round that a creature adjacent to your companion takes damage, you gain 2 ferocity. *Unleash the Beast* at level 4, gain 3 ferocity instead. You lose any remaining ferocity at the end of the encounter.
       __typeName: CharacterFeature
       classid: 0380181e-acad-4cdb-ae6d-c7cd11df6ad2
       domains:
@@ -2292,7 +2308,7 @@ levels:
           guid: 9d2e8c47-5b1f-4a36-b974-3e6c1d8f5a29
           modifiers:
           - name: Adjacent to Companion Damaged
-            description: The first time each round that a creature adjacent to your companion takes damage, you gain 2 ferocity.
+            description: The first time each round that a creature adjacent to your companion takes damage, you gain ferocity according to your level.
             __typeName: CharacterModifier
             behavior: trigger
             domains:
@@ -2302,7 +2318,7 @@ levels:
             sourceguid: 9d2e8c47-5b1f-4a36-b974-3e6c1d8f5a29
             triggeredAbility:
               name: Adjacent to Companion Damaged
-              description: The first time each round that a creature adjacent to your companion takes damage, you gain 2 ferocity.
+              description: The first time each round that a creature adjacent to your companion takes damage, you gain ferocity according to your level.
               __typeName: TriggeredAbility
               abilityType: none
               behaviors:
@@ -2310,7 +2326,16 @@ levels:
                 applyto: caster_summoner
                 chatMessage: Adjacent to Companion Damaged
                 checklistid: 9c2e5d83-4b1f-46a7-b594-1d8e3c7a6f42
-                quantity: "2"
+                quantity:
+                  id: table
+                  __typeName: GoblinScriptTable
+                  editableField: true
+                  entries:
+                  - script: "2"
+                    threshold: 1
+                  - script: "3"
+                    threshold: 4
+                  field: Level
                 resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
               display:
                 bgcolor: "#ffffffff"
@@ -2333,7 +2358,7 @@ levels:
               subjectRange: "1"
               targetType: self
               trigger: losehitpoints
-              triggerPrompt: "Adjacent to Companion Damaged: Gain 2 Ferocity."
+              triggerPrompt: "Adjacent to Companion Damaged: Gain Ferocity according to your level."
               usageLimitOptions:
                 charges: "1"
                 resourceRefreshType: round
