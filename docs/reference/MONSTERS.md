@@ -622,7 +622,7 @@ aura:
   # --- Movement Damage ---
   movedamage: "none"         # Damage type per square: "none", "fire", "poison", "acid", etc.
   damage: 0                  # Damage amount per square moved
-  movementDamageFilter: "all"  # "all", "nonshift" (shifting avoids), "forced" (forced only)
+  movementDamageFilter: "all"  # "all", "nonshift" (shifting avoids), "forced" (forced only), "willing" (all but forced/teleport)
 
   # --- Creature Filtering ---
   applyto: all               # Who is affected (see Aura.ApplyOptions below)
