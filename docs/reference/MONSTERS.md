@@ -520,6 +520,41 @@ Contains an `AbilityInvocation` sub-object that specifies which ability to invok
 
 `rangeOrigin` can be `parent_primary_target` to center every nested invoke on the first parent target, or `parent_current_target` to center each nested invoke on the parent target paired with its current squad attacker. The latter falls back to the primary target outside a paired squad attack.
 
+**Directed movement constraints:** An invoked movement ability can restrict its legal
+destinations for this cast without applying a persistent condition to the mover.
+
+```yaml
+- __typeName: ActivatedAbilityInvokeAbilityBehavior
+  abilityType: standard
+  standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167 # Move Speed
+  movementConstraint: toward
+  movementConstraintAnchor: attacker
+```
+
+`movementConstraint` accepts `toward`, `away`, or `not_closer`. `toward` and `away`
+require every square of displacement to reduce or increase the distance respectively;
+`not_closer` uses the Frightened-style rule that the destination cannot be closer than
+the mover's starting location.
+
+`movementConstraintAnchor` accepts:
+
+- `caster` -- the caster of the ability containing the invoke;
+- `attacker` -- the triggering attacker symbol;
+- `parent_target` -- the target paired with this invocation;
+- `nearest_creature` -- the nearest living creature to the mover;
+- `nearest_enemy` -- the caster's nearest living enemy to the mover;
+- `all_matching` -- every living creature allowed by `movementConstraintFilter`.
+
+Nearest anchors can be limited with `movementConstraintAnchorDistance`. Tied nearest
+anchors prompt for a choice. `movementConstraintStraightLine: true` changes ordinary
+movement to straight-path targeting. For a push or pull whose source is the selected
+anchor, set `movementConstraintAsForcedMovementOrigin: true`.
+
+`rememberMovementConstraintTarget: true` exposes the selected anchor as the
+`MovementTarget` GoblinScript symbol to later behaviors in the same parent cast, and
+sets `MovementTargetValid` to indicate whether an anchor was available. This supports
+sequences such as "move toward the nearest creature, then strike that creature."
+
 #### ActivatedAbilityRelocateCreatureBehavior
 **Purpose**: Move/teleport a creature to a new location.
 ```yaml

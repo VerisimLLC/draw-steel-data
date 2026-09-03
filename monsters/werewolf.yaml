@@ -164,8 +164,8 @@ info:
       domains:
         CharacterFeature:0610ca2d-5156-46b7-8c55-98916db018fd: true
       guid: 0610ca2d-5156-46b7-8c55-98916db018fd
-      implementation: 3
-      implementationDetails: The 10-rage start-of-turn trigger, rage expenditure, shift, free strike, and added rage are automated. Choosing the nearest creature and enforcing movement toward it require manual adjudication.
+      implementation: 4
+      implementationDetails: The 10-rage start-of-turn trigger, rage expenditure, nearest-creature selection, constrained shift, free strike against that creature, and added rage are automated.
       modifiers:
       - name: Accursed Rage
         description: The werewolf's ferocity is expressed through rage, and their abilities can inflict rage points on any enemy except a stormwight fury. A creature who starts their turn with 10 or more rage expends their rage. Then before taking their turn, they must shift up to their speed toward the nearest creature and make a melee free strike against them. A creature who takes damage from this free strike gains 1 rage. Accumulated rage disappears after a character finishes a respite.
@@ -207,6 +207,10 @@ info:
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
             standardAbilityParams:
               distance: Movement Speed
+            movementConstraint: toward
+            movementConstraintAnchor: nearest_creature
+            movementConstraintPrompt: Choose the nearest creature for Accursed Rage
+            rememberMovementConstraintTarget: true
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
             customAbility:
@@ -247,6 +251,7 @@ info:
                   attributes: []
                   behavior: modifyability
                   cannotModifyAction: true
+                  filterAbilityTargets: Target = MovementTarget
                   filterAbility: Ability.Name = "Melee Free Strike"
                   guid: 163fcb18-a9bc-4d4b-83d4-60fef29cefd3
                   source: ""
@@ -265,6 +270,7 @@ info:
               repeatTargets: false
               strain: []
               targetType: self
+            filterTarget: MovementTargetValid
             standardAbility: dfb59889-b651-40a6-80be-56d38bd34198
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             conditions: []
@@ -1026,6 +1032,9 @@ info:
           repeatTargets: false
           targetType: self
         promptText: Move speed in a straight line away from the werewolf
+        movementConstraint: away
+        movementConstraintAnchor: caster
+        movementConstraintStraightLine: true
         runOnController: true
         standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
         tiersSelected:
@@ -1057,7 +1066,7 @@ info:
       guid: 34be4019-b39b-4058-b67e-cd34242c1cea
       iconid: 92a6d94b-65ab-49b6-b33e-0dae78f3a332
       implementation: 3
-      implementationDetails: The Intuition test, frightened effects, and rage gain are automated for selected targets. Tier 1 movement must be directed manually, and rage-bearing enemies outside the burst must be added manually.
+      implementationDetails: The Intuition test, frightened effects, rage gain, and tier 1 legal destinations are restricted to a straight line away from the werewolf. The controller must still choose the farthest reachable point, and rage-bearing enemies outside the burst must be added manually.
       keywords:
         Area: true
       modifiers: []
