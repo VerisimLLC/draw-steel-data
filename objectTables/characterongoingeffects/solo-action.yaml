@@ -1,0 +1,71 @@
+id: 46ed663a-3845-4c74-9af7-e865db192759
+name: Solo Action
+description: This creature has an additional main action this turn. After they finish their first main action, that action is replenished.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1788338623894
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:46ed663a-3845-4c74-9af7-e865db192759: true
+guid: 46ed663a-3845-4c74-9af7-e865db192759
+hiddenFromEnemies: true
+iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+implementation: 4
+modifiers:
+- name: Solo Action
+  description: After this creature finishes their first main action this turn, that action is replenished.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:46ed663a-3845-4c74-9af7-e865db192759: true
+  guid: 2aff7098-3ee6-4f46-9dec-9ca2b6172c3a
+  resourceRefreshType: turn
+  source: Ongoing Effect
+  sourceguid: 46ed663a-3845-4c74-9af7-e865db192759
+  triggeredAbility:
+    name: Solo Action
+    description: The creature's first main action this turn is replenished.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityReplenishBehavior
+      applyto: caster
+      chatMessage: "Solo Action: +1 main action"
+      resourceid: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      applyto: caster
+      conditions: []
+      mode: effect
+      ongoingEffect: 46ed663a-3845-4c74-9af7-e865db192759
+    conditionFormula: Your Turn and Used Ability.Main Action
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    domains:
+      CharacterOngoingEffect:46ed663a-3845-4c74-9af7-e865db192759: true
+    guid: 8d282a47-a915-453e-9cbd-bf1f0d5261e0
+    iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: finishability
+    usageLimitOptions:
+      charges: "1"
+      resourceRefreshType: turn
+      resourceid: 2aff7098-3ee6-4f46-9dec-9ca2b6172c3a
+    whenActive: combat
+mtime: 1788338623894
+source: Ongoing Effect

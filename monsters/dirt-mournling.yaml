@@ -89,10 +89,10 @@ info:
       domains:
         CharacterFeature:085c64bc-f763-4376-9a10-4095fba6fbad: true
       guid: 085c64bc-f763-4376-9a10-4095fba6fbad
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Arise
-        description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+        description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 15 Stamina and fall prone.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -103,7 +103,7 @@ info:
         sourceguid: 085c64bc-f763-4376-9a10-4095fba6fbad
         triggeredAbility:
           name: Arise
-          description: The first time the Soulwight is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 1 Stamina and fall prone.
+          description: The first time the mournling is reduced to 0 Stamina by damage that isn't fire damage or holy damage and their body isn't destroyed, they instead have 15 Stamina and fall prone.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
@@ -117,12 +117,17 @@ info:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             applyto: caster
             rule: prone
+          - __typeName: ActivatedAbilityRaiseCorpseBehavior
+            applyto: caster
+            restoreStamina: false
           conditionFormula: Damage Type != "Fire" And Damage Type != "Holy"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
+          domains:
+            CharacterFeature:085c64bc-f763-4376-9a10-4095fba6fbad: true
           guid: 158789ed-ad7e-4be3-b2a6-314020c59cd7
           iconid: ui-icons/skills/1.png
           modifiers: []
@@ -136,7 +141,7 @@ info:
           usageLimitOptions:
             charges: "1"
             resourceRefreshType: encounter
-            resourceid: f7f65245-2933-4a45-adf9-8cfb0f6093a5
+            resourceid: 158bf343-3375-4ddb-8a59-540a57e808ac
       source: Trait
     cr: 7
     creatureSize: "3"
