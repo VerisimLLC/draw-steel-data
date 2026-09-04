@@ -142,6 +142,127 @@ info:
           triggerPrompt: Select confirm if the creature is outside or in a natural environment this encounter, select skip if not.
           whenActive: combat
       source: Trait
+    - name: Juke
+      description: |-
+        Trigger: The animal is targeted by an area ability.
+
+        Effect: The animal shifts up to 2 squares before the ability resolves.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:37c9ba2f-654c-409d-b6a1-d61002bb9abe: true
+      guid: 37c9ba2f-654c-409d-b6a1-d61002bb9abe
+      implementation: 3
+      implementationDetails: "SILVER: Offered in the enemy's power-roll trigger menu for any Area ability that targets the animal. Accepting it makes the animal immune to that ability's damage and effects, then shifts it up to 2 squares once the ability finishes resolving (roll-dialog triggers cannot move a token mid-cast)."
+      modifiers:
+      - name: Juke
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Juke
+          __typeName: TriggeredAbilityDisplay
+          distance: Self
+          effect: The animal shifts up to 2 squares before the ability resolves.
+          guid: 76199325-63de-4a93-8406-6491c6376c81
+          keywords: []
+          target: Self
+          trigger: The animal is targeted by an area ability.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:37c9ba2f-654c-409d-b6a1-d61002bb9abe: true
+        guid: d43148b7-316c-432f-bf55-19a5e0e5609e
+        source: Trait
+        sourceguid: 37c9ba2f-654c-409d-b6a1-d61002bb9abe
+      - name: Juke
+        description: ""
+        __typeName: CharacterModifier
+        abilityFilter: Ability.Keywords has "Area" and Cast.HasTarget(Triggerer)
+        behavior: powertabletrigger
+        domains:
+          CharacterFeature:37c9ba2f-654c-409d-b6a1-d61002bb9abe: true
+        guid: f6654c42-d8ff-44fa-8515-733378535029
+        powerRollModifier:
+          name: Juke
+          description: |-
+            Trigger: The animal is targeted by an area ability.
+            Effect: The animal shifts up to 2 squares before the ability resolves.
+          __typeName: CharacterModifier
+          activationCondition: false
+          armEffect: 7693d878-90b8-4aae-824b-c9c77f2621d2
+          armEffectApplyTo: self
+          behavior: power
+          customTrigger:
+            name: Juke
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: standard
+              applyto: caster
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 6fa7ba0d-d0ba-499f-90da-88603b9fdd13
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetType: self
+              invokeOnCaster: true
+              promptText: "Juke: shift up to 2 squares."
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: "2"
+                targetfilter: ""
+            - __typeName: ActivatedAbilityPurgeEffectsBehavior
+              applyto: caster
+              conditions: []
+              mode: effect
+              ongoingEffect: 7693d878-90b8-4aae-824b-c9c77f2621d2
+              purgeType: all
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: decde4bf-eff2-4259-9d0b-01d1cba98bac
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            sourceReference:
+              __typeName: SourceReference
+              docid: cc66844a-04d0-49a0-8687-65ef83b15363
+              page: 42
+            strain: []
+            targetType: self
+            trigger: d20roll
+          guid: 84b76732-4677-47a9-ad3b-b1999b928696
+          hasCustomTrigger: true
+          keywords: []
+          modtype: none
+          rollType: enemy_ability_power_roll
+          rules: ""
+          source: Trigger
+        range: ""
+        rules: The animal shifts up to 2 squares before the ability resolves.
+        source: Trait
+        sourceguid: 37c9ba2f-654c-409d-b6a1-d61002bb9abe
+        targetType: enemy
+        trigger: powerroll
+        type: trigger
+      source: Trait
     cr: 1
     creatureSize: "2"
     creatureTemplates:
@@ -289,29 +410,6 @@ info:
       strain: []
       targetFilter: Target.Size <= Caster.Size
       targetType: target
-    - name: Juke
-      description: The animal shifts 2 before the ability activates.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 1d436586-b0b4-4c2e-89fe-ddfb9aa51ce0
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
     innateAttacks: []
     keywords:
       Animal: true
@@ -355,7 +453,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: dc1c579c-d138-4da3-9cd3-dc8e9a9259a8
-mtime: 1786623075022
+  updateid: 960778e4-651e-49b9-9a7f-505c0611fa46
+mtime: 1788534573662
 ord: 6
 parentFolder: 4b3931af-633a-4d06-a87c-a4139290d258
