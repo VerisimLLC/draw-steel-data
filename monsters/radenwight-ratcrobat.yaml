@@ -192,6 +192,7 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: standard
+            autoTarget: true
             customAbility:
               name: Invoked Ability
               description: ""
@@ -210,11 +211,10 @@ info:
               range: 1
               repeatTargets: false
               targetType: self
-            promptText: "Ready Rodent: Make a Melee Free Strike"
             standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
             standardAbilityParams:
               targetid: "<<subject.id>>"
-          conditionFormula: subject.Distance(self) <= Reach and HasAttacker and Friends(Attacker, Self)
+          conditionFormula: HasAttacker and Friends(self, Attacker) and Attacker != self
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -230,11 +230,12 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          subject: other
+          subject: enemy
           subjectRange: "1"
           targetType: self
           trigger: losehitpoints
           triggerPrompt: Make a Melee Free Strike
+          whenActive: combat
       - name: Ready Rodent
         description: ""
         __typeName: CharacterModifier
@@ -659,6 +660,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: 5ffbedd6-30d9-4f83-92c0-f927ca41d317
-mtime: 1786599566197
+mtime: 1788253078264
 ord: 0
 parentFolder: 17706a52-3552-4044-86fe-e77c1e5f00dd

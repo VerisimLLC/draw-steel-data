@@ -27,27 +27,7 @@ info:
   bestiaryId: 98eb8958-711b-4d95-a5eb-392706e409b2
   createdTimestamp: 1726301040866
   disguise: null
-  locInfo:
-    floor: null
-    loc:
-    - 10
-    - 2
-    - 1
-    map: 97f55a4d-7059-40ce-8b68-2901615d5f15
-    mountedOn: null
-    mountedOnObject: null
-    mountedSaddle: 0
-    path: null
-    pos:
-      x: 0
-      y: 0
-    rotation: 0
-    summonLoc: []
-    summonLocCleared: null
-    summonLocId: null
-    teleportAnimId: null
-    teleportStyle: ""
-    updateid: 0
+  locInfo: null
   mountedBy: {}
   ownerId: ""
   partyid: null
@@ -153,7 +133,7 @@ info:
             invokeOnCaster: false
             promptText: Make a ranged free strike
             runOnController: true
-            standardAbility: aba67409-be3e-4ba9-8a99-0c01df37a34b
+            standardAbility: 0ca5fc04-6068-4f47-b5c6-936d3a595f24
           castImmediately: true
           conditionFormula: not subject.Minion
           display:
@@ -163,7 +143,6 @@ info:
             saturation: 1
           guid: 3bfd3ba3-0dc8-43c3-8c21-9f3c01a9fec7
           iconid: ui-icons/skills/1.png
-          implementation: 4
           mandatory: false
           modifiers: []
           numTargets: "1"
@@ -183,7 +162,7 @@ info:
       domains:
         CharacterFeature:490a29f6-0096-4118-9d4b-72223a122910: true
       guid: 490a29f6-0096-4118-9d4b-72223a122910
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Bloodscent
         description: The abyssal archer doesn't need line of effect to use their abilities against any creature who isn't at full Stamina, as long as a size 1 opening exists between the archer and the target.
@@ -196,16 +175,54 @@ info:
         source: Trait
         sourceguid: 490a29f6-0096-4118-9d4b-72223a122910
         value: 1
-      - name: Bloodscent - target at full Stamina
-        description: Bloodscent only ignores line of effect against creatures who are not at full Stamina (and requires a size 1 opening). This target is at full Stamina, so line of effect is still required.
+      - name: Bloodscent - line of effect
+        description: Bloodscent leaves Pierce Walls on permanently, so this re-blocks the case it should not cover - a target at full Stamina with no real line of effect. lineofsight takes its pierce-walls value from its FIRST argument, so passing Target first measures true geometry instead of the archer's own wall-piercing.
         __typeName: CharacterModifier
-        activationCondition: ""
-        behavior: power
-        displayCondition: Target.Stamina >= Target.Maximum Stamina
+        ability:
+          name: New Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 131808bd-3a32-44ac-8f5d-1b83a7a62c39
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+        attributes:
+        - id: reasonfilter
+          operation: reasonfilter
+          reasonedFilters:
+          - formula: Target.Stamina < Target.Maximum Stamina or lineofsight(Target, Caster) > 0
+            reason: "**Bloodscent:** the archer ignores line of effect against creatures who aren't at full Stamina."
+          value: ""
+        behavior: modifyability
         domains:
           CharacterFeature:490a29f6-0096-4118-9d4b-72223a122910: true
-        guid: d39a2d67-7cac-478b-ae78-4fbdd6cf7e4a
+        filterAbility: ""
+        guid: 3387eef3-e999-489b-9d3c-9887ef953d3e
+        modifyDescription: Requires line of effect only against targets at full Stamina.
+        source: Trait
+        sourceguid: 490a29f6-0096-4118-9d4b-72223a122910
+      - name: Bloodscent - ignore cover
+        description: Cancels the cover bane, but only against targets who are not at full Stamina. The activation condition repeats the global Cover modifier's own trigger so this strips a bane only when cover actually applied one - otherwise Remove Bane would eat an unrelated bane such as Adjacent Enemy on Ranged Strike.
+        __typeName: CharacterModifier
+        activationCondition: Target.Stamina < Target.Maximum Stamina and (Target.HasCover or (Line of Sight(Self, Target) < 1) or (Target.MovementType = "Burrow" and Target.DistanceBelowGround >= 1) or (Caster.MovementType = "Burrow" and Caster.DistanceBelowGround >= 1))
+        behavior: power
+        domains:
+          CharacterFeature:490a29f6-0096-4118-9d4b-72223a122910: true
+        guid: 13dd1cf4-ad77-4486-b0ad-db37903da58f
         keywords: []
+        modtype: remove_bane
         rollType: ability_power_roll
         source: Trait
         sourceguid: 490a29f6-0096-4118-9d4b-72223a122910
@@ -216,7 +233,7 @@ info:
       domains:
         CharacterFeature:1973bc9c-2c26-497e-be94-a73fba966ef2: true
       guid: 1973bc9c-2c26-497e-be94-a73fba966ef2
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Archer's Cackletongue
         description: ""
@@ -419,7 +436,7 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Highest Characteristic
+        roll: 2d10 + 2
         tiers:
         - 5 corruption damage
         - 6 corruption damage
@@ -515,7 +532,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: 56aac50d-9dc7-4192-a0ac-6c15aeb695d3
-mtime: 1786697449074
+  updateid: f4d60c22-9b08-4440-8120-0a1262b4071f
+mtime: 1788404423457
 ord: 0
 parentFolder: 820ecf96-578b-4508-8e79-c0fee75ec35e

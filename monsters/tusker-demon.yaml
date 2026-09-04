@@ -15,15 +15,15 @@ info:
     frameHueShift: 0
     frameSaturation: 1
     offtokenPortraitId: null
-    portraitFrameId: 5836106c-4ba0-4281-84cf-4ce797113f5e
+    portraitFrameId: 332770d5-bdfb-40bb-92c0-f8476e7e80f2
     portraitId: 1533da55-db8c-4cba-a129-76b5c84863cf
     portraitOffset:
-      x: 0.02764106
-      y: 0.1410385
+      x: 0.03350091
+      y: 0.02844153
     portraitRibbon: null
     saddlePositions: []
     tokenScaling: 1
-    tokenZoom: 0.7563742
+    tokenZoom: 0.9448989
   bestiaryId: 842d5398-c7e7-465e-845a-53bacb822183
   createdTimestamp: 1730266376535
   disguise:
@@ -120,10 +120,10 @@ info:
       domains:
         CharacterFeature:88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135: true
       guid: 88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Trample
-        description: The tusker demon can move through enemies and objects at normal speed. When the tusker enters a creature's space for the first time on their turn, the creature takes 5 damage. The tusker demon can end their turn in a prone size 1 creature's space, preventing the creature from getting up.
+        description: The tusker demon moves through enemies and objects at normal speed.
         __typeName: CharacterModifier
         attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
         behavior: attribute
@@ -134,13 +134,14 @@ info:
         sourceguid: 88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135
         value: 1
       - name: Trample
-        description: The tusker demon can move through enemies and objects at normal speed. When the tusker enters a creature's space for the first time on their turn, the creature takes 5 damage. The tusker demon can end their turn in a prone size 1 creature's space, preventing the creature from getting up.
+        description: The first creature the tusker demon moves through takes 5 damage.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
           CharacterFeature:88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135: true
+        filterCondition: Self.Your Turn
         guid: e0f74914-4090-4045-a08f-403529626b34
-        resourceRefreshType: none
+        resourceRefreshType: turn
         source: Trait
         sourceguid: 88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135
         triggeredAbility:
@@ -149,40 +150,11 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            applyto: targets
-            customAbility:
-              name: Trample Damage
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityDamageBehavior
-                roll: "5"
-              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                duration: 0
-                ongoingEffect: 4c4de2aa-9ebb-48e1-8176-2a224e10c478
-                ongoingEffectCustom: 4c4de2aa-9ebb-48e1-8176-2a224e10c478
-              categorization: Hidden
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 91a8a989-0d0a-4926-8ecf-8fd07726d066
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              objectTarget: false
-              persistence: []
-              range: 1
-              repeatTargets: false
-              strain: []
-              targetFilter: not Ongoing Effects has "Trampled This Turn"
-              targetType: target
+          - __typeName: ActivatedAbilityDamageBehavior
             filterTarget: ""
-            promptText: Choose target you moved through to apply 5 damage.
-          despawnBehavior: remove
+            roll: "5"
+          castImmediately: true
+          conditionFormula: First
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -190,21 +162,65 @@ info:
             saturation: 1
           guid: f4a99c43-99aa-49a7-be7e-56e3fd9ce0ec
           iconid: ui-icons/skills/1.png
-          mandatory: false
+          implementation: 4
           modifiers: []
           numTargets: "1"
-          persistence: []
-          range: "0"
+          objectTarget: false
+          range: 1
           repeatTargets: false
           strain: []
-          subject: self
-          targetType: self
+          targetType: target
           trigger: movethrough
-          triggerPrompt: Apply 5 damage for entering a creature's space for the first time on a turn.
+          triggerPrompt: The first creature the tusker demon moves through takes 5 damage.
           usageLimitOptions:
             charges: "1"
-            resourceRefreshType: none
+            resourceRefreshType: turn
             resourceid: e0f74914-4090-4045-a08f-403529626b34
+      - name: Trample
+        description: A prone size 1 creature in the tusker demon's space cannot stand up.
+        __typeName: CharacterModifier
+        aura:
+          name: Trample
+          description: A prone size 1 creature sharing the tusker demon's space cannot stand up.
+          __typeName: Aura
+          applyto: allother
+          creatureFilter: (Conditions has "Prone") and (Size <= 4)
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c142fa73-6682-4673-b8cd-8a6e2bde0831
+          implementation: 4
+          modifiers:
+          - name: Trample
+            description: This creature cannot stand while the tusker demon occupies their space.
+            __typeName: CharacterModifier
+            attribute: 207ef4f5-948b-44b1-b3c8-feae6b14e5ce
+            behavior: attribute
+            guid: 0173f0d6-93e3-434b-859e-c1ff42ffd336
+            source: Trample
+            sourceguid: c142fa73-6682-4673-b8cd-8a6e2bde0831
+            value: 1
+          - name: Stand Up
+            description: ""
+            __typeName: CharacterModifier
+            behavior: suppressabilities
+            explanation: The tusker demon is standing in your space, preventing you from getting up.
+            guid: 0ae95c05-9796-4b9c-a8ed-52820d9029e9
+            source: Trample
+            sourceguid: c142fa73-6682-4673-b8cd-8a6e2bde0831
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          source: Trample
+          triggers: []
+        behavior: aura
+        domains:
+          CharacterFeature:88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135: true
+        guid: c2ab83af-6577-47d8-9cd9-ea176d412a2f
+        radius: "0"
+        seq: cade37bd-08b7-4359-b1ff-9e8d50c95dbd
+        source: Trait
+        sourceguid: 88b17c7e-ddc9-4bb9-b3c8-bf13ac3a1135
       source: Trait
     - name: Lethe
       description: While the tusker demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.
@@ -212,12 +228,12 @@ info:
       domains:
         CharacterFeature:3ccd81b7-5661-4606-8b31-d7cfd6b53233: true
       guid: 3ccd81b7-5661-4606-8b31-d7cfd6b53233
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Lethe
         description: While the tusker demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.
         __typeName: CharacterModifier
-        activationCondition: Winded=1
+        activationCondition: "1"
         behavior: power
         displayCondition: Winded=1
         domains:
@@ -232,7 +248,7 @@ info:
       - name: Lethe
         description: While the tusker demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.
         __typeName: CharacterModifier
-        activationCondition: Target.Winded=1
+        activationCondition: "1"
         behavior: power
         displayCondition: Target.Winded=1
         domains:
@@ -246,40 +262,52 @@ info:
         sourceguid: 3ccd81b7-5661-4606-8b31-d7cfd6b53233
       source: Trait
     - name: Vengeful Tusker
-      description: ""
+      description: |-
+        Trigger: An enemy within distance deals damage to the tusker.
+
+        Effect: The tusker demon uses the Charge main action and Gore against the target.
       __typeName: CharacterFeature
       domains:
+        CharacterFeature:06879000-252a-4718-bb69-c8ee35fe8c41: true
         CharacterFeature:308cf188-67ed-475e-906a-74e7a1659082: true
-      guid: 308cf188-67ed-475e-906a-74e7a1659082
-      implementation: 3
+      guid: 06879000-252a-4718-bb69-c8ee35fe8c41
+      implementation: 4
       modifiers:
       - name: Vengeful Tusker
-        description: ""
+        description: |-
+          Trigger: An enemy within distance deals damage to the tusker.
+
+          Effect: The tusker demon uses the Charge main action and Gore against the target.
         __typeName: CharacterModifier
         ability:
           name: Vengeful Tusker
           __typeName: TriggeredAbilityDisplay
           distance: Ranged 7
           effect: The tusker demon uses the Charge main action and Gore against the target.
-          guid: faf45506-88c4-4768-97ef-e6117a974cca
+          guid: 78be4d67-38c2-4acd-ad90-cbd88b448993
           keywords:
             Ranged: true
           trigger: An enemy within distance deals damage to the tusker.
         behavior: triggerdisplay
         domains:
+          CharacterFeature:06879000-252a-4718-bb69-c8ee35fe8c41: true
           CharacterFeature:308cf188-67ed-475e-906a-74e7a1659082: true
-        guid: 7c414eac-b4a6-4f08-8520-6a68f9f7c0e5
+        guid: 459bff61-74a5-4a3d-b998-1d0417eb1edd
         source: Monster Rules
-        sourceguid: 308cf188-67ed-475e-906a-74e7a1659082
+        sourceguid: 06879000-252a-4718-bb69-c8ee35fe8c41
       - name: Vengeful Tusker
-        description: ""
+        description: |-
+          Trigger: An enemy within distance deals damage to the tusker.
+
+          Effect: The tusker demon uses the Charge main action and Gore against the target.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
+          CharacterFeature:06879000-252a-4718-bb69-c8ee35fe8c41: true
           CharacterFeature:308cf188-67ed-475e-906a-74e7a1659082: true
-        guid: ee33f35c-48e2-412f-bff7-3b85f4d2677e
+        guid: cab71873-0f24-49e1-87a6-a06aeb20d113
         source: Monster Rules
-        sourceguid: 308cf188-67ed-475e-906a-74e7a1659082
+        sourceguid: 06879000-252a-4718-bb69-c8ee35fe8c41
         triggeredAbility:
           name: Vengeful Tusker
           description: ""
@@ -301,7 +329,7 @@ info:
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              guid: eb76f466-71e5-4bc8-91df-5a987b19311c
+              guid: 4f20c8a8-56cb-457d-8da6-86faa28cb182
               iconid: ui-icons/skills/1.png
               modifiers: []
               numTargets: "1"
@@ -309,123 +337,12 @@ info:
               repeatTargets: false
               targetType: self
             filterTarget: ""
-            guid: dfb56500-e5d5-476c-ae6e-9d857ce1e93d
+            guid: 92e95ace-2445-4cfe-b138-7928beb8bb16
             standardAbility: 2ed70c5e-6494-47e3-bf84-3dd30e9e8b9c
             standardAbilityParams:
               targetid: "<<Cast.Primary Target.id>>"
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: custom
-            applyto: caster
-            customAbility:
-              name: Move & Use Gore
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                abilityType: standard
-                autoTarget: false
-                customAbility:
-                  name: Invoked Ability
-                  description: ""
-                  __typeName: ActivatedAbility
-                  abilityType: none
-                  behaviors: []
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: 31839fc4-4a94-42ba-9e97-1b27b3745705
-                  iconid: ui-icons/skills/1.png
-                  modifiers: []
-                  numTargets: "1"
-                  range: 1
-                  repeatTargets: false
-                  targetType: self
-                standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-              - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                autoTarget: false
-                customAbility:
-                  name: Gore
-                  description: ""
-                  __typeName: ActivatedAbility
-                  abilityType: none
-                  behaviors:
-                  - __typeName: ActivatedAbilityPowerRollBehavior
-                    roll: 2d10 + 2
-                    tiers:
-                    - 11 damage; push 1
-                    - 15 damage; push 2
-                    - 18 damage; push 3, prone
-                  categorization: Hidden
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: cb64c33e-0799-404d-9997-aa8a5e8da14c
-                  iconid: ui-icons/skills/1.png
-                  implementation: 3
-                  keywords:
-                    Melee: true
-                    Strike: true
-                    Weapon: true
-                  modifiers: []
-                  numTargets: "1"
-                  objectTarget: false
-                  persistence: []
-                  range: "2"
-                  repeatTargets: false
-                  strain: []
-                  targetType: target
-              categorization: Hidden
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 99a6c5cf-19ec-4ad5-acf1-e32ad14e7cb4
-              iconid: ui-icons/skills/1.png
-              implementation: 3
-              modifiers: []
-              numTargets: "1"
-              persistence: []
-              range: 1
-              repeatTargets: false
-              strain: []
-              targetType: self
-            promptText: Charge to the creature that damaged you and use Gore against the target
-            standardAbility: 923bf32c-4233-4fec-8895-7ce18da28744
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: f828d38b-7fa4-4d56-89fe-8e3943d09c08
-          iconid: ui-icons/skills/1.png
-          mandatory: false
-          modifiers: []
-          numTargets: "1"
-          persistence: []
-          range: "7"
-          repeatTargets: false
-          strain: []
-          targetType: attacker
-          trigger: losehitpoints
-          triggerPrompt: Charge and use Gore against creature that damaged you
-      - name: Vengeful Tusker
-        description: ""
-        __typeName: CharacterModifier
-        activatedAbility:
-          name: Vengeful Tusker
-          description: The tusker demon uses the Charge main action and Gore against the target.
-          __typeName: ActivatedAbility
-          abilityType: none
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
+            abilityType: named
             applyto: caster
             customAbility:
               name: Invoked Ability
@@ -438,128 +355,37 @@ info:
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              guid: 11942393-8e8e-401e-88f0-7ab9fdf64990
+              guid: d29c0cd1-7358-4db7-89c8-ebd997b8c54f
               iconid: ui-icons/skills/1.png
               modifiers: []
               numTargets: "1"
               range: 1
               repeatTargets: false
               targetType: self
-            filterTarget: ""
-            guid: ed0e9984-4c76-4111-90ee-927f021e37fe
-            standardAbility: 2ed70c5e-6494-47e3-bf84-3dd30e9e8b9c
-            standardAbilityParams:
-              targetid: "<<Cast.Primary Target.id>>"
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: custom
-            applyto: caster
-            customAbility:
-              name: Move & Use Gore
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                abilityType: standard
-                autoTarget: false
-                customAbility:
-                  name: Invoked Ability
-                  description: ""
-                  __typeName: ActivatedAbility
-                  abilityType: none
-                  behaviors: []
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: 60b38e69-6e34-4ab4-8a61-f5812ace5431
-                  iconid: ui-icons/skills/1.png
-                  modifiers: []
-                  numTargets: "1"
-                  range: 1
-                  repeatTargets: false
-                  targetType: self
-                standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-              - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                autoTarget: false
-                customAbility:
-                  name: Gore
-                  description: ""
-                  __typeName: ActivatedAbility
-                  abilityType: none
-                  behaviors:
-                  - __typeName: ActivatedAbilityPowerRollBehavior
-                    roll: 2d10 + 2
-                    tiers:
-                    - 11 damage; push 1
-                    - 15 damage; push 2
-                    - 18 damage; push 3, prone
-                  categorization: Hidden
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: f32ffbdd-6587-41c4-bc5c-c38b1032ea59
-                  iconid: ui-icons/skills/1.png
-                  implementation: 3
-                  keywords:
-                    Melee: true
-                    Strike: true
-                    Weapon: true
-                  modifiers: []
-                  numTargets: "1"
-                  objectTarget: false
-                  persistence: []
-                  range: "2"
-                  repeatTargets: false
-                  strain: []
-                  targetType: target
-              categorization: Hidden
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: e61a283e-11a3-4806-a91e-d1d261756938
-              iconid: ui-icons/skills/1.png
-              implementation: 3
-              modifiers: []
-              numTargets: "1"
-              persistence: []
-              range: 1
-              repeatTargets: false
-              strain: []
-              targetType: self
-            promptText: Charge to the creature that damaged you and use Gore against the target
-            standardAbility: 923bf32c-4233-4fec-8895-7ce18da28744
-          categorization: Signature Ability
+            invokeOnCaster: true
+            namedAbility: Charge
+          conditionFormula: Attacker.Distance(Self) <= 7
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          flavor: ""
-          guid: babc4200-ed31-4b84-86f5-1aabf0a01b3e
+          domains:
+            CharacterFeature:06879000-252a-4718-bb69-c8ee35fe8c41: true
+            CharacterFeature:308cf188-67ed-475e-906a-74e7a1659082: true
+          guid: b7f44c00-3aba-44ae-8a8c-b9435a626c5f
           iconid: ui-icons/skills/1.png
-          implementation: 2
-          keywords:
-            Ranged: true
+          implementation: 4
+          mandatory: false
           modifiers: []
-          numTargets: 1
-          range: 7
+          numTargets: "1"
+          persistence: []
+          range: "7"
           repeatTargets: false
-          sourceReference:
-            __typeName: SourceReference
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-            page: 157
           strain: []
-          targetFilter: Enemy
-          targetType: target
-        behavior: activated
-        guid: 91105671-6f34-4d5d-8c19-9bace6460e87
-        source: Monster Rules
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: Charge and use Gore against creature that damaged you
       source: Monster Rules
       tags:
         Trigger: true
@@ -705,10 +531,6 @@ info:
         __typeName: CharacterResource
         refreshid: 999e4994-bb40-428a-83a2-74de96a2b3a8-1
         used: 1
-      e0f74914-4090-4045-a08f-403529626b34:
-        __typeName: CharacterResource
-        refreshid: 999e4994-bb40-428a-83a2-74de96a2b3a8-1-3ae678b9-b0d1-4147-9fcc-2911b20af47d
-        used: 1
     role: Elite Brute
     savingThrowRatings: []
     skillProficiencies: []
@@ -732,7 +554,7 @@ info:
   size: 5
   summonerid: null
   tokenType: null
-  updateid: cc5d51c8-8c8b-4ef2-9c81-e38e937fd246
+  updateid: 1a5d78c1-ed64-4197-bc59-ccffe0243738
 mtime: 1786618794095
 ord: 0
 parentFolder: 820ecf96-578b-4508-8e79-c0fee75ec35e
