@@ -374,17 +374,44 @@ info:
           guid: 067364d2-60b0-4224-ae11-d1fa64ad41c8
           iconid: ui-icons/skills/1.png
           modifiers:
+          # Mirrors the Collision global rule so the extra 4 gets its own action-log
+          # line. A Forced Movement Damage Reduction modifier cannot work here: the
+          # collide trigger's cast is held until Club Swing finishes, and this
+          # ability-duration effect is already cancelled by then.
           - name: Club Swing Additional Forced Movement Damage
             description: Any target who takes damage from forced movement from Club Swing takes an extra 4 damage
             __typeName: CharacterModifier
-            attribute: 447ea0f8-a231-4f72-b28f-9f7827291976
-            behavior: attribute
+            behavior: trigger
             displayIcon: false
             guid: 0ca942d2-3cb3-43b0-a4af-9fa0c25470d3
-            operation: add
             source: Ongoing Effect
             sourceguid: 067364d2-60b0-4224-ae11-d1fa64ad41c8
-            value: -4
+            triggeredAbility:
+              name: "Club Swing: Extra 4 Collision Damage"
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                chatMessage: "Club Swing: Extra 4 Collision Damage"
+                roll: "4"
+              conditionFormula: (No Damage from Forced Movement < 1) and (NoDamageFromForcedMovementWithObjects
+                < 1 or not WIthObject) and (not NoCollisionDamage)
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 5c1f0a83-6b47-4d92-a0e5-1c7de4f83b21
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 5
+              repeatTargets: false
+              strain: []
+              targetType: self
+              trigger: collide
           source: Ongoing Effect
       categorization: Signature Ability
       display:
@@ -414,10 +441,7 @@ info:
       strain: []
       targetType: target
     - name: Grabby Hand
-      description: |-
-        The goon can only have one target grabbed at a time.
-
-        *1 Malice:* The target has a bane on escaping the grab while the goon crushes the target in their hand.
+      description: A target grabbed this way takes a bane on the Escape Grab maneuver.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -431,15 +455,11 @@ info:
       - __typeName: ActivatedAbilityApplyRidersBehavior
         conditionid: 70504ebe-3899-41d3-9f60-74b52ce35e39
         modesSelected:
-        - 2
+        - 1
         riderid: 6906316a-26fe-4101-9a4b-60192b77c270
-      - __typeName: ActivatedAbilityReplenishBehavior
-        applyto: caster
-        mode: expend
-        modesSelected:
+        tiersSelected:
         - 2
-        quantity: "1"
-        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+        - 3
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -450,7 +470,7 @@ info:
       guid: 30aa9cbc-5042-499a-9078-24287dad6548
       iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
       implementation: 4
-      implementationDetails: Automates damage and grabbed outcomes, relies on the global one-target grab limit, and offers an optional 1 Malice mode that applies the Escape Grab bane rider and spends the resource.
+      implementationDetails: Automates damage and grabbed outcomes, relies on the global one-target grab limit, applies the Escape Grab bane rider and spends the resource.
       keywords:
         Melee: true
         Strike: true
@@ -458,8 +478,6 @@ info:
       modeList:
       - condition: ""
         text: Normal
-      - condition: Heroic Resources Available to Spend >= 1
-        text: 1 Malice
       modifiers: []
       multipleModes: true
       numTargets: 1
@@ -477,7 +495,7 @@ info:
       description: The goon hurls what's in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goon's choice).
       __typeName: ActivatedAbility
       abilityFilters:
-      - formula: self.Number of Creatures Grabbed = 1 and self.GrabbedCreatures.Highest("Size") = 1
+      - formula: self.Number of Creatures Grabbed = 1 and self.GrabbedCreatures.Highest("Size") < 5
         reason: The goon must be grabbing a Size 1 creature.
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -654,7 +672,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: e8f76d64-4403-4062-89b8-1c472f2732a1
+  updateid: 12bef3a6-b6e1-492c-bb3b-740c11599150
 mtime: 1786598701723
 ord: 0
 parentFolder: f3ad56da-f6fa-4d7d-a056-0d090e6a130f
