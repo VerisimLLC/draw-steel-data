@@ -496,14 +496,6 @@ info:
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        filterTarget: not ConditionCaster("Grabbed") = Caster
-        guid: 8a03bae9-fffd-4961-b5a5-1b4f8dae162f
-        roll: 2d10 + 3
-        tiers:
-        - 5 damage
-        - 9 damage
-        - 12 damage; prone
       - __typeName: ActivatedAbilityAuraBehavior
         aura:
           __typeName: Aura
@@ -515,72 +507,19 @@ info:
           guid: 840dfd2c-7ac1-4b66-be3a-cf3f1fcff1a4
           modifiers: []
           objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
-        duration: endturn
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: custom
+        duration: endcast
+      - __typeName: ActivatedAbilityHurlGrabbedBehavior
         applyto: caster
-        customAbility:
-          name: Teleport Grabbed Creature
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors: []
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: a14ce458-b274-4043-83a0-3c62d07db54a
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              persistence: []
-              range: 1
-              repeatTargets: false
-              strain: []
-              targetType: self
-            inheritRange: false
-            standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
-            standardAbilityParams:
-              range: "7"
-          - __typeName: ActivatedAbilityDamageBehavior
-            guid: 3093d888-87d2-4977-bb3c-e848f4ef2b8c
-            roll: 5 when Cast.Tier = 1 else 9 when Cast.Tier = 2 else 12
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            filterTarget: Cast.Tier = 3
-            rule: Prone
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: d7960159-e064-44f8-ad6f-0e075eed29fc
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          objectTarget: true
-          persistence: []
-          range: "1"
-          repeatTargets: false
-          strain: []
-          targetFilter: ConditionCaster("Grabbed") = Caster and Size = 1
-          targetType: target
-        filterTarget: ""
-        guid: ec827b73-d84d-408d-ae31-40ee246c0181
-        inheritRange: true
-        promptText: Select the grabbed creature and then select the last square in the line of People Bowling.
-        standardAbility: 4963b93d-cb3a-409b-a0df-4d8b9bdeeeb8
-        standardAbilityParams:
-          targetfilter: ConditionCaster("Grabbed") = Caster and Size = 1
+        hurlFilter: Size < 5
+        promptText: Choose where the hurled creature lands
+        searchRadius: 3
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        guid: 8a03bae9-fffd-4961-b5a5-1b4f8dae162f
+        roll: 2d10 + 3
+        tiers:
+        - 5 damage
+        - 9 damage
+        - 12 damage; prone
       castImmediately: true
       categorization: Signature Ability
       display:
@@ -591,8 +530,8 @@ info:
       flavor: ""
       guid: 2437d269-6626-4d1e-9662-e58d121ea626
       iconid: 98e46b21-b1bb-4899-bd9c-ac1ee95f7239
-      implementation: 3
-      implementationDetails: Automates the 3 Malice cost, line power roll, damage and prone outcome for all line targets, then prompts to teleport a grabbed Size 1 creature and applies the same tier outcome. The endpoint is not constrained to the final line square, and the prerequisite cannot detect a grabbed object.
+      implementation: 4
+      implementationDetails: "Automates the 3 Malice cost and the grabbed Size 1 prerequisite. Hurls the grabbed creature to the last square of the line, or to the nearest unoccupied square (prompting only when several squares are equally near), ends the grab, and includes the hurled creature in the line's power roll so it takes the same damage and prone outcome as the other targets. Limitation: the codex has no grabbed objects, so only a grabbed creature can be hurled; objects standing in the line are still damaged normally."
       keywords:
         Area: true
         Melee: true
