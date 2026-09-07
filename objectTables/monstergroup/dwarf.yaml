@@ -68,58 +68,19 @@ maliceAbilities:
 - name: Rappelling Barrage
   description: Each dwarf acting this turn can automatically climb at full speed while moving. At any point during this movement, they can make a free strike.
   __typeName: MaliceAbility
+  abilityFilters:
+  - formula: YourTurn
+    reason: Must be used during the acting dwarf's turn
   abilityType: none
   behaviors:
-  - name: Ability Duration Effect
-    __typeName: ActivatedAbilityApplyAbilityDurationEffect
-    momentaryEffect:
-      id: 29885d30-d551-4e3e-9dd4-64f65903e6ce
-      name: Add Climb Speed
-      description: Dwarves have a climb speed
-      __typeName: CharacterOngoingEffect
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      guid: 29885d30-d551-4e3e-9dd4-64f65903e6ce
-      iconid: ui-icons/skills/1.png
-      modifiers:
-      - name: Add Climb Speed
-        description: Dwarves have a climb speed
-        __typeName: CharacterModifier
-        attribute: climb
-        behavior: attribute
-        guid: 97c77a9e-a2e6-4635-92dd-de63b6bc9c69
-        operation: set
-        source: Ongoing Effect
-        sourceguid: 29885d30-d551-4e3e-9dd4-64f65903e6ce
-        value: 1
-      source: Ongoing Effect
-  - __typeName: ActivatedAbilityInvokeAbilityBehavior
-    abilityType: standard
-    customAbility:
-      name: Invoked Ability
-      description: ""
-      __typeName: ActivatedAbility
-      abilityType: none
-      behaviors: []
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      guid: db2b47f7-ae7a-4785-9761-09a0e5a9e310
-      iconid: ui-icons/skills/1.png
-      modifiers: []
-      numTargets: "1"
-      range: 1
-      repeatTargets: false
-      targetType: self
-    promptText: At any point during this movement, you can make a free strike.
-    promptWhenResolving: true
-    runOnController: true
-    standardAbility: 1c423f02-73e6-4c44-8341-17d854f15fc5
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: 0e12f40e-2488-44cd-a96d-d4f0515fb443
+    ongoingEffectCustom: 0e12f40e-2488-44cd-a96d-d4f0515fb443
+    duration: end_of_next_turn
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: a0416b94-b206-41db-859d-4af03b70fed8
+    ongoingEffectCustom: a0416b94-b206-41db-859d-4af03b70fed8
+    duration: end_of_next_turn
   display:
     bgcolor:
       __usertype: LuaColor
@@ -132,11 +93,9 @@ maliceAbilities:
     saturation: 1
   guid: 5abb004c-a02d-4d1a-9438-e36cc4e44bad
   iconid: 53777917-af89-413b-9f1d-7202a8416cce
-  implementation: 2
+  implementation: 4
   implementationDetails: |-
-    Targets are prompted to move then strike.
-
-    Targets are not able to make a free strike at any point during the movement.
+    Grants acting dwarves full-speed climbing and one Rappelling Free Strike until their turn ends. Use the granted strike between normal movement segments; remaining movement is preserved.
   modifiers: []
   numTargets: "1"
   persistence: []
@@ -150,7 +109,7 @@ maliceAbilities:
     docid: cc66844a-04d0-49a0-8687-65ef83b15363
     page: 106
   strain: []
-  targetFilter: type = "Dwarf"
+  targetFilter: Type = "Dwarf" and YourTurn
   targetType: map
 - name: Snaring Line
   description: |
@@ -178,7 +137,7 @@ maliceAbilities:
         hueshift: 0
         saturation: 1
       guid: bbc9dbd0-d1e5-437e-9905-0be0eab62768
-      implementation: 3
+      implementation: 2
       modifiers: []
       objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
       triggers:
@@ -189,19 +148,14 @@ maliceAbilities:
           abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
-            filterTarget: not Ongoing Effects has "Damaged by Snaring Line"
-            isTest: false
+            isTest: true
             resistanceAttr: agl
             resistanceRoll: true
-            roll: 2d10 + Might or Agility
+            roll: 2d10 + Agility
             tiers:
             - 8 damage; restrained (EoT)
             - 6 damage; slowed (EoT)
             - No effect
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: endround
-            ongoingEffect: 3d2fc485-b87c-47e8-9cbc-429706c02122
-            ongoingEffectCustom: 3d2fc485-b87c-47e8-9cbc-429706c02122
           castImmediately: true
           display:
             bgcolor: "#ffffffff"
@@ -220,15 +174,50 @@ maliceAbilities:
           strain: []
           targetFilter: ""
           targetType: self
-          trigger: onenter
-        trigger: onenter
+          trigger: onfirstenterround
+        trigger: onfirstenterround
+      - ability:
+          name: Snaring Line
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            isTest: true
+            resistanceAttr: agl
+            resistanceRoll: true
+            roll: 2d10 + Agility
+            tiers:
+            - 8 damage; restrained (EoT)
+            - 6 damage; slowed (EoT)
+            - No effect
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8aaf9d10-952e-4b1f-85c9-463204bbed37
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          radius: 0
+          range: 5
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetFilter: ""
+          targetType: self
+          trigger: targetstartturnaura
+        trigger: targetstartturnaura
     duration: eoe
   - __typeName: ActivatedAbilityPowerRollBehavior
     guid: 0b4c9c97-f9a2-40e5-87f7-4344669c84f9
-    isTest: false
+    isTest: true
     resistanceAttr: agl
     resistanceRoll: true
-    roll: 2d10 + Might or Agility
+    roll: 2d10 + Agility
     tiers:
     - 8 damage; restrained (EoT)
     - 6 damage; slowed (EoT)
@@ -245,7 +234,8 @@ maliceAbilities:
     saturation: 1
   guid: a2f3a97f-e825-4d74-823f-a6daba6301cf
   iconid: 0f919f53-eaba-492b-bb7a-58e85a40c622
-  implementation: 4
+  implementation: 2
+  implementationDetails: The full automation is implemented in source. Gold verification is pending an engine build with the waypoint aura reentry fix and an in-game test with the updated Lua.
   keywords:
     Area: true
     Magic: true
