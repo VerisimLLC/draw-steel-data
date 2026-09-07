@@ -65,7 +65,23 @@ behaviors:
     runOnController: true
 ```
 
-**Used by**: Overwhelming March (Orcs), Dread March (Undead), Rappelling Barrage (Dwarves)
+**Used by**: Overwhelming March (Orcs), Dread March (Undead)
+
+### Acting-group buff with an optional strike during normal movement
+
+Rappelling Barrage uses `targetType: map` with `Type = "Dwarf" and YourTurn`.
+It applies separate climb and free-strike-availability effects, both with
+`duration: end_of_next_turn`. For creatures acting now, this removes them at
+the current turn's end. It does not invoke a move or change movement distance.
+
+The availability effect grants a self-targeted ability that invokes an augmented
+free strike. After resolving, the actual strike purges only the availability
+effect; climbing remains until turn end. Appending the purge also preserves the
+grant when targeting or an unpaid roll is canceled. The invocation suppresses
+squad coordination, and its local augmentation removes Charge.
+
+See `objectTables/monstergroup/dwarf.yaml` and
+`objectTables/characterongoingeffects/rappelling-free-strike-available.yaml`.
 
 ### Select N specific allies of a type
 

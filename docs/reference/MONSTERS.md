@@ -368,13 +368,21 @@ __typeName: ActivatedAbilityPowerRollBehavior
 rule: ""                # GoblinScript rules for power table effects
 roll: "2d10 + 2"        # Dice formula
 attrid: mgt             # Characteristic used for the roll
-resistanceRoll: false   # If true, target rolls (tiers are reversed)
+resistanceRoll: false   # If true, target rolls; tier 1 is its worst outcome
+resistanceAttr: agl     # Characteristic used when the target rolls
+isTest: false           # With resistanceRoll, true makes this a target-rolled test
 tiers:                  # Array of 3 strings: tier 1/2/3 outcomes
   - "5 damage"
   - "9 damage"
   - "12 damage"
 applyto: targets
 ```
+
+For a target's characteristic **test**, set `resistanceRoll: true`, `isTest: true`,
+and `resistanceAttr` to the required characteristic. This uses the target's test
+modifiers and resolves the tier effects against that target. A resistance roll
+with `isTest: false` retains resistance-roll modifiers. The `roll` formula does
+not select the characteristic in either target-rolled mode; use `resistanceAttr`.
 
 #### ActivatedAbilityDamageBehavior
 **Purpose**: Deal damage to targets.
@@ -721,12 +729,25 @@ symbols: `Self` (the creature being tested), `Target` (synonym for Self), `Aura`
 
 | ID | Description |
 |----|-------------|
-| `onenter` | When a creature enters the aura |
+| `onenter` | Legacy: first entry per turn or start of the affected creature's turn |
+| `onfirstenterround` | First movement into this aura instance per creature per round |
+| `targetstartturnaura` | At the start of each affected creature's turn, independent of entry |
 | `casterstartturnaura` | At the start of the caster's turn |
 | `casterendturnaura` | At the end of the caster's turn |
 
 Both caster-turn triggers use `targetType: aura` (every creature in the aura except the
 caster). Set `destroyaura: true` on the trigger to remove the aura once it fires.
+
+Use `targetType: self` for `onfirstenterround` and `targetstartturnaura`. For a zone
+such as Snaring Line, supply both triggers with the same test/effect payload.
+Entry tracking belongs to each aura instance and creature, so separate castings
+do not suppress each other. A turn-start test does not consume the first-entry
+test for that round. Resolve any initial targets with the creating ability's
+ordinary behavior; placing a zone is not movement into it.
+
+Paths that start inside, leave, and reenter in one waypoint move require the
+engine's previous-step aura containment tracking in `CharacterToken.ExecuteMove`.
+Older builds keep the deepest containment for the whole path and miss that reentry.
 
 **Trigger structure:**
 

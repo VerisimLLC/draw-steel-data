@@ -1,0 +1,200 @@
+id: ea78c7de-ae27-4b6a-b7d1-216e28355397
+name: Hybrid Form
+description: |-
+  You have your companion's physical characteristics, and your speed is your companion's speed if it is higher. You gain your companion's movement types and damage immunities, and you can use abilities with the Companion keyword.
+
+  Lasts until the end of the encounter, or until you revert to your true form as a free maneuver.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1788810000000
+custom: true
+display:
+  bgcolor: "#8a5a2bff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:ea78c7de-ae27-4b6a-b7d1-216e28355397: true
+guid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+iconid: ui-icons/skills/1.png
+implementation: 4
+implementationDetails: Physical characteristics, speed, movement types, damage immunities and access to Companion-keyword abilities are all automated. Immunities are read live from the companion per damage type and clamped at 0, so the companion's weaknesses are not inherited.
+modifiers:
+- name: Hybrid Form
+  description: You have your companion's Might.
+  __typeName: CharacterModifier
+  attribute: mgt
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 094584f5-aba2-4dfd-8e74-be51ce9bd6ec
+  operation: set
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: Companion.Might
+- name: Hybrid Form
+  description: You have your companion's Agility.
+  __typeName: CharacterModifier
+  attribute: agl
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: bc13ec77-a64e-4099-8246-f37cd5195f0f
+  operation: set
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: Companion.Agility
+- name: Hybrid Form
+  description: Your speed is your companion's speed if it is higher.
+  __typeName: CharacterModifier
+  attribute: speed
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 9a63f310-a29b-4389-8a00-17f3eb15e1ab
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: max(0, Companion.Walking Speed - Walking Speed)
+- name: Hybrid Form
+  description: You gain your companion's fly speed.
+  __typeName: CharacterModifier
+  attribute: fly
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: ea88a37d-e9b8-48fd-b902-357f47f4e1e6
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1 when Companion.Flying Speed > 0 else 0
+- name: Hybrid Form
+  description: You gain your companion's swim speed.
+  __typeName: CharacterModifier
+  attribute: swim
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: f778117e-8ada-46f2-887e-6c33c956f6bd
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1 when Companion.Swimming Speed > 0 else 0
+- name: Hybrid Form
+  description: You gain your companion's climb speed.
+  __typeName: CharacterModifier
+  attribute: climb
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 36669b11-1b26-4397-9956-7480a4ef9b36
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1 when Companion.Climbing Speed > 0 else 0
+- name: Hybrid Form
+  description: You gain your companion's burrow speed.
+  __typeName: CharacterModifier
+  attribute: burrow
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 5e6295fc-0720-47e2-81b1-c2a1c4e61838
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1 when Companion.Burrowing Speed > 0 else 0
+- name: Hybrid Form
+  description: You gain your companion's teleport speed.
+  __typeName: CharacterModifier
+  attribute: teleport
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 59f79997-eeec-4ece-91d9-f086df1c9f8b
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1 when Companion.Teleporting Speed > 0 else 0
+- name: Hybrid Form
+  description: You can use abilities with the Companion keyword.
+  __typeName: CharacterModifier
+  attribute: baa0fd43-22f1-408e-bb87-029e7e9e387f
+  behavior: attribute
+  guid: 0e1369c9-f3e3-4417-a4cc-f95999c96dc7
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+  value: 1
+- name: Hybrid Form
+  description: You gain your companion's damage immunities.
+  __typeName: CharacterModifier
+  behavior: resistance
+  filterCondition: HasCompanion
+  guid: c191da83-9d64-4b70-ac99-f94f0da50056
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: acid
+    dr: max(0, Companion.Immunities("acid"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: cold
+    dr: max(0, Companion.Immunities("cold"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: corruption
+    dr: max(0, Companion.Immunities("corruption"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: fire
+    dr: max(0, Companion.Immunities("fire"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: holy
+    dr: max(0, Companion.Immunities("holy"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: lightning
+    dr: max(0, Companion.Immunities("lightning"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: poison
+    dr: max(0, Companion.Immunities("poison"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: psychic
+    dr: max(0, Companion.Immunities("psychic"))
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: sonic
+    dr: max(0, Companion.Immunities("sonic"))
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+- name: Hybrid Form
+  description: Revert to your true form.
+  __typeName: CharacterModifier
+  activatedAbility:
+    name: Revert to True Form
+    description: Revert to your true form, ending Hybrid Form.
+    __typeName: ActivatedAbility
+    abilityType: none
+    actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      applyto: caster
+      conditions: []
+      mode: effect
+      ongoingEffect: ea78c7de-ae27-4b6a-b7d1-216e28355397
+    categorization: Ability
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    domains: []
+    guid: d1ec6ac7-939d-4419-a1bc-c90fb5301d40
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+  behavior: activated
+  guid: daf3f6c2-a944-4914-a5f3-d96934f495f3
+  source: Ongoing Effect
+  sourceguid: ea78c7de-ae27-4b6a-b7d1-216e28355397
+mtime: 1788810000000
+source: Ongoing Effect
+stackable: false
+statusEffect: true

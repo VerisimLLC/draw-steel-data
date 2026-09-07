@@ -1,0 +1,158 @@
+id: 2cd2be70-bda1-4891-939a-4a8601a64218
+name: Wild Rumpus
+description: |-
+  You and your companion gain each other's movement types in addition to your own, and you both use your speed or your companion's speed, whichever is higher.
+
+  Ends when you or your companion takes damage, or at the end of the encounter.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1788800000000
+custom: true
+display:
+  bgcolor: "#c8a24aff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:2cd2be70-bda1-4891-939a-4a8601a64218: true
+endTrigger: losehitpoints
+guid: 2cd2be70-bda1-4891-939a-4a8601a64218
+iconid: ui-icons/skills/1.png
+implementation: 3
+implementationDetails: Speed and shared movement types are automated in both directions. Manual - the escalating self-damage on repeat uses, and the companion-takes-damage half of the end condition (endTrigger fires on the effect holder, so the beastheart's own damage ends it).
+modifiers:
+- name: Wild Rumpus
+  description: Use the higher of your speed and your companion's speed.
+  __typeName: CharacterModifier
+  attribute: speed
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 6381b8ef-65f8-458b-8ef0-18cbb5bc8542
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: max(0, Companion.Walking Speed - Walking Speed)
+- name: Wild Rumpus
+  description: Gain your companion's fly speed.
+  __typeName: CharacterModifier
+  attribute: fly
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 1bc2332f-fb83-4905-b805-491c101a3a72
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: 1 when Companion.Flying Speed > 0 else 0
+- name: Wild Rumpus
+  description: Gain your companion's swim speed.
+  __typeName: CharacterModifier
+  attribute: swim
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: a649428b-ca3b-4c74-a08e-45b3b4b0897c
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: 1 when Companion.Swimming Speed > 0 else 0
+- name: Wild Rumpus
+  description: Gain your companion's climb speed.
+  __typeName: CharacterModifier
+  attribute: climb
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 1e76011c-bf79-4846-927f-d79472dd95d1
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: 1 when Companion.Climbing Speed > 0 else 0
+- name: Wild Rumpus
+  description: Gain your companion's burrow speed.
+  __typeName: CharacterModifier
+  attribute: burrow
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: e89ea82b-a4b9-4028-9d7c-e38970a0cc4e
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: 1 when Companion.Burrowing Speed > 0 else 0
+- name: Wild Rumpus
+  description: Gain your companion's teleport speed.
+  __typeName: CharacterModifier
+  attribute: teleport
+  behavior: attribute
+  filterCondition: HasCompanion
+  guid: 5d60ba65-f0e2-4227-8f58-385f3d8a8735
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+  value: 1 when Companion.Teleporting Speed > 0 else 0
+- name: Wild Rumpus
+  description: Your companion gains your movement types and the higher of your two speeds.
+  __typeName: CharacterModifier
+  behavior: modcompanion
+  feature:
+    name: Wild Rumpus
+    description: You use the higher of your speed and your beastheart's speed, and gain their movement types.
+    __typeName: CharacterFeature
+    guid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+    iconid: ui-icons/skills/1.png
+    modifiers:
+    - name: Wild Rumpus
+      description: Use the higher of your speed and your beastheart's speed.
+      __typeName: CharacterModifier
+      attribute: speed
+      behavior: attribute
+      guid: 48d5a1d0-d4e9-4cef-afde-1ef128dbd8d8
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: max(0, Summoner.Walking Speed - Walking Speed)
+    - name: Wild Rumpus
+      description: Gain your beastheart's fly speed.
+      __typeName: CharacterModifier
+      attribute: fly
+      behavior: attribute
+      guid: 75aca2c0-f54d-4218-bf7e-b7c9a309f203
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: 1 when Summoner.Flying Speed > 0 else 0
+    - name: Wild Rumpus
+      description: Gain your beastheart's swim speed.
+      __typeName: CharacterModifier
+      attribute: swim
+      behavior: attribute
+      guid: 680ef1e7-2ca9-411c-a0c4-43bfc5d7ae7f
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: 1 when Summoner.Swimming Speed > 0 else 0
+    - name: Wild Rumpus
+      description: Gain your beastheart's climb speed.
+      __typeName: CharacterModifier
+      attribute: climb
+      behavior: attribute
+      guid: 65fd7df6-db5d-4f16-9e6b-d8ffd9bc87b5
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: 1 when Summoner.Climbing Speed > 0 else 0
+    - name: Wild Rumpus
+      description: Gain your beastheart's burrow speed.
+      __typeName: CharacterModifier
+      attribute: burrow
+      behavior: attribute
+      guid: 9fb5df44-344f-47cc-9668-bfb0906b0ffb
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: 1 when Summoner.Burrowing Speed > 0 else 0
+    - name: Wild Rumpus
+      description: Gain your beastheart's teleport speed.
+      __typeName: CharacterModifier
+      attribute: teleport
+      behavior: attribute
+      guid: 1f0ba768-e6ea-42eb-8c38-7aa7aeb2d20a
+      source: Ongoing Effect
+      sourceguid: f2801c2f-af4a-4ba3-9de1-2d6ba66b7443
+      value: 1 when Summoner.Teleporting Speed > 0 else 0
+    source: Ongoing Effect
+  guid: 7002613e-f640-422b-afc7-6b37cbe7661e
+  source: Ongoing Effect
+  sourceguid: 2cd2be70-bda1-4891-939a-4a8601a64218
+mtime: 1788800100000
+source: Ongoing Effect
+stackable: false
+statusEffect: true

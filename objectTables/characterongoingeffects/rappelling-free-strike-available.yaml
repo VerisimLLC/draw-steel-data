@@ -1,0 +1,116 @@
+id: a0416b94-b206-41db-859d-4af03b70fed8
+name: Rappelling Free Strike Available
+description: Once during your movement this turn, you can make a free strike. Use Rappelling Free Strike between normal movement segments, then continue with your remaining movement.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: a0416b94-b206-41db-859d-4af03b70fed8
+iconid: ui-icons/skills/1.png
+implementation: 4
+source: Ongoing Effect
+modifiers:
+- name: Rappelling Free Strike Available
+  description: Make your free strike during movement without spending an action or gaining extra movement.
+  __typeName: CharacterModifier
+  behavior: activated
+  guid: e8118959-d3b3-4dd3-b93d-8bfd0c4e7110
+  source: Ongoing Effect
+  sourceguid: a0416b94-b206-41db-859d-4af03b70fed8
+  activatedAbility:
+    name: Rappelling Free Strike
+    description: Make a free strike at this point during your movement, then continue with your remaining movement. This consumes your Rappelling free strike but leaves your climb speed active until your turn ends.
+    __typeName: ActivatedAbility
+    guid: 91620000-17a3-4dc8-a7ca-b6488918fe0b
+    abilityType: none
+    actionResourceId: none
+    abilityFilters:
+    - formula: YourTurn
+      reason: Only available during your turn
+    categorization: Ability
+    castImmediately: true
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    targetType: self
+    behaviors:
+    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+      abilityType: custom
+      runOnController: true
+      useSquadCoordination: false
+      suppressInvokedActionCost: true
+      customAbility:
+        name: Free Strike
+        description: Choose your individual free strike.
+        __typeName: ActivatedAbility
+        guid: fa3e44bd-1049-4b17-bd5e-761ed322afcd
+        abilityType: none
+        actionResourceId: none
+        categorization: Hidden
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        iconid: ui-icons/skills/1.png
+        modifiers: []
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        targetType: self
+        behaviors:
+        - __typeName: ActivatedAbilityAugmentedAbilityBehavior
+          modifier:
+            name: Rappelling Free Strike
+            __typeName: CharacterModifier
+            behavior: modifyability
+            guid: 3c7fbcd3-1a83-4698-8fac-43e06cbaf5b2
+            filterAbility: Ability.UsableAsFreeStrike
+            cannotModifyAction: true
+            mustPayResourceCost: true
+            replaceBehaviors: after
+            attributes:
+            - id: modkeywords
+              operation: Remove
+              keywords:
+                Charge: true
+            ability:
+              name: Rappelling Free Strike
+              description: ""
+              __typeName: ActivatedAbility
+              guid: 8622aeaf-3993-405d-adcf-85b769119442
+              abilityModification: true
+              abilityType: none
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+              behaviors:
+              - __typeName: ActivatedAbilityCustomTriggerBehavior
+                applyto: caster
+                triggerName: makefreestrike
+                value: ""
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                applyto: caster
+                conditions: []
+                mode: effect
+                ongoingEffect: a0416b94-b206-41db-859d-4af03b70fed8
