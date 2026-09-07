@@ -725,6 +725,32 @@ modifierInfo:
 The `benefit` and `drawback` fields are display text only. The actual game mechanics
 are in the `modifierInfo` features and their modifiers.
 
+### Choices Inside a Complication
+
+`modifierInfo.features` may contain any `CharacterChoice` subtype (`CharacterSkillChoice`,
+`CharacterLanguageChoice`, ...). The character builder renders them inline on the
+Complication step, and the character sheet exposes them as dropdowns.
+
+**Forgetting a language** (e.g. Shipwrecked's drawback) uses `CharacterForgetLanguageChoice`.
+Its options are the languages the hero currently knows (ancestry, culture, career and
+earlier picks are all resolved before the Complication step):
+
+```yaml
+  - __typeName: CharacterForgetLanguageChoice
+    name: "Shipwrecked - Drawback"
+    description: "You have forgotten one language you know of your choice."
+    guid: <generate-uuid>
+    numChoices: 1
+    source: Complications
+```
+
+Each pick becomes a `behavior: proficiency` modifier with `subtype: forgetlanguage`.
+Languages are tallied, not flagged: every grant adds one, every forget subtracts one, and
+the language is known while the tally is positive. So a hero who knows Caelian from two
+sources and forgets it once still knows it. The same modifier can be authored directly
+(`subtype: forgetlanguage`, `skills: { <language-uuid>: true }`) when the language to
+forget is fixed rather than chosen.
+
 ### Minimal Complication YAML Template
 
 ```yaml
