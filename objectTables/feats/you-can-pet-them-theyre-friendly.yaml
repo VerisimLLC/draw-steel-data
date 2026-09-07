@@ -1,0 +1,43 @@
+id: 93e91a1f-1efa-4795-950c-d72977524451
+name: "You Can Pet Them, They're Friendly"
+description: Whenever you make a Presence test to interact with a creature while you are within 5 squares of your companion, you can use your companion's Presence instead of your own.
+_table: feats
+__typeName: CharacterFeat
+ctime: 1788806000000
+modifierInfo:
+  __typeName: ClassLevel
+  features:
+  - name: "You Can Pet Them, They're Friendly"
+    description: Whenever you make a Presence test to interact with a creature while you are within 5 squares of your companion, you can use your companion's Presence instead of your own.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    domains:
+      class:0380181e-acad-4cdb-ae6d-c7cd11df6ad2: true
+    guid: ebb119ad-7101-4a8b-b64f-2501695b0cef
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    implementationDetails: Offered as a toggle on any Presence test made within 5 squares of the companion. The player ticks it when the test is one that interacts with a creature, which is the part the engine cannot know.
+    modifiers:
+    - name: Companion's Presence
+      description: Use your companion's Presence instead of your own.
+      __typeName: CharacterModifier
+      activationCondition: attribute = "prs" and Count Nearby Creatures(5, "companion") > 0
+      behavior: power
+      guid: e7843f92-d789-450e-9903-cdf3bffc0c67
+      keywords: []
+      modtype: appendroll
+      replaceText: max(0, Companion.Presence - Presence)
+      rollType: test_power_roll
+      source: Feat
+      sourceguid: ebb119ad-7101-4a8b-b64f-2501695b0cef
+    prerequisites:
+    - __typeName: CharacterPrerequisite
+      filter: 1 when Beastheart Level > 0 else 0
+      guid: 25046739-ce8f-44fc-a66d-e1df4612a47f
+      type: goblinscript
+    source: Feat
+    tags:
+      Interpersonal: true
+mtime: 1788806000000
+prerequisite: Beastheart
+tag: Interpersonal Perk
