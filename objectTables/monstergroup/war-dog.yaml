@@ -247,14 +247,21 @@ maliceAbilities:
   strain: []
   targetType: target
 - name: Alchemical Cloud
-  description: |
-    A bank of choking chemicals sweeps across the area of the encounter map. Each enemy in the encounter makes a Might test.
-    - Tier 1 (<=11): 8 poison damage; dazed (EoT)
-    - Tier 2 (12-16): 7 poison damage; weakened (EoT)
-    - Tier 3 (17+): 4 poison damage
+  description: |2
+
   __typeName: MaliceAbility
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    attrid: mgt
+    isTest: false
+    resistanceAttr: mgt
+    resistanceRoll: true
+    roll: 2d10 + Highest Characteristic
+    tiers:
+    - 8 poison damage; dazed (EoT)
+    - 7 poison damage; weakened (EoT)
+    - 4 poison damage
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -262,11 +269,12 @@ maliceAbilities:
     saturation: 1
   guid: 1fea394f-fcd6-4f18-940c-e1dddbe7f2bc
   iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
-  implementation: 0
+  implementation: 4
   minLevel: 7
   modifiers: []
   numTargets: "1"
   persistence: []
+  preDescription: A bank of choking chemicals sweeps across the area of the encounter map. Each enemy in the encounter makes a Might test.
   range: 1
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
@@ -277,14 +285,21 @@ maliceAbilities:
   targetType: map
 - name: Cry Havoc
   description: |
-    Area, Magic. 3 burst. Each enemy in the area.
-    - Tier 1 (<=11): 7 psychic damage
-    - Tier 2 (12-16): 11 psychic damage; P<4 frightened (save ends)
-    - Tier 3 (17+): 14 psychic damage; P<5 frightened (save ends)
-    Effect: Each war dog within distance deals an extra 15 damage with strikes until the end of their next turn. Additionally, they end any effect on them that can be ended by a saving throw or that ends at the end of their turn, then shift up to their speed and can make a free strike. This ability can't be used by a minion.
+    Each war dog within distance deals an extra 15 damage with strikes until the end of their next turn. 
+
+    Additionally, they end any effect on them that can be ended by a saving throw or that ends at the end of their turn, then shift up to their speed and can make a free strike. This ability can't be used by a minion.
   __typeName: MaliceAbility
+  abilityFilters: []
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    applyto: targets
+    filterTarget: ""
+    roll: 2d10 + Highest Characteristic
+    tiers:
+    - 7 psychic damage
+    - 11 psychic damage; P<4 frightened (save ends)
+    - 14 psychic damage; P<5 frightened (save ends)
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -292,18 +307,24 @@ maliceAbilities:
     saturation: 1
   guid: 619304c6-03a2-4f76-81fb-05c67699c5ee
   iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
-  implementation: 0
+  implementation: 2
+  keywords:
+    Area: true
+    Magic: true
   minLevel: 10
   modifiers: []
   numTargets: "1"
+  objectTarget: false
   persistence: []
-  range: 1
+  range: "3"
+  reasonedFilters: []
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: 7
   selfTarget: true
   strain: []
+  targetAllegiance: enemy
   targetFilter: ""
-  targetType: map
-mtime: 1788647468161
+  targetType: all
+mtime: 1788747493221
 traits: []
