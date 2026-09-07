@@ -25,7 +25,7 @@ maliceAbilities:
     saturation: 1
   guid: 2fbcb4da-efc8-4544-a93f-efea82ed390e
   iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
-  implementation: 3
+  implementation: 2
   modifiers: []
   numTargets: "1"
   objectTarget: false
@@ -43,6 +43,12 @@ maliceAbilities:
   strain: []
   targetAllegiance: enemy
   targetType: cube
+  actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+  keywords:
+    Area: true
+    Ranged: true
+    Weapon: true
+  implementationDetails: Creates a one-use trap with an Agility test and restraint outcomes. The Director confirms enemy eligibility and applies a bane only for an unaware creature. Source-linked rescue maneuvers need Lua support.
 - name: Water Pit
   description: |
     A lizardfolk acting this turn unearths a magical size 2 pit that is 2 squares deep and filled with water. Any lizardfolk who moves into, then exits the pit on their turn gains 10 temporary Stamina, regrows their tail if applicable, and ends one effect on them that can be ended by a saving throw. While adjacent to the pit, any creature who can burrow or who has the Nature skill can make a Might test or a Reason test to drain it.
@@ -59,63 +65,6 @@ maliceAbilities:
     radius: 2
     shape: square
     tileid: fa021543-8a84-4856-8645-47dcb516abe3
-  - __typeName: ActivatedAbilityAuraBehavior
-    aliveafterdeath: true
-    applyto: targets
-    aura:
-      __typeName: Aura
-      applyto: selfandfriends
-      creatureFilter: Target.Keywords has "Lizardfolk"
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      guid: aa325e51-459f-477e-8792-d244f1a1657a
-      modifiers: []
-      triggers:
-      - ability:
-          name: Aura Trigger
-          description: ""
-          __typeName: TriggeredAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
-            chatMessage: Moved through Water Pit
-            filterTarget: target.Your Turn = true
-            stamina: "10"
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Tail Regrown
-            conditions: []
-            filterTarget: Target.Ongoing Effects has "Lost Tail"
-            mode: effect
-            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
-            purgeType: all
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Ended 1 Save Ends effect
-            conditions: []
-            mode: conditions
-            purgeType: one
-            targetDuration: save
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 80fcb8f4-e46b-4507-b33f-9f891daefbae
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          persistence: []
-          radius: 0
-          range: 5
-          repeatTargets: false
-          silent: true
-          strain: []
-          targetType: self
-          trigger: onenter
-        trigger: onenter
-    duration: eoe
   - __typeName: ActivatedAbilityCreateObjectBehavior
     objectid: 485cc7eb-a052-44ce-bcf0-b983480a1e88
   display:
@@ -126,8 +75,8 @@ maliceAbilities:
   guid: 221fbb4b-d73e-4530-8597-3a83a8b74179
   hasCustomIcon: true
   iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
-  implementation: 3
-  implementationDetails: Codex implementation does not include a maneuver to drain the pit for adjacent creatures.
+  implementation: 2
+  implementationDetails: Creates the pit terrain and object. Enter-then-exit benefits, tail regrowth, save-effect removal, and draining remain manual pending per-pit movement and water-state support. Incorrect entry-only benefits are not applied.
   modifiers: []
   numTargets: "1"
   objectTarget: false
@@ -174,5 +123,7 @@ maliceAbilities:
   strain: []
   targetFilter: ""
   targetType: map
+  implementation: 1
+  implementationDetails: Spends Malice and marks lizardfolk with the rules reminder. Physical flooding, submerged eligibility, swimming-only speed, and drainage based on open pits require Lua support; no mechanical buff is applied.
 mtime: 1779198106124
 traits: []

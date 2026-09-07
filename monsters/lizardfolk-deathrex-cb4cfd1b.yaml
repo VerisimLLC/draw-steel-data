@@ -77,7 +77,7 @@ info:
       domains:
         CharacterFeature:c7378ee5-76c3-41c2-82f6-d267e06a8dcc: true
       guid: c7378ee5-76c3-41c2-82f6-d267e06a8dcc
-      implementation: 4
+      implementation: 2
       modifiers:
       - name: Rex Reptilian Escape
         description: While the deathrex still has a tail, whenever the deathrex is inflicted with an EoT or save ends effect, the deathrex can lose their tail to immediately end the effect and shift 2.
@@ -95,13 +95,21 @@ info:
           abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Lost their Tail!
+            mode: conditions
             conditions: []
-            includeProne: true
-            mode: conditions_and_effects
             purgeType: one
             targetDuration: save|eot
-          conditionFormula: not Self.Ongoing Effects has "Lost Tail"
+            chatMessage: Rex Reptilian Escape
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
+            filterTarget: Cast.PurgedConditions > 0
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: Shift 2
+            filterTarget: Cast.PurgedConditions > 0
+          conditionFormula: not (Self.OngoingEffects has "Lost Tail")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -116,7 +124,58 @@ info:
           strain: []
           targetType: self
           trigger: inflictcondition
+          mandatory: false
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          triggerPrompt: If the newly inflicted condition ends on a save or at the end of your turn, lose your tail to end it and shift 2.
+      - name: Rex Reptilian Escape
+        __typeName: CharacterModifier
+        behavior: activated
+        guid: f9ab3b78-3895-44d9-9ee1-2633f09a3345
+        sourceguid: c7378ee5-76c3-41c2-82f6-d267e06a8dcc
+        source: Trait
+        filterCondition: not (Self.OngoingEffects has "Lost Tail")
+        activatedAbility:
+          name: Rex Reptilian Escape
+          description: "While the deathrex still has a tail, whenever the deathrex is inflicted with an EoT or save ends effect, the deathrex can lose their tail to immediately end the effect and shift 2."
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRememberBehavior
+            memoryName: rexEffectsBefore
+            calculation: Self.Conditions.Size + Self.OngoingEffects.Size
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            mode: conditions_and_effects
+            conditions: []
+            purgeType: one
+            targetDuration: save|eot
+            chatMessage: Rex Reptilian Escape
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
+            filterTarget: (Self.Conditions.Size + Self.OngoingEffects.Size) < Cast.Memory("rexEffectsBefore")
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: Shift 2
+            filterTarget: (Self.Conditions.Size + Self.OngoingEffects.Size) < Cast.Memory("rexEffectsBefore")
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f2b89065-26b9-4def-9efd-3f967d2d0d5c
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          implementation: 2
+          implementationDetails: Activate when an eligible effect is applied and select that effect. Purge, tail consumption, and shift resolve automatically; exact trigger timing and effect-instance selection remain manual.
       source: Trait
+      implementationDetails: Condition application offers an escape prompt; use the granted ability for non-condition effects. Select the newly applied eligible effect. Tail consumption and shift are automated. Exact application events and effect-instance targeting require Lua support.
     - name: Swat the Fly
       description: ""
       __typeName: CharacterFeature
@@ -124,7 +183,7 @@ info:
         CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
         CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
       guid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
-      implementation: 4
+      implementation: 2
       modifiers:
       - name: Swat the Fly
         description: ""
@@ -146,61 +205,39 @@ info:
         source: Character Feature
         sourceguid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
       - name: Swat the Fly
-        description: ""
         __typeName: CharacterModifier
-        behavior: trigger
-        domains:
-          CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
-          CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
-        guid: 3c5c6840-2f21-4481-9429-2c70ee402175
-        resourceRefreshType: round
-        source: Character Feature
+        behavior: activated
+        guid: 87fe5013-c85b-4425-b123-6fe4aeabaa3b
         sourceguid: f35af20b-3215-40f6-8342-ee5d29e4fdb2
-        triggeredAbility:
+        source: Trait
+        activatedAbility:
           name: Swat the Fly
-          description: ""
-          __typeName: TriggeredAbility
+          description: 'Trigger: An adjacent creature or object moves or shifts away. Slide the triggering target up to 5 squares. Resolve before it leaves adjacency.'
+          __typeName: ActivatedAbility
           abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           behaviors:
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             rule: Slide 5
-          conditionFormula: not path.forced
           display:
-            bgcolor:
-              __usertype: LuaColor
-              a: 1
-              h: 0.801249563694
-              s: 0.9701167345047
-              v: 0.878193855285645
+            bgcolor: '#ffffffff'
             brightness: 1
             hueshift: 0
             saturation: 1
-          domains:
-            CharacterFeature:ac370b61-a980-413a-8bbb-c692cfb8c2a1: true
-            CharacterFeature:f35af20b-3215-40f6-8342-ee5d29e4fdb2: true
-          guid: 609e2d82-e2df-419c-9017-e4b035582552
-          iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
-          mandatory: false
+          guid: e06f3bf6-d1b9-40df-b74e-93aa46c09520
+          iconid: ui-icons/skills/1.png
           modifiers: []
-          numTargets: "1"
-          persistence: []
+          numTargets: '1'
           range: 1
           repeatTargets: false
-          strain: []
-          subject: other
-          subjectRange: "1"
-          targetType: subject
-          trigger: move
-          triggerPrompt: Slide the target 5 squares
-          usageLimitOptions:
-            charges: "1"
-            resourceRefreshType: round
-            resourceid: 3c5c6840-2f21-4481-9429-2c70ee402175
-          whenActive: combat
+          targetType: target
+          objectTarget: true
+          implementation: 2
+          implementationDetails: Activate manually for the triggering creature or object before it leaves adjacency. Exact departure events independent of opportunity-attack eligibility require Lua support.
       source: Character Feature
       tags:
         Trigger: true
+      implementationDetails: Activate manually for the triggering creature or object before it leaves adjacency. Exact departure events independent of opportunity-attack eligibility require Lua support.
     cr: 1
     creatureSize: "2"
     creatureTemplates: []
@@ -224,10 +261,6 @@ info:
         - 7 damage; pull 1; A<1 bleeding (save ends)
         - 10 damage; pull 1; A<2 bleeding (save ends)
         - 12 damage; pull 2; A<3 bleeding (save ends)
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
-        ongoingEffect: 6cd6e3fa-a223-404e-a816-c9a80e8a7e20
-        ongoingEffectCustom: 6cd6e3fa-a223-404e-a816-c9a80e8a7e20
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: custom
         applyto: caster
@@ -240,10 +273,10 @@ info:
           actionResourceId: none
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            filterTarget: Target.Ongoing Effects has "Ripper Spear"
             ongoingEffect: db8d0b4f-28e4-456f-bfd2-3198ae3a46eb
             ongoingEffectCustom: false
             ongoingEffectSource: specific
+            duration: eoe
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -254,7 +287,7 @@ info:
           implementation: 4
           modifiers: []
           numTargets: "1"
-          objectTarget: false
+          objectTarget: true
           range: 1
           repeatTargets: false
           resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
@@ -264,9 +297,9 @@ info:
             page: 201
           strain: []
           targetAllegiance: enemy
-          targetFilter: target.Ongoing Effects has "Ripper Spear"
+          targetFilter: Cast.HasTarget(Target)
           targetType: target
-        filterTarget: Caster.Heroic Resources Available to Spend > 0
+          resourceNumber: 1
         invokeOnCaster: true
         namedAbility: grab
         promptText: "Spend 1 Malice: One target adjacent to the deathrex is grabbed in the deathrex's mouth."
@@ -295,6 +328,7 @@ info:
         page: 201
       strain: []
       targetType: target
+      objectTarget: true
     - name: Death Roll
       description: The target is released from the grab and slides 5.
       __typeName: ActivatedAbility
@@ -312,30 +346,9 @@ info:
         conditions:
         - 70504ebe-3899-41d3-9f60-74b52ce35e39
         reminderText: ""
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: ef4a0595-f687-44d8-b720-20e87d05641c
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        promptText: the target is no longer grabbed by the deathrex, and the deathrex slides them up to 5 squares.
-        standardAbility: 21f855e5-cef6-46a9-96aa-976d1ac35a6c
-        standardAbilityParams:
-          range: "5"
+        fromCaster: Caster
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: Slide 5
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
@@ -363,7 +376,7 @@ info:
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 201
       strain: []
-      targetFilter: Target.Conditions has "grabbed"
+      targetFilter: Caster.GrabbedCreatures is Target
       targetType: target
     - name: Trundle
       description: The deathrex moves up to their speed. They can make a free strike against each creature who makes an opportunity attack against them during this movement.
@@ -374,54 +387,10 @@ info:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
         applyto: caster
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: bec03deb-8f1d-436f-8c4d-2534ef8c9028
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
         invokeOnCaster: true
-        promptText: The deathrex moves up to their speed, then make a free strike against each creture who makes an opportunity attack against them during this movement.
         standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
         standardAbilityParams:
-          distance: walking speed
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        applyto: caster
-        autoTarget: false
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 86ccdcd1-80c6-495d-8761-a8dd67615a2d
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        invokeOnCaster: true
-        promptText: the deathrex now makes a free strike against each creature who made an opportunity attack agains them. (Director adjudication of targets  required)
-        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+          distance: WalkingSpeed
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -433,8 +402,8 @@ info:
       guid: e80e5d59-4e33-40bd-8289-5e88d807dd40
       hasCustomIcon: true
       iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
-      implementation: 3
-      implementationDetails: Players to adjudicate which creatures used an opportunity attack against the deathrex during their movement.
+      implementation: 2
+      implementationDetails: Movement is automated. Make a free strike against each creature that actually makes an opportunity attack during this movement; attacker identity tracking requires Lua support.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -452,7 +421,7 @@ info:
       Lizardfolk: true
     levelChoices: []
     max_hitpoints: 10
-    max_hitpoints_roll: "80"
+    max_hitpoints_roll: "10"
     minion: false
     monster_category: Monster
     monster_type: Lizardfolk Deathrex

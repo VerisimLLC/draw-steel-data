@@ -75,7 +75,7 @@ components:
     "@class": ObjectComponentPressurePlate
     imageSwap: null
     haltMovement: true
-    filterTargets: Size >= 3 {1M calibration} and Movement Type = "Walk"
+    filterTargets: MovementType = "Walk"
     disabled: false
     properties: null
   d55daee8-e170-4e9a-9abf-b56575c84c2c:
@@ -122,7 +122,7 @@ components:
       resources: []
       characterFeatures:
       - __typeName: CharacterFeature
-        implementation: 3
+        implementation: 2
         guid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
         domains:
           CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
@@ -143,20 +143,39 @@ components:
             strain: []
             targetType: target
             behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              isTest: true
-              roll: 2d10 + Agility
-              tiers:
-              - Restrained (Save Ends)
-              - Restrained (EoT)
-              - No Effect
-              attrid: agl
-              resistanceRoll: false
-              modifiers:
-              - type: bane
-                condition: ""
-                details: If the creature was unaware of the trap, they take a bane on the Agility Test.
-                text: Bane on Agility Test
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              applyto: targets
+              invokeOnCaster: false
+              customAbility:
+                __typeName: ActivatedAbility
+                name: Net Trap - Agility Test
+                description: Apply a bane only if you were unaware of the trap.
+                abilityType: none
+                actionResourceId: none
+                targetType: self
+                range: 1
+                numTargets: '1'
+                repeatTargets: false
+                guid: 52936b63-ad50-4840-9372-d7ad82382d38
+                iconid: ui-icons/skills/1.png
+                display:
+                  bgcolor: '#ffffffff'
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                modifiers: []
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  isTest: true
+                  roll: 2d10 + Agility
+                  tiers:
+                  - Restrained (Save Ends)
+                  - Restrained (EoT)
+                  - No Effect
+                  attrid: agl
+                  resistanceRoll: false
+                  modifiers: []
             displayName: Net Trap!
             persistence: []
             display:
@@ -178,9 +197,12 @@ components:
               charges: "1"
             range: 1
             name: Net Trap!
+            mandatory: false
+            triggerPrompt: Is this the first enemy to step into the net trap? Apply a bane to the test only if they were unaware of it.
           behavior: trigger
         source: Character Feature
         name: Snare Trap!
+        implementationDetails: Creates a one-use trap with an Agility test and restraint outcomes. The Director confirms enemy eligibility and applies a bane only for an unaware creature. Source-linked rescue maneuvers need Lua support.
       skillProficiencies: []
       classes: []
       equipment: []

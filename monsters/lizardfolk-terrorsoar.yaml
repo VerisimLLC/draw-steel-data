@@ -77,44 +77,8 @@ info:
       domains:
         CharacterFeature:c38f4f64-ed66-480a-838f-83ca84b46d2b: true
       guid: c38f4f64-ed66-480a-838f-83ca84b46d2b
-      implementation: 3
+      implementation: 2
       modifiers:
-      - name: Glider
-        description: The skyterror adds the flying keyword to their movement until the end of their next turn whenever they move at least 2 squares along the ground or fall at least 2 squares.
-        __typeName: CharacterModifier
-        behavior: trigger
-        domains:
-          CharacterFeature:c38f4f64-ed66-480a-838f-83ca84b46d2b: true
-        guid: 01a611b4-ed7b-4db9-88cc-139eea860f26
-        source: Trait
-        sourceguid: c38f4f64-ed66-480a-838f-83ca84b46d2b
-        triggeredAbility:
-          name: Glider
-          description: ""
-          __typeName: TriggeredAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: end_of_next_turn
-            ongoingEffect: 606dcd33-446b-49ed-829b-5ff4a3a64a1e
-            ongoingEffectCustom: 606dcd33-446b-49ed-829b-5ff4a3a64a1e
-          conditionFormula: self.Moved This Turn >= 2
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: e461cfc6-4a08-42a2-b675-a2e21151c054
-          iconid: ui-icons/skills/1.png
-          mandatory: false
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          strain: []
-          targetType: self
-          trigger: finishmove
-          triggerPrompt: Whenever the skyterror moves 2 or more squares along the ground or falls 2 or more squares, they can fly until the end of their next turn.
       - name: Glider
         description: The skyterror adds the flying keyword to their movement until the end of their next turn whenever they move at least 2 squares along the ground or fall at least 2 squares.
         __typeName: CharacterModifier
@@ -129,7 +93,12 @@ info:
           description: ""
           __typeName: TriggeredAbility
           abilityType: none
-          behaviors: []
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 606dcd33-446b-49ed-829b-5ff4a3a64a1e
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: end_of_next_turn
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -137,7 +106,7 @@ info:
             saturation: 1
           guid: 19d11901-6adb-4d44-9527-6391b8f3b77d
           iconid: ui-icons/skills/1.png
-          mandatory: false
+          mandatory: true
           modifiers: []
           numTargets: "1"
           range: 1
@@ -145,7 +114,41 @@ info:
           targetType: self
           trigger: fall
           triggerPrompt: Whenever the skyterror moves 2 or more squares along the ground or falls 2 or more squares, they can fly until the end of their next turn.
+          conditionFormula: Speed >= 2
+      - name: Glider
+        __typeName: CharacterModifier
+        behavior: activated
+        guid: 25f52286-b67d-4c32-9e2b-f67483fc2f2f
+        sourceguid: c38f4f64-ed66-480a-838f-83ca84b46d2b
+        source: Trait
+        activatedAbility:
+          name: Glider
+          description: The terrorsoar adds the flying keyword to their movement until the end of their next turn whenever they move at least 2 squares along the ground or fall at least 2 squares.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 606dcd33-446b-49ed-829b-5ff4a3a64a1e
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: end_of_next_turn
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 47cf18d6-4b01-4fe3-aec3-0a81c24f8cea
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: '1'
+          range: 1
+          repeatTargets: false
+          targetType: self
+          implementation: 2
+          implementationDetails: Activate after moving at least 2 squares along the ground, or during a qualifying fall. Ground distance and mid-fall timing require Director adjudication.
       source: Trait
+      implementationDetails: Flight and expiry are automated. Qualifying falls are detected on landing. Ground-distance detection and activation during a fall need Lua support; use the Glider ability when eligible.
     - name: Reptilian Escape
       description: While the terrorsoar still has a tail, whenever the terrorsoar is grabbed, slowed, weakened, or knocked prone, the terrorsoar can lose their tail to immediately end the effect and shift 2.
       __typeName: CharacterFeature
@@ -169,6 +172,11 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             chatMessage: Reptilian Escape
             conditions:
@@ -202,13 +210,8 @@ info:
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
             standardAbilityParams:
               distance: "2"
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            filterTarget: ""
-            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
-            ongoingEffectCustom: 781acd64-b717-43a2-b02e-ab9665d1efeb
           characterConditionRequired: 70504ebe-3899-41d3-9f60-74b52ce35e39
-          conditionFormula: not (Self.Ongoing Effects has "Lost Tail")
+          conditionFormula: not (Self.OngoingEffects has "Lost Tail")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -226,7 +229,8 @@ info:
           strain: []
           targetType: self
           trigger: inflictcondition
-          triggerPrompt: The Lizardfolk can lose their tail immediately to end the weakened condition, then shift up to 2 squares.
+          triggerPrompt: Lose your tail to end grabbed, then shift up to 2 squares.
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
       - name: Reptilian Escape
         description: While the lizardfolk still has a tail, whenever they are grabbed, slowed, weakened, or knocked prone, they can lose their tail to immediately end the effect and shift 2.
         __typeName: CharacterModifier
@@ -242,6 +246,11 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             chatMessage: Reptilian Escape
             conditions:
@@ -275,13 +284,8 @@ info:
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
             standardAbilityParams:
               distance: "2"
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            filterTarget: ""
-            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
-            ongoingEffectCustom: 781acd64-b717-43a2-b02e-ab9665d1efeb
           characterConditionRequired: da6867b1-01e3-4570-8d1b-1b94ea1ea343
-          conditionFormula: not (Self.Ongoing Effects has "Lost Tail")
+          conditionFormula: not (Self.OngoingEffects has "Lost Tail")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -299,7 +303,8 @@ info:
           strain: []
           targetType: self
           trigger: inflictcondition
-          triggerPrompt: The Lizardfolk can lose their tail immediately to end the prone condition, then shift up to 2 squares.
+          triggerPrompt: Lose your tail to end prone, then shift up to 2 squares.
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
       - name: Reptilian Escape
         description: While the lizardfolk still has a tail, whenever they are grabbed, slowed, weakened, or knocked prone, they can lose their tail to immediately end the effect and shift 2.
         __typeName: CharacterModifier
@@ -315,6 +320,11 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             chatMessage: Reptilian Escape
             conditions:
@@ -348,13 +358,8 @@ info:
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
             standardAbilityParams:
               distance: "2"
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            filterTarget: ""
-            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
-            ongoingEffectCustom: 781acd64-b717-43a2-b02e-ab9665d1efeb
           characterConditionRequired: 68f455f5-135f-495c-822d-40d809d2b15f
-          conditionFormula: not (Self.Ongoing Effects has "Lost Tail")
+          conditionFormula: not (Self.OngoingEffects has "Lost Tail")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -372,7 +377,8 @@ info:
           strain: []
           targetType: self
           trigger: inflictcondition
-          triggerPrompt: The Lizardfolk can lose their tail immediately to end the slowed condition, then shift up to 2 squares.
+          triggerPrompt: Lose your tail to end slowed, then shift up to 2 squares.
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
       - name: Reptilian Escape
         description: While the lizardfolk still has a tail, whenever they are grabbed, slowed, weakened, or knocked prone, they can lose their tail to immediately end the effect and shift 2.
         __typeName: CharacterModifier
@@ -388,6 +394,11 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+            duration: indefinite
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             chatMessage: Reptilian Escape
             conditions:
@@ -421,13 +432,8 @@ info:
             standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
             standardAbilityParams:
               distance: "2"
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            filterTarget: ""
-            ongoingEffect: 781acd64-b717-43a2-b02e-ab9665d1efeb
-            ongoingEffectCustom: 781acd64-b717-43a2-b02e-ab9665d1efeb
           characterConditionRequired: 567a3454-ead6-4416-b338-ed73d64b7805
-          conditionFormula: not (Self.Ongoing Effects has "Lost Tail")
+          conditionFormula: not (Self.OngoingEffects has "Lost Tail")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -445,7 +451,8 @@ info:
           strain: []
           targetType: self
           trigger: inflictcondition
-          triggerPrompt: The Lizardfolk can lose their tail immediately to end the weakened condition, then shift up to 2 squares.
+          triggerPrompt: Lose your tail to end weakened, then shift up to 2 squares.
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
       source: Trait
     cr: 1
     creatureSize: 1S
@@ -500,6 +507,14 @@ info:
         - 5 damage
         - 7 damage
         - 9 damage; prone
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        invokeOnCaster: true
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        filterTarget: Caster.MovementType = "Fly"
+        standardAbilityParams:
+          distance: '4'
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -510,7 +525,7 @@ info:
       flavor: ""
       guid: 2cf6c70d-5343-4b32-875f-dce615c021af
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Strike: true
@@ -520,6 +535,7 @@ info:
       range: 1
       repeatTargets: false
       targetType: target
+      objectTarget: true
     - name: Poison Blowdart
       description: A creature that ends their turn adjacent to a creature or object weakened by this ability is weakened (EoT).
       __typeName: ActivatedAbility
@@ -532,6 +548,9 @@ info:
         - 4 damage; M<0 weakened (save ends)
         - 7 damage; M<1 weakened (save ends)
         - 8 damage; M<2 weakened (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 567a3454-ead6-4416-b338-ed73d64b7805
+        riderid: 06d9a7bb-8ba4-4f67-b572-c9aed93ab79e
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -542,7 +561,7 @@ info:
       flavor: ""
       guid: 8c2a4d5b-ed22-44d2-9baf-c45dc774966f
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Ranged: true
         Strike: true
@@ -552,6 +571,7 @@ info:
       range: 5
       repeatTargets: false
       targetType: target
+      objectTarget: true
     innateAttacks: []
     keywords:
       Humanoid: true
