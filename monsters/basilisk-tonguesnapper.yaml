@@ -89,12 +89,119 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: Petrifying Fumes
-      description: A creature that begins their turn adjacent to the basilisk is slowed (EoT).
+      description: Any creature who starts their turn adjacent to the tonguesnapper and has M<1 is slowed (save ends).
       __typeName: CharacterFeature
       domains:
         CharacterFeature:6ea142d1-b066-45d6-9cba-872eab87747a: true
       guid: 6ea142d1-b066-45d6-9cba-872eab87747a
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Petrifying Fumes
+        description: Any creature who starts their turn adjacent to the tonguesnapper and has M<1 is slowed (save ends).
+        __typeName: CharacterModifier
+        aura:
+          name: Petrifying Fumes
+          description: Any creature who starts their turn adjacent to the tonguesnapper and has M<1 is slowed (save ends).
+          __typeName: Aura
+          applyto: allother
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9ee9626d-d607-4816-adda-c2e7cbf3b1fe
+          modifiers:
+          - name: Petrifying Fumes
+            description: Any creature who starts their turn adjacent to the tonguesnapper and has M<1 is slowed (save ends).
+            __typeName: CharacterModifier
+            behavior: trigger
+            guid: bc307407-aba4-4c71-8899-984341d3ce2a
+            source: Aura
+            sourceguid: 9ee9626d-d607-4816-adda-c2e7cbf3b1fe
+            triggeredAbility:
+              name: Petrifying Fumes
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: save_ends
+                filterTarget: target.Might < 1
+                ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+                ongoingEffectCustom: false
+                ongoingEffectSource: specific
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 2b56df34-0247-4495-bffc-e9ee8110a226
+              iconid: ui-icons/skills/1.png
+              mandatory: true
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              trigger: beginturn
+        behavior: aura
+        domains:
+          CharacterFeature:6ea142d1-b066-45d6-9cba-872eab87747a: true
+        guid: bb5547f1-2127-4c4c-8cb6-c56883589ea4
+        radius: "1"
+        source: Trait
+        sourceguid: 6ea142d1-b066-45d6-9cba-872eab87747a
+      source: Trait
+    - name: Neurotoxin Splash
+      description: |-
+        Trigger: The tonguesnapper takes damage from a melee ability.
+
+        Effect: Each enemy in a 2 burst takes 4 acid damage. Any target who has M<2 is also slowed (save ends).
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:e94ff56d-f38a-4f33-b03b-46b027161129: true
+      guid: e94ff56d-f38a-4f33-b03b-46b027161129
+      implementation: 4
+      modifiers:
+      - name: Neurotoxin Splash
+        description: Each target takes 4 acid damage. Any target who has M<2 is also slowed (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:e94ff56d-f38a-4f33-b03b-46b027161129: true
+        guid: 1b70344d-8261-4fa4-b98a-4ed9c52787e2
+        source: Trait
+        sourceguid: e94ff56d-f38a-4f33-b03b-46b027161129
+        triggeredAbility:
+          name: Neurotoxin Splash
+          description: Each target takes 4 acid damage. Any target who has M<2 is also slowed (save ends).
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: 4 acid damage; M<2 slowed (save ends)
+          castImmediately: true
+          conditionFormula: Keywords has "Melee"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 09bc895a-6afc-4d4d-9358-4360f82838b9
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: 1
+          range: 2
+          repeatTargets: false
+          strain: []
+          targetFilter: Enemy
+          targetType: all
+          trigger: losehitpoints
+          triggerPrompt: The tonguesnapper takes damage from a melee ability.
+          whenActive: combat
       source: Trait
     - name: Restorative Salve
       description: "After a basilisk dies, a character can make a Reason test to claim oil from the basilisk's mouth, which can be used to create a special salve. One dose of salve can be applied to a petrified creature as a main action, and 1 minute after the salve is applied, that creature is no longer petrified.!The character must complete the Find a Cure down time project in Draw Steel: Heroes to create one dose of salve.@The character creates one dose of salve and can create two more doses by completing the Find a Cure downtime project.#The character creates three doses of salve."
@@ -102,6 +209,7 @@ info:
       domains:
         CharacterFeature:fe77752d-f1d5-47c6-a522-afdad89db31a: true
       guid: fe77752d-f1d5-47c6-a522-afdad89db31a
+      implementation: 0
       modifiers: []
       source: Trait
     cr: 1
@@ -109,6 +217,7 @@ info:
     damage_taken: 0
     equipment: []
     ev: 12
+    groupid: c4ee9cfe-60ef-4609-9578-af3e5544c92d
     import:
       data: |+
         Basilisk Tonguesnapper	Level 1 Hexer Captain
@@ -165,6 +274,43 @@ info:
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: targets
+        momentaryEffect:
+          id: c2815f7c-6c92-4d2d-b944-bb1ad89159b8
+          name: Tongue Grip
+          description: ""
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c2815f7c-6c92-4d2d-b944-bb1ad89159b8
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: Tongue Grip
+            description: This ability can pull a target restrained by Petrifying Eye Beams.
+            __typeName: CharacterModifier
+            attribute: 82abd296-d79f-4d33-b1e6-47a28f30e161
+            behavior: attribute
+            guid: 79a4479c-97d8-4244-9225-9c4f964e7f78
+            operation: add
+            source: Ongoing Effect
+            sourceguid: c2815f7c-6c92-4d2d-b944-bb1ad89159b8
+            value: "-1 when Ongoing Effects has \"Restrained by Petrifying Eye Beams\" else 0"
+          - name: Tongue Grip Stability
+            description: A pull from this ability ignores the stability of a target restrained by Petrifying Eye Beams.
+            __typeName: CharacterModifier
+            attribute: forcedmoveresistance
+            behavior: attribute
+            guid: 6ae83d31-2582-4b24-9d99-c3faf06ad767
+            operation: add
+            source: Ongoing Effect
+            sourceguid: c2815f7c-6c92-4d2d-b944-bb1ad89159b8
+            value: "-99 when Ongoing Effects has \"Restrained by Petrifying Eye Beams\" else 0"
+          source: Ongoing Effect
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
         tiers:
@@ -180,7 +326,7 @@ info:
       flavor: ""
       guid: b652e725-bd77-4720-87c6-bb9b26c95cf7
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Strike: true
@@ -190,20 +336,107 @@ info:
       range: 3
       repeatTargets: false
       targetType: target
-    - name: 'Petrifying Eye Beams '
-      description: The target magically begins to turn to stone. Targets that are already slowed have a bane on this resistance roll. While restrained, the target, or a creature adjacent to them, can use an action to cut the encroaching stone from the target's body. When they do, the target takes 8 damage which can't be reduced in any way, and they are no longer restrained.
+    - name: Petrifying Eye Beams
+      description: The area extends from both the tonguesnapper's eyes, and this ability targets the first creature without cover on either side of the area. If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target's body, dealing 8 damage to the target that can't be reduced in any way and ending this effect.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: caster
+        momentaryEffect:
+          id: e434d174-54ae-46fc-bcad-e16059e964ed
+          name: Petrifying Eye Beams Potency
+          description: ""
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: e434d174-54ae-46fc-bcad-e16059e964ed
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: +1 Potency
+            description: The potency of this ability increases by 1 against a slowed target.
+            __typeName: CharacterModifier
+            activationAfterRoll: false
+            activationCondition: Target.Conditions has "Slowed"
+            behavior: power
+            guid: a434b69f-9e7a-4e6f-91fb-d491d103a7ea
+            keywords: []
+            modtype: none
+            potencymod: "1"
+            rollType: ability_power_roll
+            source: Ongoing Effect
+            sourceguid: e434d174-54ae-46fc-bcad-e16059e964ed
+          source: Ongoing Effect
       - __typeName: ActivatedAbilityPowerRollBehavior
-        resistanceAttr: mgt
-        resistanceRoll: true
         roll: 2d10 + Agility
         tiers:
-        - A<0 restrained (save ends)
-        - A<1 restrained (save ends)
-        - Slowed (save ends); or if A<2 restrained (save ends)
+        - "#A<0 restrained (save ends)"
+        - "#A<1 restrained (save ends)"
+        - "#Slowed (save ends); or if A<2 restrained (save ends)"
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "A", 0)
+        guid: 53264972-254d-42fb-bace-1c6f778f2b9f
+        rule: restrained (save ends)
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "A", 1)
+        guid: ebe08fda-ea26-4a44-afe8-307d481c8552
+        rule: restrained (save ends)
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "A", 2)
+        guid: da91d48c-a6e5-489f-b9c7-f54c7e50679f
+        rule: restrained (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Cast.PassesPotency(target, "A", 2)
+        guid: f257ed10-adca-4570-a1f1-3d69f6c08905
+        rule: slowed (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "A", 0)
+        guid: 75bf68e0-aa3c-43ff-87ca-096a04041c19
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "A", 1)
+        guid: 502a4989-189e-4c29-ae08-b07b43ea1112
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "A", 2)
+        guid: f7875c40-c858-45be-81bb-044a9258ebda
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
+        guid: c7f90f0c-6154-4f7f-a696-8327990ad507
+        riderid: c01fe2d5-6f02-4e41-86f1-9cace6ac410b
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
+        guid: 6239aa77-c262-42df-bca9-45700a13c0f9
+        riderid: 704e8129-eb23-43fe-ac27-ec9a7df11dea
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -215,71 +448,50 @@ info:
       guid: 800e9711-69fa-4947-bce6-c42543e663ff
       iconid: ui-icons/skills/1.png
       implementation: 3
+      implementationDetails: Targeting is left to the director.
       keywords:
+        Area: true
         Magic: true
-        Ranged: true
-        Resistance: true
+      lineDistance: "1"
       modifiers: []
-      numTargets: 2
-      range: 5
+      numTargets: 1
+      radius: "2"
+      range: "5"
       repeatTargets: false
-      targetType: target
-    - name: Barrage
-      description: Make a prehensile tongue attack against each target.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: ea73abdc-39d3-4ce6-8c0d-3bdc8c6f3bea
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Melee: true
-        Strike: true
-        Weapon: true
-      modifiers: []
-      numTargets: 3
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 5
-      targetType: target
+      targetTextOverride: Special
+      targetType: line
     - name: Neurotoxin Splash
-      description: Each target takes 5 poison damage and is slowed (EoT).
+      description: Each target takes 4 acid damage. Any target who has M<2 is also slowed (save ends).
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: 4 acid damage; M<2 slowed (save ends)
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
-      guid: 296ea305-568c-4ee2-876e-fad53723f677
+      guid: ccb583e1-48bc-4dc8-8691-7e7817058580
       iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
+      implementation: 4
+      keywords:
+        Area: true
       modifiers: []
       numTargets: 1
       range: 2
       repeatTargets: false
+      strain: []
       targetFilter: Enemy
       targetType: all
     - name: Wink
       description: A creature dazed this way can't benefit from edges or double edges and can't gain or use surges.
       __typeName: ActivatedAbility
       abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Agility
@@ -287,6 +499,10 @@ info:
         - 8 corruption damage; R<0 dazed (save ends)
         - 10 corruption damage; R<1 dazed (save ends)
         - 14 corruption damage; R<2 dazed and slowed (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: c27e0b16-291a-45ad-8406-973e26576a44
+        guid: 38d7d899-1cf8-42a4-9fab-2595a61de9cf
+        riderid: 2375991b-d4db-4fb9-bae6-8bff1fe1f887
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
@@ -296,17 +512,18 @@ info:
       flavor: ""
       guid: 3cd13d6f-6d0b-4ae1-8890-f62c2a1e7443
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Magic: true
         Melee: true
         Ranged: true
         Strike: true
+      meleeRange: 1
       modifiers: []
       numTargets: 1
-      range: 1
+      range: "10"
       repeatTargets: false
-      resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 2
       sourceReference:
         __typeName: SourceReference
@@ -340,6 +557,7 @@ info:
     skillProficiencies: []
     skillRatings: []
     stability: 2
+    titles: []
     traitNames: []
     walkingSpeed: 8
   settings:
@@ -357,7 +575,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: null
+  updateid: fde79f00-62ff-4c42-b3e8-ea2c1c1d3e3c
 mtime: 1775374988449
 ord: 1
 parentFolder: a2e7e9a5-6ef8-4681-bc88-fd6aa8612059

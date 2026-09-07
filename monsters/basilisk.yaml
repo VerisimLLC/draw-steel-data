@@ -88,7 +88,32 @@ info:
       domains:
         CharacterFeature:047bb65b-4d95-4691-935c-04f13c7e0782: true
       guid: 047bb65b-4d95-4691-935c-04f13c7e0782
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Calcifying Presence
+        description: The area within 3 squares of the basilisk is difficult terrain for enemies.
+        __typeName: CharacterModifier
+        aura:
+          name: Calcifying Presence
+          description: The area within 3 squares of the basilisk is difficult terrain for enemies.
+          __typeName: Aura
+          applyto: enemies
+          difficult_terrain: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 21cf1738-05b3-4bd6-804f-01e5cd706b2d
+          implementation: 4
+          modifiers: []
+        behavior: aura
+        domains:
+          CharacterFeature:047bb65b-4d95-4691-935c-04f13c7e0782: true
+        guid: c8ea85d0-fa9f-4f99-b385-ec74d553f863
+        radius: "3"
+        source: Trait
+        sourceguid: 047bb65b-4d95-4691-935c-04f13c7e0782
       source: Trait
     - name: Venomous
       description: Whenever the basilisk deals poison damage to a creature, that creature is marked with Basilisk Venom until the end of the encounter.
@@ -134,12 +159,62 @@ info:
           trigger: dealdamage
           whenActive: combat
       source: Trait
+    - name: Lash Out
+      description: |-
+        Trigger: The basilisk takes damage from a melee ability.
+
+        Effect: Each enemy in a 1 burst takes 5 damage and is A<2 bleeding (save ends).
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:75f60e7b-3627-472c-b2ed-ad0aa0ec203f: true
+      guid: 75f60e7b-3627-472c-b2ed-ad0aa0ec203f
+      implementation: 4
+      modifiers:
+      - name: Lash Out
+        description: Each target takes 5 damage and is A<2 bleeding (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:75f60e7b-3627-472c-b2ed-ad0aa0ec203f: true
+        guid: b3022fc7-87ce-459b-8ad5-486ee9a8cb51
+        source: Trait
+        sourceguid: 75f60e7b-3627-472c-b2ed-ad0aa0ec203f
+        triggeredAbility:
+          name: Lash Out
+          description: Each target takes 5 damage and is A<2 bleeding (save ends).
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: 5 damage; A<2 bleeding (save ends)
+          castImmediately: true
+          conditionFormula: Keywords has "Melee"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9f9e7b4a-e03f-4b07-a126-1e793ffdb237
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
+          numTargets: 1
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetFilter: Enemy
+          targetType: all
+          trigger: losehitpoints
+          triggerPrompt: The basilisk takes damage from a melee ability.
+          whenActive: combat
+      source: Trait
     - name: Restorative Salve
       description: "After a basilisk dies, a character can make a Reason test to claim oil from the basilisk's mouth, which can be used to create a special salve. One dose of salve can be applied to a petrified creature as a main action, and 1 minute after the salve is applied, that creature is no longer petrified.!The character must complete the Find a Cure down time project in Draw Steel: Heroes to create one dose of salve.@The character creates one dose of salve and can create two more doses by completing the Find a Cure downtime#The character creates three doses of salve."
       __typeName: CharacterFeature
       domains:
         CharacterFeature:b78b1e5b-14f3-45fd-af6d-2ca60b3f8710: true
       guid: b78b1e5b-14f3-45fd-af6d-2ca60b3f8710
+      implementation: 0
       modifiers: []
       source: Trait
     cr: 1
@@ -283,19 +358,113 @@ info:
       numTargets: 2
       range: 1
       repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 49
+      strain: []
       targetType: target
-    - name: 'Petrifying Eye Beams '
-      description: The basilisk targets the first unobstructed creature in each column of the area. An already slowed target has -1 to resisting the potency. Each target magically begins to turn to stone. A creature restrained by this ability or a creature adjacent to them can use an action to cut the encroaching stone from their body, taking 8 damage which can't be reduced in any way and ending the effect.
+    - name: Petrifying Eye Beams
+      description: The area extends from both the basilisk's eyes, and this ability targets the first creature without cover on either side of the area. If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target's body, dealing 8 damage to the target that can't be reduced in any way and ending this effect.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: caster
+        momentaryEffect:
+          id: 217494b9-83e1-4530-aa35-575b2d4a1b62
+          name: Petrifying Eye Beams Potency
+          description: ""
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 217494b9-83e1-4530-aa35-575b2d4a1b62
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: +1 Potency
+            description: The potency of this ability increases by 1 against a slowed target.
+            __typeName: CharacterModifier
+            activationAfterRoll: false
+            activationCondition: Target.Conditions has "Slowed"
+            behavior: power
+            guid: 552cf331-9e8e-4ca9-acaf-94fc8e7837ac
+            keywords: []
+            modtype: none
+            potencymod: "1"
+            rollType: ability_power_roll
+            source: Ongoing Effect
+            sourceguid: 217494b9-83e1-4530-aa35-575b2d4a1b62
+          source: Ongoing Effect
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
         tiers:
-        - M<0 restrained (save ends)
-        - M<1 restrained (save ends)
-        - Slowed (save ends); or if M<2 restrained (save ends)
+        - "#M<0 restrained (save ends)"
+        - "#M<1 restrained (save ends)"
+        - "#Slowed (save ends); or if M<2 restrained (save ends)"
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "M", 0)
+        guid: c999d7b5-c38e-4682-952b-769176b266ed
+        rule: restrained (save ends)
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "M", 1)
+        guid: ee0b20a0-cc18-4967-b5bc-f6ff8bd626fa
+        rule: restrained (save ends)
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: not Cast.PassesPotency(target, "M", 2)
+        guid: d1764bac-d274-496e-8658-a60a5a25a09c
+        rule: restrained (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Cast.PassesPotency(target, "M", 2)
+        guid: 659188e6-149f-420a-952b-401ad7c40c6f
+        rule: slowed (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "M", 0)
+        guid: dcafc072-ac8a-41fd-a4e5-c82409052fb1
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "M", 1)
+        guid: 13e5a9f8-bddf-4f92-84c6-78b4e5d950d7
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: not Cast.PassesPotency(target, "M", 2)
+        guid: a896e011-a0f9-4b6c-9934-afb9cfeaa7d8
+        ongoingEffect: 7dcf4812-58c0-4d84-adb5-d4ccbd406bca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
+        guid: 46d4b083-8ffd-4800-95b4-0c2ede9dbc92
+        riderid: c01fe2d5-6f02-4e41-86f1-9cace6ac410b
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 2989a051-204f-442e-967d-edafc2dd5e43
+        guid: cd084b76-cc01-4085-a8f0-167efe26b401
+        riderid: 704e8129-eb23-43fe-ac27-ec9a7df11dea
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -307,15 +476,24 @@ info:
       guid: 93b9b007-017f-41c5-96fc-894343fa446c
       iconid: ui-icons/skills/1.png
       implementation: 3
+      implementationDetails: Targeting is left to the director.
       keywords:
         Area: true
         Magic: true
         Ranged: true
+      lineDistance: "1"
       modifiers: []
       numTargets: 1
-      range: 1
+      radius: "2"
+      range: "5"
       repeatTargets: false
-      targetType: self
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 49
+      strain: []
+      targetTextOverride: Special
+      targetType: line
     - name: Poison Fumes
       description: ""
       __typeName: ActivatedAbility
@@ -359,32 +537,12 @@ info:
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 5
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 49
       strain: []
       targetType: cube
-    - name: Lash Out
-      description: Each target takes 5 damage and is A<2 bleeding (save ends).
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: a72c5b51-2966-4d94-ac29-d2ae33892201
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetFilter: Enemy
-      targetType: all
     innateAttacks: []
     keywords:
       Basilisk: true
@@ -396,6 +554,9 @@ info:
     monster_category: Monster
     monster_type: Basilisk
     movementSpeeds: []
+    notes:
+    - text: ""
+      title: Monster Notes
     ongoingEffects: []
     opportunityAttack: 5
     resistances:
@@ -430,7 +591,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: afdce296-6db3-452e-8666-97907e84e511
+  updateid: f80f01a5-75c3-4b57-90f6-66df5232b604
 mtime: 1775972964051
 ord: 0
 parentFolder: a2e7e9a5-6ef8-4681-bc88-fd6aa8612059

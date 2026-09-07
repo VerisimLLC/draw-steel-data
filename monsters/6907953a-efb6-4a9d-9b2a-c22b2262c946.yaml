@@ -83,7 +83,7 @@ info:
         CharacterFeature:badb6f1e-facb-473f-8580-1df14caebe1e: true
       guid: badb6f1e-facb-473f-8580-1df14caebe1e
       implementation: 4
-      implementationDetails: Restricts the target to the creature the ivy is climbing, enforces the enemy Intuition requirement, and invokes Move Speed for that creature.
+      implementationDetails: Only usable while the ivy is climbing a creature (suppressed with an explanation otherwise, or when the climbed creature is an enemy with Intuition 1 or higher). The climbed creature is targeted automatically through the Caster's Mount mapping and casts Move Speed itself.
       modifiers:
       - name: Creeper
         description: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
@@ -96,6 +96,7 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: standard
+            applyto: caster_mount
             customAbility:
               name: Invoked Ability
               description: ""
@@ -115,9 +116,10 @@ info:
               repeatTargets: false
               targetType: self
             filterTarget: ""
-            promptText: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
+            promptText: The memorial ivy compels {Mount.Name} to move up to their speed.
             standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-            targeting: prompt
+            targeting: self
+            targetingFormula: ""
           categorization: Ability
           display:
             bgcolor:
@@ -144,12 +146,34 @@ info:
             docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
             page: 31
           strain: []
-          targetFilter: Caster.Mounted and Caster.Mount.id = Target.id and (not Enemy or Target.Intuition < 1)
-          targetType: target
+          targetFilter: ""
+          targetType: self
         behavior: activated
         domains:
           CharacterFeature:badb6f1e-facb-473f-8580-1df14caebe1e: true
         guid: c1fc97d8-d5fb-4673-a83d-25dabfdc521c
+        source: Character Feature
+        sourceguid: badb6f1e-facb-473f-8580-1df14caebe1e
+      - name: Creeper
+        description: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
+        __typeName: CharacterModifier
+        behavior: suppressabilities
+        domains:
+          CharacterFeature:badb6f1e-facb-473f-8580-1df14caebe1e: true
+        explanation: The memorial ivy isn't climbing a creature.
+        filterCondition: not Mounted
+        guid: 958c2fd2-5f7d-4d20-9ae5-4d03b79459bb
+        source: Character Feature
+        sourceguid: badb6f1e-facb-473f-8580-1df14caebe1e
+      - name: Creeper
+        description: If the memorial ivy is climbing a willing ally or an enemy who has I<1, they can compel that creature to move up to their speed.
+        __typeName: CharacterModifier
+        behavior: suppressabilities
+        domains:
+          CharacterFeature:badb6f1e-facb-473f-8580-1df14caebe1e: true
+        explanation: The creature being climbed is an enemy with Intuition 1 or higher.
+        filterCondition: Mounted and Mount.Intuition >= 1 and (Count Nearby Enemies(1) - Count Nearby Enemies(1, Mount)) > 0
+        guid: 499a63b2-7662-4db3-a24c-5362bdfffb2c
         source: Character Feature
         sourceguid: badb6f1e-facb-473f-8580-1df14caebe1e
       source: Character Feature

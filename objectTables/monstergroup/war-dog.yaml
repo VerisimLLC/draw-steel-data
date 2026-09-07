@@ -20,7 +20,7 @@ maliceAbilities:
     saturation: 1
   guid: 9b3c64f8-f96e-440d-92ec-be34df1ea988
   iconid: 59057dc1-7abf-4304-8375-46e5905a875a
-  implementation: 3
+  implementation: 4
   modifiers: []
   numTargets: "1"
   persistence: []
@@ -31,11 +31,7 @@ maliceAbilities:
   strain: []
   targetType: self
 - name: Fire for Effect
-  description: |
-    Area, Magic, Ranged. 4 cube within 10. Each creature in the area makes an Agility test. The same condition is imposed on each affected target.
-    - Tier 1 (<=11): 5 fire damage; slowed or weakened (save ends)
-    - Tier 2 (12-16): 5 fire damage; slowed or weakened (EoT)
-    - Tier 3 (17+): 5 fire damage
+  description: ""
   __typeName: MaliceAbility
   abilityType: none
   behaviors:
@@ -82,7 +78,7 @@ maliceAbilities:
     saturation: 1
   guid: c2058c67-c81c-4d69-a538-978719ee06ee
   iconid: ui-icons/skills/1.png
-  implementation: 3
+  implementation: 4
   keywords:
     Area: true
     Magic: true
@@ -95,6 +91,9 @@ maliceAbilities:
   multipleModes: true
   numTargets: "1"
   persistence: []
+  preDescription: |+
+    Each creature in the area makes an Agility test. The same condition is imposed on each affected target.
+
   radius: "4"
   range: "10"
   repeatTargets: false
@@ -187,6 +186,7 @@ maliceAbilities:
     saturation: 1
   guid: 3f56dfe3-403a-405a-b9db-5c89b432fe21
   iconid: ui-icons/skills/1.png
+  implementation: 4
   modifiers: []
   numTargets: "1"
   persistence: []
@@ -199,14 +199,25 @@ maliceAbilities:
   targetFilter: (not enemy) and target.minion and target.Type is War Dog
   targetType: map
 - name: Loyalty Unto Death
-  description: |
-    Magic, Ranged. Two war dogs. Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target's Loyalty Collar trait is resolved, each enemy adjacent to either target makes a Presence test.
-    - Tier 1 (<=11): Push 4; the enemy is frightened of the nearest non-minion war dog (save ends)
-    - Tier 2 (12-16): Push 2; the enemy is frightened of the nearest non-minion war dog (EoT)
-    - Tier 3 (17+): Push 2
+  description: ""
   __typeName: MaliceAbility
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: targets
+    rule: shift {Movement Speed}
+  - __typeName: ActivatedAbilityDestroyBehavior
+    applyto: targets
+  - __typeName: ActivatedAbilityPowerRollBehavior
+    applyto: proximity_only
+    filterTarget: not Friends(target, caster) and not target.object
+    resistanceAttr: prs
+    resistanceRoll: true
+    roll: 2d10 + Presence
+    tiers:
+    - push 4; frightened (save ends)
+    - push 2; frightened (EoT)
+    - push 2
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -214,19 +225,27 @@ maliceAbilities:
     saturation: 1
   guid: 76b4318b-f2ec-46ff-b81c-006042f13d1f
   iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
-  implementation: 0
+  implementation: 4
+  keywords:
+    Magic: true
+    Ranged: true
   minLevel: 4
   modifiers: []
-  numTargets: "1"
+  numTargets: "2"
   persistence: []
-  range: 1
+  preDescription: Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target's Loyalty Collar trait is resolved, each enemy adjacent to either target makes a Presence test.
+  range: "10"
+  reasonedFilters:
+  - formula: Target has "War Dog"
+    reason: Loyalty Unto Death can only target war dogs.
+  - formula: Target has "Loyalty Collar" or Target has "Loyalty Collars" or Target has "Shrapnel-Laced Loyalty Collar" or Target has "Champion's Loyalty Collar"
+    reason: This war dog has no loyalty collar to detonate.
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: 5
   selfTarget: true
   strain: []
-  targetFilter: ""
-  targetType: map
+  targetType: target
 - name: Alchemical Cloud
   description: |
     A bank of choking chemicals sweeps across the area of the encounter map. Each enemy in the encounter makes a Might test.
@@ -286,5 +305,5 @@ maliceAbilities:
   strain: []
   targetFilter: ""
   targetType: map
-mtime: 1785377213966
+mtime: 1788647468161
 traits: []
