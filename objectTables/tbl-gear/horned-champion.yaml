@@ -1,0 +1,490 @@
+id: 4f0bb297-f296-4c8b-a3c8-52b0b7fa4333
+name: Horned Champion
+description: Only a beastheart can wield this weapon. Any weapon ability that deals rolled damage using this weapon deals an extra 1 damage. Additionally, your abilities with the Melee and Weapon keywords also gain the Charge keyword.
+_table: tbl_Gear
+__typeName: equipment
+category: Gear
+ctime: 1788875213333
+domains:
+  item:4f0bb297-f296-4c8b-a3c8-52b0b7fa4333: true
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+features:
+- name: Horned Champion Extra Damage
+  description: 1/2/3
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b8b52cb1-08b0-4eac-a01f-565b216cdf04
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Horned Champion Extra Damage
+    description: 1/2/3
+    __typeName: CharacterModifier
+    activationCondition: true
+    adjustments: []
+    behavior: power
+    damageModifier:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "1"
+        threshold: 1
+      - script: "2"
+        threshold: 5
+      - script: "3"
+        threshold: 9
+      field: Level
+    damageTypeMappings: []
+    guid: 85f4902b-c59b-436d-ba56-5c74b529fd76
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: b8b52cb1-08b0-4eac-a01f-565b216cdf04
+  source: Item
+- name: Charging Horns
+  description: Your abilities with the Melee and Weapon keywords also gain the Charge keyword.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 26378dcc-422b-4d4a-ba14-4844f61d7c8c
+  implementation: 4
+  implementationDetails: Restricting the wielder to a beastheart is left to the director.
+  itemAttached: true
+  modifiers:
+  - name: Charging Horns
+    description: Your abilities with the Melee and Weapon keywords also gain the Charge keyword.
+    __typeName: CharacterModifier
+    attributes:
+    - id: modkeywords
+      keywords:
+        Charge: true
+      operation: Add
+      value: ""
+    behavior: modifyability
+    filterAbility: Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+    guid: 9b5a2d5a-e3d0-42c9-95f5-2debea073801
+    keywords:
+      Melee: true
+      Weapon: true
+    modifyDescription: "**Special:** This ability also has the Charge keyword."
+    source: Item
+    sourceguid: 26378dcc-422b-4d4a-ba14-4844f61d7c8c
+  source: Item
+- name: Horned Champion Charge Rider
+  description: Whenever you or your companion uses the Charge main action and obtains a tier 3 outcome with an ability, whoever used the action can either knock the target prone, push them 2 squares or increase the distance of a push made as part of the charge, or deal extra damage equal to their own Might score.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: d587a022-25bf-42f1-a2ab-000e8f04c090
+  implementation: 3
+  implementationDetails: Offered as three opt-in triggers on a tier 3 charge outcome, each prompting for the creature you attacked. Push covers both the flat 2 squares and lengthening a charge push. Choosing only one is not enforced. The engine exposes no reliable was-this-a-charge signal, so the options offer on any tier 3 hit with a Melee and Weapon ability.
+  itemAttached: true
+  modifiers:
+  - name: Horned Champion - Knock Prone
+    description: On a tier 3 charge outcome, knock the target prone.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 3ad37fa2-55d9-4c0c-ba24-a6263e6fccdb
+    source: Item
+    sourceguid: d587a022-25bf-42f1-a2ab-000e8f04c090
+    triggeredAbility:
+      name: Horned Champion - Knock Prone
+      description: Knock the target of your charge prone.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          name: Knock Prone
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: prone
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d9a5871e-c214-4331-9a7d-00d7f4152bdd
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: "100"
+          repeatTargets: false
+          strain: []
+          targetType: target
+        promptText: Select the creature you attacked
+      castImmediately: true
+      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: e4751d9e-087d-465f-aac6-33c313ac378a
+      hasManualVersion: true
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: self
+      trigger: rollpower
+  - name: Horned Champion - Push
+    description: On a tier 3 charge outcome, push the target 2 squares.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 243d7ad8-8c24-49b4-87cd-dff20bc423f5
+    source: Item
+    sourceguid: d587a022-25bf-42f1-a2ab-000e8f04c090
+    triggeredAbility:
+      name: Horned Champion - Push
+      description: Push the target of your charge 2 squares, or lengthen a push made as part of the charge.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          name: Push
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: push 2
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a3afd4af-8d36-487a-a276-248c41b56d65
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: "100"
+          repeatTargets: false
+          strain: []
+          targetType: target
+        promptText: Select the creature you attacked
+      castImmediately: true
+      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 728ec6bf-a851-443e-ab9e-f08e925e56bc
+      hasManualVersion: true
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: self
+      trigger: rollpower
+  - name: Horned Champion - Might Damage
+    description: On a tier 3 charge outcome, deal extra damage equal to your Might score.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: a1399ed3-2c4f-43ea-9ecb-84e3cab704fc
+    source: Item
+    sourceguid: d587a022-25bf-42f1-a2ab-000e8f04c090
+    triggeredAbility:
+      name: Horned Champion - Might Damage
+      description: Deal extra damage equal to your Might score.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        customAbility:
+          name: Might Damage
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Horned Champion
+            roll: Caster.Might
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 2ad164ed-cea5-4faf-8e2b-9b1ebd87a2c3
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: "100"
+          repeatTargets: false
+          strain: []
+          targetType: target
+        promptText: Select the creature you attacked
+      castImmediately: true
+      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 2b4d8515-e053-4f51-9872-a4ae949a2a92
+      hasManualVersion: true
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: self
+      trigger: rollpower
+  - name: Horned Champion Charge Rider (Companion)
+    description: Your companion gets the same tier 3 charge options.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Horned Champion Charge Rider
+      description: On a tier 3 charge outcome, knock the target prone, push them 2 squares, or deal extra damage equal to your Might score.
+      __typeName: CharacterFeature
+      guid: d080a9e0-bf65-4bbd-9ae6-cb3294a8b2cd
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Horned Champion - Knock Prone
+        description: On a tier 3 charge outcome, knock the target prone.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: beba2989-394e-4752-a5c7-5793fe3de103
+        source: Item
+        sourceguid: d080a9e0-bf65-4bbd-9ae6-cb3294a8b2cd
+        triggeredAbility:
+          name: Horned Champion - Knock Prone
+          description: Knock the target of your charge prone.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Knock Prone
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: prone
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 87971914-86bf-40e5-8890-6233b2663d29
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "100"
+              repeatTargets: false
+              strain: []
+              targetType: target
+            promptText: Select the creature you attacked
+          castImmediately: true
+          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 60b54ac8-0aa5-4336-9782-6309496754cf
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: rollpower
+      - name: Horned Champion - Push
+        description: On a tier 3 charge outcome, push the target 2 squares.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 0987b81c-ad40-4faa-917a-904e4b596f84
+        source: Item
+        sourceguid: d080a9e0-bf65-4bbd-9ae6-cb3294a8b2cd
+        triggeredAbility:
+          name: Horned Champion - Push
+          description: Push the target of your charge 2 squares, or lengthen a push made as part of the charge.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Push
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: push 2
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 2051802f-a93e-4d00-9d71-f20852d8af7c
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "100"
+              repeatTargets: false
+              strain: []
+              targetType: target
+            promptText: Select the creature you attacked
+          castImmediately: true
+          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 381a0cf1-a245-4e80-8941-5118524bd870
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: rollpower
+      - name: Horned Champion - Might Damage
+        description: On a tier 3 charge outcome, deal extra damage equal to your Might score.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: d7cda1b8-bedd-4033-bb34-bc31014aeffd
+        source: Item
+        sourceguid: d080a9e0-bf65-4bbd-9ae6-cb3294a8b2cd
+        triggeredAbility:
+          name: Horned Champion - Might Damage
+          description: Deal extra damage equal to your Might score.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Might Damage
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                chatMessage: Horned Champion
+                roll: Caster.Might
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 35f230b9-4908-42ea-b475-acce76488c3c
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "100"
+              repeatTargets: false
+              strain: []
+              targetType: target
+            promptText: Select the creature you attacked
+          castImmediately: true
+          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9ac9a69a-3045-46a3-b59d-bb10528271b8
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: rollpower
+    guid: d940e846-6ec9-40b1-8bde-3d1d86a05429
+    source: Item
+    sourceguid: d587a022-25bf-42f1-a2ab-000e8f04c090
+  source: Item
+- name: Unimpeded Charge
+  description: When you or your companion uses the Charge main action, the movement doesn't provoke opportunity attacks.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: f823fc83-c99f-4fd5-8906-d3494e4a2c5b
+  implementation: 1
+  implementationDetails: Not automated; opportunity-attack immunity cannot be scoped to the Charge movement, and granting it outright would cover all movement.
+  itemAttached: true
+  modifiers: []
+  source: Item
+flavor: This paired helmet and barding face shield are each set with a pair of curving metal horns.
+iconid: 890846eb-cdee-4dec-80e2-32595ddb5016
+implementation: 2
+itemPrerequisite: The horns of a minotaur
+keywords:
+  Heavy Weapon: true
+  Magic: true
+level5: The weapon's extra damage increases to 2. Additionally, whenever you or your companion uses the Charge main action and obtains a tier 3 outcome with an ability, whoever used the action can either knock the target prone, push them 2 squares or increase the distance of a push made as part of the charge, or deal extra damage equal to their own Might score.
+level9: The weapon's extra damage increases to 3. Additionally, when you or your companion uses the Charge main action, the movement doesn't provoke opportunity attacks.
+mtime: 1788875494225
+projectGoal: "450"
+projectRollCharacteristic:
+  inu: true
+  mgt: true
+  rea: true
+projectSource: Epic poem in High Kuric
+specialDescription: ""
+type: Gear
+weight: 1

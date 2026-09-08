@@ -1,0 +1,134 @@
+id: da343c47-e740-4bc9-b0af-3585f116ff01
+name: Glancing Bow
+description: Only a beastheart can wield this bow. Any weapon ability that deals rolled damage using this weapon deals an extra 1 damage. Additionally, you can target your companion with a ranged weapon strike using this bow, making a glancing shot. The companion can use a free triggered action to redirect the strike to another target as if the companion were the source of the ability, using the ability's original distance. You can't make more than one glancing shot as part of the same ability.
+_table: tbl_Gear
+__typeName: equipment
+category: Gear
+ctime: 1788874296127
+domains:
+  item:da343c47-e740-4bc9-b0af-3585f116ff01: true
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+features:
+- name: Glancing Bow Extra Damage
+  description: 1/2/3
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 6f54546c-59fe-4a3d-814d-8603d6544e4d
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Glancing Bow Extra Damage
+    description: 1/2/3
+    __typeName: CharacterModifier
+    activationCondition: true
+    adjustments: []
+    behavior: power
+    damageModifier:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "1"
+        threshold: 1
+      - script: "2"
+        threshold: 5
+      - script: "3"
+        threshold: 9
+      field: Level
+    damageTypeMappings: []
+    guid: 53b79ca7-74db-478c-a1e8-3fc1168ce009
+    keywords:
+      Ranged: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 6f54546c-59fe-4a3d-814d-8603d6544e4d
+  source: Item
+- name: Glancing Shot
+  description: You can target your companion with a ranged weapon strike using this bow, making a glancing shot. The companion can use a free triggered action to redirect the strike to another target as if the companion were the source of the ability, using the ability's original distance.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 26b88adf-14ff-4568-b647-328866d492e2
+  implementation: 3
+  implementationDetails: Your weapon abilities can reach anything in range of your companion, shown in the targeting highlight. The redirect is not a triggered action, and the one-per-ability limit is not enforced. Beastheart-only is left to the director.
+  itemAttached: true
+  modifiers:
+  - name: Glancing Shot
+    description: Weapon abilities can be targeted from your companion's position.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Glancing Shot
+      description: Your beastheart's weapon abilities can be targeted from your position.
+      __typeName: CharacterFeature
+      guid: 3ede7999-d8e1-4710-af6b-ab850fb81854
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Glancing Shot
+        description: Your beastheart's weapon abilities can be targeted from your position.
+        __typeName: CharacterModifier
+        behavior: castingorigin
+        filterCondition: Caster.HasCompanion and Caster.Companion.Id = Id
+        guid: 2dfe7535-2147-44a1-a9a3-31b12f80c9d4
+        keywordFilter:
+          Weapon: true
+        source: Item
+        sourceguid: 3ede7999-d8e1-4710-af6b-ab850fb81854
+    guid: 7cad0894-7b7e-4939-ba7b-993570c14231
+    source: Item
+    sourceguid: 26b88adf-14ff-4568-b647-328866d492e2
+  source: Item
+- name: Glancing Shot Edge
+  description: When your companion redirects your glancing shot, the strike gains an edge if the target is within 5 squares of your companion.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 98e973b1-e18f-40e0-a1c1-380a2f49b1a1
+  implementation: 3
+  implementationDetails: The edge applies to any weapon ability against a target within 5 squares of your companion, since the redirect itself is not modeled.
+  itemAttached: true
+  modifiers:
+  - name: Glancing Shot Edge
+    description: You gain an edge on weapon abilities against a target within 5 squares of your companion.
+    __typeName: CharacterModifier
+    activationCondition: Level >= 5 and HasCompanion and Companion.Distance(Target) <= 5
+    behavior: power
+    damageModifier: ""
+    guid: 6ef4195d-1d98-4118-b996-96948cb1b450
+    keywords:
+      Ranged: true
+      Weapon: true
+    modtype: edge
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 98e973b1-e18f-40e0-a1c1-380a2f49b1a1
+  source: Item
+- name: Glancing Shot Off an Enemy
+  description: You can make a glancing shot off of an enemy. The enemy is unaffected by the strike but takes damage equal to your Intuition score, and you can redirect the strike to a second target as if the enemy was the source of the ability, provided you can see the second target.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 2c6a0360-268a-469e-a0ac-0d2986278e48
+  implementation: 1
+  implementationDetails: Not automated; bouncing a strike off an enemy has no engine equivalent.
+  itemAttached: true
+  modifiers: []
+  source: Item
+flavor: This bow is festooned with mirrors and sights pointing in all directions.
+iconid: 98ab1a55-533d-4092-9c57-7bc440a0f33e
+implementation: 2
+itemPrerequisite: A bow used to shoot an apple from someone's head
+keywords:
+  Bow: true
+  Magic: true
+level5: The weapon's extra damage increases to 2. When your companion redirects your glancing shot, the strike gains an edge if the target is within 5 squares of your companion.
+level9: The weapon's extra damage increases to 3. Additionally, you can now make a glancing shot off of an enemy. When you do so, the enemy is unaffected by the strike but takes damage equal to your Intuition score, and you can redirect the strike to a second target as if the enemy was the source of the ability, provided you can see the second target.
+mtime: 1788875041841
+projectGoal: "450"
+projectRollCharacteristic:
+  agl: true
+  inu: true
+  rea: true
+projectSource: Texts or lore in Yllric
+specialDescription: ""
+type: Gear
+weight: 1

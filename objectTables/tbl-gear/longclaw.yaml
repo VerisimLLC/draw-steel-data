@@ -1,0 +1,370 @@
+id: 47acd852-f1b7-44ca-9895-ce3406684197
+name: Longclaw
+description: Only a beastheart can wield this weapon. Any weapon ability that deals rolled damage using this weapon deals an extra 1 damage. Additionally, you and your companion gain a +1 bonus to melee distance.
+_table: tbl_Gear
+__typeName: equipment
+category: Gear
+ctime: 1788878494771
+domains:
+  item:47acd852-f1b7-44ca-9895-ce3406684197: true
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+features:
+- name: Longclaw Extra Damage
+  description: 1/2/3
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 7aa73edc-69fe-4678-9ae4-1cbacd6dd72c
+  implementation: 4
+  implementationDetails: Restricting the wielder to a beastheart is left to the director.
+  itemAttached: true
+  modifiers:
+  - name: Longclaw Extra Damage
+    description: 1/2/3
+    __typeName: CharacterModifier
+    activationCondition: true
+    adjustments: []
+    behavior: power
+    damageModifier:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "1"
+        threshold: 1
+      - script: "2"
+        threshold: 5
+      - script: "3"
+        threshold: 9
+      field: Level
+    damageTypeMappings: []
+    guid: 7644d74e-f304-4edc-9cf5-b28f550b7b0e
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 7aa73edc-69fe-4678-9ae4-1cbacd6dd72c
+  source: Item
+- name: Longclaw Reach
+  description: You and your companion gain a +1 bonus to melee distance.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 66589001-db07-4001-8f04-e0d54b55b8f5
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Longclaw Reach
+    description: A +1 bonus to melee distance.
+    __typeName: CharacterModifier
+    attribute: reach
+    behavior: attribute
+    guid: 250c130c-0521-4df2-ac01-8d439f59c2fe
+    source: Item
+    sourceguid: 66589001-db07-4001-8f04-e0d54b55b8f5
+    value: 1
+  - name: Longclaw Reach (Companion)
+    description: Your companion gains a +1 bonus to melee distance.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Longclaw Reach
+      description: A +1 bonus to melee distance.
+      __typeName: CharacterFeature
+      guid: d8a767b8-6206-46e2-88c0-3fa19e09d6b0
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Longclaw Reach
+        description: A +1 bonus to melee distance.
+        __typeName: CharacterModifier
+        attribute: reach
+        behavior: attribute
+        guid: 51a03e47-6265-4735-aaf9-4a3905dd1710
+        source: Item
+        sourceguid: d8a767b8-6206-46e2-88c0-3fa19e09d6b0
+        value: 1
+    guid: d52faa98-5c4b-4bac-89d3-8108771b4af1
+    source: Item
+    sourceguid: 66589001-db07-4001-8f04-e0d54b55b8f5
+  source: Item
+- name: Longclaw Bleeding Grab
+  description: Whenever you or your companion grabs a creature or a creature grabs either of you, the creature is bleeding (save ends).
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 12f4eb0c-fab1-4deb-9864-63c4a2dc88d1
+  implementation: 4
+  implementationDetails: Applies automatically in both directions. A creature that grabs you is targeted as the attacker; a creature you grab is targeted as the subject.
+  itemAttached: true
+  modifiers:
+  - name: Longclaw Bleeding Grab - Grabbed By
+    description: A creature that grabs you is bleeding (save ends).
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: d5aeb009-6af5-4d99-86ef-dceef7c0f62e
+    source: Item
+    sourceguid: 12f4eb0c-fab1-4deb-9864-63c4a2dc88d1
+    triggeredAbility:
+      name: Longclaw Bleeding Grab
+      description: The creature grabbing you is bleeding (save ends).
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: bleeding (save ends)
+      castImmediately: true
+      conditionFormula: Level >= 5 and Condition is "Grabbed" and HasAttacker
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 0b170ca6-1627-4c3b-ae09-da56202878c3
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: attacker
+      trigger: inflictcondition
+  - name: Longclaw Bleeding Grab - You Grab
+    description: A creature you grab is bleeding (save ends).
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 014c9c1e-5869-4760-b468-46fb98c1e707
+    source: Item
+    sourceguid: 12f4eb0c-fab1-4deb-9864-63c4a2dc88d1
+    triggeredAbility:
+      name: Longclaw Bleeding Grab
+      description: The creature you grab is bleeding (save ends).
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: bleeding (save ends)
+      castImmediately: true
+      conditionFormula: Level >= 5 and Condition is "Grabbed" and HasAttacker and Attacker.id = Self.id
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: b805d33e-7efd-4ffe-83df-3acf8b058cb8
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: other
+      targetType: subject
+      trigger: inflictcondition
+  - name: Longclaw Bleeding Grab (Companion)
+    description: Your companion gets the same bleeding grab.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Longclaw Bleeding Grab
+      description: On a grab, the creature is bleeding (save ends).
+      __typeName: CharacterFeature
+      guid: 6ed1e832-0276-4e28-a6c2-0c350489fa34
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Longclaw Bleeding Grab - Grabbed By
+        description: A creature that grabs you is bleeding (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 37525b96-c429-47f1-97c7-3de5ff91cb4c
+        source: Item
+        sourceguid: 6ed1e832-0276-4e28-a6c2-0c350489fa34
+        triggeredAbility:
+          name: Longclaw Bleeding Grab
+          description: The creature grabbing you is bleeding (save ends).
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: bleeding (save ends)
+          castImmediately: true
+          conditionFormula: Level >= 5 and Condition is "Grabbed" and HasAttacker
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d237a123-f93e-48c9-b78f-7a7f05e101ee
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: attacker
+          trigger: inflictcondition
+      - name: Longclaw Bleeding Grab - You Grab
+        description: A creature you grab is bleeding (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 7ebf74cb-c8f0-4360-a784-2712af929bca
+        source: Item
+        sourceguid: 6ed1e832-0276-4e28-a6c2-0c350489fa34
+        triggeredAbility:
+          name: Longclaw Bleeding Grab
+          description: The creature you grab is bleeding (save ends).
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: bleeding (save ends)
+          castImmediately: true
+          conditionFormula: Level >= 5 and Condition is "Grabbed" and HasAttacker and Attacker.id = Self.id
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c8489b3b-3e60-4400-bfa8-3de35429fdc3
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: other
+          targetType: subject
+          trigger: inflictcondition
+    guid: 551fc4e3-df3a-4dcf-af4f-89059c149147
+    source: Item
+    sourceguid: 12f4eb0c-fab1-4deb-9864-63c4a2dc88d1
+  source: Item
+- name: Longclaw Bloodletting Recovery
+  description: Whenever you or your companion causes a creature to become bleeding or uses an ability that deals damage to a bleeding creature, you can each spend a Recovery.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: d0628d23-ff75-434d-b7fc-86d20eda60e9
+  implementation: 2
+  implementationDetails: Offered when you damage a bleeding creature, prompting you to spend a Recovery. Causing a creature to become bleeding is not detected separately, and each of you is offered your own prompt rather than one shared trigger.
+  itemAttached: true
+  modifiers:
+  - name: Longclaw Bloodletting Recovery
+    description: When you damage a bleeding creature, you can spend a Recovery.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 5b7b2079-5cdb-4ce1-b704-ce0c4c4d0edf
+    source: Item
+    sourceguid: d0628d23-ff75-434d-b7fc-86d20eda60e9
+    triggeredAbility:
+      name: Longclaw Bloodletting Recovery
+      description: You can spend a Recovery.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: Prompt Recovery
+        value: "1"
+      castImmediately: true
+      conditionFormula: Level >= 9 and Target.Conditions has "Bleeding"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 01fa90bd-2e4a-4227-8954-1400d1a8c848
+      hasManualVersion: true
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: self
+      trigger: dealdamage
+  - name: Longclaw Bloodletting Recovery (Companion)
+    description: Your companion can also spend a Recovery.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Longclaw Bloodletting Recovery
+      description: When you damage a bleeding creature, you can spend a Recovery.
+      __typeName: CharacterFeature
+      guid: b6d86b16-5f1a-45b9-8433-9914f049846d
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Longclaw Bloodletting Recovery
+        description: When you damage a bleeding creature, you can spend a Recovery.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 8d85adc3-4521-430c-a2f5-2569cf078d52
+        source: Item
+        sourceguid: b6d86b16-5f1a-45b9-8433-9914f049846d
+        triggeredAbility:
+          name: Longclaw Bloodletting Recovery
+          description: You can spend a Recovery.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            triggerName: Prompt Recovery
+            value: "1"
+          castImmediately: true
+          conditionFormula: Level >= 9 and Target.Conditions has "Bleeding"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 1f65f772-20af-475b-a33c-7303c53b9443
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: dealdamage
+    guid: c2b086a3-5b53-473d-86b0-661ff657d6d8
+    source: Item
+    sourceguid: d0628d23-ff75-434d-b7fc-86d20eda60e9
+  source: Item
+flavor: The arm-length claws jutting from your armor are your only weapon.
+iconid: d29f8109-a6d5-4392-bd91-1cd2bffd5096
+implementation: 2
+itemPrerequisite: The claws of a dragon
+keywords:
+  Magic: true
+  Medium Weapon: true
+level5: The weapon's extra damage increases to 2. Additionally, whenever you or your companion grabs a creature or a creature grabs either of you, the creature is bleeding (save ends).
+level9: The weapon's extra damage increases to 3. Additionally, whenever you or your companion causes a creature to become bleeding or uses an ability that deals damage to a bleeding creature, you can each spend a Recovery.
+mtime: 1788879859316
+projectGoal: "450"
+projectRollCharacteristic:
+  inu: true
+  mgt: true
+  rea: true
+projectSource: Texts or lore in the First Language
+specialDescription: ""
+type: Gear
+weight: 1
