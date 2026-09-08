@@ -17,7 +17,7 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: 7a4e93c1-2b58-4d70-9e36-c8150f2a6b4d
-  implementation: 3
+  implementation: 4
   itemAttached: true
   modifiers:
   - name: Thief of Joy
@@ -25,25 +25,28 @@ features:
     __typeName: CharacterModifier
     activatedAbility:
       name: Thief of Joy
-      description: Choose a creature in your line of effect and learn their level. Pick the mode matching what you learn - envy if they are a higher level than you, disdain if they are your level or lower. At 5th level, if the creature is the same level as you, either mode is a legal choice.
+      description: Choose a creature in your line of effect and learn their level. The torque grants you envy if they are a higher level than you, or disdain if they are your level or lower.
+      implementationDetails: Fully automated. Pick a creature and the torque compares their level to yours by itself, then puts envy or disdain on you - you do not choose which. At 5th level, when the creature is exactly your level, the torque always gives you disdain; ask your Director if you want envy instead.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       attributeOverride: no_attribute
       behaviors:
+      # The torque branches on its own. Both behaviors land on the wearer, so the
+      # gate cannot read the target directly - applyto is resolved before filterTarget
+      # runs, which leaves Target bound to the caster. Cast.FirstTarget is the chosen
+      # creature, and bare Level is the wearer's.
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         applyto: caster
         duration: eoe
-        modesSelected:
-        - 1
+        filterTarget: Cast.FirstTarget.Level > Level
         ongoingEffect: 4d1a7f92-3c86-4e05-9b73-8a2f610d54c7
         ongoingEffectCustom: false
         ongoingEffectSource: specific
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         applyto: caster
         duration: eoe
-        modesSelected:
-        - 2
+        filterTarget: Cast.FirstTarget.Level <= Level
         ongoingEffect: b8e35c07-9d42-4a16-8f5b-2c7196e0ab34
         ongoingEffectCustom: false
         ongoingEffectSource: specific
@@ -57,16 +60,10 @@ features:
       flavor: The torque weighs them against you, and always finds one of you wanting.
       guid: e21f7b05-9a46-4c38-8d92-3b7e5104fa6c
       iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
-      implementation: 3
+      implementation: 4
       keywords:
         Psionic: true
-      modeList:
-      - rules: The creature is a higher level than you.
-        text: Envy
-      - rules: The creature is your level or lower.
-        text: Disdain
       modifiers: []
-      multipleModes: true
       numTargets: "1"
       persistence: []
       range: "10"
@@ -122,9 +119,78 @@ features:
         threshold: 9
       field: Level
   source: Item
+- name: Envy's Due
+  description: Deal damage equal to the triggering damage to a creature adjacent to you.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 4b0a7d16-52ce-4f8b-9a37-6d1c8e30f245
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Envy's Due
+    description: Deal damage equal to the triggering damage to a creature adjacent to you.
+    __typeName: CharacterModifier
+    behavior: activated
+    guid: 9f2c6b40-1d85-4e73-bc09-3a5f78e1d602
+    source: Item
+    sourceguid: 4b0a7d16-52ce-4f8b-9a37-6d1c8e30f245
+    # The delivery half of the envy reaction. It has to live on the ITEM, not on the
+    # Envy effect: the trigger removes Envy before it invokes this by name, so an
+    # ability carried by the effect would be gone by the time the invoke ran.
+    activatedAbility:
+      name: Envy's Due
+      description: One creature adjacent to you takes damage equal to the damage that triggered your envy.
+      implementationDetails: Fully automated. Taking the envy triggered action in the attacker's roll dialog banks the damage and then prompts you to pick the adjacent creature that takes it. This button is the fallback for a prompt you cancelled or missed - it costs no action and only lights up while envy damage is still banked. The redirected damage is untyped rather than matching the type of the damage that triggered it.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: none
+      attributeOverride: no_attribute
+      categorization: Trigger
+      targeting: direct
+      targetType: target
+      numTargets: "1"
+      range: "1"
+      repeatTargets: false
+      objectTarget: false
+      selfTarget: false
+      rangeTextOverride: Melee 1
+      targetTextOverride: One creature adjacent to you
+      keywords:
+        Psionic: true
+      iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 6c81f394-0a27-4d5e-b8f1-27e409cb5a83
+      implementation: 4
+      modifiers: []
+      persistence: []
+      strain: []
+      abilityFilters:
+      - reason: Your envy has not banked any damage to deal.
+        formula: ConditionStacks("Envy Payload") > 0
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: targets
+        roll: Caster.ConditionStacks("Envy Payload")
+        # Untyped: the banked amount crosses over as a stack count, which carries a
+        # number and nothing else, so the triggering damage's type cannot follow it.
+        damageType: untyped
+        separateRolls: true
+        titleText: Envy's Due
+        chatMessage: The torque repays the envy it took.
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        applyto: caster
+        mode: effect
+        ongoingEffect: ac93f501-7e62-4d18-b035-8c1746fa20e9
+        purgeType: all
+  source: Item
 flavor: This burnished copper torque thrums with a sense of judgment.
 iconid: 6d808f51-23bc-4fbe-b786-ae33e8cc48db
-implementation: 3
+implementation: 4
 itemPrerequisite: A pound of feathers, a pound of bricks from the Seven Cities of Hell
 keywords:
   Neck: true
