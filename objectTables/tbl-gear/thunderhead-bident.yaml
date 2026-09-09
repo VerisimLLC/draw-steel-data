@@ -12,6 +12,7 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: 08b94575-a855-46ac-98d9-4517795ea68a
+  implementation: 4
   itemAttached: true
   modifiers:
   - name: Thunderhead Bident Extra Damage
@@ -36,21 +37,91 @@ features:
     damageTypeMappings: []
     guid: 88bea7b5-4c0c-4ddb-b5a6-1fe419aeaf8e
     keywords:
-      Melee: true
       Weapon: true
     modtype: none
     rollType: ability_power_roll
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Thunderhead Bident Forced Movement
+  description: When used with an ability that pushes a target, the push gains +1 distance. When used with a damage-dealing ability that does not impose forced movement, you can push the target 1 square.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: aefd4b37-8569-4ee5-9c73-e543a3f0cb7a
+  implementation: 3
+  implementationDetails: Both halves are applied to the power roll automatically; the added push is offered on every qualifying strike rather than left as an option to decline.
+  itemAttached: true
+  modifiers:
+  - name: Thunderhead Bident Push Bonus
+    description: A weapon ability that pushes gains a bonus to the forced movement distance.
+    __typeName: CharacterModifier
+    activationCondition: true
+    adjustments:
+    - type: push
+      value: 2 when Level >= 5 else 1
+    behavior: power
+    displayCondition: Ability.hasforcedmovement
+    guid: 308b73eb-7a63-4c7f-b91d-03b839bb42b3
+    keywords:
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: aefd4b37-8569-4ee5-9c73-e543a3f0cb7a
+  - name: Thunderhead Bident Push
+    description: A damage-dealing weapon ability that does not already impose forced movement pushes the target.
+    __typeName: CharacterModifier
+    activationCondition: true
+    addText: push {2 when Level >= 5 else 1}
+    adjustments: []
+    behavior: power
+    displayCondition: Ability.doesdamage and not Ability.hasforcedmovement
+    guid: 48a989d9-bab3-431b-a3f4-4d12748b2a22
+    keywords:
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: aefd4b37-8569-4ee5-9c73-e543a3f0cb7a
+  source: Item
+- name: Thunderhead Bident Hurled Power
+  description: A ranged strike with this weapon deals an extra 1 sonic damage for every 2 squares it travels to the target, rising to 1 per square at 9th level.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 42c2f92e-51fd-4fa2-ab0a-28fa08185633
+  implementation: 4
+  implementationDetails: Scoped to Ranged Weapon Strike abilities, matching the printed "ranged strike". Distance is measured from you to each target when the roll resolves, so a multi-target strike scales per target.
+  itemAttached: true
+  modifiers:
+  - name: Thunderhead Bident Hurled Power
+    description: Extra sonic damage scaled by how far the weapon was hurled.
+    __typeName: CharacterModifier
+    activationCondition: true
+    adjustments: []
+    behavior: power
+    damageModifier: Distance(Target) when Level >= 9 else floor(Distance(Target) / 2)
+    damageModifierType: sonic
+    damageTypeMappings: []
+    displayCondition: Level >= 5
+    guid: 2d0c8223-98fa-4e30-91b7-7aaa8fc4b8d0
+    keywords:
+      Ranged: true
+      Strike: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 42c2f92e-51fd-4fa2-ab0a-28fa08185633
+  source: Item
 iconid: 0ee65f66-d25f-4c2c-8dfb-4ef0f14e138b
+implementation: 3
 itemPrerequisite: A jar of captured thunder, two ingots of moon metal
 keywords:
   Magic: true
   Medium Weapon: true
 level5: The weapon’s extra sonic damage increases to 2, and the additional distance or distance of a push for abilities using the weapon increases to 2 squares. Additionally, the weapon can be used with ranged weapon abilities, and gains power the farther it is hurled. For each 2 squares the weapon travels to the target of a ranged strike, the strike deals an extra 1 sonic damage.
 level9: The weapon’s extra sonic damage increases to 3, and it deals an extra 1 sonic damage for each square it travels as part of a ranged strike. Additionally, whenever you make a weapon strike using this weapon, each enemy adjacent to the target takes 6 sonic damage.
-mtime: 1759397903123
+mtime: 1788970911305
 projectGoal: "450"
 projectRollCharacteristic:
   inu: true
