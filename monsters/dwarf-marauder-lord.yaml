@@ -114,48 +114,17 @@ info:
         powerRollModifier:
           name: Triggered Modifier
           __typeName: CharacterModifier
-          activationCondition: false
+          activationCondition: Ability.Keywords has "Melee" and Ability.Keywords has "Strike"
           behavior: power
           customTrigger:
-            name: New Ability
+            name: Your Weapon Is Useless
             description: ""
             __typeName: TriggeredAbility
             abilityType: none
             behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: custom
-              applyto: caster
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors:
-                - __typeName: ActivatedAbilityDamageBehavior
-                  chatMessage: Your Weapon Is Useless
-                  roll: "4"
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: f99c39fe-8c43-4035-9d2b-520f81bfc295
-                iconid: ui-icons/skills/1.png
-                implementation: 3
-                modifiers: []
-                numTargets: "1"
-                objectTarget: false
-                persistence: []
-                range: "30"
-                repeatTargets: false
-                sourceReference:
-                  __typeName: SourceReference
-                  docid: cc66844a-04d0-49a0-8687-65ef83b15363
-                  page: 111
-                strain: []
-                targetType: target
-              invokeOnCaster: true
-              promptText: Select the triggering creature to apply 4 damage to them.
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: Your Weapon Is Useless
+              roll: "4"
             display:
               bgcolor: "#ffffffff"
               brightness: 1
@@ -163,14 +132,15 @@ info:
               saturation: 1
             guid: 565d7a89-1c18-4463-9ca4-970aa0100b70
             iconid: ui-icons/skills/1.png
+            modifierCustomTrigger: true
             modifiers: []
             numTargets: "1"
             persistence: []
             range: 1
             repeatTargets: false
             strain: []
-            targetType: self
-            trigger: d20roll
+            targetType: abilitycaster
+            trigger: custom
           damageMultiplier: half
           filterCondition: (Has attacker) and attacker.Distance(self) <= 10
           guid: 0868e06e-bb76-460a-bc8f-18ef231eef28
@@ -212,7 +182,7 @@ info:
           CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
         guid: cfe6243c-a24a-4a91-ba59-31058510f362
         source: Trait
-        sourceguid: 58bdd65e-5a1b-4448-8a61-1b18d5171e7b
+        sourceguid: 2a4bad66-0eca-49c1-b0ba-51eec2aa13ea
         triggeredAbility:
           name: End Effect
           description: |
@@ -313,7 +283,10 @@ info:
     initiativeGrouping: 6e2e47c5-99ad-4df5-9024-39071ca566e2
     innateActivatedAbilities:
     - name: Levitating Axes
-      description: A target restrained by a dwarf can be slid by this ability.
+      description: |-
+        A target restrained by a dwarf can be force moved by this ability. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
+
+        **3 Malice**: A target force moved adjacent to an ally of the marauder lord is restrained until the end of their next turn.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -388,7 +361,7 @@ info:
           strain: []
           targetFilter: Target.Ongoing Effects has "Levitating Axes Check"
           targetType: target
-        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and Target.Count Nearby Enemies(1) >= 1
+        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and Target.CountNearbyEnemies(1) >= 1 and Cast.ForcedMovementDistance > 0
         invokeOnCaster: true
         promptText: Spend 3 Malice to restrain a target moved adjacent to an ally of the marauder lord.
         promptWhenResolving: true
@@ -411,6 +384,7 @@ info:
       keywords:
         Melee: true
         Psionic: true
+        Ranged: true
         Strike: true
         Weapon: true
       meleeRange: 1
@@ -500,7 +474,7 @@ info:
           strain: []
           targetFilter: target.Ongoing Effects has "Levitating Axes Check"
           targetType: target
-        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and target.Count Nearby Enemies(1) >= 1
+        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and Target.CountNearbyEnemies(1) >= 1 and Cast.ForcedMovementDistance > 0
         invokeOnCaster: true
         promptText: 'The marauder lord may restrain targets moved adjacent to an ally of the dwarf lord. 3 Malice cost per '
         promptWhenResolving: true
@@ -539,31 +513,37 @@ info:
       strain: []
       targetAllegiance: enemy
       targetType: cube
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '69aad6e7-f2a8-41c7-b86"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 11990a3e-8d82-4a4c-91ad-f6d721801bbb
       villainAction: Villain Action 1
     - name: Test Your Metal!
-      description: The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.
+      description: The marauder lord creates three size 2 metal objects in unoccupied spaces within distance. Whenever the marauder lord uses Magnetomancy, they can additionally target one of these objects.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: none
       behaviors:
       - __typeName: ActivatedAbilityCreateObjectBehavior
         objectid: 97d5cd50-d949-4a6f-98a3-2a8215260e72
+        promptText: Choose three unoccupied spaces within 10 squares to create size 2 metal objects.
       categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 1d8e3f26-2660-4c2c-a4e9-01a1188c1c34
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 2
+      implementation: 4
+      implementationDetails: Creates three Metal Object map objects (keyword "metal"). Both Magnetomancy modes offer an extra vertical slide against one such object.
       keywords:
         Psionic: true
+        Ranged: true
       modifiers: []
-      numTargets: 1
+      numTargets: 3
       persistence: []
       range: 10
       repeatTargets: false
@@ -573,7 +553,11 @@ info:
         page: 111
       strain: []
       targetType: emptyspace
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '395fec2d-8e41-4749-ae3"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 4034e957-c452-4c9a-bc0a-97f9b8ac329d
       villainAction: Villain Action 3
     - name: Magnetomancy (Ranged)
       description: A target restrained by a dwarf can be force moved by this ability. This forced movement doesn't end the restrained condition unless the Director determines otherwise.
@@ -632,6 +616,60 @@ info:
         standardAbility: 82863cf6-ec8f-4035-952b-60c319a12b75
         standardAbilityParams:
           range: "5"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: caster
+        customAbility:
+          name: Magnetomancy - Metal Object
+          description: Vertically slide one metal object created by Test Your Metal! up to 5 squares.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 810dd04c-958e-498b-8e55-9d5972ae3402
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            standardAbility: 82863cf6-ec8f-4035-952b-60c319a12b75
+            standardAbilityParams:
+              range: "5"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b68399a0-440d-4930-8fa5-7a921e84f627
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          persistence: []
+          range: "10"
+          reasonedFilters:
+          - reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
+            formula: Target.Keywords has "metal"
+          repeatTargets: false
+          strain: []
+          targetAllegiance: none
+          targetType: target
+        invokeOnCaster: true
+        promptText: If Test Your Metal! objects are on the map, choose one metal object to vertically slide up to 5 squares. Otherwise skip.
       categorization: Hidden
       display:
         bgcolor: "#ffffffff"
@@ -716,6 +754,60 @@ info:
         standardAbility: 82863cf6-ec8f-4035-952b-60c319a12b75
         standardAbilityParams:
           range: "5"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: caster
+        customAbility:
+          name: Magnetomancy - Metal Object
+          description: Vertically slide one metal object created by Test Your Metal! up to 5 squares.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 196d08ce-8e03-4a61-9c24-2fc7056f252b
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            standardAbility: 82863cf6-ec8f-4035-952b-60c319a12b75
+            standardAbilityParams:
+              range: "5"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 34f02210-d599-4d11-9162-9869258b34ca
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          persistence: []
+          range: "10"
+          reasonedFilters:
+          - reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
+            formula: Target.Keywords has "metal"
+          repeatTargets: false
+          strain: []
+          targetAllegiance: none
+          targetType: target
+        invokeOnCaster: true
+        promptText: If Test Your Metal! objects are on the map, choose one metal object to vertically slide up to 5 squares. Otherwise skip.
       categorization: Hidden
       display:
         bgcolor: "#ffffffff"
@@ -823,7 +915,11 @@ info:
       strain: []
       targetAllegiance: ally
       targetType: all
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '1ad934b1-8e55-4b8c-b8a"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: def02c01-5d81-439c-829b-cce8d8737b02
       villainAction: Villain Action 2
     - name: Magnetomancy
       description: |-
