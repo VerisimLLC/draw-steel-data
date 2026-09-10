@@ -144,7 +144,7 @@ multipleModes: false
 
 # Usage Limits
 usageLimitOptions:
-  resourceRefreshType: "none"       # none, encounter, turn, round
+  resourceRefreshType: "none"       # none, encounter, turn, round, long, victory, victory:N
   charges: "0"
   resourceid: "none"
 
@@ -1271,7 +1271,7 @@ domains:                    # Ownership tracking
 filterCondition: ""         # GoblinScript: when modifier is active
 displayCondition: ""        # GoblinScript: when modifier is visible
 numCharges: "1"             # GoblinScript
-resourceRefreshType: "none" # none, encounter, turn, round, longrest, shortrest
+resourceRefreshType: "none" # none, encounter, turn, round, long (respite), level, victory, victory:N
 resourceCost: "none"
 deletable: false
 ```

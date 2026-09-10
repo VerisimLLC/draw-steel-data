@@ -69,7 +69,53 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: d404e990-5ae5-424f-8d31-776501554433
-      modifiers: []
+      implementation: 3
+      implementationDetails: Fires when non-fire, non-holy damage leaves you dying; you regain half your maximum Stamina and fall prone, then the benefit locks until you earn 10 Victories or finish a respite. Whether your body was destroyed is a Director call, so decline the prompt in that case.
+      modifiers:
+      - name: Other Corporeal Undead
+        description: When you are reduced to 0 Stamina by damage that isn't fire or holy damage and your body isn't destroyed, you can regain half your Stamina and fall prone. Once you use this benefit, you can't use it again until you earn 10 or more Victories.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 3b7d1f9e-6c25-4a84-b1e7-8d0c4f2a9e56
+        resourceRefreshType: victory:10
+        source: Feat
+        sourceguid: d404e990-5ae5-424f-8d31-776501554433
+        triggeredAbility:
+          name: Other Corporeal Undead
+          description: You regain half your Stamina and fall prone. You can't use this benefit again until you earn 10 or more Victories.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            chatMessage: Other Corporeal Undead
+            roll: Maximum Stamina * 0.5
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: prone
+          castImmediately: true
+          conditionFormula: Damage Type is not "fire" and Damage Type is not "holy"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9e2c6a4b-1f83-4d57-a6b9-2c5e8d0f7a13
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: dying
+          triggerPrompt: "Other Corporeal Undead: if your body isn't destroyed, you can regain half your Stamina and fall prone."
+          usageLimitOptions:
+            charges: "1"
+            resourceRefreshType: victory:10
+            resourceid: 3b7d1f9e-6c25-4a84-b1e7-8d0c4f2a9e56
       source: Feat
       sourceReference:
         __typeName: SourceReference

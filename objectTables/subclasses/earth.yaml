@@ -414,6 +414,61 @@ levels:
       guid: c454be38-1bec-43c0-aee3-7bc7680a8535
       implementation: 3
       modifiers:
+      # The book locks this ability once the source is reduced to 0 Stamina until a Victory
+      # is earned. A 1-point resource with a victory refresh carries that state: the death
+      # trigger expends it, and the summon ability is hidden while it is spent.
+      - name: 'Summon Source of Earth '
+        description: ""
+        __typeName: CharacterModifier
+        behavior: resource
+        domains:
+          class:c1e1c512-6092-423f-85b2-324547f7f390: true
+          class:cb7d3e3a-e0c6-4161-8cd0-773be869ec2c: true
+        guid: 2f6a9c1d-4e83-4b57-8a2e-9d0b7c5f1e38
+        num: 1
+        resourceType: c8d4e6f2-7a19-4b35-9e0d-5f3c1a8b7d24
+        source: Earth Class Feature
+        sourceguid: c454be38-1bec-43c0-aee3-7bc7680a8535
+      - name: 'Summon Source of Earth '
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          class:c1e1c512-6092-423f-85b2-324547f7f390: true
+          class:cb7d3e3a-e0c6-4161-8cd0-773be869ec2c: true
+        guid: 7d3b5e9f-2a46-4c18-b7e0-1f8c6d4a2b95
+        source: Earth Class Feature
+        sourceguid: c454be38-1bec-43c0-aee3-7bc7680a8535
+        triggeredAbility:
+          name: Source of Earth Destroyed
+          description: When your source of earth is reduced to 0 Stamina, you can't summon it again until you earn 1 or more Victories.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityReplenishBehavior
+            applyto: caster
+            chatMessage: Source of Earth destroyed; it cannot be summoned again until you earn a Victory.
+            mode: expend
+            resourceid: c8d4e6f2-7a19-4b35-9e0d-5f3c1a8b7d24
+          castImmediately: true
+          conditionFormula: Subject.Summoned and Subject.Summoner = Self and Subject.Name = "Source of Earth"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4a8e2c6d-9b17-4f53-a0d8-6e1f3b9c7a42
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: any
+          targetType: self
+          trigger: creaturedeath
       - name: 'Summon Source of Earth '
         description: ""
         __typeName: CharacterModifier
@@ -476,7 +531,6 @@ levels:
           guid: 4a527402-382b-4aa7-bd0e-a95400872bd6
           iconid: ui-icons/skills/1.png
           implementation: 3
-          implementationDetails: The Codex doesn't currently support blocking this ability until you earn a victory.
           keywords:
             Earth: true
             Magic: true
@@ -537,6 +591,7 @@ levels:
         domains:
           class:c1e1c512-6092-423f-85b2-324547f7f390: true
           class:cb7d3e3a-e0c6-4161-8cd0-773be869ec2c: true
+        filterCondition: Resources.Source Of Earth >= 1
         guid: d86f1184-4444-4033-ac60-43bc27753870
         source: Earth Class Feature
         sourceguid: c454be38-1bec-43c0-aee3-7bc7680a8535

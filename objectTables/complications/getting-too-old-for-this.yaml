@@ -16,59 +16,8 @@ modifierInfo:
     guid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
     implementation: 3
     modifiers:
-    # The "2 or more Victories" cooldown is modelled as a 2-point resource rather than a
-    # usage limit, because no refresh type tracks victories. Using the benefit spends both
-    # points; each Victory earned refunds one, so the second Victory is what makes it
-    # available again. RefreshResource clamps at full, so banking extra Victories does not
-    # let the benefit be used twice in a row.
-    - name: Getting Too Old for This - Benefit
-      description: On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability's other prerequisites and can spend any required Heroic Resource, you can use the ability. Once you use this benefit, you can't do so again until you earn 2 or more Victories.
-      __typeName: CharacterModifier
-      behavior: resource
-      guid: e6141f69-b91f-4aa1-8d78-c1559081d257
-      num: 2
-      resourceType: 84e48e9e-459c-449e-a122-57561cbd510a
-      source: Complications
-      sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
-    - name: Getting Too Old for This - Benefit
-      description: Each Victory you earn brings your old tricks back to mind.
-      __typeName: CharacterModifier
-      behavior: trigger
-      guid: e697de65-d2f1-4d1a-bf4c-4f154d983f72
-      source: Complications
-      sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
-      triggeredAbility:
-        name: Getting Too Old for This
-        description: Each Victory you earn brings your old tricks back to mind.
-        __typeName: TriggeredAbility
-        abilityType: none
-        behaviors:
-        - __typeName: ActivatedAbilityReplenishBehavior
-          chatMessage: Getting Too Old for This
-          quantity: Quantity
-          resourceid: 84e48e9e-459c-449e-a122-57561cbd510a
-        castImmediately: true
-        display:
-          bgcolor: "#ffffffff"
-          brightness: 1
-          hueshift: 0
-          saturation: 1
-        guid: 6be21313-19ee-4b54-84f8-27f6aeda2f27
-        iconid: ui-icons/skills/1.png
-        mandatory: true
-        modifiers: []
-        numTargets: "1"
-        persistence: []
-        range: 1
-        repeatTargets: false
-        sourceReference:
-          __typeName: SourceReference
-          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-          page: 238
-          type: pdf
-        strain: []
-        targetType: self
-        trigger: earnvictory
+    # Once per 2 Victories: the usage limit below uses the victory:2 refresh type, which
+    # also resets on a respite.
     - name: Getting Too Old for This - Benefit
       description: On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability's other prerequisites and can spend any required Heroic Resource, you can use the ability. Once you use this benefit, you can't do so again until you earn 2 or more Victories.
       __typeName: CharacterModifier
@@ -109,11 +58,15 @@ modifierInfo:
         numTargets: "1"
         range: 1
         repeatTargets: false
-        resourceCost: 84e48e9e-459c-449e-a122-57561cbd510a
-        resourceNumber: "2"
         targetType: self
+        usageLimitOptions:
+          charges: "1"
+          multicharge: false
+          resourceRefreshType: victory:2
+          resourceid: a8bf7ca9-ebae-40a1-be50-df9c4f5ab9e4
       behavior: activated
       guid: a8bf7ca9-ebae-40a1-be50-df9c4f5ab9e4
+      resourceRefreshType: victory:2
       source: Complications
       sourceguid: b7433e7b-8ca7-4b63-8ea7-779e7866c316
     source: Complications

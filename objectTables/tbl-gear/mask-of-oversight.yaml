@@ -1,7 +1,7 @@
 id: f6fc8c84-5d9b-466e-9b80-9eb7a9090609
 name: Mask of Oversight
 description: |-
-  While wearing this grotesque mask, you can use a maneuver to cause your eyes to erupt from their sockets and multiply until six eyes orbit your head. This grants you a 360-degree arc of vision and prevents\ you from being surprised. Additionally, you have a double edge on tests made to discover hidden creatures, items, or mechanisms, but you have a double bane on Presence tests that don’t use the Intimidate skill. As a maneuver, you can return your eyes to your head and make the additional eyes disappear.
+  While wearing this grotesque mask, you can use a maneuver to cause your eyes to erupt from their sockets and multiply until six eyes orbit your head. This grants you a 360-degree arc of vision and prevents you from being surprised. Additionally, you have a double edge on tests made to discover hidden creatures, items, or mechanisms, but you have a double bane on Presence tests that don’t use the Intimidate skill. As a maneuver, you can return your eyes to your head and make the additional eyes disappear.
   While the eyes circle your head, you can use a maneuver to launch up to three of the eyes at one creature within 10 squares. Each eye you launch deals 5 damage to the target before it is destroyed. You can’t reduce the number of eyes to fewer than two in this way. If you reduce the number of eyes to two, those eyes return to your head, and you can’t use the mask again until you earn 1 or more Victories.
 _table: tbl_Gear
 __typeName: equipment
@@ -9,6 +9,141 @@ category: Gear
 ctime: 1775047226825
 echelon: 3
 equipmentCategory: 659f34f2-14d6-4e71-99c1-89d703d5ba48
+features:
+- name: Mask of Oversight
+  description: Use a maneuver to send six eyes into orbit around your head, and another maneuver to recall them. While the eyes circle your head you can launch up to three of them at a creature within 10 squares.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b4619306-c81f-40a9-8574-95b05c932512
+  itemAttached: true
+  modifiers:
+  - name: Mask of Oversight
+    description: Use a maneuver to cause your eyes to erupt from their sockets and multiply until six eyes orbit your head.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Erupt Eyes
+      description: Your eyes erupt from their sockets and multiply until six eyes orbit your head. This grants you a 360-degree arc of vision and prevents you from being surprised. Additionally, you have a double edge on tests made to discover hidden creatures, items, or mechanisms, but you have a double bane on Presence tests that don't use the Intimidate skill.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        duration: eoe
+        ongoingEffect: e654f0f7-1c6a-4496-bd66-7ce2291d8874
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 5893b800-2a43-4bfc-a5ff-0e5008dd89f7
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+    behavior: activated
+    filterCondition: Resources.Mask Eyes >= 1
+    guid: c69e919f-93f9-4b9a-9e80-8a43f81500ca
+    source: Item
+    sourceguid: b4619306-c81f-40a9-8574-95b05c932512
+  # filterCondition keeps the recall and volley maneuvers off the action bar until the
+  # eyes are actually out.
+  - name: Mask of Oversight
+    description: As a maneuver, you can return your eyes to your head and make the additional eyes disappear.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Return Eyes
+      description: You return your eyes to your head and make the additional eyes disappear.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        applyto: caster
+        conditions: []
+        mode: effect
+        ongoingEffect: e654f0f7-1c6a-4496-bd66-7ce2291d8874
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: f84e3ee9-d335-4248-956a-79b5e0fd7ee3
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+    behavior: activated
+    filterCondition: OngoingEffects has "Mask of Oversight"
+    guid: fa13a306-4869-4074-a05a-e2091e978ab4
+    source: Item
+    sourceguid: b4619306-c81f-40a9-8574-95b05c932512
+  # Six eyes minus the two-eye floor leaves four that can be launched. They are a 4-point
+  # resource that only refreshes on a Victory (or respite); Launch Eyes channels 1-3 of
+  # them per use, and both mask maneuvers hide once the pool is empty.
+  - name: Mask of Oversight
+    description: ""
+    __typeName: CharacterModifier
+    behavior: resource
+    guid: 8b2d6f4a-1c97-4e35-b0a8-3d5e9c7f2a61
+    num: 4
+    resourceType: e1f7a3c9-5b28-4d64-a9e2-7c0d8f4b6a15
+    source: Item
+    sourceguid: b4619306-c81f-40a9-8574-95b05c932512
+  - name: Mask of Oversight
+    description: While the eyes circle your head, you can use a maneuver to launch up to three of the eyes at one creature within 10 squares. Each eye you launch deals 5 damage to the target before it is destroyed.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Launch Eyes
+      description: You launch up to three of the eyes at one creature within 10 squares. Each eye you launch deals 5 damage to the target before it is destroyed. You can't reduce the number of eyes to fewer than two in this way. If you reduce the number of eyes to two, those eyes return to your head, and you can't use the mask again until you earn 1 or more Victories.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        roll: 5 * Charges
+      categorization: Ability
+      channelDescription: Eyes launched
+      channelIncrement: 1
+      channeledResource: e1f7a3c9-5b28-4d64-a9e2-7c0d8f4b6a15
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 930e9f00-f1e4-4675-8831-552fe9a9463e
+      iconid: ui-icons/skills/1.png
+      maxChannel: "3"
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: "10"
+      repeatTargets: false
+      strain: []
+      targetType: target
+    behavior: activated
+    filterCondition: OngoingEffects has "Mask of Oversight" and Resources.Mask Eyes >= 1
+    guid: 4d19813e-17f9-416f-8c08-7242eeb197ec
+    source: Item
+    sourceguid: b4619306-c81f-40a9-8574-95b05c932512
+  source: Item
+implementation: 3
 itemPrerequisite: An overmind egg, the skin of any shapeshifter
 keywords:
   Head: true
