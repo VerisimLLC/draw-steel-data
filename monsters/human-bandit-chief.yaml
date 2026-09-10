@@ -209,7 +209,7 @@ info:
 
         *2 Malice:* This ability targets one additional target.
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      range: 1
+      range: 2
       display:
         bgcolor: "#ffffffff"
         hueshift: 0
@@ -489,8 +489,36 @@ info:
       flavor: ""
       numTargets: 1
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: caster
+        momentaryEffect:
+          id: 6a6105a6-7d35-47dc-9911-11be97aa7143
+          name: Lead From the Front
+          description: The bandit chief shifts up to 10 squares regardless of their speed.
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 6a6105a6-7d35-47dc-9911-11be97aa7143
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: Lead From the Front
+            description: Speed is at least 10 while this villain action resolves.
+            __typeName: CharacterModifier
+            attribute: speed
+            behavior: attribute
+            operation: max
+            value: 10
+            guid: 8d4b986b-989d-43ff-acde-9cac70998c3f
+            source: Ongoing Effect
+            sourceguid: 6a6105a6-7d35-47dc-9911-11be97aa7143
+          source: Ongoing Effect
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        abilityType: standard
+        autoTarget: false
         customAbility:
           __typeName: ActivatedAbility
           modifiers: []
@@ -509,12 +537,13 @@ info:
           iconid: ui-icons/skills/1.png
           numTargets: "1"
           behaviors: []
-        promptText: You can shift up to 10 squares and use Whip and Magic Longsword on 4 targets during or after this movement.
+        promptText: Shift up to 10 squares before the first Whip and Magic Longsword, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
         standardAbilityParams:
           distance: "10"
-        abilityType: standard
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        promptText: Target 4 creatures you moved past
+        autoTarget: false
+        promptText: Whip and Magic Longsword (1 of up to 4). Pick a target not yet struck by this villain action, or skip.
         customAbility:
           __typeName: ActivatedAbility
           modifiers: []
@@ -522,13 +551,13 @@ info:
           guid: 29d0d52e-4c31-4cf7-bdec-ef6547615b07
           description: ""
           name: Whip and Magic Longsword
-          range: "1"
+          range: "2"
           display:
             bgcolor: "#ffffffff"
             hueshift: 0
             brightness: 1
             saturation: 1
-          numTargets: "4"
+          numTargets: "1"
           categorization: Signature Ability
           keywords:
             Weapon: true
@@ -605,6 +634,389 @@ info:
           strain: []
           abilityType: none
           objectTarget: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          repeatTargets: false
+          targetType: self
+          guid: 946cfe08-dc42-47c8-8124-56387331cbb4
+          abilityType: none
+          description: ""
+          name: Invoked Ability
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          behaviors: []
+        promptText: Continue shifting before the second Whip and Magic Longsword, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, 10 - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < 10
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        autoTarget: false
+        promptText: Whip and Magic Longsword (2 of up to 4). Pick a target not yet struck by this villain action, or skip.
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          targetType: target
+          guid: aedc3e02-29f1-4acc-a9d4-a1c1327a4687
+          description: ""
+          name: Whip and Magic Longsword
+          range: "2"
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          categorization: Signature Ability
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+            Magic: true
+          repeatTargets: false
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 8 damage; pull 1
+            - 12 damage; pull 2
+            - 15 damage; pull 3
+            guid: a23a5393-8446-4abb-9f76-cfd1bc8e7b0d
+            roll: 2d10 + 3
+          - __typeName: ActivatedAbilityDamageBehavior
+            applyto: targets
+            chatMessage: Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.
+            damageType: corruption
+            filterTarget: Target.Distance(caster) < 2
+            roll: "3"
+            titleText: Whip and Magic Longsword
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: e19f1d97-6e44-4366-8f35-418bd5c5ab8e
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                standardAbility: 9eb2b74c-bf41-48db-a7a4-d0ebb62201f8
+                customAbility:
+                  __typeName: ActivatedAbility
+                  modifiers: []
+                  repeatTargets: false
+                  targetType: self
+                  guid: ced839e1-2c6e-487a-bca1-4062fc0865f4
+                  abilityType: none
+                  description: ""
+                  name: Invoked Ability
+                  range: 1
+                  display:
+                    bgcolor: "#ffffffff"
+                    hueshift: 0
+                    brightness: 1
+                    saturation: 1
+                  iconid: ui-icons/skills/1.png
+                  numTargets: "1"
+                  behaviors: []
+                abilityType: standard
+              strain: []
+              modifiers: []
+              objectTarget: false
+              repeatTargets: false
+              targetType: target
+              guid: b7eb7723-15db-41ec-b9e0-bdced95e54de
+              persistence: []
+              description: ""
+              name: Invoked Ability
+              abilityType: none
+              range: 1
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              categorization: Hidden
+            promptText: Adjacent Ally attacks target
+            standardAbilityParams:
+              range: "1"
+            abilityType: standard
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          objectTarget: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          repeatTargets: false
+          targetType: self
+          guid: 62ea4bbe-14b4-4588-a10c-b84f78d65684
+          abilityType: none
+          description: ""
+          name: Invoked Ability
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          behaviors: []
+        promptText: Continue shifting before the third Whip and Magic Longsword, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, 10 - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < 10
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        autoTarget: false
+        promptText: Whip and Magic Longsword (3 of up to 4). Pick a target not yet struck by this villain action, or skip.
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          targetType: target
+          guid: 9c244cfd-516b-4cea-9c9f-e83f46fd4677
+          description: ""
+          name: Whip and Magic Longsword
+          range: "2"
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          categorization: Signature Ability
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+            Magic: true
+          repeatTargets: false
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 8 damage; pull 1
+            - 12 damage; pull 2
+            - 15 damage; pull 3
+            guid: 61dc7aea-0943-4e4c-9d9c-7e232449e535
+            roll: 2d10 + 3
+          - __typeName: ActivatedAbilityDamageBehavior
+            applyto: targets
+            chatMessage: Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.
+            damageType: corruption
+            filterTarget: Target.Distance(caster) < 2
+            roll: "3"
+            titleText: Whip and Magic Longsword
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: e19f1d97-6e44-4366-8f35-418bd5c5ab8e
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                standardAbility: 9eb2b74c-bf41-48db-a7a4-d0ebb62201f8
+                customAbility:
+                  __typeName: ActivatedAbility
+                  modifiers: []
+                  repeatTargets: false
+                  targetType: self
+                  guid: 797e95da-6a12-4034-a686-73fa5ec94f85
+                  abilityType: none
+                  description: ""
+                  name: Invoked Ability
+                  range: 1
+                  display:
+                    bgcolor: "#ffffffff"
+                    hueshift: 0
+                    brightness: 1
+                    saturation: 1
+                  iconid: ui-icons/skills/1.png
+                  numTargets: "1"
+                  behaviors: []
+                abilityType: standard
+              strain: []
+              modifiers: []
+              objectTarget: false
+              repeatTargets: false
+              targetType: target
+              guid: cb78b841-7dcb-4994-ad07-f91a0eba3c24
+              persistence: []
+              description: ""
+              name: Invoked Ability
+              abilityType: none
+              range: 1
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              categorization: Hidden
+            promptText: Adjacent Ally attacks target
+            standardAbilityParams:
+              range: "1"
+            abilityType: standard
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          objectTarget: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          repeatTargets: false
+          targetType: self
+          guid: 0bb3fbf4-7c9e-4f92-abf5-b856c2cb5ebd
+          abilityType: none
+          description: ""
+          name: Invoked Ability
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          behaviors: []
+        promptText: Continue shifting before the fourth Whip and Magic Longsword, or choose not to move yet.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, 10 - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < 10
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        autoTarget: false
+        promptText: Whip and Magic Longsword (4 of up to 4). Pick a target not yet struck by this villain action, or skip.
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          targetType: target
+          guid: be54c6cc-9241-4ae2-93ce-d64172ff1e8a
+          description: ""
+          name: Whip and Magic Longsword
+          range: "2"
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          numTargets: "1"
+          categorization: Signature Ability
+          keywords:
+            Weapon: true
+            Strike: true
+            Melee: true
+            Magic: true
+          repeatTargets: false
+          persistence: []
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            tiers:
+            - 8 damage; pull 1
+            - 12 damage; pull 2
+            - 15 damage; pull 3
+            guid: e6a1c2d3-4f50-4b61-8c72-93d4e5f60718
+            roll: 2d10 + 3
+          - __typeName: ActivatedAbilityDamageBehavior
+            applyto: targets
+            chatMessage: Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.
+            damageType: corruption
+            filterTarget: Target.Distance(caster) < 2
+            roll: "3"
+            titleText: Whip and Magic Longsword
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            standardAbility: e19f1d97-6e44-4366-8f35-418bd5c5ab8e
+            customAbility:
+              __typeName: ActivatedAbility
+              behaviors:
+              - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                standardAbility: 9eb2b74c-bf41-48db-a7a4-d0ebb62201f8
+                customAbility:
+                  __typeName: ActivatedAbility
+                  modifiers: []
+                  repeatTargets: false
+                  targetType: self
+                  guid: 08c3e4f5-6b72-4d83-ae94-b5f607182930
+                  abilityType: none
+                  description: ""
+                  name: Invoked Ability
+                  range: 1
+                  display:
+                    bgcolor: "#ffffffff"
+                    hueshift: 0
+                    brightness: 1
+                    saturation: 1
+                  iconid: ui-icons/skills/1.png
+                  numTargets: "1"
+                  behaviors: []
+                abilityType: standard
+              strain: []
+              modifiers: []
+              objectTarget: false
+              repeatTargets: false
+              targetType: target
+              guid: f7b2d3e4-5a61-4c72-9d83-a4e5f6071829
+              persistence: []
+              description: ""
+              name: Invoked Ability
+              abilityType: none
+              range: 1
+              display:
+                bgcolor: "#ffffffff"
+                hueshift: 0
+                brightness: 1
+                saturation: 1
+              iconid: ui-icons/skills/1.png
+              numTargets: "1"
+              categorization: Hidden
+            promptText: Adjacent Ally attacks target
+            standardAbilityParams:
+              range: "1"
+            abilityType: standard
+          iconid: ui-icons/skills/1.png
+          strain: []
+          abilityType: none
+          objectTarget: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          __typeName: ActivatedAbility
+          modifiers: []
+          repeatTargets: false
+          targetType: self
+          guid: 19d4f506-7c83-4e94-bfa5-c60718293041
+          abilityType: none
+          description: ""
+          name: Invoked Ability
+          range: 1
+          display:
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+            saturation: 1
+          iconid: ui-icons/skills/1.png
+          numTargets: "1"
+          behaviors: []
+        promptText: Finish any remaining shift after the last Whip and Magic Longsword.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, 10 - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < 10
       keywords: []
       strain: []
       repeatTargets: false
@@ -616,8 +1028,8 @@ info:
         __typeName: SourceReference
         page: 54
         docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
-      implementation: 3
-      implementationDetails: The shift, attacks, corruption damage, and adjacent ally free strikes are automated. The attacks resolve after the shift; DMHub can't interleave them during movement.
+      implementation: 4
+      implementationDetails: The five shift prompts share one 10-square budget through the cast spaces-moved counter, so the chief can split the shift before, between, and after up to four single-target Whip and Magic Longsword uses. Each strike prompt can be skipped. The engine cannot stop the same creature being chosen twice, so the Director keeps the four targets distinct.
       usageLimitOptions:
         charges: "1"
         multicharge: false
@@ -699,8 +1111,7 @@ info:
       source: Character Feature
       domains:
         CharacterFeature:caa71856-39f2-4438-b753-894fcf1f85c3: true
-      implementation: 3
-      implementationDetails: The tier increase and self-damage are automated. Accept the follow-up trigger prompt after selecting Bloodstones so its triggered-action cost is paid.
+      implementation: 4
       guid: caa71856-39f2-4438-b753-894fcf1f85c3
       tags:
         Trigger: true
@@ -712,7 +1123,7 @@ info:
           CharacterFeature:caa71856-39f2-4438-b753-894fcf1f85c3: true
         customTrigger:
           __typeName: TriggeredAbility
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          mandatory: true
           trigger: d20roll
           modifiers: []
           strain: []
@@ -721,7 +1132,7 @@ info:
           guid: bdbf26a7-ba71-4efc-b300-6d2dab04a957
           abilityType: none
           description: ""
-          name: New Ability
+          name: Bloodstones
           persistence: []
           range: 1
           display:
@@ -748,6 +1159,7 @@ info:
         hasCustomTrigger: true
         modtype: tierup
         activationCondition: false
+        resourceCost: b9bc06dd-80f1-4f33-bc55-25c114e3300c
       - __typeName: CharacterModifier
         description: The bandit chief takes 5 corruption damage and increases the outcome of the power roll by one tier. This damage can't be reduced in any way.
         name: Bloodstones
