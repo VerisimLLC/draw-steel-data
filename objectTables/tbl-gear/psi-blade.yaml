@@ -7,7 +7,124 @@ category: Gear
 ctime: 1775049552748
 echelon: 4
 equipmentCategory: 659f34f2-14d6-4e71-99c1-89d703d5ba48
+features:
+- name: Psi Blade
+  description: While wearing this metallic band, you can use a maneuver to project a glowing blade of rippling psychic energy that extends parallel to your arm. While the blade is active, you can use a maneuver once per turn to make a melee weapon free strike that deals an extra 3 psychic damage.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 10329732-f33f-4b48-8b33-66e50adafc92
+  itemAttached: true
+  modifiers:
+  - name: Psi Blade
+    description: You can use a maneuver to project a glowing blade of rippling psychic energy that extends parallel to your arm.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Project Psi Blade
+      description: You can use a maneuver to project a glowing blade of rippling psychic energy that extends parallel to your arm.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        duration: eoe
+        ongoingEffect: bcc4ce39-7082-49d8-bba1-7f6e2dfaed60
+        ongoingEffectCustom: false
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 15640e1e-3b8d-4040-8d91-7362fe98b83d
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Psionic: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+    behavior: activated
+    guid: 4b1c4e8d-e401-442d-9e07-cf7df935655d
+    source: Item
+    sourceguid: 10329732-f33f-4b48-8b33-66e50adafc92
+  # filterCondition hides the strike maneuver until the blade has been projected.
+  # The charge effect is applied first so it is live when the free strike rolls.
+  - name: Psi Blade
+    description: While the blade is active, you can use a maneuver once per turn to make a melee weapon free strike that deals an extra 3 psychic damage.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Psi Blade Strike
+      description: While the blade is active, you can use a maneuver once per turn to make a melee weapon free strike that deals an extra 3 psychic damage.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        duration: end_of_next_turn
+        ongoingEffect: def0707e-1fbc-4dd9-b128-b4708c31595d
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 7c800160-9291-4758-997b-8fa7824fe38c
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        standardAbility: 0a68f64c-67f7-4279-9741-38aedaab7029
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: df3c3842-6f3b-4e8d-8565-f5e4b2bc0ca1
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Melee: true
+        Psionic: true
+        Strike: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: turn
+        resourceid: 38a117ab-948a-4f23-9cd8-b0164f813134
+    behavior: activated
+    filterCondition: OngoingEffects has "Psi Blade"
+    guid: 38a117ab-948a-4f23-9cd8-b0164f813134
+    resourceRefreshType: turn
+    source: Item
+    sourceguid: 10329732-f33f-4b48-8b33-66e50adafc92
+  source: Item
 flavor: This wide metal bracer is set with a glowing gemstone.
+implementation: 4
 itemPrerequisite: Steel alloy, one fine-cut topaz
 keywords:
   Arms: true

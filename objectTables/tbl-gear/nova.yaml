@@ -6,10 +6,102 @@ __typeName: equipment
 category: Gear
 ctime: 1770783445184
 equipmentCategory: f8795dac-fda0-48a7-ba63-c2618c812d76
+features:
+- name: Nova
+  description: Whenever you damage a creature using this weapon, each enemy adjacent to you takes damage based on the tier outcome of the power roll - 2 damage for tier 1, 6 for tier 2, or 10 for tier 3. Additionally, while you are winded, you have the Nova ability.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: ae0dd9c8-5856-499b-aa50-df096fb1fb2c
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Nova
+    description: Whenever you damage a creature using this weapon, each enemy adjacent to you takes damage based on the tier outcome of the power roll - 2 damage for tier 1, 6 for tier 2, or 10 for tier 3.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 0556ce96-6f5d-4d57-a316-29e55593ad91
+    source: Item
+    sourceguid: ae0dd9c8-5856-499b-aa50-df096fb1fb2c
+    triggeredAbility:
+      name: Nova (Splash)
+      description: Each enemy adjacent to you takes damage based on the tier outcome of the power roll.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: "{2 when Cast.Tier = 1 else (6 when Cast.Tier = 2 else 10)} damage"
+      conditionFormula: Keywords has "Weapon" and HasCast
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 157914b0-f71c-4a81-9a7b-19b78d97bccf
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      selfTarget: false
+      strain: []
+      subject: self
+      targetAllegiance: enemy
+      targetFilter: ""
+      targetType: all
+      trigger: dealdamage
+  - name: Nova
+    description: While you are winded, you have the Nova ability.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Nova
+      description: I am an eternal flame, baby!
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 7 fire damage
+        - 11 fire damage
+        - 16 fire damage
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 79d7c0d8-325d-474b-9221-67c94f55bda4
+      iconid: f3ca1e31-fa85-4a4f-aa5d-36d4a551310f
+      implementation: 4
+      keywords:
+        Area: true
+        Magic: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 3
+      repeatTargets: false
+      strain: []
+      targetAllegiance: enemy
+      targetFilter: ""
+      targetType: all
+    behavior: activated
+    filterCondition: Winded
+    guid: 0f23ffff-76ba-4740-abc7-b614155968a3
+    source: Item
+    sourceguid: ae0dd9c8-5856-499b-aa50-df096fb1fb2c
+  source: Item
 imbueLevel: 9
 imbuePrereq: none
 imbueTargetType: weapon
-implementation: 2
+implementation: 4
 itemPrerequisite: A piece of metal touched by a sun
 mtime: 1770783445184
 projectGoal: "150"

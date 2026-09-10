@@ -6,10 +6,99 @@ __typeName: equipment
 category: Gear
 ctime: 1770782857821
 equipmentCategory: f8795dac-fda0-48a7-ba63-c2618c812d76
+features:
+- name: Disrupting III
+  description: Whenever you damage an undead using this weapon and leave that undead with 50 Stamina or less, they immediately drop to 0 Stamina. If you instead leave the undead with 100 Stamina or less, they are frightened (save ends). This replaces the benefit of Disrupting II.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: a148894f-07bb-485a-8430-250d0a5d60cd
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Disrupting III
+    description: Whenever you damage an undead using this weapon and leave that undead with 50 Stamina or less, they immediately drop to 0 Stamina.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 6e2aff2d-b132-4692-bb36-d3632f684b1e
+    source: Item
+    sourceguid: a148894f-07bb-485a-8430-250d0a5d60cd
+    triggeredAbility:
+      name: Disrupting III
+      description: Whenever you damage an undead using this weapon and leave that undead with 50 Stamina or less, they immediately drop to 0 Stamina.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityFloatTextBehavior
+        color:
+          __usertype: LuaColor
+          a: 1
+          h: 0
+          s: 0.99316418170929
+          v: 0.989623188972473
+        text: Disrupting III
+      - __typeName: ActivatedAbilitySetStaminaBehavior
+        roll: "0"
+      conditionFormula: Attacker = Self and (subject.Keywords has "Undead" or subject.type = "undead") and (subject.Stamina <= 50)
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 7b69eba3-b914-4f22-9c4a-98ca7069a7d6
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: ""
+      repeatTargets: false
+      selfTarget: false
+      strain: []
+      subject: other
+      targetFilter: ""
+      targetType: subject
+      trigger: losehitpoints
+  - name: Disrupting III
+    description: If you instead leave the undead with 100 Stamina or less, they are frightened (save ends).
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 165dc5ae-9611-4d94-adc4-1463c6926b34
+    source: Item
+    sourceguid: a148894f-07bb-485a-8430-250d0a5d60cd
+    triggeredAbility:
+      name: Disrupting III (Frightened)
+      description: If you instead leave the undead with 100 Stamina or less, they are frightened (save ends).
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: frightened (save ends)
+      conditionFormula: Attacker = Self and (subject.Keywords has "Undead" or subject.type = "undead") and (subject.Stamina > 50) and (subject.Stamina <= 100)
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 276e77d3-c169-4388-ace9-ea0ef9fd9ca8
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: ""
+      repeatTargets: false
+      selfTarget: false
+      strain: []
+      subject: other
+      targetFilter: ""
+      targetType: subject
+      trigger: losehitpoints
+  source: Item
 imbueLevel: 9
 imbuePrereq: 7b1acd7b-c5a2-48a4-9868-b09d0515acf6
+imbueReplacesPrereq: true
 imbueTargetType: weapon
-implementation: 2
+implementation: 4
 itemPrerequisite: Wrappings from a mummy buried at least a century ago
 mtime: 1770782857821
 projectGoal: "150"

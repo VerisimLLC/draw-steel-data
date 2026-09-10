@@ -58,10 +58,124 @@ features:
     rollType: ability_power_roll
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
+  - name: Third Eye Seeker Retaliation
+    description: Whenever a creature within distance of your ranged weapon free strike uses a triggered action, you can use a triggered action after their triggered action resolves to make a ranged weapon free strike using this weapon against the creature.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 5
+    guid: 40d9b3ce-d55a-4c46-b6db-66b0eb32bb5f
+    source: Item
+    sourceguid: 199215df-0133-4dca-9d54-d0cdfb01245e
+    triggeredAbility:
+      name: Third Eye Seeker
+      description: Whenever a creature within distance of your ranged weapon free strike uses a triggered action, you can use a triggered action after their triggered action resolves to make a ranged weapon free strike using this weapon against the creature.
+      __typeName: TriggeredAbility
+      abilityType: none
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 0b4713f8-96db-4ab1-91a8-ae523460fe77
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5+Kit.Distance
+          repeatTargets: false
+          strain: []
+          targetType: self
+        standardAbility: 49180e7f-0337-4a80-a98f-1543c67550bb
+        standardAbilityParams:
+          targetid: "<<Subject.id>>"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 88bd236f-70d8-455b-b14a-77abb7bb803f
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: other
+      subjectRange: 5+Kit.Distance
+      targetType: subject
+      trigger: usetriggeredaction
+      triggerPrompt: Make a ranged free strike against the creature that used a triggered action.
+  - name: Third Eye Seeker Psionic Echo
+    description: Marks any creature that uses a psionic ability so the bow's 9th-level double edge can find them.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: 332084a6-f2e8-40ca-8910-4294f47b3e83
+    source: Item
+    sourceguid: 199215df-0133-4dca-9d54-d0cdfb01245e
+    triggeredAbility:
+      name: Third Eye Seeker
+      description: Marks any creature that uses a psionic ability so the bow's 9th-level double edge can find them.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: subject
+        duration: end_of_next_turn
+        ongoingEffect: 57554e39-bceb-4ce8-98e4-eb6a5c5b8f12
+        ongoingEffectCustom: false
+      castImmediately: true
+      conditionFormula: UsedAbility.Keywords has "Psionic"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 008303bf-b8fa-46c8-973b-2f27ea9536bd
+      iconid: ui-icons/skills/1.png
+      implementationDetails: The marker expires at the end of the marked creature's next turn, which is the closest available duration to the book's "since the end of your last turn" window.
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: other
+      subjectRange: "100"
+      targetType: subject
+      trigger: useability
+  - name: Third Eye Seeker Psionic Double Edge
+    description: You have a double edge on weapon abilities that use the weapon against creatures who have used a psionic ability since the end of your last turn.
+    __typeName: CharacterModifier
+    activationCondition: Target.OngoingEffects has "Psionic Echo"
+    behavior: power
+    displayCondition: Target.OngoingEffects has "Psionic Echo"
+    filterCondition: Level >= 9
+    guid: e90ec828-c42d-42a3-8644-e33b06b560fc
+    keywords:
+      Ranged: true
+      Weapon: true
+    modtype: double_edge
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 199215df-0133-4dca-9d54-d0cdfb01245e
   source: Item
 flavor: The shifting patterns on this bow’s crystalline grip resemble dozens of blinking eyes.
 iconid: c1b70aa9-c1e0-43f6-9de9-b051c3e0a5fb
-implementation: 2
+implementation: 3
 itemPrerequisite: Heart strings of a tapir, a pound of tiger’s eye gemstones
 keywords:
   Bow: true

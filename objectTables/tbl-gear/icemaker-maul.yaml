@@ -43,8 +43,88 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Icemaker Maul Ice Field
+  description: Use a maneuver to create an ice field in a 3 burst (4 at 5th level, 5 at 9th). The ground there is difficult terrain for enemies until the end of the encounter.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: f5b0cb41-30a0-42aa-82fe-779fab50669f
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Icemaker Maul Ice Field
+    description: Use a maneuver to create an ice field in a 3 burst (4 at 5th level, 5 at 9th). The ground there is difficult terrain for enemies until the end of the encounter.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Icemaker Maul Ice Field
+      description: |-
+        **1st Level:** Create an ice field in a 3 burst. The ground in the area is difficult terrain for enemies, and lasts until the end of the encounter or until you use this ability again.
+        **5th Level:** The ice field becomes a 4 burst.
+        **9th Level:** The ice field becomes a 5 burst.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      # replacePrevious makes a second use of this ability clear the earlier field,
+      # which is what "or when you use this ability again" means.
+      - __typeName: ActivatedAbilityAuraBehavior
+        aura:
+          name: Ice Field
+          description: The ground in this area is difficult terrain for enemies.
+          __typeName: Aura
+          applyto: enemies
+          difficult_terrain: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 431c8061-5e4a-428d-867a-dac30976b15a
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        duration: eoe
+        replacePrevious: true
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 9657273c-19c2-4b57-adc7-9739a4a38758
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      keywords:
+        Area: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      # targetType "all" is a burst centred on the caster whose radius comes from range.
+      range:
+        id: table
+        __typeName: GoblinScriptTable
+        editableField: true
+        entries:
+        - script: "3"
+          threshold: 1
+        - script: "4"
+          threshold: 5
+        - script: "5"
+          threshold: 9
+        field: Level
+      repeatTargets: false
+      strain: []
+      targetTextOverride: Special
+      targetType: all
+    behavior: activated
+    guid: fd6a3bbe-da5a-4308-9bb5-b3df60054aea
+    source: Item
+    sourceguid: f5b0cb41-30a0-42aa-82fe-779fab50669f
+    suppressOthers: false
+  source: Item
 flavor: The head of this iron hammer is cold to the touch and encases whatever it strikes in a thin layer of ice.
 iconid: cb5ea622-e202-474f-887e-2bea1bc86a76
+implementation: 3
 itemPrerequisite: Eight iron bars cooled in a glacier, the branch of an ancient evergreen
 keywords:
   Heavy Weapon: true

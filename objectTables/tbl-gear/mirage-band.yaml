@@ -37,7 +37,13 @@ features:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        ongoingEffect: 42754a38-05ab-4be7-b05d-d9119991854f
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
@@ -64,12 +70,38 @@ features:
         page: 325
       strain: []
       targetAllegiance: ally
-      targetType: target
+      targetType: all
     behavior: activated
     guid: 3d43c63f-6512-4b90-b62b-ce008037ebe1
     source: Item
     sourceguid: c14ca485-1098-4267-bd3a-7d2cb966f2b7
+  - name: Mirage Band
+    description: Supernatural effects can't conceal creatures and objects from you.
+    __typeName: CharacterModifier
+    attribute: 16228928-9f29-4510-a703-65344f2356ef
+    behavior: attribute
+    guid: fd9c91a2-67d3-441c-a627-d73bcdedb251
+    operation: set
+    source: Item
+    sourceguid: c14ca485-1098-4267-bd3a-7d2cb966f2b7
+    value: 1
+  # Invisibility's only mechanical bite is the bane it hands enemy strikes, so seeing
+  # through it is expressed as stripping exactly that bane.
+  - name: Mirage Band
+    description: You can see invisible creatures, so your strikes against them do not take the bane invisibility normally imposes.
+    __typeName: CharacterModifier
+    activationCondition: Target.Conditions has "Invisible"
+    behavior: power
+    displayCondition: Target.Conditions has "Invisible"
+    guid: 9f966b9d-b9c0-41a3-86e2-37911eabb719
+    keywords:
+      Strike: true
+    modtype: remove_bane
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: c14ca485-1098-4267-bd3a-7d2cb966f2b7
   source: Item
+implementation: 3
 itemPrerequisite: A sable blue circlet shimmers with finely woven threads of sparkling white.
 mtime: 1775047512629
 projectGoal: "450"

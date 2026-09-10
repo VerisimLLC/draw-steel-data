@@ -135,6 +135,12 @@ features:
         runOnController: true
         targeting: prompt
         targetingFormula: ""
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: subject
+        duration: eoe
+        filterTarget: Caster.Level >= 5
+        ongoingEffect: 974e9729-c76d-44f0-abcc-c46c587c95c8
+        ongoingEffectCustom: false
       castImmediately: true
       display:
         bgcolor: "#ffffffff"
@@ -159,9 +165,59 @@ features:
         resourceRefreshType: turn
         resourceid: 2fe4cdd3-3cb1-4d1c-b189-be9b3537f243
   source: Item
+- name: Telekinetic Bulwark - Reel In
+  description: You can use a maneuver to pull any number of targets the shield has grabbed up to 5 squares.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 1b2b5c41-add4-4a17-847d-b93a1725d27c
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Telekinetic Bulwark - Reel In
+    description: You can use a maneuver to pull any number of targets the shield has grabbed up to 5 squares.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Reel In
+      description: You can use a maneuver to pull any number of targets the shield has grabbed up to 5 squares.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: pull 5
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: c03bfbdf-2a6d-47f9-b9f5-ffcfa1e23559
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      modifiers: []
+      numTargets: "10"
+      objectTarget: false
+      persistence: []
+      range: "10"
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 330
+      strain: []
+      targetFilter: ConditionCaster("Grabbed") = Caster
+      targetType: target
+    behavior: activated
+    filterCondition: Level >= 9 and Number of Creatures Grabbed > 0
+    guid: 57610239-0cdc-4781-9517-149aed72fd95
+    source: Item
+    sourceguid: 1b2b5c41-add4-4a17-847d-b93a1725d27c
+  source: Item
 flavor: An unseen force seems to draw this steel shield toward nearby creatures.
 iconid: 61696f63-34a2-41b0-be78-2c36ecd0bce0
-implementation: 2
+implementation: 4
 itemPrerequisite: Three ingots of steel, six crystals that resonate with psionic power
 keywords:
   Psionic: true

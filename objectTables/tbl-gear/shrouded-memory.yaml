@@ -60,7 +60,7 @@ features:
     description: Whenever you take damage, you can use a triggered action to teleport up to 5 squares. If you do, you create an illusion of you dying in your previous space, which fades at the end of your next turn.
     __typeName: CharacterModifier
     behavior: trigger
-    filterCondition: Level >= 5
+    filterCondition: Level >= 5 and Level < 9
     guid: f59abb73-0f81-44ab-9741-2f0eb59db529
     source: Item
     sourceguid: 93c9c106-f16c-4e72-a750-b9e6108a3219
@@ -115,10 +115,76 @@ features:
       targetType: self
       trigger: losehitpoints
       triggerPrompt: Teleport up to 5 squares
+  - name: Shrouded Memory
+    description: Whenever you use the armor's triggered action to teleport, you can teleport up to a number of squares equal to the damage taken (minimum 5 squares). Additionally, if a creature dealt you the triggering damage, you become invisible to that creature until the end of your next turn.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: e4ee0352-d3bc-4ee8-8037-5517387f04db
+    source: Item
+    sourceguid: 93c9c106-f16c-4e72-a750-b9e6108a3219
+    triggeredAbility:
+      name: Shrouded Memory
+      description: Whenever you use the armor's triggered action to teleport, you can teleport up to a number of squares equal to the damage taken (minimum 5 squares). Additionally, if a creature dealt you the triggering damage, you become invisible to that creature until the end of your next turn.
+      __typeName: TriggeredAbility
+      abilityType: none
+      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f90b2dcd-87bf-4740-9c36-d11a1203258d
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: "{max(5, Damage)}"
+          repeatTargets: false
+          strain: []
+          targetType: emptyspace
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+        standardAbilityParams:
+          range: "{max(5, Damage)}"
+        targeting: prompt
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        duration: end_of_next_turn
+        filterTarget: HasAttacker
+        ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+        ongoingEffectCustom: false
+      castImmediately: true
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 54681628-f096-44ff-a4fd-59bc2b67a64d
+      iconid: ui-icons/skills/1.png
+      implementationDetails: The engine has no per-observer invisibility, so the Invisible effect is applied against every creature rather than only the attacker who dealt the triggering damage.
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: losehitpoints
+      triggerPrompt: Teleport up to the damage taken (minimum 5 squares) and turn invisible
   source: Item
 flavor: This midnight-dark leather coat is embossed with fractal patterns that appear different each time they are observed.
 iconid: 603f1e31-cc39-4f16-a8ec-1bee3d631455
-implementation: 2
+implementation: 3
 itemPrerequisite: The will of a deceased person with no heirs
 keywords:
   Light Armor: true

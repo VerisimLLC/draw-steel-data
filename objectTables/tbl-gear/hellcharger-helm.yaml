@@ -6,8 +6,106 @@ __typeName: equipment
 category: Gear
 ctime: 1759400280006
 equipmentCategory: 659f34f2-14d6-4e71-99c1-89d703d5ba48
+features:
+- name: Hellcharger Helm
+  description: Whenever you use the Charge main action, you gain a +5 bonus to speed until the end of your current turn. After charging, you can use the Knockback maneuver as a free maneuver, regardless of the target creature's size.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: cc742200-139f-4d8f-9653-6d887b833b98
+  itemAttached: true
+  modifiers:
+  # Charging Speed is the attribute the Charge action uses for its range, so a flat
+  # +5 here only ever shows up on a charge.
+  - name: Hellcharger Helm
+    description: Whenever you use the Charge main action, you gain a +5 bonus to speed until the end of your current turn.
+    __typeName: CharacterModifier
+    attribute: 6707d8ac-4323-47bc-9593-e36fd1ac146e
+    behavior: attribute
+    guid: eb4771bf-30a1-4511-a20b-d889525785e2
+    source: Item
+    sourceguid: cc742200-139f-4d8f-9653-6d887b833b98
+    value: 5
+  # Offers a free Knockback once the Charge finishes. The invoked ability is a copy of
+  # the standard maneuver minus its size restriction, since the helm ignores that.
+  - name: Hellcharger Helm
+    description: After charging, you can use the Knockback maneuver as a free maneuver, regardless of the target creature's size.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 9b5f2996-a3cb-4e4e-8184-790142f63084
+    source: Item
+    sourceguid: cc742200-139f-4d8f-9653-6d887b833b98
+    triggeredAbility:
+      name: Hellcharger Helm
+      description: After charging, you can use the Knockback maneuver as a free maneuver, regardless of the target creature's size.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        autoTarget: false
+        customAbility:
+          name: Knockback
+          description: You attempt to shove an adjacent creature using a power roll. The Hellcharger Helm lets you do this regardless of the target creature's size.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            applyto: caster
+            triggerName: BeginKnockback
+            value: ""
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            filterTarget: ""
+            roll: 2d10 + Might
+            tiers:
+            - Push 1
+            - Push 2
+            - Push 3
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains: []
+          guid: 4690a5f3-a0c3-4852-949a-4287fa4e68fc
+          iconid: 652d9c4c-f87d-4b50-af37-683cfc52a727
+          keywords:
+            Melee: true
+            Weapon: true
+          modifiers: []
+          numTargets: Knockback Targets
+          objectTarget: true
+          persistence: []
+          range: "1"
+          reasonedFilters:
+          - formula: (Not (target.conditions has "Grabbed")) or (ConditionCaster("Grabbed") = Caster)
+            reason: Grabbed creatures cannot be force moved, except by the grabber.
+          repeatTargets: false
+          strain: []
+          targetType: target
+        promptText: Use Knockback as a free maneuver, regardless of the target creature's size.
+        runOnController: true
+      conditionFormula: UsedAbility.Name = "Charge"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 5b7f211e-1dd8-4be2-b11f-ccc31c96bf4c
+      iconid: 446b9948-ff31-4a4b-ab01-d08d3c510e52
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: finishability
+  source: Item
 flavor: A steel helm is set with two curved ebony horns, a crackling plume of fire floating between them.
 iconid: 446b9948-ff31-4a4b-ab01-d08d3c510e52
+implementation: 4
 itemPrerequisite: One broken contract, one ingot of steel
 keywords:
   Head: true

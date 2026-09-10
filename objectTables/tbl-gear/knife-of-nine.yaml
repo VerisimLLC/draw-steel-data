@@ -71,8 +71,59 @@ features:
     source: Item
     sourceguid: 6b794f1b-6860-43d0-8fd0-34448dbe4de6
   source: Item
+- name: Knife of Nine Drop Attack
+  description: If you make a weapon strike using this weapon against a target after dropping down on them from a height of 2 squares or more, the attack deals an extra 10 psychic damage.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b317ccea-df6a-4347-8837-026744eadf2f
+  implementation: 3
+  implementationDetails: Landing from a drop of 2 or more squares arms an until-end-of-turn effect that offers the extra 10 psychic damage as an opt-in on your weapon strikes, so you tick it for the strike that actually followed the drop. Splitting that damage between the target and enemies adjacent to them is still manual.
+  itemAttached: true
+  modifiers:
+  - name: Knife of Nine Drop Attack
+    description: Dropping 2 or more squares arms an extra 10 psychic damage on your next weapon strike.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: 9cfa0c4d-4a26-434e-b15f-b9ea4e89204a
+    source: Item
+    sourceguid: b317ccea-df6a-4347-8837-026744eadf2f
+    triggeredAbility:
+      name: Knife of Nine Drop Attack
+      description: Your weapon strike deals an extra 10 psychic damage after a drop of 2 or more squares.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: 0
+        durationUntilEndOfTurn: true
+        ongoingEffect: 34c1cc70-52fd-4432-8472-c3c0b63c93e2
+        ongoingEffectCustom: false
+      castImmediately: true
+      conditionFormula: speed >= 2
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: d437fdc2-090e-47e9-9e9c-1eb79e142124
+      hasManualVersion: false
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence:
+        enabled: false
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: fall
+  source: Item
 flavor: This ivory dagger features nine faintly glowing indentations along the blade.
 iconid: 09462bf3-7c2f-4774-ba7b-cfa2a6497d16
+implementation: 2
 itemPrerequisite: Eighteen daggers—nine taken from personal enemies and nine gifted by friends
 keywords:
   Light Weapon: true

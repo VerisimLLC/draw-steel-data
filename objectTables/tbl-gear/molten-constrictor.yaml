@@ -43,8 +43,101 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Molten Constrictor Ensnare
+  description: A strike using the net that gets a tier 3 outcome grabs the target, who takes a bane on the Escape Grab maneuver.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: a79be55f-70b9-4d0c-88fa-36b3d2aa49e4
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  # "grabbed with Bane on Escape Grab" is condition + condition-rider syntax: the rider's
+  # powerTableText is matched against the conditionRiders table by the power table parser.
+  - name: Molten Constrictor Ensnare
+    description: A strike using the net that gets a tier 3 outcome grabs the target, who takes a bane on the Escape Grab maneuver.
+    __typeName: CharacterModifier
+    activationCondition: ability.doesdamage
+    addText: // // grabbed with Bane on Escape Grab
+    behavior: power
+    displayCondition: ability.doesdamage
+    guid: f0da28b9-8594-44ee-9451-466965d59f86
+    keywords:
+      Melee: true
+      Strike: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: a79be55f-70b9-4d0c-88fa-36b3d2aa49e4
+  source: Item
+- name: Molten Constrictor Finisher
+  description: At 9th level, you can use a maneuver to make a free strike with another weapon against a target grabbed using the net.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: bbc0f0d6-232d-4a98-87a9-cfa8f7f9f156
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Molten Constrictor Finisher
+    description: At 9th level, you can use a maneuver to make a free strike with another weapon against a target grabbed using the net.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Molten Constrictor Finisher
+      description: Make a melee free strike with another weapon against a target you have grabbed using the net.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: bca4d86d-517b-4f86-ade7-45b92eef5b71
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        invokeOnCaster: true
+        standardAbility: 0a68f64c-67f7-4279-9741-38aedaab7029
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 852f46e6-253e-429a-91e3-54fbd7d8aaff
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+    behavior: activated
+    filterCondition: Level >= 9
+    guid: 424583ca-9bbd-45bb-bd1a-eeb06c73bcf5
+    source: Item
+    sourceguid: bbc0f0d6-232d-4a98-87a9-cfa8f7f9f156
+    suppressOthers: false
+  source: Item
 flavor: This flexible black-iron net burns with the heat of a volcano.
 iconid: c49ead6e-af05-4f58-842e-8cae5bb7543f
+implementation: 3
 itemPrerequisite: Four iron bars coated in magma slag
 keywords:
   Magic: true

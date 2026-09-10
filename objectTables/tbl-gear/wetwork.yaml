@@ -43,8 +43,90 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Wetwork Killing Stroke
+  description: If you reduce a creature to 0 Stamina using the weapon, you can use a maneuver to make a melee free strike. At 5th level you can move 2 squares first; at 9th level you can move up to your speed.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b148d371-88bd-4db4-b2aa-ec593365ebf7
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Wetwork Killing Stroke
+    description: If you reduce a creature to 0 Stamina using the weapon, you can use a maneuver to make a melee free strike. At 5th level you can move 2 squares first; at 9th level you can move up to your speed.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 597e7ee0-f489-48b9-9895-5ef4d6c56afc
+    source: Item
+    sourceguid: b148d371-88bd-4db4-b2aa-ec593365ebf7
+    triggeredAbility:
+      name: Wetwork Killing Stroke
+      description: Use a maneuver to make a melee free strike. At 5th level you can also move up to 2 squares; at 9th level up to your speed.
+      __typeName: TriggeredAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      # The two move invokes are mutually exclusive on level, so at most one prompt fires
+      # before the free strike.
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        filterTarget: Caster.Level > 4 and Caster.Level < 9
+        invokeOnCaster: true
+        promptText: Move up to 2 squares before the strike
+        standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+        standardAbilityParams:
+          distance: "2"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        filterTarget: Caster.Level >= 9
+        invokeOnCaster: true
+        promptText: Move up to your speed before the strike
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        invokeOnCaster: true
+        standardAbility: 0a68f64c-67f7-4279-9741-38aedaab7029
+      castImmediately: true
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 22c001b8-6a20-4cd7-b240-60a4e29f10f7
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: kill
+      triggerPrompt: Spend a maneuver to make a melee free strike with Wetwork.
+      whenActive: combat
+  - name: Wetwork Killing Stroke
+    description: If you reduce a creature to 0 Stamina using the weapon, you can use a maneuver to make a melee free strike.
+    __typeName: CharacterModifier
+    ability:
+      name: Wetwork Killing Stroke
+      __typeName: TriggeredAbilityDisplay
+      effect: You can use a maneuver to make a melee free strike. At 5th level you can also move up to 2 squares before or after the strike; at 9th level you can move up to your speed.
+      guid: 016d8e4f-032a-4426-9152-9f6dcca79155
+      keywords: []
+      target: Self
+      trigger: You reduce a creature to 0 Stamina using the weapon.
+      type: passive
+    behavior: triggerdisplay
+    guid: 81e994ce-8e16-415b-9470-22825b5d8517
+    source: Item
+    sourceguid: b148d371-88bd-4db4-b2aa-ec593365ebf7
+  source: Item
 flavor: When first held, this naginata whispers the names of its past victims.
 iconid: e26ca38b-67e1-415c-99c8-4e01ad36290c
+implementation: 3
 itemPrerequisite: A folded metal blade infused with blood
 keywords:
   Polearm: true

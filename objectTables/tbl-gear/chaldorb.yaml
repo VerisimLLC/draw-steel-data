@@ -135,9 +135,126 @@ features:
       targetType: all
       trigger: useability
   source: Item
+- name: Chaldorb Lingering Whirlwind
+  description: The whirlwind creates a 2 aura around you that lasts until the start of your next turn. Each enemy who enters the aura for the first time in a combat round or starts their turn there takes 6 cold damage.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 8b19229d-05fa-4178-b48d-05365c739377
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Chaldorb Lingering Whirlwind
+    description: The whirlwind creates a 2 aura around you that lasts until the start of your next turn. Each enemy who enters the aura for the first time in a combat round or starts their turn there takes 6 cold damage.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: f5083cea-cc3e-4294-a7d2-d2b498c95e96
+    source: Item
+    sourceguid: 8b19229d-05fa-4178-b48d-05365c739377
+    triggeredAbility:
+      name: Chaldorb Lingering Whirlwind
+      description: A 2 aura of sleet and ice lingers around you until the start of your next turn.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        applyto: caster
+        aura:
+          name: Chaldorb Whirlwind
+          description: Each enemy who enters this area for the first time in a round or starts their turn there takes 6 cold damage.
+          __typeName: Aura
+          applyto: enemies
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 1b0510de-f0f5-4f7f-a6ea-77663fd7c3ff
+          implementation: 4
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers:
+          - ability:
+              name: Chaldorb Whirlwind
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: 6 cold damage
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: ba052ac1-484d-4e56-88be-e4f8e7b19ea0
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: onfirstenterround
+            trigger: onfirstenterround
+          - ability:
+              name: Chaldorb Whirlwind
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: 6 cold damage
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 51ed07c1-533c-459b-8468-d342d771ce73
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: targetstartturnaura
+            trigger: targetstartturnaura
+        duration: nextturn
+        grow: 2
+      castImmediately: true
+      conditionFormula: Used Ability.Keywords has "magic" or Used Ability.Keywords has "psionic"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 1dda7454-1efd-4b6a-977e-8e993ad1ebe5
+      hasManualVersion: false
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence:
+        enabled: false
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: useability
+  source: Item
 flavor: A perfectly clear sphere is embossed with fine ivory and crystal that is frigid to the touch.
 iconid: 914f33e7-f21b-42a2-9ff1-3f9449388782
-implementation: 2
+implementation: 4
 itemPrerequisite: An ounce of primordial ice, an ounce of mammoth-ivory shards
 keywords:
   Implement: true

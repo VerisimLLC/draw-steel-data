@@ -6,10 +6,58 @@ __typeName: equipment
 category: Gear
 ctime: 1774275675352
 equipmentCategory: f8795dac-fda0-48a7-ba63-c2618c812d76
+features:
+- name: Imprisoning
+  description: Whenever you damage a creature with an ability using this weapon and obtain a tier 3 outcome, that creature is also restrained (save ends). While restrained in this way, the creature can't use magic or psionic abilities.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 5d37fa53-0d18-4cbe-9a86-2121d1e4b1ef
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Imprisoning
+    description: Whenever you damage a creature with an ability using this weapon and obtain a tier 3 outcome, that creature is also restrained (save ends). While restrained in this way, the creature can't use magic or psionic abilities.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: c0b71635-eaaa-4d3c-b09d-36a554324d57
+    source: Item
+    sourceguid: 5d37fa53-0d18-4cbe-9a86-2121d1e4b1ef
+    triggeredAbility:
+      name: Imprisoning
+      description: The damaged creature is restrained (save ends) and can't use magic or psionic abilities while restrained this way.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        ongoingEffect: 0f12e668-df46-44da-ba3b-510ce169dc87
+        ongoingEffectCustom: false
+      conditionFormula: Keywords has "Weapon" and HasCast and Cast.Tier = 3
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 8046a184-4343-4efc-bdc2-d3f123ba68fb
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: "100"
+      repeatTargets: false
+      selfTarget: false
+      strain: []
+      subject: self
+      targetFilter: ""
+      targetType: target
+      trigger: dealdamage
+  source: Item
 imbueLevel: 9
 imbuePrereq: none
 imbueTargetType: weapon
-implementation: 2
+implementation: 4
 itemPrerequisite: A chain once used to restrain an angel
 mtime: 1774275675352
 projectGoal: "150"

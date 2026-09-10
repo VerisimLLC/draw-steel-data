@@ -93,7 +93,7 @@ features:
     __typeName: CharacterModifier
     activationCondition: "1"
     behavior: power
-    displayCondition: stamina < Maximum Stamina and (not winded)
+    displayCondition: Winded
     guid: 84e0a288-b829-49df-8b68-e253506070e6
     keywords:
       Magic: true
@@ -103,8 +103,59 @@ features:
     source: Item
     sourceguid: 5ccb49f3-15c5-4cf1-b0e0-20460183304e
   source: Item
+- name: Brittlebreaker Overload
+  description: Once per round when you take more than 20 damage from a single source, the implement's extra damage is doubled until the end of your next turn.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: d5dd8ef5-6db0-47c4-b054-e16e179943af
+  implementation: 4
+  implementationDetails: The doubled damage rides on a non-stacking ongoing effect, so a second big hit in the same round refreshes the window rather than doubling again - which is what the once-per-round limit is there to prevent.
+  itemAttached: true
+  modifiers:
+  - name: Brittlebreaker Overload
+    description: Once per round when you take more than 20 damage from a single source, the implement's extra damage is doubled until the end of your next turn.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 5
+    guid: 0f4ac2fb-3799-437f-b429-e17678378768
+    source: Item
+    sourceguid: d5dd8ef5-6db0-47c4-b054-e16e179943af
+    triggeredAbility:
+      name: Brittlebreaker Overload
+      description: The implement's extra psychic damage is doubled until the end of your next turn.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: end_of_next_turn
+        ongoingEffect: 670c6ca6-0da4-42fe-8e08-87a7b69f1858
+        ongoingEffectCustom: false
+      castImmediately: true
+      conditionFormula: Damage > 20
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 4cf23099-a851-448c-89a6-7b1112571dd9
+      hasManualVersion: false
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence:
+        enabled: false
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: self
+      targetType: self
+      trigger: losehitpoints
+  source: Item
 flavor: This crystal wand thrums with power, yet is so thin and brittle that it feels as if even a slight squeeze will shatter it.
 iconid: cc913329-17fb-46c0-9a66-25e9bafbd445
+implementation: 2
 itemPrerequisite: A handful of shattered quartz
 keywords:
   Psionic: true

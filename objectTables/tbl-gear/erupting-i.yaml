@@ -30,56 +30,34 @@ features:
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
-          name: Invoked Ability
+          name: Erupting I
           description: ""
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            customAbility:
-              name: Erupting I
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityDamageBehavior
-                chatMessage: Erupting I
-                damageType: fire
-                roll: "3"
-              categorization: Hidden
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 8cac6a58-dfd7-439d-b93c-9fbb604378b1
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              persistence: []
-              range: "2"
-              repeatTargets: false
-              strain: []
-              targetType: all
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Erupting I
+            damageType: fire
+            roll: "3"
+          castImmediately: true
           categorization: Hidden
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 4e3a5a48-8b70-4f6f-8e37-c8c1d39f8f65
+          guid: 8cac6a58-dfd7-439d-b93c-9fbb604378b1
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
-          objectTarget: false
           persistence: []
-          range: "100"
+          range: "2"
           repeatTargets: false
           strain: []
-          targetType: target
-        promptText: Select creature you damaged.
+          targetAllegiance: enemy
+          targetType: all
       castImmediately: true
-      conditionFormula: Ability.doesdamage and (Ability.Keywords has "magic" or Ability.Keywords has "psionic") and Tier Three
+      conditionFormula: HasCast and HasAbility and (Ability.Keywords has "Magic" or Ability.Keywords has "Psionic") and Cast.TargetCount = 1 and Cast.TierForTarget(Target) = 3
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -87,22 +65,22 @@ features:
         saturation: 1
       guid: a1c220e1-50e9-4723-b12e-71a9b270805f
       iconid: ui-icons/skills/1.png
-      mandatory: false
+      mandatory: true
       modifiers: []
       numTargets: "1"
       persistence: []
       range: 1
       repeatTargets: false
       strain: []
-      targetType: self
-      trigger: rollpower
+      targetType: target
+      trigger: dealdamage
       triggerPrompt: Whenever you damage a creature using a magic or psionic ability that targets only a single creature and obtain a tier 3 outcome, each enemy within 2 squares of the creature takes 3 fire damage after the ability's effects resolve.
   source: Erupting I Imbuement
 iconid: 7236b4b5-d910-4da5-92d6-c29a9a7347b7
 imbueLevel: 5
 imbuePrereq: none
 imbueTargetType: implement
-implementation: 3
+implementation: 4
 itemPrerequisite: Obsidian from an active volcano
 mtime: 1774701804843
 projectGoal: "150"

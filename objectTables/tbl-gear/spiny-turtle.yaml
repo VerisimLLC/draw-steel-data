@@ -37,8 +37,121 @@ features:
         threshold: 9
       field: Level
   source: Item
+- name: Spiny Turtle Wall
+  description: Use a main action to expand a 4 wall of metal beside you. It blocks movement and line of effect until the end of the encounter.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 761f695e-3326-4ce5-9a86-cfdf11f218c4
+  implementation: 2
+  itemAttached: true
+  modifiers:
+  - name: Spiny Turtle Wall
+    description: Use a main action to expand a 4 wall of metal beside you. It blocks movement and line of effect until the end of the encounter. Retract it manually if you move or it takes enough damage.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Spiny Turtle Wall
+      description: Expand the armor on your back to create a 4 wall of metal behind you. The wall retracts if you move, or if it takes 15 damage (25 at 5th level); it then needs a main action to recalibrate before it can be deployed again. Track the wall's damage and retraction manually.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      # replacePrevious clears an earlier wall so redeploying never leaves two on the map.
+      - __typeName: ActivatedAbilityAuraBehavior
+        aura:
+          name: Spiny Turtle Wall
+          description: A wall of metal that blocks movement and line of effect.
+          __typeName: Aura
+          applyto: all
+          blocks_line_of_effect: true
+          blocks_movement: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 31d9b51a-b041-4aa9-b6be-e35dfa2a8db8
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        duration: eoe
+        replacePrevious: true
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 42b5c551-dea2-46a0-ad7f-54eca1b729d4
+      iconid: ui-icons/skills/1.png
+      implementation: 2
+      keywords:
+        Area: true
+      modifiers: []
+      numTargets: "4"
+      persistence: []
+      range: "1"
+      rangeTextOverride: 4 wall adjacent to you
+      repeatTargets: false
+      strain: []
+      targetTextOverride: Special
+      targetType: anyspace
+      targeting: contiguous_wall
+    behavior: activated
+    guid: 57b8061e-8f6b-4213-8fda-efeac85a3c6a
+    source: Item
+    sourceguid: 761f695e-3326-4ce5-9a86-cfdf11f218c4
+    suppressOthers: false
+  source: Item
+- name: Spiny Turtle Spikes
+  description: At 9th level, any adjacent creature who deals damage to you takes 6 damage.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 05a6bb01-89ac-4806-965e-aaca9c4085f5
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Spiny Turtle Spikes
+    description: Any adjacent creature who deals damage to you takes 6 damage.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: 8a5e93af-381d-4eaf-be43-8a458bf3ab5a
+    source: Item
+    sourceguid: 05a6bb01-89ac-4806-965e-aaca9c4085f5
+    triggeredAbility:
+      name: Spiny Turtle Spikes
+      description: The adjacent creature who damaged you takes 6 damage.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        chatMessage: Spiny Turtle
+        damageType: untyped
+        roll: "6"
+        titleText: Spiny Turtle
+      castImmediately: true
+      conditionFormula: HasAttacker and Distance(Attacker) < 2
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 8bfb2fd0-d0d4-488e-b7bc-e29b6e510e52
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: attacker
+      trigger: losehitpoints
+  source: Item
 flavor: This heavy mechanized plate armor of gnomish make is designed to create its own cover on the battlefield.
 iconid: 30431abb-e57c-4b7d-aab1-9159c8b78fba
+implementation: 2
 itemPrerequisite: Ten steel gears from an ancient construct
 keywords:
   Heavy Armor: true

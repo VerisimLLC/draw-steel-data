@@ -7,10 +7,104 @@ description: |-
 _table: tbl_Gear
 __typeName: equipment
 category: Gear
+consumable:
+  name: Catapult Dust
+  description: |-
+    As a main action, you pour the dust out in an adjacent unoccupied space to fill an area as large as a 2 cube.
+
+    At the start of your next turn, the ground at the bottom of the area erupts violently upwards and in a direction of your choice. Any unattended objects in the area, or creatures who have entered the area since the dust was poured, are launched in an arc that is 6 + 1d6 squares long and 3 + 1d6 squares high.
+  __typeName: ActivatedAbility
+  abilityType: none
+  actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+  attributeOverride: no_attribute
+  behaviors:
+  - __typeName: ActivatedAbilityAuraBehavior
+    aliveafterdeath: true
+    aura:
+      name: Catapult Dust
+      description: At the start of the caster's next turn the ground erupts, launching each creature in the area in an arc 6 + 1d6 squares long and 3 + 1d6 squares high.
+      __typeName: Aura
+      applyto: all
+      creatureFilter: ""
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 5be119cc-77ab-4ff6-8d52-ad7f18b78b22
+      modifiers: []
+      objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+      source: Catapult Dust
+      triggers:
+      - ability:
+          name: Catapult Dust
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRollBehavior
+            applyto: caster
+            roll: 1d6
+            rollDescription: Catapult Dust - arc height
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: vertical push {3 + Cast.Roll}
+          - __typeName: ActivatedAbilityRollBehavior
+            applyto: caster
+            roll: 1d6
+            rollDescription: Catapult Dust - arc length
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: slide {6 + Cast.Roll}
+          castImmediately: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a904f414-3156-4900-abab-e8b2e51c6d69
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          radius: 0
+          range: 5
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetType: aura
+          trigger: casterstartturnaura
+        destroyaura: true
+        trigger: casterstartturnaura
+    duration: endnextturn
+  categorization: Ability
+  consumables:
+    5969d015-13fd-40e2-b2d5-be67a4169f5a: 1
+  display:
+    bgcolor: "#ffffffff"
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: 0e08b43f-a4c1-4801-81e8-cde4eb35c692
+  iconid: da34b3f9-0f5e-4e22-9a23-5f8d17a61d1b
+  implementationDetails: The zone erupts on its own at the start of your next turn and launches every creature standing in it (two 1d6 rolls set the arc). Unattended objects are not launched, and the engine cannot tell which creatures entered after the dust was poured, so anything sitting in the area when it goes off is caught.
+  keywords:
+    Area: true
+    Magic: true
+  modifiers: []
+  numTargets: "1"
+  persistence: []
+  radius: "2"
+  range: 1
+  repeatTargets: false
+  strain: []
+  targetType: cube
 ctime: 1759400091138
 equipmentCategory: 95125d91-fe41-4310-8f7b-44386651b0a7
 flavor: A small leather pouch is filled with this fine blue powder.
 iconid: da34b3f9-0f5e-4e22-9a23-5f8d17a61d1b
+implementation: 3
 itemPrerequisite: An ounce of witherite crystal
 keywords:
   Magic: true

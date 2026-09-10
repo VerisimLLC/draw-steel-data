@@ -43,8 +43,52 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Onerous Bow Toxin
+  description: A signature ability using the weapon that gets a tier 3 outcome also makes the target weakened (EoT). At 5th level the target is also slowed.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: be92535f-6b0c-49d2-aff5-c32f575c3518
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  # Two modifiers rather than one because the rider gains "slowed" at 5th level;
+  # filterCondition makes exactly one of them exist at any given character level.
+  - name: Onerous Bow Toxin
+    description: A signature ability using the weapon that gets a tier 3 outcome also makes the target weakened until the end of their next turn.
+    __typeName: CharacterModifier
+    activationCondition: Ability.Categorization = "Signature Ability"
+    addText: // // weakened (eot)
+    behavior: power
+    displayCondition: Ability.Categorization = "Signature Ability"
+    filterCondition: Level < 5
+    guid: 682edef0-12f8-4dea-9ea9-e6487b71ee19
+    keywords:
+      Ranged: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: be92535f-6b0c-49d2-aff5-c32f575c3518
+  - name: Onerous Bow Toxin
+    description: A signature ability using the weapon that gets a tier 3 outcome also makes the target weakened and slowed until the end of their next turn.
+    __typeName: CharacterModifier
+    activationCondition: Ability.Categorization = "Signature Ability"
+    addText: // // weakened and slowed (eot)
+    behavior: power
+    displayCondition: Ability.Categorization = "Signature Ability"
+    filterCondition: Level >= 5
+    guid: 3c5070ee-d495-47ea-88b9-902a04a856e8
+    keywords:
+      Ranged: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: be92535f-6b0c-49d2-aff5-c32f575c3518
+  source: Item
 flavor: This mechanized bow is set with magical reservoirs that carry the faint tang of toxins.
 iconid: 8c2d5e07-2310-4799-8830-950029535ccf
+implementation: 3
 itemPrerequisite: A venom sac from a giant spider, one valok gyroscope
 keywords:
   Bow: true

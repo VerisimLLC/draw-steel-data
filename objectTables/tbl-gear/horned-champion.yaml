@@ -79,7 +79,7 @@ features:
   addText: Add Magical Property
   guid: d587a022-25bf-42f1-a2ab-000e8f04c090
   implementation: 3
-  implementationDetails: Offered as three opt-in triggers on a tier 3 charge outcome, each prompting for the creature you attacked. Push covers both the flat 2 squares and lengthening a charge push. Choosing only one is not enforced. The engine exposes no reliable was-this-a-charge signal, so the options offer on any tier 3 hit with a Melee and Weapon ability.
+  implementationDetails: Offered as three opt-in triggers on a tier 3 charge outcome, each prompting for the creature you attacked. The Charge action sets the Charging attribute for its whole duration, so the options only appear on a real charge. Push covers both the flat 2 squares and lengthening a charge push. Nothing stops a player from taking more than one of the three options.
   itemAttached: true
   modifiers:
   - name: Horned Champion - Knock Prone
@@ -122,7 +122,7 @@ features:
           targetType: target
         promptText: Select the creature you attacked
       castImmediately: true
-      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -182,7 +182,7 @@ features:
           targetType: target
         promptText: Select the creature you attacked
       castImmediately: true
-      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -243,7 +243,7 @@ features:
           targetType: target
         promptText: Select the creature you attacked
       castImmediately: true
-      conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+      conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -314,7 +314,7 @@ features:
               targetType: target
             promptText: Select the creature you attacked
           castImmediately: true
-          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -374,7 +374,7 @@ features:
               targetType: target
             promptText: Select the creature you attacked
           castImmediately: true
-          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -435,7 +435,7 @@ features:
               targetType: target
             promptText: Select the creature you attacked
           castImmediately: true
-          conditionFormula: Level >= 5 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
+          conditionFormula: Level >= 5 and Charging > 0 and Tier Three and Ability.Keywords has "Melee" and Ability.Keywords has "Weapon"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -464,14 +464,48 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: f823fc83-c99f-4fd5-8906-d3494e4a2c5b
-  implementation: 1
-  implementationDetails: Not automated; opportunity-attack immunity cannot be scoped to the Charge movement, and granting it outright would cover all movement.
+  implementation: 4
+  implementationDetails: The Charge action sets the Charging attribute for its whole duration, so the opportunity-attack immunity is gated on it and lapses the moment the charge ends.
   itemAttached: true
-  modifiers: []
+  modifiers:
+  - name: Unimpeded Charge
+    description: While charging, you are immune to opportunity attacks.
+    __typeName: CharacterModifier
+    attribute: e2773895-411c-404e-a7f4-1aa50cd87710
+    behavior: attribute
+    filterCondition: Level >= 9 and Charging > 0
+    guid: ab1a2e36-0aba-4b55-b650-b7c53defc9af
+    source: Item
+    sourceguid: f823fc83-c99f-4fd5-8906-d3494e4a2c5b
+    value: 1
+  - name: Unimpeded Charge
+    description: Your companion is also immune to opportunity attacks while charging.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Unimpeded Charge
+      description: While charging, you are immune to opportunity attacks.
+      __typeName: CharacterFeature
+      guid: 8f8bf3d3-043e-4ee8-8681-e77f8f359d29
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Unimpeded Charge
+        description: While charging, you are immune to opportunity attacks.
+        __typeName: CharacterModifier
+        attribute: e2773895-411c-404e-a7f4-1aa50cd87710
+        behavior: attribute
+        filterCondition: Level >= 9 and Charging > 0
+        guid: 79bc9d2a-1632-462c-b9d5-dc4d4efdbe08
+        source: Item
+        sourceguid: 8f8bf3d3-043e-4ee8-8681-e77f8f359d29
+        value: 1
+    guid: b849b7c4-dea0-48ee-8c78-f8ceef0134d3
+    source: Item
+    sourceguid: f823fc83-c99f-4fd5-8906-d3494e4a2c5b
   source: Item
 flavor: This paired helmet and barding face shield are each set with a pair of curving metal horns.
 iconid: 890846eb-cdee-4dec-80e2-32595ddb5016
-implementation: 2
+implementation: 3
 itemPrerequisite: The horns of a minotaur
 keywords:
   Heavy Weapon: true

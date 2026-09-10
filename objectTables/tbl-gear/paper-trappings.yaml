@@ -88,10 +88,62 @@ features:
     guid: 0c4db3ed-51ba-4dd4-b529-95a742fbb6a5
     source: Item
     sourceguid: c30f3e82-d05f-488b-9722-2e7d6ff507b4
+  - name: Paper Trappings
+    description: When you return to your three-dimensional form, you are dazed for 1 minute. At 5th level you are dazed only until the end of your next turn, and at 9th level you are not dazed at all.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Return to True Form
+      description: You unfold back into your three-dimensional form. Below 5th level you are then dazed for 1 minute; at 5th level you are dazed only until the end of your next turn; at 9th level you are no longer dazed.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+      behaviors:
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        ongoingEffect: be3a4dcc-4bef-4f70-95bc-87bc34b863a1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: Caster.Level < 5
+        ongoingEffect: 65d906ae-c83a-4b57-adaf-17dc3793b9c5
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: end_of_next_turn
+        filterTarget: Caster.Level >= 5 and Caster.Level < 9
+        ongoingEffect: 65d906ae-c83a-4b57-adaf-17dc3793b9c5
+        ongoingEffectCustom: false
+      castImmediately: true
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: fd9d0499-8e33-4877-a5d0-f1fe76b25249
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: 'The Codex does not track minutes, so the below-5th-level daze uses end of encounter to match the paper-thin effect''s own duration. The "expelled from a space too small for you, take 3d6 damage" clause is left to the Director: the engine cannot tell whether the space you unfold into is too small.'
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 328
+      strain: []
+      targetType: self
+    behavior: activated
+    filterCondition: OngoingEffects has "Paper Trappings"
+    guid: 929e76b6-8130-4108-938e-1b3c107688bb
+    source: Item
+    sourceguid: c30f3e82-d05f-488b-9722-2e7d6ff507b4
   source: Item
 flavor: This delicate robe is made from thousands of pages torn from books, intricately folded together without a single thread to bind them.
 iconid: 9f4e0000-d3f4-4340-8d76-99ca0e748e9a
-implementation: 2
+implementation: 3
 itemPrerequisite: Ten pages from each of a hundred different books
 keywords:
   Light Armor: true

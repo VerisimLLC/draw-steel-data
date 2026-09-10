@@ -6,11 +6,65 @@ __typeName: equipment
 category: Gear
 ctime: 1777281199583
 equipmentCategory: f8795dac-fda0-48a7-ba63-c2618c812d76
-features: []
+features:
+- name: Psionic Siphon
+  description: Once per turn when you damage one or more creatures using a magic or psionic ability and obtain a tier 3 outcome, you gain Stamina equal to your highest characteristic score, and one creature you damage takes an extra 5 damage.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 680b0dae-9f78-46c4-8546-ad539cb682e5
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Psionic Siphon
+    description: Once per turn when you damage one or more creatures using a magic or psionic ability and obtain a tier 3 outcome, you gain Stamina equal to your highest characteristic score, and one creature you damage takes an extra 5 damage.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 0e8168aa-d3f1-4115-a441-8acdb0cd853a
+    resourceRefreshType: turn
+    source: Item
+    sourceguid: 680b0dae-9f78-46c4-8546-ad539cb682e5
+    triggeredAbility:
+      name: Psionic Siphon
+      description: You gain Stamina equal to your highest characteristic score, and the creature takes an extra 5 damage.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityHealBehavior
+        applyto: caster
+        roll: Highest Characteristic
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: 5 damage
+      conditionFormula: (Keywords has "Magic" or Keywords has "Psionic") and HasCast and Cast.Tier = 3
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 045840ee-76ab-4229-a7fe-83d65f50df4b
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: "100"
+      repeatTargets: false
+      selfTarget: false
+      strain: []
+      subject: self
+      targetFilter: ""
+      targetType: target
+      trigger: dealdamage
+      usageLimitOptions:
+        charges: "1"
+        resourceRefreshType: turn
+        resourceid: 0e8168aa-d3f1-4115-a441-8acdb0cd853a
+  source: Item
 imbueLevel: 9
 imbuePrereq: none
 imbueTargetType: implement
-implementation: 2
+implementation: 4
 itemPrerequisite: The frontal lobe of an overmind
 mtime: 1777281199583
 projectGoal: "150"

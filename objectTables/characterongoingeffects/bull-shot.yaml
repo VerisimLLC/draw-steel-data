@@ -16,6 +16,8 @@ domains:
   CharacterOngoingEffect:8c15103c-dbdd-466e-bcbe-899e92fa2061: true
 guid: 8c15103c-dbdd-466e-bcbe-899e92fa2061
 iconid: ui-icons/skills/1.png
+implementation: 3
+implementationDetails: The grab plus bleeding rider is attached to melee strikes that can be made at the end of a Charge (melee free strikes and Charge-keyword strikes). The engine exposes no was-this-a-charge signal at ability-modification time, so the rider also rides a melee free strike made outside a Charge.
 modifiers:
 - name: Bull Shot
   description: You sprout 3-foot sharpened horns from your forehead. Whenever you use the Charge main action, the target of your strike is gored upon your horns and grabbed. While grabbed this way, the creature is bleeding. You can also grab another creature with your limbs. The horns harmlessly fall off your head at the end of the encounter.
@@ -60,7 +62,11 @@ modifiers:
   behavior: modifyability
   domains:
     CharacterOngoingEffect:8c15103c-dbdd-466e-bcbe-899e92fa2061: true
+  filterAbility: Ability.FreeStrike or Ability.UsableAsFreeStrike or (Ability.Keywords has "Charge")
   guid: 78564649-9f9a-43e7-a9a4-5a86044517db
+  keywords:
+    Melee: true
+    Strike: true
   modifyDescription: Whenever you use the Charge main action, the target of your strike is gored upon your horns and grabbed. While grabbed this way, the creature is bleeding.
   source: Ongoing Effect
   sourceguid: 8c15103c-dbdd-466e-bcbe-899e92fa2061

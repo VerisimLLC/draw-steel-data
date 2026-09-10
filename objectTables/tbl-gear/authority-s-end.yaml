@@ -42,8 +42,149 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Authority's End Break Control
+  description: When you damage a creature with the weapon, you can use a maneuver to end one effect on yourself or a creature within 5 squares. At 9th level this costs no maneuver.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 9286f877-d4c0-4159-b553-3da30a8ebeee
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Authority's End Break Control
+    description: When you damage a creature with the weapon, you can use a maneuver to end one effect on yourself or a creature within 5 squares. At 9th level this costs no maneuver.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 5b8215b5-77fb-4eb5-aaff-d4c1b0aab364
+    source: Item
+    sourceguid: 9286f877-d4c0-4159-b553-3da30a8ebeee
+    triggeredAbility:
+      name: Authority's End Break Control
+      description: Choose yourself or a creature within 5 squares and end one effect on them.
+      __typeName: TriggeredAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      # The purge is wrapped in an invoked ability because a triggered ability's own
+      # "target" is fixed to the creature that fired the trigger; the inner ability is what
+      # lets the wielder pick who gets the effect removed.
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Authority's End
+          description: End one effect on yourself or a creature within 5 squares.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            chatMessage: Authority's End
+            conditions: []
+            guid: 0dc43355-6bb6-4983-aa20-f5b6849f3267
+            mode: conditions
+            purgeType: one
+            targetDuration: all
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 33d3ac5d-255c-40ad-8406-8678c2cfa069
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          selfTarget: true
+          strain: []
+          targetType: target
+        invokeOnCaster: true
+      # 9th level: hand the maneuver straight back, which is how "you no longer need to
+      # use a maneuver" is expressed without a second copy of the ability.
+      - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        filterTarget: Caster.Level >= 9
+        resourceid: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      castImmediately: true
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: c1ef2a4b-e653-448d-814f-87a1c5ebb031
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: dealdamage
+      triggerPrompt: End one effect imposed on you or a creature within 5 squares.
+      whenActive: combat
+  - name: Authority's End Break Control
+    description: When you damage a creature with the weapon, you can use a maneuver to end one effect imposed by that creature on you or another creature within 5 squares of you.
+    __typeName: CharacterModifier
+    ability:
+      name: Authority's End
+      __typeName: TriggeredAbilityDisplay
+      distance: Ranged 5
+      effect: You can use a maneuver to end one effect imposed by that creature on you or another creature within 5 squares of you. At 9th level, no maneuver is required.
+      guid: 3d2886ad-1281-48c0-9475-f9b46c1da52f
+      keywords: []
+      target: Self or one creature
+      trigger: You damage a creature with the weapon.
+      type: passive
+    behavior: triggerdisplay
+    guid: e98d986a-88ec-435e-9017-6dcb973e212f
+    source: Item
+    sourceguid: 9286f877-d4c0-4159-b553-3da30a8ebeee
+  source: Item
+- name: Authority's End Steadfast Aura
+  description: At 5th level, you and each ally within 2 squares of you gain a +1 bonus to saving throws.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 05a95425-2b06-4338-9eee-f3490ba42bcc
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Authority's End Steadfast Aura
+    description: You and each ally within 2 squares of you gain a +1 bonus to saving throws.
+    __typeName: CharacterModifier
+    aura:
+      name: Authority's End
+      description: You and each ally within 2 squares of you gain a +1 bonus to saving throws.
+      __typeName: Aura
+      applyto: selfandfriends
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 7466e605-6d45-4ab3-80e6-531fa3676952
+      implementation: 4
+      modifiers:
+      - name: Authority's End Steadfast Aura
+        description: +1 bonus to saving throws.
+        __typeName: CharacterModifier
+        attribute: 34e099f4-afe1-4b99-abd0-8784cac7f857
+        behavior: attribute
+        guid: 5316877e-d4ac-4ac6-8174-6b1e4a75dd27
+        source: Item
+        sourceguid: 05a95425-2b06-4338-9eee-f3490ba42bcc
+        value: 1
+      objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+    behavior: aura
+    filterCondition: Level >= 5
+    guid: afb8298c-6db2-4a07-9523-1a82dc3cf082
+    radius: "2"
+    source: Item
+    sourceguid: 05a95425-2b06-4338-9eee-f3490ba42bcc
+  source: Item
 flavor: This long, sinuous chain is composed entirely of broken links held together by unseen power.
 iconid: 5d7dd5a6-954d-4d7a-b12f-f0fbc5eb6578
+implementation: 3
 itemPrerequisite: A lash used to punish a mutineer
 keywords:
   Psionic: true

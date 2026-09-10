@@ -15,6 +15,8 @@ domains:
   CharacterOngoingEffect:e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1: true
 guid: e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1
 iconid: ui-icons/skills/1.png
+implementation: 2
+implementationDetails: A melee strike gains an extra target and a ranged strike becomes a line, and the effect is spent on the first weapon strike after it is attached. The tier-scaled 1 / 3 / 7 extra targets is NOT automated - a target count has to be fixed before the power roll is made, so the engine cannot widen the strike once the tier is known.
 modifiers:
 - name: Lachomp Tooth
   description: You attach a lachomp tooth to a weapon, allowing that weapon to supernaturally flicker in and out of reality.
@@ -91,6 +93,49 @@ modifiers:
     Ranged: true
     Weapon: true
   modifyDescription: This ability will be affected by the Lachomp Tooth
+  source: Ongoing Effect
+  sourceguid: e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1
+- name: Lachomp Tooth
+  description: The tooth flickers out of reality once the strike is made, ending the effect.
+  __typeName: CharacterModifier
+  activationCondition: "1"
+  behavior: power
+  customTrigger:
+    name: Lachomp Tooth
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      mode: effect
+      ongoingEffect: e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 327b4413-5aba-479c-b753-21efa08a5cbe
+    iconid: ui-icons/skills/1.png
+    modifierCustomTrigger: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: d20roll
+  displayCondition: Ability.Keywords has "Weapon" and Ability.Keywords has "Strike"
+  domains:
+    CharacterOngoingEffect:e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1: true
+  guid: 751b856d-b78f-4de8-8940-14b4f4dd16bf
+  hasCustomTrigger: true
+  keywords:
+    Strike: true
+    Weapon: true
+  modtype: none
+  rollType: ability_power_roll
   source: Ongoing Effect
   sourceguid: e0f901d7-e06d-44cb-89b0-dbd0eaf7afd1
 mtime: 1779691518803

@@ -6,9 +6,89 @@ __typeName: equipment
 category: Gear
 ctime: 1759397137940
 equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
-features: []
+features:
+- name: Steeltongue Reach
+  description: 1/2/3 bonus to melee distance with weapon abilities using this weapon.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 39ad54ac-a49a-461a-b711-dc8a18dcb548
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Steeltongue Reach
+    description: 1/2/3 bonus to melee distance.
+    __typeName: CharacterModifier
+    attribute: reach
+    behavior: attribute
+    guid: 37ad92fe-6ff0-4e0c-879a-71b4c3e7dccf
+    source: Item
+    sourceguid: 39ad54ac-a49a-461a-b711-dc8a18dcb548
+    value:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "1"
+        threshold: 1
+      - script: "2"
+        threshold: 5
+      - script: "3"
+        threshold: 9
+      field: Level
+  source: Item
+- name: Steeltongue Bleeding
+  description: Any damage-dealing weapon ability using the weapon leaves a target with A<Average bleeding (save ends).
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 61347615-55fa-4cc5-a0ce-3cbc38d69c8e
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  # addText with no "//" separators merges into every tier of the power table, so the
+  # potency gate is checked on any tier that deals damage.
+  - name: Steeltongue Bleeding
+    description: Any damage-dealing weapon ability using the weapon leaves a target with A<Average bleeding (save ends).
+    __typeName: CharacterModifier
+    activationCondition: ability.doesdamage
+    addText: A<{Average}, bleeding (save ends)
+    behavior: power
+    displayCondition: ability.doesdamage
+    guid: 5a74d84e-e1dd-42c8-9d24-8c42e99cdd8f
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 61347615-55fa-4cc5-a0ce-3cbc38d69c8e
+  source: Item
+- name: Steeltongue Bloodletting
+  description: At 5th level, weapon abilities using the weapon that deal rolled damage gain a +3 damage bonus against a bleeding target.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: df855d1f-84fc-41da-a9ed-6d7f699addff
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  - name: Steeltongue Bloodletting
+    description: A +3 damage bonus against a bleeding target.
+    __typeName: CharacterModifier
+    activationCondition: Target.Conditions has "Bleeding"
+    behavior: power
+    damageModifier: "3"
+    filterCondition: Level >= 5
+    guid: 6f8b6a73-f70f-4055-a9fa-1e2ea9ec4673
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: df855d1f-84fc-41da-a9ed-6d7f699addff
+  source: Item
 flavor: This sinuous whip reflects all light off its plated steel surfaces.
 iconid: 6d9b7047-a1fb-442b-9654-4dc58f4571f8
+implementation: 3
 itemPrerequisite: One hundred steel arrowheads stained with blood
 keywords:
   Magic: true

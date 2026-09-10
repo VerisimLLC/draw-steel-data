@@ -56,10 +56,118 @@ features:
     guid: ee87cbdf-9cb9-4211-8c02-1842df1156be
     source: Item
     sourceguid: d6d422b9-cbd1-4250-ae00-c56ca439bdc7
+  - name: Words Become Wonders at Next Breath
+    description: When you or a creature you have line of effect to uses a magic or psionic ability, you can use a triggered action to grant a +3 bonus to the power roll.
+    __typeName: CharacterModifier
+    abilityFilter: Ability.Keywords has "magic" or Ability.Keywords has "psionic"
+    behavior: powertabletrigger
+    filterCondition: Level >= 5 and OngoingEffects has "Words Become Wonder At Next Breath"
+    guid: 9ed62c4f-dc37-4f88-8eae-a785ae87ad74
+    powerRollModifier:
+      name: Words Become Wonders at Next Breath
+      description: Grant a +3 bonus to the power roll.
+      __typeName: CharacterModifier
+      activationAfterRoll: false
+      activationCondition: false
+      adjustments: []
+      behavior: power
+      guid: e8d16761-5076-4b2a-9ade-e4b33ff9bb6f
+      keywords: []
+      modtype: plusthree
+      rollType: ability_power_roll
+      rules: ""
+      source: Trigger
+    range: "100"
+    rules: Grant a +3 bonus to the power roll.
+    source: Item
+    sourceguid: d6d422b9-cbd1-4250-ae00-c56ca439bdc7
+    targetType: anycreature
+    trigger: powerroll
+    type: trigger
+  - name: Words Become Wonders at Next Breath
+    description: At 5th level the tome's distance bonus rises from +3 to +5. The base +3 lives on the "tome is open" ongoing effect; this modifier adds the extra 2.
+    __typeName: CharacterModifier
+    ability:
+      name: New Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityModification: true
+      abilityType: none
+      behaviors: []
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: a766d32d-afd6-4ed5-9981-c0faf5025681
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    attributes:
+    - id: range
+      operation: Add
+      value: "2"
+    behavior: modifyability
+    filterAbility: Ability.Keywords has "ranged" and (Ability.Keywords has "magic" or Ability.Keywords has "psionic")
+    filterCondition: Level >= 5 and OngoingEffects has "Words Become Wonder At Next Breath"
+    guid: 589ea0e2-9eed-48bb-804b-01bb6f0f27c8
+    modifyDescription: You gain an additional +2 distance due to Words Become Wonder At Next Breath
+    source: Item
+    sourceguid: d6d422b9-cbd1-4250-ae00-c56ca439bdc7
+  - name: Words Become Wonders at Next Breath
+    description: While the tome is open, you automatically obtain a tier 3 outcome on Reason tests made to recall lore.
+    __typeName: CharacterModifier
+    activationCondition: false
+    attribute: rea
+    behavior: power
+    filterCondition: Level >= 9 and OngoingEffects has "Words Become Wonder At Next Breath"
+    guid: 6c3d54d1-8b8e-4a4c-9628-9cf5b3c34546
+    keywords: []
+    modtype: tier3
+    rollType: test_power_roll
+    source: Item
+    sourceguid: d6d422b9-cbd1-4250-ae00-c56ca439bdc7
+  - name: Words Become Wonders at Next Breath
+    description: While the tome is open, when you use a heroic ability its Heroic Resource cost is reduced by 1 (to a minimum of 1).
+    __typeName: CharacterModifier
+    ability:
+      name: New Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityModification: true
+      abilityType: none
+      behaviors: []
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 7a25c745-526c-4f40-ab22-a5dc0aa25992
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    attributes:
+    - id: cost
+      operation: Add
+      value: "-1"
+    behavior: modifyability
+    filterAbility: Ability.Heroic and Ability.HeroicResourceCost > 1
+    filterCondition: Level >= 9 and OngoingEffects has "Words Become Wonder At Next Breath"
+    guid: 6e29641b-b70b-44d0-8fe1-f8ae15b72994
+    modifyDescription: The tome shaves 1 off this ability's Heroic Resource cost.
+    source: Item
+    sourceguid: d6d422b9-cbd1-4250-ae00-c56ca439bdc7
   source: Item
 flavor: This ornate high elf tome seems to sigh each time it is opened.
 hiddenFromPlayers: true
 iconid: 3adf5fd4-e113-4d94-b36c-8a5602e9a7c4
+implementation: 3
 itemPrerequisite: Written permission from a high elf magistrate
 keywords:
   Implement: true

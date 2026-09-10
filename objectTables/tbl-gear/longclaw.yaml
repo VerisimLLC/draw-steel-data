@@ -257,7 +257,7 @@ features:
   addText: Add Magical Property
   guid: d0628d23-ff75-434d-b7fc-86d20eda60e9
   implementation: 2
-  implementationDetails: Offered when you damage a bleeding creature, prompting you to spend a Recovery. Causing a creature to become bleeding is not detected separately, and each of you is offered your own prompt rather than one shared trigger.
+  implementationDetails: Two trigger sources - damaging a bleeding creature, and inflicting the bleeding condition yourself. Whichever of you triggers it, both you and your companion are offered the Recovery, which is what "you can each spend a Recovery" means.
   itemAttached: true
   modifiers:
   - name: Longclaw Bloodletting Recovery
@@ -274,6 +274,10 @@ features:
       abilityType: none
       behaviors:
       - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: Prompt Recovery
+        value: "1"
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        applyto: caster_companion
         triggerName: Prompt Recovery
         value: "1"
       castImmediately: true
@@ -297,6 +301,48 @@ features:
       subject: self
       targetType: self
       trigger: dealdamage
+  - name: Longclaw Bloodletting Recovery
+    description: When you cause a creature to become bleeding, you can spend a Recovery.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: bd6719fa-fe72-467a-81d3-af400941f5ac
+    source: Item
+    sourceguid: d0628d23-ff75-434d-b7fc-86d20eda60e9
+    triggeredAbility:
+      name: Longclaw Bloodletting Recovery
+      description: You can spend a Recovery.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        triggerName: Prompt Recovery
+        value: "1"
+      - __typeName: ActivatedAbilityCustomTriggerBehavior
+        applyto: caster_companion
+        triggerName: Prompt Recovery
+        value: "1"
+      castImmediately: true
+      conditionFormula: Level >= 9 and Condition is "Bleeding" and HasAttacker and
+        Attacker.id = Self.id
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: ac54d54c-c57b-46b0-90c0-3e82368e3124
+      hasManualVersion: true
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      subject: other
+      targetType: self
+      trigger: inflictcondition
   - name: Longclaw Bloodletting Recovery (Companion)
     description: Your companion can also spend a Recovery.
     __typeName: CharacterModifier
@@ -324,6 +370,10 @@ features:
           - __typeName: ActivatedAbilityCustomTriggerBehavior
             triggerName: Prompt Recovery
             value: "1"
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            applyto: caster_summoner
+            triggerName: Prompt Recovery
+            value: "1"
           castImmediately: true
           conditionFormula: Level >= 9 and Target.Conditions has "Bleeding"
           display:
@@ -345,13 +395,56 @@ features:
           subject: self
           targetType: self
           trigger: dealdamage
+      - name: Longclaw Bloodletting Recovery
+        description: When you cause a creature to become bleeding, you can spend a
+          Recovery.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 8884a114-8df5-4e6c-b6c5-4ee624e8c7f2
+        source: Item
+        sourceguid: b6d86b16-5f1a-45b9-8433-9914f049846d
+        triggeredAbility:
+          name: Longclaw Bloodletting Recovery
+          description: You can spend a Recovery.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            triggerName: Prompt Recovery
+            value: "1"
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            applyto: caster_summoner
+            triggerName: Prompt Recovery
+            value: "1"
+          castImmediately: true
+          conditionFormula: Level >= 9 and Condition is "Bleeding" and HasAttacker
+            and Attacker.id = Self.id
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 1f71898b-18e8-4f15-ba47-b0cdd970bbca
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: other
+          targetType: self
+          trigger: inflictcondition
     guid: c2b086a3-5b53-473d-86b0-661ff657d6d8
     source: Item
     sourceguid: d0628d23-ff75-434d-b7fc-86d20eda60e9
   source: Item
 flavor: The arm-length claws jutting from your armor are your only weapon.
 iconid: d29f8109-a6d5-4392-bd91-1cd2bffd5096
-implementation: 2
+implementation: 4
 itemPrerequisite: The claws of a dragon
 keywords:
   Magic: true

@@ -7,7 +7,7 @@ category: Gear
 ctime: 1759400836901
 equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
 features:
-- name: BLance of the Sundered Star Extra Damage
+- name: Lance of the Sundered Star Extra Damage
   description: 1/2/3
   __typeName: CharacterFeature
   addText: Add Magical Property
@@ -43,8 +43,81 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Lance of the Sundered Star Skyward Step
+  description: When a weapon ability using this weapon pushes a target, you can shift after the push to end up beside them.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 859ac2b1-7289-4085-a234-ac71f39d8ee3
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  # The book grants a shift to any square adjacent to the pushed target; the closest the
+  # rules engine expresses is a shift capped at the wielder's own movement speed, which is
+  # enough to close a push of that distance. Opt-in, because the book says "you can".
+  - name: Lance of the Sundered Star Skyward Step
+    description: Shift up to your speed after the push, letting you end up adjacent to the target.
+    __typeName: CharacterModifier
+    activationCondition: false
+    addText: you shift {MovementSpeed}
+    behavior: power
+    displayCondition: Ability.HasForcedMovement
+    guid: 3c5070ee-d495-47ea-88b9-902a04a856f0
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 859ac2b1-7289-4085-a234-ac71f39d8ee3
+  source: Item
+- name: Lance of the Sundered Star Vertical Force
+  description: At 9th level, a push or slide from a weapon ability using this weapon can be vertical.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 5a74d84e-e1dd-42c8-9d24-8c42e99cdd90
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  # Two modifiers because replacePattern is a single literal: one rewrites "push" in the
+  # tier text to "vertical push", the other does the same for "slide".
+  - name: Lance of the Sundered Star Vertical Force
+    description: Make the push vertical.
+    __typeName: CharacterModifier
+    activationCondition: false
+    behavior: power
+    displayCondition: Ability.HasForcedMovement
+    filterCondition: Level >= 9
+    guid: df855d1f-84fc-41da-a9ed-6d7f699adde0
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    replacePattern: push
+    replaceText: vertical push
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 5a74d84e-e1dd-42c8-9d24-8c42e99cdd90
+  - name: Lance of the Sundered Star Vertical Force
+    description: Make the slide vertical.
+    __typeName: CharacterModifier
+    activationCondition: false
+    behavior: power
+    displayCondition: Ability.HasForcedMovement
+    filterCondition: Level >= 9
+    guid: 6f8b6a73-f70f-4055-a9fa-1e2ea9ec4680
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    replacePattern: slide
+    replaceText: vertical slide
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 5a74d84e-e1dd-42c8-9d24-8c42e99cdd90
+  source: Item
 flavor: This needlelike lance is cast of shimmering metal and induces a yearning for the skies in those who handle it.
 iconid: c6bdba73-39cb-41d3-9887-681abe15ee44
+implementation: 3
 itemPrerequisite: Night-blooming flower petals, a starmetal meteorite
 keywords:
   Magic: true

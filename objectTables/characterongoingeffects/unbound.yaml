@@ -1,0 +1,73 @@
+id: 2ff9504a-8c0f-40db-b861-efb5bcc90e6a
+name: Unbound
+description: You can move through the air as high as 3 squares above the ground from where you started. If you end your turn while you are still airborne, you fall.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1783900000000
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: 2ff9504a-8c0f-40db-b861-efb5bcc90e6a
+iconid: ui-icons/skills/1.png
+modifiers:
+- name: Unbound
+  description: You can move through the air.
+  __typeName: CharacterModifier
+  attribute: fly
+  behavior: attribute
+  guid: 758dbd98-dbe4-4c1e-b5b4-c4d76c023254
+  source: Ongoing Effect
+  sourceguid: 2ff9504a-8c0f-40db-b861-efb5bcc90e6a
+  value: 1
+# The 3-square ceiling is not something the engine can cap, so it is surfaced as a
+# reminder on the movement overlay instead.
+- name: Unbound
+  description: You can rise no higher than 3 squares above the ground from where you started.
+  __typeName: CharacterModifier
+  behavior: movementtext
+  color: green
+  filterCondition: MovementType = "fly"
+  guid: d19b5b6c-8c66-4a2c-8b13-3a06a22389f8
+  source: Ongoing Effect
+  sourceguid: 2ff9504a-8c0f-40db-b861-efb5bcc90e6a
+  text: You can move as high as 3 squares above the ground from where you started. If you end your turn airborne, you fall.
+# TryFall is a no-op for a creature standing on something solid, so this is safe even
+# when the altitude reading is a ledge rather than open air.
+- name: Unbound
+  description: If you end your turn while you are still airborne, you fall.
+  __typeName: CharacterModifier
+  behavior: trigger
+  guid: 9e009d35-9727-4eb4-b03a-de4eb5c4dad3
+  source: Ongoing Effect
+  sourceguid: 2ff9504a-8c0f-40db-b861-efb5bcc90e6a
+  triggeredAbility:
+    name: Unbound
+    description: If you end your turn while you are still airborne, you fall.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityFallBehavior
+    conditionFormula: Altitude > 0
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: f9a958b4-0b74-48aa-ad4e-a16164d5e591
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: endturn
+mtime: 1783900000000
+source: Ongoing Effect

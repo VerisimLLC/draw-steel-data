@@ -7,7 +7,98 @@ category: Gear
 ctime: 1775049225188
 echelon: 3
 equipmentCategory: 659f34f2-14d6-4e71-99c1-89d703d5ba48
+features:
+- name: Shifting Ring
+  description: Once per turn, you can use a maneuver to teleport up to 3 squares. Additionally, when targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: a6477134-8215-4c2c-a113-c96ddc931567
+  itemAttached: true
+  modifiers:
+  - name: Shifting Ring
+    description: Once per turn, you can use a maneuver to teleport up to 3 squares.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Shifting Ring
+      description: Once per turn, you can use a maneuver to teleport up to 3 squares.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: caster
+        rule: teleport 3
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 4d222201-03ab-4031-be6e-2571fb88d2df
+      iconid: ui-icons/skills/1.png
+      keywords:
+        Psionic: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: turn
+        resourceid: 9067abfc-9abe-4470-84b1-ebc0df1b5f7f
+    behavior: activated
+    guid: 9067abfc-9abe-4470-84b1-ebc0df1b5f7f
+    resourceRefreshType: turn
+    source: Item
+    sourceguid: a6477134-8215-4c2c-a113-c96ddc931567
+  # The teleport trigger cannot tell the ring's own teleport from someone else's, so
+  # the once-per-turn charge is what stops the bonus hop from chaining off itself.
+  - name: Shifting Ring
+    description: When targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 17608c1f-2038-4ff3-a2f2-49ecae27d6bf
+    resourceRefreshType: turn
+    source: Item
+    sourceguid: a6477134-8215-4c2c-a113-c96ddc931567
+    triggeredAbility:
+      name: Shifting Ring
+      description: When targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: caster
+        rule: teleport 3
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: fe11e622-09b6-4c50-864b-b1a468077798
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: teleport
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: turn
+        resourceid: 17608c1f-2038-4ff3-a2f2-49ecae27d6bf
+  source: Item
 flavor: This silvery metal ring seems to momentarily vanish when observed from certain angles.
+implementation: 3
 itemPrerequisite: One-third of a pound of diamond dust, one nugget of pure silver
 keywords:
   Psionic: true

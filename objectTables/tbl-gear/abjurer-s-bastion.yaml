@@ -71,6 +71,195 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Abjurer's Bastion Field of Protection
+  description: Use a maneuver to create an immobile field of protection. While in the area, the protected creature has damage immunity 5. The field disappears at the start of your next turn.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 8ec3cc82-ea6f-405f-b95d-25806c4de3da
+  implementation: 3
+  implementationDetails: Two level-gated versions of the same maneuver - a 1 cube within 5 squares from 5th level, a 3 cube within 10 squares from 9th. The requirement that you have already dealt rolled damage with a magic or psionic ability this turn is not enforced, so the maneuver is always offered.
+  itemAttached: true
+  modifiers:
+  - name: Abjurer's Bastion Field of Protection
+    description: Create an immobile 1 cube field of protection around yourself or an ally within 5 squares.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Field of Protection
+      description: Create an immobile field of protection that is a 1 cube, around yourself or around an ally within 5 squares. While in the area, the chosen creature has damage immunity 5. The field disappears at the start of your next turn.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        applyto: targets
+        aura:
+          name: Field of Protection
+          description: You and each ally in the area have damage immunity 5.
+          __typeName: Aura
+          applyto: selfandfriends
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 84b20744-5240-4979-ab19-58375f7b493f
+          implementation: 4
+          modifiers:
+          - name: Field of Protection
+            description: You have damage immunity 5.
+            __typeName: CharacterModifier
+            behavior: resistance
+            guid: 21dc8c0b-73d2-4daf-90cd-aa5116e16bf1
+            resistances:
+            - __typeName: ResistanceEntry
+              apply: Damage Reduction
+              damageType: all
+              dr: "5"
+            source: Aura
+            sourceguid: 84b20744-5240-4979-ab19-58375f7b493f
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        duration: nextturn
+        grow: 0
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: d1f391b7-7116-4582-9928-6cfa9b63fa5b
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 5
+      repeatTargets: false
+      selfTarget: true
+      strain: []
+      targetAllegiance: ally
+      targetType: target
+    behavior: activated
+    filterCondition: Level >= 5 and Level < 9
+    guid: ea44d1c9-cf23-4fde-bbb3-0a829af41e59
+    source: Item
+    sourceguid: 8ec3cc82-ea6f-405f-b95d-25806c4de3da
+  - name: Abjurer's Bastion Field of Protection
+    description: Create an immobile 3 cube field of protection anywhere within 10 squares of you.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Field of Protection
+      description: Create an immobile field of protection that is a 3 cube, placed anywhere within 10 squares of you. You and each ally in the area have damage immunity 5. The field disappears at the start of your next turn.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        applyto: targets
+        aura:
+          name: Field of Protection
+          description: You and each ally in the area have damage immunity 5.
+          __typeName: Aura
+          applyto: selfandfriends
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3aacd8ef-5bf5-420a-83fe-c123c3a46c85
+          implementation: 4
+          modifiers:
+          - name: Field of Protection
+            description: You have damage immunity 5.
+            __typeName: CharacterModifier
+            behavior: resistance
+            guid: 670c831c-060a-457b-903f-3bc1c5981d4f
+            resistances:
+            - __typeName: ResistanceEntry
+              apply: Damage Reduction
+              damageType: all
+              dr: "5"
+            source: Aura
+            sourceguid: 3aacd8ef-5bf5-420a-83fe-c123c3a46c85
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        duration: nextturn
+        grow: 1
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: a3fb17d9-3ef3-4b27-bd91-04d3408637d7
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence: []
+      range: 10
+      repeatTargets: false
+      strain: []
+      targetType: anyspace
+    behavior: activated
+    filterCondition: Level >= 9
+    guid: 16ab80ac-c8ee-4569-bd10-b6c32f16ba43
+    source: Item
+    sourceguid: 8ec3cc82-ea6f-405f-b95d-25806c4de3da
+  source: Item
+- name: Abjurer's Bastion Shared Ward
+  description: Whenever you deal rolled damage to a creature using a magic or psionic ability, each ally within 5 squares of you gains temporary Stamina equal to your highest characteristic score.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 4d6e4b30-3141-4ee1-bcf8-fcfd3b3aa849
+  implementation: 4
+  implementationDetails: Only allies are covered here; your own temporary Stamina already comes from the 1st-level property.
+  itemAttached: true
+  modifiers:
+  - name: Abjurer's Bastion Shared Ward
+    description: Each ally within 5 squares of you gains temporary Stamina equal to your highest characteristic score.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 9
+    guid: aaf95162-32da-497f-8819-6ed54d5a3d07
+    source: Item
+    sourceguid: 4d6e4b30-3141-4ee1-bcf8-fcfd3b3aa849
+    triggeredAbility:
+      name: Abjurer's Bastion Shared Ward
+      description: Each ally within 5 squares gains temporary Stamina equal to your highest characteristic score.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        chatMessage: Abjurer's Bastion
+        stamina: Caster.HighestCharacteristic
+      castImmediately: true
+      conditionFormula: Used Ability.doesdamage and (Used Ability.Keywords has "magic" or Used Ability.Keywords has "psionic")
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: f111c5ae-2dd8-47ab-994d-c42bb14b59a2
+      hasManualVersion: false
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: false
+      persistence:
+        enabled: false
+      range: 5
+      repeatTargets: false
+      strain: []
+      targetAllegiance: ally
+      targetType: all
+      trigger: useability
+  source: Item
 flavor: An ornate ring is set with a large diamond that swirls with blue light, and whose inner surface is etched with protective runes.
 iconid: 55d8b440-204f-40b2-a558-4157113c0a7a
 implementation: 3

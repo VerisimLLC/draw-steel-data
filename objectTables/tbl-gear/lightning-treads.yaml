@@ -60,8 +60,103 @@ features:
     sourceguid: 1e27d9ae-c165-4188-92ca-19dae3250b32
     value: 2
   source: Item
+- name: Lightning Treads Momentum
+  description: At 5th level, each square you moved this turn adds 1 extra lightning damage, capped so the treads' total extra damage does not exceed 4 (6 at 9th level).
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 997db852-ba34-43f2-a74e-5a3f3b44b8d4
+  implementation: 4
+  itemAttached: true
+  modifiers:
+  # The base treads bonus is already 2 at 5th level and 3 at 9th, so this ramp is capped at
+  # 2 / 3 to land on the printed maximums of 4 and 6.
+  - name: Lightning Treads Momentum
+    description: Each square you moved this turn adds 1 extra lightning damage, up to the treads' maximum.
+    __typeName: CharacterModifier
+    activationCondition: "1"
+    behavior: power
+    damageModifier:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "0"
+        threshold: 1
+      - script: MovedThisTurn when MovedThisTurn <= 2 else 2
+        threshold: 5
+      - script: MovedThisTurn when MovedThisTurn <= 3 else 3
+        threshold: 9
+      field: Level
+    damageModifierType: lightning
+    displayCondition: Level >= 5
+    filterCondition: Level >= 5
+    guid: bd621d06-9350-45c6-8dc8-ca97ec1b2521
+    keywords:
+      Melee: true
+      Weapon: true
+    modtype: none
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 997db852-ba34-43f2-a74e-5a3f3b44b8d4
+  source: Item
+- name: Lightning Treads Flying Kick
+  description: At 9th level, use a maneuver to kick one adjacent creature, pushing them up to 5 squares. You can then move to any square adjacent to the target.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b3b64eb9-4a4d-4ca7-82da-d20923d66909
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Lightning Treads Flying Kick
+    description: At 9th level, use a maneuver to kick one adjacent creature, pushing them up to 5 squares. You can then move to any square adjacent to the target.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Lightning Treads Flying Kick
+      description: Perform a flying lightning kick on one adjacent creature. That target is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: push 5
+      # The follow-up is a plain move of up to 5, which is enough to land adjacent to a
+      # target you just pushed 5 squares.
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        invokeOnCaster: true
+        promptText: Move to a square adjacent to the target
+        standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+        standardAbilityParams:
+          distance: "5"
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: ee72d583-4d58-49c1-bba1-47fa9dc0ce49
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      modifiers: []
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: target
+    behavior: activated
+    filterCondition: Level >= 9
+    guid: e6bb09c4-c850-415a-a546-5304c449a263
+    source: Item
+    sourceguid: b3b64eb9-4a4d-4ca7-82da-d20923d66909
+    suppressOthers: false
+  source: Item
 flavor: Sparks strike from these boots whenever they touch the ground, increasing in number as the wearer gathers speed.
 iconid: ece9578f-c400-4529-8345-e0febfe2daf8
+implementation: 4
 itemPrerequisite: One jar of lightning
 keywords:
   Feet: true

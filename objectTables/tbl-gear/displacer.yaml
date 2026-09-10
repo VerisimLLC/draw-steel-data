@@ -43,8 +43,68 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Displacer Trade Places
+  description: After you deal rolled damage to a creature, you can use a maneuver to teleport and trade places with it. The range grows with the weapon's level.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 747256d7-7a84-4bcf-bd95-d8459a8be92a
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Displacer Trade Places
+    description: After you deal rolled damage to a creature, you can use a maneuver to teleport and trade places with it. The range grows with the weapon's level.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Displacer Trade Places
+      description: |-
+        **1st Level:** After you deal rolled damage to a creature, trade places with it, provided you both fit into each other's spaces.
+        **5th Level:** You can instead trade places with any creature within 4 squares of the one you damaged (range 5).
+        **9th Level:** You can instead trade places with any creature within 8 squares of the one you damaged (range 9).
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: swap places with the target
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 2bdbe6a5-0dc3-4c95-b921-c7162e670ac3
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      # The book states the 5th/9th ranges relative to the creature you damaged; melee reach
+      # plus that 4/8 squares gives the flat 1/5/9 range used here.
+      range:
+        id: table
+        __typeName: GoblinScriptTable
+        editableField: true
+        entries:
+        - script: "1"
+          threshold: 1
+        - script: "5"
+          threshold: 5
+        - script: "9"
+          threshold: 9
+        field: Level
+      repeatTargets: false
+      strain: []
+      targetType: target
+    behavior: activated
+    guid: 0bea6714-a5e1-49d7-a9f3-f034452c67c9
+    source: Item
+    sourceguid: 747256d7-7a84-4bcf-bd95-d8459a8be92a
+    suppressOthers: false
+  source: Item
 flavor: This crystal battleaxe seems to pull at the hands that wield it, as if anxious to leap across the battlefield.
 iconid: de48a745-de9d-447e-a38b-992c43b8f6ae
+implementation: 3
 itemPrerequisite: An ancient bronze gear covered in indecipherable runes
 keywords:
   Medium Weapon: true

@@ -14,8 +14,49 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: 6c5de15f-06bb-4bf1-93b2-685804a1c2ea
+  implementation: 3
+  implementationDetails: Rides on the same fall trigger as the Falling global rule and adds the difference between the item's 3-per-square/75 cap and the standard 2-per-square/50 cap. Falling twice as fast has no mechanical effect to model.
   itemAttached: true
-  modifiers: []
+  modifiers:
+  - name: Extra Fall Damage
+    description: While holding the Deadweight, you fall twice as fast, taking an extra 1 damage for each square you fall (to a maximum of 75 total damage from a single fall).
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: be478c5f-212e-467a-ba8f-64fcfd9e83b2
+    source: Item
+    sourceguid: 6c5de15f-06bb-4bf1-93b2-685804a1c2ea
+    triggeredAbility:
+      name: Extra Fall Damage
+      description: You take an extra 1 damage for each square you fall, to a maximum of 75 total damage from a single fall.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        chatMessage: Deadweight Falling Damage
+        filterTarget: (speed - Fall Reduction) >= 2 and Target.InWater = 0
+        roll: Min(75, (speed - Fall Reduction)*3) - Min(50, (speed - Fall Reduction)*2)
+      - __typeName: ActivatedAbilityDamageBehavior
+        chatMessage: Deadweight Falling Damage - Landed in Water
+        filterTarget: ((speed-4) - Fall Reduction) >= 2 and Target.InWater = 1
+        roll: Min(75, ((speed-4) - Fall Reduction)*3) - Min(50, ((speed-4) - Fall Reduction)*2)
+      castImmediately: true
+      conditionFormula: Stop Fall Damage < 1
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: d49a0785-26bd-4bec-b6bb-ca29efeb6f50
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 5
+      repeatTargets: false
+      strain: []
+      targetFilter: ""
+      targetType: self
+      trigger: fall
   source: Item
 - name: Falling Free Strike
   description: If you fall 5 or more squares this way, you can make a melee free strike as a free maneuver once during the fall before you hit the ground.
@@ -84,6 +125,7 @@ features:
   source: Item
 flavor: Though this humanoid femur is coated in lead, it feels impossibly heavy for its size.
 iconid: fa43e642-8f04-47dc-9db8-4083291fbd69
+implementation: 3
 itemPrerequisite: One humanoid femur, one bar of lead laced with starmetal
 keywords:
   Magic: true

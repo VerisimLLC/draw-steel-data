@@ -30,57 +30,35 @@ features:
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         customAbility:
-          name: Invoked Ability
+          name: Free Strike
           description: ""
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            customAbility:
-              name: Free Strike
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityDamageBehavior
-                chatMessage: Monster Free Strike
-                roll: Free Strike Damage + <<characteristicbonus>>
-              castImmediately: true
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: f2515d32-8296-4a04-85c3-fa525c4f85cc
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              objectTarget: false
-              persistence: []
-              range: "5"
-              repeatTargets: false
-              strain: []
-              targetType: target
-            promptText: Make free strike against nearest ally
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Monster Free Strike
+            roll: Free Strike Damage + <<characteristicbonus>>
+          castImmediately: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 8655ad6d-ba14-49aa-95d2-a68ac489bfe3
+          guid: f2515d32-8296-4a04-85c3-fa525c4f85cc
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
           objectTarget: false
           persistence: []
-          range: "100"
+          range: "5"
           repeatTargets: false
           strain: []
           targetType: target
-        promptText: Select the creature you attacked
+        promptText: Make free strike against nearest ally
         standardAbilityParams:
           characteristicbonus: "{max(Reason, max(Intuition, Presence))}"
-      conditionFormula: (Ability.Keywords has "Magic" or Ability.Keywords has "psionic") and Tier Three
+      castImmediately: true
+      conditionFormula: HasCast and HasAbility and (Ability.Keywords has "Magic" or Ability.Keywords has "Psionic") and Cast.TierForTarget(Target) = 3
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -95,8 +73,8 @@ features:
       repeatTargets: false
       strain: []
       subject: self
-      targetType: self
-      trigger: rollpower
+      targetType: target
+      trigger: dealdamage
   source: Item
 iconid: 3aa4267b-8f95-48f5-8d92-8d9b88908c04
 imbueLevel: 1

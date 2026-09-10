@@ -43,8 +43,107 @@ features:
     source: Item
     sourceguid: ec93c3b3-1829-43b8-8535-eb9a43ac51a0
   source: Item
+- name: Ether-Fueled Vessel Insubstantial
+  description: When you deal rolled damage with a magic or psionic ability, the target becomes insubstantial until the end of their next turn and can't make opportunity attacks.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: e77fcb28-64c9-43fe-a9cd-ae9ba69c85fc
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Ether-Fueled Vessel Insubstantial
+    description: When you deal rolled damage with a magic or psionic ability, the target becomes insubstantial until the end of their next turn and can't make opportunity attacks.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: a6cc5f8f-1297-4b0b-b577-02c6ee4bf42a
+    source: Item
+    sourceguid: e77fcb28-64c9-43fe-a9cd-ae9ba69c85fc
+    triggeredAbility:
+      name: Ether-Fueled Vessel
+      description: The damaged creature becomes insubstantial to you until the end of their next turn.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: end_of_next_turn
+        ongoingEffect: 34bd6958-2297-4dab-9878-7829a6efbef3
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      castImmediately: true
+      # "Keywords" here are the keywords of the damage event itself, so this covers any
+      # magic or psionic ability that rolled damage.
+      conditionFormula: hasrolleddamage and (Keywords has "Magic" or Keywords has "Psionic")
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 36c4f63c-b06f-42d5-998b-0a2339672892
+      iconid: ui-icons/skills/1.png
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: target
+      trigger: dealdamage
+  source: Item
+- name: Ether-Fueled Vessel Ghost Step
+  description: At 5th level, when you move through an insubstantial creature you can use a free triggered action to deal damage equal to your highest characteristic score, ending the insubstantial effect.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: afe11e22-717b-4ab2-96cb-8992cb2f8615
+  implementation: 3
+  itemAttached: true
+  modifiers:
+  - name: Ether-Fueled Vessel Ghost Step
+    description: At 5th level, when you move through an insubstantial creature you can use a free triggered action to deal damage equal to your highest characteristic score, ending the insubstantial effect.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level >= 5
+    guid: 235fe0ef-9dcd-431a-904e-99b8d7a614a0
+    source: Item
+    sourceguid: afe11e22-717b-4ab2-96cb-8992cb2f8615
+    triggeredAbility:
+      name: Ether-Fueled Vessel Ghost Step
+      description: Deal damage equal to your highest characteristic score to the creature you moved through. The insubstantial effect then ends.
+      __typeName: TriggeredAbility
+      abilityType: none
+      actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: targets
+        chatMessage: Ether-Fueled Vessel
+        damageType: untyped
+        roll: HighestCharacteristic
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: 34bd6958-2297-4dab-9878-7829a6efbef3
+      conditionFormula: Target.OngoingEffects has "Insubstantial"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 8421c848-e4f6-48ee-b3ec-70e2736e7def
+      iconid: ui-icons/skills/1.png
+      mandatory: false
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: target
+      trigger: movethrough
+      triggerPrompt: Deal damage equal to your highest characteristic and end the insubstantial effect.
+  source: Item
 flavor: This bronze bottle has been shaped into the form of a ghostly figure.
 iconid: 45c2c8c9-aba0-446b-b7be-321db0328ad2
+implementation: 3
 itemPrerequisite: Incense distilled from the essence of ether
 keywords:
   Implement: true

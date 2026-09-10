@@ -28,36 +28,12 @@ features:
       __typeName: TriggeredAbility
       abilityType: none
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            filterTarget: ""
-            guid: 1df8a7ea-63e6-45c5-833f-4a9ce195199d
-            ongoingEffect: afc47b1e-192e-4330-81d8-490555bd2a61
-            ongoingEffectCustom: afc47b1e-192e-4330-81d8-490555bd2a61
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 5df3cbea-5e92-4c03-90c4-de72d7b4ed4f
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          objectTarget: false
-          persistence: []
-          range: "100"
-          repeatTargets: false
-          strain: []
-          targetType: target
-        promptText: Select creature you damaged to apply the effects of Lingering I
-      conditionFormula: Used Ability.doesdamage and (Used Ability.Keywords has "magic" or Used Ability.Keywords has "psionic") and cast.tier = 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        guid: 1df8a7ea-63e6-45c5-833f-4a9ce195199d
+        ongoingEffect: afc47b1e-192e-4330-81d8-490555bd2a61
+        ongoingEffectCustom: afc47b1e-192e-4330-81d8-490555bd2a61
+      castImmediately: true
+      conditionFormula: HasCast and HasAbility and (Ability.Keywords has "Magic" or Ability.Keywords has "Psionic") and Cast.TierForTarget(Target) = 3
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -68,13 +44,12 @@ features:
       modifiers: []
       numTargets: "1"
       persistence: []
-      range: ""
+      range: 1
       repeatTargets: false
       strain: []
       subject: self
-      targetFilter: ""
-      targetType: self
-      trigger: useability
+      targetType: target
+      trigger: dealdamage
   - name: Lingering I
     description: Whenever you damage a creature using a magic or psionic ability and obtain a tier 3 outcome, that creature takes 8 damage at the start of your next turn.
     __typeName: CharacterModifier
@@ -95,7 +70,7 @@ features:
 imbueLevel: 5
 imbuePrereq: none
 imbueTargetType: implement
-implementation: 3
+implementation: 4
 itemPrerequisite: Slow-acting poison refined from rare fungi
 mtime: 1774703388710
 projectGoal: "150"
