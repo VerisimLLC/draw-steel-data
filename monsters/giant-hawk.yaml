@@ -190,7 +190,7 @@ info:
         sourceguid: 8d22bbaa-6965-4cd6-9710-247e451a72b1
         triggeredAbility:
           name: Mounted Platform
-          description: Once per turn when the hawk moves, any creature riding the hawk can make a free strike druing or after the movement.
+          description: Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
@@ -232,7 +232,7 @@ info:
           strain: []
           targetType: self
           trigger: move
-          triggerPrompt: Once per turn when the hawk moves, any creature riding the hawk can make a free strike druing or after the movement.
+          triggerPrompt: Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.
           usageLimitOptions:
             charges: "1"
             resourceRefreshType: turn
@@ -251,9 +251,7 @@ info:
     initiativeGrouping: 443eb684-cc86-4daa-acb8-7a93bfd5c2ca
     innateActivatedAbilities:
     - name: Talons
-      description: |2-
-
-        **2 Malice**: If this ability gains an edge or has a double edge, it deals an  extra 2 damage.
+      description: "*2 Malice:* If this ability gains an edge or has a double edge, it deals an extra 2 damage."
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -266,16 +264,16 @@ info:
         - 9 damage; grabbed
       - __typeName: ActivatedAbilityModifyPowerRollBehavior
         guid: 6b06aa4b-cd18-421d-84ba-6847cc680624
+        modesSelected:
+        - 2
         modifier:
-          name: Spend 2 Malice
-          description: Spend 2 Malice and if this ability gains an edge or has a double edge, it deals an extra 2 damage.
+          name: "Talons: 2 Malice"
+          description: If this ability gains an edge or has a double edge, it deals an extra 2 damage.
           __typeName: CharacterModifier
-          activationAfterRoll: false
-          activationCondition: ""
-          adjustments: []
+          activationCondition: true
           behavior: power
           damageModifier: "2"
-          displayCondition: Caster.Heroic Resources Available to Spend >= 2
+          displayCondition: ""
           domains: []
           guid: 2bd2da0b-fb0b-448b-a521-fd6b99986a9d
           keywords: []
@@ -298,15 +296,19 @@ info:
         Strike: true
         Weapon: true
       modeList:
-      - text: Standard
-      - rules: If this ability gains an edge or has a double edge, it deals an extra 2 damage.
-        text: 2 Mode
+      - text: Normal
+      - condition: Heroic Resources Available to Spend >= 2
+        rules: If this ability gains an edge or has a double edge, it deals an extra 2 damage.
+        text: 2 Malice
       modifiers: []
-      multipleModes: false
+      multipleModes: true
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when Mode = 2 else 0
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
@@ -347,7 +349,6 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: b1443033-8719-49a1-a19d-c42721ff7652
       hasCustomIcon: true
