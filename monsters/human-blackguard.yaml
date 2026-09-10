@@ -174,7 +174,7 @@ info:
       domains:
         CharacterFeature:1991a87c-a8b5-458b-a530-bbfc2d223247: true
       guid: 1991a87c-a8b5-458b-a530-bbfc2d223247
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Parry!
         description: ""
@@ -511,7 +511,7 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
-        applyto: targets
+        autoTarget: false
         customAbility:
           name: Invoked Ability
           description: ""
@@ -523,18 +523,17 @@ info:
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
+          guid: dca70ec8-cda4-436a-98df-7a20b2876a72
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
           range: 1
           repeatTargets: false
           targetType: self
-        promptText: The blackguard shifts up to their speed.
+        promptText: Shift before the first Zweihander Swing, or choose not to move yet.
         standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
         standardAbilityParams:
-          distance: walking speed
-          targetfilter: ""
+          distance: <<MovementSpeed>>
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         customAbility:
@@ -548,7 +547,7 @@ info:
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
+          guid: eff41104-e950-4d9e-a883-566ced7817e0
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
@@ -558,8 +557,10 @@ info:
         invokeOnCaster: false
         namedAbility: Zweihander Swing
         promptText: First Zweihander Swing
+        suppressInvokedActionCost: true
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
+        autoTarget: false
         customAbility:
           name: Invoked Ability
           description: ""
@@ -571,18 +572,18 @@ info:
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 81aaa1b3-e17e-4118-95b8-83d2ed5516fb
+          guid: 4667c05d-b6c5-4210-bba3-76f3abb07f27
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
           range: 1
           repeatTargets: false
           targetType: self
-        guid: b2ac7b23-8ad4-4f49-8568-c9e3284f1663
-        promptText: You may continue shifting
+        promptText: Continue shifting before the second Zweihander Swing, or choose not to move yet.
         standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
         standardAbilityParams:
-          targetfilter: walking speed
+          distance: <<Max(0, MovementSpeed - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < MovementSpeed
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         customAbility:
@@ -596,7 +597,7 @@ info:
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: e3cbf807-5bb9-4208-9a11-33b2d5454487
+          guid: 6fe83d1a-234c-4180-86ed-5d040376afe0
           iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
@@ -606,6 +607,33 @@ info:
         guid: c370a587-c056-437d-9159-842b33750201
         namedAbility: Zweihander Swing
         promptText: Second Zweihander Swing
+        suppressInvokedActionCost: true
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 2fa1f3e3-1ec1-4e54-a186-cc0958cc1166
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        promptText: Finish any remaining shift after the second Zweihander Swing.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: <<Max(0, MovementSpeed - Cast.SpacesMoved)>>
+        filterTarget: Cast.SpacesMoved < MovementSpeed
       castImmediately: true
       categorization: Villain Action
       display:
@@ -613,12 +641,12 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 4bcf8499-746e-4f45-b91c-71fcc0397c0c
       hasCustomIcon: true
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 2
+      implementation: 4
+      implementationDetails: The three shift prompts share the cast's movement total, allowing the blackguard to divide one shift up to their speed before, between, and after two free Zweihander Swing uses.
       keywords: []
       modifiers: []
       numTargets: 1
@@ -631,7 +659,11 @@ info:
         page: 184
       strain: []
       targetType: self
-      usageLimitOptions: "{'multicharge': False, 'resourceid': '3d267b38-000c-4063-a64"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 45862fee-57a4-4fb3-ab4c-e7c095403777
       villainAction: Villain Action 1
     - name: Back!
       description: The blackguard slides each target up to 5 squares
@@ -649,7 +681,6 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: de6a2aa1-ad99-4e9c-95b1-00ed41676c61
       hasCustomIcon: true
@@ -673,7 +704,11 @@ info:
       targetFilter: ""
       targetTextOverride: Each enemy in the area
       targetType: all
-      usageLimitOptions: "{'multicharge': False, 'resourceid': 'ac1a969c-edfb-46b2-b9e"
+      usageLimitOptions:
+        charges: "1"
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: b438af2a-ea1e-480e-bffc-be93ad478eee
       villainAction: Villain Action 2
     - name: I Can Throw My Blade and So Should You!
       description: The blackguard uses their Zweihander Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).
@@ -681,111 +716,54 @@ info:
       abilityType: none
       actionResourceId: none
       behaviors:
-      - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-        modifier:
-          name: Modify Attack
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + 3
+        tiers:
+        - 3 damage; M<1, slowed (save ends)
+        - 6 damage; M<2, slowed (save ends)
+        - 8 damage; M<3, slowed (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: proximity_only
+        autoTarget: false
+        customAbility:
+          name: Invoked Ability
           description: ""
-          __typeName: CharacterModifier
-          ability:
-            name: New Ability
-            description: ""
-            __typeName: ActivatedAbility
-            abilityModification: true
-            abilityType: none
-            behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors:
-                - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                  abilityType: standard
-                  customAbility:
-                    name: Invoked Ability
-                    description: ""
-                    __typeName: ActivatedAbility
-                    abilityType: none
-                    behaviors: []
-                    display:
-                      bgcolor: "#ffffffff"
-                      brightness: 1
-                      hueshift: 0
-                      saturation: 1
-                    guid: 8d15618b-3b89-4f3d-85e1-a8d336352d63
-                    iconid: ui-icons/skills/1.png
-                    modifiers: []
-                    numTargets: "1"
-                    range: 1
-                    repeatTargets: false
-                    targetType: self
-                  promptText: Free Strike
-                  runOnController: true
-                  standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-                categorization: Hidden
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: 99e06312-34e3-4c01-8ea8-d51785b7403b
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                numTargets: Count Nearby Enemies(15)
-                objectTarget: false
-                persistence: []
-                range: "15"
-                repeatTargets: false
-                sourceReference:
-                  __typeName: SourceReference
-                  docid: cc66844a-04d0-49a0-8687-65ef83b15363
-                  page: 184
-                strain: []
-                targetAllegiance: ally
-                targetType: target
-              promptText: Select Allies within 5 squares of target area
-            display:
-              bgcolor: "#ffffffff"
-              brightness: 1
-              hueshift: 0
-              saturation: 1
-            guid: 7cfe3d3c-560b-4bea-9c1e-e67c43f46f15
-            iconid: ui-icons/skills/1.png
-            modifiers: []
-            numTargets: "1"
-            range: 1
-            repeatTargets: false
-            strain: []
-            targetType: self
-          attributes:
-          - id: targettype
-            allegiance: enemy
-            operation: targeting
-            radius: "3"
-            targeting: cube
-            value: ""
-          - id: range
-            operation: Set
-            value: "5"
-          behavior: modifyability
-          cannotModifyAction: true
-          filterAbility: Ability.name is Zweihander Swing
-          guid: d07b1311-f22e-4c78-956c-60783bcbb1c3
-          mustPayResourceCost: true
-          source: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 596a4d44-c8d9-48e8-accb-6f3fddf8dcf2
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        filterTarget: Friends(Self, Caster) and not (Self = Caster)
+        promptText: Make a free strike against one target of the blackguard's Zweihander Swing.
+        promptWhenResolving: true
+        promptWhenResolvingText: Choose allies within 5 squares of the area to make one free strike each.
+        runOnController: true
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+        target_proximity_range: "5"
+        targeting: prompt_inherit
       categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: true
       flavor: ""
       guid: 2d79e042-684e-46f4-9585-2c8216bea713
       hasCustomIcon: true
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 2
+      implementation: 4
+      implementationDetails: Allies within 5 squares of the area are collected once. Each selected ally can make one free strike against one of the original targets.
       keywords:
         Area: true
         Magic: true
@@ -794,16 +772,16 @@ info:
       modifiers: []
       numTargets: "1"
       persistence: []
-      range: 1
-      rangeTextOverride: 3 cube within 5 squares
+      radius: 3
+      range: 5
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 184
       strain: []
-      targetTextOverride: Each enemy in the area
-      targetType: self
+      targetAllegiance: enemy
+      targetType: cube
       usageLimitOptions:
         charges: "1"
         multicharge: false
