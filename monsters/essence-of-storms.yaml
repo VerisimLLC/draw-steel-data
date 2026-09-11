@@ -73,81 +73,137 @@ info:
       domains:
         CharacterFeature:169d064f-90e0-4549-977e-15f1f0188eb6: true
       guid: 169d064f-90e0-4549-977e-15f1f0188eb6
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Fickle and Free
+        description: The essence can't be restrained, slowed, or knocked prone.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 2989a051-204f-442e-967d-edafc2dd5e43
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        domains:
+          CharacterFeature:169d064f-90e0-4549-977e-15f1f0188eb6: true
+        guid: 0c617f65-9235-4c4c-8c01-73c90281399f
+        source: Trait
+        sourceguid: 169d064f-90e0-4549-977e-15f1f0188eb6
+      - name: Fickle and Free
+        description: The essence ignores difficult terrain.
+        __typeName: CharacterModifier
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        behavior: attribute
+        domains:
+          CharacterFeature:169d064f-90e0-4549-977e-15f1f0188eb6: true
+        guid: aa023892-5d6b-4922-8d15-2f646f50eb4a
+        source: Trait
+        sourceguid: 169d064f-90e0-4549-977e-15f1f0188eb6
+        value: 1
       source: Trait
+    - name: Thunderclap
+      description: |-
+        **1 Malice.** Trigger: A creature within distance deals damage to the essence.
+
+        Effect: The target takes 5 lightning damage.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:cf34d688-a606-45c4-9c6b-fc2f61ac9f79: true
+      guid: cf34d688-a606-45c4-9c6b-fc2f61ac9f79
+      implementation: 4
+      modifiers:
+      - name: Thunderclap
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Thunderclap
+          __typeName: TriggeredAbilityDisplay
+          cost: 1 Malice
+          distance: Ranged 5
+          effect: The target takes 5 lightning damage.
+          guid: a396aba1-2c58-4cd0-bb8e-35429973cddf
+          keywords:
+            Magic: true
+            Ranged: true
+          target: The triggering creature
+          trigger: A creature within distance deals damage to the essence.
+          type: trigger
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:cf34d688-a606-45c4-9c6b-fc2f61ac9f79: true
+        guid: 2c8c5ea2-5437-42fb-9575-d94db435a00c
+        source: Trait
+        sourceguid: cf34d688-a606-45c4-9c6b-fc2f61ac9f79
+      - name: Thunderclap
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:cf34d688-a606-45c4-9c6b-fc2f61ac9f79: true
+        guid: 3241a764-6791-4ab8-b59a-fa107301dead
+        source: Trait
+        sourceguid: cf34d688-a606-45c4-9c6b-fc2f61ac9f79
+        triggeredAbility:
+          name: Thunderclap
+          description: The target takes 5 lightning damage.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: 5 lightning damage
+            damageType: lightning
+            roll: "5"
+            titleText: Thunderclap
+          conditionFormula: HasAttacker
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c851e75b-9a8a-4dc4-80b9-de2178b238e4
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Magic: true
+            Ranged: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          strain: []
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: "**Thunderclap (1 Malice):** A creature within 5 squares dealt damage to the essence. The essence can use a triggered action to deal 5 lightning damage to them."
+      source: Trait
+      tags:
+        Trigger: true
     cr: 3
     creatureSize: 1S
     damage_taken: 0
     equipment: []
     ev: 20
     groupid: 49b3126a-b109-4534-95a4-925d621463aa
-    import:
-      data: |+
-        Essence of Storms	Level 3 Elite Harrier
-        Elemental	EV 20
-        <b>Stamina</b> 100	<b>Immunity</b> lightning 5
-        <b>Speed</b> 8 (fly)	<b>Size</b> 1S /<b> Stability</b> 0
-        <b>	Free Strike</b> 5
-        Might +1	Agility +2	Reason -1	Intuition 0	Presence +2
-        <b>Bluster</b> (Action) %E2%97%86 2d10 + 2 %E2%97%86 Signature
-        <b>Keywords</b> Area, Magic, Melee
-        <b>Distance</b> 1 burst<b>	Target</b> All enemies in the burst
-        %E2%9C%A6	<b>%E2%89%A411</b>	5 damage
-        %E2%98%85	<b>12%E2%80%9316</b>	5 damage; 4 lightning damage; push 1
-        %E2%9C%B8	<b>17</b>	5 damage; 7 lightning damage; push 3
-        <b>Effect</b> The essence shifts 3 before or after using this ability.
-
-        <b>Convocation of Squalls</b> (Maneuver)
-        <b>Keywords</b> Magic, Ranged
-        <b>Distance</b> Ranged 5<b>	Target</b> Self or 1 elemental
-        <b>Effect</b> The target receives lightning immunity 5 until the start of the essence's next turn if they don't already have it.
-        <b>3 Malice</b> The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target's turns, the target can select 1 creature within the aura to push 5.
-
-        <b>Thunderclap</b> (Triggered Action) %E2%97%86 1 Malice
-        <b>Keywords</b> Magic, Melee, Ranged
-        <b>Distance</b> Melee 1 or Ranged 5	<b>Target</b> 1 creature or object
-        <b>Trigger</b> The essence takes damage from the target.
-        <b>Effect</b> The essence deals 5 lightning damage to the target.
-
-        <b>Fickle and Free</b>
-        The essence can't be restrained, slowed, or knocked prone, and they ignore difficult terrain.
-
-      type: mcdm
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Bluster
-      description: The essence shifts 3 before or after using this ability.
+      description: The essence shifts up to 3 squares before or after using this ability.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         applyto: caster
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: a8ace4c2-122c-4358-b5ce-630ab973b0ad
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
+        guid: 68a03384-1a3f-4077-bb4f-56e86194f84f
         modesSelected:
         - 1
-        promptText: Shift the Essence now, before using Bluster ability
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        standardAbilityParams:
-          distance: "3"
+        promptWhenResolving: true
+        promptWhenResolvingText: The essence shifts up to 3 squares before Bluster.
+        rule: shift 3
       - __typeName: ActivatedAbilityPowerRollBehavior
         promptWhenResolving: true
         promptWhenResolvingText: Select targets to push in your preferred order
@@ -156,42 +212,20 @@ info:
         - 5 damage
         - 5 damage; 4 lightning damage; push 1
         - 5 damage; 7 lightning damage; push 3
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         applyto: caster
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: a8ace4c2-122c-4358-b5ce-630ab973b0ad
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        guid: e020ce37-94e5-48b1-b5eb-ebe07b1f8f18
-        invokeOnCaster: true
+        guid: 7ac61742-f6e1-44d7-82e2-ead38dafd9b0
         modesSelected:
-        - 3
-        promptText: The Essence may shift 3 spaces.
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        standardAbilityParams:
-          distance: "3"
+        - 2
+        promptWhenResolving: true
+        promptWhenResolvingText: The essence shifts up to 3 squares after Bluster.
+        rule: shift 3
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: e69aea87-01b2-47e7-9879-41ea89e240ba
       iconid: ui-icons/skills/1.png
@@ -199,13 +233,9 @@ info:
       keywords:
         Area: true
         Magic: true
-        Melee: true
       modeList:
-      - rules: The Essence shifts before using Bluster
-        text: Shift before Bluster Ability
-      - condition: ""
-        text: Shift After Bluster Ability
-      - text: The Essence uses Bluster, then shifts
+      - text: Shift before Bluster
+      - text: Shift after Bluster
       modifiers: []
       multipleModes: true
       numTargets: 1
@@ -217,63 +247,68 @@ info:
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 114
       strain: []
-      targetFilter: Enemy
+      targetAllegiance: enemy
       targetType: all
     - name: Convocation of Squalls
-      description: The target receives lightning immunity 5 until the start of the essence's next turn if they don't already have it.
+      description: |-
+        Until the start of the essence's next turn, the target has lightning immunity 5.
+
+        **3 Malice:** Until the end of the encounter, a vortex surrounds the target in a 3 aura. The area is difficult terrain for enemies. Additionally, at the end of each of the target's turns, they can push one creature in the area up to 5 squares.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: 1
+        durationUntilEndOfTurn: false
+        ongoingEffect: 9f32dc79-9930-4fac-a62a-425b2ff57987
+        stacks: "1"
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        modesSelected:
+        - 2
+        ongoingEffect: 2828c9a0-7d26-47e7-8d8f-8a30daba4930
+        stacks: "1"
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 50ced6f1-703e-4151-8d48-1ca141d584ab
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
       keywords:
         Magic: true
         Ranged: true
+      modeList:
+      - text: Normal
+      - rules: Until the end of the encounter, a vortex surrounds the target in a 3 aura. The area is difficult terrain for enemies. At the end of each of the target's turns, they can push one creature in the area up to 5 squares.
+        text: 3 Malice - Vortex
       modifiers: []
+      multipleModes: true
       numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
-    - name: Thunderclap
-      description: The essence deals 5 lightning damage to the target.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: bc9b993f-94c2-4de7-ad7f-29ca82738656
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Magic: true
-        Melee: true
-        Ranged: true
-      meleeRange: 1
-      modifiers: []
-      numTargets: 1
+      persistence: []
       range: 5
+      reasonedFilters:
+      - formula: Keywords has "Elemental"
+        reason: This ability can only target the essence or an elemental.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
+      resourceNumber: 3 when Mode = 2 else 0
+      selfTarget: true
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 114
+      strain: []
       targetType: target
     innateAttacks: []
+    innateLanguages:
+      85fb494c-2f8d-4e2b-9887-d03a2949c4fa: true # Low Kuric
     keywords:
       Elemental: true
     levelChoices: []
@@ -314,6 +349,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: 81ba6837-da3b-4608-af62-cda47699cf72
-mtime: 1775375103134
+mtime: 1788940800000
 ord: 0
 parentFolder: 56d7eb0d-966a-478f-9cdf-a336d5fa9bb1

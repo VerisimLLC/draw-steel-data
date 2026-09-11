@@ -87,7 +87,7 @@ info:
         sourceguid: 8bb12f86-6972-46ee-adee-ff22acc6ebc2
         triggeredAbility:
           name: Mounted Platform
-          description: Once per turn when the hawk moves, any creature riding the hawk can make a free strike druing or after the movement.
+          description: Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
@@ -129,17 +129,105 @@ info:
           strain: []
           targetType: self
           trigger: move
-          triggerPrompt: Once per turn when the hawk moves, any creature riding the hawk can make a free strike druing or after the movement.
+          triggerPrompt: Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.
           usageLimitOptions:
             charges: "1"
             resourceRefreshType: turn
             resourceid: bcc303fe-b3ab-47e0-8c19-e3d364f8a63a
           whenActive: combat
       source: Trait
+    - name: Bombs Away!
+      description: The siege hawk must be flying to use this ability.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:b7e4c2a9-1f6d-4e3b-8a5c-9d2f7e1b4c68: true
+      guid: b7e4c2a9-1f6d-4e3b-8a5c-9d2f7e1b4c68
+      implementation: 4
+      modifiers:
+      - name: Bombs Away!
+        description: The siege hawk must be flying to use this ability.
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Bombs Away!
+          description: The siege hawk must be flying to use this ability.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            attrid: agl
+            isTest: false
+            resistanceAttr: agl
+            resistanceRoll: true
+            roll: 2d10 + Agility
+            tiers:
+            - 7 fire damage; restrained (EoT)
+            - 6 fire damage; slowed (EoT)
+            - 3 fire damage
+          categorization: Heroic Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          flavor: ""
+          guid: 61345200-ea20-4b4d-a6f5-1bf2e5a8d2a7
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
+            Ranged: true
+            Resistance: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          persistence: []
+          radius: 5
+          range: 10
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 7
+          strain: []
+          targetTextOverride: Each creature and object in the area
+          targetType: cube
+        behavior: activated
+        domains:
+          CharacterFeature:b7e4c2a9-1f6d-4e3b-8a5c-9d2f7e1b4c68: true
+        filterCondition: Movement Type = "fly"
+        guid: d3f8a1c5-7b2e-4d9a-b6e4-1c8f5a2d9e37
+        source: Trait
+        sourceguid: b7e4c2a9-1f6d-4e3b-8a5c-9d2f7e1b4c68
+      source: Trait
+      tags:
+        Ability: true
+    - name: Talons Grab Limit
+      description: The siege hawk can have two targets grabbed at a time.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:5e9c2a71-3d84-4f6b-a1c7-8b2e6d4f9a13: true
+      guid: 5e9c2a71-3d84-4f6b-a1c7-8b2e6d4f9a13
+      implementation: 4
+      modifiers:
+      - name: Talons Grab Limit
+        description: The siege hawk can have two targets grabbed at a time.
+        __typeName: CharacterModifier
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        behavior: attribute
+        domains:
+          CharacterFeature:5e9c2a71-3d84-4f6b-a1c7-8b2e6d4f9a13: true
+        guid: 9b4d7f2c-6e1a-4c5b-8f3d-1a7e9c2b5d68
+        source: Trait
+        sourceguid: 5e9c2a71-3d84-4f6b-a1c7-8b2e6d4f9a13
+        value: "2"
+      source: Trait
+      tags:
+        Hidden: true
     cr: 1
     creatureSize: "3"
     damage_taken: 0
     equipment: []
+    ev: 28
     groupid: f185d16e-35aa-42db-9fbd-529f55ab7935
     import:
       data: |
@@ -180,75 +268,66 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 1
+        attrid: mgt
+        roll: 2d10 + Might
         tiers:
         - 4 damage
         - 7 damage
         - 10 damage
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: grabbed
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: e79d9e7b-ece5-46b7-ad0c-30a4ec877ad6
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
+      persistence: []
       range: 1
       repeatTargets: false
-      targetAdditionalCriteria: or objects
+      strain: []
       targetType: target
-    - name: Bombs Away!
-      description: ""
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        resistanceAttr: agl
-        resistanceRoll: true
-        roll: 2d6 + Might or Agility
-        tiers:
-        - 7 fire damage; restrained (EoT)
-        - 6 fire damage; slowed (EoT)
-        - 3 fire damage
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      flavor: ""
-      guid: 61345200-ea20-4b4d-a6f5-1bf2e5a8d2a7
-      iconid: ui-icons/skills/1.png
-      implementation: 4
-      keywords:
-        Area: true
-        Magic: true
-        Ranged: true
-        Resistance: true
-      modifiers: []
-      numTargets: "1"
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 7
-      targetType: self
     - name: Dive
-      description: ""
+      description: The hawk moves up to their speed.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
-      categorization: Signature Ability
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 0c3a7d1e-5b2f-4e8a-9d64-2f7b8c1a3e59
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        namedAbility: move speed
+        standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+      categorization: Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -256,18 +335,20 @@ info:
         saturation: 1
       flavor: ""
       guid: 57b2cbe6-8842-4164-87d1-3a0cbe630412
-      iconid: ui-icons/skills/1.png
-      implementation: 0
+      hasCustomIcon: true
+      iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: 1
+      persistence: []
       range: 1
       repeatTargets: false
-      targetType: target
+      strain: []
+      targetType: self
     innateAttacks: []
     keywords:
       Animal: true
-      Human: true
     levelChoices: []
     max_hitpoints: 60
     max_hitpoints_roll: "60"

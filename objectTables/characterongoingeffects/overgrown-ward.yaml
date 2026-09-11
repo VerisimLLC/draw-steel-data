@@ -1,0 +1,60 @@
+id: e8821dee-c831-433d-a386-46f85bf35244
+name: Overgrown Ward
+description: The ground around you is overgrown with underbrush and vines. Whenever an enemy makes a strike against you, they are pulled 5 squares toward you after the strike is resolved.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1788940800000
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: e8821dee-c831-433d-a386-46f85bf35244
+iconid: ui-icons/skills/1.png
+implementation: 3
+implementationDetails: "SILVER: after any enemy strike resolves against the warded creature, the attacker is pulled 5 squares toward the warded creature. The book pulls toward the overgrown area and only when the attacker is within line of effect of it; the pull here is toward the creature (who normally stands in the area) and has no line-of-effect check, since triggered abilities cannot reference the aura's location."
+modifiers:
+- name: Overgrown Ward
+  description: Whenever an enemy makes a strike against you, they are pulled 5 squares toward you after the strike is resolved.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:e8821dee-c831-433d-a386-46f85bf35244: true
+  guid: e0d2d4e0-1180-4b54-b484-9b1e40bc6544
+  source: Ongoing Effect
+  sourceguid: e8821dee-c831-433d-a386-46f85bf35244
+  triggeredAbility:
+    name: Overgrown Ward
+    description: The attacker is pulled 5 squares toward the overgrown area.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: pull 5
+    castImmediately: true
+    conditionFormula: HasAttacker
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    domains:
+      CharacterOngoingEffect:e8821dee-c831-433d-a386-46f85bf35244: true
+    guid: 567c9edf-ef9e-463f-8f62-8a3ec8db0017
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 20
+    repeatTargets: false
+    silent: true
+    strain: []
+    targetType: attacker
+    trigger: attacked
+mtime: 1788940800000
+source: Ongoing Effect

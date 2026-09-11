@@ -68,12 +68,75 @@ info:
         baseValue: 0
     characterFeatures:
     - name: Roots Run Deep
-      description: The field can target creatures touching the ground with abilities, even if they don't have line of effect.
+      description: The field can target any creature touching the ground with their abilities, even if they don't have line of effect to that creature.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:bb1e4255-ff2c-436f-b47d-53111fee76f0: true
       guid: bb1e4255-ff2c-436f-b47d-53111fee76f0
-      modifiers: []
+      implementation: 4
+      implementationDetails: "GOLD: Pierce Walls lets the field's abilities target through walls, and a target filter re-blocks any creature that is off the ground (floor altitude above 0) when true line of effect is missing. The cover bane is also cancelled against grounded targets, since a strike that ignores the wall should not suffer the wall's cover."
+      modifiers:
+      - name: Roots Run Deep
+        description: The field ignores line of effect to creatures touching the ground.
+        __typeName: CharacterModifier
+        attribute: 899681f1-936f-48ce-b2f1-4a40fc694083
+        behavior: attribute
+        domains:
+          CharacterFeature:bb1e4255-ff2c-436f-b47d-53111fee76f0: true
+        guid: 4b27f71a-b4f8-469a-8ca0-d2d1cadffdb3
+        source: Trait
+        sourceguid: bb1e4255-ff2c-436f-b47d-53111fee76f0
+        value: 99
+      - name: Roots Run Deep
+        description: Pierce Walls is on permanently, so this re-blocks the case it should not cover - an airborne target with no real line of effect. lineofsight takes its pierce-walls value from its FIRST argument, so passing Target first measures true geometry instead of the field's own wall-piercing.
+        __typeName: CharacterModifier
+        ability:
+          name: New Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 92653a17-cf99-49c0-891f-bb25f96565c4
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+        attributes:
+        - id: reasonfilter
+          operation: reasonfilter
+          reasonedFilters:
+          - formula: Target.FloorAltitude <= 0 or lineofsight(Target, Caster) > 0
+            reason: "**Roots Run Deep:** the field ignores line of effect only against creatures touching the ground."
+          value: ""
+        behavior: modifyability
+        domains:
+          CharacterFeature:bb1e4255-ff2c-436f-b47d-53111fee76f0: true
+        filterAbility: ""
+        guid: d50d0b5d-d15e-439a-96cf-f1d24a6b9e6d
+        modifyDescription: Requires line of effect only against creatures that are not touching the ground.
+        source: Trait
+        sourceguid: bb1e4255-ff2c-436f-b47d-53111fee76f0
+      - name: Roots Run Deep
+        description: Cancels the cover bane against grounded targets. The activation condition repeats the global Cover modifier's own trigger so this strips a bane only when cover actually applied one.
+        __typeName: CharacterModifier
+        activationCondition: Target.FloorAltitude <= 0 and (Target.HasCover or (Line of Sight(Self, Target) < 1) or (Target.MovementType = "Burrow" and Target.DistanceBelowGround >= 1) or (Caster.MovementType = "Burrow" and Caster.DistanceBelowGround >= 1))
+        behavior: power
+        domains:
+          CharacterFeature:bb1e4255-ff2c-436f-b47d-53111fee76f0: true
+        guid: 22c92532-f08e-481c-b85e-e10649275648
+        keywords: []
+        modtype: remove_bane
+        source: Trait
+        sourceguid: bb1e4255-ff2c-436f-b47d-53111fee76f0
       source: Trait
     - name: Fickle and Free
       description: The field can't be restrained, slowed, or knocked prone, and they ignore difficult terrain.
@@ -81,8 +144,117 @@ info:
       domains:
         CharacterFeature:01e676d4-b6b7-42d0-8eb8-08e1a2115804: true
       guid: 01e676d4-b6b7-42d0-8eb8-08e1a2115804
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Fickle and Free
+        description: The field can't be restrained, slowed, or knocked prone.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 2989a051-204f-442e-967d-edafc2dd5e43
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        domains:
+          CharacterFeature:01e676d4-b6b7-42d0-8eb8-08e1a2115804: true
+        guid: 5e17e0d5-c512-4361-b21e-d6aa942e6cc6
+        source: Trait
+        sourceguid: 01e676d4-b6b7-42d0-8eb8-08e1a2115804
+      - name: Fickle and Free
+        description: The field ignores difficult terrain.
+        __typeName: CharacterModifier
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        behavior: attribute
+        domains:
+          CharacterFeature:01e676d4-b6b7-42d0-8eb8-08e1a2115804: true
+        guid: a336a3f8-34d9-4dbf-9b71-fe4e371c9c74
+        source: Trait
+        sourceguid: 01e676d4-b6b7-42d0-8eb8-08e1a2115804
+        value: 1
       source: Trait
+    - name: Rose Thorn Lash
+      description: |-
+        **1 Malice.** Trigger: A creature or object within distance deals damage to the field.
+
+        Effect: The target takes 6 damage, and if they have A<2, they are bleeding (save ends).
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:0c57f67e-ab47-42da-b2bd-767025255d83: true
+      guid: 0c57f67e-ab47-42da-b2bd-767025255d83
+      implementation: 4
+      modifiers:
+      - name: Rose Thorn Lash
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Rose Thorn Lash
+          __typeName: TriggeredAbilityDisplay
+          cost: 1 Malice
+          distance: Melee 3
+          effect: The target takes 6 damage, and if they have A<2, they are bleeding (save ends).
+          guid: 4c05bc86-186a-40d8-b842-844530e03e68
+          keywords:
+            Magic: true
+            Melee: true
+          target: The triggering creature or object
+          trigger: A creature or object within distance deals damage to the field.
+          type: trigger
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:0c57f67e-ab47-42da-b2bd-767025255d83: true
+        guid: 5b2a54c6-4bbb-4ce8-9efd-a476a48577ed
+        source: Trait
+        sourceguid: 0c57f67e-ab47-42da-b2bd-767025255d83
+      - name: Rose Thorn Lash
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:0c57f67e-ab47-42da-b2bd-767025255d83: true
+        guid: 9aa7f8c1-6a3d-48e6-bca4-33d670f5ad4c
+        source: Trait
+        sourceguid: 0c57f67e-ab47-42da-b2bd-767025255d83
+        triggeredAbility:
+          name: Rose Thorn Lash
+          description: The target takes 6 damage, and if they have A<2, they are bleeding (save ends).
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: 6 damage; A<2 bleeding (save ends)
+          conditionFormula: HasAttacker
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: cee26597-bb40-4eb8-adc2-0edab556a5e0
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Magic: true
+            Melee: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 3
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 115
+          strain: []
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: "**Rose Thorn Lash (1 Malice):** A creature or object within 3 squares dealt damage to the field. The field can use a triggered action to deal 6 damage to them, and if they have A<2 they are bleeding (save ends)."
+      source: Trait
+      tags:
+        Trigger: true
     cr: 5
     creatureSize: "3"
     damage_taken: 0
@@ -127,93 +299,204 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Hampering Roots
-      description: This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can't stand effects also end.
+      description: If a target made prone this way is already prone, they are instead restrained (save ends). If the target was also unable to stand, that effect ends when they are no longer restrained this way.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: 0
+        filterTarget: Target.Conditions has "prone"
+        ongoingEffect: fb3607b3-261b-4fd8-8d88-c13d1863f9e3
+        ongoingEffectCustom: fb3607b3-261b-4fd8-8d88-c13d1863f9e3
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Might
         tiers:
         - 8 damage
         - 13 damage; R<1 prone and can't stand (save ends)
         - 16 damage; R<2 prone and can't stand (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "R", 1) and Target.Ongoing Effects has "already prone"
+        ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "R", 2) and Target.Ongoing Effects has "already prone"
+        ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: e5b56f74-e4a3-4330-b484-7ce703821bb3
       iconid: ui-icons/skills/1.png
       implementation: 3
+      implementationDetails: "SILVER: damage, the potency-gated prone and can't stand (save ends), and restrained (save ends) for targets who were already prone when the roll resolved are all automated. A target that was already prone also receives the can't stand effect on its own saving throw instead of having it end with restrained, since the two save-ends effects are tracked separately."
       keywords:
         Magic: true
         Ranged: true
         Strike: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
+      persistence: []
       range: 8
       repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 115
+      strain: []
       targetType: target
     - name: Convocation of Verdure
-      description: The target gains 15 temporary Stamina that lasts until the start of the field's next turn.
+      description: |-
+        The target gains 15 temporary Stamina that lasts until the start of the field's next turn.
+
+        **3 Malice:** Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target while within line of effect of that area, the enemy is pulled 5 squares toward the area after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: 1
+        durationUntilEndOfTurn: false
+        hasTemporaryHitpoints: true
+        ongoingEffect: 9a074bfa-ce30-431f-ac60-969bf025b871
+        ongoingEffectCustom: 9a074bfa-ce30-431f-ac60-969bf025b871
+        temporaryHitpoints: "15"
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        modesSelected:
+        - 2
+        ongoingEffect: e8821dee-c831-433d-a386-46f85bf35244
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        applyto: targets
+        aura:
+          name: Overgrown Ground
+          description: Any enemy who enters this area for the first time in a round or starts their turn there is knocked prone.
+          __typeName: Aura
+          applyto: enemies
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4a5efa4a-b19a-46bd-a162-50c4cd802f5e
+          implementation: 4
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers:
+          - ability:
+              name: Overgrown Ground
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: prone
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 7b4d6e9c-85d0-4d3e-94a8-910f9fc1388e
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: onfirstenterround
+            trigger: onfirstenterround
+          - ability:
+              name: Overgrown Ground
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: prone
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 6ed2ba7f-71d1-4a96-96ec-da9735038d92
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: targetstartturnaura
+            trigger: targetstartturnaura
+        duration: eoe
+        grow: 1
+        modesSelected:
+        - 2
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: b1a43f84-71e3-420e-ab07-8dc8cad9e991
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 3
+      implementationDetails: "SILVER: 15 temporary Stamina that expires at the start of the field's next turn, the 3 Malice cost, the end-of-encounter overgrown zone (prone on first entry each round and at the start of an enemy's turn there), and the pull after an enemy strike are automated. The pull is toward the warded creature rather than the fixed area and has no line-of-effect check, because triggered abilities cannot reference the aura's location."
       keywords:
         Magic: true
         Ranged: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: ""
+        rules: Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target, the enemy is pulled 5 squares toward the target after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.
+        text: 3 Malice - Overgrowth
       modifiers: []
+      multipleModes: true
       numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
-    - name: Rose Thorn Lash
-      description: The target takes 6 damage, and if they have A<2, they are bleeding (save ends).
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Trigger
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      flavor: ""
-      guid: cee26597-bb40-4eb8-adc2-0edab556a5e0
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Magic: true
-        Melee: true
-      modifiers: []
-      numTargets: 1
-      range: 3
+      persistence: []
+      range: 5
+      reasonedFilters:
+      - formula: Keywords has "Elemental"
+        reason: This ability can only target the field or an elemental.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
+      resourceNumber: 3 when Mode = 2 else 0
+      selfTarget: true
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 115
+      strain: []
       targetType: target
     innateAttacks: []
+    innateLanguages:
+      85fb494c-2f8d-4e2b-9887-d03a2949c4fa: true # Low Kuric
     keywords:
       Elemental: true
     levelChoices: []

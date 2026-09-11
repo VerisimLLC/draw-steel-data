@@ -76,8 +76,134 @@ info:
       domains:
         CharacterFeature:dcabedbb-2fb4-48d0-a2e2-f6b8492aa939: true
       guid: dcabedbb-2fb4-48d0-a2e2-f6b8492aa939
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Fickle and Free
+        description: The crux can't be restrained, slowed, or knocked prone.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 2989a051-204f-442e-967d-edafc2dd5e43
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        domains:
+          CharacterFeature:dcabedbb-2fb4-48d0-a2e2-f6b8492aa939: true
+        guid: 4b7e2c19-8d3f-4a6e-b1c5-7f9a2d4e6b83
+        source: Trait
+        sourceguid: dcabedbb-2fb4-48d0-a2e2-f6b8492aa939
+      - name: Fickle and Free
+        description: The crux ignores difficult terrain.
+        __typeName: CharacterModifier
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        behavior: attribute
+        domains:
+          CharacterFeature:dcabedbb-2fb4-48d0-a2e2-f6b8492aa939: true
+        guid: 9a1c5e77-3b2d-4f8e-a6d4-1e8b7c3f5a29
+        source: Trait
+        sourceguid: dcabedbb-2fb4-48d0-a2e2-f6b8492aa939
+        value: 1
       source: Trait
+    - name: Flame Jet
+      description: ""
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37: true
+      guid: 6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37
+      implementation: 3
+      implementationDetails: "SILVER: The 1 Malice cost, the prompt when the crux takes damage, and the flight up to speed (with a fall if the crux ends in the air) are automated. The crux ignoring the non-damage effects of the triggering damage is not automated: conditions or forced movement riding on the damage still apply and must be removed by hand."
+      modifiers:
+      - name: Flame Jet
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          effect: The crux ignores any effects associated with the damage and can fly up to their speed. If the crux doesn't end this movement on solid ground, they fall.
+          guid: c8d2f6a4-1e7b-4c9a-b3e8-5f2d9a7c4e16
+          implementationNotes: "Silver: the flight and Malice cost are automated; ignoring the damage's rider effects is manual."
+          keywords:
+          - Magic
+          malice: 1
+          trigger: The crux takes damage.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37: true
+        guid: 2f9b7d35-6a1e-4d8c-9e4b-3c7f1a5d8b62
+        source: Character Feature
+        sourceguid: 6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37
+      - name: Flame Jet
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37: true
+        guid: 1324580e-02ed-4a49-bd6d-ff7ccc525dcb
+        source: Character Feature
+        sourceguid: 6e3a8f21-9c4d-4b7e-a2f5-8d1c6b4e9a37
+        triggeredAbility:
+          name: Flame Jet
+          description: The crux ignores any effects associated with the damage and can fly up to their speed. If the crux doesn't end this movement on solid ground, they fall.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityChangeMovementTypeBehavior
+            applyto: caster
+            movementType: fly
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 5d8e3b17-2c9f-4a6d-8f1e-7b4c2e9a6d53
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            invokeOnCaster: true
+            promptText: Flame Jet - the crux flies up to their speed.
+            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
+          - __typeName: ActivatedAbilityChangeMovementTypeBehavior
+            applyto: caster
+            movementType: walk
+          - __typeName: ActivatedAbilityFallBehavior
+            applyto: caster
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8a4f6c2d-9e1b-4d7a-b5c3-2f8e6a1d9c74
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Magic: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          strain: []
+          subject: self
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: The crux takes damage. Spend 1 Malice to use Flame Jet and fly up to their speed?
+          whenActive: combat
+      source: Character Feature
+      tags:
+        Trigger: true
     cr: 3
     creatureSize: 1T
     damage_taken: 0
@@ -121,34 +247,51 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Spitfire
-      description: A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.
+      description: A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: agl
         roll: 2d10 + Agility
         tiers:
         - 8 fire damage
         - 12 fire damage; A<1 the target is burning (save ends)
         - 15 fire damage; A<2 the target is burning (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "A", 1)
+        ongoingEffect: 420d80fa-3784-4b7e-9b6c-586deed49d4e
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "A", 2)
+        ongoingEffect: 420d80fa-3784-4b7e-9b6c-586deed49d4e
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: cd0e83c4-9b93-46c2-b95b-8e61735a992b
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Magic: true
         Ranged: true
         Strike: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
       range: 12
       repeatTargets: false
       targetType: target
@@ -156,40 +299,92 @@ info:
       description: |-
         Until the start of the crux's next turn, the target has fire immunity 5.
 
-        **3 Malice**: Until the end of the encounter, the ground within 3 squares  of the target is wreathed in fire. Any enemy who enters that area for  the first time in a round or starts their turn there takes 3 fire damage.
+        **3 Malice**: Until the end of the encounter, the ground within 3 squares of the target is wreathed in fire. Any enemy who enters that area for the first time in a round or starts their turn there takes 3 fire damage.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        autoTarget: false
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            damageType: fire
-            roll: "3"
-          categorization: Hidden
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: end_of_next_turn
+        ongoingEffect: 7c2f9e41-5b8a-4d3e-9f16-2a8c4e7b1d05
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        applyto: targets
+        aura:
+          name: Wreathed in Fire
+          description: Any enemy who enters this area for the first time in a round or starts their turn there takes 3 fire damage.
+          __typeName: Aura
+          applyto: enemies
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 3d6e6508-47cc-4912-b483-7504f392894e
-          iconid: ui-icons/skills/1.png
+          guid: b3f7a1c9-4e2d-4b8f-9a6c-1d5e8f2b7c43
+          implementation: 4
           modifiers: []
-          numTargets: "1"
-          range: "5"
-          repeatTargets: false
-          targetType: targets
-        invokeOnCaster: false
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers:
+          - ability:
+              name: Wreathed in Fire
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: 3 fire damage
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: e5c9d3a7-8b1f-4e6a-a2d4-7f3b9c1e5a86
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: onfirstenterround
+            trigger: onfirstenterround
+          - ability:
+              name: Wreathed in Fire
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: 3 fire damage
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: a7e1b5d9-3c8f-4a2e-b6d1-9f4c7e2a8b35
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: targetstartturnaura
+            trigger: targetstartturnaura
+        duration: eoe
+        grow: 3
         modesSelected:
         - 2
-        promptText: "Malice: Until the end of the encounter, the ground within 3 squares  of the target is wreathed in fire. Any enemy who enters that area for  the first time in a round or starts their turn there takes 3 fire damage."
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -199,7 +394,8 @@ info:
       flavor: ""
       guid: 6f5b01f2-206a-4f6f-b187-4ba82ae66596
       iconid: ui-icons/skills/1.png
-      implementation: 4
+      implementation: 3
+      implementationDetails: "SILVER: Fire immunity 5, the 3 Malice cost, and the end-of-encounter fire zone (3 fire damage on first entry each round and at the start of an enemy's turn there) are automated. The immunity uses the target's end-of-next-turn timer because ongoing effects have no 'until the start of the caster's next turn' duration; if the crux targets itself the window drifts slightly from the book."
       keywords:
         Magic: true
         Ranged: true
@@ -207,47 +403,27 @@ info:
       - condition: ""
         text: Normal
       - condition: ""
-        rules: Until the end of the encounter, the ground within 3 squares  of the target is wreathed in fire. Any enemy who enters that area for  the first time in a round or starts their turn there takes 3 fire damage.
-        text: Malice
+        rules: Until the end of the encounter, the ground within 3 squares of the target is wreathed in fire. Any enemy who enters that area for the first time in a round or starts their turn there takes 3 fire damage.
+        text: 3 Malice
       modifiers: []
       multipleModes: true
       numTargets: 1
       range: 5
+      reasonedFilters:
+      - formula: Keywords has "Elemental"
+        reason: This ability can only target the crux or an elemental.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 3 when Mode = 2 else 0
+      selfTarget: true
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 114
       targetType: target
-    - name: Flame Jet
-      description: The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn't end this movement on solid ground, they fall prone.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 1324580e-02ed-4a49-bd6d-ff7ccc525dcb
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Magic: true
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      targetType: self
     innateAttacks: []
+    innateLanguages:
+      85fb494c-2f8d-4e2b-9887-d03a2949c4fa: true # Low Kuric
     keywords:
       Elemental: true
     levelChoices: []

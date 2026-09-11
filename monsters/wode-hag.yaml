@@ -1086,6 +1086,12 @@ info:
 
           Click Confirm to hide, or skip.
         standardAbility: 003a1b5e-0b14-4c99-b948-0f0fc715bbf2
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectid: 4f835472-60a6-4be5-9c4f-4ea86752ec28
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectid: 7c3e5a1d-9b42-4f8e-a6d1-2e8f4c0b9a57
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         applyto: caster
         modesSelected:
@@ -1093,8 +1099,11 @@ info:
         ongoingEffect: 4f835472-60a6-4be5-9c4f-4ea86752ec28
         ongoingEffectCustom: 4f835472-60a6-4be5-9c4f-4ea86752ec28
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        ongoingEffect: 402241f6-ce1d-4b30-8d57-52e66c2b11e8
-        ongoingEffectCustom: false
+        applyto: caster
+        modesSelected:
+        - 2
+        ongoingEffect: 7c3e5a1d-9b42-4f8e-a6d1-2e8f4c0b9a57
+        ongoingEffectCustom: 7c3e5a1d-9b42-4f8e-a6d1-2e8f4c0b9a57
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -1104,19 +1113,61 @@ info:
       flavor: ""
       guid: fcf19833-9144-4775-9746-8d518b770155
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
+      implementationDetails: Both forms swap the token appearance (pick the alternate appearance on the sheet). The 5 Malice form sets size 2, adds +1 melee distance and +4 melee damage. Return to Original Form is a free maneuver that ends either form.
       keywords:
         Magic: true
       modeList:
-      - rules: The hag alters their body to become any size 1 creature, from a house cat to a humanoid. If the hag uses this ability while outside of any enemy’s line of effect, they can choose to be automatically hidden.
+      - rules: The hag alters their body to become any size 1 creature, from a house cat to a humanoid. If the hag uses this ability while outside of any enemy's line of effect, they can choose to be automatically hidden.
         text: Size 1 creature
-      - rules: The hag becomes a size 2 creature instead, from a bear to an ogre. While in this form, the hag’s melee abilities gain a +1 bonus to distance and deal an extra 4 damage.
+      - rules: The hag becomes a size 2 creature instead, from a bear to an ogre. While in this form, the hag's melee abilities gain a +1 bonus to distance and deal an extra 4 damage.
         text: "5 Malice: Size 2 creature"
       modifiers: []
       multipleModes: true
       numTargets: 1
       persistence: []
       range: 1
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 5 when mode = 2 else 0
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 170
+      strain: []
+      targetFilter: ""
+      targetType: self
+    - name: Return to Original Form
+      description: The hag returns to their original form, ending their Shapeshifter form.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+      behaviors:
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectid: 4f835472-60a6-4be5-9c4f-4ea86752ec28
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: caster
+        ongoingEffectid: 7c3e5a1d-9b42-4f8e-a6d1-2e8f4c0b9a57
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 9d4b6e2a-3c8f-4a1e-b7d5-0f2c8e6a4b93
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Magic: true
+      modifiers: []
+      numTargets: 1
+      persistence: []
+      range: 1
+      reasonedFilters:
+      - formula: (OngoingEffects has "Shapeshifter (Size 1)") or (OngoingEffects has "Shapeshifter (Size 2)")
+        reason: The hag is already in their original form.
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
