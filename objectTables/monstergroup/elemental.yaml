@@ -9,7 +9,44 @@ maliceAbilities:
   description: Two elementals on the encounter map teleport to swap places, and each has damage immunity 2 until the end of the round.
   __typeName: MaliceAbility
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    abilityType: custom
+    applyto: targets
+    customAbility:
+      name: Elemental Swap
+      description: Choose the elemental to swap places with. Both elementals teleport to trade positions and gain damage immunity 2 until the end of the round.
+      __typeName: ActivatedAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        applyto: targets
+        movementType: teleport
+        swapCreatures: true
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster_and_targets
+        duration: endround
+        ongoingEffect: cfc75497-42d4-449b-9f7a-3afd9d3ea379
+        ongoingEffectCustom: false
+      categorization: Hidden
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 0c3d4e5f-6a7b-4c8d-9e0f-1a2b3c4d5e6f
+      iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: "100"
+      rangeTextOverride: Encounter map
+      repeatTargets: false
+      strain: []
+      targetFilter: Friends(Caster, Target) and target.Keywords has "Elemental"
+      targetType: target
+    guid: 2d4e6f80-1a3b-4c5d-8e9f-0a1b2c3d4e5f
+    promptText: Choose the second elemental to swap places with.
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -17,21 +54,46 @@ maliceAbilities:
     saturation: 1
   guid: d168eeb9-e266-4d5e-aa7f-f43752a25439
   iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+  implementation: 4
+  implementationDetails: "GOLD: Pick the first elemental (any elemental on the map, including the acting one), then the second; they teleport to swap places and both receive damage immunity 2 until the end of the round."
   modifiers: []
   numTargets: "1"
   persistence: []
-  range: 1
+  range: "100"
+  rangeTextOverride: Encounter map
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: "3"
+  selfTarget: true
   strain: []
-  targetType: self
+  targetFilter: Friends(Caster, Target) and target.Keywords has "Elemental"
+  targetTextOverride: Two elementals
+  targetType: target
 - name: Split
   description: |
     An elemental acting this turn cleaves themself into two separate elementals. Each elemental has the same statistics as the original, except that each has half the original's current Stamina and is one size smaller. Both elementals can then shift up to their speed.
   __typeName: MaliceAbility
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilitySummonBehavior
+    applyto: caster
+    casterControls: true
+    copyEffects: true
+    copyStamina: true
+    duplicateMode: true
+    duplicateTargetOrigin: both
+    groupInitiativeWithCaster: true
+  - __typeName: ActivatedAbilitySetStaminaBehavior
+    applyto: targets
+    roll: Stamina / 2
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    applyto: targets
+    duration: eoe
+    ongoingEffect: a744ab04-9e4a-405e-b218-d333a7fd9171
+    ongoingEffectCustom: false
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: targets
+    rule: shift {MovementSpeed}
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -39,6 +101,8 @@ maliceAbilities:
     saturation: 1
   guid: 750c0225-ff34-4ffc-94ab-09f2d42703cb
   iconid: e2345ee0-e8e3-412c-bebc-d0dddbafad93
+  implementation: 4
+  implementationDetails: "GOLD: Spawns a duplicate of the acting elemental with its current Stamina and ongoing effects copied, sets both copies to half the original's current Stamina (rounded down), applies a size -1 effect to both for the encounter, then each shifts up to its speed."
   modifiers: []
   numTargets: "1"
   persistence: []
@@ -53,7 +117,12 @@ maliceAbilities:
     Magic, Ranged. Maneuver. Ranged 8. Self or one elemental. Until the end of the encounter, the target has a +5 bonus to speed and a +5 damage bonus to strikes. Additionally, whenever an elemental within the target's line of effect uses an ability with "Convocation" in the name, the target also gains the effects of that ability.
   __typeName: MaliceAbility
   abilityType: none
-  behaviors: []
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    applyto: targets
+    duration: eoe
+    ongoingEffect: f0fa6b05-98be-4942-a89a-48c95c665e8c
+    ongoingEffectCustom: false
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -61,14 +130,22 @@ maliceAbilities:
     saturation: 1
   guid: 70784e48-7372-4793-8e06-5b4fc26407ad
   iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
+  implementation: 3
+  implementationDetails: "SILVER: Applies the Convocation of Chaos effect (+5 speed, +5 strike damage, until end of encounter). The effect echoes the base effect of Convocation of Flames / Squalls / Verdure used by elementals in line of effect; the 3-Malice zone modes and the unimplemented Waves / Quartz abilities are not echoed."
+  keywords:
+    Magic: true
+    Ranged: true
   modifiers: []
   numTargets: "1"
   persistence: []
-  range: 1
+  range: "8"
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: "7"
+  selfTarget: true
   strain: []
-  targetType: self
+  targetFilter: Friends(Caster, Target) and target.Keywords has "Elemental"
+  targetTextOverride: Self or one elemental
+  targetType: target
 mtime: 1762948973939
 traits: []
