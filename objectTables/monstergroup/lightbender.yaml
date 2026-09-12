@@ -165,15 +165,12 @@ maliceAbilities:
   targetTextOverride: Lightbender's Acting This Turn
   targetType: map
 - name: Everything the Light Touches
-  description: |
-    Each lightbender in the encounter shines radiantly, distorting the senses of any enemy within 5 squares of them. Each affected enemy makes a Reason test.
-    - Tier 1 (<=11): The target doesn't have line of effect to any lightbender (save ends).
-    - Tier 2 (12-16): The target doesn't have line of effect to any lightbender (EoT).
-    - Tier 3 (17+): No effect.
+  description: ""
   __typeName: MaliceAbility
   abilityType: none
   behaviors:
   - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    applyto: caster_and_targets
     customAbility:
       name: Light Distortion 5 Burst
       description: ""
@@ -186,11 +183,23 @@ maliceAbilities:
         resistanceRoll: true
         roll: 2d10 + Highest Characteristic
         tiers:
-        - |-
-          The target doesn’t have line of effect to any lightbender (save
-          ends).
+        - The target doesn’t have line of effect to any lightbender (save ends).
         - The target doesn’t have line of effect to any lightbender (EoT).
         - No effect.
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        ongoingEffect: 2ab76a97-6627-4e53-a7b9-42c33de59885
+        ongoingEffectCustom: 2ab76a97-6627-4e53-a7b9-42c33de59885
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: end_of_next_turn
+        guid: 623696ce-0726-47c0-9ab2-a5ec5a26b06d
+        ongoingEffect: 2ab76a97-6627-4e53-a7b9-42c33de59885
+        ongoingEffectCustom: 2ab76a97-6627-4e53-a7b9-42c33de59885
+        tiersSelected:
+        - 2
+      categorization: Hidden
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -213,9 +222,11 @@ maliceAbilities:
     saturation: 1
   guid: be4b0b46-e642-452a-97f5-70bcb68fc192
   iconid: e1fd5b75-e4a2-49c4-905b-e15ea6528d70
+  implementation: 3
   modifiers: []
   numTargets: "1"
   persistence: []
+  preDescription: Each lightbender in the encounter shines radiantly, distorting the senses of any enemy within 5 squares of them. Each affected enemy makes a Reason test.
   range: 1
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
@@ -227,5 +238,5 @@ maliceAbilities:
   strain: []
   targetFilter: Target.Keywords has "Lightbender"
   targetType: map
-mtime: 1779886239163
+mtime: 1789234236174
 traits: []
