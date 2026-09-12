@@ -44,6 +44,42 @@ diffed, and re-imported independently of the engine and the codex mod that surro
 - A folder may contain a **`_meta.yaml`** (folder metadata, e.g. `id: classes`) — it is
   not a content item and is excluded from the manifest counts.
 
+## Asset flags: `hidden` and `doNotPurge`
+
+Every asset record inherits two independent booleans from `GameAsset`
+(`Assets/Scripts/AccountInfo.cs`). Both are omitted from the YAML when false, so an absent
+key reads as `false`.
+
+| Flag | Question it answers | Meaning |
+|---|---|---|
+| `hidden` | Should a user see this in a picker? | Withheld from pickers and the Journal. Existing references by id or description keep resolving. |
+| `doNotPurge` | Is this record safe to delete? | No. The asset is required, and is excluded from bulk cleanups of this repo. |
+
+The two are orthogonal. `hidden: true` plus `doNotPurge: true` marks an asset that code
+consumes and users should not browse — the four blank form-fillable character sheets in
+`pdfDocuments/` are the current example: the Codex exporter fills them, and they are hidden
+so they do not appear as readable books in the Journal.
+
+`doNotPurge` is distinct from `publish-exclude.yaml`. That file controls **shipping** —
+assets that stay in the repo but are withheld from the `mcdm-drawsteel` module.
+`doNotPurge` controls **deletion**, and most such assets do ship, because the client needs
+them installed.
+
+### Cleanup rules
+
+- A record with `doNotPurge: true` is not deleted, regardless of `hidden`, a sparse body, a
+  placeholder-looking name, or its absence from `publish-exclude.yaml`.
+- `hidden: true` alone does not mean deletable. The engine's own field documentation calls
+  hidden assets "soft-deleted", which describes user-facing visibility, not disposability.
+- A missing `doNotPurge` carries no information, since the key is written only when true.
+  Establish that an asset is unused before removing it.
+- Code may reference an asset by `description` rather than by id. The PDF exporter resolves
+  its sheets through a normalized prefix match on that string
+  (`CharSheetPDFExport.ResolveDocumentAsset`), which no symbol search will surface — grep
+  the codex for the description text before deleting a record.
+- Deleting a record here does not delete the underlying blob. Removal breaks the reference;
+  the stored file remains reachable at the URL in `imageId`.
+
 ## Top-level categories
 
 Counts are as of the export recorded in `_manifest.yaml`.
