@@ -1,0 +1,261 @@
+id: 18a2d2c7-f533-4a33-a3d0-d741047b5148
+name: Encepter
+description: |-
+  This scepter waits high in the sky, resting within an endlessly raging cyclone. It waits for the one who will unify all people under its light. It awaits its champion.
+
+  The Encepter is said to have first manifested in a young world doomed to apocalypse - unless every last inhabitant of that world could stand together. The scepter is said to impose either dominion or obliteration over any threat its light is drawn around. Today, it is most commonly known as a bad omen, and should the Encepter reveal itself, folk know that the world teeters on the brink of destruction. Whether any of the stories are true, few can say, for the only living eyes that have witnessed the Encepter belong to dragons deep in slumber.
+
+  **Shining Presence:** The one who wields the Encepter is always cast in a brilliant glow. Any power roll made by the wielder that uses Presence automatically achieves a tier 3 outcome, though the wielder can still roll in an attempt to score a critical success or critical hit.
+  **Champion's Lasso:** As a free maneuver, the wielder of the scepter can trigger a glowing line of light that traces their path as they move, or can dismiss the glowing line. If the wielder crosses over this line, each creature and object of the wielder's choice enclosed inside the line and within 2 squares above and below it are considered lassoed by the Encepter. Creatures remain lassoed until the lasso is released or until a new line is drawn.
+  **Dominion:** Each creature lassoed by the Encepter is restrained and can't teleport. A creature caught in midair while lassoed stays in place rather than falling.
+  **Obliteration:** As a main action, the wielder raises the Encepter to the sky. Each target lassoed by the Encepter erupts in a prismatic burst of light, taking 10 psychic damage for each square horizontally encircled by the lasso. The lasso is then immediately released.
+  **At World's End:** If the Encepter was not taken from its cyclonic resting place with the purpose of vanquishing a terrible peril, then a terrible peril emerges to threaten the world within 3 days of the scepter being taken.
+_table: tbl_Gear
+__typeName: equipment
+category: Gear
+ctime: 1789200000000
+domains:
+  item:18a2d2c7-f533-4a33-a3d0-d741047b5148: true
+equipmentCategory: 1121b8c9-1f4a-443e-83b2-485fbd0310e1
+features:
+- name: Shining Presence
+  description: The one who wields the Encepter is always cast in a brilliant glow. Any power roll made by the wielder that uses Presence automatically achieves a tier 3 outcome, though the wielder can still roll in an attempt to score a critical success or critical hit.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 567a7987-8228-48ac-a619-529f7b1b7815
+  implementation: 4
+  implementationDetails: "GOLD: Presence ability power rolls, Presence tests, and Presence opposed rolls are all forced to tier 3. The dice are still rolled, so a natural 19-20 still crits."
+  itemAttached: true
+  modifiers:
+  - name: Shining Presence
+    description: Presence ability power rolls automatically achieve a tier 3 outcome.
+    __typeName: CharacterModifier
+    activationAfterRoll: false
+    activationCondition: Ability.Characteristics has "Presence"
+    behavior: power
+    guid: 0be209b2-b930-40b2-934b-29c692fedf33
+    keywords: []
+    modtype: tier3
+    rollType: ability_power_roll
+    source: Item
+    sourceguid: 567a7987-8228-48ac-a619-529f7b1b7815
+  - name: Shining Presence
+    description: Presence tests automatically achieve a tier 3 outcome.
+    __typeName: CharacterModifier
+    activationAfterRoll: false
+    activationCondition: true
+    attribute: prs
+    behavior: power
+    guid: bba777d2-7196-4c88-8fef-7eea68852c7c
+    keywords: []
+    modtype: tier3
+    rollType: test_power_roll
+    source: Item
+    sourceguid: 567a7987-8228-48ac-a619-529f7b1b7815
+  - name: Shining Presence
+    description: Opposed Presence rolls automatically achieve a tier 3 outcome.
+    __typeName: CharacterModifier
+    activationAfterRoll: false
+    activationCondition: true
+    attribute: prs
+    behavior: power
+    guid: 1784e211-bf57-4830-9ac9-f268d30c05da
+    keywords: []
+    modtype: tier3
+    rollType: opposed_power_roll
+    source: Item
+    sourceguid: 567a7987-8228-48ac-a619-529f7b1b7815
+  source: Item
+- name: Champion's Lasso
+  description: As a free maneuver, the wielder of the scepter can trigger a glowing line of light that traces their path as they move, or can dismiss the glowing line. If the wielder crosses over this line, each creature and object of the wielder's choice enclosed inside the line and within 2 squares above and below it are considered lassoed by the Encepter. Creatures remain lassoed until the lasso is released or until a new line is drawn.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 877dda1e-573c-4b2c-8f11-265db5273d0b
+  implementation: 3
+  implementationDetails: "SILVER: The glowing line is not drawn on the map; the engine cannot trace a path and detect enclosure. Instead, after crossing the line the wielder uses this free maneuver, enters the number of squares horizontally encircled, and picks the enclosed creatures and objects. They gain Lassoed by the Encepter (restrained) with the square count stored for Obliteration. Drawing a new lasso first releases any existing one. Release Lasso is a separate free maneuver."
+  itemAttached: true
+  modifiers:
+  - name: Champion's Lasso
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Champion's Lasso
+      description: Enter the number of squares horizontally encircled by the glowing line, then choose each creature and object enclosed inside it (and within 2 squares above or below). They are lassoed by the Encepter until released or a new line is drawn.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Release Previous Lasso
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+            applyto: targets
+            ongoingEffectid: 8ab0c6ba-b455-448d-95d6-f74e4dc424a2
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 057c1252-9395-490c-97bf-1a05d174eb08
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetFilter: OngoingEffects has "Lassoed by the Encepter"
+          targetType: map
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: indefinite
+        ongoingEffect: 8ab0c6ba-b455-448d-95d6-f74e4dc424a2
+        ongoingEffectCustom: false
+        stacks: Charges
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: b5e21fc9-636c-43cb-b28d-8ecc5ad3ed5b
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      keywords:
+        Magic: true
+      modifiers: []
+      numTargets: "30"
+      objectTarget: true
+      persistence: []
+      range: 30
+      repeatTargets: false
+      strain: []
+      targetType: target
+      usageLimitOptions:
+        charges: "0"
+        multicharge: true
+        resourceRefreshType: none
+        resourceid: none
+    behavior: activated
+    guid: e268a225-7ded-4bd1-a98d-3bf14402913b
+    source: Item
+    sourceguid: 877dda1e-573c-4b2c-8f11-265db5273d0b
+  - name: Champion's Lasso
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Release Lasso
+      description: Dismiss the glowing line. Every creature and object lassoed by the Encepter is released.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
+      behaviors:
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: 8ab0c6ba-b455-448d-95d6-f74e4dc424a2
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 2f790748-06fb-49fe-94ef-2a6e04e945ad
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Magic: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetFilter: OngoingEffects has "Lassoed by the Encepter"
+      targetType: map
+    behavior: activated
+    guid: 5c630e87-4f74-4ffe-8bb1-f3f5f7e7ac1c
+    source: Item
+    sourceguid: 877dda1e-573c-4b2c-8f11-265db5273d0b
+  source: Item
+- name: Dominion
+  description: Each creature lassoed by the Encepter is restrained and can't teleport. A creature caught in midair while lassoed stays in place rather than falling.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 6d007d8a-bb50-49ec-b513-54886a49de22
+  implementation: 3
+  implementationDetails: "SILVER: Implemented by the Lassoed by the Encepter ongoing effect: restrained is applied, teleport speed is set to 0, and Hover is granted so a flying creature stays aloft. The engine has no hook that blocks teleport abilities, so 'can't teleport' is display-only."
+  itemAttached: true
+  modifiers: []
+  source: Item
+- name: Obliteration
+  description: As a main action, the wielder raises the Encepter to the sky. Each target lassoed by the Encepter erupts in a prismatic burst of light, taking 10 psychic damage for each square horizontally encircled by the lasso. The lasso is then immediately released.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: b8f49191-408a-4a60-beb8-397543bd453a
+  implementation: 4
+  implementationDetails: "GOLD: Automatically targets every creature lassoed by the Encepter, deals 10 psychic damage per encircled square (the count entered when the lasso was drawn), then releases the lasso."
+  itemAttached: true
+  modifiers:
+  - name: Obliteration
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Obliteration
+      description: Raise the Encepter to the sky. Each target lassoed by the Encepter erupts in a prismatic burst of light, taking 10 psychic damage for each square horizontally encircled by the lasso. The lasso is then immediately released.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: '{10 * Stacks("Lassoed by the Encepter")} psychic damage'
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: 8ab0c6ba-b455-448d-95d6-f74e4dc424a2
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      domains: []
+      guid: 9c2c6a41-3b2e-4f0a-9c55-7d2a5f0e8b11
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Magic: true
+        Psychic: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetFilter: OngoingEffects has "Lassoed by the Encepter"
+      targetType: map
+    behavior: activated
+    guid: 4f7d1a2b-8c3e-4d5f-9a6b-1e2f3a4b5c6d
+    source: Item
+    sourceguid: b8f49191-408a-4a60-beb8-397543bd453a
+  source: Item
+- name: At World's End
+  description: If the Encepter was not taken from its cyclonic resting place with the purpose of vanquishing a terrible peril, then a terrible peril emerges to threaten the world within 3 days of the scepter being taken.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 7a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d
+  implementation: 0
+  implementationDetails: "NARRATIVE: A Director-driven story consequence with no mechanical hook."
+  itemAttached: true
+  modifiers: []
+  source: Item
+flavor: A bejeweled scepter with a spiraling porcelain handle balances an orb of light above its crown.
+implementation: 3
+implementationDetails: "SILVER overall. Shining Presence and Obliteration are fully automated. Champion's Lasso cannot trace the glowing line on the map, so the wielder enters the encircled square count and picks the enclosed targets by hand. Dominion applies restrained but cannot actually block teleport abilities. At World's End is narrative."
+keywords:
+  Magic: true
+mtime: 1789200000000
+specialDescription: ""
+type: Gear
+weight: 1
