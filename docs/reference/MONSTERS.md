@@ -1034,6 +1034,19 @@ number: "all"
 applyto: targets
 ```
 
+#### ActivatedAbilityManifestTreasureBehavior
+**Purpose**: Equip (`manifest`) or remove (`vanish`) the treasure a hero picked through a
+`granttreasure` modifier with `treasureDelivery: manifest`. The `treasureId` must match the
+modifier's. Manifest equips the item into a free trinket or leveled slot (item properties
+are only live while equipped); vanish unequips and removes it. Both are no-ops when there
+is nothing to do. Gate vanish triggers on the creature symbol `HasManifestedTreasure`.
+```yaml
+__typeName: ActivatedAbilityManifestTreasureBehavior
+treasureId: artifact-bonded
+mode: manifest
+applyto: targets
+```
+
 #### ActivatedAbilityChangeMovementTypeBehavior
 **Purpose**: Change movement type.
 ```yaml

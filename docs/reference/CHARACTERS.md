@@ -751,6 +751,37 @@ sources and forgets it once still knows it. The same modifier can be authored di
 (`subtype: forgetlanguage`, `skills: { <language-uuid>: true }`) when the language to
 forget is fixed rather than chosen.
 
+### Granting a Treasure (`behavior: granttreasure`)
+
+A benefit like "a 1st-echelon trinket of your choice" is a plain `CharacterFeature`
+carrying a `granttreasure` modifier. The builder turns it into a regular feature choice
+(nav button, target slot, filterable options list) and the character sheet shows a
+picker on the feature row. The pick is recorded on the hero under `treasureGrants`,
+keyed by the modifier guid.
+
+```yaml
+    modifiers:
+    - __typeName: CharacterModifier
+      behavior: granttreasure
+      guid: <generate-uuid>
+      name: Amnesia - Benefit          # must match the feature name
+      source: Complications
+      sourceguid: <feature-guid>
+      treasureCategory: trinket        # trinket | leveled | consumable | artifact | any
+      treasureEchelon: 1               # 0 = any echelon; items without an echelon are 1st
+      treasureKeywords: ""             # comma list, ANY may match a keyword substring, e.g. "Weapon, Bow"
+      treasureNote: ""                 # optional, leads the prompt: "The Director chooses this trinket."
+      treasureDelivery: claim          # claim | manifest
+      treasureId: ""                   # manifest only: pairs with ManifestTreasure behaviors
+```
+
+- `claim` (default): a "Claim Treasure" button adds the item to the inventory once and
+  locks the choice.
+- `manifest`: the pick is only recorded. `ActivatedAbilityManifestTreasureBehavior`
+  entries in the feature's triggers equip and remove the item (see MONSTERS.md). The
+  creature symbol `HasManifestedTreasure` is true while the item is out, for use in a
+  vanish trigger's `conditionFormula`. Artifact Bonded is the reference implementation.
+
 ### Minimal Complication YAML Template
 
 ```yaml

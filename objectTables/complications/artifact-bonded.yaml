@@ -17,8 +17,22 @@ modifierInfo:
     __typeName: CharacterFeature
     canHavePrerequisites: true
     guid: 2dc221da-7aac-40ad-93f3-8c368ad47167
-    implementation: 2
+    implementation: 3
+    implementationDetails: The chosen artifact is equipped by the once-per-encounter dying trigger and removed at the end of the hero's next turn or when they regain Stamina. It is not removed automatically when the hero benefits from one of its properties (no way to detect passive benefits); the Director handles that case.
     modifiers:
+    - __typeName: CharacterModifier
+      behavior: granttreasure
+      guid: 7af3885a-1e05-44d9-9006-026e44593e1b
+      name: Artifact Bonded - Benefit and Drawback
+      source: Complications
+      sourceguid: 2dc221da-7aac-40ad-93f3-8c368ad47167
+      description: "Choose an artifact (see Treasures in Chapter 13: Rewards). The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person."
+      treasureCategory: artifact
+      treasureEchelon: 0
+      treasureKeywords: ""
+      treasureDelivery: manifest
+      treasureId: artifact-bonded
+      treasureNote: The artifact only appears the first time in an encounter you are reduced to 0 Stamina.
     - name: Artifact Bonded - Benefit and Drawback
       description: |-
         Choose an artifact (see Treasures in Chapter 13: Rewards). The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first.
@@ -36,14 +50,6 @@ modifierInfo:
         __typeName: TriggeredAbility
         abilityType: none
         behaviors:
-        - __typeName: ActivatedAbilityFloatTextBehavior
-          color:
-            __usertype: LuaColor
-            a: 1
-            h: 0.140000000596046
-            s: 0.899999976158142
-            v: 1
-          text: Artifact Appears!
         - __typeName: ActivatedAbilityDamageBehavior
           cannotBeReduced: true
           filterTarget: Recoveries Available to Spend = 0
@@ -53,6 +59,9 @@ modifierInfo:
           filterTarget: Recoveries Available to Spend > 0
           mode: expend
           resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
+        - __typeName: ActivatedAbilityManifestTreasureBehavior
+          treasureId: artifact-bonded
+          mode: manifest
         castImmediately: true
         display:
           bgcolor: "#ffffffff"
@@ -76,6 +85,74 @@ modifierInfo:
           resourceRefreshType: encounter
           resourceid: 58002813-c7a1-4ad1-a22f-20527a82996c
         whenActive: combat
+    - __typeName: CharacterModifier
+      behavior: trigger
+      guid: fb39daa7-fce7-45b3-9280-24457ced808d
+      name: Artifact Bonded - Benefit and Drawback
+      description: The artifact disappears at the end of your next turn.
+      source: Complications
+      sourceguid: 2dc221da-7aac-40ad-93f3-8c368ad47167
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        name: Artifact Vanishes
+        description: The artifact disappears at the end of your next turn.
+        guid: 3d7c3c65-8b8d-46f9-9c2c-4436ed3fe6ed
+        abilityType: none
+        trigger: endturn
+        targetType: self
+        conditionFormula: HasManifestedTreasure
+        mandatory: true
+        castImmediately: true
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        iconid: ui-icons/skills/1.png
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        modifiers: []
+        persistence: []
+        strain: []
+        behaviors:
+        - __typeName: ActivatedAbilityManifestTreasureBehavior
+          treasureId: artifact-bonded
+          mode: vanish
+    - __typeName: CharacterModifier
+      behavior: trigger
+      guid: 8c72d5cd-cf1f-4a24-ab34-2afd387c67ad
+      name: Artifact Bonded - Benefit and Drawback
+      description: The artifact disappears when you have more than 0 Stamina.
+      source: Complications
+      sourceguid: 2dc221da-7aac-40ad-93f3-8c368ad47167
+      triggeredAbility:
+        __typeName: TriggeredAbility
+        name: Artifact Vanishes
+        description: The artifact disappears when you have more than 0 Stamina.
+        guid: 4ed304d1-6708-4136-9ac5-cddccdab1e69
+        abilityType: none
+        trigger: regainhitpoints
+        targetType: self
+        conditionFormula: HasManifestedTreasure and Stamina > 0
+        mandatory: true
+        castImmediately: true
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        iconid: ui-icons/skills/1.png
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        modifiers: []
+        persistence: []
+        strain: []
+        behaviors:
+        - __typeName: ActivatedAbilityManifestTreasureBehavior
+          treasureId: artifact-bonded
+          mode: vanish
     source: Complications
     tags:
       Combat: true
