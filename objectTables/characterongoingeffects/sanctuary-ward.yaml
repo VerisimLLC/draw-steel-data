@@ -37,11 +37,6 @@ modifiers:
       conditions: []
       mode: effect
       ongoingEffect: 5075a6ba-c1f0-4f89-8d0c-d1dd5bcb6c83
-    - __typeName: ActivatedAbilityPurgeEffectsBehavior
-      applyto: subject
-      conditions: []
-      mode: effect
-      ongoingEffect: 617f5c50-cee7-412d-bfe7-24511dfa1407
     conditionFormula: Attacker = ConditionCaster("Sanctuary Ward")
     display:
       bgcolor: "#ffffffff"
@@ -82,14 +77,16 @@ modifiers:
     repeatTargets: false
     targetType: self
   attributes:
-  - id: filter
-    condition: Ongoing Effects has not "Sanctuary Ward Protection"
-    operation: Condition
-    value: You cannot attack the Conduit with a Strike
+  - id: reasonfilter
+    operation: reasonfilter
+    reasonedFilters:
+    - formula: not (Caster.ConditionCaster("Sanctuary Ward") = Target)
+      reason: Sanctuary Ward prevents you from targeting this creature
+    value: ""
   behavior: modifyability
   domains:
     CharacterOngoingEffect:5075a6ba-c1f0-4f89-8d0c-d1dd5bcb6c83: true
-  filterAbility: Ability.Has Attack
+  filterAbility: Ability.Has Attack and not Ability.Keywords has "Area"
   guid: 52ab1f11-e0d8-4f5e-8265-8325eb64bfd6
   modifyDescription: ""
   source: Ongoing Effect
