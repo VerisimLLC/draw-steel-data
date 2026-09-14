@@ -21,10 +21,49 @@ features:
     __typeName: CharacterModifier
     attribute: 6707d8ac-4323-47bc-9593-e36fd1ac146e
     behavior: attribute
+    filterCondition: not (Ongoing Effects has "Hellcharger Momentum")
     guid: eb4771bf-30a1-4511-a20b-d889525785e2
     source: Item
     sourceguid: cc742200-139f-4d8f-9653-6d887b833b98
     value: 5
+  # The book grants +5 SPEED for the rest of the turn, not just a longer charge, so
+  # movement taken after the charge benefits too. Applied to yourself on your own
+  # turn, end_of_next_turn is the very next turn end -- this one.
+  - name: Hellcharger Helm
+    description: Whenever you use the Charge main action, you gain a +5 bonus to speed until the end of your current turn.
+    __typeName: CharacterModifier
+    behavior: trigger
+    guid: 9bc3afc0-b8bf-455d-b6eb-03b1369e6b64
+    source: Item
+    sourceguid: cc742200-139f-4d8f-9653-6d887b833b98
+    triggeredAbility:
+      name: Hellcharger Helm
+      description: You gain a +5 bonus to speed until the end of your current turn.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        duration: end_of_next_turn
+        ongoingEffect: e8b47b03-d66d-4309-9b79-0a8d52f6c3df
+        ongoingEffectCustom: e8b47b03-d66d-4309-9b79-0a8d52f6c3df
+      conditionFormula: UsedAbility.Name = "Charge"
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 20d00f29-db72-46f1-b819-95db7e2078c7
+      iconid: 446b9948-ff31-4a4b-ab01-d08d3c510e52
+      mandatory: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: useability
   # Offers a free Knockback once the Charge finishes. The invoked ability is a copy of
   # the standard maneuver minus its size restriction, since the helm ignores that.
   - name: Hellcharger Helm
@@ -93,6 +132,7 @@ features:
         saturation: 1
       guid: 5b7f211e-1dd8-4be2-b11f-ccc31c96bf4c
       iconid: 446b9948-ff31-4a4b-ab01-d08d3c510e52
+      hasManualVersion: true
       mandatory: false
       modifiers: []
       numTargets: "1"
