@@ -168,7 +168,7 @@ levels:
       tags:
         Combat: true
     - name: Creation Domain Effect
-      description: You create a 5 wall of stone within 10 squares of you.
+      description: You summon the forces of creation and create a wall of stone within 10 squares whose size is 5 + your Intuition score. The wall lasts until the end of the encounter.
       __typeName: CharacterFeature
       classid: b774e01a-7639-4d1e-abb4-1004ec062d76
       domains:
@@ -178,20 +178,16 @@ levels:
       implementation: 2
       modifiers:
       - name: Creation Domain Effect
-        description: You create a 5 wall of stone within 10 squares of you.
+        description: You summon the forces of creation and create a wall of stone within 10 squares whose size is 5 + your Intuition score. The wall lasts until the end of the encounter.
         __typeName: CharacterModifier
         activatedAbility:
           name: Creation Domain Effect
-          description: You summon the forces of creation and create a wall of stone within 10 squares whose size is 5 + your Intuition score. The wall lasts until the end of the encounter
+          description: You summon the forces of creation and create a wall of stone within 10 squares whose size is 5 + your Intuition score. The wall lasts until the end of the encounter.
           __typeName: ActivatedAbility
           abilityType: none
-          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           behaviors:
-          - __typeName: ActivatedAbilityChangeElevationBehavior
-            shape: square
-          - __typeName: ActivatedAbilityChangeTerrainBehavior
-            shape: square
-            tileid: "-MBVRbloUEmdjp2s5SdP"
+          - __typeName: ActivatedAbilityBuildWallBehavior
+            objectid: 5dffb1f7-c558-40ab-a159-7743d2d788ce
           categorization: Trigger
           display:
             bgcolor: "#ffffffff"
@@ -204,7 +200,7 @@ levels:
           guid: 5ceb3597-fa5c-4875-ac9b-81e4bcd54cf5
           iconid: fbfb413b-5378-48cc-9a8d-44af9bddd71c
           implementation: 2
-          implementationDetails: The wall does not end when the encounter ends
+          implementationDetails: Stone wall placement and size are automated. Remove the wall manually at the end of the encounter.
           modifiers: []
           numTargets: 5 + Intuition
           persistence: []
@@ -216,7 +212,7 @@ levels:
             docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
             page: 96
           strain: []
-          targetType: anyspace
+          targetType: emptyspace
           targeting: contiguous_wall
         behavior: activated
         domains:
