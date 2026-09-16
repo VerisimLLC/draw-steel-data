@@ -231,35 +231,7 @@ info:
         CharacterFeature:e5958acb-d24f-4116-8a6d-035c9bc5fa4a: true
       guid: 2197dc55-a499-4ee4-a46f-e577f56ba40c
       implementation: 0
-      modifiers:
-      - name: Alchemical Ingredients
-        description: After a shambling mound dies, a creature can make a Reason test to extract toxins from the remains.
-        __typeName: CharacterModifier
-        behavior: trigger
-        guid: b8dd2bb3-9684-4658-ac5b-eb7e08c8dc1d
-        source: Trait
-        sourceguid: 2197dc55-a499-4ee4-a46f-e577f56ba40c
-        triggeredAbility:
-          name: Alchemical Ingredients
-          description: ""
-          __typeName: TriggeredAbility
-          abilityType: none
-          behaviors: []
-          castImmediately: true
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: c8267cde-60c8-46f4-8c70-1190e2886a7a
-          iconid: ui-icons/skills/1.png
-          mandatory: true
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-          trigger: zerohitpoints
+      modifiers: []
       source: Trait
     - name: Tether Down
       description: |-
@@ -655,7 +627,14 @@ info:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        damageType: poison
+        filterTarget: Ongoing Effects has "Engulfed"
+        roll: "5"
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        applyto: caster
+        stamina: Cast.Damage Dealt
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
