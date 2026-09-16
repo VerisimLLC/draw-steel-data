@@ -1,39 +1,43 @@
+id: cd37b13a-9134-41bf-9081-9f8756f76b23
+name: Loner
+description: You've always been a lone wolf. With no one else to lean on, you've picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group and found the family you'd never known you needed.
+_table: complications
 __typeName: CharacterComplication
+benefit: When you finish a respite, choose a skill you don't have. You have that skill until the end of your next respite.
+ctime: 1775106066768
+drawback: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeature
-    implementation: 1
-    guid: 51b86f1f-74e0-4506-917b-7cdaee46ef84
-    tags:
-      Respite: true
-    canHavePrerequisites: true
+  - name: Loner - Benefit
     description: When you finish a respite, choose a skill you don't have. You have that skill until the end of your next respite.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: 51b86f1f-74e0-4506-917b-7cdaee46ef84
+    implementation: 1
     modifiers: []
     source: Complications
-    name: Loner - Benefit
-  - __typeName: CharacterFeature
-    implementation: 4
-    guid: 5e437b33-6031-4552-bb7b-2c509f2ab547
     tags:
-      Combat: true
-    canHavePrerequisites: true
+      Respite: true
+  - name: Loner - Drawback
     description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: 5e437b33-6031-4552-bb7b-2c509f2ab547
+    implementation: 4
     modifiers:
-    - __typeName: CharacterModifier
-      guid: 6afb94e1-0283-4fd7-ba05-716dcf4e87f2
-      name: Loner - Drawback
-      sourceguid: 5e437b33-6031-4552-bb7b-2c509f2ab547
+    - name: Loner - Drawback
       description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: 6afb94e1-0283-4fd7-ba05-716dcf4e87f2
       source: Complications
+      sourceguid: 5e437b33-6031-4552-bb7b-2c509f2ab547
       triggeredAbility:
+        name: Loner Drawback
+        description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
         __typeName: TriggeredAbility
-        mandatory: true
-        castImmediately: true
-        triggerPrompt: ""
-        strain: []
-        targetType: self
-        conditionFormula: ""
+        abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityDrawSteelCommandBehavior
           applyto: targets
@@ -41,45 +45,41 @@ modifierInfo:
         - __typeName: ActivatedAbilityFloatTextBehavior
           color:
             __usertype: LuaColor
+            a: 1
             h: 0
             s: 0.830634832382202
             v: 0.998205065727234
-            a: 1
           text: Loner Drawback
         - __typeName: ActivatedAbilityConditionSourceBehavior
-          filterTarget: Target = Attacker
           applyto: all_creatures
           condid: 85e26e12-e853-464d-bbbc-98ddf2c0071a
+          filterTarget: Target = Attacker
         - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-          duration: eoe
           applyto: subject
+          duration: eoe
           ongoingEffect: e5b9fa52-b2aa-4cc2-b46a-d18828bdcf9a
           ongoingEffectCustom: e5b9fa52-b2aa-4cc2-b46a-d18828bdcf9a
-        persistence: []
+        castImmediately: true
+        conditionFormula: ""
         display:
           bgcolor: "#ffffffff"
-          hueshift: 0
           brightness: 1
+          hueshift: 0
           saturation: 1
-        subject: otherheroes
-        numTargets: "1"
-        modifiers: []
-        iconid: ui-icons/skills/1.png
         guid: 2d8be557-e492-4417-953f-a9a96712c793
-        description: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
-        abilityType: none
-        trigger: dying
-        repeatTargets: false
+        iconid: ui-icons/skills/1.png
+        mandatory: true
+        modifiers: []
+        numTargets: "1"
+        persistence: []
         range: 1
-        name: Loner Drawback
-      behavior: trigger
+        repeatTargets: false
+        strain: []
+        subject: otherheroes
+        targetType: self
+        trigger: dying
+        triggerPrompt: ""
     source: Complications
-    name: Loner - Drawback
+    tags:
+      Combat: true
 mtime: 1775107597199
-benefit: When you finish a respite, choose a skill you don't have. You have that skill until the end of your next respite.
-description: You've always been a lone wolf. With no one else to lean on, you've picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group and found the family you'd never known you needed.
-drawback: Now that you finally have people who care about you, you won't let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by that creature until your ally's Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.
-id: cd37b13a-9134-41bf-9081-9f8756f76b23
-ctime: 1775106066768
-name: Loner
-_table: complications

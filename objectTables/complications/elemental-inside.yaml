@@ -1,21 +1,33 @@
+id: b681b614-e00a-42a8-bdbc-258dc5d31893
+name: Elemental Inside
+description: When an evil mage threatened someone you loved, you blocked that foe's summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental -- who isn't at all happy about it.
+_table: complications
 __typeName: CharacterComplication
+benefit: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
+ctime: 1774704821569
+drawback: While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety. If you don't do your best to fulfill the elemental's rage, the Director can take temporary control of your hero.
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeature
-    implementation: 4
-    guid: aac722b7-63a6-4e12-858a-4318bd643fd6
-    tags:
-      Hidden: true
-    canHavePrerequisites: true
+  - name: Elemental Inside - Benefit
     description: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: aac722b7-63a6-4e12-858a-4318bd643fd6
+    implementation: 4
     modifiers:
-    - __typeName: CharacterModifier
-      name: Elemental Inside - Benefit
+    - name: Elemental Inside - Benefit
+      description: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
+      __typeName: CharacterModifier
+      attribute: hitpoints
+      behavior: attribute
       guid: 0a3b8f07-9080-4e90-a235-eb06cd7245ae
+      source: Complications
+      sourceguid: aac722b7-63a6-4e12-858a-4318bd643fd6
       value:
-        __typeName: GoblinScriptTable
         id: table
+        __typeName: GoblinScriptTable
+        editableField: true
         entries:
         - script: "3"
           threshold: 1
@@ -26,117 +38,105 @@ modifierInfo:
         - script: "12"
           threshold: 10
         field: Level
-        editableField: true
-      attribute: hitpoints
-      description: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
-      source: Complications
-      sourceguid: aac722b7-63a6-4e12-858a-4318bd643fd6
-      behavior: attribute
     source: Complications
-    name: Elemental Inside - Benefit
-  - __typeName: CharacterFeature
-    implementation: 3
-    guid: 4512106e-9fe3-412c-a890-69e6bb5bf30b
     tags:
-      Exploration: true
-    canHavePrerequisites: true
+      Hidden: true
+  - name: Elemental Inside - Drawback
     description: While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety. If you don't do your best to fulfill the elemental's rage, the Director can take temporary control of your hero.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: 4512106e-9fe3-412c-a890-69e6bb5bf30b
+    implementation: 3
     modifiers:
-    - __typeName: CharacterModifier
-      guid: eef45372-e30f-4f05-b9c3-feb610334232
-      name: Elemental Inside - Benefit
-      sourceguid: aac722b7-63a6-4e12-858a-4318bd643fd6
+    - name: Elemental Inside - Benefit
       description: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: eef45372-e30f-4f05-b9c3-feb610334232
       source: Complications
+      sourceguid: aac722b7-63a6-4e12-858a-4318bd643fd6
       triggeredAbility:
+        name: Elemental Inside Drawback
+        description: While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety. If you don't do your best to fulfill the elemental's rage, the Director can take temporary control of your hero.
         __typeName: TriggeredAbility
-        mandatory: false
-        castImmediately: true
-        triggerPrompt: While you are dying, your possessed elemental takes control of your body. Attack the nearest creature.
-        strain: []
-        targetType: self
-        conditionFormula: Dying
+        abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityInvokeAbilityBehavior
           abilityType: custom
           customAbility:
+            name: Invoked Ability
+            description: ""
             __typeName: ActivatedAbility
-            repeatTargets: false
-            castImmediately: true
-            numTargets: "1"
-            strain: []
-            targetType: self
-            modifiers: []
+            abilityType: none
             behaviors:
             - __typeName: ActivatedAbilityAugmentedAbilityBehavior
               modifier:
-                __typeName: CharacterModifier
-                attributes: []
-                cannotModifyAction: true
                 name: Modify Attack
-                guid: 165376e8-91d9-4e38-9b1c-2d34265121a9
+                description: ""
+                __typeName: CharacterModifier
                 ability:
+                  name: New Ability
+                  description: ""
                   __typeName: ActivatedAbility
+                  abilityModification: true
+                  abilityType: none
+                  behaviors: []
                   display:
                     bgcolor: "#ffffffff"
-                    hueshift: 0
                     brightness: 1
+                    hueshift: 0
                     saturation: 1
-                  abilityType: none
-                  numTargets: "1"
-                  targetType: self
-                  modifiers: []
-                  behaviors: []
-                  abilityModification: true
-                  iconid: ui-icons/skills/1.png
                   guid: fc22fef7-ef06-4bef-8726-2c045f11b603
-                  description: ""
-                  repeatTargets: false
+                  iconid: ui-icons/skills/1.png
+                  modifiers: []
+                  numTargets: "1"
                   range: 1
-                  name: New Ability
-                modifyDescription: ""
-                description: ""
-                source: ""
-                filterAbility: Ability.Has Attack
+                  repeatTargets: false
+                  targetType: self
+                attributes: []
                 behavior: modifyability
-            iconid: ui-icons/skills/1.png
-            guid: c4216e97-7eba-402d-9044-778f68ab38e3
-            abilityType: none
+                cannotModifyAction: true
+                filterAbility: Ability.Has Attack
+                guid: 165376e8-91d9-4e38-9b1c-2d34265121a9
+                modifyDescription: ""
+                source: ""
+            castImmediately: true
             display:
               bgcolor: "#ffffffff"
-              hueshift: 0
               brightness: 1
+              hueshift: 0
               saturation: 1
-            description: ""
+            guid: c4216e97-7eba-402d-9044-778f68ab38e3
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
             persistence: []
             range: 1
-            name: Invoked Ability
+            repeatTargets: false
+            strain: []
+            targetType: self
           promptText: "While you are dying, your possessing elemental takes control of your body. \vThe elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety."
-        persistence: []
-        repeatTargets: false
-        abilityType: none
-        whenActive: always
-        modifiers: []
-        iconid: ui-icons/skills/1.png
-        guid: 5514b2a2-d1ff-415d-9c30-0e77a3e3bfaa
-        description: While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety. If you don't do your best to fulfill the elemental's rage, the Director can take temporary control of your hero.
+        castImmediately: true
+        conditionFormula: Dying
         display:
           bgcolor: "#ffffffff"
-          hueshift: 0
           brightness: 1
+          hueshift: 0
           saturation: 1
-        trigger: beginturn
+        guid: 5514b2a2-d1ff-415d-9c30-0e77a3e3bfaa
+        iconid: ui-icons/skills/1.png
+        mandatory: false
+        modifiers: []
         numTargets: "1"
+        persistence: []
         range: 1
-        name: Elemental Inside Drawback
-      behavior: trigger
+        repeatTargets: false
+        strain: []
+        targetType: self
+        trigger: beginturn
+        triggerPrompt: While you are dying, your possessed elemental takes control of your body. Attack the nearest creature.
+        whenActive: always
     source: Complications
-    name: Elemental Inside - Drawback
+    tags:
+      Exploration: true
 mtime: 1775105665493
-benefit: You gain a +3 bonus to Stamina at 1st level, then again at 4th, 7th, and 10th levels.
-description: When an evil mage threatened someone you loved, you blocked that foe's summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental -- who isn't at all happy about it.
-drawback: While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the nearest creature you notice without regard for your desires or your body's safety. If you don't do your best to fulfill the elemental's rage, the Director can take temporary control of your hero.
-id: b681b614-e00a-42a8-bdbc-258dc5d31893
-ctime: 1774704821569
-name: Elemental Inside
-_table: complications

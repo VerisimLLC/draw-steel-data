@@ -17,6 +17,7 @@ domains:
 guid: 441faa43-b719-40a0-ade2-43e11b5f344b
 iconid: ebc8b529-f450-4bee-9466-86374c26dc13
 implementation: 2
+implementationDetails: Adjacent start-of-turn triggers are automated. Entry reactions use the granted ability until exact adjacency-entry events exist.
 modifiers:
 - name: Thresher Thrasher
   description: Until the end of the encounter, whenever a creature comes adjacent to a target or starts their turn there, the target can make a free strike against them.
@@ -49,19 +50,20 @@ modifiers:
     description: ""
     __typeName: TriggeredAbility
     abilityType: none
+    actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
     behaviors:
     - __typeName: ActivatedAbilityInvokeAbilityBehavior
       abilityType: custom
       applyto: caster
-      invokeOnCaster: true
       customAbility:
         name: Thresher Thrasher - Free Strike
         description: ""
         __typeName: ActivatedAbility
         abilityType: none
+        actionResourceId: none
         behaviors:
         - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-          filterAbilityTargets: "Cast.HasTarget(Target)"
+          filterAbilityTargets: Cast.HasTarget(Target)
           modifier:
             name: Modify Attack
             description: ""
@@ -108,7 +110,7 @@ modifiers:
         source: Monster
         strain: []
         targetType: self
-        actionResourceId: none
+      invokeOnCaster: true
     display:
       bgcolor: "#ffffffff"
       brightness: 1
@@ -130,13 +132,8 @@ modifiers:
     trigger: beginturn
     triggerPrompt: whenever a creature starts their turn adjacent to you, you can make a free strike against them.
     whenActive: combat
-    actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
 - name: Thresher Thrasher
   __typeName: CharacterModifier
-  behavior: activated
-  guid: b8253f62-b0f3-4705-8345-44caa356c902
-  sourceguid: 441faa43-b719-40a0-ade2-43e11b5f344b
-  source: Trait
   activatedAbility:
     name: Thresher Thrasher
     description: When a creature enters adjacency, you may make a free strike against that creature.
@@ -147,15 +144,15 @@ modifiers:
     - __typeName: ActivatedAbilityInvokeAbilityBehavior
       abilityType: custom
       applyto: caster
-      invokeOnCaster: true
       customAbility:
         name: Thresher Thrasher - Free Strike
         description: ""
         __typeName: ActivatedAbility
         abilityType: none
+        actionResourceId: none
         behaviors:
         - __typeName: ActivatedAbilityAugmentedAbilityBehavior
-          filterAbilityTargets: "Cast.HasTarget(Target)"
+          filterAbilityTargets: Cast.HasTarget(Target)
           modifier:
             name: Modify Attack
             description: ""
@@ -202,22 +199,25 @@ modifiers:
         source: Monster
         strain: []
         targetType: self
-        actionResourceId: none
+      invokeOnCaster: true
     display:
-      bgcolor: '#ffffffff'
+      bgcolor: "#ffffffff"
       brightness: 1
       hueshift: 0
       saturation: 1
     guid: 3e9ce07b-b209-4172-8245-2e42743f663c
     iconid: ui-icons/skills/1.png
+    implementation: 2
+    implementationDetails: Activate for the creature entering adjacency. Exact adjacency-entry detection needs Lua support.
     modifiers: []
-    numTargets: '1'
+    numTargets: "1"
     range: 1
     repeatTargets: false
     targetType: target
-    implementation: 2
-    implementationDetails: Activate for the creature entering adjacency. Exact adjacency-entry detection needs Lua support.
+  behavior: activated
+  guid: b8253f62-b0f3-4705-8345-44caa356c902
+  source: Trait
+  sourceguid: 441faa43-b719-40a0-ade2-43e11b5f344b
 mtime: 1778596230500
 source: Ongoing Effect
 statusEffect: true
-implementationDetails: Adjacent start-of-turn triggers are automated. Entry reactions use the granted ability until exact adjacency-entry events exist.

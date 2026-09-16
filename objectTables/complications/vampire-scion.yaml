@@ -1,120 +1,120 @@
-__typeName: CharacterComplication
 id: 2c0450dc-ce69-444c-8450-8b14f8acb2a6
-mtime: 1778597382100
+name: Vampire Scion
+description: A vampire has bitten you. You're not undead--or not yet, anyway--but your connection with your vampire progenitor fills you with urges you fight to control.
+_table: complications
+__typeName: CharacterComplication
 benefit: Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
+ctime: 1771037630959
+drawback: While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
 modifierInfo:
   __typeName: ClassLevel
   features:
-  - __typeName: CharacterFeature
-    implementation: 4
-    guid: cf55b1cb-61c9-439a-8108-7786da45e953
-    tags:
-      Combat: true
-      Respite: true
-    canHavePrerequisites: true
+  - name: Vampire Scion - Benefit
     description: Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: cf55b1cb-61c9-439a-8108-7786da45e953
+    implementation: 4
     modifiers:
-    - __typeName: CharacterModifier
-      guid: 4e549796-ce36-4520-b0a1-995aea94b838
-      behavior: trigger
-      name: Vampire Scion - Benefit
+    - name: Vampire Scion - Benefit
       description: Whenever you deal damage with a melee free strike and get a tier 3 result, you gain temporary Stamina equal to the damage dealt.
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: 4e549796-ce36-4520-b0a1-995aea94b838
       source: Complications
+      sourceguid: cf55b1cb-61c9-439a-8108-7786da45e953
       triggeredAbility:
+        name: Vampire Scion Benefit
+        description: |-
+          Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
+
+          While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
         __typeName: TriggeredAbility
-        mandatory: false
-        castImmediately: true
-        triggerPrompt: Vampire Bite! Gain temporary Stamina equal to damage dealt.
-        strain: []
-        targetType: self
-        conditionFormula: Trigger Name = "Vampire Bite" and Trigger Value > 0
+        abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityFloatTextBehavior
-          guid: c8dc971d-001f-4c8f-8cef-88d11e7fc9bb
           color:
             __usertype: LuaColor
+            a: 1
             h: 0
             s: 0.899999976158142
             v: 0.899999976158142
-            a: 1
+          guid: c8dc971d-001f-4c8f-8cef-88d11e7fc9bb
           text: Vampire Bite!
         - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
           chatMessage: Vampire Scion Benefit
           stamina: Trigger Value
         - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-          ongoingEffect: e7e75bf3-c7aa-4d27-a056-800459678f75
           applyto: caster
+          ongoingEffect: e7e75bf3-c7aa-4d27-a056-800459678f75
           ongoingEffectCustom: e7e75bf3-c7aa-4d27-a056-800459678f75
-        persistence: []
-        repeatTargets: false
-        abilityType: none
-        numTargets: "1"
-        modifiers: []
-        iconid: ui-icons/skills/1.png
-        guid: a957aea1-6422-47a7-8319-2d79258a3020
+        castImmediately: true
+        conditionFormula: Trigger Name = "Vampire Bite" and Trigger Value > 0
         display:
           bgcolor: "#ffffffff"
-          hueshift: 0
           brightness: 1
+          hueshift: 0
           saturation: 1
-        trigger: custom
-        description: |-
-          Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
-
-          While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
-        range: 1
-        name: Vampire Scion Benefit
-      sourceguid: cf55b1cb-61c9-439a-8108-7786da45e953
-    - __typeName: CharacterModifier
-      attributes: []
-      sourceguid: cf55b1cb-61c9-439a-8108-7786da45e953
-      ability:
-        __typeName: ActivatedAbility
-        repeatTargets: false
-        abilityType: none
+        guid: a957aea1-6422-47a7-8319-2d79258a3020
+        iconid: ui-icons/skills/1.png
+        mandatory: false
+        modifiers: []
         numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
         strain: []
         targetType: self
-        modifiers: []
+        trigger: custom
+        triggerPrompt: Vampire Bite! Gain temporary Stamina equal to damage dealt.
+    - name: Vampire Scion - Benefit
+      description: Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
+      __typeName: CharacterModifier
+      ability:
+        name: New Ability
+        description: ""
+        __typeName: ActivatedAbility
+        abilityModification: true
+        abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityCustomTriggerBehavior
+          applyto: caster
           filterTarget: Cast.Tier = 3
           triggerName: Vampire Bite
-          applyto: caster
           value: Cast.Damage Dealt
-        abilityModification: true
-        iconid: ui-icons/skills/1.png
-        guid: 2ab30f0b-b6c0-474d-b8f5-417b93d030b4
-        description: ""
         display:
           bgcolor: "#ffffffff"
-          hueshift: 0
           brightness: 1
+          hueshift: 0
           saturation: 1
+        guid: 2ab30f0b-b6c0-474d-b8f5-417b93d030b4
+        iconid: ui-icons/skills/1.png
+        modifiers: []
+        numTargets: "1"
         range: 1
-        name: New Ability
-      guid: fa864d94-ac17-42d4-8226-acd9d62bb18e
-      name: Vampire Scion - Benefit
-      modifyDescription: ""
-      description: Whenever you make a melee free strike against an adjacent creature, you can do so by biting that creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.
-      source: Complications
-      filterAbility: Ability.Free Strike and Ability.Keywords has "Melee"
+        repeatTargets: false
+        strain: []
+        targetType: self
+      attributes: []
       behavior: modifyability
+      filterAbility: Ability.Free Strike and Ability.Keywords has "Melee"
+      guid: fa864d94-ac17-42d4-8226-acd9d62bb18e
+      modifyDescription: ""
+      source: Complications
+      sourceguid: cf55b1cb-61c9-439a-8108-7786da45e953
     source: Complications
-    name: Vampire Scion - Benefit
-  - __typeName: CharacterFeature
-    implementation: 4
+    tags:
+      Combat: true
+      Respite: true
+  - name: Vampire Scion - Drawback
+    description: While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
     guid: 36ef83ca-5ee5-4766-a9cf-348416c92a2e
+    implementation: 4
+    modifiers: []
+    source: Complications
     tags:
       Exploration: true
       Negotiation: true
-    canHavePrerequisites: true
-    description: While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
-    modifiers: []
-    source: Complications
-    name: Vampire Scion - Drawback
-description: A vampire has bitten you. You're not undead--or not yet, anyway--but your connection with your vampire progenitor fills you with urges you fight to control.
-drawback: While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.
-ctime: 1771037630959
-name: Vampire Scion
-_table: complications
+mtime: 1778597382100
