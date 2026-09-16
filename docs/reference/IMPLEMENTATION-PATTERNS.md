@@ -191,6 +191,7 @@ powerRollModifier:
 ```
 **Example:** Goblin Monarch "Meat Shield", Mystic Queen Bargnot "Show Them Your Might!"
 **When:** Bodyguard or "interpose" abilities that swap the target of an incoming attack.
+Creatures the strike already targets (including the original target) are excluded from the picker. Set `changeTargetAllowOriginal: true` when choosing a new target is optional (Berserker "Lines of Force"): the original target stays pickable, and picking it resolves as the same creature with the trigger owner as the new source.
 
 ### Reasoned Filters for Targeting Feedback
 Provide user-facing explanations when targeting fails.
