@@ -156,14 +156,15 @@ info:
       - name: Masking Glamor
         description: Abilities targeting the scout that would take a bane from cover or concealment have a double bane instead.
         __typeName: CharacterModifier
-        activationCondition: Target.Conditions has "concealment"
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
         behavior: power
-        displayCondition: Target.Conditions has "concealment"
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
         domains:
           CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
           CharacterFeature:e39b4270-2ec9-44fa-8d60-07ba96205112: true
         guid: 44ccf69d-2c86-42bc-8e64-e508524cd15d
-        keywords: []
+        keywords:
+          Strike: true
         modtype: bane
         rollType: enemy_ability_power_roll
         source: Trait

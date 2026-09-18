@@ -110,16 +110,17 @@ info:
       - name: Masking Glamor
         description: Abilities targeting the greenskeeper that would take a bane from concealment have a double bane instead.
         __typeName: CharacterModifier
-        activationCondition: Target.Conditions has "concealment"
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
         behavior: power
-        displayCondition: Target.Conditions has "concealment"
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
         domains:
           CharacterFeature:43114623-44ec-4a74-bcb9-ffe3440c88da: true
           CharacterFeature:4ca15083-5ef2-414a-a86b-e27839e46c1b: true
           CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
           CharacterFeature:ada9539c-8562-4387-8b48-038e5ec37d45: true
         guid: 691866f5-08bd-4030-8733-b82d90788340
-        keywords: []
+        keywords:
+          Strike: true
         modtype: bane
         rollType: enemy_ability_power_roll
         source: Trait

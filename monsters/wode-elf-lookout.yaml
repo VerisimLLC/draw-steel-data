@@ -176,13 +176,14 @@ info:
       - name: Masking Glamor
         description: Abilities targeting the lookout that would take a bane from concealment have a double bane instead.
         __typeName: CharacterModifier
-        activationCondition: Target.Conditions has "concealment"
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
         behavior: power
-        displayCondition: Target.Conditions has "concealment"
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
         domains:
           CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
         guid: b8519013-2fe9-4d33-91df-4607085f6129
-        keywords: []
+        keywords:
+          Strike: true
         modtype: bane
         rollType: enemy_ability_power_roll
         source: Trait

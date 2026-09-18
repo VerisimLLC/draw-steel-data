@@ -92,11 +92,12 @@ info:
         description: Abilities targeting the {shortname} that would take a bane from cover or concealment have a double bane instead.
         __typeName: CharacterModifier
         activationAfterRoll: false
-        activationCondition: Target.Conditions has "concealment"
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
         behavior: power
-        displayCondition: Target.Conditions has "concealment"
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
         guid: 9138d0e6-ed52-42d9-8a7a-294811779c14
-        keywords: []
+        keywords:
+          Strike: true
         modtype: bane
         rollType: enemy_ability_power_roll
         source: Trait

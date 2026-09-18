@@ -141,16 +141,17 @@ info:
       - name: Masking Glamor
         description: Abilities targeting the geurrilla that would take a bane from concealment have a double bane instead.
         __typeName: CharacterModifier
-        activationCondition: Target.Conditions has "concealment"
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
         behavior: power
-        displayCondition: Target.Conditions has "concealment"
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
         domains:
           CharacterFeature:43114623-44ec-4a74-bcb9-ffe3440c88da: true
           CharacterFeature:4ca15083-5ef2-414a-a86b-e27839e46c1b: true
           CharacterFeature:83f34496-fc00-42e2-a19c-f3b12428268b: true
           CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
         guid: 268ff0bd-f210-4405-a108-b79af38f85f2
-        keywords: []
+        keywords:
+          Strike: true
         modtype: bane
         rollType: enemy_ability_power_roll
         source: Trait
