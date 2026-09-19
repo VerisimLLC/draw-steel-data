@@ -163,7 +163,7 @@ info:
           trigger: zerohitpoints
           triggerPrompt: Move speed and make a melee free strike
       source: Trait
-    - name: Cackletongue Trigger
+    - name: Bonesplitter's Cackletongue
       description: ""
       __typeName: CharacterFeature
       domains:
@@ -173,7 +173,7 @@ info:
       guid: fc4879c9-288d-46df-a331-f283c67365af
       implementation: 4
       modifiers:
-      - name: Cackletongue Trigger
+      - name: Bonesplitter's Cackletongue
         description: ""
         __typeName: CharacterModifier
         behavior: trigger
@@ -269,6 +269,115 @@ info:
           targetType: self
           trigger: custom
           triggerPrompt: Use Bonesplitter's Cackletongue at no cost
+      - name: Bonesplitter's Cackletongue
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Bonesplitter's Cackletongue
+          description: Each target makes a melee free strike. Targets who haven't used a cackletongue maneuver on this turn use it immediately at no cost.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: 0
+            guid: d9e8d5b0-98ed-4158-8c97-6bf414c61136
+            ongoingEffect: bca3f902-ace6-4b39-9f6c-be4a86824e7d
+            ongoingEffectCustom: bca3f902-ace6-4b39-9f6c-be4a86824e7d
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: targets
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: b4efa195-05d6-4192-9e8e-4d8e01d3c8cb
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            inheritRange: true
+            invokeOnCaster: false
+            promptText: Select up to 3 targets to make a free strike
+            standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+            standardAbilityParams:
+              numcreatures: "3"
+              range: ""
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Use Cackletongue
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityCustomTriggerBehavior
+                filterTarget: not Ongoing Effects has "Used Cackletongue"
+                guid: c9e7169e-9065-4b2f-b3ae-819bc4ae341c
+                triggerName: Cackletongue
+                value: ""
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: da2058c0-d8fb-4aaa-ae3e-a3b566d1f4b0
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "2"
+              repeatTargets: false
+              strain: []
+              targetAllegiance: ally
+              targetType: all
+            filterTarget: ""
+            guid: 748614c0-18c3-4e13-9f47-f31c077e7e04
+            invokeOnCaster: false
+            promptText: ""
+          categorization: Heroic Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          effectImplemented: false
+          flavor: ""
+          guid: 9345fe76-74ac-4950-bbff-950cf3f96229
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords: []
+          modifiers: []
+          numTargets: 3
+          objectTarget: false
+          persistence: []
+          range: 2
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 4
+          selfTarget: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 156
+          strain: []
+          targetAllegiance: ally
+          targetType: target
+        behavior: activated
+        guid: 31572ddd-9272-479d-87c2-c2e160fb879d
       source: Character Feature
     cr: 2
     creatureSize: 1L
@@ -422,109 +531,6 @@ info:
         page: 156
       strain: []
       targetType: target
-    - name: Bonesplitter's Cackletongue
-      description: Each target makes a melee free strike. Targets who haven't used a cackletongue maneuver on this turn use it immediately at no cost.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        applyto: caster
-        duration: 0
-        guid: b0cd0389-32f7-42ea-9991-dbd8d8d4c26d
-        ongoingEffect: bca3f902-ace6-4b39-9f6c-be4a86824e7d
-        ongoingEffectCustom: bca3f902-ace6-4b39-9f6c-be4a86824e7d
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        applyto: targets
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 3462c620-7751-411f-b74c-61ec903af3d3
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        inheritRange: true
-        invokeOnCaster: false
-        promptText: Select up to 3 targets to make a free strike
-        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
-        standardAbilityParams:
-          numcreatures: "3"
-          range: ""
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: custom
-        applyto: caster
-        customAbility:
-          name: Use Cackletongue
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityCustomTriggerBehavior
-            filterTarget: not Ongoing Effects has "Used Cackletongue"
-            guid: 9afc767b-c616-4075-b8e3-079b4d855ef9
-            triggerName: Cackletongue
-            value: ""
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: d1d71f25-faf5-4d26-ad8f-c36cacb92c07
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          objectTarget: false
-          persistence: []
-          range: "2"
-          repeatTargets: false
-          strain: []
-          targetAllegiance: ally
-          targetType: all
-        filterTarget: ""
-        guid: 1c26e06a-3425-4f22-bda2-d82422683797
-        invokeOnCaster: false
-        promptText: ""
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 112d7c27-0b24-4e3a-9d11-75c868a41756
-      iconid: ui-icons/skills/1.png
-      implementation: 4
-      keywords: []
-      modifiers: []
-      numTargets: 3
-      objectTarget: false
-      persistence: []
-      range: 2
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 4
-      selfTarget: true
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 156
-      strain: []
-      targetAllegiance: ally
-      targetType: target
     innateAttacks: []
     innateLanguages:
       ebc44aa6-305a-471e-843a-ef44a7c23810: true
@@ -572,7 +578,7 @@ info:
   size: 3
   summonerid: null
   tokenType: null
-  updateid: bfe991ab-124c-47fd-a8cf-6c0bfe275954
+  updateid: e2f72497-a713-4a5a-8feb-015ac4048f6d
 mtime: 1786697487473
 ord: 0
 parentFolder: 820ecf96-578b-4508-8e79-c0fee75ec35e
