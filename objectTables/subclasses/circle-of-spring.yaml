@@ -1091,6 +1091,11 @@ levels:
             chatMessage: Pixie Dust
             filterTarget: Friends(Caster, Target) and not Minion
             stamina: Reason *2
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: subject
+            guid: 926b8238-a923-4e03-91a2-82221106b402
+            leavesCorpse: true
+            runOnDismiss: true
           conditionFormula: Subject.Minion and Subject.Summoner = Self and Subject.Keywords has "Fey"
           display:
             bgcolor: "#ffffffff"
@@ -1111,6 +1116,7 @@ levels:
           numTargets: "1"
           range: 1
           repeatTargets: false
+          resourceCost: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
           sourceReference:
             __typeName: SourceReference
             docid: 6a761787-90ad-4cd8-b2cb-43064db57a20
@@ -1122,6 +1128,35 @@ levels:
           targetType: subject
           trigger: creaturedeath
           triggerPrompt: Whenever one of your fey minions dies within your Summoner's Range, you can spend a Recovery to give temporary Stamina equal to twice your Reason score to each non-minion ally adjacent to the minion when they died.
+      - name: Pixie Dust
+        description: Fey minions hold off the global death rule while Pixie Dust can still
+          fire, so the prompt removes them itself instead of racing it.
+        __typeName: CharacterModifier
+        behavior: modsummoner
+        domains:
+          class:b41b7bcb-6246-4906-8115-831e55f62758: true
+          class:caf264c6-204d-4a80-89ea-e2a9ed6f4d31: true
+        feature:
+          name: Summoner
+          description: Modify the summoner's properties
+          __typeName: CharacterFeature
+          guid: a4a9f1f2-9ed4-4b47-a461-e258618b28e0
+          modifiers:
+          - name: Pixie Dust
+            description: Suppress global minion death only while the Pixie Dust prompt will
+              actually be raised, so a minion is never stranded dead on the board.
+            __typeName: CharacterModifier
+            attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+            behavior: attribute
+            guid: fe5894aa-755d-4115-9609-f6bebe45a893
+            source: Summoner
+            sourceguid: a4a9f1f2-9ed4-4b47-a461-e258618b28e0
+            value: 1 when (Minion and Keywords has "Fey" and Summoner.Recoveries Available to Spend > 0 and Summoner.Distance(Self) <= Summoner.SummonerRange)
+          source: Summoner
+        guid: a67bad62-64c2-4ba3-8c83-bf8ebcf28b6a
+        mode: summons
+        source: Circle of Spring Class Feature
+        sourceguid: 838a0909-4493-4c9d-bcb6-9f1cf08fc512
       source: Circle of Spring Class Feature
       sourceReference:
         __typeName: SourceReference
