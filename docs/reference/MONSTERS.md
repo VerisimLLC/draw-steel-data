@@ -88,7 +88,8 @@ The base `ActivatedAbility` type used for all abilities. Default values shown ar
 ```yaml
 __typeName: ActivatedAbility
 name: "Ability Name"               # default: ""
-description: "What this ability does"
+description: "What this ability does"  # After-roll effect text; card adds "Effect:" itself
+preDescription: ""                  # Before-roll effect text; also auto-prefixed with "Effect:"
 flavor: ""                          # Optional flavor text
 guid: <uuid>
 

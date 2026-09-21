@@ -94,6 +94,11 @@ These errors have been discovered through testing. Read this section BEFORE crea
     negative bloodied threshold -- use the `dying` trigger for "hero reduced to 0" effects.
     Details in `MONSTER_PATTERNS.md` "Triggered Reactions".
 
+15. **Never start `description` or `preDescription` with "Effect:".** Copying the stat block's
+    `Effect:` prefix renders as "Effect: Effect: ...". Write only the text after the label:
+    `description: "The target is slowed (save ends)."`, not
+    `description: "Effect: The target is slowed (save ends)."`.
+
 ---
 
 ## ASCII-Only Rule
