@@ -819,31 +819,35 @@ Replace one creature with another at the same location.
 
 ## Resistance Rolls
 
-### Resistance Roll (Target Defends)
-Targets roll instead of the attacker. Tier severity is inverted.
+### Reactive Test (Target Rolls)
+Use whenever the rules text makes targets roll a test. Targets roll instead of the
+attacker, and tier severity is inverted. `roll` is ignored (but must be present): each
+target rolls 2d10 + the `resistanceAttr` characteristic, which defaults to `inu`.
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
-  roll: 2d6 + Might or Agility
+  roll: 2d10 + Highest Characteristic
   resistanceRoll: true
-  resistanceAttr: inu            # targets roll with this attribute
+  resistanceAttr: inu            # targets roll with this characteristic -- always set it
   tiers:
   - 18 fire damage               # Tier 1 = worst for target
   - 14 fire damage
   - 9 fire damage                # Tier 3 = best for target
 ```
 **Example:** Fire Giant Chief "Roiling Fist", Orc Warleader "Close In" (Intuition test)
-**When:** Boss AoE abilities, environmental hazards. Note: uses 2d6 and `resistanceAttr`.
+**When:** Any "each target makes an X test" effect -- boss AoE abilities, environmental hazards.
 
-### Test Rolls (isTest)
-Tests where the target rolls and tier 3 is the best outcome for them.
+### Caster Test (isTest)
+The monster itself makes a test ("the X makes a Reason test"). For tests the *targets*
+make, use a Reactive Test (above) instead.
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
   roll: 2d10 + Reason
+  attrid: rea                    # test modifiers filter on this
   isTest: true
   tiers: [worst outcome, middle, best outcome]
 ```
 **Example:** Abyssal Rift "Destabilize Test", Lord Relg "Siphon Memory"
-**When:** Skill tests, resistance checks. `isTest: true` inverts tier display.
+**When:** Tests the monster makes. `isTest: true` inverts tier display.
 
 ---
 
