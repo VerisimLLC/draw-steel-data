@@ -1,6 +1,6 @@
 id: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
 name: Thunderstruck
-description: ""
+description: A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
@@ -13,7 +13,35 @@ display:
   saturation: 1
 guid: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
 iconid: ui-icons/skills/1.png
-modifiers: []
+implementation: 4
+modifiers:
+- name: Thunderstruck
+  description: A thunderstruck creature has lightning weakness 5.
+  __typeName: CharacterModifier
+  behavior: resistance
+  domains:
+    CharacterOngoingEffect:eedc3f15-39dc-4fc4-af0e-e626ca6797ee: true
+  guid: 62af9469-d87a-481d-939d-1a17ca15fcdc
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: 14e4938b-b811-4356-adde-994bd417f0c7
+    dr: "-5"
+  source: Ongoing Effect
+  sourceguid: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
+- name: Thunderstruck
+  description: The creature who thunderstruck them gains an edge on power rolls against them.
+  __typeName: CharacterModifier
+  activationCondition: Ongoing Effect.Caster.id = Caster.id
+  behavior: power
+  domains:
+    CharacterOngoingEffect:eedc3f15-39dc-4fc4-af0e-e626ca6797ee: true
+  guid: 7bafbdda-666e-49aa-821b-0e4a30793737
+  keywords: []
+  modtype: edge
+  rollType: enemy_ability_power_roll
+  source: Ongoing Effect
+  sourceguid: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
 mtime: 1746147870700
 source: Ongoing Effect
 statusEffect: true
