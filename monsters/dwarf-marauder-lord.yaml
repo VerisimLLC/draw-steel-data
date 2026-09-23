@@ -30,8 +30,11 @@ info:
   disguise: null
   locInfo:
     floor: null
-    loc: []
-    map: null
+    loc:
+    - -4
+    - -1
+    - 1
+    map: 58b0cff0-0298-4a45-a25f-9b8d6018e1f9
     mountedOn: null
     mountedOnObject: null
     mountedSaddle: 0
@@ -51,6 +54,12 @@ info:
   partyid: null
   properties:
     __typeName: monster
+    animations:
+      anim:
+      - animType: consumeResource
+        resources:
+          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
+      guid: 50be2029-e103-434a-9e66-e38788bac1d2-757
     attributes:
       agl:
         id: agl
@@ -280,7 +289,7 @@ info:
 
       type: mcdm
     inflictedConditions: []
-    initiativeGrouping: 6e2e47c5-99ad-4df5-9024-39071ca566e2
+    initiativeGrouping: 8743eab7-dd7f-488f-b5c6-d711dca7ba82
     innateActivatedAbilities:
     - name: Levitating Axes
       description: |-
@@ -291,10 +300,6 @@ info:
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
-        ongoingEffect: d5c1f7ac-e052-40c3-8c41-af52c1455f24
-        ongoingEffectCustom: d5c1f7ac-e052-40c3-8c41-af52c1455f24
       - name: Ability Duration Effect
         __typeName: ActivatedAbilityApplyAbilityDurationEffect
         momentaryEffect:
@@ -326,15 +331,17 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         promptWhenResolving: true
         promptWhenResolvingText: Select targets to slide in your preferred order.
-        roll: 2d10 + 3
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 8 damage; slide 1
         - 12 damage; slide 3
         - 15 damage; slide 5
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        autoSelectInheritedTargets: true
         customAbility:
           name: Levitating Axes - 3 Malice Restrain
-          description: ""
+          description: Each target force moved adjacent to an ally of the marauder lord is restrained until the end of their next turn.
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
@@ -342,8 +349,8 @@ info:
             duration: end_of_next_turn
             ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
             ongoingEffectCustom: false
-          channelIncrement: 3
-          channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          channelIncrement: 1
+          channeledResource: none
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -353,25 +360,23 @@ info:
           iconid: ui-icons/skills/1.png
           implementation: 4
           modifiers: []
-          numTargets: 1
+          numTargets: Cast.TargetCount
           objectTarget: false
           persistence: []
           range: "25"
           repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "3"
           strain: []
-          targetFilter: Target.Ongoing Effects has "Levitating Axes Check"
           targetType: target
-        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and Target.CountNearbyEnemies(1) >= 1 and Cast.ForcedMovementDistance > 0
+        filterTarget: (Caster.Malice >= 3) and (Cast.ForcedMovementDistance > 0)
         invokeOnCaster: true
-        promptText: Spend 3 Malice to restrain a target moved adjacent to an ally of the marauder lord.
-        promptWhenResolving: true
-        promptWhenResolvingText: Spend 3 Malice per target to apply restrained
-      - __typeName: ActivatedAbilityPurgeEffectsBehavior
-        conditions: []
-        mode: effect
-        ongoingEffect: d5c1f7ac-e052-40c3-8c41-af52c1455f24
-        purgeType: all
+        promptText: "Spend 3 Malice: each selected target (adjacent to an ally of the marauder lord) is restrained until the end of their next turn."
+        targeting: prompt_inherit
+        targetingFormula: Target.CountNearbyEnemies(1, Caster) >= 1
       categorization: Signature Ability
+      channelIncrement: 1
+      channeledResource: none
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -387,6 +392,7 @@ info:
         Ranged: true
         Strike: true
         Weapon: true
+      maxChannel: ""
       meleeRange: 1
       modifiers: []
       numTargets: 2
@@ -405,10 +411,6 @@ info:
       abilityType: none
       actionResourceId: none
       behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
-        ongoingEffect: d5c1f7ac-e052-40c3-8c41-af52c1455f24
-        ongoingEffectCustom: d5c1f7ac-e052-40c3-8c41-af52c1455f24
       - name: Ability Duration Effect
         __typeName: ActivatedAbilityApplyAbilityDurationEffect
         momentaryEffect:
@@ -437,15 +439,17 @@ info:
             value: -1
           source: Ongoing Effect
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 3
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 8 damage; slide 1
         - 12 damage; slide 3
         - 15 damage; slide 5
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        autoSelectInheritedTargets: true
         customAbility:
-          name: Invoked Ability
-          description: ""
+          name: Levitating Axes - 3 Malice Restrain
+          description: Each target force moved adjacent to an ally of the marauder lord is restrained until the end of their next turn.
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
@@ -453,8 +457,8 @@ info:
             duration: end_of_next_turn
             ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
             ongoingEffectCustom: false
-          channelIncrement: 3
-          channeledResource: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          channelIncrement: 1
+          channeledResource: none
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -463,27 +467,23 @@ info:
           guid: 88c0bc57-8dfe-4b1f-a56c-86636e57a576
           iconid: ui-icons/skills/1.png
           modifiers: []
-          numTargets: ""
+          numTargets: Cast.TargetCount
           objectTarget: false
           persistence: []
           range: "25"
           repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "3"
           sourceReference:
             __typeName: SourceReference
             docid: cc66844a-04d0-49a0-8687-65ef83b15363
           strain: []
-          targetFilter: target.Ongoing Effects has "Levitating Axes Check"
           targetType: target
-        filterTarget: Target.Ongoing Effects has "Levitating Axes Check" and Target.CountNearbyEnemies(1) >= 1 and Cast.ForcedMovementDistance > 0
+        filterTarget: Caster.Malice >= 3 and Cast.ForcedMovementDistance > 0
         invokeOnCaster: true
-        promptText: 'The marauder lord may restrain targets moved adjacent to an ally of the dwarf lord. 3 Malice cost per '
-        promptWhenResolving: true
-        promptWhenResolvingText: Spend 3 Malice per target to apply restrained
-      - __typeName: ActivatedAbilityPurgeEffectsBehavior
-        conditions: []
-        mode: effect
-        ongoingEffect: d5c1f7ac-e052-40c3-8c41-af52c1455f24
-        purgeType: all
+        promptText: "Spend 3 Malice: each selected target (adjacent to an ally of the marauder lord) is restrained until the end of their next turn."
+        targeting: prompt_inherit
+        targetingFormula: Target.CountNearbyEnemies(1, Caster) >= 1
       categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
@@ -662,8 +662,8 @@ info:
           persistence: []
           range: "10"
           reasonedFilters:
-          - reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
-            formula: Target.Keywords has "metal"
+          - formula: Target.Keywords has "metal"
+            reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
           repeatTargets: false
           strain: []
           targetAllegiance: none
@@ -800,8 +800,8 @@ info:
           persistence: []
           range: "10"
           reasonedFilters:
-          - reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
-            formula: Target.Keywords has "metal"
+          - formula: Target.Keywords has "metal"
+            reason: Magnetomancy can additionally target only a metal object created by Test Your Metal!
           repeatTargets: false
           strain: []
           targetAllegiance: none
@@ -1036,9 +1036,14 @@ info:
     notes:
     - text: ""
       title: Monster Notes
+    ongoingEffects: []
     opportunityAttack: 5
     resistances: []
-    resources: []
+    resources:
+      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
+        __typeName: CharacterResource
+        refreshid: 96edd5b4-5803-4dd4-8f91-eb5e8269eb6f-2-8743eab7-dd7f-488f-b5c6-d711dca7ba82-0
+        used: 1
     role: Leader
     savingThrowRatings: []
     skillProficiencies: []
@@ -1062,7 +1067,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: 8ba73580-e66d-4d3e-a514-e1d8aaf7b441
-mtime: 1785883085716
+  updateid: 469f777a-fc2a-4872-9fda-a4ed0478030e
+mtime: 1790079656300
 ord: 0
 parentFolder: 8e456dc2-a795-41ed-85c8-d1219c957c5e

@@ -965,8 +965,7 @@ how tiers are interpreted:
 
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
-  roll: "2d10 + 2"           # caster's roll formula
-  attrid: mgt                # characteristic for the roll
+  roll: "2d10 + Highest Characteristic"  # always this for monster ability rolls
   tiers:
   - "5 damage"               # Tier 1 (<=11) -- worst for caster
   - "9 damage"               # Tier 2 (12-16)
@@ -997,13 +996,13 @@ roll determines the outcome for everyone.
 
 **Used by**: Troll Foul Spew, Fossil Cryptic Choking Dust, Wyvern Overflowing Rage
 
-### Resistance Roll (`resistanceRoll: true`) -- Each target rolls individually
+### Reactive Test (`resistanceRoll: true`) -- Each target rolls individually
 
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
   resistanceRoll: true
   resistanceAttr: mgt        # attribute targets roll with
-  roll: "2d10 + Might"       # formula each TARGET uses
+  roll: "2d10 + Highest Characteristic"  # ignored for target rolls, but must be present
   tiers:
   - "5 damage; slowed (EoT)" # Tier 1 (<=11) -- worst for target
   - "3 damage"               # Tier 2 (12-16)
@@ -1012,8 +1011,9 @@ roll determines the outcome for everyone.
 
 Each TARGET rolls individually using their own characteristic. Results vary per target.
 **Tiers are INVERTED** (same as test): Tier 1 = worst for the rolling creature.
-The `roll` field is the formula each target uses (typically `2d10 + Characteristic`).
-The `resistanceAttr` specifies which characteristic to use.
+Use this whenever the rules text makes targets roll a test ("each target makes a Might
+test"). The `roll` field is ignored: each target rolls 2d10 + the `resistanceAttr`
+characteristic, which defaults to `inu` if omitted -- always set it.
 
 Targets are prompted to roll via `RequireSavingThrowsCo` (similar to a saving throw).
 

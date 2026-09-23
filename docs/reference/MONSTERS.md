@@ -367,8 +367,8 @@ Built-in values (always available):
 ```yaml
 __typeName: ActivatedAbilityPowerRollBehavior
 rule: ""                # GoblinScript rules for power table effects
-roll: "2d10 + 2"        # Dice formula
-attrid: mgt             # Characteristic used for the roll
+roll: "2d10 + Highest Characteristic"  # Dice formula -- always this for monsters
+attrid: mgt             # Optional characteristic override for modifiers; leave unset for monster ability rolls
 resistanceRoll: false   # If true, target rolls; tier 1 is its worst outcome
 resistanceAttr: agl     # Characteristic used when the target rolls
 isTest: false           # With resistanceRoll, true makes this a target-rolled test
@@ -379,11 +379,19 @@ tiers:                  # Array of 3 strings: tier 1/2/3 outcomes
 applyto: targets
 ```
 
-For a target's characteristic **test**, set `resistanceRoll: true`, `isTest: true`,
-and `resistanceAttr` to the required characteristic. This uses the target's test
-modifiers and resolves the tier effects against that target. A resistance roll
-with `isTest: false` retains resistance-roll modifiers. The `roll` formula does
-not select the characteristic in either target-rolled mode; use `resistanceAttr`.
+Monster ability rolls always use `2d10 + Highest Characteristic`, even when the statblock
+prints a number or a named characteristic: monster level scaling raises the highest
+characteristic, and only this formula follows it. If the printed bonus disagrees with the
+monster's characteristics, fix the characteristics. Leave `attrid` unset.
+
+When the rules text makes **targets** roll a test ("each target makes an Agility test"),
+use the **Reactive Test** roll type: `resistanceRoll: true`, `isTest: false`, and
+`resistanceAttr` set to the tested characteristic (it defaults to `inu` if omitted).
+
+The **Target Characteristic Test** roll type (`resistanceRoll: true`, `isTest: true`)
+also has the target roll, but uses the target's test modifiers instead of
+resistance-roll modifiers. The `roll` formula does not select the characteristic in
+either target-rolled mode; use `resistanceAttr`.
 
 #### ActivatedAbilityDamageBehavior
 **Purpose**: Deal damage to targets.
@@ -2399,8 +2407,7 @@ custom: true
 **Simple damage tiers:**
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
-  roll: 2d10 + 2
-  attrid: mgt
+  roll: 2d10 + Highest Characteristic
   tiers:
     - "7 damage"
     - "11 damage"
@@ -2431,12 +2438,12 @@ tiers:
   - "12 poison damage; dragonsealed (save ends)"
 ```
 
-**Resistance roll (target rolls to resist):**
+**Reactive test (each target rolls):**
 ```yaml
 - __typeName: ActivatedAbilityPowerRollBehavior
   resistanceRoll: true
-  roll: 2d10 + Might
-  attrid: mgt
+  resistanceAttr: mgt           # the tested characteristic; defaults to inu if omitted
+  roll: 2d10 + Highest Characteristic   # ignored for target rolls, but must be present
   tiers:
     - "12 poison damage; dragonsealed (save ends)"
     - "9 poison damage; dragonsealed (save ends)"
@@ -2485,11 +2492,11 @@ Abilities can have multiple modes (e.g., normal + malice-enhanced). Use `multipl
   behaviors:
     - __typeName: ActivatedAbilityPowerRollBehavior
       modesSelected: [1]         # Only executes in mode 1
-      roll: "2d10 + 2"
+      roll: "2d10 + Highest Characteristic"
       tiers: ["5 damage", "9 damage", "12 damage"]
     - __typeName: ActivatedAbilityPowerRollBehavior
       modesSelected: [2]         # Only executes in mode 2
-      roll: "2d10 + 2"
+      roll: "2d10 + Highest Characteristic"
       tiers: ["7 damage", "11 damage", "14 damage"]
 ```
 

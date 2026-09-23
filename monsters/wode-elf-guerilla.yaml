@@ -158,16 +158,16 @@ info:
         sourceguid: 83f34496-fc00-42e2-a19c-f3b12428268b
       source: Trait
     - name: Into the Green
-      description: The geurrilla can attempt to hide at the end of each of their turns.
+      description: The guerrilla can attempt to hide at the end of each of their turns.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:21198158-23ed-4bd3-9610-435c50805d7c: true
         CharacterFeature:ef33fb6b-21fb-4b32-9939-63af62f3d3a5: true
       guid: 21198158-23ed-4bd3-9610-435c50805d7c
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Into the Green
-        description: The geurrilla can attempt to hide at the end of each of their turns.
+        description: The guerrilla can attempt to hide at the end of each of their turns.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -178,7 +178,7 @@ info:
         sourceguid: 21198158-23ed-4bd3-9610-435c50805d7c
         triggeredAbility:
           name: Into the Green
-          description: The scout can attempt to hide at the end of each of their turns.
+          description: The guerrilla can attempt to hide at the end of each of their turns.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
@@ -195,6 +195,7 @@ info:
             CharacterFeature:ef33fb6b-21fb-4b32-9939-63af62f3d3a5: true
           guid: 8c937856-49ce-4fe6-bde3-86ff3b2c8fe4
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
           mandatory: false
           modifiers: []
           numTargets: "1"
@@ -204,19 +205,19 @@ info:
           strain: []
           targetType: self
           trigger: endturn
-          triggerPrompt: The scout can attempt to hide at the end of each of their turns.
+          triggerPrompt: The guerrilla can attempt to hide at the end of each of their turns.
           whenActive: combat
       - name: Into the Green
-        description: The geurrilla can attempt to hide at the end of each of their turns.
+        description: The guerrilla can attempt to hide at the end of each of their turns.
         __typeName: CharacterModifier
         ability:
           name: Into the Green
           __typeName: TriggeredAbilityDisplay
-          effect: The geurrilla can attempt to hide.
+          effect: The guerrilla can attempt to hide.
           guid: 02e8664f-83df-45d5-a8c3-b497d313b442
           keywords: []
           target: Self
-          trigger: When the geurrilla ends their turn
+          trigger: When the guerrilla ends their turn
           type: passive
         behavior: triggerdisplay
         domains:
@@ -227,21 +228,37 @@ info:
         sourceguid: 21198158-23ed-4bd3-9610-435c50805d7c
       source: Trait
     - name: Do Not Hesitate in the Wode
-      description: ""
+      description: |-
+        **Special:** The guerrilla must be acting as a captain.
+
+        **Trigger:** An ally ends their turn while the guerrilla hasn't acted this round.
+
+        **Effect:** The targets take their turn immediately. Each target gains an edge on abilities until the end of their turn.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:ec007e24-b467-42ce-b3c2-fed05032d017: true
       guid: ec007e24-b467-42ce-b3c2-fed05032d017
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Do Not Hesitate in the Wode
-        description: ""
+        description: |-
+          **Special:** The guerrilla must be acting as a captain.
+
+          **Trigger:** An ally ends their turn while the guerrilla hasn't acted this round.
+
+          **Effect:** The targets take their turn immediately. Each target gains an edge on abilities until the end of their turn.
         __typeName: CharacterModifier
         ability:
+          name: Do Not Hesitate in the Wode
           __typeName: TriggeredAbilityDisplay
+          cost: 3 Malice
+          distance: Ranged 20
+          effect: "Special: The guerrilla must be acting as a captain. The targets take their turn immediately. Each target gains an edge on abilities until the end of their turn."
           guid: bbda660c-c8fe-4592-a922-8855615f494d
-          keywords: []
-          trigger: An ally ends their turn, while the guerrilla hasn't acted this round.
+          keywords:
+            Ranged: true
+          target: Self and each minion in their squad
+          trigger: An ally ends their turn while the guerrilla hasn't acted this round.
           type: free
         behavior: triggerdisplay
         domains:
@@ -250,7 +267,12 @@ info:
         source: Character Feature
         sourceguid: ec007e24-b467-42ce-b3c2-fed05032d017
       - name: Do Not Hesitate in the Wode
-        description: ""
+        description: |-
+          **Special:** The guerrilla must be acting as a captain.
+
+          **Trigger:** An ally ends their turn while the guerrilla hasn't acted this round.
+
+          **Effect:** The targets take their turn immediately. Each target gains an edge on abilities until the end of their turn.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -261,7 +283,12 @@ info:
         sourceguid: ec007e24-b467-42ce-b3c2-fed05032d017
         triggeredAbility:
           name: Do Not Hesitate in the Wode
-          description: ""
+          description: |-
+            **Special:** The guerrilla must be acting as a captain.
+
+            **Trigger:** An ally ends their turn while the guerrilla hasn't acted this round.
+
+            **Effect:** The targets take their turn immediately. Each target gains an edge on abilities until the end of their turn.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
@@ -270,7 +297,7 @@ info:
             text: Do Not Hesitate in the Wode
           - __typeName: ActivatedAbilityInitiativeBehavior
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: 0
+            duration: end_of_next_turn
             ongoingEffect: fe9650f3-e8c6-42c4-89d4-9f8a40a94002
             ongoingEffectCustom: false
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
@@ -293,6 +320,8 @@ info:
           persistence: []
           range: 1
           repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "3"
           strain: []
           subject: allies
           targetType: self
@@ -372,43 +401,63 @@ info:
     initiativeGrouping: 3f6a836f-70d7-48c0-a7d4-621a1e69fad6
     innateActivatedAbilities:
     - name: Splinter Dagger
-      description: The tree guerilla can teleport 3 after using this ability.
+      description: "The guerrilla can teleport up to 3 squares. 3 Malice: This ability targets one additional target, and deals an additional 3 damage if both targets are adjacent to each other."
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + 2
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 7 damage
         - 11 damage
         - 14 damage; M<2 bleeding (save ends)
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 8e2f8b80-b287-4383-bf64-20296e64a148
         modesSelected:
         - 2
-        ongoingEffect: 43511ad9-a211-439a-8742-e7a62c08c0f8
-        ongoingEffectCustom: 43511ad9-a211-439a-8742-e7a62c08c0f8
-      - __typeName: ActivatedAbilityDamageBehavior
-        applyto: proximity_only
-        chatMessage: Splinter Dagger Bonus Damage
-        filterTarget: Ongoing Effects has "Splinter Dagger"
+        modifier:
+          name: Splinter Dagger (3 Malice)
+          description: This ability deals an additional 3 damage if both targets are adjacent to each other.
+          __typeName: CharacterModifier
+          activationCondition: true
+          behavior: power
+          damageModifier: "3"
+          displayCondition: Cast.Targets Adjacent
+          domains: []
+          guid: 934a8634-7681-4bec-a8c8-cd378399e485
+          keywords: []
+          modtype: none
+          rollType: ability_power_roll
+          sourceguid: 8e2f8b80-b287-4383-bf64-20296e64a148
+      - __typeName: ActivatedAbilityReplenishBehavior
+        applyto: caster
+        chatMessage: Splinter Dagger 3 Malice spent
+        mode: expend
         modesSelected:
         - 2
-        roll: "3"
-        titleText: ""
+        quantity: "3"
+        resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        promptText: The guerrilla can teleport up to 3 squares.
+        standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+        standardAbilityParams:
+          range: "3"
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: ae9e32c2-cea6-4522-85b8-9ec46913c5e9
       iconid: d15fe212-5892-433b-869f-4778a5a9604d
       implementation: 4
       keywords:
+        Magic: true
         Melee: true
         Ranged: true
         Strike: true
@@ -518,7 +567,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: 035f225b-6dc1-4439-955c-6ca008b301fd
+  updateid: fbdb77e8-b3e0-4d76-b110-b363ce992093
 mtime: 1785883085708
 ord: 0
 parentFolder: 611678b8-01dd-4ce2-bf54-e462ca7f4d29

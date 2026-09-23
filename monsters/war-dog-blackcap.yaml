@@ -1,0 +1,287 @@
+id: 5a91c3e7-42b8-4d16-9f70-8e2c4b593da1
+description: War Dog Blackcap
+artist: null
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: 72f0634e-8d6a-4afc-884b-b9c824746cc8
+    portraitId: null
+    portraitOffset:
+      x: 0
+      y: 0
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: 5a91c3e7-42b8-4d16-9f70-8e2c4b593da1
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ''
+    updateid: 0
+  mountedBy: {}
+  ownerId: null
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 4
+      inu:
+        id: inu
+        baseValue: 2
+      mgt:
+        id: mgt
+        baseValue: 1
+      prs:
+        id: prs
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 4
+    characterFeatures:
+    - name: Ash Clones
+      description: An ash clone has the blackcap's statistics but has 1 Stamina. Ash clones don't take turns in combat, but they can act when the blackcap allows them to and can move when the blackcap willingly moves.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f19d6082-4b73-4ae5-9c31-7d05e846b2fa: true
+      guid: f19d6082-4b73-4ae5-9c31-7d05e846b2fa
+      modifiers: []
+      source: Trait
+    - name: Duplicating Loyalty Collar
+      description: When the blackcap or any of their ash clones is reduced to 0 Stamina, that creature's loyalty collar explodes, dealing 3d6 poison damage to each adjacent enemy and object. If any adjacent enemy has A<3 they are also weakened (save ends).
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:3c85a712-6d09-4f4b-b927-e0518c3d76fa: true
+      guid: 3c85a712-6d09-4f4b-b927-e0518c3d76fa
+      implementation: 4
+      modifiers:
+      - name: Duplicating Loyalty Collar
+        description: When the blackcap or any of their ash clones is reduced to 0 Stamina, that creature's loyalty collar explodes, dealing 3d6 poison damage to each adjacent enemy and object. If any adjacent enemy has A<3 they are also weakened (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:3c85a712-6d09-4f4b-b927-e0518c3d76fa: true
+        guid: 9b24e7f5-018c-4a63-bd50-72e9c14f8306
+        source: Trait
+        sourceguid: 3c85a712-6d09-4f4b-b927-e0518c3d76fa
+        triggeredAbility:
+          name: Duplicating Loyalty Collar
+          description: ''
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: 3d6 poison damage; A<3 weakened (save ends)
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d7f61c98-53b2-4d07-ae84-16b0942ce35d
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: '1'
+          objectTarget: true
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetFilter: Enemy
+          targetType: all
+          trigger: creaturedeath
+      source: Trait
+    cr: 7
+    creatureSize: 1M
+    damage_taken: 0
+    equipment: []
+    ev: 9
+    groupid: f3f01a76-0278-4aea-9ac0-fc527ec3d731
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Flesh-Eater Knife
+      description: The blackcap can teleport up to their speed before using this ability, creating an ash clone in their original square.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: caster
+        customAbility:
+          name: Flesh-Eater Knife - Ash Clone
+          description: ''
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            allCreaturesTheSame: true
+            applyto: caster
+            casterChoosesCreatures: false
+            casterControls: true
+            choosePlacement: true
+            groupInitiativeWithCaster: true
+            guid: 9c4b7e12-05a8-4f36-bd71-2e690c83a5f4
+            monsterType: c71e5b04-9a36-4f82-b5d9-06437e1c8f25
+            numSummons: '1'
+            summonRange: '1'
+          castImmediately: true
+          categorization: Hidden
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          flavor: ''
+          guid: d05a7c38-1e62-4b94-a7f1-83c50e29d746
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: '1'
+          range: 1
+          repeatTargets: false
+          targetType: self
+        guid: 2e84f0a7-6b19-4c53-8de2-71a09c46b3f8
+        invokeOnCaster: true
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: caster
+        rule: teleport {Movement Speed}
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 8 damage
+        - 11 damage
+        - 12 damage; M<4 bleeding and weakened (save ends)
+      categorization: Signature Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: 04a7be93-1c5f-42d8-9b06-e3184c7a5062
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: Damage, bleeding and weakened all resolve; the ash clone is summoned and the blackcap teleports. Targeting is resolved before behaviors run, so the target must already be in melee 1 or ranged 5 when the ability is selected - the teleport cannot be used to close into melee first.
+      keywords:
+        Magic: true
+        Melee: true
+        Ranged: true
+        Strike: true
+        Weapon: true
+      meleeRange: 1
+      modifiers: []
+      numTargets: '1'
+      objectTarget: true
+      range: 5
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 312
+      targetTextOverride: One creature or object
+      targetType: target
+    - name: Ashes to Ashes
+      description: Each target makes a free strike.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        guid: 48d93f0b-2a67-4e15-bc80-59f13e6a2d7c
+        promptText: Make a free strike.
+        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+      categorization: Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: b6e0342c-7f18-495d-a83b-c2149e7056fd
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Ranged: true
+      modifiers: []
+      numTargets: '3'
+      range: 20
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 312
+      targetFilter: target.keywords has "Ash Clone"
+      targetTextOverride: Up to three ash clones
+      targetType: target
+    innateAttacks: []
+    innateLanguages:
+      9f8bf21e-a483-46e7-aa12-dbe63591d928: true
+    keywords:
+      Humanoid: true
+      Soulless: true
+      War Dog: true
+    levelChoices: []
+    max_hitpoints: 45
+    max_hitpoints_roll: '45'
+    minion: false
+    monster_category: Monster
+    monster_type: War Dog Blackcap
+    movementSpeeds:
+      teleport: 6
+    opportunityAttack: 4
+    resistances: []
+    resources: []
+    role: Horde Ambusher
+    savingThrowRatings: []
+    skillRatings: []
+    stability: 0
+    titles: []
+    traitNames: []
+    walkingSpeed: 6
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: c94ae557-faf2-412d-b8df-3d95fd119f56
+ord: 9
+parentFolder: dd2974a5-afe0-42da-8fb3-f9cb518106e0

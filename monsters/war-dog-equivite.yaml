@@ -157,7 +157,7 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 6 damage
         - 8 damage
@@ -230,8 +230,38 @@ info:
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: caster
+        momentaryEffect:
+          id: 4e8ab5a7-e510-4056-8afc-79eae0179d83
+          name: Blazing Charge
+          description: ""
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4e8ab5a7-e510-4056-8afc-79eae0179d83
+          iconid: ui-icons/skills/1.png
+          modifiers:
+          - name: Freely Move Through Enemies
+            description: ""
+            __typeName: CharacterModifier
+            attribute: 112b8524-f15d-4d3b-84d7-a8aaa5997bb8
+            behavior: attribute
+            guid: 8c2ac747-f5c6-4533-a812-07879c242c1b
+            source: Ongoing Effect
+            sourceguid: 4e8ab5a7-e510-4056-8afc-79eae0179d83
+            value: 1
+          source: Ongoing Effect
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: move
+        targetMoveVicinity: true
+        vicinityFilter: Enemy
       - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Might
+        roll: 2d10 + Highest Characteristic
         tiers:
         - 2 damage; push 1
         - 4 damage; push 2
@@ -242,7 +272,7 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: c4ece09d-3870-4238-926c-22883d749fc1
       iconid: ui-icons/skills/1.png
@@ -252,10 +282,11 @@ info:
         Weapon: true
       modifiers: []
       numTargets: 1
-      range: 1
+      range: Walking Speed
       repeatTargets: false
       strain: []
-      targetType: self
+      targetType: anyspace
+      targeting: pathfind
     innateAttacks: []
     keywords:
       Soulless: true

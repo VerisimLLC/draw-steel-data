@@ -1,0 +1,519 @@
+id: 8e3b1f47-5c02-49da-b761-4f80e59c3a2d
+description: War Dog Taxiarch
+artist: null
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: 72f0634e-8d6a-4afc-884b-b9c824746cc8
+    portraitId: null
+    portraitOffset:
+      x: 0
+      y: 0
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: 8e3b1f47-5c02-49da-b761-4f80e59c3a2d
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ''
+    updateid: 0
+  mountedBy: {}
+  ownerId: null
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 3
+      inu:
+        id: inu
+        baseValue: 4
+      mgt:
+        id: mgt
+        baseValue: 1
+      prs:
+        id: prs
+        baseValue: 3
+      rea:
+        id: rea
+        baseValue: 5
+    characterFeatures:
+    - name: End Effect
+      description: At the end of each of their turns, the taxiarch can take 15 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:c8027a56-3b91-4df4-a610-25e89c37b0d1: true
+      guid: c8027a56-3b91-4df4-a610-25e89c37b0d1
+      implementation: 4
+      modifiers:
+      - name: End Effect
+        description: At the end of each of their turns, the taxiarch can take 15 damage to end one effect on them that can be ended by a saving throw. This damage can't be reduced in any way.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:c8027a56-3b91-4df4-a610-25e89c37b0d1: true
+        guid: 4b19e0c7-5a83-4216-9be4-7c03d58f1a29
+        source: Trait
+        sourceguid: c8027a56-3b91-4df4-a610-25e89c37b0d1
+        triggeredAbility:
+          name: End Effect
+          description: ''
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPurgeEffectsBehavior
+            conditions: []
+            damageToSelf: '15'
+            purgeType: one
+            targetDuration: save
+          castImmediately: true
+          conditionFormula: Save Ends Effects
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 92f5c380-71ba-4e6d-8047-c3159ea2687f
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: '1'
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: endturn
+          triggerPrompt: End effect for 15
+          whenActive: combat
+      source: Trait
+    - name: Thunderstruck
+      description: After the ability is resolved, the target is teleported up to 5 squares and is thunderstruck (save ends). A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:7e50ac93-4b18-42f7-8d0e-61b5943ca207: true
+      guid: 7e50ac93-4b18-42f7-8d0e-61b5943ca207
+      implementation: 4
+      modifiers:
+      - name: Thunderstruck
+        description: After the ability is resolved, the target is teleported up to 5 squares and is thunderstruck (save ends). A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:7e50ac93-4b18-42f7-8d0e-61b5943ca207: true
+        guid: 1d86f04a-9c25-4a73-be81-035fd7e2c496
+        source: Trait
+        sourceguid: 7e50ac93-4b18-42f7-8d0e-61b5943ca207
+        triggeredAbility:
+          name: Thunderstruck
+          description: After the ability is resolved, the target is teleported up to 5 squares and is thunderstruck (save ends). A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: teleport 5
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: targets
+            duration: save_ends
+            ongoingEffect: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
+            ongoingEffectCustom: false
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: ae3701f8-5d26-4c94-b08a-72e15c36d4b9
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Magic: true
+            Melee: true
+          mandatory: false
+          modifiers: []
+          numTargets: '1'
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: enemy
+          subjectRange: '1'
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: Thunderstruck
+          whenActive: combat
+      source: Trait
+      tags:
+        Trigger: true
+    cr: 9
+    creatureSize: 1M
+    damage_taken: 0
+    equipment: []
+    ev: 44
+    groupid: f3f01a76-0278-4aea-9ac0-fc527ec3d731
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Stunning Surge
+      description: The spread is the distance the charge arcs from a target to nearby enemies. Each enemy within spread takes 5 lightning damage.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: rea
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 14 lightning damage; the lightning spreads 1 square; I<3 dazed (save ends)
+        - 19 lightning damage; the lightning spreads 2 squares; I<4 dazed (save ends)
+        - 23 lightning damage; the lightning spreads 3 squares; I<5 dazed (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "I", 3)
+        ongoingEffect: 65d906ae-c83a-4b57-adaf-17dc3793b9c5
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "I", 4)
+        ongoingEffect: 65d906ae-c83a-4b57-adaf-17dc3793b9c5
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "I", 5)
+        ongoingEffect: 65d906ae-c83a-4b57-adaf-17dc3793b9c5
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        modesSelected:
+        - 2
+        rule: M<4 slowed (eot)
+      categorization: Signature Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: 1c7e9034-6a5b-4d82-bf19-e0a37c48562d
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: Lightning damage and the dazed rider resolve on every tier, and the 2 Malice mode applies the M<4 slowed rider. The lightning "spread" itself - the 5 lightning damage arcing to enemies within N squares of each target - has no targeting shape in the engine and is applied by the Director.
+      keywords:
+        Magic: true
+        Ranged: true
+        Strike: true
+      modeList:
+      - text: Stunning Surge
+      - rules: The lightning spread increases by 2 squares. Additionally, any creature who takes lightning damage from this ability and who has M<4 is slowed until the end of their next turn.
+        text: 2 Malice
+      modifiers: []
+      multipleModes: true
+      numTargets: '2'
+      objectTarget: true
+      range: 10
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when mode = 2 else 0
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 314
+      targetTextOverride: Two creatures or objects
+      targetType: target
+    - name: Overcharge
+      description: Each target shifts up to their speed and can make a free strike that deals an extra 5 lightning damage.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: momentary
+        ongoingEffect: d787152b-c3e0-4a31-bd08-a7d1d24d3327
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        guid: 6b21d05e-4c93-47f8-a2e5-0913b4d6c8fa
+        promptText: Shift up to your speed.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: movement speed
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        guid: f3a870c5-1d46-4e29-b0d7-58c2941ea63b
+        promptText: Make a free strike (it deals an extra 5 lightning damage).
+        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+      categorization: Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: 9f04a2c8-3e71-4b56-8d09-c1746be3025f
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Area: true
+        Magic: true
+        Ranged: true
+      modifiers: []
+      numTargets: '1'
+      radius: 4
+      range: 10
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 314
+      targetFilter: target.keywords has "War Dog"
+      targetTextOverride: Each war dog in the area
+      targetType: cube
+    - name: Magnetic Trickery
+      description: Slide 5, and if the target has M<4, they fall prone.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        applyto: targets
+        rule: slide 5; M<4 prone
+      castImmediately: true
+      categorization: Villain Action
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: a5c37e91-08b4-4d62-9f13-6e05c8a24b7d
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Area: true
+        Magic: true
+      modifiers: []
+      numTargets: '1'
+      range: 10
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 314
+      targetFilter: Enemy
+      targetTextOverride: Each enemy in the area
+      targetType: all
+      usageLimitOptions:
+        charges: '1'
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 4e8b0d27-96c1-4a53-bf70-15d9e3287a4c
+      villainAction: Villain Action 1
+    - name: Conductor of Combat
+      description: Each target shifts up to their speed, then can make a free strike or use a maneuver.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        guid: 5804bc1f-6a27-4d93-be50-c17f9a3e28d4
+        promptText: Shift up to your speed.
+        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+        standardAbilityParams:
+          distance: movement speed
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        guid: b91e76d0-4f38-42a5-9c86-0d275ae3f14b
+        promptText: Make a free strike, or decline and use a maneuver instead.
+        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
+      castImmediately: true
+      categorization: Villain Action
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: d2f9560a-7c81-4e34-b9d5-03a8265fc1e7
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: The shift and the free strike are both prompted. Choosing to use a maneuver instead of the free strike is left to the player - decline the free strike prompt and take the maneuver manually.
+      keywords:
+        Area: true
+        Magic: true
+      modifiers: []
+      numTargets: '1'
+      range: 5
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 314
+      targetFilter: target.keywords has "War Dog"
+      targetTextOverride: Each war dog in the area
+      targetType: all
+      usageLimitOptions:
+        charges: '1'
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: 7c04e185-2b93-4f6a-8d51-e90b73a2645c
+      villainAction: Villain Action 2
+    - name: Unlimited Power!
+      description: See Thunderstruck. Additionally, until the end of the encounter, any enemy who moves within 3 squares of the taxiarch for the first time in a round or starts their turn there takes 3 lightning damage.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        isTest: false
+        resistanceAttr: agl
+        resistanceRoll: true
+        roll: 2d10 + Agility
+        tiers:
+        - 18 lightning damage; the target is thunderstruck (save ends)
+        - 14 lightning damage; the target is thunderstruck (EoT)
+        - 9 lightning damage
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        ongoingEffect: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 1
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: end_of_next_turn
+        ongoingEffect: eedc3f15-39dc-4fc4-af0e-e626ca6797ee
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: false
+        applyto: caster
+        aura:
+          name: Unlimited Power!
+          __typeName: Aura
+          applyto: enemies
+          damage: 3
+          damageType: lightning
+          guid: 0c48f2b9-6e13-4a70-bd95-87e2413c0d6a
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          radius: '3'
+          triggers: []
+        duration: eoe
+      castImmediately: true
+      categorization: Villain Action
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: 3a61c7e4-9d05-4b28-8f73-2e50c916b4da
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Area: true
+        Magic: true
+      modifiers: []
+      numTargets: '1'
+      range: 3
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 314
+      targetTextOverride: Each creature in the area
+      targetType: all
+      usageLimitOptions:
+        charges: '1'
+        multicharge: false
+        resourceRefreshType: encounter
+        resourceid: e5710b3c-8d42-49f6-a07b-31c9528ed6f0
+      villainAction: Villain Action 3
+    innateAttacks: []
+    innateLanguages:
+      9f8bf21e-a483-46e7-aa12-dbe63591d928: true
+    keywords:
+      Humanoid: true
+      Soulless: true
+      War Dog: true
+    levelChoices: []
+    max_hitpoints: 240
+    max_hitpoints_roll: '240'
+    minion: false
+    monster_category: Monster
+    monster_type: War Dog Taxiarch
+    movementSpeeds:
+      teleport: 7
+    opportunityAttack: 9
+    resistances: []
+    resources: []
+    role: Leader
+    savingThrowRatings: []
+    skillRatings: []
+    stability: 1
+    titles: []
+    traitNames: []
+    walkingSpeed: 7
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: 7b7a8c06-c758-4dc5-8cdc-81cc7a07b9e0
+ord: 14
+parentFolder: dd2974a5-afe0-42da-8fb3-f9cb518106e0
