@@ -161,8 +161,8 @@ info:
       domains:
         CharacterFeature:cabb28dc-3ba8-4a92-aab7-3d81137aa189: true
       guid: cabb28dc-3ba8-4a92-aab7-3d81137aa189
-      implementation: 3
-      implementationDetails: "SILVER: Moving through creature spaces is automated. Treating the sludge as size 1T for squeezing through narrow terrain is not supported."
+      implementation: 4
+      implementationDetails: Approximated as free movement through enemy spaces. RAW, moving as a size 1T creature only allows ending movement in the space of a 1M or larger creature, which DMHub does not restrict for any creature.
       modifiers:
       - name: Gelatinous
         description: The creeping sludge can move through spaces as if they were a size 1T creature.
@@ -177,7 +177,7 @@ info:
         value: 1
       source: Character Feature
     - name: Split
-      description: ""
+      description: The creeping sludge splits to create another creeping sludge, each with half their current Stamina before splitting. The new sludge has none of the benefits, effects, or conditions affecting the original.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:236f8a31-a2d3-4b92-9352-8cbea67ca8d4: true
@@ -185,7 +185,7 @@ info:
       implementation: 4
       modifiers:
       - name: Split
-        description: ""
+        description: The creeping sludge splits to create another creeping sludge, each with half their current Stamina before splitting. The new sludge has none of the benefits, effects, or conditions affecting the original.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -238,6 +238,7 @@ info:
             doesNotTrigger: true
             roll: Stamina * 0.5
           castImmediately: false
+          conditionFormula: Stamina > 1
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -246,6 +247,7 @@ info:
           guid: de665ad2-f0cc-401e-b410-107c12ddb165
           hasManualVersion: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
           mandatory: false
           mandatoryDifferentPlayer: false
           modifiers: []
@@ -255,16 +257,38 @@ info:
           repeatTargets: false
           sourceReference:
             __typeName: SourceReference
-            docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+            docid: cbddffb4-0c92-4245-bdfb-ad7621163a57
             page: 34
           strain: []
           targetType: self
           trigger: losehitpoints
-          triggerPrompt: The creeping sludge splits to create another creeping sludge, each with half their current stamina before splitting.
+          triggerPrompt: When the creeping sludge takes damage, it splits to create another creeping sludge, each with half their current Stamina before splitting.
           whenActive: always
       source: Character Feature
       tags:
         Trigger: true
+    - name: Oozen Grasp
+      description: The creeping sludge can have an unlimited number of size 1 creatures grabbed at a time.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:d33663e6-85f7-4485-ba9f-56ad6e41d511: true
+      guid: d33663e6-85f7-4485-ba9f-56ad6e41d511
+      implementation: 4
+      modifiers:
+      - name: Oozen Grasp
+        description: The creeping sludge can have an unlimited number of size 1 creatures grabbed at a time.
+        __typeName: CharacterModifier
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        behavior: attribute
+        domains:
+          CharacterFeature:d33663e6-85f7-4485-ba9f-56ad6e41d511: true
+        guid: c26ae0f3-8f56-4efa-ae76-a2e90e993e7e
+        source: Character Feature
+        sourceguid: d33663e6-85f7-4485-ba9f-56ad6e41d511
+        value: 99
+      source: Character Feature
+      tags:
+        Hidden: true
     cr: 2
     creatureSize: 1L
     d19658a2-4d7b-4504-af9e-1a5410fb17fd_history:
@@ -318,24 +342,7 @@ info:
           set: 0/1
           timestamp: 1763976544390
           userid: fWgsyXoFyNZCSaNPiJrHyGZz4583
-    damageEntries:
-      060a6624-74a3-4120-9fe9-82157697f8ab:
-        id: 060a6624-74a3-4120-9fe9-82157697f8ab
-        damage: 3
-        timestamp: 1763975141616
-      73319fc6-90c3-4201-98a4-37f696bfce61:
-        id: 73319fc6-90c3-4201-98a4-37f696bfce61
-        damage: 11
-        damage_type: push
-        timestamp: 1763975148293
-      bd6ef7c8-9721-4934-a845-1306bdcad29f:
-        id: bd6ef7c8-9721-4934-a845-1306bdcad29f
-        heal: 25
-        timestamp: 1763975179864
-      f8592764-17a5-430e-b7fb-4d7b0fc85ff8:
-        id: f8592764-17a5-430e-b7fb-4d7b0fc85ff8
-        heal: 25
-        timestamp: 1763975135315
+    damageEntries: []
     damage_taken: 0
     deathSavingThrowFailures: 0
     deathSavingThrowSuccesses: 0
@@ -409,7 +416,7 @@ info:
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
-        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        docid: cbddffb4-0c92-4245-bdfb-ad7621163a57
         page: 34
       strain: []
       targetType: target
@@ -419,11 +426,6 @@ info:
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        applyto: caster
-        duration: eoe
-        ongoingEffect: 7d7e64a3-0b2b-41c3-a00d-15b48ee1d8d5
-        ongoingEffectCustom: 7d7e64a3-0b2b-41c3-a00d-15b48ee1d8d5
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
@@ -443,8 +445,8 @@ info:
         saturation: 1
       guid: 401ff646-4915-48d1-a02a-0440a3a2055f
       iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
-      implementation: 3
-      implementationDetails: "SILVER: The area grab, vertical pull, and expanded grab limit are automated. The expanded limit cannot currently be restricted to size 1 creatures, so it also permits multiple larger creatures to remain grabbed."
+      implementation: 4
+      implementationDetails: The unlimited grab count also applies to creatures larger than size 1.
       keywords:
         Area: true
       modifiers: []
@@ -457,7 +459,7 @@ info:
       resourceNumber: "2"
       sourceReference:
         __typeName: SourceReference
-        docid: d71f26fc-7c02-49d3-ad30-6eadd34796cb
+        docid: cbddffb4-0c92-4245-bdfb-ad7621163a57
         page: 34
       strain: []
       targetFilter: Enemy or Object
@@ -479,24 +481,7 @@ info:
     notes:
     - text: ""
       title: Monster Notes
-    ongoingEffects:
-    - id: ea2d5b9a-4eb1-4c82-8625-efbf51367694
-      __typeName: CharacterOngoingEffectInstance
-      casterInfo:
-        abilityName: Oozen Grasp
-        tokenid: 06b1aeb3-ed4c-4760-b122-bc8fba3ccab1
-      ongoingEffectid: 7d7e64a3-0b2b-41c3-a00d-15b48ee1d8d5
-      seq: 3
-      sourceDescription: Applied by Obsessed Creeping Sludge's <b>Oozen Grasp</b> ability
-      stacks: 1
-      time:
-        __typeName: TimePoint
-        initiativeid: 0a570dd4-d68b-4ec9-a326-6762c516042c
-        initiativeord: 0
-        queueguid: 43bcea95-3704-4541-8ca6-9c516a300f7a
-        round: 1
-        time: 2.61544333065257
-      timestamp: 1764149530424
+    ongoingEffects: []
     opportunityAttack: 3
     resistances:
     - __typeName: ResistanceEntry
@@ -507,14 +492,7 @@ info:
       apply: Damage Reduction
       damageType: corruption
       dr: 2
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        used: 1
-      d19658a2-4d7b-4504-af9e-1a5410fb17fd:
-        __typeName: CharacterResource
-        refreshid: bc89db2b-0475-4925-84b9-4663ed00344a-3
-        used: 1
+    resources: []
     role: Horde Brute
     savingThrowRatings: []
     skillProficiencies: []
@@ -575,9 +553,7 @@ info:
           set: 2
           timestamp: 1763674388791
           userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-    tempHitpointsEndEffect: true
-    temporary_hitpoints: 15
-    temporary_hitpoints_effect: 89229841-7787-43a7-b336-85f93170c863
+    temporary_hitpoints: 0
     temporary_stamina_history:
       __typeName: StatHistory
       entries:
@@ -603,7 +579,7 @@ info:
   size: 3
   summonerid: null
   tokenType: null
-  updateid: a2e2eaf7-f4a4-494e-a616-b4601f8e0b18
-mtime: 1775375068085
+  updateid: 7a973d7a-0e0e-421a-8c91-3bf826f704fd
+mtime: 1790155904264
 ord: 1
 parentFolder: 18b8aee2-b927-4c4f-b978-2526f38bdf87

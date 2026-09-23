@@ -21,6 +21,7 @@ domains:
 guid: a561704f-5985-4871-9067-55b3bc4f0dec
 iconid: 006e8403-6056-46d1-bd48-db8804433d39
 implementation: 4
+implementationDetails: Escalation stops after 5 failed saves (damage weakness 12, potency reduced by 6).
 modifiers:
 - name: Corroded
   description: The target gains damage weakness 2 and reduces the potency of their potency effects by 1 (save ends). Each time the target fails this saving throw, the damage weakness increases by 2 and the potency of their potency effects is reduced by 1
@@ -67,7 +68,7 @@ modifiers:
       ongoingEffectCustom: false
       stacks: "1"
     castImmediately: false
-    conditionFormula: Trigger Name = "madesaveCorroded" and (Trigger Value < Subject.Save Ends)
+    conditionFormula: EffectName = "Corroded" and Stacks < 6
     display:
       bgcolor: "#ffffffff"
       brightness: 1
@@ -83,9 +84,9 @@ modifiers:
     repeatTargets: false
     strain: []
     targetType: self
-    trigger: custom
+    trigger: savefail
     triggerPrompt: ""
-    whenActive: combat
+    whenActive: always
 mtime: 1775262223635
 source: Ongoing Effect
 stackable: true
