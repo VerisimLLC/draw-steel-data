@@ -3,9 +3,14 @@ name: Animal Traits
 description: |-
   This section presents a number of default animal stat blocks with basic features. You can customize those stat blocks by adding traits from the following categories to more closely model the animal's most identifiable features. You can spend up to 4 points on traits to add to a stat block without increasing the encounter value. Each point you spend after 4 increases the stat block's EV by 2. Unless otherwise specified, you can select a trait only once.
 
-  <B>Codex Note:</B> Where a trait has a standard and a + mode, you only need to select one. For example, Burrowing (2 points) and Burrowing+ (3 points), if you want Burrowing+, do not select Burrowing.
+  <B>Codex Note:</B> Some traits come in a standard and an upgraded + version, such as Burrowing (2 points) and Burrowing+ (3 points). The + version already includes the standard trait, so pick one or the other, never both.
 _table: creatureTemplates
 __typeName: CharacterTemplate
+builderArt: 3dc93102-e5dc-431e-984d-9c3bdd30b75c
+builderIntro: The natural denizens of every world, animals ferocious, atrocious, and precocious roam the lands between and among settlements of humanoids and other folk. Whether they graze or hunt, stay solitary or move in packs, fight danger or fly from it, all animals share a singular goal—to live. Most animals are not monsters, but some are twisted by magic and malice to become monsters. A hero wouldn’t mercilessly kill a pack of hungry wolves—but they’ll slay rot-magic dire wolves created by vampires. In many cases, animals are more likely to be bystanders than threats in an encounter.
+builderIntroTitle: Animals
+builderSidebar: When using animal traits, think about using one mobility trait and either a defensive or an offensive trait to capture the sense of the animal. Other animal traits that don’t need to be on the stat block can emerge naturally through gameplay, such as a cat taking no damage from a fall.
+builderSidebarTitle: Lots of Options!
 ctime: 1782733783550
 modifierInfo:
   __typeName: ClassLevel
@@ -2471,5 +2476,72 @@ modifierInfo:
       sourceguid: 7ccad13a-fe87-44a7-8c81-5f61ac6400d1
       value: max(0, GetPointsSpent("Animal Traits Points")-4)*2
     source: Creature Template
-mtime: 1790244578949
+  - name: Animal Traits Reminder
+    description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: dd274062-6f3b-4a94-980b-4a669ddcfe92
+    implementation: 4
+    modifiers:
+    - name: Animal Traits Reminder
+      description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: 185da983-f65c-45ee-8b1d-40c3d8024a5a
+      source: Creature Template
+      sourceguid: dd274062-6f3b-4a94-980b-4a669ddcfe92
+      triggeredAbility:
+        name: Choose Animal Traits
+        description: ""
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          applyto: caster
+          autoTarget: false
+          customAbility:
+            name: Choose Animal Traits
+            description: ""
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 9891f7a7-fcd6-4290-854a-0e0bacf52cf3
+            iconid: ui-icons/skills/1.png
+            implementation: 4
+            modifiers: []
+            numTargets: "1"
+            objectTarget: false
+            persistence: []
+            range: "50"
+            repeatTargets: false
+            strain: []
+            targetType: target
+          filterTarget: ""
+          invokeOnCaster: true
+          promptText: Open the Character Sheet, and select the builder tab to spend 4 points on traits for {name}
+          targeting: inherit
+        conditionFormula: GetPointsSpent("Animal Traits Points") = 0
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        guid: 2b987d3c-4d5d-4597-b403-7ac43cab9113
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        trigger: rollinitiative
+    source: Creature Template
+mtime: 1790275326737
 tag: Animal Traits
