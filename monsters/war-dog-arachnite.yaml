@@ -72,15 +72,13 @@ info:
         baseValue: 2
     characterFeatures:
     - name: Eight-Eyed Sight
-      description: |-
-        The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
-
-        {Implementation Status: automated for adjacent creatures only; the engine's hidden-detection attribute has no range parameter, so the 10-square turn-start sweep is adjudicated at the table.}
+      description: The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:8d9091a3-f46d-4bd1-a07e-dd6334738629: true
       guid: 8d9091a3-f46d-4bd1-a07e-dd6334738629
       implementation: 2
+      implementationDetails: Automated for adjacent creatures only; the engine's hidden-detection attribute has no range parameter, so the 10-square turn-start sweep is adjudicated at the table.
       modifiers:
       - name: Eight-Eyed Sight
         description: The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
@@ -206,11 +204,28 @@ info:
       repeatTargets: false
       targetType: target
     - name: Web Vial
-      description: The affected area becomes difficult terrain.
+      description: The area is difficult terrain until the end of the encounter.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityAuraBehavior
+        duration: eoe
+        aliveafterdeath: true
+        aura:
+          name: Web Vial
+          __typeName: Aura
+          applyto: all
+          difficult_terrain: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f0529115-5e78-49c3-9f0f-a9733060f7ef
+          iconid: 80eefb2e-eed0-4e13-8f19-21bad620cc8d
+          modifiers: []
+          objectid: db02fb5e-fb33-438b-8441-72c39ee6bd11
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -221,15 +236,16 @@ info:
       flavor: ""
       guid: 37cbcb39-415c-4956-bfe7-78471a20120a
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
       keywords:
         Area: true
         Ranged: true
       modifiers: []
       numTargets: 1
-      range: 1
+      radius: 2
+      range: 10
       repeatTargets: false
-      targetType: self
+      targetType: cube
     innateAttacks: []
     keywords:
       Humanoid: true

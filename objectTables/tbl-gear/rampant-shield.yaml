@@ -1,0 +1,127 @@
+id: a0728a04-c807-4866-b56f-227adc497eca
+name: Rampant Shield
+description: Only a beastheart can wield or carry this shield. You gain a +3 bonus to Stamina and the painting on the shield changes to resemble your companion. Additionally, your companion can see as if they were in your space as well as their own, and whenever your companion uses an ability, they can do so as if they were in either your space or their own.
+_table: tbl_Gear
+__typeName: equipment
+category: Gear
+ctime: 1790211050892
+domains:
+  item:a0728a04-c807-4866-b56f-227adc497eca: true
+equipmentCategory: e036b288-416c-4a2e-ac33-95c6a528ed87
+features:
+- name: 1st Level
+  description: Only a beastheart can wield or carry this shield. You gain a +3 bonus to Stamina and the painting on the shield changes to resemble your companion. Additionally, your companion can see as if they were in your space as well as their own, and whenever your companion uses an ability, they can do so as if they were in either your space or their own.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: d2c0d815-8cfd-4a40-bfa6-afd9623c2f43
+  implementation: 2
+  implementationDetails: "Bronze: the Stamina bonus is fully automated and scales to +6 at 5th and +9 at 9th. The two origin-sharing clauses are not automated - the engine gives a creature a single vision origin and a single ability origin, so the companion seeing and acting from your space as well as their own must be adjudicated at the table. Restricting the wielder to a beastheart is left to the director."
+  itemAttached: true
+  modifiers:
+  - name: 1st Level
+    description: You gain a +3 bonus to Stamina, increasing to +6 at 5th level and +9 at 9th level.
+    __typeName: CharacterModifier
+    attribute: hitpoints
+    behavior: attribute
+    guid: a5b75459-1473-41e9-9945-b99b85754a59
+    source: Item
+    sourceguid: d2c0d815-8cfd-4a40-bfa6-afd9623c2f43
+    value:
+      id: table
+      __typeName: GoblinScriptTable
+      editableField: true
+      entries:
+      - script: "3"
+        threshold: 1
+      - script: "6"
+        threshold: 5
+      - script: "9"
+        threshold: 9
+      field: Level
+  source: Item
+- name: 5th Level
+  description: The shield's bonus to Stamina increases to +6. Additionally, your companion can use 2 squares of movement to teleport from their current location and leap out of the shield, landing in a space adjacent to you.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: a983164a-deae-4aa1-8626-ab121c925a9f
+  implementation: 2
+  implementationDetails: "Bronze: the Stamina increase is carried by the 1st Level scaling table. The leap is offered to the companion as a no-action ability that teleports them adjacent to you. The 2 squares of movement are NOT deducted - the engine has no mechanism to spend part of a creature's movement - so the player must subtract them manually."
+  itemAttached: true
+  modifiers:
+  - name: 5th Level
+    description: Your companion can teleport out of the shield, landing in a space adjacent to you.
+    __typeName: CharacterModifier
+    behavior: modcompanion
+    feature:
+      name: Leap from the Shield
+      description: You can use 2 squares of movement to teleport from your current location and leap out of the shield, landing in a space adjacent to your beastheart.
+      __typeName: CharacterFeature
+      guid: 5d548f0e-2e1e-4b46-9b61-d6fc1ae679ab
+      iconid: ui-icons/skills/1.png
+      modifiers:
+      - name: Leap from the Shield
+        description: You can use 2 squares of movement to teleport from your current location and leap out of the shield, landing in a space adjacent to your beastheart.
+        __typeName: CharacterModifier
+        behavior: activated
+        filterCondition: Level >= 5
+        guid: 2109da87-3321-4a51-929c-5088669627e8
+        source: Item
+        sourceguid: 5d548f0e-2e1e-4b46-9b61-d6fc1ae679ab
+        activatedAbility:
+          name: Leap from the Shield
+          description: You use 2 squares of movement to teleport from your current location and leap out of the shield, landing in a space adjacent to your beastheart.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+            applyto: caster_summoner
+            movementType: teleport
+            targetMoveVicinity: true
+            vicinity: 1
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: fd47dfd4-cd99-4584-b6c6-ecf510ccd096
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        suppressOthers: false
+    filterCondition: Level >= 5
+    guid: 67e2d06e-2bed-43c5-8ebb-7569bfda64c2
+    source: Item
+    sourceguid: a983164a-deae-4aa1-8626-ab121c925a9f
+  source: Item
+- name: 9th Level
+  description: The shield's bonus to Stamina increases to +9. Additionally, the shield can make opportunity attacks as if it was your companion.
+  __typeName: CharacterFeature
+  addText: Add Magical Property
+  guid: 16223b29-36b1-4d7e-beb8-020f22328889
+  implementation: 1
+  implementationDetails: The Stamina increase is carried by the 1st Level scaling table. The shield making opportunity attacks in its own right is not automated - an item cannot be an attack origin in the engine, and there is no creature to hang the opportunity attack on. Adjudicate at the table.
+  itemAttached: true
+  modifiers: []
+  source: Item
+flavor: This battered shield bears a magically animated painting of a lion rampant.
+iconid: 57406688-521f-48ba-b069-d566dd5ce41c
+implementation: 2
+itemPrerequisite: Strands from the manes of nine lions
+keywords:
+  Magic: true
+  Shield: true
+level5: The shield's bonus to Stamina increases to +6. Additionally, your companion can use 2 squares of movement to teleport from their current location and leap out of the shield, landing in a space adjacent to you.
+level9: The shield's bonus to Stamina increases to +9. Additionally, the shield can make opportunity attacks as if it was your companion.
+mtime: 1790211050892
+projectGoal: "450"
+projectRollCharacteristic:
+  inu: true
+  mgt: true
+projectSource: Texts or lore in Vaslorian
+specialDescription: ""
+type: Gear
+weight: 1
