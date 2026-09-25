@@ -3,9 +3,14 @@ name: Animal Traits
 description: |-
   This section presents a number of default animal stat blocks with basic features. You can customize those stat blocks by adding traits from the following categories to more closely model the animal's most identifiable features. You can spend up to 4 points on traits to add to a stat block without increasing the encounter value. Each point you spend after 4 increases the stat block's EV by 2. Unless otherwise specified, you can select a trait only once.
 
-  <B>Codex Note:</B> Where a trait has a standard and a + mode, you only need to select one. For example, Burrowing (2 points) and Burrowing+ (3 points), if you want Burrowing+, do not select Burrowing.
+  <B>Codex Note:</B> Some traits come in a standard and an upgraded + version, such as Burrowing (2 points) and Burrowing+ (3 points). The + version already includes the standard trait, so pick one or the other, never both.
 _table: creatureTemplates
 __typeName: CharacterTemplate
+builderArt: 3dc93102-e5dc-431e-984d-9c3bdd30b75c
+builderIntro: The natural denizens of every world, animals ferocious, atrocious, and precocious roam the lands between and among settlements of humanoids and other folk. Whether they graze or hunt, stay solitary or move in packs, fight danger or fly from it, all animals share a singular goal—to live. Most animals are not monsters, but some are twisted by magic and malice to become monsters. A hero wouldn’t mercilessly kill a pack of hungry wolves—but they’ll slay rot-magic dire wolves created by vampires. In many cases, animals are more likely to be bystanders than threats in an encounter.
+builderIntroTitle: Animals
+builderSidebar: When using animal traits, think about using one mobility trait and either a defensive or an offensive trait to capture the sense of the animal. Other animal traits that don’t need to be on the stat block can emerge naturally through gameplay, such as a cat taking no damage from a fall.
+builderSidebarTitle: Lots of Options!
 ctime: 1782733783550
 modifierInfo:
   __typeName: ClassLevel
@@ -1257,7 +1262,75 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 7acbbf36-ad26-4871-85e2-ac0ccb068a82
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Grappler
+        __typeName: CharacterModifier
+        ability:
+          name: Grappler
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            filterTarget: Cast.TargetCount = 1
+            guid: 6dbc650b-6338-4993-9327-63289b9125bb
+            rule: A<1 grabbed
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Grappler
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                guid: 28dbc3f5-0f69-47f6-8a22-3392038a2df4
+                rule: grabbed
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 810bd3cb-303b-4f63-bfa4-d5689454f674
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: true
+              range: 99
+              repeatTargets: false
+              targetType: target
+            filterTarget: Cast.TargetCount >= 2
+            guid: 7322ed8b-5ebf-4208-9e4c-04f1a6440593
+            invokeOnCaster: true
+            promptText: "Grappler: Select which target to grab"
+            targeting: prompt_inherit
+            targetingFormula: not Target.PassesPotency("A", 1)
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3ba5d28c-f79f-49a7-93f1-397e03ebc7e3
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        attributes: []
+        behavior: modifyability
+        filterAbility: Ability.Categorization = "Signature Ability" and Ability.DoesDamage
+        guid: fc7b3ae0-fabb-44fe-b3c8-68821560f780
+        replaceBehaviors: after
+        source: Creature Template
+        sourceguid: 7acbbf36-ad26-4871-85e2-ac0ccb068a82
       pointsCost: 1
       source: Creature Template
     - name: Grappler+
@@ -1268,7 +1341,107 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 3f4fa6e3-191b-435a-84ed-a11201817323
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Grappler+
+        __typeName: CharacterModifier
+        ability:
+          name: Grappler+
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            filterTarget: Cast.TargetCount = 1
+            guid: 40e14dde-134d-4cf4-8313-ea295891e148
+            rule: A<1 grabbed with Bane on Escape Grab
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Grappler+
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                guid: 6dc6a86d-c8f9-4105-bd73-fc37dbec0f97
+                rule: grabbed with Bane on Escape Grab
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: ea314694-353f-473b-be8f-fa2abe20ab6b
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: true
+              range: 99
+              repeatTargets: false
+              targetType: target
+            filterTarget: Cast.TargetCount >= 2
+            guid: 763fb133-7433-4c54-b455-ea0b4b183d14
+            invokeOnCaster: true
+            promptText: "Grappler+: Select which target to grab"
+            targeting: prompt_inherit
+            targetingFormula: not Target.PassesPotency("A", 1)
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8f2c2419-0010-4b17-a0e1-55b666ff714e
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        attributes: []
+        behavior: modifyability
+        filterAbility: Ability.Categorization = "Signature Ability" and Ability.DoesDamage
+        guid: 887c1cf6-4c74-42e4-b512-7951ce48cd4a
+        replaceBehaviors: after
+        source: Creature Template
+        sourceguid: 3f4fa6e3-191b-435a-84ed-a11201817323
+      - name: Grappler+
+        __typeName: CharacterModifier
+        ability:
+          name: Grappler+
+          description: A creature grabbed by the animal's Grab maneuver takes a bane on the Escape Grab maneuver.
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyRidersBehavior
+            conditionid: 70504ebe-3899-41d3-9f60-74b52ce35e39
+            riderid: 6906316a-26fe-4101-9a4b-60192b77c270
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 80aea3ca-f32d-4326-8dc4-908b1b9f8813
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        attributes: []
+        behavior: modifyability
+        cannotModifyAction: true
+        filterAbility: Ability.Name = "Grab"
+        guid: 7a3d6d22-c497-4102-8a85-24d405632154
+        replaceBehaviors: after
+        source: Creature Template
+        sourceguid: 3f4fa6e3-191b-435a-84ed-a11201817323
       pointsCost: 2
       source: Creature Template
     - name: Hunter
@@ -1303,8 +1476,75 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: de6c7b8c-1de5-4c89-a293-eead54df2624
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Multilimb
+        __typeName: CharacterModifier
+        attributes:
+        - id: numtargets
+          operation: Add
+          value: "1"
+        behavior: modifyability
+        filterAbility: Ability.FreeStrike or Ability.Name = "Grab"
+        guid: c7aeec4b-af6d-4916-b778-7c156b790c7c
+        source: Creature Template
+        sourceguid: de6c7b8c-1de5-4c89-a293-eead54df2624
+      - name: Multilimb
+        __typeName: CharacterModifier
+        attribute: f438be18-6fc0-46d5-9a68-fed0fe61f418
+        behavior: attribute
+        guid: 0dac433d-cac1-4593-829e-bf0d48cc0574
+        source: Creature Template
+        sourceguid: de6c7b8c-1de5-4c89-a293-eead54df2624
+        value: 1
+      - name: Multilimb
+        __typeName: CharacterModifier
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        behavior: attribute
+        guid: b7e2481b-01f2-49c0-9454-a327a62ec7ec
+        source: Creature Template
+        sourceguid: de6c7b8c-1de5-4c89-a293-eead54df2624
+        value: 1
       pointsCost: 2
+      source: Creature Template
+    - name: Multilimb+
+      description: |-
+        Multilimb selected twice. The animal can target two additional creatures or objects whenever they make a free strike, use the Grab maneuver, or use the Knockback maneuver.
+
+        Typically Used By: Monkeys, octopuses, quadrakangas.
+      __typeName: CharacterFeature
+      canHavePrerequisites: true
+      guid: 7f08e6d4-cbe7-4ad3-b064-5a2bb9467d2a
+      implementation: 4
+      modifiers:
+      - name: Multilimb+
+        __typeName: CharacterModifier
+        attributes:
+        - id: numtargets
+          operation: Add
+          value: "2"
+        behavior: modifyability
+        filterAbility: Ability.FreeStrike or Ability.Name = "Grab"
+        guid: 047f9331-a58a-45fa-9fc9-6c9fea00bab9
+        source: Creature Template
+        sourceguid: 7f08e6d4-cbe7-4ad3-b064-5a2bb9467d2a
+      - name: Multilimb+
+        __typeName: CharacterModifier
+        attribute: f438be18-6fc0-46d5-9a68-fed0fe61f418
+        behavior: attribute
+        guid: 49907137-7e4f-4691-b974-9323d611b860
+        source: Creature Template
+        sourceguid: 7f08e6d4-cbe7-4ad3-b064-5a2bb9467d2a
+        value: 2
+      - name: Multilimb+
+        __typeName: CharacterModifier
+        attribute: 7a91dad1-97f4-4411-b326-425d58bb2bb2
+        behavior: attribute
+        guid: db11fdda-34f3-4db5-b2fa-57d8eca189ec
+        source: Creature Template
+        sourceguid: 7f08e6d4-cbe7-4ad3-b064-5a2bb9467d2a
+        value: 2
+      pointsCost: 4
       source: Creature Template
     - name: Pouncer
       description: |-
@@ -1435,18 +1675,36 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 19ec579b-483b-4c1d-8680-aa4b887e28af
+      implementation: 4
       modifiers:
       - name: Projectile
-        description: |-
-          The animal's signature ability gains the Ranged keyword and adds Ranged 10 to its distance.
-
-          Optional: The animal's signature ability can deal acid or cold damage.
-
-          Typically Used By: Archer fish, snakes
+        __typeName: CharacterModifier
+        attributes:
+        - id: modkeywords
+          keywords:
+            Ranged: true
+          operation: Add
+        - id: range
+          operation: Set
+          value: "10"
+        behavior: modifyability
+        filterAbility: Ability.Categorization = "Signature Ability"
+        guid: 4c886c97-a1fa-46fb-96d4-539c9867672e
+        source: Creature Template
+        sourceguid: 19ec579b-483b-4c1d-8680-aa4b887e28af
+      - name: Projectile
+        description: The signature ability deals acid, cold, or untyped damage (acid by default).
         __typeName: CharacterModifier
         activationAfterRoll: false
-        activationCondition: Ability.Usable as Signature Ability
+        activationCondition: Ability.Categorization = "Signature Ability"
         behavior: power
+        damageTypeChoicePerTarget: true
+        damageTypeMappings:
+          all:
+          - acid
+          - cold
+          - untyped
+        displayCondition: Ability.Categorization = "Signature Ability"
         guid: cc7b0630-735e-4c7a-bc7d-a2f21cc2ec99
         keywords: []
         modtype: none
@@ -1465,7 +1723,38 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 7c19c189-99d9-4217-ac8b-9db174c6a940
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Reach
+        __typeName: CharacterModifier
+        attributes:
+        - id: range
+          operation: Add
+          value: "2"
+        behavior: modifyability
+        filterAbility: Ability.Categorization = "Signature Ability"
+        guid: bbbc0df7-7c05-4328-ba98-41567769fc93
+        source: Creature Template
+        sourceguid: 7c19c189-99d9-4217-ac8b-9db174c6a940
+      - name: Reach
+        description: The signature ability deals fire, sonic, or untyped damage (fire by default).
+        __typeName: CharacterModifier
+        activationAfterRoll: false
+        activationCondition: Ability.Categorization = "Signature Ability"
+        behavior: power
+        damageTypeChoicePerTarget: true
+        damageTypeMappings:
+          all:
+          - fire
+          - sonic
+          - untyped
+        displayCondition: Ability.Categorization = "Signature Ability"
+        guid: 7564ede8-640c-4e5c-a551-3482acdea203
+        keywords: []
+        modtype: none
+        rollType: ability_power_roll
+        source: Creature Template
+        sourceguid: 7c19c189-99d9-4217-ac8b-9db174c6a940
       pointsCost: 1
       source: Creature Template
     - name: Venom
@@ -1476,7 +1765,23 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: d2bd499b-1feb-4b60-9b3c-c966941ba8ed
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Venom
+        __typeName: CharacterModifier
+        activationAfterRoll: false
+        activationCondition: Ability.Categorization = "Signature Ability"
+        addText: M<1 weakened (save ends)
+        behavior: power
+        damageModifier: "2"
+        damageModifierType: poison
+        displayCondition: Ability.Categorization = "Signature Ability"
+        guid: 226d9c00-5bb4-4d3e-a5a3-2426234245cf
+        keywords: []
+        modtype: none
+        rollType: ability_power_roll
+        source: Creature Template
+        sourceguid: d2bd499b-1feb-4b60-9b3c-c966941ba8ed
       pointsCost: 1
       source: Creature Template
     - name: Web
@@ -1626,10 +1931,193 @@ modifierInfo:
         The animal has an affinity for one of the following damage types: acid, cold, corruption, fire, lightning, poison. The animal has damage immunity 3 to the chosen damage type, and their strikes deal the chosen damage type instead of their original damage type.
 
         Typically Used By: Fire salamanders, ice bats.
-      __typeName: CharacterFeature
+      __typeName: CharacterFeatureChoice
+      allowDuplicateChoices: false
       canHavePrerequisites: true
       guid: acbe3f33-6f85-4198-8f02-184346b0c510
-      modifiers: []
+      implementation: 4
+      numChoices: 1
+      options:
+      - name: Elemental (Acid)
+        description: The animal has damage immunity 3 to acid damage, and their strikes deal acid damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 275c30be-7324-43b8-8970-fc2db91aa87a
+        implementation: 4
+        modifiers:
+        - name: Elemental (Acid)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: d70fce8f-ab33-4433-9ba9-9212da10f4fe
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: acid
+            dr: 3
+          source: Creature Template
+          sourceguid: 275c30be-7324-43b8-8970-fc2db91aa87a
+        - name: Elemental (Acid)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: acid
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: 4d474a58-3d38-46f9-bc6b-cef6f96b85ae
+          source: Creature Template
+          sourceguid: 275c30be-7324-43b8-8970-fc2db91aa87a
+        source: Creature Template
+      - name: Elemental (Cold)
+        description: The animal has damage immunity 3 to cold damage, and their strikes deal cold damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 122518b2-295b-43e4-9c25-8966f4f87198
+        implementation: 4
+        modifiers:
+        - name: Elemental (Cold)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: d3f21a9c-fa09-4188-ada0-a86b9550a416
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: cold
+            dr: 3
+          source: Creature Template
+          sourceguid: 122518b2-295b-43e4-9c25-8966f4f87198
+        - name: Elemental (Cold)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: cold
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: 6afef646-bd9d-4eda-b48f-d6c9f04c92e6
+          source: Creature Template
+          sourceguid: 122518b2-295b-43e4-9c25-8966f4f87198
+        source: Creature Template
+      - name: Elemental (Corruption)
+        description: The animal has damage immunity 3 to corruption damage, and their strikes deal corruption damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 16ce8613-7b0b-4765-909d-d1abfedba716
+        implementation: 4
+        modifiers:
+        - name: Elemental (Corruption)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: 8c00d68c-8b17-452f-bc71-76ab04a6c58f
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: corruption
+            dr: 3
+          source: Creature Template
+          sourceguid: 16ce8613-7b0b-4765-909d-d1abfedba716
+        - name: Elemental (Corruption)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: corruption
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: a57747cc-3854-4477-b9bd-e73a6df80650
+          source: Creature Template
+          sourceguid: 16ce8613-7b0b-4765-909d-d1abfedba716
+        source: Creature Template
+      - name: Elemental (Fire)
+        description: The animal has damage immunity 3 to fire damage, and their strikes deal fire damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: f87eb7eb-b919-42a3-9ce2-64a5b0645344
+        implementation: 4
+        modifiers:
+        - name: Elemental (Fire)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: 499ca763-6e3b-49a8-9540-18199b86397c
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: fire
+            dr: 3
+          source: Creature Template
+          sourceguid: f87eb7eb-b919-42a3-9ce2-64a5b0645344
+        - name: Elemental (Fire)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: fire
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: d2d084f1-adcf-4ce0-bdee-fa840bfb22e9
+          source: Creature Template
+          sourceguid: f87eb7eb-b919-42a3-9ce2-64a5b0645344
+        source: Creature Template
+      - name: Elemental (Lightning)
+        description: The animal has damage immunity 3 to lightning damage, and their strikes deal lightning damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: 7d414b47-fe3b-41a6-bd47-8e01236cd2a6
+        implementation: 4
+        modifiers:
+        - name: Elemental (Lightning)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: 9841d95e-4296-47fc-b93d-18771f773ac8
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: lightning
+            dr: 3
+          source: Creature Template
+          sourceguid: 7d414b47-fe3b-41a6-bd47-8e01236cd2a6
+        - name: Elemental (Lightning)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: lightning
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: c974b794-348b-4749-a348-8805d1b0a71a
+          source: Creature Template
+          sourceguid: 7d414b47-fe3b-41a6-bd47-8e01236cd2a6
+        source: Creature Template
+      - name: Elemental (Poison)
+        description: The animal has damage immunity 3 to poison damage, and their strikes deal poison damage instead of their original damage type.
+        __typeName: CharacterFeature
+        canHavePrerequisites: true
+        guid: b242cd64-5459-4871-9d01-1d24568df2b3
+        implementation: 4
+        modifiers:
+        - name: Elemental (Poison)
+          __typeName: CharacterModifier
+          behavior: resistance
+          guid: 6e7feb05-4408-4978-9ed8-ba424eefde08
+          resistances:
+          - __typeName: ResistanceEntry
+            apply: Damage Reduction
+            damageType: poison
+            dr: 3
+          source: Creature Template
+          sourceguid: b242cd64-5459-4871-9d01-1d24568df2b3
+        - name: Elemental (Poison)
+          __typeName: CharacterModifier
+          attributes:
+          - id: damagetype
+            operation: Set
+            value: poison
+          behavior: modifyability
+          filterAbility: Ability.Keywords has "Strike"
+          guid: 352dd284-5f4b-4458-af70-44d376b8076a
+          source: Creature Template
+          sourceguid: b242cd64-5459-4871-9d01-1d24568df2b3
+        source: Creature Template
       pointsCost: 2
       source: Creature Template
     - name: Gelatinous
@@ -1988,5 +2476,72 @@ modifierInfo:
       sourceguid: 7ccad13a-fe87-44a7-8c81-5f61ac6400d1
       value: max(0, GetPointsSpent("Animal Traits Points")-4)*2
     source: Creature Template
-mtime: 1782733783550
+  - name: Animal Traits Reminder
+    description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: dd274062-6f3b-4a94-980b-4a669ddcfe92
+    implementation: 4
+    modifiers:
+    - name: Animal Traits Reminder
+      description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: 185da983-f65c-45ee-8b1d-40c3d8024a5a
+      source: Creature Template
+      sourceguid: dd274062-6f3b-4a94-980b-4a669ddcfe92
+      triggeredAbility:
+        name: Choose Animal Traits
+        description: ""
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          applyto: caster
+          autoTarget: false
+          customAbility:
+            name: Choose Animal Traits
+            description: ""
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 9891f7a7-fcd6-4290-854a-0e0bacf52cf3
+            iconid: ui-icons/skills/1.png
+            implementation: 4
+            modifiers: []
+            numTargets: "1"
+            objectTarget: false
+            persistence: []
+            range: "50"
+            repeatTargets: false
+            strain: []
+            targetType: target
+          filterTarget: ""
+          invokeOnCaster: true
+          promptText: Open the Character Sheet, and select the builder tab to spend 4 points on traits for {name}
+          targeting: inherit
+        conditionFormula: GetPointsSpent("Animal Traits Points") = 0
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        guid: 2b987d3c-4d5d-4597-b403-7ac43cab9113
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        trigger: rollinitiative
+    source: Creature Template
+mtime: 1790275326737
 tag: Animal Traits
