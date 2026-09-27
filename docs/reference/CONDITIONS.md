@@ -292,18 +292,18 @@ Use direct infliction when:
 
 ### Duration Options for Ongoing Effects
 
-| ID | Description |
-|----|-------------|
-| `turn` | Until end of turn |
-| `endround` | Until end of round |
-| `endnextround` | Until end of next round |
-| `rounds` | N rounds (from start of turn) |
-| `rounds_end_turn` | N rounds (from end of turn) |
-| `until_rest` | Until respite |
-| `indefinite` | Indefinitely |
-| `save_ends` | Save ends |
-| `eoe` | End of encounter |
-| `eoe_or_dying` | End of encounter or dying |
+| Editor option | Write in YAML |
+|---------------|---------------|
+| Until End of Turn | `duration: 0` |
+| Until End of Round | `duration: endround` |
+| Until End of Next Round | `duration: endnextround` |
+| N Rounds (from start of turn) | `duration: N` (a number) |
+| N Rounds (from end of turn) | `duration: N` plus `durationUntilEndOfTurn: true` |
+| Until Respite | `duration: until_rest` |
+| Indefinitely | *omit `duration` entirely* -- never write `duration: indefinite` |
+| Save Ends | `duration: save_ends` |
+| End of Encounter | `duration: eoe` |
+| End of Encounter or Dying | `duration: eoe_or_dying` |
 
 ### Example: Ongoing Effect Wrapping Slowed
 

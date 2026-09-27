@@ -492,7 +492,10 @@ by potency (e.g., "I<2 cursed (save ends)"), use the two-part pattern:
 **1-indexed**: `[1]` = Tier 1 only, `[1, 2]` = Tiers 1 and 2, `[1, 2, 3]` = all tiers.
 If omitted, the effect applies on all tiers.
 
-**Valid duration values for ongoing effects (code-verified from OngoingEffect.durationOptions):**
+**Valid duration values for ongoing effects (code-verified from
+`CharacterOngoingEffectInstance.Create` and the Apply Ongoing Effect editor):**
+- *(omit `duration` entirely)* -- indefinitely / permanent. This is what the editor's
+  "Indefinitely" option saves.
 - `end_of_next_turn` -- until end of affected creature's next turn
 - `eoe` -- end of encounter
 - `save_ends` -- until saving throw
@@ -502,11 +505,13 @@ If omitted, the effect applies on all tiers.
 - `until_rest` -- until respite
 - `until_long_rest` -- until long rest
 - `momentary` -- momentary (immediate, for ApplyMomentaryEffect)
-- `turn` -- until end of turn
-- `rounds` -- rounds (from start of turn) - requires numeric durationLength
-- `rounds_end_turn` -- rounds (from end of turn) - requires numeric durationLength
-- `indefinite` -- indefinitely
-- A number -- specific number of rounds
+- A number -- that many rounds (the editor's "Until End of Turn" saves `0`; its "Rounds"
+  options save the round count, plus `durationUntilEndOfTurn: true` for "Rounds (From End of Turn)")
+
+**WARNING:** never write `duration: indefinite`, `duration: turn`, `duration: rounds` or
+`duration: rounds_end_turn`. Those are the editor's dropdown ids, not stored values: the
+engine keeps them as a text duration and treats the effect as already expired, so it
+silently never applies. For a permanent effect, leave `duration` out.
 
 **WARNING:** `nextturn` and `endnextturn` are NOT valid for ongoing effect durations
 (those are aura duration values). Using invalid strings causes runtime errors.
