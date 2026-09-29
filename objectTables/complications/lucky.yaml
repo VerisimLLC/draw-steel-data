@@ -14,47 +14,8 @@ modifierInfo:
     __typeName: CharacterFeature
     canHavePrerequisites: true
     guid: 7985cace-81b1-43cf-b525-049ed49bdaa9
-    implementation: 1
-    modifiers:
-    - name: Lucky - Benefit
-      description: When you spend a hero token to succeed on a saving throw or to reroll a test, roll a d10. On a 6 or higher, you gain the benefit but don't spend the hero token.
-      __typeName: CharacterModifier
-      behavior: trigger
-      guid: 8cdff6c1-6cc3-41c6-9c36-3494ee29f57f
-      source: Complications
-      sourceguid: 7985cace-81b1-43cf-b525-049ed49bdaa9
-      triggeredAbility:
-        name: Lucky - Benefit
-        description: When you spend a hero token to succeed on a saving throw or to reroll a test, roll a d10. On a 6 or higher, you gain the benefit but don't spend the hero token.
-        __typeName: TriggeredAbility
-        abilityType: none
-        behaviors:
-        - __typeName: ActivatedAbilityRollBehavior
-          roll: 1d10
-          rollDescription: Lucky - Benefit
-        - __typeName: ActivatedAbilityReplenishBehavior
-          chatMessage: Lucky - Benefit
-          filterTarget: Cast.Roll >= 6
-          resourceid: 2166c5fe-260e-4691-9743-06cf097a59f3
-        castImmediately: true
-        conditionFormula: Resource = "Hero Tokens"
-        display:
-          bgcolor: "#ffffffff"
-          brightness: 1
-          hueshift: 0
-          saturation: 1
-        guid: ca10bd06-1076-4d29-a374-2e0bdf815b3d
-        iconid: ui-icons/skills/1.png
-        mandatory: false
-        modifiers: []
-        numTargets: "1"
-        persistence: []
-        range: 1
-        repeatTargets: false
-        strain: []
-        targetType: self
-        trigger: useresource
-        triggerPrompt: When you spend a hero token to succeed on a saving throw or to reroll a test, roll a d10. On a 6 or higher, you gain the benefit but don't spend the hero token.
+    implementation: 4
+    modifiers: []
     source: Complications
   - name: Lucky - Drawback
     description: Whenever you obtain a tier 1 outcome on a test and don't spend a hero token to reroll, you take a bane on the next test you make.
@@ -79,7 +40,7 @@ modifierInfo:
         - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
           ongoingEffect: 686af6c5-7f90-4b8a-8c30-ae9eb8109448
           ongoingEffectCustom: 686af6c5-7f90-4b8a-8c30-ae9eb8109448
-        conditionFormula: Ability.Test and Tier One
+        conditionFormula: Ability.Test and TierOne and not HeroTokenReroll
         display:
           bgcolor: "#ffffffff"
           brightness: 1
@@ -87,7 +48,7 @@ modifierInfo:
           saturation: 1
         guid: c121e2c6-8173-4cc6-b853-6e0501b9adee
         iconid: ui-icons/skills/1.png
-        mandatory: false
+        mandatory: true
         modifiers: []
         numTargets: "1"
         persistence: []
