@@ -1,0 +1,181 @@
+id: 3a267b83-0b33-4ac7-a410-ff47d1fb6c07
+name: Flammable Oil
+description: |-
+  A patch of flammable oil or pitch on the ground is ready to be ignited.
+
+  Activate: A creature or object in a square of oil takes fire damage. The oil ignites and becomes Burning Oil, and the triggering creature or object takes 3 fire damage and is burning (save ends).
+
+  Deactivate: As a maneuver, a creature adjacent to a patch of flammable oil can make an Agility test. 11 or lower: the creature ignites the oil and is affected as if in its area. 12-16: the oil temporarily ignites before safely burning out, and the creature takes 3 fire damage and is burning (save ends). 17+: the oil is rendered safe and can't be ignited.
+
+  Allied Awareness: Allies of the trap (creatures that are not heroes) can use a maneuver to throw a torch up to 5 squares and ignite the flammable oil.
+_table: environmentalKeywords
+__typeName: EnvironmentalKeyword
+appearance:
+  alpha: 1
+  edgeFade: 0
+  fractalEdge: 0.478723397190774
+  mode: floor
+  spriteAlpha: 1
+  spriteScale: 1
+  tileImageId: dddd835e-1db8-49f6-8381-5dacaece1f6f
+  tileOwned: true
+  tileid: 8978ad49-7db5-4fd4-9902-636da27f0f27
+ctime: 1790395169716
+defaultPlayerVisible: false
+display:
+  bgcolor:
+    __usertype: LuaColor
+    a: 0.982692837715149
+    h: 0
+    s: -0.00178396701812744
+    v: 0.471699804067612
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: 34752972-7546-4cf0-b267-61a30ab1e983
+iconid: ui-icons/skills/1.png
+implementation: 4
+mapFeature:
+  name: Flammable Oil
+  description: ""
+  __typeName: CharacterFeature
+  guid: e06e5975-e670-4beb-a292-7612fc6879d3
+  modifiers:
+  - name: Flammable Oil
+    description: Allied Awareness - allies of the trap can throw a torch to ignite the flammable oil.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Torch
+      description: Throw a torch up to 5 squares to ignite a patch of flammable oil. The whole patch becomes burning oil.
+      __typeName: ActivatedAbility
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityTransformZoneBehavior
+        abortIfNone: true
+        fromKeyword: 3a267b83-0b33-4ac7-a410-ff47d1fb6c07
+        location: targets
+        reveal: true
+        toKeyword: 2bbec711-e414-439a-b6fc-76ac6d7f21c3
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 1c6f87e3-bc8e-4191-a168-4ceb883071f5
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Ranged: true
+      modifiers: []
+      numTargets: "1"
+      range: 5
+      repeatTargets: false
+      targetFilter: target.Environment has "Flammable Oil"
+      targetTextOverride: 1 square of flammable oil
+      targetType: anyspace
+    behavior: activated
+    filterCondition: not Hero
+    guid: ecf471c4-a234-4d0e-8061-0007a0a352b9
+    source: Environmental Keyword
+    sourceguid: e06e5975-e670-4beb-a292-7612fc6879d3
+  - name: Flammable Oil
+    description: A creature adjacent to a patch of flammable oil can try to deactivate it.
+    __typeName: CharacterModifier
+    activatedAbility:
+      name: Deactivate Flammable Oil
+      description: Make an Agility test to deal with an adjacent patch of flammable oil. 11 or lower, you ignite the oil and are affected as if in its area. 12-16, the oil temporarily ignites before safely burning out, and you take 3 fire damage and are burning (save ends). 17+, the oil is rendered safe and can't be ignited.
+      __typeName: ActivatedAbility
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        attrid: agl
+        isTest: true
+        resistanceRoll: false
+        roll: 2d10 + Agility
+        tiers:
+        - "#You ignite the oil and are affected as if in its area."
+        - "#The oil temporarily ignites before safely burning out."
+        - "#The oil is rendered safe and can't be ignited."
+      - __typeName: ActivatedAbilityTransformZoneBehavior
+        abortIfNone: false
+        fromKeyword: 3a267b83-0b33-4ac7-a410-ff47d1fb6c07
+        location: adjacent
+        reveal: true
+        tiersSelected:
+        - 1
+        toKeyword: 2bbec711-e414-439a-b6fc-76ac6d7f21c3
+      - __typeName: ActivatedAbilityTransformZoneBehavior
+        abortIfNone: false
+        fromKeyword: 3a267b83-0b33-4ac7-a410-ff47d1fb6c07
+        location: adjacent
+        reveal: true
+        tiersSelected:
+        - 2
+        - 3
+        toKeyword: none
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: 3 fire damage; burning (save ends)
+        tiersSelected:
+        - 1
+        - 2
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: fc22aef0-fe2a-4bf8-af47-0781c1bc61ea
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    behavior: activated
+    filterCondition: AdjacentEnvironment has "Flammable Oil"
+    guid: 2db49e95-012c-41e5-a384-b860645038ec
+    source: Environmental Keyword
+    sourceguid: e06e5975-e670-4beb-a292-7612fc6879d3
+  source: Environmental Keyword
+modifiers:
+- name: Flammable Oil
+  description: When a creature or object in a square of oil takes fire damage, the oil ignites into burning oil and the creature or object takes 3 fire damage and is burning (save ends).
+  __typeName: CharacterModifier
+  behavior: trigger
+  guid: 5b57d492-0b12-45f6-8dbf-d7fe409c580b
+  source: Environmental Keyword
+  sourceguid: 34752972-7546-4cf0-b267-61a30ab1e983
+  triggeredAbility:
+    name: Flammable Oil Ignites
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityTransformZoneBehavior
+      abortIfNone: true
+      fromKeyword: 3a267b83-0b33-4ac7-a410-ff47d1fb6c07
+      location: targets
+      reveal: true
+      toKeyword: 2bbec711-e414-439a-b6fc-76ac6d7f21c3
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: 3 fire damage; burning (save ends)
+    conditionFormula: DamageType is "fire"
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    environmentalSource: true
+    guid: 265aea27-a592-4137-a2ae-24512d33a929
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    targetType: self
+    trigger: losehitpoints
+mtime: 1790417227094
+source: Environmental Keyword

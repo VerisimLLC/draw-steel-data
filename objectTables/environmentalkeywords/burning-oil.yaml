@@ -1,0 +1,81 @@
+id: 2bbec711-e414-439a-b6fc-76ac6d7f21c3
+name: Burning Oil
+description: A patch of oil or pitch that has been set alight. A creature or object that enters a square of burning oil or starts their turn there takes 3 fire damage and is burning (save ends). A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.
+_table: environmentalKeywords
+__typeName: EnvironmentalKeyword
+appearance:
+  alpha: 0.660057401231992
+  edgeFade: 0
+  fractalEdge: 0.411025581713655
+  mode: floor
+  spriteAlpha: 1
+  spriteScale: 1
+  tileImageId: dddd835e-1db8-49f6-8381-5dacaece1f6f
+  tileOwned: true
+  tileid: e131d8e8-1af0-4e74-84ea-290502769665
+ctime: 1790395345801
+defaultPlayerVisible: true
+display:
+  bgcolor:
+    __usertype: LuaColor
+    a: 1
+    h: 0.0932691097259521
+    s: 1.00191175937653
+    v: 1.00219202041626
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+entryEffectRule: 3 fire damage; burning (save ends)
+guid: cbcd1b6a-ee25-46af-9297-dbf84b29d0ef
+iconid: ui-icons/skills/1.png
+implementation: 4
+mapFeature:
+  name: Burning Oil
+  description: ""
+  __typeName: CharacterFeature
+  guid: d62ad52d-42d6-4f0f-8043-fb3194eda303
+  modifiers: []
+  source: Environmental Keyword
+modifiers: []
+mtime: 1790417412824
+script: |-
+  --Burning Oil: top-down fire over every tile of the zone (the shared
+  --"burning-ground" particle recipe, see ParticleEffects.lua) plus a heat
+  --shimmer, for as long as the zone exists.
+
+  local def = {}
+
+  def.create = function(zone)
+    zone.data.heat = dmhub.CreateWorldDistortion{
+      type = "heatwave",
+      locs = zone.locs,
+      strength = 6,
+      edgeFade = 0.5,
+      direction = { x = 0, y = 1 },
+      plumeWidth = 2,
+      plumeHeight = 1.2,
+      turbulence = 0.5,
+      shimmer = 0.7,
+      haze = 0.6,
+      frequency = 1.35,
+      speed = 1.5,
+    }
+    zone.data.fire = ParticleEffects.Create("burning-ground", { locs = zone.locs })
+  end
+
+  def.locsChanged = function(zone)
+    zone.data.heat:SetLocs(zone.locs)
+    zone.data.fire:SetLocs(zone.locs)
+  end
+
+  def.destroy = function(zone)
+    if zone.data.heat ~= nil then
+      zone.data.heat:Stop()
+    end
+    if zone.data.fire ~= nil then
+      zone.data.fire:Stop()
+    end
+  end
+
+  return def
+source: Environmental Keyword
