@@ -7,6 +7,8 @@ description: |-
 _table: creatureTemplates
 __typeName: CharacterTemplate
 builderArt: 3dc93102-e5dc-431e-984d-9c3bdd30b75c
+builderEVPerPoint: 2
+builderFreePoints: 4
 builderIntro: The natural denizens of every world, animals ferocious, atrocious, and precocious roam the lands between and among settlements of humanoids and other folk. Whether they graze or hunt, stay solitary or move in packs, fight danger or fly from it, all animals share a singular goal—to live. Most animals are not monsters, but some are twisted by magic and malice to become monsters. A hero wouldn’t mercilessly kill a pack of hungry wolves—but they’ll slay rot-magic dire wolves created by vampires. In many cases, animals are more likely to be bystanders than threats in an encounter.
 builderIntroTitle: Animals
 builderSidebar: When using animal traits, think about using one mobility trait and either a defensive or an offensive trait to capture the sense of the animal. Other animal traits that don’t need to be on the stat block can emerge naturally through gameplay, such as a cat taking no damage from a fall.
@@ -2477,14 +2479,14 @@ modifierInfo:
       value: max(0, GetPointsSpent("Animal Traits Points")-4)*2
     source: Creature Template
   - name: Animal Traits Reminder
-    description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+    description: When the animal is placed on the map with no points spent on animal traits, the Director gets a trigger that opens its Builder tab.
     __typeName: CharacterFeature
     canHavePrerequisites: true
     guid: dd274062-6f3b-4a94-980b-4a669ddcfe92
     implementation: 4
     modifiers:
     - name: Animal Traits Reminder
-      description: At the start of an encounter, if no points have been spent on animal traits, the Director is reminded to choose them in the builder.
+      description: When the animal is placed on the map with no points spent on animal traits, the Director gets a trigger that opens its Builder tab.
       __typeName: CharacterModifier
       behavior: trigger
       guid: 185da983-f65c-45ee-8b1d-40c3d8024a5a
@@ -2495,36 +2497,10 @@ modifierInfo:
         description: ""
         __typeName: TriggeredAbility
         abilityType: none
+        actionResourceId: none
         behaviors:
-        - __typeName: ActivatedAbilityInvokeAbilityBehavior
-          applyto: caster
-          autoTarget: false
-          customAbility:
-            name: Choose Animal Traits
-            description: ""
-            __typeName: ActivatedAbility
-            abilityType: none
-            behaviors: []
-            display:
-              bgcolor: "#ffffffff"
-              brightness: 1
-              hueshift: 0
-              saturation: 1
-            guid: 9891f7a7-fcd6-4290-854a-0e0bacf52cf3
-            iconid: ui-icons/skills/1.png
-            implementation: 4
-            modifiers: []
-            numTargets: "1"
-            objectTarget: false
-            persistence: []
-            range: "50"
-            repeatTargets: false
-            strain: []
-            targetType: target
-          filterTarget: ""
-          invokeOnCaster: true
-          promptText: Open the Character Sheet, and select the builder tab to spend 4 points on traits for {name}
-          targeting: inherit
+        - __typeName: ActivatedAbilityOpenSheetBehavior
+          tab: Builder
         conditionFormula: GetPointsSpent("Animal Traits Points") = 0
         display:
           bgcolor: "#ffffffff"
@@ -2534,6 +2510,7 @@ modifierInfo:
         guid: 2b987d3c-4d5d-4597-b403-7ac43cab9113
         iconid: ui-icons/skills/1.png
         implementation: 4
+        mandatory: false
         modifiers: []
         numTargets: "1"
         persistence: []
@@ -2541,7 +2518,8 @@ modifierInfo:
         repeatTargets: false
         strain: []
         targetType: self
-        trigger: rollinitiative
+        trigger: placedonmap
+        triggerPrompt: Spend 4 points on traits for {name}. Use this trigger to open its Builder tab.
     source: Creature Template
-mtime: 1790275326737
+mtime: 1790671469261
 tag: Animal Traits
