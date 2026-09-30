@@ -1,0 +1,353 @@
+id: b511ea3c-f7ea-4eb1-a036-b6f74073a272
+description: Field Ballista
+artist: null
+children: {}
+components:
+  CORE:
+    "@class": ObjectComponentCore
+    _lastRotation: -1
+    _lastScale: -1
+    disabled: false
+    hasShadow: true
+    height: 0.8
+    keywords: []
+    locked: false
+    pivot_x: 0.5
+    pivot_y: 0.5
+    properties: null
+    rotation: 0
+    scale: 0.3
+    sprite_invisible_to_players: false
+    sublayer: Objects
+  63b12152-f0b8-448d-9183-886cddc6661a:
+    "@class": ObjectComponentTargetable
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    turnSpeed: 120
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+          baseValue: 2
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+      creatureSize: "2"
+      max_hitpoints: 40
+      resources: []
+      characterFeatures: []
+      classes: []
+      titles: []
+      skillProficiencies: []
+      equipment: []
+      notes:
+      - title: Backstory
+        text: ""
+      innateActivatedAbilities:
+      - name: Release Bolt
+        description: This ability can't be used again until the field ballista is reloaded.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Field Ballista Deactivated")
+          reason: The field ballista has been deactivated and can't be used.
+        - formula: not (OngoingEffects has "Field Ballista Unloaded")
+          reason: The field ballista must be reloaded before it can fire again.
+        abilityType: none
+        aimCasterAtTarget: true
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Highest Characteristic
+          tiers:
+          - 5 damage
+          - 8 damage; M<1 push 1
+          - 11 damage; M<2 push 2
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 54f9b2a2-5946-468a-b0d2-39c81f231cfd
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          ongoingEffect: 742bfdd8-2878-4391-886d-be9203949bdd
+          ongoingEffectCustom: false
+          stacks: "1"
+        categorization: Ability
+        conditionalReminders:
+        - formula: OngoingEffects has "Field Ballista Unloaded"
+          text: The field ballista is unloaded. A creature adjacent to it must use Reload before it can fire again.
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ""
+        guid: ef05ce1b-b203-439e-8f37-d280740b13b6
+        iconid: ui-icons/skills/ranged-attack-icon.png
+        implementation: 4
+        implementationDetails: Firing applies Field Ballista Unloaded to the ballista, which blocks Release Bolt until Reload removes it. Firing also spends any Spot bonus.
+        keywords:
+          Ranged: true
+          Strike: true
+          Weapon: true
+        modifiers: []
+        numTargets: 1
+        objectTarget: true
+        persistence: []
+        range: 20
+        repeatTargets: false
+        strain: []
+        targetTextOverride: One creature or object
+        targetType: target
+      - name: Reload
+        description: The field ballista is reloaded, allowing Release Bolt to be used again. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Field Ballista Deactivated")
+          reason: The field ballista has been deactivated and can't be used.
+        - formula: OngoingEffects has "Field Ballista Unloaded"
+          reason: The field ballista is already loaded.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 742bfdd8-2878-4391-886d-be9203949bdd
+        categorization: Ability
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ""
+        guid: fa6b5ef6-d0d4-46aa-9b71-299e2987bb1c
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Removes Field Ballista Unloaded from the ballista. Limited to once per round on the ballista itself, whoever operates it.
+        keywords: {}
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: "1"
+          resourceRefreshType: round
+          resourceid: 1239dfe1-4493-41e3-8795-910504144f22
+      - name: Spot
+        description: The next use of Release Bolt gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Field Ballista Deactivated")
+          reason: The field ballista has been deactivated and can't be used.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: eoe
+          ongoingEffect: 54f9b2a2-5946-468a-b0d2-39c81f231cfd
+          ongoingEffectCustom: false
+          stacks: "1"
+        categorization: Ability
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ""
+        guid: 058b1619-c032-4002-9dbb-78e13924d3ce
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Applies Field Ballista Spotted to the ballista (an edge and +10 distance on Release Bolt). Release Bolt removes it when fired. Limited to once per round on the ballista itself.
+        keywords: {}
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: "1"
+          resourceRefreshType: round
+          resourceid: fe529fa9-c3b3-465b-b93b-b8123e11a941
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a field ballista can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - "#The creature accidentally activates the Release Bolt ability."
+          - "#The field ballista is deactivated but the creature is slowed (EoT)."
+          - "#The field ballista is deactivated and can't be used."
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: named
+          customAbility:
+            name: Invoked Ability
+            description: ""
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: cb19eb81-bccc-4616-bf72-1efe6b96f1a7
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            range: 1
+            repeatTargets: false
+            targetType: self
+          filterTarget: not (Target.OngoingEffects has "Field Ballista Unloaded")
+          namedAbility: Release Bolt
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: 1c1c2d96-68f5-4eb6-9527-e243e321dc29
+          ongoingEffectCustom: false
+          stacks: "1"
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: "1"
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ""
+        guid: 337f45cb-9eab-41a8-a0ee-74ebdb298e5e
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the ballista as its own maneuver, usable only on the ballista. Tier 1 makes the ballista fire Release Bolt (if loaded) with the creature choosing the target; tiers 2 and 3 apply Field Ballista Deactivated, which blocks all of its abilities; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: "1"
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Field Ballista Deactivated")
+          reason: The field ballista is already deactivated.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The field ballista
+        targetType: target
+      - name: Move
+        description: The field ballista and the creature using this action move together up to 3 squares.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: eoe
+          ongoingEffect: d7f9499c-3f2e-4487-9ee0-0cccdcefd096
+          ongoingEffectCustom: false
+          stacks: "1"
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
+          applyto: caster
+          customAbility:
+            name: Invoked Ability
+            description: ""
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 61d0b161-040b-4df3-a136-7c8022222d43
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            range: 1
+            repeatTargets: false
+            targetType: self
+          invokeOnCaster: true
+          standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+          standardAbilityParams:
+            distance: "3"
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          ongoingEffectid: d7f9499c-3f2e-4487-9ee0-0cccdcefd096
+        categorization: Ability
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ""
+        guid: 98d5677e-3df2-420d-9268-9e87ad20521a
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: Granted to every creature adjacent to the ballista, usable only on the ballista. Hitches the ballista to the creature (Field Ballista Hitched, a movement carrier), the creature moves up to 3 squares, then it unhitches. Needs the engine change that lets a movement carrier drag a map object.
+        keywords: {}
+        modifiers: []
+        numTargets: "1"
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Field Ballista Deactivated")
+          reason: The field ballista has been deactivated and can't be used.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The field ballista
+        targetType: target
+ctime: 1788148895148
+height: 0
+hidden: false
+imageId: https://codexback.com/XA5_31Eo3PjX9y3oueOJ7g
+keywords: null
+mtime: 1790748566226
+ord: 307
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+previewType: null
+tint:
+  a: 1
+  b: 1
+  g: 1
+  r: 1
+width: 0
