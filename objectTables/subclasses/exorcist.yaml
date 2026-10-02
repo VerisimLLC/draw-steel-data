@@ -54,19 +54,52 @@ levels:
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
-            - __typeName: ActivatedAbilityDamageBehavior
-              chatMessage: 'It Is Justice You Fear '
-              damageType: psychic
-              filterTarget: Conditions has "frightened"
-              roll: Presence*2
-              titleText: 'It Is Justice You Fear '
             - __typeName: ActivatedAbilityPowerRollBehavior
               filterTarget: ""
               roll: 2d10 + Might
               tiers:
-              - 8 + M holy damage; P < weak, frightened (save ends)
-              - 12 + M holy damage; P < average, frightened (save ends)
-              - 15 + M holy damage; P < strong, frightened (save ends)
+              - "8 + M holy damage; #P < weak, frightened (save ends)"
+              - "12 + M holy damage; #P < average, frightened (save ends)"
+              - "15 + M holy damage; #P < strong, frightened (save ends)"
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: It Is Justice You Fear Effect
+              damageType: psychic
+              filterTarget: Target.Conditions has "frightened" and (not Cast.PassesPotency(Target, "P", "Weak"))
+              roll: Presence*2
+              tiersSelected:
+              - 1
+              titleText: It Is Justice You Fear Effect
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: It Is Justice You Fear Effect
+              damageType: psychic
+              filterTarget: Target.Conditions has "frightened" and (not Cast.PassesPotency(Target, "P", "Average"))
+              roll: Presence*2
+              tiersSelected:
+              - 2
+              titleText: It Is Justice You Fear Effect
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: It Is Justice You Fear Effect
+              damageType: psychic
+              filterTarget: Target.Conditions has "frightened" and (not Cast.PassesPotency(Target, "P", "Strong"))
+              roll: Presence*2
+              tiersSelected:
+              - 3
+              titleText: It Is Justice You Fear Effect
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              filterTarget: (not (Target.Conditions has "frightened")) and (not Cast.PassesPotency(Target, "P", "Weak"))
+              rule: frightened (save ends)
+              tiersSelected:
+              - 1
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              filterTarget: (not (Target.Conditions has "frightened")) and (not Cast.PassesPotency(Target, "P", "Average"))
+              rule: frightened (save ends)
+              tiersSelected:
+              - 2
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              filterTarget: (not (Target.Conditions has "frightened")) and (not Cast.PassesPotency(Target, "P", "Strong"))
+              rule: frightened (save ends)
+              tiersSelected:
+              - 3
             categorization: Heroic Ability
             display:
               bgcolor:
@@ -127,7 +160,7 @@ levels:
           class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           class:1f7923cb-3018-45a9-955c-50ab6ccba28e: true
         guid: 48a9bfba-ed6c-4400-a9c2-ac651c66609a
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Revelator
           description: You channel holy energy to harm unbelievers and reveal those hidden from your judgment
@@ -145,6 +178,11 @@ levels:
               magicalDamage: true
               roll: Presence*2
               titleText: Revelator
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              duration: 1
+              filterTarget: Target.OngoingEffects has "Hidden"
+              ongoingEffect: 6534c2f9-daaa-4bb1-bad4-fd4e980710a2
+              ongoingEffectCustom: 6534c2f9-daaa-4bb1-bad4-fd4e980710a2
             - __typeName: ActivatedAbilityPurgeEffectsBehavior
               conditions:
               - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
@@ -229,7 +267,7 @@ levels:
             flavor: You channel holy energy to harm unbelievers and reveal those hidden from your judgment
             guid: 6ee8e7c8-d3d0-4466-85a6-5d4285c58416
             iconid: f3ca1e31-fa85-4a4f-aa5d-36d4a551310f
-            implementation: 3
+            implementation: 4
             keywords:
               Area: true
               Magic: true
@@ -1224,5 +1262,5 @@ levels:
       class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
       class:1f7923cb-3018-45a9-955c-50ab6ccba28e: true
     features: []
-mtime: 1787612287635
+mtime: 1790934249725
 primaryClassId: 1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049

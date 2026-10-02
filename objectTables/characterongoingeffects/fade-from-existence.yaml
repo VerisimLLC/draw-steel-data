@@ -1,6 +1,6 @@
 id: 79e55e08-5a25-4905-b1af-42d3db2190cf
 name: Fade from Existence
-description: ""
+description: This creature is fading from existence (save ends). On their first turn while fading they take a bane on power rolls. At the end of their first turn they have a double bane on power rolls. At the end of their second turn they fade from existence for 1 hour.
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
@@ -20,9 +20,10 @@ domains:
   CharacterOngoingEffect:79e55e08-5a25-4905-b1af-42d3db2190cf: true
 guid: 79e55e08-5a25-4905-b1af-42d3db2190cf
 iconid: 6cda6156-84cb-4c95-9973-de54b30a6815
+implementation: 4
 modifiers:
 - name: Fade from Existence
-  description: ""
+  description: "At the end of each of this creature's turns, the fade progresses: after their second turn they fade from existence for 1 hour."
   __typeName: CharacterModifier
   behavior: trigger
   domains:
@@ -37,7 +38,17 @@ modifiers:
     abilityType: none
     behaviors:
     - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+      filterTarget: Target.Stacks("Fade from Existence") >= 2
+      ongoingEffect: 3487c05f-289c-454f-8036-9f5766ca3941
+      ongoingEffectCustom: false
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      filterTarget: Target.Stacks("Fade from Existence") >= 2
+      mode: effect
+      ongoingEffect: 79e55e08-5a25-4905-b1af-42d3db2190cf
+    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
       duration: save_ends
+      filterTarget: Target.Stacks("Fade from Existence") < 2 and (not (Target.OngoingEffects has "Fade From Existence 1 Hour"))
       ongoingEffect: 79e55e08-5a25-4905-b1af-42d3db2190cf
       ongoingEffectCustom: false
     display:
@@ -49,6 +60,7 @@ modifiers:
       CharacterOngoingEffect:79e55e08-5a25-4905-b1af-42d3db2190cf: true
     guid: 15614a65-e7c8-41f2-a6a5-6138fcb58fd4
     iconid: ui-icons/skills/1.png
+    implementation: 4
     modifiers: []
     numTargets: "1"
     persistence: []
@@ -58,8 +70,8 @@ modifiers:
     targetType: self
     trigger: endturn
     whenActive: combat
-- name: Fade from Existence
-  description: ""
+- name: Fade from Existence 1st Turn
+  description: This creature is fading from existence and takes a bane on power rolls.
   __typeName: CharacterModifier
   activationCondition: true
   behavior: power
@@ -72,8 +84,8 @@ modifiers:
   rollType: ability_power_roll
   source: Ongoing Effect
   sourceguid: 79e55e08-5a25-4905-b1af-42d3db2190cf
-- name: Fade from Existence
-  description: ""
+- name: Fade from Existence 2nd Turn
+  description: This creature is fading from existence and takes a double bane on power rolls.
   __typeName: CharacterModifier
   activationCondition: true
   behavior: power
@@ -82,33 +94,10 @@ modifiers:
   filterCondition: Stacks = 2
   guid: 61fd3346-6a3a-4822-80ed-2fcc9e27532c
   keywords: []
-  modtype: bane
+  modtype: double_bane
   rollType: ability_power_roll
   source: Ongoing Effect
   sourceguid: 79e55e08-5a25-4905-b1af-42d3db2190cf
-- name: Fade from Existence
-  description: ""
-  __typeName: CharacterModifier
-  abilityFilter: "0"
-  behavior: suppressabilities
-  domains:
-    CharacterOngoingEffect:79e55e08-5a25-4905-b1af-42d3db2190cf: true
-  explanation: You have faded from existence for the next hour.
-  filterCondition: Stacks = 3
-  guid: 60e0980f-d17f-4482-b558-2ca3b815f3d0
-  source: Ongoing Effect
-  sourceguid: 79e55e08-5a25-4905-b1af-42d3db2190cf
-- name: Fade from Existence
-  description: ""
-  __typeName: CharacterModifier
-  behavior: bestowcondition
-  conditionid: 98e85a3b-95a1-41d8-b176-d2d64e7d18d0
-  domains:
-    CharacterOngoingEffect:79e55e08-5a25-4905-b1af-42d3db2190cf: true
-  filterCondition: Stacks = 3
-  guid: f2ca4817-378b-40b5-8e00-ce1681b157a0
-  source: Ongoing Effect
-  sourceguid: 79e55e08-5a25-4905-b1af-42d3db2190cf
-mtime: 1762631534085
+mtime: 1790762150304
 source: Ongoing Effect
 stackable: true
