@@ -1,6 +1,6 @@
 id: d6537789-d9b0-47c4-9ea5-59a3514952ed
 name: with Pillar of Holy Fire
-description: ""
+description: At the end of each of the censor's turns, a target dazed this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them.
 _table: conditionRiders
 __typeName: ConditionRider
 condition: c27e0b16-291a-45ad-8406-973e26576a44
@@ -14,7 +14,7 @@ guid: f6fb9666-5ec0-4ba0-84a5-0f61696b8745
 iconid: 8d0939bf-1a2f-4b30-849e-f804784e7335
 modifiers:
 - name: with Pillar of Holy Fire
-  description: ""
+  description: At the end of each of the censor's turns, a target dazed this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them.
   __typeName: CharacterModifier
   behavior: trigger
   guid: 1fe419a3-ea91-440a-ae67-f162e4f8f34e
@@ -26,9 +26,11 @@ modifiers:
     __typeName: TriggeredAbility
     abilityType: none
     behaviors:
+    - __typeName: ActivatedAbilityMacroBehavior
+      macro: broadcast tokenfx {Id} pillar-of-holy-fire 3
     - __typeName: ActivatedAbilityDamageBehavior
       chatMessage: Pillar of Holy Fire damage
-      damageType: untyped
+      damageType: holy
       roll: Subject.Presence*2
     conditionFormula: ConditionCaster("Dazed") = Subject
     display:
@@ -50,5 +52,5 @@ modifiers:
     targetType: all
     trigger: endturn
     whenActive: combat
-mtime: 1775322330584
+mtime: 1790952867406
 source: Ongoing Effect
