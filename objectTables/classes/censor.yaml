@@ -1063,77 +1063,81 @@ levels:
       domains:
         class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
       guid: fa89909c-59d0-4eee-97e0-de2d3cdf7f9c
-      implementation: 3
+      implementation: 4
       modifiers:
-      - name: Relentless Judgment
+      - name: Look On My Work and Despair
         description: ""
         __typeName: CharacterModifier
-        activatedAbility:
-          name: Judgment
-          description: |-
-            The target is judged by you until the end of the encounter, you use this ability again, you willingly end this effect (no action required), or another censor judges the target. 
-            Whenever a creature judged by you uses a main action and is within your line of effect, you can use a free triggered action to deal holy damage equal to twice your Presence score to them.
-            When a creature judged by you is reduced to 0 Stamina, you can use a free triggered action to use this ability against a new target. 
-            Additionally, you can spend 1 wrath to take one of the following free triggered actions: 
-            • When an adjacent creature judged by you starts to shift, you make a melee free strike against them and their speed becomes 0 until the end of the current turn, preventing them from shifting.
-            • When a creature judged by you within 10 squares makes a power roll, you cause them to take a bane on the roll.
-            • When a creature judged by you within 10 squares uses an ability with a potency that targets only one creature, the potency is reduced by 1 for that creature.
-            • If you damage a creature judged by you with a melee ability, the creature is taunted by you until the end of their next turn. 
-
-            You can choose only one free triggered action option at a time, even if multiple options are triggered by the same effect.
+        ability:
+          name: Look On My Work and Despair
+          description: ""
           __typeName: ActivatedAbility
+          abilityModification: true
           abilityType: none
-          actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
           behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: 96af4c26-d4ea-4098-83d1-b6b14c79b658
-            ongoingEffectCustom: false
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: save_ends
-            filterTarget: Charges > 0 and Presence < Caster.Average
-            ongoingEffect: 3cc61ad4-03d5-4db9-af58-bf59318c9d5a
-            ongoingEffectCustom: 3cc61ad4-03d5-4db9-af58-bf59318c9d5a
-          categorization: Heroic Ability
-          channelDescription: Whenever you use your Judgment ability, you can spend 1 wrath, and if the target has P<Average , they are frightened of you (save ends).
-          channeledResource: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            autoSelectInheritedTargets: true
+            customAbility:
+              name: Look On My Work and Despair
+              description: The target is frightened of you (save ends). If the target is already frightened of you, they instead take holy damage equal to twice your Presence score.
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                damageType: holy
+                filterTarget: ConditionCaster("frightened") = caster
+                roll: Presence*2
+                titleText: Look On My Work and Despair
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                filterTarget: not (ConditionCaster("frightened") = caster)
+                rule: frightened (save ends)
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 94120502-0985-4ddd-8085-1d83a1ca5705
+              iconid: ui-icons/skills/1.png
+              keywords:
+                Magic: true
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: "10"
+              repeatTargets: false
+              resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+              resourceNumber: 1
+              strain: []
+              targetType: target
+            invokeOnCaster: true
+            promptText: "Look On My Work and Despair: spend 1 wrath to frighten the target (save ends), or deal holy damage if they are already frightened of you?"
+            targeting: prompt_inherit
+            targetingFormula: not Target.PassesPotency("P", Caster.Average)
           display:
-            bgcolor:
-              __usertype: LuaColor
-              a: 1
-              h: 0.665032684803009
-              s: 0.931506872177124
-              v: 0.858823537826538
+            bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          domains:
-            class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
-          flavor: You utter a prayer that outlines your foe in holy energy.
-          guid: c5ef13e8-0b81-49f9-97ec-d0b034f55708
-          iconid: 47dfb08a-7a22-4856-86a4-57502f236f4e
-          keywords:
-            Magic: true
-            Ranged: true
-          maxChannel: "1"
+          guid: bd111cb9-a114-400c-ade6-20179d0886d5
+          iconid: ui-icons/skills/1.png
           modifiers: []
           numTargets: "1"
-          persistence: []
-          range: "10"
+          range: 1
           repeatTargets: false
-          sourceReference:
-            __typeName: SourceReference
-            docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-            page: 80
-            type: pdf
           strain: []
-          targetType: target
-        behavior: activated
+          targetType: self
+        attributes: []
+        behavior: modifyability
         domains:
           class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
-        guid: 94275356-3595-43f9-98e6-78f85ac3a7c4
+        filterAbility: Ability.name is Judgment
+        guid: 08041e18-f92d-4bad-a9ca-528caa979d31
+        modifyDescription: "Look On My Work and Despair: when you use this ability, you can spend 1 wrath, and if the target has P < Average, they are frightened of you (save ends). If the target is already frightened of you, they instead take holy damage equal to twice your Presence score."
         source: Censor Class Feature
-        sourceguid: b04cd28f-9662-4fa7-8248-8881c28429c4
-        suppressOthers: true
+        sourceguid: fa89909c-59d0-4eee-97e0-de2d3cdf7f9c
       - name: Relentless Judgment
         description: ""
         __typeName: CharacterModifier
@@ -1178,6 +1182,7 @@ levels:
                 saturation: 1
               guid: 87bcf101-e27f-4322-9520-72bd62df3ac2
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
               objectTarget: false
@@ -1199,6 +1204,7 @@ levels:
             class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           guid: de82f51b-87e4-4c27-95d1-822b23c48ad2
           iconid: ui-icons/skills/1.png
+          implementation: 4
           mandatory: false
           modifiers: []
           numTargets: "1"
@@ -6203,6 +6209,7 @@ levels:
             class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           guid: 7bb1ccd1-de6e-457b-a4da-382458ecd2f7
           iconid: ui-icons/skills/1.png
+          implementation: 4
           mandatory: false
           modifiers: []
           numTargets: "1"
@@ -7514,7 +7521,7 @@ levels:
     domains:
       class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
     features: []
-mtime: 1790951283474
+mtime: 1791009143540
 numKits: 1
 portraitid: fc7c1dc8-f860-4a25-8da4-328745ce24ba
 quantity: "2"
