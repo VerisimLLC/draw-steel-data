@@ -621,6 +621,19 @@ forced movement, grab rules, and more. Access in GoblinScript by lowercase name 
 | `6707d8ac-4323-47bc-9593-e36fd1ac146e` | `chargingspeed` | Speed during charge (base: walking speed) |
 | `11650b6f-ee8f-4ab1-9a44-b56a3d43119a` | `jumpdistance` | Jump distance (base: max(1, max(Might, Agility))) |
 
+**Ignoring only some difficult terrain** uses the `ignoredifficultterrain` modifier
+behavior instead of the attribute. Difficult terrain carries the keywords of the ability
+that created it (and of its zone type), and the modifier ignores terrain with ANY of its
+`keywords`; with no `keywords` it ignores all difficult terrain, like the attribute.
+Only the difficult terrain is ignored, not the area's other effects.
+```yaml
+- __typeName: CharacterModifier
+  behavior: ignoredifficultterrain
+  keywords:          # omit to ignore all difficult terrain
+    Magic: true
+    Psionic: true
+```
+
 #### Combat
 
 | UUID | GoblinScript Symbol | Effect |
