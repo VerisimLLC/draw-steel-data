@@ -67,7 +67,7 @@ components:
     properties: null
   af8ee97b-cbc1-441f-9444-094898479c1e:
     "@class": ObjectComponentHoverText
-    text: Net Trap!
+    text: Net Trap
     hideFromPlayers: true
     disabled: false
     properties: null
@@ -75,7 +75,7 @@ components:
     "@class": ObjectComponentPressurePlate
     imageSwap: null
     haltMovement: true
-    filterTargets: MovementType = "Walk"
+    filterTargets: Size >= 3 {1M calibration} and Movement Type = "Walk"
     disabled: false
     properties: null
   d55daee8-e170-4e9a-9abf-b56575c84c2c:
@@ -85,7 +85,7 @@ components:
     speed: 0
     xorigin: 0
     yorigin: 0
-    attackable: false
+    attackable: true
     onDeath: delete
     _tilesInArea:
     - - 0
@@ -120,89 +120,103 @@ components:
           __typeName: CharacterAttribute
           id: mgt
       resources: []
+      max_hitpoints: 3
       characterFeatures:
       - __typeName: CharacterFeature
-        implementation: 2
+        implementation: 3
         guid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
         domains:
           CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
-        description: ""
+        description: "The snare is a net that wraps up multiple targets. The net has 3 Stamina and fills an area of 3 squares by 3 squares, triggered by a target moving through its center square."
+        source: Character Feature
         modifiers:
         - __typeName: CharacterModifier
-          resourceRefreshType: none
-          sourceguid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
-          guid: 2ec890ed-5be2-4382-a7ff-0fbd2cb0425e
-          name: Snare Trap!
-          domains:
-            CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
-          description: ""
-          source: Character Feature
           triggeredAbility:
             __typeName: TriggeredAbility
-            objectTarget: false
-            strain: []
-            targetType: target
-            behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: custom
-              applyto: targets
-              invokeOnCaster: false
-              customAbility:
-                __typeName: ActivatedAbility
-                name: Net Trap - Agility Test
-                description: Apply a bane only if you were unaware of the trap.
-                abilityType: none
-                actionResourceId: none
-                targetType: self
-                range: 1
-                numTargets: '1'
-                repeatTargets: false
-                guid: 52936b63-ad50-4840-9372-d7ad82382d38
-                iconid: ui-icons/skills/1.png
-                display:
-                  bgcolor: '#ffffffff'
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                modifiers: []
-                behaviors:
-                - __typeName: ActivatedAbilityPowerRollBehavior
-                  isTest: true
-                  roll: 2d10 + Agility
-                  tiers:
-                  - Restrained (Save Ends)
-                  - Restrained (EoT)
-                  - No Effect
-                  attrid: agl
-                  resistanceRoll: false
-                  modifiers: []
-            displayName: Net Trap!
-            persistence: []
-            display:
-              brightness: 1
-              hueshift: 0
-              bgcolor: "#ffffffff"
-              saturation: 1
-            abilityType: none
-            numTargets: "1"
-            modifiers: []
-            iconid: ui-icons/skills/1.png
-            guid: f0be0663-b1b5-472e-a4de-7a58d75a117e
-            description: The first time an enemy steps into a square with a net trap, they make an Agility test. If the creature was unaware of the trap, they take a bane.
-            repeatTargets: false
+            name: Snare
+            displayName: Snare
+            description: "A creature restrained this way is vertical pulled 2 squares and suspended in the air in the net. Any creature who makes their save to end the restrained effect ends that effect for all targets, who all fall to the ground. The net must be manually reset."
+            implementation: 3
+            implementationDetails: "SILVER: Targets every creature within 1 square of the trigger square (the 3 x 3 net). The roll, damage, potency, shift, restrained, and one save ending it for everyone caught are automated. Objects in the net are not targeted; the vertical pull is visual only (no falling damage when the net comes down). The trap fires once."
             trigger: pressureplate
+            targetType: all
+            range: 1
+            numTargets: "1"
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Area: true
             usageLimitOptions:
               resourceid: 2ec890ed-5be2-4382-a7ff-0fbd2cb0425e
               resourceRefreshType: none
               charges: "1"
-            range: 1
-            name: Net Trap!
-            mandatory: false
-            triggerPrompt: Is this the first enemy to step into the net trap? Apply a bane to the test only if they were unaware of it.
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            guid: f0be0663-b1b5-472e-a4de-7a58d75a117e
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - "#The target shifts 1 square away from the snare."
+              - "1 damage; A<1 #restrained (save ends)"
+              - "3 damage; A<2 #restrained (save ends)"
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              guid: cacffc99-5160-40ca-b0b0-47a4cb3d33ac
+              abilityType: standard
+              applyto: targets
+              runOnController: true
+              invokeOnCaster: false
+              promptText: Shift 1 square away from the snare.
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: "1"
+              tiersSelected:
+              - 1
+              customAbility:
+                __typeName: ActivatedAbility
+                name: Invoked Ability
+                description: ""
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 85464a44-b2ba-4fd3-8d61-5f46da64be34
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetType: self
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              guid: 6f857508-ad68-431f-9dde-f537c8b536e2
+              duration: save_ends
+              filterTarget: not Cast.PassesPotency(Target, "A", Cast.Tier for Target(Target) - 1)
+              ongoingEffect: 85dac922-4dbd-45ee-9198-eff37dd83361
+              ongoingEffectCustom: false
+              ongoingEffectSource: specific
+              tiersSelected:
+              - 2
+              - 3
+          guid: 2ec890ed-5be2-4382-a7ff-0fbd2cb0425e
           behavior: trigger
-        source: Character Feature
-        name: Snare Trap!
-        implementationDetails: Creates a one-use trap with an Agility test and restraint outcomes. The Director confirms enemy eligibility and applies a bane only for an unaware creature. Source-linked rescue maneuvers need Lua support.
+          domains:
+            CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
+          description: "The snare is a net that wraps up multiple targets. The net has 3 Stamina and fills an area of 3 squares by 3 squares, triggered by a target moving through its center square."
+          source: Character Feature
+          name: Net Trap
+          sourceguid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
+        name: Net Trap
       skillProficiencies: []
       classes: []
       equipment: []

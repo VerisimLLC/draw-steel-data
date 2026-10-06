@@ -66,7 +66,7 @@ components:
     properties: null
   af8ee97b-cbc1-441f-9444-094898479c1e:
     "@class": ObjectComponentHoverText
-    text: Net Trap
+    text: Snare Trap
     hideFromPlayers: true
     disabled: false
     properties: null
@@ -84,7 +84,7 @@ components:
     speed: 0
     xorigin: 0
     yorigin: 0
-    attackable: false
+    attackable: true
     onDeath: delete
     _tilesInArea:
     - - 2
@@ -119,57 +119,105 @@ components:
           __typeName: CharacterAttribute
           id: rea
       resources: []
+      max_hitpoints: 1
       characterFeatures:
       - __typeName: CharacterFeature
         implementation: 3
         guid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
         domains:
           CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
-        description: Codex implementation assumes creature is unaware of trap, and takes a bane when triggering.
+        description: "A rope snare is set to grab a target, leaving them hanging upside down. It is calibrated to be triggered by creatures or objects of a particular size or larger."
         source: Character Feature
         modifiers:
         - __typeName: CharacterModifier
           triggeredAbility:
             __typeName: TriggeredAbility
-            objectTarget: false
-            strain: []
+            name: Snare
+            displayName: Snare
+            description: "A creature restrained this way is vertical pulled 2 squares and suspended in the air by the snare line. On a successful save, the snare is cut or breaks and the creature falls to the ground. The snare must be manually reset."
+            implementation: 3
+            implementationDetails: "SILVER: The roll, damage, potency, the shift on a miss, restrained (save ends), and the hanging animation are automated. The trap fires once; reset it by placing a fresh one. The vertical pull is visual only (no falling damage when the snare breaks)."
+            trigger: pressureplate
             targetType: target
-            behaviors:
-            - __typeName: ActivatedAbilityPowerRollBehavior
-              tiers:
-              - Restrained (save ends)
-              - Restrained (EoT)
-              - No Effect
-              roll: 2d10 + Agility
-              resistanceRoll: true
-              isTest: true
-              resistanceAttr: agl
-            displayName: Net Trap!
+            range: 1
+            numTargets: "1"
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Melee: true
+              Strike: true
+              Weapon: true
+            usageLimitOptions:
+              resourceid: 2ec890ed-5be2-4382-a7ff-0fbd2cb0425e
+              resourceRefreshType: none
+              charges: "1"
+            strain: []
             persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
             display:
               bgcolor: "#ffffffff"
               hueshift: 0
               brightness: 1
               saturation: 1
-            abilityType: none
-            numTargets: "1"
-            modifiers: []
-            iconid: ui-icons/skills/1.png
             guid: f0be0663-b1b5-472e-a4de-7a58d75a117e
-            repeatTargets: false
-            description: ""
-            trigger: pressureplate
-            range: 1
-            name: Net Trap!
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - "#The target shifts 1 square away from the snare."
+              - "1 damage; A<1 #restrained (save ends)"
+              - "3 damage; A<2 #restrained (save ends)"
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              guid: d585ba18-8d41-4876-9306-e9c34cf42e02
+              abilityType: standard
+              applyto: targets
+              runOnController: true
+              invokeOnCaster: false
+              promptText: Shift 1 square away from the snare.
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: "1"
+              tiersSelected:
+              - 1
+              customAbility:
+                __typeName: ActivatedAbility
+                name: Invoked Ability
+                description: ""
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 8b1bc240-551b-4068-837a-342f35a2244e
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetType: self
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              guid: 941389b4-fa95-4117-b08e-388d8d0ee609
+              duration: save_ends
+              filterTarget: not Cast.PassesPotency(Target, "A", Cast.Tier for Target(Target) - 1)
+              ongoingEffect: 96b31362-4858-4919-9410-2db4962cc972
+              ongoingEffectCustom: false
+              ongoingEffectSource: specific
+              tiersSelected:
+              - 2
+              - 3
           guid: 2ec890ed-5be2-4382-a7ff-0fbd2cb0425e
           behavior: trigger
           domains:
             CharacterFeature:a3470190-64a0-4aa8-bbb8-177d51f6dcb0: true
-          description: Codex implementation assumes creature is unaware of trap, and takes a bane when triggering.
+          description: "A rope snare is set to grab a target, leaving them hanging upside down. It is calibrated to be triggered by creatures or objects of a particular size or larger."
           source: Character Feature
-          name: Net Trap
+          name: Snare
           sourceguid: a3470190-64a0-4aa8-bbb8-177d51f6dcb0
-        name: Net Trap
+        name: Snare
       inflictedConditions: []
       classes: []
       titles: []
