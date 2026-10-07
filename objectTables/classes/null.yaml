@@ -790,16 +790,16 @@ levels:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
             customAbility:
-              name: Invoked Ability
-              description: ""
+              name: Reorder
+              description: End one effect on you that is ended by a saving throw or that ends at the end of your turn. Alternatively, you can grant this benefit to one creature in the area of your Null Field ability.
               __typeName: ActivatedAbility
               abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
                 abilityType: standard
                 customAbility:
-                  name: Invoked Ability
-                  description: ""
+                  name: Reorder
+                  description: End one effect on you that is ended by a saving throw or that ends at the end of your turn. Alternatively, you can grant this benefit to one creature in the area of your Null Field ability.
                   __typeName: ActivatedAbility
                   abilityType: none
                   behaviors: []
@@ -824,6 +824,7 @@ levels:
                 saturation: 1
               guid: 00919b08-b6c1-4e04-b057-efb62bef34fa
               iconid: ui-icons/skills/1.png
+              implementation: 3
               keywords:
                 Psionic: true
               modifiers: []
@@ -834,9 +835,11 @@ levels:
               repeatTargets: false
               selfTarget: true
               strain: []
+              targetAllegiance: ally
               targetType: target
             promptText: End Effect on Ally or Self
           castImmediately: true
+          conditionFormula: Endable Effects or Count Nearby Creatures(Nullifying Aura Radius, "ally", "endable effects") > 0
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -1083,7 +1086,7 @@ levels:
               - 7 + A damage; I < Weak, restrained (save ends)
               - 10 + A damage; I < Average, restrained (save ends)
               - 13 + A damage; I < Strong, restrained (save ends)
-            conditionFormula: Resource is "Main Action"
+            conditionFormula: Resource is "Main Action" and Resources.Heroic Resource >= 9
             display:
               bgcolor: "#ffffffff"
               brightness: 1
@@ -1107,11 +1110,11 @@ levels:
               page: 154
               type: pdf
             strain: []
-            subject: other
+            subject: enemy
             subjectRange: "1"
             targetType: self
             trigger: useresource
-            triggerPrompt: You suddenly strike an enemy, then grab them in a psionically enhanced grip.
+            triggerPrompt: When an enemy uses a main action, you may use your Anticipating Strike triggered ability against them.
             usageLimitOptions:
               charges: "1"
               resourceRefreshType: turn
@@ -1139,7 +1142,7 @@ levels:
               - 7 + A damage; I < Weak, restrained (save ends)
               - 10 + A damage; I < Average, restrained (save ends)
               - 13 + A damage; I < Strong, restrained (save ends)
-            conditionFormula: ""
+            conditionFormula: Resources.Heroic Resource >= 9
             display:
               bgcolor: "#ffffffff"
               brightness: 1
@@ -1163,11 +1166,11 @@ levels:
               page: 154
               type: pdf
             strain: []
-            subject: other
+            subject: enemy
             subjectRange: "1"
             targetType: self
             trigger: move
-            triggerPrompt: You suddenly strike an enemy, then grab them in a psionically enhanced grip.
+            triggerPrompt: When an enemy moves, you may use your Anticipating Strike triggered ability against them.
             usageLimitOptions:
               charges: "1"
               resourceRefreshType: turn
@@ -1190,7 +1193,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: f6d17491-6d2c-422d-a0cb-0c286d280e17
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -1207,7 +1210,7 @@ levels:
             - __typeName: ActivatedAbilityPowerRollBehavior
               roll: 2d10 + Agility
               tiers:
-              - 10 + A damage; I < Weak, grabbed
+              - 10 + A damage; A < Weak, grabbed
               - 14 + A damage; A < Average, grabbed
               - 18 + A damage; A < Strong, grabbed
             - __typeName: ActivatedAbilityApplyRidersBehavior
@@ -1225,7 +1228,7 @@ levels:
             flavor: You grab the target with near supernatural force
             guid: 9372e9cb-8e79-413a-b847-b1314203efef
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -1665,7 +1668,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: db939bc9-35d5-4126-a031-7377e2f43542
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Dynamic Power
           description: 'If the ability force moves a target, the forced movement distance gains a bonus equal to your Intuition score. '
@@ -1711,7 +1714,7 @@ levels:
         - name: Expanded Power
           description: If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.
           __typeName: CharacterModifier
-          abilityFilter: ""
+          abilityFilter: Ability.Keywords has "Psionic" and (Ability.main action or Ability.Maneuver)
           behavior: abilityimprovement
           domains:
             class:4203e447-4531-467b-b270-c952806ce67f: true
@@ -1727,7 +1730,7 @@ levels:
         - name: Expanded Power
           description: If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.
           __typeName: CharacterModifier
-          abilityFilter: ""
+          abilityFilter: Ability.Keywords has "Psionic" and (Ability.main action or Ability.Maneuver)
           behavior: abilityimprovement
           domains:
             class:4203e447-4531-467b-b270-c952806ce67f: true
@@ -1763,6 +1766,7 @@ levels:
         - name: Extended Power
           description: 'If the ability is ranged, the distance gains a bonus equal to your Intuition score. If the ability is melee, the distance gains a +2 bonus. '
           __typeName: CharacterModifier
+          abilityFilter: Ability.Keywords has "Psionic" and (Ability.main action or Ability.Maneuver)
           behavior: abilityimprovement
           domains:
             class:4203e447-4531-467b-b270-c952806ce67f: true
@@ -1780,6 +1784,7 @@ levels:
         - name: Extended Power
           description: 'If the ability is ranged, the distance gains a bonus equal to your Intuition score. If the ability is melee, the distance gains a +2 bonus. '
           __typeName: CharacterModifier
+          abilityFilter: Ability.Keywords has "Psionic" and (Ability.main action or Ability.Maneuver)
           behavior: abilityimprovement
           domains:
             class:4203e447-4531-467b-b270-c952806ce67f: true
@@ -1810,7 +1815,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 01de88a1-d51c-4902-912d-41020910280e
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Heightened Power
           description: If the ability deals rolled damage, it deals extra damage equal to your Intuition score.
@@ -1845,7 +1850,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 4e61acce-17fa-4d80-9246-455d811561fb
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Magnified Power
           description: If the ability has a potency, you increase that potency by an amount equal to your Intuition score.
@@ -1882,12 +1887,12 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 21ab8af4-6bb7-42ca-87f8-46c1fbda7608
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Shared Power
           description: If the ability targets individual creatures or objects, you target one additional creature or object within distance.
           __typeName: CharacterModifier
-          abilityFilter: ""
+          abilityFilter: Ability.Keywords has "Psionic" and (Ability.main action or Ability.Maneuver)
           behavior: abilityimprovement
           domains:
             class:4203e447-4531-467b-b270-c952806ce67f: true
@@ -1916,7 +1921,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 74242f08-6d3d-40ce-bfa6-696f294a0778
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Sharpened Power
           description: If the ability has any power roll, that roll gains an edge.
@@ -2096,7 +2101,8 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 866694cf-4c2e-4b01-9f24-58df37138036
-        implementation: 2
+        implementation: 3
+        implementationDetails: Psychic damage to creatures or objects the target collides with must be applied manually.
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -2110,6 +2116,9 @@ levels:
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              duration: 0
+              ongoingEffect: 52c8863d-182d-4572-963b-307c081ab317
             - __typeName: ActivatedAbilityPowerRollBehavior
               promptWhenResolving: false
               roll: 2d10 + Agility
@@ -2129,8 +2138,8 @@ levels:
             flavor: You throw your foe out of phase with this manifold, causing them to harm other enemies as they return.
             guid: e6f14365-5805-4271-9d25-90e714f998e3
             iconid: ui-icons/skills/1.png
-            implementation: 2
-            implementationDetails: Damage based on number of squares pushed must be manually applied
+            implementation: 3
+            implementationDetails: Psychic damage to creatures or objects the target collides with must be applied manually.
             keywords:
               Melee: true
               Psionic: true
@@ -2405,6 +2414,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: bc9ee960-dca9-4a31-8185-cd2451ba7152
+        immunityMessage: I am the Weapon. I do not bleed.
         source: Null Class Feature
         sourceguid: b93ce740-baf3-4ddf-b3af-86b4e1d678dc
       - name: I Am the Weapon
@@ -2489,7 +2499,7 @@ levels:
       domains:
         class:4203e447-4531-467b-b270-c952806ce67f: true
       guid: 220e88b1-dd9e-414a-8651-1ae5f4702091
-      implementation: 3
+      implementation: 4
       imported: 70932960-6f32-457a-854e-8ae16c34535d
       modifiers:
       - name: Recoveries
@@ -2570,7 +2580,7 @@ levels:
       domains:
         class:4203e447-4531-467b-b270-c952806ce67f: true
       guid: b435d512-50d6-493c-8366-d71d4860e76a
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Discipline
         description: |-
@@ -2807,6 +2817,10 @@ levels:
           targetType: self
           trigger: useability
           triggerPrompt: "Enemy Uses Malice: Gain Discipline"
+          usageLimitOptions:
+            charges: "1"
+            resourceRefreshType: round
+            resourceid: b1d9533e-a561-47fb-8d4e-6e5a4621dcd5
       - name: Discipline
         description: |-
           At the start of a combat encounter or some other stressful situation tracked in combat rounds (as determined by the Director), you gain discipline equal to your Victories. At the start of each of your turns during combat, you gain 2 discipline.
@@ -2849,7 +2863,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 3cd79085-e4d3-4001-9328-dbea706d62cb
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -2866,15 +2880,15 @@ levels:
             - __typeName: ActivatedAbilityPowerRollBehavior
               roll: 2d10 + Agility
               tiers:
+              - 3 damage
               - 4 damage
               - 5 damage
-              - 7 damage
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
               applyto: caster
               autoTarget: false
               customAbility:
-                name: Invoked Ability
-                description: ""
+                name: Slide One Target
+                description: You can slide one adjacent enemy up to a number of squares equal to your Intuition score.
                 __typeName: ActivatedAbility
                 abilityType: none
                 behaviors:
@@ -2887,6 +2901,7 @@ levels:
                   saturation: 1
                 guid: eb853fd7-cbb6-4d3e-ac8b-13f68f123385
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 persistence: []
@@ -2894,7 +2909,7 @@ levels:
                 repeatTargets: false
                 strain: []
                 targetType: target
-              promptText: Choose enemy to slide {Intuition}
+              promptText: You can slide one adjacent enemy {Intuition} squares.
             categorization: Signature Ability
             display:
               bgcolor:
@@ -2912,7 +2927,7 @@ levels:
             flavor: You strike everywhere at once, tricking an enemy into moving out of position.
             guid: 1d44825d-c7b6-4cca-8142-6067c845dc33
             iconid: b67b89e6-cc8a-40bd-848b-37aef0455137
-            implementation: 3
+            implementation: 4
             keywords:
               Area: true
               Psionic: true
@@ -2955,7 +2970,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 399197db-834c-4dbe-a304-4cf66cc3c18e
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -2980,7 +2995,7 @@ levels:
               autoTarget: false
               customAbility:
                 name: Faster than the Eye Effect
-                description: "Effect: You can deal damage equal to your Agility score to an adjacent creature or object. "
+                description: You can deal damage equal to your Agility score to one creature or object adjacent to you.
                 __typeName: ActivatedAbility
                 abilityType: none
                 behaviors:
@@ -2993,8 +3008,10 @@ levels:
                   saturation: 1
                 guid: ff4a91ad-e00f-4199-b474-40ec7ff14db8
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
+                objectTarget: true
                 range: 1
                 repeatTargets: false
                 targetFilter: Enemy
@@ -3017,7 +3034,7 @@ levels:
             flavor: You strike so quickly that your hands become a blur.
             guid: f6e7bdc8-3801-4cca-9da5-4adcecfed51b
             iconid: 6929f97b-0bcb-4824-b52b-b328187339c2
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3173,6 +3190,7 @@ levels:
                       saturation: 1
                     guid: 2a5a6627-714f-4b00-8dca-a43c181cb500
                     iconid: ui-icons/skills/1.png
+                    implementation: 4
                     modifiers: []
                     numTargets: "1"
                     range: 1
@@ -3180,6 +3198,7 @@ levels:
                     targetType: self
                   guid: e2372428-93f9-4b00-90e4-6ab9a1b7ca31
                   modesSelected: []
+                  promptText: "Inertial Step: You can shift up to half your speed."
                   standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
                   standardAbilityParams:
                     distance: walking speed/2
@@ -3252,7 +3271,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: bbb65dcd-cf05-4605-9d24-527785167c9d
-        implementation: 3
+        implementation: 4
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
         - name: Ability
@@ -3282,7 +3301,7 @@ levels:
             flavor: You contort your enemy's body into a stance they struggle to escape from.
             guid: e0818a31-b7b7-4d69-9bf0-b394958d934f
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3325,7 +3344,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 2c88ab4b-12c0-476b-8823-d74a2a123304
-        implementation: 3
+        implementation: 4
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
         - name: Ability
@@ -3355,7 +3374,7 @@ levels:
             flavor: Your opponent staggers. They cannot ignore you.
             guid: 4640e0d1-bbc6-43dd-8e40-de09e70449aa
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3397,7 +3416,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 0c920905-7e43-44bb-aed6-274d768b28e9
-        implementation: 3
+        implementation: 4
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
         - name: Ability
@@ -3427,7 +3446,7 @@ levels:
             flavor: The force of your blow extends past the limits of your body, pulling your enemy closer.
             guid: 14912c7f-a314-48d4-9a2e-7323356fbab0
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3469,7 +3488,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: df503a37-672e-4ff6-ab23-a467c194ffc2
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -3501,7 +3520,7 @@ levels:
             flavor: You step momentarily out of phase as you pull an enemy through you.
             guid: 587e019b-44a6-4db9-b448-e2f5679bc460
             iconid: 0dcf74b7-bfa3-4e85-82cc-c67e0c5d6d52
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3544,7 +3563,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 1a83ebee-8d32-4767-b473-c866cc86e8a5
-        implementation: 3
+        implementation: 4
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
         - name: Ability
@@ -3574,7 +3593,7 @@ levels:
             flavor: You strike at key nerve clusters to leave your foe staggered.
             guid: 3df96911-2453-482e-86d7-a838590abf26
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3632,7 +3651,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 8d4f690a-c3f1-41de-9fe4-f8e63cab712a
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -3668,6 +3687,7 @@ levels:
                   saturation: 1
                 guid: 6e2ed246-358d-4bec-8444-b89eb384c55d
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 range: 1
@@ -3676,7 +3696,7 @@ levels:
               guid: e15aa53e-dc22-4070-911b-b65df303f952
               modesSelected:
               - 2
-              promptText: Shift
+              promptText: "Chronal Spike: You can shift up to half your speed."
               standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
               standardAbilityParams:
                 distance: walking speed/2
@@ -3692,7 +3712,7 @@ levels:
             flavor: You foresee the best moment to strike, then exploit it.
             guid: e8f3e6a0-d894-4531-b4a4-47c65a1bb935
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -3713,7 +3733,7 @@ levels:
                   applyto: caster
                   customAbility:
                     name: Chronal Spike
-                    description: ""
+                    description: Strike one creature or object adjacent to you.
                     __typeName: ActivatedAbility
                     abilityType: none
                     behaviors:
@@ -3732,6 +3752,7 @@ levels:
                       saturation: 1
                     guid: 5bb48455-027d-49ad-a637-fc18cb20735d
                     iconid: ui-icons/skills/1.png
+                    implementation: 4
                     modifiers: []
                     numTargets: "1"
                     objectTarget: false
@@ -3751,9 +3772,11 @@ levels:
                   class:4203e447-4531-467b-b270-c952806ce67f: true
                 guid: b95b8d78-2d45-48fc-a03b-30ef7991a7cc
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 persistence: []
+                promptOverride: "Chronal Spike: You can shift up to half your speed now. Or you can select 'Shift After Strike'."
                 range: Walking Speed/2
                 repeatTargets: false
                 sourceReference:
@@ -3780,6 +3803,7 @@ levels:
                   class:4203e447-4531-467b-b270-c952806ce67f: true
                 guid: 172e8f82-0cea-4858-8464-80687aef1e0a
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 persistence: []
@@ -3831,7 +3855,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 8e529568-3c3d-4625-b7e6-fae16306bcf3
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: c0e4cded-14fe-4dd7-b10c-8c6eebcc807f
         modifiers:
@@ -3872,7 +3896,7 @@ levels:
             flavor: A burst of psionic energy interferes with your enemy's synapses.
             guid: c6399698-6900-4339-87ba-0a7bc40d83d7
             iconid: a3eeef10-0121-4752-a152-b8896554f16a
-            implementation: 3
+            implementation: 4
             keywords:
               Area: true
               Psionic: true
@@ -4004,7 +4028,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 54d88ef4-e164-460d-835b-885c6b067371
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -4040,7 +4064,7 @@ levels:
             flavor: You focus your psionic technique into a concussive punch.
             guid: 7c4a9574-b1a1-48d7-b4d2-f6e2d2540005
             iconid: b67b89e6-cc8a-40bd-848b-37aef0455137
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -4593,7 +4617,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 9014af92-dab4-4db3-a71c-c1258c9b4b8f
-        implementation: 2
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -4602,7 +4626,7 @@ levels:
           __typeName: CharacterModifier
           activatedAbility:
             name: Phase Strike
-            description: A target who goes out of phase is slowed, has their stability reduced by 2, and can't achieve results higher than tier 2 on ability power rolls.
+            description: A target who goes out of phase is slowed, has their stability reduced by 2, and can't obtain a tier 3 outcome on ability rolls.
             __typeName: ActivatedAbility
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -4610,9 +4634,12 @@ levels:
             - __typeName: ActivatedAbilityPowerRollBehavior
               roll: 2d10 + Agility
               tiers:
-              - 3 + A psychic damage; I < weak, the target goes out of phase (save ends)
-              - 4 + A psychic damage; I < average, the target goes out of phase (save ends)
-              - 6 + A psychic damage; I < strong, the target goes out of phase (save ends)
+              - 3 + A psychic damage; I < weak, slowed (save ends)
+              - 4 + A psychic damage; I < average, slowed (save ends)
+              - 6 + A psychic damage; I < strong, slowed (save ends)
+            - __typeName: ActivatedAbilityApplyRidersBehavior
+              conditionid: 68f455f5-135f-495c-822d-40d809d2b15f
+              riderid: 7e239b11-9d61-43c3-9bba-943c80429790
             categorization: Heroic Ability
             display:
               bgcolor: "#ffffffff"
@@ -4625,7 +4652,7 @@ levels:
             flavor: For a moment, your foe slips out of phase with this manifold.
             guid: fe8459cd-7390-4bcf-8053-157a93bfe0f8
             iconid: ui-icons/skills/1.png
-            implementation: 2
+            implementation: 4
             keywords:
               Melee: true
               Psionic: true
@@ -4669,7 +4696,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: 696260a9-e70d-4e22-a434-2a7b44ca7e31
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 70932960-6f32-457a-854e-8ae16c34535d
         modifiers:
@@ -4707,6 +4734,7 @@ levels:
                   saturation: 1
                 guid: 180af898-d5af-4fad-b20b-dbfbddceb12c
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 range: 1
@@ -4714,6 +4742,7 @@ levels:
                 targetType: self
               modesSelected:
               - 2
+              promptText: "A Squad Unto Myself: You can take the Disengage move action as a free maneuver."
               standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
               standardAbilityParams:
                 distance: disengage speed
@@ -4733,6 +4762,7 @@ levels:
                   saturation: 1
                 guid: d033cd10-0cb9-416f-b113-ccbefa0fd569
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 range: 1
@@ -4740,6 +4770,7 @@ levels:
                 targetType: self
               modesSelected:
               - 1
+              promptText: "A Squad Unto Myself: You can take the Disengage move action as a free maneuver now."
               standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
               standardAbilityParams:
                 distance: disengage speed
@@ -4767,6 +4798,7 @@ levels:
                   saturation: 1
                 guid: 19fca853-50ce-4388-8ea6-d99cf530fdbb
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 keywords:
                   Area: true
                 modifiers: []
@@ -4793,7 +4825,7 @@ levels:
             flavor: 'You move so quickly, it seems as though an army assaulted your foes. '
             guid: ed4fd98b-f66e-4049-9c6f-7a0148501417
             iconid: 925c6a87-214b-4f8d-bc20-83e96b23dd12
-            implementation: 3
+            implementation: 4
             keywords:
               Area: true
               Melee: true
@@ -4897,7 +4929,7 @@ levels:
         domains:
           class:4203e447-4531-467b-b270-c952806ce67f: true
         guid: c0235bf8-1580-4691-ba23-b6db49f847e1
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Force Augmentation
           description: You gain a +1 rolled damage bonus with damage-dealing psionic abilities.
@@ -4970,7 +5002,7 @@ levels:
       domains:
         class:4203e447-4531-467b-b270-c952806ce67f: true
       guid: 543afb0a-962b-410f-9764-186c62987c17
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Psionic Martial Arts
         description: 'When you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you. If you use Knockback, you can choose to slide the target instead of pushing them. '
@@ -5030,6 +5062,6 @@ levels:
         type: pdf
       tags:
         Combat: true
-mtime: 1790949017288
+mtime: 1791380960116
 portraitid: 3bf3e70b-d628-4377-93be-9fa466491ab1
 quantity: "2"
