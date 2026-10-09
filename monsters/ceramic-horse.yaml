@@ -237,7 +237,7 @@ info:
         CharacterFeature:ae8b2e7b-749c-4ba8-b2ca-1242b0539911: true
         CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
       guid: 6bd92dd2-dca2-4407-a6e7-9682d2a30c76
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Shared Otherworldly Grace
         description: If the ceramic horse's rider has the Otherworldly Grace trait, the ceramic horse also has that trait.
@@ -259,12 +259,9 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Shared Otherworldly Grace - Change One Save Ends to EoT
-            conditions: []
-            purgeType: one
-            targetDuration: save
-          conditionFormula: Count Riders("Otherworldly Grace") > 0 and Conditions has "Bleeding" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Dazed" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Frightened" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Prone" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Restrained" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Slowed" or Count Riders("Otherworldly Grace") > 0 and Conditions has "Taunted" or Count Riders("Otherworldly Grace") > 0 and  Conditions has "Weakened"
+          - __typeName: ActivatedAbilitySaveEndsToEotBehavior
+            allowMultiple: false
+          conditionFormula: Count Riders("Otherworldly Grace") > 0 and Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -276,6 +273,8 @@ info:
             CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
           guid: 013c7b32-eaef-452b-a07c-46da3aabb7a7
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -283,7 +282,8 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
-          trigger: endturn
+          trigger: beginturn
+          triggerPrompt: Choose one save ends effect on {name}. It ends at the end of this turn instead.
           whenActive: combat
       - name: Shared Otherworldly Grace
         description: If the ceramic horse's rider has the Otherworldly Grace trait, the ceramic horse also has that trait.
@@ -487,6 +487,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: a3affe06-003b-4ec6-ae7a-05dd1b43fc11
-mtime: 1775375050533
+mtime: 1791560137152
 ord: 0
 parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d

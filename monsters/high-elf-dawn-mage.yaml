@@ -73,7 +73,7 @@ info:
         CharacterFeature:ebc71e1e-1b01-4ea0-b0f7-3f553aa43628: true
         CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
       guid: ebc71e1e-1b01-4ea0-b0f7-3f553aa43628
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Otherworldly Grace
         description: At the start of each of their turns, the dawn mage can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
@@ -91,12 +91,9 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Otherworldly Grace - Change One Save Ends to EoT
-            conditions: []
-            purgeType: one
-            targetDuration: save
-          conditionFormula: Conditions has "Bleeding" or Conditions has "Dazed" or Conditions has "Frightened" or Conditions has "Prone" or Conditions has "Restrained" or Conditions has "Slowed" or Conditions has "Taunted" or Conditions has "Weakened"
+          - __typeName: ActivatedAbilitySaveEndsToEotBehavior
+            allowMultiple: false
+          conditionFormula: Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -107,6 +104,8 @@ info:
             CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
           guid: 6139ca13-65b4-41bd-a09b-29b464910e1b
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -114,7 +113,8 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
-          trigger: endturn
+          trigger: beginturn
+          triggerPrompt: Choose one save ends effect on {name}. It ends at the end of this turn instead.
           whenActive: combat
       - name: Otherworldly Grace
         description: At the start of each of their turns, the dawn mage can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
@@ -247,6 +247,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: 318b5698-2730-4749-add8-2fc22cfeb4eb
-mtime: 1775375061622
+mtime: 1791560137089
 ord: 0
 parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d

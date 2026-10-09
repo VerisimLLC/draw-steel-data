@@ -177,7 +177,7 @@ info:
         CharacterFeature:b403222e-4a0f-47cb-9efc-0455f35e6173: true
         CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
       guid: b403222e-4a0f-47cb-9efc-0455f35e6173
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Otherworldly Grace
         description: At the start of each of their turns, the zephyr can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
@@ -196,12 +196,9 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Otherworldly Grace - Change One Save Ends to EoT
-            conditions: []
-            purgeType: one
-            targetDuration: save
-          conditionFormula: Conditions has "Bleeding" or Conditions has "Dazed" or Conditions has "Frightened" or Conditions has "Prone" or Conditions has "Restrained" or Conditions has "Slowed" or Conditions has "Taunted" or Conditions has "Weakened"
+          - __typeName: ActivatedAbilitySaveEndsToEotBehavior
+            allowMultiple: false
+          conditionFormula: Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -213,6 +210,8 @@ info:
             CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
           guid: 06403a7e-7fba-4636-ae6a-e39e5f0ab66c
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -220,7 +219,8 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
-          trigger: endturn
+          trigger: beginturn
+          triggerPrompt: Choose one save ends effect on {name}. It ends at the end of this turn instead.
           whenActive: combat
       - name: Otherworldly Grace
         description: At the start of each of their turns, the zephyr can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.

@@ -263,7 +263,7 @@ info:
         CharacterFeature:cf33ae7e-6974-4532-99dc-a0652ec94a99: true
         CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
       guid: cf33ae7e-6974-4532-99dc-a0652ec94a99
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Otherworldly Blessing
         description: At the start of each of their turns, the ordinator can choose one or more effects on them that can be ended by a saving throw. The effects instead ends at the end of their turn.
@@ -276,17 +276,14 @@ info:
         source: Trait
         sourceguid: cf33ae7e-6974-4532-99dc-a0652ec94a99
         triggeredAbility:
-          name: Otherworldly Grace
-          description: At the start of each of their turns, the ordinator can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
+          name: Otherworldly Blessing
+          description: At the start of each of their turns, the ordinator can choose one or more effects on them that can be ended by a saving throw. The effects instead ends at the end of their turn.
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Otherworldly Grace - Change One Save Ends to EoT
-            conditions: []
-            purgeType: chosen
-            targetDuration: save
-          conditionFormula: Conditions has "Bleeding" or Conditions has "Dazed" or Conditions has "Frightened" or Conditions has "Prone" or Conditions has "Restrained" or Conditions has "Slowed" or Conditions has "Taunted" or Conditions has "Weakened"
+          - __typeName: ActivatedAbilitySaveEndsToEotBehavior
+            allowMultiple: true
+          conditionFormula: Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -297,6 +294,8 @@ info:
             CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
           guid: 8a220eaf-fc35-4558-8cbc-39fa191f9d9c
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -304,7 +303,8 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
-          trigger: endturn
+          trigger: beginturn
+          triggerPrompt: Choose any number of save ends effects on {name}. They end at the end of this turn instead.
           whenActive: combat
       - name: Otherworldly Blessing
         description: At the start of each of their turns, the ordinator can choose one or more effects on them that can be ended by a saving throw. The effects instead ends at the end of their turn.
@@ -1170,6 +1170,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: 451f210d-e551-48d2-8da1-882a819c3d2b
-mtime: 1786606726004
+mtime: 1791560137168
 ord: 0
 parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d

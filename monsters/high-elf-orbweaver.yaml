@@ -77,7 +77,7 @@ info:
         CharacterFeature:2f7adc57-1ef9-4980-ac76-4338ba33ea7a: true
         CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
       guid: 2f7adc57-1ef9-4980-ac76-4338ba33ea7a
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Otherworldly Grace
         description: At the start of each of their turns, the orbweaver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
@@ -95,12 +95,9 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            chatMessage: Otherworldly Grace - Change One Save Ends to EoT
-            conditions: []
-            purgeType: one
-            targetDuration: save
-          conditionFormula: Conditions has "Bleeding" or Conditions has "Dazed" or Conditions has "Frightened" or Conditions has "Prone" or Conditions has "Restrained" or Conditions has "Slowed" or Conditions has "Taunted" or Conditions has "Weakened"
+          - __typeName: ActivatedAbilitySaveEndsToEotBehavior
+            allowMultiple: false
+          conditionFormula: Save Ends Effects
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -111,6 +108,8 @@ info:
             CharacterFeature:f2389745-fc05-4850-afa4-5f44dd78b271: true
           guid: 1ff3cf4a-7f57-4c72-ae40-fb7ab818e381
           iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -118,7 +117,8 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
-          trigger: endturn
+          trigger: beginturn
+          triggerPrompt: Choose one save ends effect on {name}. It ends at the end of this turn instead.
           whenActive: combat
       - name: Otherworldly Grace
         description: At the start of each of their turns, the orbweaver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.
@@ -384,6 +384,6 @@ info:
   summonerid: null
   tokenType: null
   updateid: ed5b7cea-359c-4635-bf2c-aa2b9640c64e
-mtime: 1775375101070
+mtime: 1791560137081
 ord: 0
 parentFolder: 32508dc1-a157-427c-a73e-c5bf45b86a8d
