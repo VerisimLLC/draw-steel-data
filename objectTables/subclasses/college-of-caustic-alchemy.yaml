@@ -1090,7 +1090,7 @@ levels:
           class:17dda8c6-7d81-42c7-85f8-d66aa25f45d5: true
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: c067eb85-b266-45b0-bab1-268d889b6c51
-        implementation: 4
+        implementation: 3
         modifiers:
         - name: Chain Reaction
           description: ""
@@ -1102,33 +1102,220 @@ levels:
             abilityType: none
             actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
             behaviors:
-            - __typeName: ActivatedAbilityChainReachBehavior
-              applyto: caster
-              chainRange: 3
             - __typeName: ActivatedAbilityPowerRollBehavior
+              applyto: targets
+              filterTarget: 0{Just for display purposes}
+              roll: 2d10 + Agility
+              tiers:
+              - 7 damage
+              - 10 damage
+              - 15 damage
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              duration: 0
+              ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+              ongoingEffectCustom: false
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              autoTarget: false
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                  duration: 0
+                  filterTarget: ""
+                  ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                  ongoingEffectCustom: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  autoTarget: false
+                  customAbility:
+                    name: Invoked Ability
+                    description: ""
+                    __typeName: ActivatedAbility
+                    abilityType: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                      duration: 0
+                      filterTarget: not Target.Ongoing Effects has "Chain Reaction target"
+                      ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                      ongoingEffectCustom: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                    categorization: Hidden
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    guid: 3603daf3-e604-4fcd-a72f-303a7f9977cb
+                    iconid: ui-icons/skills/1.png
+                    modifiers: []
+                    numTargets: "1"
+                    objectTarget: false
+                    persistence: []
+                    range: "3"
+                    repeatTargets: false
+                    strain: []
+                    targetAllegiance: ally
+                    targetFilter: not Ongoing Effects has "Chain Reaction target"
+                    targetType: all
+                  guid: a803b922-73ca-463b-9495-a6b7b8d0e235
+                  promptText: Confirm Chain Targeting
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 3603daf3-e604-4fcd-a72f-303a7f9977cb
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                objectTarget: false
+                persistence: []
+                range: "3"
+                repeatTargets: false
+                strain: []
+                targetAllegiance: ally
+                targetFilter: not Ongoing Effects has "Chain Reaction target"
+                targetType: all
+              promptText: Confirm Chain Targeting
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  applyto: targets
+                  filterTarget: ""
+                  guid: 0777d908-0d9a-4424-b1bb-b9b0805599b5
+                  modesSelected:
+                  - 1
+                  promptWhenResolving: false
+                  roll: 2d10 + Agility
+                  target_proximity_range: "3"
+                  tiers:
+                  - 7 acid damage
+                  - 10 acid damage
+                  - 15 acid damage
+                - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                  conditions: []
+                  mode: effect
+                  ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: ac149a26-5b51-4dc8-a7de-65bda9a4a3da
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                objectTarget: false
+                persistence: []
+                range: 1
+                repeatTargets: false
+                strain: []
+                targetFilter: ""
+                targetType: target
               modesSelected:
               - 1
-              roll: 2d10 + Agility
-              tiers:
-              - 7 acid damage
-              - 10 acid damage
-              - 15 acid damage
-            - __typeName: ActivatedAbilityPowerRollBehavior
+              targeting: formula
+              targetingFormula: Target.Ongoing Effects has "Chain Reaction target"
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  applyto: targets
+                  filterTarget: ""
+                  guid: f7dd8bfa-ebb7-4de5-ad4b-99c2d801e26c
+                  modesSelected:
+                  - 2
+                  promptWhenResolving: false
+                  roll: 2d10 + Agility
+                  target_proximity_range: "3"
+                  tiers:
+                  - 7 fire damage
+                  - 10 fire damage
+                  - 15 fire damage
+                - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                  conditions: []
+                  guid: 686eead6-fcfe-4ccb-ada4-a0681b0dcca6
+                  mode: effect
+                  ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: ac149a26-5b51-4dc8-a7de-65bda9a4a3da
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                persistence: []
+                range: 1
+                repeatTargets: false
+                strain: []
+                targetFilter: Ongoing Effects has "Tester"
+                targetType: map
+              guid: 791a0734-bb09-4e27-9097-26c794a42b1b
               modesSelected:
               - 2
-              roll: 2d10 + Agility
-              tiers:
-              - 7 fire damage
-              - 10 fire damage
-              - 15 fire damage
-            - __typeName: ActivatedAbilityPowerRollBehavior
+              targeting: formula
+              targetingFormula: Target.Ongoing Effects has "Chain Reaction target"
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  applyto: targets
+                  filterTarget: ""
+                  guid: 62922de7-67b3-45d8-897a-49b57d5a8cec
+                  modesSelected:
+                  - 3
+                  promptWhenResolving: false
+                  roll: 2d10 + Agility
+                  target_proximity_range: "3"
+                  tiers:
+                  - 7 poison damage
+                  - 10 poison damage
+                  - 15 poison damage
+                - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                  conditions: []
+                  guid: 8772dd2a-cca8-4801-9f1b-e0f64fe798b7
+                  mode: effect
+                  ongoingEffect: 57d2432e-5d34-4bf6-a462-fc419043bff6
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: ac149a26-5b51-4dc8-a7de-65bda9a4a3da
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: "1"
+                persistence: []
+                range: 1
+                repeatTargets: false
+                strain: []
+                targetFilter: Ongoing Effects has "Tester"
+                targetType: map
+              guid: 0cfcec5c-1dcb-40bd-a413-c843a450c7dc
               modesSelected:
               - 3
-              roll: 2d10 + Agility
-              tiers:
-              - 7 poison damage
-              - 10 poison damage
-              - 15 poison damage
+              targeting: formula
+              targetingFormula: Target.Ongoing Effects has "Chain Reaction target"
             categorization: Heroic Ability
             display:
               bgcolor: "#ffffffff"
@@ -1141,7 +1328,7 @@ levels:
             flavor: One explosion, an offense. Three explosions, an assault. Nine explosions, a celebration
             guid: 272d00a0-fd91-4966-b75c-f932469cb4de
             iconid: 4af2392d-cb5c-4afa-a2ae-2db77e79e582
-            implementation: 4
+            implementation: 3
             implementationDetails: ""
             keywords:
               Ranged: true
@@ -1155,9 +1342,9 @@ levels:
             objectTarget: true
             persistence: []
             preDescription: Each enemy within 3 squares of the target who is not currently targeted by this ability also becomes targeted by this ability. This effect continues until there are no more available targets. The ability deals acid, fire, or poison damage (your choice).
-            proximityChain: false
+            proximityChain: true
             proximityRange: "3"
-            proximityTargeting: false
+            proximityTargeting: true
             range: "10"
             rangeTextOverride: Ranged 10
             repeatTargets: false
@@ -1313,11 +1500,6 @@ levels:
         sourceguid: 0781f815-21f2-4683-ac62-696759f02c74
         subtype: skill
       source: College of Caustic Alchemy Class Feature
-      sourceReference:
-        __typeName: SourceReference
-        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 161
-        type: pdf
       tags:
         Hidden: true
     - name: Coat the Blade
@@ -1633,7 +1815,7 @@ levels:
       sourceReference:
         __typeName: SourceReference
         docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 163
+        page: 162
         type: pdf
       tags:
         Trigger: true
@@ -1649,5 +1831,5 @@ levels:
       class:17dda8c6-7d81-42c7-85f8-d66aa25f45d5: true
       class:a58112e5-6466-4189-b810-5d0d93adc075: true
     features: []
-mtime: 1791552720164
+mtime: 1790935049738
 primaryClassId: a58112e5-6466-4189-b810-5d0d93adc075
