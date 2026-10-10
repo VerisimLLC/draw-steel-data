@@ -1713,10 +1713,80 @@ filter: ""                  # GoblinScript
 ```
 
 ### behavior: "modifyability"
-Modify existing abilities.
+Modify existing abilities. `filterAbility` (GoblinScript) picks which abilities are
+affected; `attributes` lists the changes; an optional embedded `ability` with
+`abilityModification: true` injects behaviors (see `replaceBehaviors`).
 ```yaml
 behavior: modifyability
+filterAbility: Ability.name = "Longarm Shrikegun"
+attributes:
+- id: damagetype            # see "Damage Type attribute" below
+  operation: Set
+  value: fire
 ```
+
+#### Damage Type attribute (`id: damagetype`)
+
+Engine: `ModifierModifyAbilities.lua` (`RegisterAbilityModifier{ id = "damagetype" }`).
+The ability's **base type** is read from its first `ActivatedAbilityDamageBehavior`
+(`damageType`), else from the first power roll tier's damage clause (`"7 damage"` =
+`untyped`, `"7 fire damage"` = `fire`).
+
+| Operation | YAML | Effect |
+|---|---|---|
+| **Set** | `value: <type>` | **Retypes** the damage. Rewrites `damageType` on damage behaviors and the first damage clause of every power roll tier. No choice is offered. |
+| **Add** (one type) | `value: <type>` | Offers a **cast-time choice** between the base type and `<type>`. The ability becomes multi-mode: mode 1 = base type, mode 2 = added type. |
+| **Add** (several types) | `damageTypes: { acid: true, cold: true, ... }` | Same as above but adds one mode per type (sorted alphabetically). This is what the editor's "Add Damage Type..." multiselect writes. A legacy `value` on the same entry is merged into the set. |
+
+Rules and gotchas:
+
+- **Add always keeps the base type as an option.** If the source text says "chooses one
+  of the following damage types" and the ability's tiers are untyped, a bare Add offers
+  *Untyped* as well. To restrict the choice to exactly the listed types, put a **Set**
+  to one of them *before* the Add — the Set makes it the base (mode 1), and the Add
+  skips a type equal to the base.
+- **Order matters.** Attributes apply top to bottom. Set → Add = "choose from these
+  types". A Set *after* an Add changes the base type and relabels mode 1.
+- Add **will not** mix into an ability that already has authored `multipleModes`; it
+  only extends a mode list it built itself.
+- Adding a type equal to the base is a no-op (no pointless one-option prompt).
+- Type names are lowercase and must exist in the `damagetypes` table
+  (acid, cold, corruption, fire, holy, lightning, poison, psychic, sonic, untyped).
+
+```yaml
+# Retype: strikes deal acid instead of their original type (animal "Elemental (Acid)")
+- id: damagetype
+  operation: Set
+  value: acid
+
+# Choice of base or new type: free strike may deal fire OR untyped (Fire Plume)
+- id: damagetype
+  operation: Set
+  value: fire
+- id: damagetype
+  operation: Add
+  value: untyped
+
+# Choose exactly one of a list (no untyped option)
+- id: damagetype
+  operation: Set
+  value: acid               # becomes the base / first option
+- id: damagetype
+  operation: Add
+  damageTypes:
+    cold: true
+    fire: true
+    lightning: true
+    poison: true
+    psychic: true
+    sonic: true
+```
+
+For a monster whose *signature* ability lets it pick a type, deliver the modifier
+from a hidden `CharacterFeature` (`tags: { Hidden: true }`) in the monster's
+`characterFeatures`, filtered to that ability by name (see `war-dog-arachnite.yaml`).
+To convert *all* outgoing damage of one type to another instead, use a `power`
+modifier's `damageTypeMappings` (see IMPLEMENTATION-PATTERNS.md).
 
 ### behavior: "alternateappearance"
 Grant alternate visual appearance.

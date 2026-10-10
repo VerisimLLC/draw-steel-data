@@ -126,6 +126,22 @@ modtype: none
 **Example:** Blade of Quintessence (choose element), Frostheart complication (untyped -> cold)
 **When:** Elemental weapons, elemental affinity traits.
 
+### Damage Type Choice / Retype on One Ability (modifyability `damagetype`)
+Retype a specific ability, or let the user pick its damage type at cast time.
+```yaml
+behavior: modifyability
+filterAbility: Ability.name = "Longarm Shrikegun"
+attributes:
+- id: damagetype
+  operation: Set          # Set = retype (and sets the base option)
+  value: acid
+- id: damagetype
+  operation: Add          # Add = offer extra types as cast-time modes
+  damageTypes: { cold: true, fire: true, lightning: true, poison: true, psychic: true, sonic: true }
+```
+**Example:** War Dog Arachnite "Longarm Shrikegun" (choose a type), Fire Plume free strike (fire or untyped), animal "Elemental (X)" traits (Set only)
+**When:** "Chooses one of the following damage types", "deals X damage instead". Add always keeps the base type as an option, so Set first to exclude untyped. Full rules: MONSTERS.md → `behavior: "modifyability"` → Damage Type attribute.
+
 ### Conditional Damage Bonus (damageModifier)
 Add bonus damage to power rolls under specific conditions.
 ```yaml
