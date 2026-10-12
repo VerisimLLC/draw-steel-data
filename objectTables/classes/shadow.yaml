@@ -384,7 +384,7 @@ levels:
       sourceReference:
         __typeName: SourceReference
         docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 170
+        page: 173
         type: pdf
       tags:
         Combat: true
@@ -725,7 +725,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 75f382f4-efbe-4612-b921-08055175176b
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -752,7 +752,7 @@ levels:
               applyto: caster
               autoTarget: false
               customAbility:
-                name: Invoked Ability
+                name: Misdirecting Strike Effect
                 description: ""
                 __typeName: ActivatedAbility
                 abilityType: none
@@ -766,6 +766,7 @@ levels:
                   saturation: 1
                 guid: ba8f1e31-75a1-47c5-96a6-59ded6fff8b4
                 iconid: ui-icons/skills/1.png
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
                 objectTarget: false
@@ -788,7 +789,7 @@ levels:
             flavor: Why are you looking at ME?!
             guid: aff5a23a-8095-4ac0-97dd-37a373536d65
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Ranged: true
@@ -833,7 +834,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 017339ac-02b4-4aa6-8c42-672baa1d5afd
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -864,7 +865,7 @@ levels:
             flavor: One missile--placed well and placed hard.
             guid: ce125d5b-8ddf-4d93-ba65-c2d9b259939d
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Ranged: true
               Strike: true
@@ -907,7 +908,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 59d28351-a862-4739-9ac3-742d3c627614
-        implementation: 3
+        implementation: 4
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
         - name: Ability
@@ -937,7 +938,7 @@ levels:
             flavor: There's no recovering from this.
             guid: 3bdce6de-98ae-4bf0-9500-cc1f5489bb51
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Ranged: true
@@ -980,7 +981,7 @@ levels:
       domains:
         class:a58112e5-6466-4189-b810-5d0d93adc075: true
       guid: 953bdcc9-53e7-4bcb-aa0b-1a08cd1cbbd6
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Careful Observation
         description: "Effect: As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature."
@@ -992,6 +993,10 @@ levels:
           abilityType: none
           actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
           behaviors:
+          - __typeName: ActivatedAbilityLimitCasterEffectsBehavior
+            applyto: caster
+            maxFormula: 3 when Level >= 10 else 2 when Level >= 7 else 1
+            ongoingEffect: 54436ed6-156d-4765-8aca-90708c6ee19f
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             applyto: targets
             durationUntilEndOfTurn: false
@@ -1012,10 +1017,10 @@ levels:
           flavor: A moment of focus leaves a foe firmly in your sights.
           guid: af5c899a-a40d-4b23-9d2a-60bd344dcff8
           iconid: 947f7dc6-e7cc-4829-88f2-1aed4f729c57
-          implementation: 3
-          implementationDetails: The Codex has not limit the number of creatures which can be effected by Careful Observation. Codex does not know if you maintain line of effect to the target.
+          implementation: 4
+          implementationDetails: "Known issue: the ongoing effect can remain after the observer moves beyond range or line of effect. The roll modifier is checked at roll time and does not apply in either case."
           modifiers: []
-          numTargets: 2 when Level >= 7 else 1
+          numTargets: 3 when Level >= 10 else 2 when Level >= 7 else 1
           persistence: []
           range: "20"
           repeatTargets: false
@@ -1229,13 +1234,17 @@ levels:
       tags:
         Exploration: true
     - name: Night Watch
-      description: Your sense for stealth shows those around you how to evade notice. While you are hidden, enemies take a bane on tests made to search for you or other hidden creatures within 10 squares of you.
+      description: |-
+        Your sense for stealth shows those around you how to evade notice. While you are hidden, enemies take a bane on tests made to search for you or other hidden creatures within 10 squares of you.
+
+        Additionally, you have the Night Watch Triggered Ability.
       __typeName: CharacterFeature
       classid: a58112e5-6466-4189-b810-5d0d93adc075
       domains:
         class:a58112e5-6466-4189-b810-5d0d93adc075: true
       guid: e9381bb4-9408-41a8-8ffd-9f2ee2f7fa61
-      implementation: 3
+      implementation: 4
+      implementationDetails: ""
       modifiers:
       - name: Night Watch
         description: ""
@@ -1286,6 +1295,47 @@ levels:
         targetType: ally
         trigger: takedamage
         type: trigger
+      - name: Night Watch
+        description: "Night Watch: while the shadow is hidden, enemies take a bane on tests made to search for the shadow or for other hidden creatures within 10 squares of the shadow."
+        __typeName: CharacterModifier
+        aura:
+          name: Night Watch
+          description: "Night Watch: while the shadow is hidden, enemies take a bane on tests made to search for the shadow or for other hidden creatures within 10 squares of the shadow."
+          __typeName: Aura
+          applyto: selfandfriends
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+          guid: fc25c7ce-4c4b-4442-8993-3e5eb1d81cf9
+          modifiers:
+          - name: Night Watch
+            description: While {Aura.Caster.Name} is hidden, enemies take a bane on tests made to search for {Aura.Caster.Name} or for other hidden creatures within 10 squares of them.
+            __typeName: CharacterModifier
+            activationCondition: Ability.name = "Search for Hidden Creatures" and Target.Conditions has "Hidden"
+            behavior: power
+            displayCondition: Ability.name = "Search for Hidden Creatures"
+            domains:
+              class:a58112e5-6466-4189-b810-5d0d93adc075: true
+            filterCondition: Aura.Caster.Conditions has "Hidden"
+            guid: 29acb606-ca61-448b-9e93-f719b71e2972
+            keywords: []
+            modtype: bane
+            rollType: opposed_power_roll
+            source: Aura
+            sourceguid: fc25c7ce-4c4b-4442-8993-3e5eb1d81cf9
+          radius: "10"
+        behavior: aura
+        domains:
+          class:a58112e5-6466-4189-b810-5d0d93adc075: true
+        guid: 778b8c7c-f631-4a88-b2b7-ea99dcc503ea
+        radius: "10"
+        seq: 8bfc6f76-344f-42e2-b116-ddba26a51bfd
+        source: Shadow Class Feature
+        sourceguid: e9381bb4-9408-41a8-8ffd-9f2ee2f7fa61
       source: Shadow Class Feature
       sourceReference:
         __typeName: SourceReference
@@ -1600,7 +1650,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 78e62003-0a0a-4315-a0a7-37c92ade37e5
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -1620,31 +1670,8 @@ levels:
               - 10 damage
               - 14 damage
               - 20 damage
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
+            - __typeName: ActivatedAbilityTeleportToLineEndBehavior
               applyto: caster
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors: []
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: e794ca49-e023-4178-8c42-440db775315d
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                numTargets: "1"
-                range: 1
-                repeatTargets: false
-                targetType: self
-              promptText: Teleport to end of line
-              standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
-              standardAbilityParams:
-                range: "10"
             categorization: Heroic Ability
             display:
               bgcolor: "#ffffffff"
@@ -1657,8 +1684,8 @@ levels:
             flavor: You vanish. They vanish. You reappear.
             guid: e9e95bc2-c333-48c9-969c-43d4c5d6d06f
             iconid: ui-icons/skills/1.png
-            implementation: 3
-            implementationDetails: Player must select the valid teleport location after resolving the Power Roll.
+            implementation: 4
+            implementationDetails: ""
             keywords:
               Area: true
               Weapon: true
@@ -1742,6 +1769,7 @@ levels:
             guid: a3ade3e8-740d-4b5e-8081-2b6dffc7fe3f
             iconid: ui-icons/skills/1.png
             implementation: 3
+            implementationDetails: The Codex does not stop the target communicating.
             keywords:
               Melee: true
               Ranged: true
@@ -1850,7 +1878,7 @@ levels:
           guid: 098e59da-4e4b-40ae-8698-35422b199a5a
           iconid: ui-icons/skills/1.png
           implementation: 3
-          implementationDetails: The Codex does not automatically apply hidden when you have cover or are concealed
+          implementationDetails: Player adjudication required to determine if the hero has cover or concealment to be able to hide.
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -1953,7 +1981,7 @@ levels:
       sourceReference:
         __typeName: SourceReference
         docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 167
+        page: 170
         type: pdf
       tags:
         Hidden: true
@@ -2930,7 +2958,7 @@ levels:
       sourceReference:
         __typeName: SourceReference
         docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-        page: 7
+        page: 161
         type: pdf
       tags:
         Hidden: true
@@ -3243,6 +3271,11 @@ levels:
         source: Shadow Class Feature
         sourceguid: 750a4fb9-77ff-4781-826d-42394eed4911
       source: Shadow Class Feature
+      sourceReference:
+        __typeName: SourceReference
+        docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+        page: 163
+        type: pdf
       tags:
         Combat: true
     - name: Kit
@@ -3291,7 +3324,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 4ebd3a66-4684-4731-ba55-cd0ca0a1f100
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -3335,6 +3368,7 @@ levels:
                 targetType: self
               filterTarget: ""
               promptText: Grant Surge to Ally
+              rangeOrigin: parent_primary_target
               standardAbility: 15079d42-f9af-4e1c-a739-2078a9e22a07
               standardAbilityParams:
                 message: Gasping in Pain - Surge
@@ -3354,7 +3388,7 @@ levels:
             flavor: Your precise strikes let your allies take advantage of a target's agony.
             guid: 125163d7-c4e7-48f8-a690-801910de2fbd
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Strike: true
@@ -3395,7 +3429,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: dc3a9f1e-fc73-426f-a493-159054481197
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -3412,7 +3446,7 @@ levels:
             - __typeName: ActivatedAbilityReplenishBehavior
               applyto: caster
               chatMessage: I Work Better Alone - Surge
-              filterTarget: not Cast.Primary Target.Has Adjacent Enemy Other Than Us(caster)
+              filterTarget: Cast.PrimaryTarget.Count Friends Of Within(1, Caster) = 0
               resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
             - __typeName: ActivatedAbilityPowerRollBehavior
               roll: 2d10 + Agility
@@ -3437,7 +3471,7 @@ levels:
             flavor: It's better, just you and me. Isn't it?
             guid: 666b6dad-cd8c-498d-abfb-a70e6e4e79c4
             iconid: ae3647ff-fa6f-4e00-bc22-3b4d25395b23
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Ranged: true
@@ -3481,7 +3515,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 530889be-e2cf-4bc7-89d5-927585b1202d
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -3503,7 +3537,7 @@ levels:
                 description: |
                   If any ally is adjacent to the target, you gain 1 surge before making the power roll.
                 __typeName: CharacterModifier
-                activationCondition: target.CountNearbyEnemies(1, caster)
+                activationCondition: target.Count Friends Of Within(1, caster) > 0
                 behavior: power
                 displayCondition: "1"
                 domains: []
@@ -3532,7 +3566,7 @@ levels:
             flavor: You attack an enemy as an ally exposes their weakness.
             guid: 1c716f35-ea28-4b35-b267-ceeb4f050641
             iconid: ee8d5b2c-efdb-4310-b8a2-4d10a78a6f79
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Ranged: true
@@ -3576,7 +3610,7 @@ levels:
         domains:
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: ec9dc9b2-fb28-4e75-b3a6-42729aaf6703
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 37284c36-f032-4b30-8eec-226ff3b1ecd9
         modifiers:
@@ -3599,37 +3633,22 @@ levels:
             - __typeName: ActivatedAbilityReplenishBehavior
               applyto: caster
               chatMessage: You Were Watching the Wrong One!
-              filterTarget: cast.PrimaryTarget.Count Nearby Enemies(5, Caster) > 0
+              filterTarget: Cast.PrimaryTarget.Count Friends Of Within(5, Caster) > 0
               resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
+            - __typeName: ActivatedAbilityStashTargetBehavior
+              applyto: targets
+            - __typeName: ActivatedAbilityCustomTriggerBehavior
               applyto: caster
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors: []
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: cce366e2-5430-498b-85ee-5ce241761517
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                numTargets: "1"
-                range: 1
-                repeatTargets: false
-                targetType: self
-              filterTarget: cast.Primary Target.Flanked By(caster)
-              promptText: Choose ally flanking the target to grant surge to
-              standardAbility: 15079d42-f9af-4e1c-a739-2078a9e22a07
-              standardAbilityParams:
-                message: Grant a surge to an ally flanking the target
-                quantity: "1"
-                range: "5"
-                targets: "1"
+              filterTarget: Cast.PrimaryTarget.Flanking Partner Count(Caster) = 1
+              triggerName: WWO One
+              value: ""
+              waitForResolution: true
+            - __typeName: ActivatedAbilityCustomTriggerBehavior
+              applyto: caster
+              filterTarget: Cast.PrimaryTarget.Flanking Partner Count(Caster) > 1
+              triggerName: WWO Many
+              value: ""
+              waitForResolution: true
             categorization: Signature Ability
             display:
               bgcolor: "#ffffffff"
@@ -3642,7 +3661,7 @@ levels:
             flavor: They can't watch both of you at once.
             guid: 840d6d7a-17c9-44c5-a534-638da40a8552
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Strike: true
@@ -3665,6 +3684,155 @@ levels:
           guid: 5031d4be-028d-4e9a-bb4c-8eca657864b3
           source: Shadow Class Feature
           sourceguid: f09da83c-5843-497a-8316-d5fdca4349aa
+        - name: You Were Watching the Wrong One
+          description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+          __typeName: CharacterModifier
+          behavior: trigger
+          domains:
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+            class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+          guid: b52eee56-6b3b-4e2b-aa5f-c0308ddff028
+          source: Shadow Class Feature
+          sourceguid: 55ceec07-62e1-41c9-9cb9-6bc5cccb2d67
+          triggeredAbility:
+            name: You Were Watching the Wrong One
+            description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: standard
+              applyto: caster
+              customAbility:
+                name: Invoked Ability
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: e3f7be9f-b148-4877-87e4-b40ee985311a
+                iconid: ui-icons/skills/1.png
+                implementation: 4
+                modifiers: []
+                numTargets: "1"
+                range: 1
+                repeatTargets: false
+                targetType: self
+              standardAbility: 15079d42-f9af-4e1c-a739-2078a9e22a07
+              standardAbilityParams:
+                message: Flanking ally gains a surge
+                quantity: "1"
+                range: "100"
+                targets: "1"
+              targeting: formula
+              targetingFormula: Target.Is Friend(Caster) and Target != Caster and Caster.Stashed Target.Flanked By(Caster, Target)
+            castImmediately: false
+            conditionFormula: Trigger Name is "WWO One"
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:a58112e5-6466-4189-b810-5d0d93adc075: true
+              class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+            guid: 4bbadb3e-3f0f-42f2-b9d8-646a6d966b1b
+            hasManualVersion: true
+            iconid: ui-icons/skills/1.png
+            mandatory: false
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            sourceReference:
+              __typeName: SourceReference
+              docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+              page: 164
+              type: pdf
+            strain: []
+            targetType: self
+            trigger: custom
+            triggerPrompt: If you are flanking the target when you use this ability, your flanking ally also gains 1 surge.
+        - name: You Were Watching the Wrong One
+          description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+          __typeName: CharacterModifier
+          behavior: trigger
+          domains:
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+            class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+          guid: 34e01eda-e5b6-4b7b-969f-a94e55504d19
+          source: Shadow Class Feature
+          sourceguid: 55ceec07-62e1-41c9-9cb9-6bc5cccb2d67
+          triggeredAbility:
+            name: You Were Watching the Wrong One
+            description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              abilityType: custom
+              applyto: caster
+              customAbility:
+                name: You Were Watching the Wrong One - Flanking Surge
+                description: ""
+                __typeName: ActivatedAbility
+                abilityType: none
+                behaviors:
+                - __typeName: ActivatedAbilityReplenishBehavior
+                  applyto: targets
+                  chatMessage: You Were Watching the Wrong One - Flanking Surge
+                  quantity: "1"
+                  resourceid: 8b0ae5fe-0eb3-45fa-9e6d-b9de68f5cc6d
+                categorization: Hidden
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 52ee89af-1d2b-4a17-b9e9-03f225272aa7
+                iconid: ui-icons/skills/1.png
+                implementation: 4
+                modifiers: []
+                numTargets: "1"
+                range: "100"
+                repeatTargets: false
+                targetAllegiance: ally
+                targetFilter: Target != Caster and Caster.Stashed Target.Flanked By(Caster, Target)
+                targetType: target
+              promptText: Choose the ally flanking with you to gain 1 surge
+            castImmediately: false
+            conditionFormula: Trigger Name is "WWO Many"
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            domains:
+              class:a58112e5-6466-4189-b810-5d0d93adc075: true
+              class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+            guid: 4bbadb3e-3f0f-42f2-b9d8-646a6d966b1b
+            hasManualVersion: true
+            iconid: ui-icons/skills/1.png
+            mandatory: false
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            sourceReference:
+              __typeName: SourceReference
+              docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+              page: 164
+              type: pdf
+            strain: []
+            targetType: self
+            trigger: custom
+            triggerPrompt: If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.
         mtime: 1715748063870
         source: Shadow Class Feature
         sourceReference:
@@ -3746,6 +3914,7 @@ levels:
                   __typeName: SourceReference
                   docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
                   page: 164
+                  type: pdf
                 strain: []
                 targetType: emptyspace
                 targeting: vacated
@@ -3762,7 +3931,7 @@ levels:
             flavor: Your attack leaves them reeling, allowing you to follow up.
             guid: 03c13a28-a2db-4cc6-b67b-fef93dd8a20f
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Melee: true
               Strike: true
@@ -4523,6 +4692,7 @@ levels:
               __typeName: SourceReference
               docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
               page: 164
+              type: pdf
             strain: []
             targetType: target
           behavior: activated
@@ -4533,6 +4703,11 @@ levels:
           sourceguid: f09da83c-5843-497a-8316-d5fdca4349aa
         mtime: 1715748063870
         source: Shadow Class Feature
+        sourceReference:
+          __typeName: SourceReference
+          docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+          page: 164
+          type: pdf
         tags:
           Ability: true
       - id: f95a509b-c821-42b9-96bb-f364a689e8c2
@@ -4657,6 +4832,6 @@ levels:
     domains:
       class:a58112e5-6466-4189-b810-5d0d93adc075: true
     features: []
-mtime: 1790949041415
+mtime: 1791556708269
 portraitid: 9e682ff6-eae0-435f-a7e7-b356bebb6ca3
 quantity: 1d3
