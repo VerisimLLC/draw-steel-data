@@ -137,22 +137,30 @@ modifierInfo:
           repeatTargets: false
           strain: []
           targetType: self
+        addModes:
+        - text: One additional creature of your size
+          rules: "Target one additional creature of your size or smaller."
+        - text: Two additional smaller creatures
+          rules: "Target two additional creatures who are smaller than you."
         attributes:
         - id: reasonfilter
           operation: reasonfilter
           reasonedFilters:
-          - formula: Number of Targets < 1 or Size < Caster.Size or (Number of Targets = 1 and Size <= Caster.Size)
-            reason: "**Ratcatcher:** Confirm creatures size is your size if targeting 1 additional creature, or smaller if targeting 2 additonal creatures."
+          - formula: Mode = 2 or Number of Targets < 1 or Size <= Caster.Size
+            reason: "**Ratcatcher:** The additional creature must be your size or smaller."
+          - formula: Mode = 1 or Number of Targets < 1 or Size < Caster.Size
+            reason: "**Ratcatcher:** Additional creatures must be smaller than you."
           value: ""
         - id: numtargets
           operation: Add
-          value: "2"
+          value: 2 when Mode = 2 else 1
         behavior: modifyability
         filterAbility: Ability.Name has "Knockback"
         guid: efa1f469-107d-4329-abde-3de21019c41d
         modifyDescription: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
         source: Feat
         sourceguid: f5d7b21b-8e19-4a0c-af44-ba1e7a6875ed
+        targetPromptLabel: "Ratcatcher Title: Choose additional targets"
       source: Feat
       sourceReference:
         __typeName: SourceReference
