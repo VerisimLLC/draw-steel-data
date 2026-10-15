@@ -1471,7 +1471,7 @@ levels:
                     - __typeName: ActivatedAbilityDamageBehavior
                       chatMessage: Wall of Fire Damage
                       damageType: fire
-                      roll: Target.AurasCaster("Wall of Fire").Reason
+                      roll: Target.AurasCaster("Wall of Fire").Reason * Target.AuraSquares("Wall of Fire")
                     display:
                       bgcolor: "#ffffffff"
                       brightness: 1
@@ -1503,7 +1503,7 @@ levels:
             guid: 908f7395-772a-4951-b10b-e45bb3b25474
             iconid: ui-icons/skills/1.png
             implementation: 3
-            implementationDetails: When Persistenting Ability, the Codex does not forcible limit the location of the new wall squares.
+            implementationDetails: When persisting, the Codex does not force the added squares to touch the existing wall or stay within range.
             keywords:
               Area: true
               Fire: true
@@ -1515,9 +1515,92 @@ levels:
             objectTarget: false
             persistence:
               enabled: true
-              mode: none
+              mode: recast_new
+              promptText: extend the wall by squares equal to your Reason score
             radius: "1"
             range: "10"
+            recastNewAbility:
+              name: Wall of Fire
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: none
+              behaviors:
+              - __typeName: ActivatedAbilityAuraBehavior
+                aura:
+                  name: Wall of Fire
+                  __typeName: Aura
+                  applyto: enemies
+                  canrelocate: false
+                  display:
+                    bgcolor: "#ffffffff"
+                    brightness: 1
+                    hueshift: 0
+                    saturation: 1
+                  guid: ac1b6406-0845-4bd2-a0da-202accb0d81b
+                  modifiers: []
+                  objectid: 5619c849-e671-40e6-9624-ce75771f8884
+                  triggers:
+                  - ability:
+                      name: Wall of Fire
+                      description: ""
+                      __typeName: TriggeredAbility
+                      abilityType: none
+                      behaviors:
+                      - __typeName: ActivatedAbilityDamageBehavior
+                        chatMessage: Wall of Fire Damage
+                        damageType: fire
+                        roll: Target.AurasCaster("Wall of Fire").Reason * Target.AuraSquares("Wall of Fire")
+                      display:
+                        bgcolor: "#ffffffff"
+                        brightness: 1
+                        hueshift: 0
+                        saturation: 1
+                      guid: e213c346-2fed-478c-bf7c-a7dae49519e3
+                      iconid: ui-icons/skills/1.png
+                      modifiers: []
+                      numTargets: "1"
+                      persistence: []
+                      radius: 0
+                      range: 5
+                      repeatTargets: false
+                      silent: true
+                      strain: []
+                      targetType: self
+                      trigger: onenter
+                    trigger: onenter
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              domains:
+                class:c1e1c512-6092-423f-85b2-324547f7f390: true
+              guid: 0a398d74-23e7-4bd4-b6ae-edcf0e9c4b8d
+              iconid: ui-icons/skills/1.png
+              implementation: 3
+              joinsPersistence: true
+              keywords:
+                Area: true
+                Fire: true
+                Magic: true
+                Ranged: true
+              lineDistance: "10"
+              modifiers: []
+              numTargets: Reason
+              objectTarget: false
+              radius: "1"
+              range: "10"
+              repeatTargets: false
+              sourceReference:
+                __typeName: SourceReference
+                docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
+                page: 121
+                type: pdf
+              strain: []
+              targetType: anyspace
+              targeting: contiguous_wall
             rangeTextOverride: 10 wall within 10
             repeatTargets: false
             resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
