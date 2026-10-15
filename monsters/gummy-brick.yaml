@@ -1,0 +1,536 @@
+id: 9b8960fc-8138-479f-82ab-2de77af142f7
+description: null
+artist: null
+ctime: 1792037558608
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: 2b02a5ab-38ce-4406-b4a5-3889b80ab574
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    popoutScale: 0.5
+    portraitFrameId: db9489e4-8b35-41e9-afd2-69c5eddf6510
+    portraitId: 9f6f0eb8-2811-4789-889f-c139b4806823
+    portraitOffset:
+      x: 0
+      y: 0.1078545
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: 9b8960fc-8138-479f-82ab-2de77af142f7
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: ""
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        __typeName: CharacterAttribute
+        baseValue: -1
+      inu:
+        id: inu
+        __typeName: CharacterAttribute
+        baseValue: 1
+      mgt:
+        id: mgt
+        __typeName: CharacterAttribute
+        baseValue: 2
+      prs:
+        id: prs
+        __typeName: CharacterAttribute
+        baseValue: -2
+      rea:
+        id: rea
+        __typeName: CharacterAttribute
+        baseValue: -3
+    characterFeatures:
+    - name: Hellcharger Helm
+      description: The brick carries a Hellcharger Helm. Their Engulf ability gains the Charge keyword. Whenever the brick charges, they can move an additional 5 squares. The helm does not transfer these traits to any brick that splits off from the original gummy brick.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:43e92091-fc9a-42d4-bcb8-fc99c3ec8ccf: true
+      guid: 43e92091-fc9a-42d4-bcb8-fc99c3ec8ccf
+      implementation: 3
+      implementationDetails: "SILVER: Engulf carries the Charge keyword and the brick's charging speed is increased by 5. A brick created by Split is a fresh copy of this stat block, so it also has the helm; the Director should ignore the helm on split-off bricks."
+      modifiers:
+      - name: Hellcharger Helm
+        description: Whenever the brick charges, they can move an additional 5 squares.
+        __typeName: CharacterModifier
+        attribute: 6707d8ac-4323-47bc-9593-e36fd1ac146e
+        behavior: attribute
+        domains:
+          CharacterFeature:43e92091-fc9a-42d4-bcb8-fc99c3ec8ccf: true
+        guid: 6c38f398-b9a8-471b-8dcc-73418bc62ef2
+        operation: add
+        source: Trait
+        sourceguid: 43e92091-fc9a-42d4-bcb8-fc99c3ec8ccf
+        value: 5
+      source: Trait
+    - name: Engulfed
+      description: A creature restrained by the brick's Engulf takes 5 acid damage at the start of each of their turns.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:295f754c-f631-4688-9aef-28e5c19c1728: true
+      guid: 295f754c-f631-4688-9aef-28e5c19c1728
+      implementation: 4
+      implementationDetails: An aura on the brick (its own space and each adjacent square) deals 5 acid damage at the start of the turn of each enemy who is restrained by this brick.
+      modifiers:
+      - name: Engulfed
+        description: A creature restrained by the brick's Engulf takes 5 acid damage at the start of each of their turns.
+        __typeName: CharacterModifier
+        aura:
+          name: Engulfed
+          description: A creature restrained by the gummy brick's Engulf takes 5 acid damage at the start of each of their turns.
+          __typeName: Aura
+          applyto: enemies
+          creatureFilter: Self.Conditions has "Restrained" and ConditionCaster("Restrained") = Caster
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3a3933c2-7eae-41ca-a612-5c04d422239d
+          implementation: 4
+          modifiers:
+          - name: Engulfed
+            description: A creature restrained by the gummy brick's Engulf takes 5 acid damage at the start of each of their turns.
+            __typeName: CharacterModifier
+            behavior: trigger
+            guid: 101efc1b-0d6f-42d0-8db4-b11fc314c894
+            source: Aura
+            sourceguid: 3a3933c2-7eae-41ca-a612-5c04d422239d
+            triggeredAbility:
+              name: Engulfed
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                damageType: acid
+                roll: "5"
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 4f65b81d-88fd-4594-a954-55545f894929
+              hostile: true
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              mandatory: true
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              trigger: beginturn
+              triggerPrompt: Engulfed by the gummy brick. Take 5 acid damage.
+          triggers: []
+        behavior: aura
+        domains:
+          CharacterFeature:295f754c-f631-4688-9aef-28e5c19c1728: true
+        guid: 08d6cd14-49a4-4668-afad-2c55104e8b04
+        radius: "1"
+        seq: d6b43408-ff6c-4700-bd88-88309e3f4376
+        source: Trait
+        sourceguid: 295f754c-f631-4688-9aef-28e5c19c1728
+      source: Trait
+      tags:
+        Hidden: true
+    - name: The Brick Consumes
+      description: "Trigger: A creature or object enters a square adjacent to the brick. The brick uses Engulf against the triggering creature and has a double edge."
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:337fd5d5-e19b-4d66-bc90-7582b4fcd387: true
+      guid: 337fd5d5-e19b-4d66-bc90-7582b4fcd387
+      implementation: 3
+      implementationDetails: "SILVER: Fires as an optional free triggered action when another creature finishes moving adjacent to the brick, then uses Engulf with a double edge (the Director picks the triggering creature as the target). It does not fire for objects or for a creature that only passes through an adjacent square, and the Engulf used this way has no 2 Malice option."
+      modifiers:
+      - name: The Brick Consumes
+        description: "Trigger: A creature or object enters a square adjacent to the brick. The brick uses Engulf against the triggering creature and has a double edge."
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:337fd5d5-e19b-4d66-bc90-7582b4fcd387: true
+        guid: 892fbe5a-3dce-4a07-9eb5-ec34393d96eb
+        source: Trait
+        sourceguid: 337fd5d5-e19b-4d66-bc90-7582b4fcd387
+        triggeredAbility:
+          name: The Brick Consumes
+          description: The brick uses Engulf against the triggering creature and has a double edge.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Engulf (The Brick Consumes)
+              description: A size 2 or smaller creature restrained this way is pulled into the brick's space, moves with the brick, and takes 5 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                roll: 2d10 + Highest Characteristic
+                tiers:
+                - 8 acid damage; A<0 dazed (save ends)
+                - 12 acid damage; A<1 dazed (save ends)
+                - 16 acid damage; A<2 restrained (save ends)
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 8027b638-0758-4ffb-80fe-a9b0c6b25d38
+              iconid: ui-icons/skills/1.png
+              keywords:
+                Charge: true
+                Melee: true
+                Strike: true
+                Weapon: true
+              modifiers:
+              - name: The Brick Consumes
+                description: The brick uses Engulf against the triggering creature with a double edge.
+                __typeName: CharacterModifier
+                activationCondition: true
+                behavior: power
+                guid: adfa7c29-4ebc-402f-bada-90cf65cff24c
+                keywords: []
+                modtype: double_edge
+                rollType: ability_power_roll
+                source: Ability
+              numTargets: "1"
+              objectTarget: true
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: target
+            invokeOnCaster: true
+            promptText: The brick uses Engulf against the triggering creature with a double edge.
+          castImmediately: false
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d558be3d-cc09-4426-8b61-8407a3a0bf83
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 3
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: other
+          subjectRange: "1"
+          targetType: self
+          trigger: finishmove
+          triggerPrompt: A creature entered a square adjacent to the gummy brick. The brick can use Engulf against them with a double edge.
+      source: Trait
+      tags:
+        Trigger: true
+    - name: Split
+      description: The gummy brick splits to create another gummy brick, each with half their current Stamina before splitting. The new brick has none of the benefits, effects, or conditions affecting the original.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:21918623-f5b1-40d6-8fae-e2c291f10f75: true
+      guid: 21918623-f5b1-40d6-8fae-e2c291f10f75
+      implementation: 4
+      implementationDetails: The damage trigger summons a fresh copy and independently reduces both the original and the new gummy brick to half the original's current Stamina.
+      modifiers:
+      - name: Split
+        description: The gummy brick splits to create another gummy brick, each with half their current Stamina before splitting. The new brick has none of the benefits, effects, or conditions affecting the original.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:21918623-f5b1-40d6-8fae-e2c291f10f75: true
+        guid: 7579ac41-35c8-4c09-83a4-ba128c106cca
+        source: Character Feature
+        sourceguid: 21918623-f5b1-40d6-8fae-e2c291f10f75
+        triggeredAbility:
+          name: Split
+          description: The gummy brick splits to create another gummy brick, each with half their current Stamina before splitting. The new brick has none of the benefits, effects, or conditions affecting the original.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilitySummonBehavior
+                bestiaryFilter: Beast.Name = Invoker.Name
+                casterChoosesCreatures: false
+                casterControls: false
+                groupInitiativeWithCaster: true
+                monsterType: custom
+              - __typeName: ActivatedAbilityDamageBehavior
+                cannotBeReduced: true
+                doesNotTrigger: true
+                roll: Maximum Stamina - (Invoker.Stamina * 0.5)
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 708cf0a1-2f9d-4e6d-b2b6-c0ffb4500b42
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: emptyspace
+            promptText: Split
+          - __typeName: ActivatedAbilityDamageBehavior
+            cannotBeReduced: true
+            doesNotTrigger: true
+            roll: Stamina * 0.5
+          castImmediately: false
+          conditionFormula: Stamina > 1
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 094fc347-8f9f-4da6-a9c4-a73be2b16063
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
+          mandatoryDifferentPlayer: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: The gummy brick splits to create another gummy brick, each with half their current Stamina before splitting.
+          whenActive: always
+      source: Character Feature
+      tags:
+        Trigger: true
+    - name: Translucent Brick
+      description: The brick completely occupies their space, blocking line of effect for enemies. The brick is hidden until they act.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:4499acfd-4389-4adf-b91b-f03b065b7ba2: true
+      guid: 4499acfd-4389-4adf-b91b-f03b065b7ba2
+      implementation: 3
+      implementationDetails: "SILVER: The brick's own space blocks line of effect for enemies, and the brick enters play hidden (until end of encounter or until hidden ends normally). Ending hidden when the brick acts follows the standard hidden rules and is not forced by this trait."
+      modifiers:
+      - name: Translucent Brick
+        description: The brick completely occupies their space, blocking line of effect for enemies.
+        __typeName: CharacterModifier
+        aura:
+          name: Translucent Brick
+          description: The brick completely occupies their space, blocking line of effect for enemies.
+          __typeName: Aura
+          applyto: enemies
+          blocks_line_of_effect: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a67f36e0-eb43-4b3e-8c0b-18c36ad54dab
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        behavior: aura
+        domains:
+          CharacterFeature:4499acfd-4389-4adf-b91b-f03b065b7ba2: true
+        guid: 07c21f48-7944-4539-a50a-dfb34635e46a
+        radius: "0"
+        seq: 65fc7b0c-ef37-43f3-8555-33aaf8af6a8c
+        source: Trait
+        sourceguid: 4499acfd-4389-4adf-b91b-f03b065b7ba2
+      source: Trait
+    cr: 1
+    creatureSize: "2"
+    damage_taken: 0
+    equipment: []
+    ev: 12
+    footprintStyle: trail
+    groupid: 171c1ebf-ae57-4e86-bfd1-de9fdc4968f1
+    inflictedConditions:
+      31daf7f6-f77c-4f73-8eab-43e2d0f123c0:
+        duration: eoe
+        riders: []
+        stacks: 1
+    innateActivatedAbilities:
+    - name: Engulf
+      description: |-
+        A size 2 or smaller creature restrained this way is pulled into the brick's space, moves with the brick, and takes 5 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.
+
+        **2 Malice:** If the brick was hidden from the target, the potency increases by 1 and targets Intuition instead of Agility.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 8 acid damage; A<0 dazed (save ends)
+        - 12 acid damage; A<1 dazed (save ends)
+        - 16 acid damage; A<2 restrained (save ends)
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 35ffd27e-aa53-461d-8805-05383dcad5db
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: "SILVER: Damage, dazed and restrained (with potency), the Charge keyword, the 2 Malice Intuition variant, and the 5 acid damage at the start of each engulfed creature's turn (see the Engulfed aura) are automated. Pulling the target into the brick's space, moving them with the brick, and placing them adjacent when the restraint ends are done by hand. The 2 Malice variant does not check that the brick was hidden from the target."
+      keywords:
+        Charge: true
+        Melee: true
+        Strike: true
+        Weapon: true
+      modeList:
+      - text: Normal
+      - hasAbility: true
+        rules: If the brick was hidden from the target, the potency increases by 1 and targets Intuition instead of Agility.
+        text: 2 Malice
+        variation:
+          name: Engulf
+          description: A size 2 or smaller creature restrained this way is pulled into the brick's space, moves with the brick, and takes 5 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 8 acid damage; I<1 dazed (save ends)
+            - 12 acid damage; I<2 dazed (save ends)
+            - 16 acid damage; I<3 restrained (save ends)
+          categorization: Signature Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d2c9acb8-bd72-4801-8ccb-f8e3cbb33f6c
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Charge: true
+            Melee: true
+            Strike: true
+            Weapon: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          persistence: []
+          range: 1
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: "2"
+          strain: []
+          targetType: target
+      modifiers: []
+      multipleModes: variations
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 1
+      repeatTargets: false
+      resourceCost: none
+      resourceNumber: ""
+      strain: []
+      targetType: target
+    innateAttacks: []
+    innateLanguages: {}
+    inventory: []
+    keywords:
+      Ooze: true
+      Soulless: true
+    levelChoices: []
+    max_hitpoints: 40
+    max_hitpoints_roll: "40"
+    minion: false
+    monster_category: Monster
+    monster_type: Gummy Brick
+    movementSpeeds: []
+    notes:
+    - text: ""
+      title: Monster Notes
+    ongoingEffects: []
+    opportunityAttack: 5
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: acid
+      dr: 3
+    resources: []
+    role: Elite Ambusher
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 2
+    titles: []
+    traitNames: []
+    walkingSpeed: 5
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: 4
+  summonerid: null
+  tokenType: null
+  updateid: 13c37916-5b4c-4013-b137-e73f73e23e7a
+ord: 7
+parentFolder: 18b8aee2-b927-4c4f-b978-2526f38bdf87

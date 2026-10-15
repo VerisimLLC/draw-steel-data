@@ -1,0 +1,201 @@
+id: 9fa01745-6ef5-4931-81b6-023fe22cca45
+description: Rakiling
+artist: null
+ctime: 1792037742339
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: 9242a1db-25ff-403c-908c-010ef15dc821
+    portraitId: a529eb99-e5be-4dcc-869a-1e976caff5af
+    portraitOffset:
+      x: 0.01171899
+      y: -0.02343762
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1.047059
+  bestiaryId: 9fa01745-6ef5-4931-81b6-023fe22cca45
+  createdTimestamp: 1792037742339
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ''
+    updateid: 0
+  mountedBy: {}
+  ownerId: ''
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 5
+      inu:
+        id: inu
+        baseValue: 3
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: -1
+      rea:
+        id: rea
+        baseValue: 2
+    characterFeatures:
+    - name: Breacher
+      description: While swimming, the rakiling can jump 5 squares as part of their movement.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:3b226fa5-7e4f-48e2-839e-24f3debd15f5: true
+      guid: 3b226fa5-7e4f-48e2-839e-24f3debd15f5
+      implementation: 1
+      implementationDetails: Not automated - the engine has no way to let a creature jump as part of its own movement (only Charge has a jump option). While the rakiling is swimming, the Director moves it over obstacles by hand (a jump of up to 5 squares).
+      modifiers: []
+      source: Trait
+    - name: Soul Sight
+      description: Any creature within 2 squares of the rakiling can't be hidden from them.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:d6f69650-d414-486f-adcc-5c582c61f677: true
+      guid: d6f69650-d414-486f-adcc-5c582c61f677
+      implementation: 4
+      modifiers:
+      - attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        behavior: attribute
+        value: 2
+        name: Soul Sight
+        description: Any creature within 2 squares of the rakiling can't be hidden from them.
+        __typeName: CharacterModifier
+        domains:
+          CharacterFeature:d6f69650-d414-486f-adcc-5c582c61f677: true
+        guid: 2043bacc-437c-4f86-b01e-e038d3dcce79
+        source: Trait
+        sourceguid: d6f69650-d414-486f-adcc-5c582c61f677
+      source: Trait
+    cr: 10
+    creatureSize: 1T
+    damage_taken: 0
+    equipment: []
+    ev: 12
+    footprintStyle: talons
+    groupid: 2975ac03-05e1-422f-945d-239c08336bf1
+    inflictedConditions: []
+    initiativeGrouping: bc5e7a61-229b-408c-9946-2d173d1b1115
+    innateActivatedAbilities:
+    - name: Endless Biting
+      description: The rakiling attaches to the target and moves with them while they are bleeding. The target takes damage from bleeding at the start of each turn of combat until the condition ends.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 4 damage; A<3 bleeding (save ends)
+        - 7 damage; A<4 bleeding (save ends)
+        - 9 damage; A<5 bleeding (save ends)
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: Target.Conditions has "Bleeding" and not Target.Object
+        ongoingEffect: 5ec3b973-6052-4a20-8141-4069b27f1fe8
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityClimbCreatureBehavior
+        filterTarget: Target.Conditions has "Bleeding" and not Target.Object
+        operation: climb
+      categorization: Signature Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ''
+      guid: 4b0c6f60-9bc7-483f-b504-a6b586f0bf7d
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      modifiers: []
+      numTargets: 1
+      range: 1
+      repeatTargets: false
+      targetType: target
+      implementationDetails: "SILVER: Damage and bleeding are automated. A bleeding target gets the Endless Biting effect, which makes them lose 1d6 + their level Stamina at the start of every turn of combat until the bleeding ends, and the rakiling climbs onto them (Climb Creature), so it moves with them. Getting the rakiling off when the bleeding ends is not automated - the Director moves it off by hand (or the target uses Shake Off)."
+      objectTarget: true
+      targetTextOverride: One creature or object per minion
+    innateAttacks: []
+    innateLanguages:
+      ebc44aa6-305a-471e-843a-ef44a7c23810: true
+    keywords:
+      Abyssal: true
+      Demon: true
+    levelChoices: []
+    max_hitpoints: 14
+    max_hitpoints_roll: '14'
+    minion: true
+    monster_category: Monster
+    monster_type: Rakiling
+    movementSpeeds:
+      swim: 6
+    opportunityAttack: 4
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: holy
+      dr: -5
+    resources: []
+    role: Minion Hexer
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 0
+    titles: []
+    traitNames: []
+    walkingSpeed: 6
+    minionSquad: Rakiling Squad 1
+    withCaptain: +4 damage bonus to strikes
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: 0
+  summonerid: null
+  tokenType: null
+  updateid: 0245708d-ea78-472d-b94c-93722fd58e06
+mtime: 1792037742339
+ord: 0
+parentFolder: 481cfcf5-4411-44af-8316-d740deca8552

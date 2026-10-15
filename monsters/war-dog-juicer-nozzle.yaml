@@ -1,0 +1,307 @@
+id: 6ad9752a-8c38-4584-9718-d29b293d6ae2
+description: War Dog Juicer Nozzle
+artist: null
+ctime: 1791936000000
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: 3e14cacd-4ce1-4db5-aec7-8b33aa99f944
+    portraitId: f30a779f-6fb7-4f03-bf77-b10c3e633a8d
+    portraitOffset:
+      x: 0.04422558
+      y: 0.1327421
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: 6ad9752a-8c38-4584-9718-d29b293d6ae2
+  createdTimestamp: 1791936000000
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: null
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 5
+      inu:
+        id: inu
+        baseValue: 0
+      mgt:
+        id: mgt
+        baseValue: 4
+      prs:
+        id: prs
+        baseValue: 0
+      rea:
+        id: rea
+        baseValue: 0
+    characterFeatures:
+    - name: Fuel Level
+      description: The juicer's Juice Spray and Juice Up abilities refer to their Fuel Level. A juicer's Fuel Level is equal to the number of inert war dogs in juicer beds powering the Iron Scorpion.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:e17ca8a8-aabe-4eb6-b398-102eb7b56225: true
+      guid: e17ca8a8-aabe-4eb6-b398-102eb7b56225
+      implementation: 3
+      implementationDetails: The engine can't count the inert juicers in the beds, so Juice Spray and Juice Up each ask for the current Fuel Level (1-8) as a mode when cast; the chosen mode sets the acid damage or temporary Stamina.
+      modifiers: []
+      source: Trait
+    - name: Connected
+      description: The juicer is attached to the ceiling. The juicer is destroyed if they are knocked prone or moved away from the ceiling.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:8c050b33-8be0-4b19-8d8d-2e64e07da499: true
+      guid: 8c050b33-8be0-4b19-8d8d-2e64e07da499
+      implementation: 3
+      implementationDetails: Knocking the juicer prone destroys them automatically. When the juicer is force moved, the Director is prompted and confirms whether they were moved away from the ceiling, which destroys them. Being attached to the ceiling is not modeled - place the juicer on the ceiling by hand.
+      modifiers:
+      - name: Connected
+        description: The juicer is destroyed if they are knocked prone.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:8c050b33-8be0-4b19-8d8d-2e64e07da499: true
+        guid: b56b7057-ac4a-42b5-9a92-36ea88522842
+        source: Trait
+        sourceguid: 8c050b33-8be0-4b19-8d8d-2e64e07da499
+        triggeredAbility:
+          name: Connected
+          description: The juicer is knocked loose from the ceiling and destroyed.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDestroyBehavior
+            applyto: caster
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          conditionFormula: Condition = "Prone"
+          guid: 7bb5ebac-9fcc-42ef-9b6a-c854a456c519
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: inflictcondition
+      - name: Connected
+        description: The juicer is destroyed if they are moved away from the ceiling.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:8c050b33-8be0-4b19-8d8d-2e64e07da499: true
+        guid: 03328eb7-2776-4ed5-a22f-4a90e4b0345c
+        source: Trait
+        sourceguid: 8c050b33-8be0-4b19-8d8d-2e64e07da499
+        triggeredAbility:
+          name: Connected
+          description: The juicer is pulled from the ceiling and destroyed.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDestroyBehavior
+            applyto: caster
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 0fe22bef-e7e1-4bf9-ae4a-8e649f5bb63c
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: forcemove
+          triggerPrompt: Was the juicer moved away from the ceiling? If so, they are destroyed.
+      source: Trait
+    cr: 10
+    creatureSize: 1S
+    damage_taken: 0
+    equipment: []
+    ev: 12
+    footprintStyle: boots
+    groupid: f3f01a76-0278-4aea-9ac0-fc527ec3d731
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Juice Spray
+      description: The target takes acid damage equal to the juicer's Fuel Level.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: targets
+        chatMessage: Juice Spray
+        damageType: acid
+        roll: Mode
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 860a7632-0b8f-489a-8d70-57a5f0c72a26
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: Choose the juicer's current Fuel Level as the mode when casting; the target takes that much acid damage.
+      keywords:
+        Magic: true
+        Ranged: true
+        Strike: true
+      modeList:
+      - text: Fuel Level 1
+      - text: Fuel Level 2
+      - text: Fuel Level 3
+      - text: Fuel Level 4
+      - text: Fuel Level 5
+      - text: Fuel Level 6
+      - text: Fuel Level 7
+      - text: Fuel Level 8
+      modifiers: []
+      multipleModes: true
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 5
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 191
+      strain: []
+      targetType: target
+    - name: Juice Up
+      description: The target gains temporary Stamina equal to the juicer's Fuel Level. As a free triggered action when the target deals damage with a melee ability, the target can lose this temporary Stamina to deal extra damage equal to the temporary Stamina spent.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        hasTemporaryHitpoints: true
+        ongoingEffect: 5c3b4864-2e6f-4999-9b6c-b717c34fe110
+        ongoingEffectCustom: false
+        temporaryHitpoints: Mode
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: c1ff168b-61ab-4062-a36b-c55aca8cc4f8
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: "SILVER: Choose the juicer's current Fuel Level as the mode when casting; the target gets the Juiced Up effect, which grants that much temporary Stamina. Their melee power rolls then offer an unchecked roll-dialog option to add their current temporary Stamina as extra damage, which ends the effect and with it the temporary Stamina. The grant replaces any temporary Stamina the target already had, even a larger amount, and a melee ability without a power roll does not offer the option."
+      keywords:
+        Magic: true
+        Melee: true
+      modeList:
+      - text: Fuel Level 1
+      - text: Fuel Level 2
+      - text: Fuel Level 3
+      - text: Fuel Level 4
+      - text: Fuel Level 5
+      - text: Fuel Level 6
+      - text: Fuel Level 7
+      - text: Fuel Level 8
+      modifiers: []
+      multipleModes: true
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 191
+      strain: []
+      targetType: target
+    innateAttacks: []
+    innateLanguages:
+      9f8bf21e-a483-46e7-aa12-dbe63591d928: true
+    keywords:
+      Construct: true
+      Soulless: true
+      War Dog: true
+    levelChoices: []
+    max_hitpoints: 15
+    max_hitpoints_roll: "15"
+    minion: true
+    monster_category: Monster
+    monster_type: War Dog Juicer Nozzle
+    movementSpeeds:
+      climb: 3
+    opportunityAttack: 4
+    resistances: []
+    resources: []
+    role: Minion Support
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 3
+    traitNames: []
+    walkingSpeed: 3
+    withCaptain: "-"
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: 15d7ff47-546e-481e-a239-7d58a8b9fe64
+mtime: 1791936000000
+ord: 9
+parentFolder: e0fe4628-5728-4664-a543-30bf2efaf46e

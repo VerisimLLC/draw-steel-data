@@ -1,0 +1,481 @@
+id: 99414df8-3a6d-4bdb-9bf4-63cb408fff56
+description: Eranya Ala'ral
+artist: null
+ctime: 1792000000000
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: e0946fe5-d98e-4543-bc4a-407534377572
+    portraitId: d4c534ff-d6e4-4cea-b9be-99e268ab67cd
+    portraitOffset:
+      x: -0.01105784
+      y: 0.09955637
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 0.7876106
+  bestiaryId: 99414df8-3a6d-4bdb-9bf4-63cb408fff56
+  createdTimestamp: 1792000000000
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: ""
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 3
+      mgt:
+        id: mgt
+        baseValue: 0
+      prs:
+        id: prs
+        baseValue: 2
+      rea:
+        id: rea
+        baseValue: 4
+    availableTriggers: []
+    characterFeatures:
+    - name: Undead Summoner
+      description: |-
+        Eranya can command up to two squads of minions with a maximum of 8 minions per squad. She can have only one squad of signature minions active at any time.
+        At the start of each of Eranya's turns, up to four skeletons appear in unoccupied spaces within 5 squares of Eranya. On each of Eranya's turns, she directs the squad of skeletons to move and use a main action.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:835960b4-8b2f-4a40-8fda-ef2fd08a7c7e: true
+      guid: 835960b4-8b2f-4a40-8fda-ef2fd08a7c7e
+      implementation: 3
+      implementationDetails: The start-of-turn skeletons are automated (the Director is prompted, places up to four skeletons within 5 squares, and picks their squad). The squad limits (two squads, 8 minions each, one signature squad) are not enforced.
+      modifiers:
+      - name: Undead Summoner
+        description: At the start of each of Eranya's turns, up to four skeletons appear in unoccupied spaces within 5 squares of Eranya.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:835960b4-8b2f-4a40-8fda-ef2fd08a7c7e: true
+        guid: e61a0500-f1dd-4f3b-9a18-feda790b8ce4
+        source: Trait
+        sourceguid: 835960b4-8b2f-4a40-8fda-ef2fd08a7c7e
+        triggeredAbility:
+          name: Undead Summoner
+          description: Up to four skeletons appear in unoccupied spaces within 5 squares of Eranya.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            allCreaturesTheSame: true
+            casterChoosesCreatures: false
+            chooseSquad: true
+            choosePlacement: true
+            groupInitiativeWithCaster: true
+            monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+            numSummons: "4"
+            summonRange: "5"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            CharacterFeature:835960b4-8b2f-4a40-8fda-ef2fd08a7c7e: true
+          guid: d69c4010-3fc9-4e8f-94d3-78d21c0b5d39
+          iconid: ui-icons/skills/1.png
+          implementation: 3
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: beginturn
+          triggerPrompt: "Undead Summoner: up to four skeletons appear in unoccupied spaces within 5 squares of Eranya."
+          whenActive: combat
+      source: Trait
+    - name: Shifting Ring
+      description: Eranya has a silvery metal ring that seems to vanish and reappear on her hand. When targeted by an effect other than moving that causes Eranya to teleport, she can teleport up to 3 additional squares.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f79d8bfb-5474-47f1-8836-e580d0aee75e: true
+      guid: f79d8bfb-5474-47f1-8836-e580d0aee75e
+      implementation: 1
+      implementationDetails: Not automated - add 3 squares by hand when an effect other than moving makes Eranya teleport.
+      modifiers: []
+      source: Trait
+    - name: Death Ward
+      description: "Trigger: The target is targeted by a strike. Effect: Eranya summons a skeleton into an unoccupied space adjacent to the target. They become the new target of the strike. The target can shift into any square adjacent to the minion. 1 Malice: Instead, Eranya summons a zombie lumberer into an unoccupied space adjacent to the target to take the strike."
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:9158438b-7ecb-4411-bba4-ed7893a2b487: true
+      guid: 9158438b-7ecb-4411-bba4-ed7893a2b487
+      implementation: 2
+      modifiers:
+      - name: Death Ward
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Death Ward
+          __typeName: TriggeredAbilityDisplay
+          cost: 2 Malice
+          distance: Ranged 10
+          effect: Eranya summons a skeleton into an unoccupied space adjacent to the target. They become the new target of the strike. The target can shift into any square adjacent to the minion. 1 Malice - Instead, Eranya summons a zombie lumberer into an unoccupied space adjacent to the target to take the strike.
+          guid: 24eb4cdf-a4c4-48dd-b8c4-114fc08721db
+          keywords: {}
+          target: Self or one ally
+          trigger: The target is targeted by a strike.
+          type: trigger
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:9158438b-7ecb-4411-bba4-ed7893a2b487: true
+        guid: 7cede6fa-d003-484a-816b-c3e1fcec7bec
+        source: Trait
+        sourceguid: 9158438b-7ecb-4411-bba4-ed7893a2b487
+      - name: Death Ward
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Death Ward
+          description: Eranya summons a skeleton (or, for 1 more Malice, a zombie lumberer) into an unoccupied space adjacent to the target. The minion becomes the new target of the strike, and the target can shift into any square adjacent to the minion.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilitySummonBehavior
+            applyto: targets
+            casterChoosesCreatures: false
+            chooseSquad: true
+            groupInitiativeWithCaster: true
+            modesSelected:
+            - 1
+            monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+            numSummons: "1"
+            tweakPlacement: true
+            tweakRadius: "1"
+            tweakMessage: placed adjacent to the target. The skeleton becomes the new target of the strike.
+          - __typeName: ActivatedAbilitySummonBehavior
+            applyto: targets
+            casterChoosesCreatures: false
+            chooseSquad: true
+            groupInitiativeWithCaster: true
+            modesSelected:
+            - 2
+            monsterType: edf6be40-04f5-4b65-8120-d936df9370c2
+            numSummons: "1"
+            tweakPlacement: true
+            tweakRadius: "1"
+            tweakMessage: placed adjacent to the target. The zombie lumberer becomes the new target of the strike.
+          categorization: Trigger
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          flavor: ""
+          guid: bfa53426-a1ce-4de4-b9a3-01c8477bbdb5
+          iconid: ui-icons/skills/1.png
+          implementation: 2
+          implementationDetails: Use this manually when Eranya or an ally within 10 squares is targeted by a strike. The minion is summoned adjacent to the target and the Malice is spent automatically; redirecting the strike to the minion and the target's optional shift are done by hand.
+          keywords: {}
+          modeList:
+          - text: Skeleton (2 Malice)
+          - rules: Instead, Eranya summons a zombie lumberer into an unoccupied space adjacent to the target to take the strike.
+            text: Zombie Lumberer (3 Malice)
+          modifiers: []
+          multipleModes: true
+          numTargets: "1"
+          persistence: []
+          range: 10
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 2 when Mode = 1 else 3
+          selfTarget: true
+          sourceReference:
+            __typeName: SourceReference
+            docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+            page: 133
+          strain: []
+          targetAllegiance: ally
+          targetTextOverride: Self or one ally
+          targetType: target
+        behavior: activated
+        domains:
+          CharacterFeature:9158438b-7ecb-4411-bba4-ed7893a2b487: true
+        guid: f6846426-4db3-419e-b9a7-8bcad366c7da
+        source: Trait
+        sourceguid: 9158438b-7ecb-4411-bba4-ed7893a2b487
+      source: Trait
+      tags:
+        Trigger: true
+    cr: 8
+    creatureSize: 1M
+    damage_taken: 0
+    equipment: []
+    ev: 40
+    footprintStyle: boots
+    groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Glimpse of the Grave
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 8 psychic damage; R<2 frightened (EoT)
+        - 13 psychic damage; R<3 frightened (EoT)
+        - 17 psychic damage; R<4 frightened (EoT)
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 41e35ea1-fa4e-4306-aa18-280a05a5210a
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Magic: true
+        Ranged: true
+        Strike: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 10
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 133
+      strain: []
+      targetType: target
+    - name: Call Forth
+      description: Eranya summons the listed number of minions for their Malice cost into unoccupied spaces within distance. If the minions are a part of a new squad, Eranya directs the squad to move and use a main action on each of their turns.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 1
+        monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+        numSummons: "1"
+        summonRange: "10"
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 2
+        monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+        numSummons: "2"
+        summonRange: "10"
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 3
+        monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+        numSummons: "3"
+        summonRange: "10"
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 4
+        monsterType: 45bc13b2-8863-4120-8cb3-0202f828c525
+        numSummons: "4"
+        summonRange: "10"
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 5
+        monsterType: edf6be40-04f5-4b65-8120-d936df9370c2
+        numSummons: "2"
+        summonRange: "10"
+      - __typeName: ActivatedAbilitySummonBehavior
+        allCreaturesTheSame: true
+        casterChoosesCreatures: false
+        chooseSquad: true
+        choosePlacement: true
+        groupInitiativeWithCaster: true
+        modesSelected:
+        - 6
+        monsterType: 7d243ece-10d4-45c5-807a-9877b19a242f
+        numSummons: "2"
+        summonRange: "10"
+      categorization: Heroic Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: c761d744-ecf0-44d6-9197-b53611a51a59
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: Summoning and the Malice cost are automated through the mode choice (skeletons 1 Malice each, two zombie lumberers for 2 Malice, two false vampires for 6 Malice). The minions are the Summoner-class Circle of Graves stat blocks, whose Stamina differs from the delve's printed values (skeleton 4, zombie lumberer 14, false vampire 22) - adjust Stamina by hand if needed.
+      keywords:
+        Magic: true
+        Ranged: true
+      modeList:
+      - text: One skeleton (1 Malice)
+      - text: Two skeletons (2 Malice)
+      - text: Three skeletons (3 Malice)
+      - text: Four skeletons (4 Malice)
+      - text: Two zombie lumberers (2 Malice)
+      - text: Two false vampires (6 Malice)
+      modifiers: []
+      multipleModes: true
+      numTargets: "1"
+      persistence: []
+      range: 10
+      rangeTextOverride: Ranged 10
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: (Mode <= 4) * Mode + (Mode = 5) * 2 + (Mode = 6) * 6
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 133
+      strain: []
+      targetTextOverride: Special
+      targetType: self
+    - name: Determination
+      description: Eranya ends the frightened, slowed, or weakened condition on herself.
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        applyto: caster
+        conditions:
+        - 1211270f-bfce-45a6-b937-d72f0e8a06a8
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - 567a3454-ead6-4416-b338-ed73d64b7805
+        mode: conditions
+        purgeType: one
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 7282a4a0-9668-4c42-b598-0bef1ddda8ef
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords: {}
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 133
+      strain: []
+      targetType: self
+    innateAttacks: []
+    innateLanguages:
+      9f8bf21e-a483-46e7-aa12-dbe63591d928: true # Caelian
+    keywords:
+      Human: true
+      Humanoid: true
+    levelChoices: []
+    max_hitpoints: 180
+    max_hitpoints_roll: "180"
+    minion: false
+    monster_category: Monster
+    monster_type: Eranya Ala'ral
+    movementSpeeds:
+      teleport: 5
+    notes:
+    - text: ""
+      title: Monster Notes
+    opportunityAttack: 8
+    resistances: []
+    resources: []
+    role: Elite Controller
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 1
+    titles: []
+    traitNames: []
+    walkingSpeed: 5
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: 8f5e5790-682a-4946-b817-b3b2fb49c77f
+mtime: 1792000000000
+ord: 9
+parentFolder: 7fcca4d0-0ce3-4e95-946b-bd6053158331

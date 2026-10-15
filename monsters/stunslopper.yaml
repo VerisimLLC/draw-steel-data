@@ -1,0 +1,356 @@
+id: fe144331-628e-4ce0-87f0-56d1f1722503
+description: null
+artist: null
+ctime: 1792037558608
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: 2b02a5ab-38ce-4406-b4a5-3889b80ab574
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 0.3763961
+    frameHueShift: 0.3591881
+    frameSaturation: 0.9854543
+    offtokenPortraitId: af27004f-eef7-4bac-92c6-26a8351650ad
+    popoutScale: 0.49
+    portraitFrameId: ac7e5d6a-bddf-43c3-83ee-f962e7094076
+    portraitId: 7bec2c34-3d9b-4b95-96c4-685e29613a89
+    portraitOffset:
+      x: 0.1120024
+      y: 0
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 1
+  bestiaryId: fe144331-628e-4ce0-87f0-56d1f1722503
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: ""
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        __typeName: CharacterAttribute
+        baseValue: 0
+      inu:
+        id: inu
+        __typeName: CharacterAttribute
+        baseValue: -1
+      mgt:
+        id: mgt
+        __typeName: CharacterAttribute
+        baseValue: 1
+      prs:
+        id: prs
+        __typeName: CharacterAttribute
+        baseValue: 2
+      rea:
+        id: rea
+        __typeName: CharacterAttribute
+        baseValue: -1
+    characterFeatures:
+    - name: Climb Speed
+      description: ""
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:e728356b-f60e-4317-b65f-e01f98dc6461: true
+      guid: e728356b-f60e-4317-b65f-e01f98dc6461
+      implementation: 4
+      modifiers:
+      - name: Climb Speed
+        description: ""
+        __typeName: CharacterModifier
+        attribute: climb
+        behavior: attribute
+        domains:
+          CharacterFeature:e728356b-f60e-4317-b65f-e01f98dc6461: true
+        guid: d8ad1941-be59-4877-b543-2764217852f1
+        source: Character Feature
+        sourceguid: e728356b-f60e-4317-b65f-e01f98dc6461
+        value: 1
+      source: Character Feature
+      tags:
+        Hidden: true
+    - name: Split
+      description: The stunslopper splits to create another stunslopper, each with half their current Stamina before splitting. The new stunslopper has none of the benefits, effects, or conditions affecting the original.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:134f765e-67b8-49d9-976c-ac30db08dac6: true
+      guid: 134f765e-67b8-49d9-976c-ac30db08dac6
+      implementation: 4
+      implementationDetails: The damage trigger summons a fresh copy and independently reduces both the original and the new stunslopper to half the original's current Stamina.
+      modifiers:
+      - name: Split
+        description: The stunslopper splits to create another stunslopper, each with half their current Stamina before splitting. The new stunslopper has none of the benefits, effects, or conditions affecting the original.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:134f765e-67b8-49d9-976c-ac30db08dac6: true
+        guid: 74a8a4f9-aee8-41e6-b5e0-f05306c72a3f
+        source: Character Feature
+        sourceguid: 134f765e-67b8-49d9-976c-ac30db08dac6
+        triggeredAbility:
+          name: Split
+          description: The stunslopper splits to create another stunslopper, each with half their current Stamina before splitting. The new stunslopper has none of the benefits, effects, or conditions affecting the original.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: 5e551b7d-17fb-4099-a303-bafb3c146f98
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilitySummonBehavior
+                bestiaryFilter: Beast.Name = Invoker.Name
+                casterChoosesCreatures: false
+                casterControls: false
+                groupInitiativeWithCaster: true
+                monsterType: custom
+              - __typeName: ActivatedAbilityDamageBehavior
+                cannotBeReduced: true
+                doesNotTrigger: true
+                roll: Maximum Stamina - (Invoker.Stamina * 0.5)
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 80a023dc-c65f-4f96-8067-7bdc414e22cb
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: emptyspace
+            promptText: Split
+          - __typeName: ActivatedAbilityDamageBehavior
+            cannotBeReduced: true
+            doesNotTrigger: true
+            roll: Stamina * 0.5
+          castImmediately: false
+          conditionFormula: Stamina > 1
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: bbebc5a0-c0ed-4efb-a6fd-fe8497adc60b
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
+          mandatoryDifferentPlayer: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: The stunslopper splits to create another stunslopper, each with half their current Stamina before splitting.
+          whenActive: always
+      source: Character Feature
+      tags:
+        Trigger: true
+    - name: Mind Sense
+      description: At the start of each of their turns, the stunslopper automatically knows the location of each creature who has a Reason score of 0 or higher within 10 squares of them.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:0edffbc8-e173-4ac4-9111-8070544b7cd3: true
+      guid: 0edffbc8-e173-4ac4-9111-8070544b7cd3
+      implementation: 3
+      implementationDetails: "SILVER: Creatures within 10 squares can't stay hidden from the stunslopper (Ignore Hidden Within Range 10). This applies at all times rather than only at the start of its turns, and it does not exclude creatures with a negative Reason score - the Director can ignore it against such a creature."
+      modifiers:
+      - name: Mind Sense
+        description: At the start of each of their turns, the stunslopper automatically knows the location of each creature who has a Reason score of 0 or higher within 10 squares of them.
+        __typeName: CharacterModifier
+        attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
+        behavior: attribute
+        domains:
+          CharacterFeature:0edffbc8-e173-4ac4-9111-8070544b7cd3: true
+        guid: cf3c96b9-4474-4f6a-88bd-4b0108dc2b6b
+        source: Trait
+        sourceguid: 0edffbc8-e173-4ac4-9111-8070544b7cd3
+        value: 10
+      source: Trait
+    cr: 3
+    creatureSize: "2"
+    damage_taken: 0
+    equipment: []
+    ev: 10
+    footprintStyle: trail
+    groupid: 171c1ebf-ae57-4e86-bfd1-de9fdc4968f1
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Psychic Stun
+      description: A target made dazed by this ability who is already dazed is instead slowed (save ends).
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: 0
+        filterTarget: Target.Conditions has "Dazed"
+        ongoingEffect: 99c4c175-1473-4fa6-88d8-87076acd8196
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 3 acid damage, 3 psychic damage
+        - 3 acid damage, 6 psychic damage; R<1 dazed (save ends)
+        - 3 acid damage, 8 psychic damage; R<2 dazed (save ends)
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Target.OngoingEffects has "Already Dazed" and not Cast.PassesPotency(Target, "R", 1)
+        guid: 9528cf70-572d-4559-b3db-5d46de35ecfa
+        rule: slowed (save ends)
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Target.OngoingEffects has "Already Dazed" and not Cast.PassesPotency(Target, "R", 2)
+        guid: 22133c8a-60fe-479f-9edf-d096877039b4
+        rule: slowed (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: 99c4c175-1473-4fa6-88d8-87076acd8196
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 36af3bdc-0a85-4b37-8d88-4c200985f476
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: "SILVER: Damage and dazed (with potency) are automated, and a target who was already dazed when the ability was used and fails the potency is slowed (save ends) instead. The tier text still re-applies dazed (save ends) to that target, so an existing dazed (EoT) on them becomes save ends - end it at the end of their turn by hand if that matters."
+      keywords:
+        Melee: true
+        Psionic: true
+        Strike: true
+      modifiers: []
+      numTargets: "2"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: target
+    - name: Psychic Slop
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 4 psychic damage; R<0 slowed (EoT)
+        - 6 psychic damage; slide 1; R<1 slowed (save ends)
+        - 9 psychic damage; slide 2; R<2 slowed (save ends)
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 4a235d2a-8e83-408a-a297-52d7e16e18a6
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Area: true
+        Psionic: true
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: "2"
+      repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: "2"
+      strain: []
+      targetFilter: Enemy
+      targetType: all
+    innateAttacks: []
+    innateLanguages: {}
+    inventory: []
+    keywords:
+      Ooze: true
+      Soulless: true
+    levelChoices: []
+    max_hitpoints: 40
+    max_hitpoints_roll: "40"
+    minion: false
+    monster_category: Monster
+    monster_type: Stunslopper
+    movementSpeeds:
+      climb: 5
+    notes:
+    - text: ""
+      title: Monster Notes
+    ongoingEffects: []
+    opportunityAttack: 5
+    resistances:
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: acid
+      dr: 2
+    - __typeName: ResistanceEntry
+      apply: Damage Reduction
+      damageType: psychic
+      dr: 2
+    resources: []
+    role: Platoon Hexer
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 2
+    titles: []
+    traitNames: []
+    walkingSpeed: 5
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: 4
+  summonerid: null
+  tokenType: null
+  updateid: 586a9c94-ac4f-4a4c-bab7-16a4fff91fcb
+ord: 10
+parentFolder: 18b8aee2-b927-4c4f-b978-2526f38bdf87

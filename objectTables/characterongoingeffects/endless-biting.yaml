@@ -1,0 +1,64 @@
+id: 5ec3b973-6052-4a20-8141-4069b27f1fe8
+name: Endless Biting
+description: A rakiling is attached to this creature. While they are bleeding, they take damage from bleeding at the start of each turn of combat.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: debuff
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:5ec3b973-6052-4a20-8141-4069b27f1fe8: true
+guid: 5ec3b973-6052-4a20-8141-4069b27f1fe8
+iconid: bd44e33a-fb70-490c-acac-882da0d34642
+implementation: 4
+implementationDetails: "GOLD: At the start of every creature's turn in combat, the creature loses 1d6 + their level Stamina (as bleeding, unreducible). The effect ends when they stop bleeding."
+modifiers:
+- name: Endless Biting
+  description: Take damage from bleeding at the start of each turn of combat.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:5ec3b973-6052-4a20-8141-4069b27f1fe8: true
+  guid: 5581359a-ed4e-49b3-888f-ff4c4ff7f2f2
+  source: Ongoing Effect
+  sourceguid: 5ec3b973-6052-4a20-8141-4069b27f1fe8
+  triggeredAbility:
+    name: Endless Biting
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      applyto: caster
+      cannotBeReduced: true
+      chatMessage: "Endless Biting: bleeding"
+      filterTarget: Caster.Conditions has "Bleeding"
+      roll: 1d6+Level
+    castImmediately: true
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 08a1eafc-ea9a-4e68-af2e-fd25a525c649
+    hostile: true
+    iconid: bd44e33a-fb70-490c-acac-882da0d34642
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    subject: any
+    targetType: self
+    trigger: beginturn
+    whenActive: combat
+source: Ongoing Effect
+statusEffect: true
+sustainFormula: Conditions has "Bleeding"

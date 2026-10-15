@@ -1,0 +1,66 @@
+id: 8b67f1be-fb78-4b55-bef2-7606fe0ca9e0
+name: Suffocating (Grabbed)
+description: While grabbed this way, this creature is suffocating. They can hold their breath for a number of rounds equal to their Might score (minimum 1). After that, they take 1d6 damage at the end of each round. The effect ends when they are no longer grabbed.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: debuff
+clearStacksWhenApplying: false
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:8b67f1be-fb78-4b55-bef2-7606fe0ca9e0: true
+guid: 8b67f1be-fb78-4b55-bef2-7606fe0ca9e0
+iconid: f82593c3-746d-4e03-ae6f-bd4d5e26b2ef
+implementation: 4
+implementationDetails: "GOLD: Stacks count the rounds spent grabbed. At the end of each round (the start of the next) the creature takes 1d6 damage if the rounds already held exceed max(Might, 1), then gains a stack. The effect ends as soon as the creature is no longer grabbed. A creature that does not need to breathe still gets it - remove it by hand."
+modifiers:
+- name: Suffocating (Grabbed)
+  description: Hold your breath for rounds equal to your Might (minimum 1), then take 1d6 damage at the end of each round.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:8b67f1be-fb78-4b55-bef2-7606fe0ca9e0: true
+  guid: eca38844-4dec-429c-9fb0-02028a0c1dc8
+  source: Ongoing Effect
+  sourceguid: 8b67f1be-fb78-4b55-bef2-7606fe0ca9e0
+  triggeredAbility:
+    name: Suffocating
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      chatMessage: Suffocating
+      filterTarget: Stacks("Suffocating (Grabbed)") > max(Might, 1)
+      roll: 1d6
+    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+      duration: eoe
+      ongoingEffect: 8b67f1be-fb78-4b55-bef2-7606fe0ca9e0
+      ongoingEffectCustom: false
+    castImmediately: true
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: db44dea5-cdbe-4bad-9a58-fbf2360372ca
+    iconid: f82593c3-746d-4e03-ae6f-bd4d5e26b2ef
+    mandatory: true
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: beginround
+    whenActive: combat
+source: Ongoing Effect
+stackable: true
+statusEffect: true
+sustainFormula: Conditions has "Grabbed"

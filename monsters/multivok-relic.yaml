@@ -1,0 +1,284 @@
+id: 5867ebe9-489e-4bcc-85d5-e47c4b346b5d
+description: Multivok Relic
+artist: null
+ctime: 1791936000000
+hidden: false
+info:
+  appearance:
+    anthem: null
+    anthemVolume: 1
+    backgroundId: null
+    characterName: null
+    characterNamePrivate: false
+    flip: false
+    frameBrightness: 1
+    frameHueShift: 0
+    frameSaturation: 1
+    offtokenPortraitId: null
+    portraitFrameId: 72f0634e-8d6a-4afc-884b-b9c824746cc8
+    portraitId: dcecdd29-e5a4-4082-8e48-0aef986ff07d
+    portraitOffset:
+      x: 0.08844935
+      y: 0.2115586
+    portraitRibbon: null
+    saddlePositions: []
+    tokenScaling: 1
+    tokenZoom: 0.7751199
+  bestiaryId: 5867ebe9-489e-4bcc-85d5-e47c4b346b5d
+  createdTimestamp: 1791936000000
+  disguise: null
+  locInfo:
+    floor: null
+    loc: []
+    map: null
+    mountedOn: null
+    mountedOnObject: null
+    mountedSaddle: 0
+    path: null
+    pos:
+      x: 0
+      y: 0
+    rotation: 0
+    summonLoc: []
+    summonLocCleared: null
+    summonLocId: null
+    teleportAnimId: null
+    teleportStyle: ""
+    updateid: 0
+  mountedBy: {}
+  ownerId: null
+  partyid: null
+  properties:
+    __typeName: monster
+    attributes:
+      agl:
+        id: agl
+        baseValue: 0
+      inu:
+        id: inu
+        baseValue: 1
+      mgt:
+        id: mgt
+        baseValue: 4
+      prs:
+        id: prs
+        baseValue: -4
+      rea:
+        id: rea
+        baseValue: -2
+    bloodColor: none
+    characterFeatures:
+    - name: Self-Replicating
+      description: At the end of each round, the relic squad's Stamina pool increases as if each relic were at full Stamina. If there are at least five minions in their squad, they also create new multivok relics until the squad contains eight. If there are fewer than four, they instead create new relics until the squad contains four. New relics are added to adjacent unoccupied squares.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:24ce5ab2-74d2-4172-b629-a7d4bf7c1b78: true
+      guid: 24ce5ab2-74d2-4172-b629-a7d4bf7c1b78
+      implementation: 2
+      implementationDetails: The squad's Stamina pool refills automatically when the next round begins, which is the same moment as the end of the round. Creating new relics is not automated - at the end of each round, add multivok relics to the squad in adjacent unoccupied squares (up to eight if the squad has five or more, or up to four if it has fewer than four).
+      modifiers:
+      - name: Self-Replicating
+        description: At the end of each round, the relic squad's Stamina pool increases as if each relic were at full Stamina.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:24ce5ab2-74d2-4172-b629-a7d4bf7c1b78: true
+        guid: 66c55aa7-5428-4f35-b9b4-4e0b77551ca4
+        source: Trait
+        sourceguid: 24ce5ab2-74d2-4172-b629-a7d4bf7c1b78
+        triggeredAbility:
+          name: Self-Replicating
+          description: The relic squad's Stamina pool increases as if each relic were at full Stamina.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityHealBehavior
+            applyto: caster
+            chatMessage: "Self-Replicating: The multivok relic squad's Stamina pool refills."
+            roll: Maximum Stamina - Stamina
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4091be78-ff3f-43a9-a973-351ed383d6cc
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetType: self
+          trigger: beginround
+          whenActive: combat
+      source: Trait
+    - name: Crafted to Perfection
+      description: The relic's shape can't be changed by any external effect.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:f7a2c7de-cd78-4452-835c-4297aca231ed: true
+      guid: f7a2c7de-cd78-4452-835c-4297aca231ed
+      implementation: 0
+      implementationDetails: No shape-change effects are tracked by the engine - adjudicate by hand.
+      modifiers: []
+      source: Trait
+    - name: With Captain
+      description: +4 damage to strikes against targets adjacent to captain.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:dcc227ea-9608-4257-a840-34e7bac27238: true
+      guid: dcc227ea-9608-4257-a840-34e7bac27238
+      implementation: 3
+      implementationDetails: Offered on every strike while the squad has a captain, and pre-checked when the target is adjacent to the captain.
+      modifiers:
+      - name: With Captain
+        description: +4 damage to strikes against targets adjacent to captain.
+        __typeName: CharacterModifier
+        activationCondition: HasCaptain and Target.Distance(SquadCaptain) <= 1
+        behavior: power
+        damageModifier: "4"
+        displayCondition: HasCaptain
+        domains:
+          CharacterFeature:dcc227ea-9608-4257-a840-34e7bac27238: true
+        guid: 170e0348-5e19-4edb-bccd-5a23267d1da7
+        keywords:
+          Strike: true
+        modtype: none
+        rollType: ability_power_roll
+        source: Trait
+        sourceguid: dcc227ea-9608-4257-a840-34e7bac27238
+      source: Trait
+      tags:
+        Hidden: true
+    cr: 9
+    creatureSize: 1M
+    damage_taken: 0
+    equipment: []
+    ev: 11
+    groupid: 4be02076-a110-4dc3-85d3-144d9391430e
+    inflictedConditions: []
+    innateActivatedAbilities:
+    - name: Arm Blade
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 6 damage; push 2
+        - 9 damage; push 3
+        - 12 damage; push 4
+      categorization: Signature Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: e81018b6-a5b7-4b3c-8c2b-f8cafaf6ca15
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Melee: true
+        Strike: true
+        Weapon: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 1
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 180
+      strain: []
+      targetType: target
+    - name: Arm Blaster
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+      behaviors:
+      - __typeName: ActivatedAbilityPowerRollBehavior
+        roll: 2d10 + Highest Characteristic
+        tiers:
+        - 5 fire damage
+        - 8 fire damage
+        - 10 fire damage
+      categorization: Ability
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      flavor: ""
+      guid: 0256aeea-a473-4d1a-90d6-3694c946d370
+      iconid: ui-icons/skills/1.png
+      implementation: 4
+      keywords:
+        Ranged: true
+        Strike: true
+        Weapon: true
+      modifiers: []
+      numTargets: "1"
+      objectTarget: true
+      persistence: []
+      range: 10
+      repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: 8e6b780e-754c-4c35-902f-c52e5745cfea
+        page: 180
+      strain: []
+      targetType: target
+    innateAttacks: []
+    innateLanguages:
+      a7eb4785-677f-442d-bb09-7f4f0e948f0a: true
+    keywords:
+      Construct: true
+      Multivok: true
+      Soulless: true
+      Valok: true
+    levelChoices: []
+    max_hitpoints: 14
+    max_hitpoints_roll: "14"
+    minion: true
+    monster_category: Monster
+    monster_type: Multivok Relic
+    movementSpeeds:
+      climb: 5
+    opportunityAttack: 6
+    resistances: []
+    resources: []
+    role: Minion Artillery
+    savingThrowRatings: []
+    skillProficiencies: []
+    skillRatings: []
+    stability: 0
+    traitNames: []
+    walkingSpeed: 5
+    withCaptain: +4 damage to strikes against targets adjacent to captain
+  settings:
+    canRotate: false
+    lightAngle: 360
+    lightColor:
+      a: 1
+      b: 1
+      g: 1
+      r: 1
+    lightFalloff: 0.1
+    lightIntensity: 0.1
+    lightRadius: 10
+    useLight: false
+  size: -1
+  summonerid: null
+  tokenType: null
+  updateid: ff722e56-1f5d-4914-b8e2-b87164886fa5
+mtime: 1791936000000
+ord: 1
+parentFolder: 5d7591f8-2289-4a26-8fd5-14dcd72e6285

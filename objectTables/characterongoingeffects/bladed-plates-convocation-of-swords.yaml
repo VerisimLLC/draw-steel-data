@@ -1,0 +1,94 @@
+id: b5d96064-fb1e-4527-b3fa-a3891a53f793
+name: Bladed Plates
+description: This creature is covered in bladed metal plates. Whenever an adjacent enemy grabs them or uses a melee ability against them, that enemy takes 6 damage.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:b5d96064-fb1e-4527-b3fa-a3891a53f793: true
+guid: b5d96064-fb1e-4527-b3fa-a3891a53f793
+iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
+implementation: 4
+implementationDetails: "GOLD: an adjacent enemy who targets the bearer with a melee ability, or grabs the bearer, takes 6 damage (Toxiferous pattern)."
+modifiers:
+- name: Bladed Plates
+  description: Whenever an adjacent enemy uses a melee ability against this creature, that enemy takes 6 damage.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:b5d96064-fb1e-4527-b3fa-a3891a53f793: true
+  guid: e0af9c9c-941b-4f67-ab95-a8bb3d9d76ae
+  source: Ongoing Effect
+  sourceguid: b5d96064-fb1e-4527-b3fa-a3891a53f793
+  triggeredAbility:
+    name: Bladed Plates
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      chatMessage: Bladed Plates vs melee ability
+      roll: "6"
+      titleText: Bladed Plates
+    conditionFormula: target = self and (UsedAbility.Keywords has "Melee")
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 38501f70-f6d7-460a-85fe-e700bfd34c47
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    subject: enemy
+    targetType: subject
+    trigger: targetwithability
+- name: Bladed Plates
+  description: Whenever an adjacent enemy grabs this creature, that enemy takes 6 damage.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:b5d96064-fb1e-4527-b3fa-a3891a53f793: true
+  guid: 11a5f4de-e278-4fab-8d41-c4d8e500aad7
+  source: Ongoing Effect
+  sourceguid: b5d96064-fb1e-4527-b3fa-a3891a53f793
+  triggeredAbility:
+    name: Bladed Plates
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDamageBehavior
+      chatMessage: Bladed Plates vs grab
+      roll: "6"
+      titleText: Bladed Plates
+    conditionFormula: condition = "Grabbed" and (HasAttacker)
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 4f5776e7-0ab4-428f-96c9-057fa348d32b
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    modifiers: []
+    numTargets: "1"
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: attacker
+    trigger: inflictcondition
+source: Ongoing Effect
