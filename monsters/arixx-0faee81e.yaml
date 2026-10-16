@@ -276,6 +276,56 @@ info:
       implementation: 4
       modifiers: []
       source: Trait
+    - name: Started Turn Underground
+      description: Marks the arixx as Underground for the rest of a turn they start burrowed below ground, giving Dirt Devil its double edge.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:fd282947-0092-4467-a8af-0cd6003e11e6: true
+      guid: fd282947-0092-4467-a8af-0cd6003e11e6
+      implementation: 4
+      modifiers:
+      - name: Started Turn Underground
+        description: Marks the arixx as Underground for the rest of a turn they start burrowed below ground, giving Dirt Devil its double edge.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:fd282947-0092-4467-a8af-0cd6003e11e6: true
+        guid: 67aeb504-36e1-4f00-a29a-c22b8b835c1a
+        source: Trait
+        sourceguid: fd282947-0092-4467-a8af-0cd6003e11e6
+        triggeredAbility:
+          name: Started Turn Underground
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: end_of_next_turn
+            ongoingEffect: 3cfee38a-1af5-4558-8a03-82430f05a0ce
+            ongoingEffectCustom: false
+            ongoingEffectSource: specific
+          castImmediately: true
+          conditionFormula: MovementType = "Burrow" and DistanceBelowGround >= 1
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9b571cce-31ee-4b91-99f0-55d7f25b1821
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetType: self
+          trigger: beginturn
+      source: Trait
+      tags:
+        Hidden: true
     - name: Skitter
       description: |-
         The arixx halves the damage and shifts up to 3 squares after
@@ -1126,30 +1176,6 @@ info:
         resourceRefreshType: encounter
         resourceid: d7626558-1717-458d-a7b4-2ae9e3115c18
       villainAction: Villain Action 3
-    - name: Dig
-      description: It takes extra effort to dig vertically through the ground as opposed to tunneling horizontally, requiring a creature to use a special maneuver. To use the Dig maneuver, a creature must have "burrow" in their speed entry, they must have a speed that is equal to or greater than their size, and they must be touching terrain that can be burrowed through. When a creature uses the Dig maneuver, they can move vertically up to a number of squares equal to their size. If a burrowing creature has a creature who is not unconscious grabbed, they can't willingly move deeper into the ground. It's too difficult to dig with a flailing enemy in your claws.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors:
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        applyto: caster
-        ongoingEffect: 3cfee38a-1af5-4558-8a03-82430f05a0ce
-        ongoingEffectCustom: false
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      guid: 5e9b630d-7064-4106-ac81-aa817bf3081c
-      iconid: 63864356-6bf1-4516-8ef1-58a1436a99c1
-      modifiers: []
-      numTargets: "1"
-      persistence: []
-      range: 1
-      repeatTargets: false
-      strain: []
-      targetType: self
     innateAttacks: []
     keywords:
       Arixx: true
