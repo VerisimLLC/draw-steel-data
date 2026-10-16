@@ -99,28 +99,34 @@ info:
           abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
+            abilityType: custom
             customAbility:
-              name: Invoked Ability
-              description: ""
+              name: Volant
+              description: The chimera moves their speed toward one enemy within line of effect.
               __typeName: ActivatedAbility
               abilityType: none
-              behaviors: []
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: move
+              categorization: Hidden
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              guid: cf269913-7be3-4c8d-b5d2-c86686071985
+              guid: c75ce3a8-c737-4b28-8c19-68dffa80e9cc
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
-              range: 1
+              persistence: []
+              range: Movement Speed
               repeatTargets: false
-              targetType: self
+              strain: []
+              targetType: emptyspace
+              targeting: pathfind
             promptText: When the chimera makes a creature winded or reduces them to 0 Stamina, they can move their speed toward an enemy.
-            standardAbility: de95d093-f3d4-4d74-99fe-ab49aae8b167
-          conditionFormula: Target.Winded = 1 or target.Stamina <=0
+          conditionFormula: (Target.Winded and ((Target.Stamina + Damage) > (Target.Maximum Stamina / 2))) or (Target.Stamina <= 0 and ((Target.Stamina + Damage) > 0))
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -135,7 +141,9 @@ info:
           repeatTargets: false
           strain: []
           targetType: self
+          mandatory: false
           trigger: dealdamage
+          triggerPrompt: Move your speed toward an enemy (Volant)
           whenActive: combat
       source: Trait
     - name: Solo Monster
@@ -146,9 +154,9 @@ info:
       domains:
         CharacterFeature:818e0832-584c-4041-b528-a7fa2c5105a0: true
       guid: 818e0832-584c-4041-b528-a7fa2c5105a0
-      implementation: 3
+      implementation: 4
       modifiers:
-      - name: End Effect
+      - name: Solo Monster End Effect
         description: ""
         __typeName: CharacterModifier
         behavior: trigger
@@ -156,7 +164,7 @@ info:
         source: Trait
         sourceguid: d9e3b2d6-370d-4903-96ee-939f98190bc0
         triggeredAbility:
-          name: End Effect
+          name: Solo Monster End Effect
           description: ""
           __typeName: TriggeredAbility
           abilityType: none
@@ -184,7 +192,7 @@ info:
           strain: []
           targetType: self
           trigger: endturn
-          triggerPrompt: End effect for 5
+          triggerPrompt: 'End turn: the chimera can take 5 damage to end 1 effect on them that can be ended by a saving throw.'
           whenActive: combat
       - name: Solo Turns
         description: The chimera can take two turns each round. They can’t take turns consecutively.
@@ -240,29 +248,34 @@ info:
           abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
+            abilityType: custom
             customAbility:
-              name: Invoked Ability
-              description: ""
+              name: Ram's Defiance Shift
+              description: The chimera shifts up to 5 squares.
               __typeName: ActivatedAbility
               abilityType: none
-              behaviors: []
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: shift
+              categorization: Hidden
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              guid: a33ef860-2f9e-4d48-8b99-40fb0c40b4e9
+              guid: cb7465aa-0c7f-422c-8b8f-9bafb3d94456
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
-              range: 1
+              persistence: []
+              range: "5"
               repeatTargets: false
-              targetType: self
-            promptText: The Chimera shifts up to 5 squares. If they end this shift within distance of the target, make a power roll.
-            standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-            standardAbilityParams:
-              distance: "5"
+              strain: []
+              targetType: emptyspace
+              targeting: pathfind
+            guid: ac6aea81-3958-43f6-9ae1-1ab617605b49
+            promptText: The Chimera shifts up to 5 squares.
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             applyto: caster
             customAbility:
@@ -274,9 +287,9 @@ info:
               - __typeName: ActivatedAbilityPowerRollBehavior
                 roll: 2d10 + Highest Characteristic
                 tiers:
-                - 6 damage; M<1 slowed (save ends
-                - 8 damage; M<2 slowed (save ends
-                - 10 damage; M<3 slowed (save ends
+                - 6 damage; M<1 slowed (save ends)
+                - 8 damage; M<2 slowed (save ends)
+                - 10 damage; M<3 slowed (save ends)
               categorization: Common Ability
               display:
                 bgcolor: "#ffffffff"
@@ -286,18 +299,26 @@ info:
               guid: d5e3936e-5d8b-4217-a749-ca399cc9b170
               iconid: ui-icons/skills/1.png
               implementation: 4
+              keywords:
+                Melee: true
+                Strike: true
+                Weapon: true
               modifiers: []
               numTargets: "1"
-              range: 1
+              range: "2"
               repeatTargets: false
               sourceReference:
                 __typeName: SourceReference
                 docid: cc66844a-04d0-49a0-8687-65ef83b15363
                 page: 57
               strain: []
-              targetType: self
-            promptText: After shifting, the Chimera makes a power roll against the creature that struck them.
+              targetFilter: Target.ID = <<targetid>>
+              targetType: all
+            promptText: If the Chimera ended the shift within 2 squares of the creature that struck them, they make a power roll against it.
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
           conditionFormula: Ability.Keywords has "strike" and Tier One
+          mandatory: false
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -311,8 +332,14 @@ info:
           range: "2"
           repeatTargets: false
           strain: []
+          subject: enemy
+          subjectRange: "5"
           targetType: self
-          trigger: losehitpoints
+          trigger: rollpower
+          triggerPrompt: |-
+            Trigger: The ram was struck by a Tier 1.
+
+            Effect: Shift 5, if the chimera ends movement within 2 spaces of their attacker, they make a power roll against them.
           whenActive: always
       - name: Ram's Defiance
         description: ""
@@ -727,7 +754,7 @@ info:
           targetAllegiance: enemy
           targetType: cube
         guid: 3c16216f-3238-40af-9e96-e5a0c0ba585d
-        promptText: The chimera uses Dragon's Eruption without spending Malice
+        promptText: 'Dragon''s Eruption: Select the target 3 cube area'
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         applyto: caster
         customAbility:
@@ -818,103 +845,143 @@ info:
       actionResourceId: none
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: named
         applyto: caster
         customAbility:
-          name: Invoked Ability
+          name: Roar - No Malice
           description: ""
           __typeName: ActivatedAbility
           abilityType: none
-          behaviors: []
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 4 psychic damage
+            - 8 psychic damage; I<2 frightened (save ends)
+            - 10 psychic damage; I<3 frightened (save ends)
+          categorization: Heroic Ability
           display:
-            bgcolor: "#ffffffff"
+            bgcolor:
+              __usertype: LuaColor
+              a: 1
+              h: 0
+              s: 0.354199171066284
+              v: 1.00105094909668
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: dd74a4e0-d7d1-4dd0-9ea9-9db5896e46bc
-          iconid: ui-icons/skills/1.png
+          flavor: ""
+          guid: a470741b-4c12-4728-a11a-a2a1f3471d0c
+          hasCustomIcon: true
+          iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
+          implementation: 4
+          implementationDetails: Gold Implementation; this ability is part of Overture of Destruction (Chimera Villain Action 1)
+          keywords:
+            Area: true
+            Magic: true
           modifiers: []
-          numTargets: "1"
-          range: 1
+          numTargets: 1
+          objectTarget: false
+          range: 5
           repeatTargets: false
-          targetType: self
-        namedAbility: Roar - No Malice
-        promptText: The chimera uses Roar without spending Malice.
-      - __typeName: ActivatedAbilityRelocateCreatureBehavior
-        movementType: shift
-        targetMoveVicinity: true
+          resourceCost: none
+          resourceNumber: 5
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+          strain: []
+          targetAllegiance: enemy
+          targetFilter: Enemy
+          targetType: all
+        guid: 8792b783-a973-4ffd-8f69-dec0855c1134
+        promptText: The chimera then uses Roar without spending Malice
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        applyto: targets
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 06649b34-15b1-42af-a235-8f4eed5f8b05
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        filterTarget: Distance(Target) = Cast.Spaces Moved
-        guid: 90b74172-a8f9-4cbc-8125-079fb1187637
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        standardAbilityParams:
-          distance: walking speed
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: named
+        abilityType: custom
+        applyto: caster
         autoTarget: false
         customAbility:
-          name: Invoked Ability
-          description: ""
+          name: Chorus Shift
+          description: The chimera shifts up to their speed and makes a free strike against each enemy who comes adjacent to them during the shift.
           __typeName: ActivatedAbility
           abilityType: none
-          behaviors: []
+          behaviors:
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+            movementType: shift
+            targetMoveVicinity: true
+            vicinity: 1
+            vicinityFilter: enemy
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Chorus of Destruction free strike
+            roll: "6"
+          categorization: Hidden
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: f5c8cb09-d97f-4f29-961f-bd882f6cd1b0
+          guid: 7af6f057-8637-451d-9292-cd20bcc6ca94
           iconid: ui-icons/skills/1.png
+          implementation: 3
+          keywords:
+            Melee: true
+            Weapon: true
           modifiers: []
           numTargets: "1"
-          range: 1
+          persistence: []
+          range: Movement Speed
           repeatTargets: false
-          targetType: self
-        namedAbility: Ranged Free Strike
-        promptText: The Chimera makes a free strike against each enemy who comes adjacent to them during the shift.
+          strain: []
+          targetType: emptyspace
+          targeting: pathfind
+        guid: 6f877ce1-0a24-42f8-8c55-f23565448f99
+        promptText: The chimera shifts up to their speed and makes a free strike against each enemy who comes adjacent during the shift.
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: named
+        abilityType: custom
+        applyto: caster
         customAbility:
-          name: Invoked Ability
-          description: ""
+          name: Dragon's Eruption - No Malice
+          description: Gold Implementation; this ability is part of Overture of Destruction (Chimera Villain Action 1)
           __typeName: ActivatedAbility
           abilityType: none
-          behaviors: []
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 3 fire damage; A<1 3 fire damage
+            - 5 fire damage; A<2 5 fire damage
+            - 7 fire damage; A<3 7 fire damage
+          categorization: Heroic Ability
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: ef6ba1c3-27f1-4a8c-9c96-39748e8958a5
+          flavor: ""
+          guid: 6a731cac-2758-47bc-b0bc-282ff23fb974
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
           modifiers: []
-          numTargets: "1"
-          range: 1
+          numTargets: 1
+          objectTarget: false
+          radius: "3"
+          range: "10"
           repeatTargets: false
-          targetType: self
-        namedAbility: Dragon's Eruption - No Malice
-        promptText: When the chimera ends their shift, they use Dragon's Eruption, costing no Malice.
-      categorization: Heroic Ability
+          resourceCost: none
+          resourceNumber: "0"
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 57
+          strain: []
+          targetAllegiance: enemy
+          targetType: cube
+        guid: 9e61cd7b-4e25-4324-b481-841fa07a9709
+        promptText: 'Dragon''s Eruption: Select the target 3 cube area'
+      categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
         brightness: 1
