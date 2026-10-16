@@ -773,28 +773,26 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        applyto: attackable_objects
         duration: 0
         ongoingEffect: 87a73f70-7899-4acf-beda-9d42bf17a8b3
         ongoingEffectCustom: false
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
-        applyto: attackable_objects
         movementConstraint: toward
         movementConstraintAnchor: nearest_enemy
         movementConstraintAnchorDistance: 3
+        movementConstraintPickAnyInRange: true
         movementConstraintAsForcedMovementOrigin: true
-        movementConstraintPrompt: Choose the nearest enemy for Paranormal Activity
-        promptText: Vertically pull the object up to 5 squares toward the nearest enemy.
+        movementConstraintPrompt: Choose the nearest enemy (any enemy within 3 squares of the object)
+        promptText: You may pull the object up to 5 squares toward the nearest enemy within 3 squares of the target.
         promptWhenResolving: true
-        promptWhenResolvingText: You may vertically pull the object up to 5 squares toward the nearest enemy within 3 squares.
+        promptWhenResolvingText: Select the next object to pull toward the nearest enemy
         standardAbility: 8a44cac4-f869-4d8d-8139-06c2d2926f0d
         standardAbilityParams:
           range: "5"
       - __typeName: ActivatedAbilityPurgeEffectsBehavior
         applyFilterOverride: Ongoing Effects has "Levitate 1"
         applyRadius: 15
-        applyto: attackable_objects
         conditions: []
         mode: effect
         ongoingEffect: 87a73f70-7899-4acf-beda-9d42bf17a8b3
@@ -818,13 +816,13 @@ info:
       persistence: []
       range: 5
       reasonedFilters:
-      - formula: CountNearbyEnemies(3) > 0
+      - formula: CountEnemiesOfWithin(3, Caster) > 0
         reason: No enemy within 3 squares of the object.
       repeatTargets: false
       strain: []
       targetFilter: target.object and target.TileSize <= 3
       targetTextOverride: Each size 3 or smaller object in the area
-      targetType: self
+      targetType: all
       usageLimitOptions:
         charges: "1"
         multicharge: false
