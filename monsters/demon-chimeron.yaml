@@ -41,6 +41,7 @@ info:
     pos:
       x: 0
       y: 0
+    rewindAnimId: null
     rotation: 0
     summonLoc: []
     summonLocCleared: null
@@ -71,7 +72,7 @@ info:
         baseValue: 2
     characterFeatures:
     - name: Lethe
-      description: While winded, the chimeron has an edge on strikes, and strikes have an edge against them.
+      description: While the chimeron is winded, they gain an edge on strikes, and any strike made against them gains an edge.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:4c6c2c5b-fcfd-4a05-ab16-9632a2e9285a: true
@@ -79,7 +80,7 @@ info:
       implementation: 4
       modifiers:
       - name: Lethe
-        description: While winded, the chimeron has an edge on strikes, and strikes have an edge against them.
+        description: While the chimeron is winded, they gain an edge on strikes, and any strike made against them gains an edge.
         __typeName: CharacterModifier
         activationCondition: self.Winded = 1
         behavior: power
@@ -92,7 +93,7 @@ info:
         source: Trait
         sourceguid: 4c6c2c5b-fcfd-4a05-ab16-9632a2e9285a
       - name: Lethe
-        description: While winded, the chimeron has an edge on strikes, and strikes have an edge against them.
+        description: While the chimeron is winded, they gain an edge on strikes, and any strike made against them gains an edge.
         __typeName: CharacterModifier
         activationCondition: Target.Winded = 1
         behavior: power
@@ -105,8 +106,12 @@ info:
         source: Trait
         sourceguid: 4c6c2c5b-fcfd-4a05-ab16-9632a2e9285a
       source: Trait
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 70
     - name: Soulsight
-      description: Each creature within 2 of the chimeron can't be hidden from them.
+      description: Any creature within 2 squares of the chimeron can't be hidden from them.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:9fa8c094-d9cc-48d0-8246-c571cf39e209: true
@@ -114,7 +119,7 @@ info:
       implementation: 4
       modifiers:
       - name: Soulsight
-        description: Each creature within 2 of the chimeron can't be hidden from them.
+        description: Any creature within 2 squares of the chimeron can't be hidden from them.
         __typeName: CharacterModifier
         attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
         behavior: attribute
@@ -125,6 +130,74 @@ info:
         sourceguid: 9fa8c094-d9cc-48d0-8246-c571cf39e209
         value: 2
       source: Trait
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 70
+    - name: Pain Absorption
+      description: The chimeron halves the damage from a damage-dealing strike that targets them.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:dfe77d1e-1fbe-41a4-88fa-417c8df68447: true
+      guid: dfe77d1e-1fbe-41a4-88fa-417c8df68447
+      implementation: 4
+      modifiers:
+      - name: Pain Absorption
+        description: The chimeron halves the damage from a damage-dealing strike that targets them.
+        __typeName: CharacterModifier
+        abilityFilter: ability.DoesDamage
+        behavior: powertabletrigger
+        domains:
+          CharacterFeature:dfe77d1e-1fbe-41a4-88fa-417c8df68447: true
+        guid: 13360499-f994-4c3a-935f-b648eea2bf50
+        powerRollModifier:
+          name: Pain Absorption
+          __typeName: CharacterModifier
+          activationCondition: true
+          behavior: power
+          damageMultiplier: half
+          guid: 6e627f3f-7d77-4332-aa2c-353ad047075e
+          keywords:
+            Strike: true
+          modtype: none
+          resourceCostAmount: "1"
+          resourceCostType: cost
+          rollType: ability_power_roll
+          rules: ""
+          source: Trigger
+        range: 10
+        rules: The chimeron halves the damage.
+        source: Trait
+        sourceguid: dfe77d1e-1fbe-41a4-88fa-417c8df68447
+        targetType: self
+        trigger: takedamage
+        type: trigger
+      - name: Pain Absorption
+        description: The chimeron halves the damage from a damage-dealing strike that targets them.
+        __typeName: CharacterModifier
+        ability:
+          name: Pain Absorption
+          __typeName: TriggeredAbilityDisplay
+          cost: 1 Malice
+          distance: Self
+          effect: The chimeron halves the damage.
+          guid: 2e8574fa-1c2c-4955-abf8-c94ffd0013de
+          keywords: []
+          target: Self
+          trigger: The chimeron is targeted by a damage-dealing strike.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:dfe77d1e-1fbe-41a4-88fa-417c8df68447: true
+        guid: 3b59ee81-7505-4f39-9993-a12e07bfaf52
+        source: Trait
+        sourceguid: dfe77d1e-1fbe-41a4-88fa-417c8df68447
+      source: Trait
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 70
+      tags:
+        Trigger: true
     cr: 9
     creatureSize: "3"
     damage_taken: 0
@@ -143,56 +216,29 @@ info:
         <b>Flux Gnash</b> (Action) %E2%97%86 2d10 + 4 %E2%97%86 Signature
         <b>Keywords</b> Melee, Strike, Weapon
         <b>Distance</b> Melee 2 <b>    Target</b> 1 creature or object
-        %E2%9C%A6    <b>%E2%89%A411</b>    9 fire damage
-        %E2%98%85    <b>12-16</b>    11 fire damage
-        %E2%9C%B8    <b>17</b>    13 fire damage; M<4 bleeding (save ends)
-        Effect     After rolling power, the chimeron can choose to replace the damage type and effect of the ability with sonic and dazed (save ends) or cold and slowed (save ends).
+        %E2%9C%A6    <b>%E2%89%A411</b>    9 cold, fire, or sonic damage
+        %E2%98%85    <b>12-16</b>    11 cold, fire, or sonic damage
+        %E2%9C%B8    <b>17</b>    13 cold, fire, or sonic damage; m<4] bleeding, dazed, or slowed (save ends)
+        Special     After making the power roll, the chimeron decides what damage type the ability deals and which condition it imposes.
 
         <b>Pain Absorption</b> (Triggered Action) %E2%97%86 1 Malice
         <b>Keywords</b> -
         <b>Distance</b> Self<b>    Target</b> Self
-        <b>Trigger </b>The chimeron is targeted by an attack.
-        Effect The chimeron halves any damage dealt to them.
+        <b>Trigger </b>The chimeron is targeted by a damage-dealing strike.
+        Effect The chimeron halves the damage.
 
         <b>Lethe</b>
-        While winded, the chimeron has an edge on strikes, and strikes have an edge against them.
+        While the chimeron is winded, they gain an edge on strikes, and any strike made against them gains an edge.
 
         <b>Soulsight</b>
-        Each creature within 2 of the chimeron can't be hidden from them.
-        Demon Styrich    Level 8 Horde Hexer
-        Abyssal, Demon    EV 10
-        <b>Stamina</b> 45    <b>Weakness</b> Holy 5
-        <b>Speed</b> 6    <b>Size</b> 1L /<b> Stability</b> 1
-        <b>Free Strike</b> 3
-        Might +2    Agility +4    Reason 0    Intuition +2    Presence 0
-        <b>Hair Whip</b> (Action) %E2%97%86 2d10 + 4 %E2%97%86 Signature
-        <b>Keywords</b> Melee, Strike, Weapon
-        <b>Distnce</b> Melee 4<b>    Target</b> 1 creature or object
-        %E2%9C%A6    <b>%E2%89%A411</b>    7 damage; pull 1
-        %E2%98%85    <b>12-16</b>    10 damage; pull 2; grabbed
-        %E2%9C%B8    <b>17</b>    12 damage; pull 3; grabbed
-        <b>Effect </b>The styrich can pull targets restrained by their Tangled Nest ability.
-
-        <b>Tangled Nest</b> (Maneuver) %E2%97%86 2d10 + 4 %E2%97%86 5 Malice
-        <b>Keywords</b> Area, Melee
-        <b>Distance</b> 4 burst<b>    Target</b> All enemies
-        %E2%9C%A6    <b>%E2%89%A411</b>    A<2 slowed (save ends)
-        %E2%98%85    <b>12-16</b>    slowed (EoT) or A<3 restrained (EoT)
-        %E2%9C%B8    <b>17</b>    restrained (EoT) or A<4 restrained (save ends)
-        <b>Effect </b>The styrich makes a free strike against restrained targets.
-
-        <b>Lethe</b>
-        While winded, the styrich has an edge on strikes, and strikes have an edge against them.
-
-        <b>Soulsight</b>
-        Each creature within 2 of the styrich can't be hidden from them.
+        Any creature within 2 squares of the chimeron can't be hidden from them.
 
       type: mcdm
     inflictedConditions: []
     initiativeGrouping: cfe04de8-4d5c-4e83-917b-ebf142296b75
     innateActivatedAbilities:
     - name: Flux Gnash
-      description: ""
+      description: "Special: After making the power roll, the chimeron decides what damage type the ability deals and which condition it imposes."
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -200,9 +246,54 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
-        - 9 fire damage
-        - 11 fire damage
-        - 13 fire damage; M<4 bleeding (save ends)
+        - 9 damage
+        - 11 damage
+        - 13 damage
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: c660fbd4-5306-412d-9bf0-de6d218a927c
+        modifier:
+          name: Flux Gnash - Damage Type
+          description: After rolling, the chimeron decides whether the ability deals cold, fire, or sonic damage.
+          __typeName: CharacterModifier
+          activationAfterRoll: "1"
+          activationCondition: false
+          behavior: power
+          damageTypeMappings:
+            untyped:
+            - fire
+            - cold
+            - sonic
+          domains: []
+          guid: e72666d8-2905-41ac-a71d-ed0f1daf300e
+          keywords: []
+          modtype: none
+          rollType: ability_power_roll
+          sourceguid: fea22c99-0fff-484f-b350-b3e2348894b9
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 04237e47-915f-41eb-834e-c3a1dd728ac5
+        modifier:
+          name: Flux Gnash - Condition
+          description: After rolling a tier 3 outcome, the chimeron decides whether the target is bleeding, dazed, or slowed (save ends).
+          __typeName: CharacterModifier
+          activationAfterRoll: Cast.Tier = 3
+          activationCondition: false
+          addTextChoiceLabels:
+          - bleeding
+          - dazed
+          - slowed
+          addTextChoiceTier: 3
+          addTextChoices:
+          - M<4 bleeding (save ends)
+          - M<4 dazed (save ends)
+          - M<4 slowed (save ends)
+          behavior: power
+          displayAfterRoll: Cast.Tier = 3
+          domains: []
+          guid: e64ed9b4-61c1-4220-91c7-54c04746fac6
+          keywords: []
+          modtype: none
+          rollType: ability_power_roll
+          sourceguid: 5a2aec80-302b-4403-92e2-91f725de48bf
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -221,97 +312,12 @@ info:
       numTargets: 1
       range: 2
       repeatTargets: false
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 70
+      strain: []
       targetType: target
-    - name: Pain Absorption
-      description: ""
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      flavor: ""
-      guid: 291696ff-9e84-469e-af41-8f6375ec76b0
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: "1"
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      targetType: self
-    - name: Hair Whip
-      description: The styrich can pull targets restrained by their Tangled Nest ability.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Highest Characteristic
-        tiers:
-        - 7 damage; pull 1
-        - 10 damage; pull 2; grabbed
-        - 12 damage; pull 3; grabbed
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: e87842c3-60c6-418a-a06e-c9efc009f970
-      iconid: ui-icons/skills/1.png
-      implementation: 3
-      keywords:
-        Melee: true
-        Strike: true
-        Weapon: true
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: target
-    - name: Tangled Nest
-      description: The styrich makes a free strike against restrained targets.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Highest Characteristic
-        tiers:
-        - A<2 slowed (save ends)
-        - slowed (EoT) or A<3 restrained (EoT)
-        - restrained (EoT) or A<4 restrained (save ends)
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: d1894eed-4252-40a0-b46c-17c1321f4290
-      iconid: ui-icons/skills/1.png
-      implementation: 3
-      keywords:
-        Area: true
-        Melee: true
-      modifiers: []
-      numTargets: 1
-      range: 4
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 5
-      targetFilter: Enemy
-      targetType: all
     innateAttacks: []
     keywords:
       Abyssal: true
@@ -353,7 +359,7 @@ info:
   size: 5
   summonerid: null
   tokenType: null
-  updateid: e9bdbcfa-d2fc-4025-92ec-8bb200b97170
+  updateid: 3f92d269-939b-4f82-b6d8-b203d70085e2
 mtime: 1786606105497
 ord: 5
 parentFolder: d28dbebc-b729-459f-858a-44e596d131e0
