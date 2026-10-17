@@ -152,49 +152,49 @@ info:
         sourceguid: 37b276e1-b917-4d63-ab3f-6925d4d1b594
       source: Trait
     - name: Shared Glamor
-      description: If the wodenelg's rider has the Masking Glamor or Hunter's Glamor trait, they also gain the trait's benefits.
+      description: If the wodenelg’s rider has the Masking Glamor trait, the wodenelg also has that trait.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:98e07092-1c98-4ca9-9798-da03537f213b: true
       guid: 98e07092-1c98-4ca9-9798-da03537f213b
-      implementation: 2
+      implementation: 3
       modifiers:
-      - name: Shared Glamor
-        description: If the wodenelg's rider has the Masking Glamor or Hunter's Glamor trait, they also gain the trait's benefits.
+      - name: Masking Glamor
+        description: Abilities targeting the wodenelg that would take a bane from cover or concealment have a double bane instead.
         __typeName: CharacterModifier
-        behavior: trigger
+        activationCondition: '(Target.HasCover or (Line of Sight(self, Target) < 1)) and Self.Ignore Cover <= 0 '
+        behavior: power
         domains:
-          CharacterFeature:98e07092-1c98-4ca9-9798-da03537f213b: true
-        guid: 4fc4be13-24fc-4d20-b0e3-3bb9ab44e666
+          CharacterFeature:43114623-44ec-4a74-bcb9-ffe3440c88da: true
+          CharacterFeature:4ca15083-5ef2-414a-a86b-e27839e46c1b: true
+          CharacterFeature:83f34496-fc00-42e2-a19c-f3b12428268b: true
+          CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
+        filterCondition: Count Riders("Masking Glamor") > 0
+        guid: 1ac6130a-054a-4095-b001-8057ac95d7bf
+        keywords: []
+        modtype: bane
+        rollType: enemy_ability_power_roll
         source: Trait
-        sourceguid: 98e07092-1c98-4ca9-9798-da03537f213b
-        triggeredAbility:
-          name: Shared Glamor
-          description: If the wodenelg's rider has the Masking Glamor or Hunter's Glamor trait, they also gain the trait's benefits.
-          __typeName: TriggeredAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            ongoingEffect: 0aa81848-85f7-4c0a-915c-146de14eb8aa
-            ongoingEffectCustom: false
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: af32cd77-beb7-4eb9-ac95-f757f41f9737
-          iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
-          mandatory: false
-          modifiers: []
-          numTargets: "1"
-          persistence: []
-          range: 1
-          repeatTargets: false
-          strain: []
-          targetType: self
-          trigger: endturn
-          triggerPrompt: If the wodenelg's rider has the Hunter's Glamor trait, the wodenelg also hides now. (If the rider has Masking Glamor, apply its benefit to the wodenelg manually.)
-          whenActive: combat
+        sourceguid: 83f34496-fc00-42e2-a19c-f3b12428268b
+      - name: Masking Glamor
+        description: Abilities targeting the wodenelg that would take a bane from cover or concealment have a double bane instead.
+        __typeName: CharacterModifier
+        activationCondition: (Target.Concealed or (Target.Conditions has "concealment")) and (not Caster.Ignore Concealment) and (Caster.Ignore Concealment Within Range <= 0 or Distance(Caster, Target) > Caster.Ignore Concealment Within Range) and (not (Caster.Ignore Darkness Concealment and (Target.Environment has "Darkness") and (not Target.Concealed Ignoring Darkness)))
+        behavior: power
+        displayCondition: Target.Concealed or (Target.Conditions has "concealment")
+        domains:
+          CharacterFeature:43114623-44ec-4a74-bcb9-ffe3440c88da: true
+          CharacterFeature:4ca15083-5ef2-414a-a86b-e27839e46c1b: true
+          CharacterFeature:ab759e91-96e7-4d17-b8ce-668e2d1a2cec: true
+          CharacterFeature:c76cdb38-e20b-42a3-899c-b965af84e5dd: true
+        filterCondition: Count Riders("Masking Glamor") > 0
+        guid: 5e52bacf-859e-4460-bdf2-041722cf8872
+        keywords:
+          Strike: true
+        modtype: bane
+        rollType: enemy_ability_power_roll
+        source: Trait
+        sourceguid: c76cdb38-e20b-42a3-899c-b965af84e5dd
       source: Trait
     cr: 1
     creatureSize: "2"
@@ -376,7 +376,7 @@ info:
   size: 4
   summonerid: null
   tokenType: null
-  updateid: 6932adbd-91a6-4e31-8b5d-79f6962add04
+  updateid: a4bcf173-5659-4aec-8fe3-d475fb5ae6c7
 mtime: 1785867190181
 ord: 0
 parentFolder: 611678b8-01dd-4ce2-bf54-e462ca7f4d29
