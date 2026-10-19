@@ -180,7 +180,7 @@ info:
         applyto: caster
         modesSelected:
         - 2
-        roll: Cast.Damage Dealt *0.5
+        roll: Cast.Damage Dealt / 2
       - __typeName: ActivatedAbilityReplenishBehavior
         chatMessage: "2 Malice: The death cultist regains Stamina equal to half the damage dealt."
         mode: expend
@@ -207,7 +207,8 @@ info:
       meleeRange: 1
       modeList:
       - text: No Malice
-      - text: 2 Malice
+      - condition: Malice >= 2
+        text: 2 Malice
       modifiers: []
       multipleModes: true
       numTargets: 1
@@ -231,6 +232,35 @@ info:
       - __typeName: ActivatedAbilityRaiseCorpseBehavior
         guid: fa771fa5-5cd8-447b-ae20-7b4f5be3dfc5
         restoreStamina: true
+      - __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- Rise, My Minions: a raised minion whose squad is not in this combat (it died
+          -- before the fight began) joins the cultist's initiative entry, the way
+          -- summoned minions join their summoner's turn. Minions already in combat keep
+          -- their own entry.
+          local q = dmhub.initiativeQueue
+          if q == nil or q.hidden then
+              return
+          end
+          local casterInitiative = InitiativeQueue.GetInitiativeId(casterToken)
+          if casterInitiative == nil or q.entries[casterInitiative] == nil then
+              return
+          end
+          for _,target in ipairs(targets) do
+              local token = target.token
+              if token ~= nil and token.valid and (not token.isObject) and token.properties ~= nil then
+                  local initiativeid = InitiativeQueue.GetInitiativeId(token)
+                  if initiativeid == nil or q.entries[initiativeid] == nil then
+                      token:ModifyProperties{
+                          description = "Raised minion joins combat",
+                          execute = function()
+                              token.properties.initiativeGrouping = casterInitiative
+                          end,
+                      }
+                  end
+              end
+          end
+        guid: 38db9d14-7866-470d-9744-0b97e854334a
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: eoe_or_dying
         ongoingEffect: d3b50284-a103-4a7f-8567-db5484d41c53
@@ -245,7 +275,7 @@ info:
         mode: expend
         quantity: Cast.Target Count-1
         resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      categorization: Signature Ability
+      categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
