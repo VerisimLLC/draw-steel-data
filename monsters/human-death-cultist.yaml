@@ -229,38 +229,41 @@ info:
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
+      - __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- Each target must have died during this encounter: a corpse whose initiative
+          -- entry is not in the current combat died before the fight, so it is dropped
+          -- before the raise step. Later steps and the Malice cost see only what is left.
+          local q = dmhub.initiativeQueue
+          local inCombat = q ~= nil and not q.hidden
+          local dropped = 0
+          for i = #targets, 1, -1 do
+              local corpseToken = targets[i].token
+              local deadToken = nil
+              if corpseToken ~= nil and corpseToken.isCorpse and corpseToken.objectInstance ~= nil then
+                  local corpse = corpseToken.objectInstance:GetComponent("Corpse")
+                  if corpse ~= nil then
+                      deadToken = corpse.properties:DeadCreatureToken()
+                  end
+              end
+              local diedThisEncounter = false
+              if inCombat and deadToken ~= nil then
+                  local initiativeid = InitiativeQueue.GetInitiativeId(deadToken)
+                  diedThisEncounter = initiativeid ~= nil and q.entries[initiativeid] ~= nil
+              end
+              if not diedThisEncounter then
+                  table.remove(targets, i)
+                  dropped = dropped + 1
+              end
+          end
+          if dropped > 0 then
+              ActionLogNoteChatMessage.Post(casterToken, "Rise, My Minions",
+                  string.format("%d target(s) did not die during this encounter and stay dead.", dropped))
+          end
+        guid: 38db9d14-7866-470d-9744-0b97e854334a
       - __typeName: ActivatedAbilityRaiseCorpseBehavior
         guid: fa771fa5-5cd8-447b-ae20-7b4f5be3dfc5
         restoreStamina: true
-      - __typeName: ActivatedAbilityScriptBehavior
-        code: |
-          -- Rise, My Minions: a raised minion whose squad is not in this combat (it died
-          -- before the fight began) joins the cultist's initiative entry, the way
-          -- summoned minions join their summoner's turn. Minions already in combat keep
-          -- their own entry.
-          local q = dmhub.initiativeQueue
-          if q == nil or q.hidden then
-              return
-          end
-          local casterInitiative = InitiativeQueue.GetInitiativeId(casterToken)
-          if casterInitiative == nil or q.entries[casterInitiative] == nil then
-              return
-          end
-          for _,target in ipairs(targets) do
-              local token = target.token
-              if token ~= nil and token.valid and (not token.isObject) and token.properties ~= nil then
-                  local initiativeid = InitiativeQueue.GetInitiativeId(token)
-                  if initiativeid == nil or q.entries[initiativeid] == nil then
-                      token:ModifyProperties{
-                          description = "Raised minion joins combat",
-                          execute = function()
-                              token.properties.initiativeGrouping = casterInitiative
-                          end,
-                      }
-                  end
-              end
-          end
-        guid: 38db9d14-7866-470d-9744-0b97e854334a
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: eoe_or_dying
         ongoingEffect: d3b50284-a103-4a7f-8567-db5484d41c53
