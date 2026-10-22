@@ -1031,9 +1031,9 @@ levels:
         class:b41b7bcb-6246-4906-8115-831e55f62758: true
         class:eea09df2-bbd8-4100-a6e5-fdfeb1ff15ef: true
       guid: f0f40fd7-988f-453a-af41-a789c1c398c6
-      implementation: 2
+      implementation: 3
       modifiers:
-      - name: Start of Turn
+      - name: Elemental Affinity
         description: |-
           Whenever you use Call Forth to summon one or more non-signature elemental minions, you can summon one bonus signature minion at no cost. You can choose between a signature minion that shares an Element keyword with the minions you summoned (such as Fire,
           Earth, or Air) or an elemental mote.
@@ -1046,7 +1046,7 @@ levels:
         numCharges: ""
         resourceRefreshType: none
         source: Circle of Storms Class Feature
-        sourceguid: 360a52e0-4385-483f-abd6-34d9078764b3
+        sourceguid: f0f40fd7-988f-453a-af41-a789c1c398c6
         triggeredAbility:
           name: Elemental Affinity
           description: Whenever you use Call Forth to summon one or more non-signature elemental minions, you can summon one bonus signature minion at no cost. You can choose between a signature minion that shares an Element keyword with the minions you summoned (such as fire, earth, or air) or an elemental mote.
@@ -1055,49 +1055,15 @@ levels:
           behaviors:
           - __typeName: ActivatedAbilitySummonBehavior
             allCreaturesTheSame: true
-            bestiaryFilter: SignatureSummons.Matches(beast) and beast.Keywords has "Fire"
-            choosePlacement: true
-            groupInitiativeWithCaster: true
-            modesSelected:
-            - 4
-            shareHeroicResourceWithSummoner: true
-            shareSurgesWithSummoner: true
-            summonRange: SummonerRange
-          - __typeName: ActivatedAbilitySummonBehavior
-            allCreaturesTheSame: true
-            bestiaryFilter: SignatureSummons.Matches(beast) and beast.Keywords has "Earth"
-            choosePlacement: true
-            groupInitiativeWithCaster: true
-            guid: a2f0aa67-27e0-40b7-9cc1-636c6100ef6c
-            modesSelected:
-            - 2
-            shareHeroicResourceWithSummoner: true
-            shareSurgesWithSummoner: true
-            summonRange: SummonerRange
-          - __typeName: ActivatedAbilitySummonBehavior
-            allCreaturesTheSame: true
-            bestiaryFilter: SignatureSummons.Matches(beast) and beast.Keywords has "Air"
-            choosePlacement: true
-            groupInitiativeWithCaster: true
-            guid: c225fae3-c40e-4d0e-945e-51f8e4cb2191
-            modesSelected:
-            - 3
-            shareHeroicResourceWithSummoner: true
-            shareSurgesWithSummoner: true
-            summonRange: SummonerRange
-          - __typeName: ActivatedAbilitySummonBehavior
-            allCreaturesTheSame: true
-            bestiaryFilter: SignatureSummons.Matches(beast) and beast.name = "elemental mote"
+            bestiaryFilter: SignatureSummons.Matches(beast) and (beast.name = "elemental mote" or (beast.Keywords has "Fire" and (TriggerValue - (TriggerValue / 2) * 2) = 1) or (beast.Keywords has "Earth" and (TriggerValue / 2 - (TriggerValue / 4) * 2) = 1) or (beast.Keywords has "Air" and (TriggerValue / 4 - (TriggerValue / 8) * 2) = 1))
             choosePlacement: true
             groupInitiativeWithCaster: true
             guid: 9f3104e1-da39-463b-9761-9842ffc4e5f3
-            modesSelected:
-            - 1
             shareHeroicResourceWithSummoner: true
             shareSurgesWithSummoner: true
             summonRange: SummonerRange
           castImmediately: true
-          conditionFormula: Trigger Name = "non-signature minions"
+          conditionFormula: Trigger Name = "non-signature minions" and TriggerValue >= 8
           display:
             bgcolor:
               __usertype: LuaColor
@@ -1112,16 +1078,12 @@ levels:
             class:b41b7bcb-6246-4906-8115-831e55f62758: true
             class:eea09df2-bbd8-4100-a6e5-fdfeb1ff15ef: true
           guid: a4eef73b-be50-472c-a79a-cd28a22352ef
-          hasManualVersion: true
+          hasManualVersion: false
           iconid: 56729dfc-0cf4-4b75-99db-61ae8ac81d71
+          implementation: 3
           mandatory: false
-          modeList:
-          - text: Elemental Mote
-          - text: Earth
-          - text: Air
-          - text: Fire
           modifiers: []
-          multipleModes: true
+          multipleModes: false
           numTargets: "1"
           persistence: []
           range: 1
@@ -1135,7 +1097,7 @@ levels:
           strain: []
           targetType: self
           trigger: custom
-          triggerPrompt: You can summon one bonus signature minion at no cost. **Elemental Mote is selected**
+          triggerPrompt: You can summon one bonus signature minion at no cost - an elemental mote, or a signature minion that shares an Element keyword with the minions you just summoned.
           usageLimitOptions:
             charges: ""
             resourceRefreshType: none
@@ -1155,5 +1117,5 @@ levels:
       class:b41b7bcb-6246-4906-8115-831e55f62758: true
       class:eea09df2-bbd8-4100-a6e5-fdfeb1ff15ef: true
     features: []
-mtime: 1787612277359
+mtime: 1792703754369
 primaryClassId: b41b7bcb-6246-4906-8115-831e55f62758
