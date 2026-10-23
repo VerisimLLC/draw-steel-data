@@ -3651,14 +3651,8 @@ levels:
               applyto: targets
             - __typeName: ActivatedAbilityCustomTriggerBehavior
               applyto: caster
-              filterTarget: Cast.PrimaryTarget.Flanking Partner Count(Caster) = 1
-              triggerName: WWO One
-              value: ""
-              waitForResolution: true
-            - __typeName: ActivatedAbilityCustomTriggerBehavior
-              applyto: caster
-              filterTarget: Cast.PrimaryTarget.Flanking Partner Count(Caster) > 1
-              triggerName: WWO Many
+              filterTarget: Cast.PrimaryTarget.Flanking Partner Count(Caster) >= 1
+              triggerName: WWO
               value: ""
               waitForResolution: true
             categorization: Signature Ability
@@ -3697,81 +3691,7 @@ levels:
           source: Shadow Class Feature
           sourceguid: f09da83c-5843-497a-8316-d5fdca4349aa
         - name: You Were Watching the Wrong One
-          description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
-          __typeName: CharacterModifier
-          behavior: trigger
-          domains:
-            class:a58112e5-6466-4189-b810-5d0d93adc075: true
-            class:d5b2e07d-657a-4405-899a-7fed0771f184: true
-          guid: b52eee56-6b3b-4e2b-aa5f-c0308ddff028
-          source: Shadow Class Feature
-          sourceguid: 55ceec07-62e1-41c9-9cb9-6bc5cccb2d67
-          triggeredAbility:
-            name: You Were Watching the Wrong One
-            description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
-            __typeName: TriggeredAbility
-            abilityType: none
-            behaviors:
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
-              applyto: caster
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors: []
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: e3f7be9f-b148-4877-87e4-b40ee985311a
-                iconid: ui-icons/skills/1.png
-                implementation: 4
-                modifiers: []
-                numTargets: "1"
-                range: 1
-                repeatTargets: false
-                targetType: self
-              standardAbility: 15079d42-f9af-4e1c-a739-2078a9e22a07
-              standardAbilityParams:
-                message: Flanking ally gains a surge
-                quantity: "1"
-                range: "100"
-                targets: "1"
-              targeting: formula
-              targetingFormula: Target.Is Friend(Caster) and Target != Caster and Caster.Stashed Target.Flanked By(Caster, Target)
-            castImmediately: false
-            conditionFormula: Trigger Name is "WWO One"
-            display:
-              bgcolor: "#ffffffff"
-              brightness: 1
-              hueshift: 0
-              saturation: 1
-            domains:
-              class:a58112e5-6466-4189-b810-5d0d93adc075: true
-              class:d5b2e07d-657a-4405-899a-7fed0771f184: true
-            guid: 4bbadb3e-3f0f-42f2-b9d8-646a6d966b1b
-            hasManualVersion: true
-            iconid: ui-icons/skills/1.png
-            mandatory: false
-            modifiers: []
-            numTargets: "1"
-            persistence: []
-            range: 1
-            repeatTargets: false
-            sourceReference:
-              __typeName: SourceReference
-              docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
-              page: 164
-              type: pdf
-            strain: []
-            targetType: self
-            trigger: custom
-            triggerPrompt: If you are flanking the target when you use this ability, your flanking ally also gains 1 surge.
-        - name: You Were Watching the Wrong One
-          description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+          description: If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.
           __typeName: CharacterModifier
           behavior: trigger
           domains:
@@ -3782,7 +3702,7 @@ levels:
           sourceguid: 55ceec07-62e1-41c9-9cb9-6bc5cccb2d67
           triggeredAbility:
             name: You Were Watching the Wrong One
-            description: The ash you leave behind burns your foes. The first time on a turn that you use a shadow ability to teleport away from or into a space adjacent to an enemy, that enemy takes fire damage equal to your Agility score.
+            description: If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.
             __typeName: TriggeredAbility
             abilityType: none
             behaviors:
@@ -3818,7 +3738,7 @@ levels:
                 targetType: target
               promptText: Choose the ally flanking with you to gain 1 surge
             castImmediately: false
-            conditionFormula: Trigger Name is "WWO Many"
+            conditionFormula: Trigger Name is "WWO"
             display:
               bgcolor: "#ffffffff"
               brightness: 1
