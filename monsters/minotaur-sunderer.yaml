@@ -7,7 +7,7 @@ info:
   appearance:
     anthem: null
     anthemVolume: 1
-    backgroundId: null
+    backgroundId: d63535d4-f7a5-4082-a677-b86e012ab630
     characterName: null
     characterNamePrivate: false
     flip: false
@@ -15,8 +15,9 @@ info:
     frameHueShift: 0
     frameSaturation: 1
     offtokenPortraitId: null
+    popoutScale: 0.8446602
     portraitFrameId: 5836106c-4ba0-4281-84cf-4ce797113f5e
-    portraitId: 1533da55-db8c-4cba-a129-76b5c84863cf
+    portraitId: 8fa33622-32ae-4a20-b67a-1b3e9359dff2
     portraitOffset:
       x: 0.02764106
       y: 0.1410385
@@ -68,7 +69,7 @@ info:
         baseValue: 0
     characterFeatures:
     - name: Minotaur Sense
-      description: The minotaur cannot get a result lower than tier 2 when making Tests to navigate, search, or seek.
+      description: The sunderer can't obtain less than a tier 2 outcome when making tests to navigate, search, or seek.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:0c007c70-9f61-4985-b665-0842d59b4d82: true
@@ -78,7 +79,7 @@ info:
       implementation: 4
       modifiers:
       - name: Minotaur Sense
-        description: The minotaur cannot get a result lower than tier 2 when making Tests to navigate, search, or seek.
+        description: The sunderer can't obtain less than a tier 2 outcome when making tests to navigate, search, or seek.
         __typeName: CharacterModifier
         activationCondition: true
         behavior: power
@@ -113,7 +114,7 @@ info:
         sourceguid: bbfaf956-b826-49b3-873a-0168b1e4e684
       source: Trait
     - name: Retaliatory Strike
-      description: The Sunderer uses the Charge main action and Spiked Maul against the target.
+      description: The sunderer uses the Charge main action and Spiked Maul against the target.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:1b95f647-96a1-41c4-9fd9-1585523f3ada: true
@@ -123,7 +124,7 @@ info:
       implementation: 4
       modifiers:
       - name: Retaliatory Strike
-        description: The Sunderer uses the Charge main action and Spiked Maul against the target.
+        description: The sunderer uses the Charge main action and Spiked Maul against the target.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -144,7 +145,7 @@ info:
             applyto: caster
             customAbility:
               name: Sunderer Retaliatory Strike
-              description: The Sunderer uses the Charge main action and Spiked Maul against the target.
+              description: The sunderer uses the Charge main action and Spiked Maul against the target.
               __typeName: ActivatedAbility
               abilityType: none
               behaviors:
@@ -177,7 +178,7 @@ info:
                   cannotModifyAction: true
                   filterAbility: ability.name is "charge"
                   guid: 5907d364-5dc7-4ebf-8dae-bcb597ec65e2
-                  modifyDescription: The Sunderer uses the Charge main action and Spiked Maul against the target.
+                  modifyDescription: The sunderer uses the Charge main action and Spiked Maul against the target.
                   source: ""
               display:
                 bgcolor: "#ffffffff"
@@ -210,6 +211,7 @@ info:
           guid: e2c4a612-8fee-4740-b589-0fb4588e0953
           iconid: e7d55d80-630d-432d-8d3d-33051478bcd9
           implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -220,7 +222,7 @@ info:
           trigger: losehitpoints
           whenActive: combat
       - name: Retaliatory Strike
-        description: The Sunderer uses the Charge main action and Spiked Maul against the target.
+        description: The sunderer uses the Charge main action and Spiked Maul against the target.
         __typeName: CharacterModifier
         ability:
           name: Retaliatory Strike
@@ -228,9 +230,10 @@ info:
           distance: Ranged 6
           effect: The sunderer uses the Charge main action and Spiked Maul against the target.
           guid: 84a7b60f-1eb7-4133-8b48-f90d7766c3a3
-          keywords: []
+          keywords:
+            Ranged: true
           target: The Triggering Creature
-          trigger: A creature within distance deals damage to the minotaur.
+          trigger: A creature within distance deals damage to the sunderer.
         behavior: triggerdisplay
         domains:
           CharacterFeature:1b95f647-96a1-41c4-9fd9-1585523f3ada: true
@@ -296,7 +299,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Spiked Maul
-      description: A target is grabbed if they are pulled adjacent to the sunderer.
+      description: A target pulled adjacent to the sunderer is automatically grabbed.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -309,7 +312,7 @@ info:
         - 15 damage; pull 3
       - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         filterTarget: Caster.Distance(Target) < 2
-        rule: grab
+        rule: grabbed
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -337,8 +340,8 @@ info:
         page: 207
       strain: []
       targetType: target
-    - name: 'Fearsome Bay '
-      description: The minotaur has damage immunity 2 and deals an additional 5 damage with their strikes until the end of their next turn.
+    - name: Fearsome Bay
+      description: Until the end of their next turn, the minotaur has damage immunity 2 and deals an extra 5 damage with strikes.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -354,7 +357,7 @@ info:
         duration: end_of_next_turn_from_turnstart
         ongoingEffect: 7b3e91d4-2a08-45c6-9f17-84d0e6c3b52a
         ongoingEffectCustom: 7b3e91d4-2a08-45c6-9f17-84d0e6c3b52a
-      categorization: Malice
+      categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -381,8 +384,8 @@ info:
       strain: []
       targetFilter: Enemy
       targetType: all
-    - name: 'Disemboweling Horns '
-      description: The target takes 1d6 damage at the start of each of their turns while bleeding from this ability.
+    - name: Disemboweling Horns
+      description: While bleeding this way, the target takes 1d6 damage at the start of each of their turns.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -393,7 +396,9 @@ info:
         - 5 damage; M<0 bleeding (save ends)
         - 8 damage; M<1 bleeding (save ends)
         - 9 damage; M<2 bleeding (save ends)
-      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+        riderid: 2747a5d0-b396-4767-be12-a25aa28d7bc4
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
@@ -415,6 +420,9 @@ info:
       objectTarget: false
       persistence: []
       range: 2
+      reasonedFilters:
+      - formula: (Target.Conditions has "Grabbed") and (Target.ConditionCaster("Grabbed") = Caster)
+        reason: The target must be grabbed by the sunderer.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 3
@@ -423,6 +431,7 @@ info:
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 207
       strain: []
+      targetTextOverride: One creature grabbed by the sunderer
       targetType: target
     innateAttacks: []
     innateLanguages:
