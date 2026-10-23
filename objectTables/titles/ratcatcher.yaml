@@ -108,14 +108,20 @@ modifierInfo:
       tags:
         Combat: true
     - name: Everybody Move!
-      description: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
+      description: |-
+        When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures.
+
+        *Codex Implementation Note:* Everybody Move does not currently work with Null's Chronokinetic Mastery.
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: f5d7b21b-8e19-4a0c-af44-ba1e7a6875ed
       implementation: 3
       modifiers:
       - name: Everybody Move!
-        description: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
+        description: |-
+          When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures.
+
+          *Codex Implementation Note:* Everybody Move does not currently work with Null's Chronokinetic Mastery.
         __typeName: CharacterModifier
         ability:
           name: New Ability
@@ -137,30 +143,43 @@ modifierInfo:
           repeatTargets: false
           strain: []
           targetType: self
-        addModes:
-        - text: One additional creature of your size
-          rules: "Target one additional creature of your size or smaller."
-        - text: Two additional smaller creatures
-          rules: "Target two additional creatures who are smaller than you."
         attributes:
-        - id: reasonfilter
-          operation: reasonfilter
-          reasonedFilters:
-          - formula: Mode = 2 or Number of Targets < 1 or Size <= Caster.Size
-            reason: "**Ratcatcher:** The additional creature must be your size or smaller."
-          - formula: Mode = 1 or Number of Targets < 1 or Size < Caster.Size
-            reason: "**Ratcatcher:** Additional creatures must be smaller than you."
+        - id: addmode
+          attributes:
+          - id: numtargets
+            operation: Add
+            value: "1"
+          - id: reasonfilter
+            operation: reasonfilter
+            reasonedFilters:
+            - formula: Number of Targets < 1 or Size <= Caster.Size
+              reason: "**Ratcatcher:** The additional creature must be your size or smaller."
+            value: ""
+          operation: addmode
+          rules: Target one additional creature of your size or smaller.
+          text: One additional creature of your size
           value: ""
-        - id: numtargets
-          operation: Add
-          value: 2 when Mode = 2 else 1
+        - id: addmode
+          attributes:
+          - id: numtargets
+            operation: Add
+            value: "2"
+          - id: reasonfilter
+            operation: reasonfilter
+            reasonedFilters:
+            - formula: Number of Targets < 1 or Size < Caster.Size
+              reason: "**Ratcatcher:** Additional creatures must be smaller than you."
+            value: ""
+          operation: addmode
+          rules: Target two additional creatures who are smaller than you.
+          text: Two additional smaller creatures
+          value: ""
         behavior: modifyability
         filterAbility: Ability.Name has "Knockback"
         guid: efa1f469-107d-4329-abde-3de21019c41d
         modifyDescription: When you use the Knockback maneuver, you can target one additional creature of your size or two additional smaller creatures
         source: Feat
         sourceguid: f5d7b21b-8e19-4a0c-af44-ba1e7a6875ed
-        targetPromptLabel: "Ratcatcher Title: Choose additional targets"
       source: Feat
       sourceReference:
         __typeName: SourceReference
@@ -169,5 +188,5 @@ modifierInfo:
         type: pdf
       tags:
         Combat: true
-mtime: 1787612319818
+mtime: 1792765587642
 prerequisite: You defeat a leader or solo creature who is size 1S or smaller, such as a goblin monarch.
