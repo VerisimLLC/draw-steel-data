@@ -1,0 +1,186 @@
+id: 524e6a79-5595-4252-ae18-67002c6e5e81
+description: Pillar
+artist: null
+children: {}
+components:
+  CORE:
+    "@class": ObjectComponentCore
+    _lastRotation: -1
+    _lastScale: -1
+    disabled: false
+    hasShadow: true
+    height: 0.8
+    keywords: []
+    locked: false
+    pivot_x: 0.5
+    pivot_y: 0.5
+    properties: null
+    rotation: 0
+    scale: 1
+    sprite_invisible_to_players: false
+    sublayer: Objects
+  ObjectComponentSolid:
+    "@class": ObjectComponentSolid
+    blockMovement: true
+    blockForcedMovement: true
+    blockVision: false
+    blockLight: true
+    cover: Three Quarters
+    _noutlineRefresh: 0
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties: null
+  c50e3e61-f973-4a23-a9b3-228c2d1f8ba1:
+    "@class": ObjectComponentTargetable
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    turnSpeed: 120
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+      creatureSize: 1L
+      max_hitpoints: 6
+      resources: []
+      characterFeatures:
+      - __typeName: CharacterFeature
+        implementation: 3
+        guid: 848ddcf6-1018-4635-97fc-aa6e6e4a0ccf
+        domains:
+          CharacterFeature:848ddcf6-1018-4635-97fc-aa6e6e4a0ccf: true
+        description: "A pillar rigged to topple in a preset direction when it is destroyed. Level 2 Hazard Hexer, EV 3."
+        source: Character Feature
+        name: Toppling Pillar
+        modifiers:
+        - __typeName: CharacterModifier
+          guid: a4166e2f-9800-4358-a6a5-883dc0b42468
+          behavior: trigger
+          domains:
+            CharacterFeature:848ddcf6-1018-4635-97fc-aa6e6e4a0ccf: true
+          description: "When the pillar is destroyed it topples, using Toppling Pillar."
+          source: Character Feature
+          name: Toppling Pillar
+          sourceguid: 848ddcf6-1018-4635-97fc-aa6e6e4a0ccf
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Toppling Pillar
+            displayName: Toppling Pillar
+            description: "The pillar topples when it is destroyed."
+            implementation: 3
+            implementationDetails: "SILVER: Topples when destroyed (the Destroyed trigger). The Director aims the 4 x 1 line in the pillar's preset direction. Toppling from a linked pressure plate or switch is not automated yet. No Upgrades."
+            trigger: objectdestroyed
+            mandatory: true
+            targetType: self
+            range: 1
+            numTargets: "1"
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: "#ffffffff"
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            guid: 94495a30-a304-4cbb-9074-fc629113c3b9
+            behaviors:
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              guid: 6d42f877-426a-43ad-a958-b8b3ecd882fc
+              abilityType: custom
+              applyto: caster
+              runOnController: true
+              invokeOnCaster: true
+              targeting: prompt
+              promptText: Aim the pillar's fall.
+              customAbility:
+                __typeName: ActivatedAbility
+                name: Toppling Pillar
+                description: "The area is difficult terrain."
+                abilityType: none
+                keywords:
+                  Area: true
+                targetType: line
+                range: "4"
+                radius: "1"
+                rangeTextOverride: 4 x 1 line within 1
+                objectTarget: true
+                numTargets: "1"
+                repeatTargets: false
+                display:
+                  bgcolor: "#ffffffff"
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 10e03062-16b7-49da-acbf-6e191762a258
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                behaviors:
+                - __typeName: ActivatedAbilityPowerRollBehavior
+                  roll: 2d10 + 2
+                  tiers:
+                  - 4 damage
+                  - 6 damage; M<1 restrained (save ends)
+                  - 9 damage; M<2 restrained (save ends)
+                - __typeName: ActivatedAbilityAuraBehavior
+                  aliveafterdeath: true
+                  duration: none
+                  aura:
+                    __typeName: Aura
+                    name: Toppled Pillar
+                    guid: f15eb15c-60e2-4035-8d76-943ef11c8608
+                    applyto: all
+                    difficult_terrain: true
+                    iconid: ui-icons/skills/1.png
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    modifiers: []
+                    source: Toppled Pillar
+      classes: []
+      titles: []
+      skillProficiencies: []
+      equipment: []
+      notes:
+      - title: Backstory
+        text: ""
+ctime: 1792195200000
+height: 0
+hidden: false
+imageId: https://codexback.com/u176kM1pp97YH4PfVpw8XQ
+keywords: null
+mtime: 1792195200000
+ord: 308
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+previewType: null
+tint:
+  a: 1
+  b: 1
+  g: 1
+  r: 1
+width: 0

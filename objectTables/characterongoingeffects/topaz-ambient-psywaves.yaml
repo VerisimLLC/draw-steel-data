@@ -1,0 +1,104 @@
+id: 141aa7bc-e084-5f94-a37d-3e80667cd245
+name: Ambient Psywaves
+description: This map is a location the topaz dragon has occupied for 1 week or more. At the start of each round the dragon gains 5 temporary Stamina for each hero in the encounter. While the dragon has temporary Stamina, each creature other than the dragon must spend 1 additional square to leave their starting position.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1792540800000
+custom: true
+display:
+  bgcolor: '#ffffffff'
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:141aa7bc-e084-5f94-a37d-3e80667cd245: true
+guid: 141aa7bc-e084-5f94-a37d-3e80667cd245
+iconid: ui-icons/skills/1.png
+implementation: 4
+modifiers:
+- name: Ambient Psywaves
+  description: At the start of each round, the dragon gains 5 temporary Stamina for each hero in the encounter.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:141aa7bc-e084-5f94-a37d-3e80667cd245: true
+  guid: 9910ac88-d034-5be6-90df-b6c57d1cb639
+  source: Ongoing Effect
+  sourceguid: 141aa7bc-e084-5f94-a37d-3e80667cd245
+  triggeredAbility:
+    name: Ambient Psywaves
+    description: ''
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+      applyto: caster
+      stamina: 5 * HeroesInEncounter
+      chatMessage: Ambient Psywaves
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 05e32c23-a4af-557f-9053-7349c2694d25
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    keywords: {}
+    modifiers: []
+    numTargets: '1'
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    mandatory: true
+    castImmediately: true
+    whenActive: combat
+    trigger: beginround
+- name: Ambient Psywaves
+  description: Each creature other than the dragon must spend 1 additional square to leave their starting position while the dragon has temporary Stamina.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:141aa7bc-e084-5f94-a37d-3e80667cd245: true
+  guid: cd5b072e-29ff-5a86-8197-f63406c0b9a2
+  source: Ongoing Effect
+  sourceguid: 141aa7bc-e084-5f94-a37d-3e80667cd245
+  triggeredAbility:
+    name: Ambient Psywaves Drag
+    description: ''
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+      ongoingEffect: e36bb01e-efc0-5948-b2e7-5b636731808b
+      ongoingEffectCustom: false
+      duration: eoe
+      applyto: targets
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: ac1e78b4-8343-5119-b1b0-a12bc7091b6e
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    keywords: {}
+    modifiers: []
+    numTargets: '1'
+    persistence: []
+    range: 999
+    repeatTargets: false
+    strain: []
+    targetType: all
+    targetFilter: '1'
+    mandatory: true
+    castImmediately: true
+    silent: true
+    whenActive: combat
+    trigger: beginround
+mtime: 1792540800000
+source: Ongoing Effect
+statusEffect: true

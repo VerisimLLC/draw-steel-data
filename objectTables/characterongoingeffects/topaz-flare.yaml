@@ -1,0 +1,74 @@
+id: 59053c3b-bc81-529f-b310-8ff925097e5d
+name: Topaz Flare
+description: The dragon's psionic field is now a 5 aura, and it explodes at the end of each round. Each enemy within the dragon's field when it explodes takes 8 fire damage and is pushed 3 squares.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1792540800000
+custom: true
+display:
+  bgcolor: '#ffffffff'
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:59053c3b-bc81-529f-b310-8ff925097e5d: true
+guid: 59053c3b-bc81-529f-b310-8ff925097e5d
+iconid: 5493b9ce-db86-4bfe-8900-b3a72c1c7cf1
+implementation: 4
+modifiers:
+- name: Topaz Flare
+  description: The dragon's psionic field is a 5 aura.
+  __typeName: CharacterModifier
+  behavior: attribute
+  domains:
+    CharacterOngoingEffect:59053c3b-bc81-529f-b310-8ff925097e5d: true
+  guid: 55144716-e1d3-5682-bd75-407121ab05ad
+  source: Ongoing Effect
+  sourceguid: 59053c3b-bc81-529f-b310-8ff925097e5d
+  attribute: 3dc5e544-1d36-5e36-b9d3-212c848e07c0
+  value: 2
+- name: Topaz Flare
+  description: The field explodes at the end of each round.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:59053c3b-bc81-529f-b310-8ff925097e5d: true
+  guid: 834da390-a014-5868-9e48-e87177d7f3e4
+  source: Ongoing Effect
+  sourceguid: 59053c3b-bc81-529f-b310-8ff925097e5d
+  triggeredAbility:
+    name: Topaz Flare
+    description: The dragon's psionic field explodes. Each enemy within the field takes 8 fire damage and is pushed 3 squares.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: 8 fire damage; push 3
+      applyto: targets
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 24352a8a-dd22-5f1a-9e5e-524b2c57a281
+    iconid: 5493b9ce-db86-4bfe-8900-b3a72c1c7cf1
+    implementation: 4
+    keywords: {}
+    modifiers: []
+    numTargets: '1'
+    persistence: []
+    range: max(0, PsionicFieldSize)
+    repeatTargets: false
+    strain: []
+    targetType: all
+    conditionFormula: PsionicFieldSize > 0
+    targetFilter: Enemy
+    mandatory: true
+    castImmediately: true
+    whenActive: combat
+    trigger: endround
+mtime: 1792540800000
+source: Ongoing Effect
+statusEffect: true

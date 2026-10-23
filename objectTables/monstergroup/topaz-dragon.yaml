@@ -1,0 +1,187 @@
+id: eb6b8340-f39e-5ea0-b054-f1b0f4f90682
+name: Topaz Dragon
+_table: MonsterGroup
+__typeName: MonsterGroup
+attacks: []
+ctime: 1792540800000
+maliceAbilities:
+- name: Psi Boost
+  description: The dragon empowers their next psionic ability. They can choose to gain a double edge on the ability's power roll, deal an additional 2 damage to each target, or increase the ability's potency by 1.
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: ecab7bfc-37da-555e-9528-762016e939e6
+    ongoingEffectCustom: false
+    applyto: caster
+    modesSelected:
+    - 1
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: 1cea272b-ba94-5d23-8dfa-988f38536f73
+    ongoingEffectCustom: false
+    applyto: caster
+    modesSelected:
+    - 2
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: 15ed028b-c668-5208-999d-16bad9977cc2
+    ongoingEffectCustom: false
+    applyto: caster
+    modesSelected:
+    - 3
+  display:
+    bgcolor: '#ffffffff'
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: e9e41845-d915-54a0-be0c-ef9c2887160b
+  iconid: 3cfaa0fb-fa04-4b54-b082-6c5fdb72f21e
+  implementation: 4
+  keywords: {}
+  modifiers: []
+  numTargets: '1'
+  persistence: []
+  range: 1
+  repeatTargets: false
+  strain: []
+  targetType: self
+  castImmediately: true
+  multipleModes: true
+  modeList:
+  - text: Double Edge
+    rules: Double edge on the next psionic ability's power roll.
+  - text: +2 Damage
+    rules: The next psionic ability deals an additional 2 damage to each target.
+  - text: +1 Potency
+    rules: The next psionic ability's potency increases by 1.
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: '3'
+- name: Thermal Exchange
+  description: The dragon saps the energy out of a 3 cube area within 10 squares of themself. Until the start of the dragon's next turn, the area is difficult terrain, and each enemy in the area with P<2 is slowed. At the start of the dragon's next turn, the energy rushes back into the area and explodes in a 5 burst centered on the center of the cube. Each enemy in the area takes 8 fire damage and is pushed 3 squares.
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityAuraBehavior
+    duration: nextturn
+    aliveafterdeath: false
+    guid: ee739729-2de5-5b56-b5e0-07583e3fab53
+    aura:
+      name: Thermal Exchange
+      description: Until the start of the dragon's next turn, the area is difficult terrain, and each enemy in the area with P<2 is slowed.
+      __typeName: Aura
+      applyto: all
+      difficult_terrain: true
+      display:
+        bgcolor: '#9fd8ffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: a9bfa817-2539-50ac-8568-278ccb9be68e
+      iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+      modifiers: []
+      objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+      triggers:
+      - trigger: casterstartturnaura
+        destroyaura: true
+        ability:
+          name: Thermal Exchange
+          description: The energy rushes back into the area and explodes in a 5 burst centered on the center of the cube. Each enemy in the area takes 8 fire damage and is pushed 3 squares.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityForcedMovementLocBehavior
+            type: aura
+            applyto: targets
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: 8 fire damage; push 3
+            applyto: targets
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8c53161f-e50f-59bd-b566-d992dcffea96
+          iconid: 5493b9ce-db86-4bfe-8900-b3a72c1c7cf1
+          implementation: 4
+          keywords: {}
+          modifiers: []
+          numTargets: '1'
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: aura
+          auraBurstRadius: '5'
+          targetFilter: Enemy
+          mandatory: true
+          castImmediately: true
+          trigger: casterstartturnaura
+      subauras:
+      - name: Thermal Exchange (Sapped)
+        __typeName: Aura
+        applyto: enemies
+        creatureFilter: PresencePotencyResistance < 2
+        guid: 5a79ba7b-af9a-5401-b4e7-9c62e8627e8c
+        modifiers:
+        - name: Thermal Exchange
+          description: Slowed while in the sapped area.
+          __typeName: CharacterModifier
+          behavior: bestowcondition
+          conditionid: 68f455f5-135f-495c-822d-40d809d2b15f
+          guid: a830c58b-16f0-50ec-b996-18437bbcab69
+          source: Thermal Exchange
+          sourceguid: 5a79ba7b-af9a-5401-b4e7-9c62e8627e8c
+        triggers: []
+  display:
+    bgcolor: '#ffffffff'
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: cc58ca00-2b9c-549b-853b-6574462ed853
+  iconid: 85d0e26c-d0a3-4c9a-b117-2e9bfc1a221b
+  implementation: 4
+  keywords:
+    Area: true
+    Psionic: true
+  modifiers: []
+  numTargets: '1'
+  persistence: []
+  range: 10
+  repeatTargets: false
+  strain: []
+  targetType: cube
+  radius: '3'
+  rangeTextOverride: 3 cube within 10
+  targetTextOverride: Special
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: '5'
+- name: Solo Action
+  description: The dragon takes an additional main action on their turn. They can use this feature even if they are dazed.
+  __typeName: MaliceAbility
+  abilityType: none
+  behaviors:
+  - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+    ongoingEffect: 46ed663a-3845-4c74-9af7-e865db192759
+    ongoingEffectCustom: false
+    applyto: caster
+    duration: 0
+  display:
+    bgcolor: '#ffffffff'
+    brightness: 1
+    hueshift: 0
+    saturation: 1
+  guid: e2cc046b-045e-5226-a112-1532fd5b85bd
+  iconid: ebc8b529-f450-4bee-9466-86374c26dc13
+  implementation: 4
+  keywords: {}
+  modifiers: []
+  numTargets: '1'
+  persistence: []
+  range: 1
+  repeatTargets: false
+  strain: []
+  targetType: self
+  castImmediately: true
+  resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+  resourceNumber: '5'
+mtime: 1792540800000
+traits: []

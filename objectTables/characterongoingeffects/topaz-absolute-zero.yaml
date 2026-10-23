@@ -1,0 +1,102 @@
+id: a447a9d2-fb78-5850-991e-eba715972efd
+name: Absolute Zero
+description: While the dragon has temporary Stamina, their base speed is reduced to 2, their stability increases to 6, and abilities that target the dragon have a double bane. Whenever the dragon takes damage, the Director gains 1 Malice.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+ctime: 1792540800000
+custom: true
+display:
+  bgcolor: '#ffffffff'
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:a447a9d2-fb78-5850-991e-eba715972efd: true
+guid: a447a9d2-fb78-5850-991e-eba715972efd
+iconid: ui-icons/skills/1.png
+implementation: 4
+modifiers:
+- name: Absolute Zero
+  description: While the dragon has temporary Stamina, their base speed is 2.
+  __typeName: CharacterModifier
+  behavior: attribute
+  domains:
+    CharacterOngoingEffect:a447a9d2-fb78-5850-991e-eba715972efd: true
+  guid: b4e637c1-0a83-5791-95f5-966d296cf72f
+  source: Ongoing Effect
+  sourceguid: a447a9d2-fb78-5850-991e-eba715972efd
+  attribute: speed
+  value: -3
+  filterCondition: TemporaryStamina > 0
+- name: Absolute Zero
+  description: While the dragon has temporary Stamina, their stability is 6.
+  __typeName: CharacterModifier
+  behavior: attribute
+  domains:
+    CharacterOngoingEffect:a447a9d2-fb78-5850-991e-eba715972efd: true
+  guid: f4b653ad-df6c-5e31-b353-93e57d5ed057
+  source: Ongoing Effect
+  sourceguid: a447a9d2-fb78-5850-991e-eba715972efd
+  attribute: forcedmoveresistance
+  operation: set
+  value: 6
+  filterCondition: TemporaryStamina > 0
+- name: Absolute Zero
+  description: While the dragon has temporary Stamina, abilities that target the dragon have a double bane.
+  __typeName: CharacterModifier
+  behavior: power
+  domains:
+    CharacterOngoingEffect:a447a9d2-fb78-5850-991e-eba715972efd: true
+  guid: 082fabf6-3100-5b91-bbfd-4510b40cdf8f
+  source: Ongoing Effect
+  sourceguid: a447a9d2-fb78-5850-991e-eba715972efd
+  rollType: enemy_ability_power_roll
+  modtype: double_bane
+  activationCondition: true
+  force: true
+  keywords: {}
+  filterCondition: TemporaryStamina > 0
+- name: Absolute Zero
+  description: Whenever the dragon takes damage while they have temporary Stamina, the Director gains 1 Malice.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:a447a9d2-fb78-5850-991e-eba715972efd: true
+  guid: aac9da48-7b41-579c-bd5d-ad9008199a98
+  source: Ongoing Effect
+  sourceguid: a447a9d2-fb78-5850-991e-eba715972efd
+  triggeredAbility:
+    name: Absolute Zero
+    description: ''
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      rule: the director gains 1 malice
+      applyto: caster
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: bf708a4e-1600-5885-9b13-9aea0f90e508
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    keywords: {}
+    modifiers: []
+    numTargets: '1'
+    persistence: []
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    conditionFormula: TemporaryStamina + (FullDamage - Damage) > 0
+    mandatory: true
+    castImmediately: true
+    silent: true
+    trigger: losehitpoints
+mtime: 1792540800000
+source: Ongoing Effect
+statusEffect: true
