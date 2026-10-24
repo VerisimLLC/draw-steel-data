@@ -208,7 +208,7 @@ info:
       implementation: 3
       modifiers:
       - name: Tongue Slap
-        description: ""
+        description: When a creature within 5 squares makes a strike against the daybringer or an ally that isn't a critical hit, the daybringer reduces the outcome of the strike's power roll by one tier.
         __typeName: CharacterModifier
         behavior: powertabletrigger
         domains:
@@ -216,6 +216,7 @@ info:
         guid: 9d048313-7128-4dab-8e3a-ce15de0ec403
         powerRollModifier:
           name: Tongue Slap
+          description: The daybringer slaps the striker with their tongue, reducing the outcome of the strike's power roll by one tier.
           __typeName: CharacterModifier
           activationCondition: false
           behavior: power
@@ -278,7 +279,7 @@ info:
         triggeredAbility:
           name: End Effect
           description: |
-            At the end of each of their turns, the centurion can take 5 damage to end one effect on them that can be ended by a saving throw. 
+            At the end of each of their turns, the daybringer can either take 5 damage or end the wet effect on an adjacent creature in order to end one effect on them that can be ended by a saving throw.
             This damage can't be reduced in any way.
           __typeName: TriggeredAbility
           abilityType: none
@@ -287,8 +288,47 @@ info:
             conditions: []
             damageToSelf: "5"
             mode: conditions
+            modesSelected:
+            - 1
             purgeType: one
             targetDuration: save
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            customAbility:
+              name: Moisturizing End Effect
+              description: End the wet effect on an adjacent creature, then end one effect on yourself that can be ended by a saving throw.
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: b936df43-5c0e-4046-9221-ce360fa5131b
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                applyto: caster
+                conditions: []
+                mode: conditions
+                purgeType: one
+                targetDuration: save
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: da5b257d-f09a-4dc0-97dc-5ca514485724
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetFilter: Target has "Wet"
+              targetType: target
+            modesSelected:
+            - 2
+            promptText: Choose an adjacent wet creature to dry
           conditionFormula: SaveEndsEffects
           display:
             bgcolor: "#ffffffff"
@@ -302,7 +342,16 @@ info:
           hasManualVersion: true
           iconid: ui-icons/skills/1.png
           mandatory: false
+          modeList:
+          - hasAbility: false
+            rules: Take 5 damage to end one effect on yourself that can be ended by a saving throw. This damage can't be reduced in any way.
+            text: Take 5 Damage
+          - condition: Subject.Count Nearby Creatures(1, "Wet") > 0
+            hasAbility: false
+            rules: End the wet effect on an adjacent creature to end one effect on yourself that can be ended by a saving throw.
+            text: Dry an Adjacent Creature
           modifiers: []
+          multipleModes: true
           numTargets: "1"
           persistence: []
           range: 1
@@ -310,7 +359,7 @@ info:
           strain: []
           targetType: self
           trigger: endturn
-          triggerPrompt: End one save ends effect on self, take 5 damage.
+          triggerPrompt: End one save ends effect on self by taking 5 damage or drying an adjacent wet creature.
       source: Trait
     cr: 1
     creatureSize: 1M
@@ -575,6 +624,7 @@ info:
         allCreaturesTheSame: true
         bestiaryFilter: beast.name = "Angulotl Pollywog"
         groupInitiativeWithCaster: false
+        summonAnimation: fromCaster
       categorization: Villain Action
       display:
         bgcolor: "#ffffffff"
