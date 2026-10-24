@@ -69,20 +69,6 @@ info:
   partyid: null
   properties:
     __typeName: monster
-    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
-      __typeName: StatHistory
-      entries:
-        17de789f-ab44-434a-9eb1-ca7d578ee4bb:
-          note: Rise, My Minions
-          refreshid: 98f39b50-622d-4138-8500-8936c5f7fa46-1
-          set: 0/1
-          userid: qEfsVECZ5sUF7XdznhpYiuErYD12
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b: 1
-      guid: f209aadc-036a-49d5-b032-00cc8e7c9445-295
     attributes:
       agl:
         id: agl
@@ -162,7 +148,6 @@ info:
       override: true
       type: mcdm
     inflictedConditions: []
-    initiativeGrouping: 36ee4237-2e11-491d-a9d9-ca126d31050b
     innateActivatedAbilities:
     - name: Death Scythe
       description: "2 Malice: The death cultist regains Stamina equal to half the damage dealt."
@@ -180,7 +165,7 @@ info:
         applyto: caster
         modesSelected:
         - 2
-        roll: Cast.Damage Dealt *0.5
+        roll: Cast.Damage Dealt / 2
       - __typeName: ActivatedAbilityReplenishBehavior
         chatMessage: "2 Malice: The death cultist regains Stamina equal to half the damage dealt."
         mode: expend
@@ -207,7 +192,8 @@ info:
       meleeRange: 1
       modeList:
       - text: No Malice
-      - text: 2 Malice
+      - condition: Malice >= 2
+        text: 2 Malice
       modifiers: []
       multipleModes: true
       numTargets: 1
@@ -223,11 +209,43 @@ info:
     - name: Rise, My Minions
       description: |-
         **1 Malice per minion**
-        Each target revives with their full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.
+        Each target who died during this encounter revives with full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
+      - __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- Each target must have died during this encounter: a corpse whose initiative
+          -- entry is not in the current combat died before the fight, so it is dropped
+          -- before the raise step. Later steps and the Malice cost see only what is left.
+          local q = dmhub.initiativeQueue
+          local inCombat = q ~= nil and not q.hidden
+          local dropped = 0
+          for i = #targets, 1, -1 do
+              local corpseToken = targets[i].token
+              local deadToken = nil
+              if corpseToken ~= nil and corpseToken.isCorpse and corpseToken.objectInstance ~= nil then
+                  local corpse = corpseToken.objectInstance:GetComponent("Corpse")
+                  if corpse ~= nil then
+                      deadToken = corpse.properties:DeadCreatureToken()
+                  end
+              end
+              local diedThisEncounter = false
+              if inCombat and deadToken ~= nil then
+                  local initiativeid = InitiativeQueue.GetInitiativeId(deadToken)
+                  diedThisEncounter = initiativeid ~= nil and q.entries[initiativeid] ~= nil
+              end
+              if not diedThisEncounter then
+                  table.remove(targets, i)
+                  dropped = dropped + 1
+              end
+          end
+          if dropped > 0 then
+              ActionLogNoteChatMessage.Post(casterToken, "Rise, My Minions",
+                  string.format("%d target(s) did not die during this encounter and stay dead.", dropped))
+          end
+        guid: 38db9d14-7866-470d-9744-0b97e854334a
       - __typeName: ActivatedAbilityRaiseCorpseBehavior
         guid: fa771fa5-5cd8-447b-ae20-7b4f5be3dfc5
         restoreStamina: true
@@ -245,7 +263,7 @@ info:
         mode: expend
         quantity: Cast.Target Count-1
         resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      categorization: Signature Ability
+      categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -255,7 +273,8 @@ info:
       flavor: ""
       guid: 481ee11f-764c-4f7d-b024-4e2183a8032e
       iconid: d38cfd57-01a7-4bae-bc92-74689ddc4e92
-      implementation: 4
+      implementation: 3
+      implementationDetails: Minions that died before this fight stay dead, and the action log says how many. A corpse can still rise if its squad is in this fight. It can also rise if the minion was placed from a tabletop card, encounter staging, a macro or a random table and the same kind of creature is in this fight. Check the corpses in range before you use this ability. If none of them can rise, you still spend 1 Malice.
       keywords:
         Area: true
       modifiers: []
@@ -288,29 +307,11 @@ info:
     monster_category: Monster
     monster_type: Human Death Cultist
     moveDiag: 0
-    moveDistance: 6
-    moveDistanceRoundId: 98f39b50-622d-4138-8500-8936c5f7fa46-1
     movementSpeeds: []
     notes:
     - text: ""
       title: Monster Notes
-    ongoingEffects:
-    - id: a0dd9312-2da1-40db-a5dd-67c21450ac1a
-      __typeName: CharacterOngoingEffectInstance
-      casterInfo:
-        abilityName: Rise, My Minions
-        tokenid: 5efc2c42-056b-48c6-a436-9872f43a3d7d
-      ongoingEffectid: 760be874-e320-44e5-8a13-e528a34ebb71
-      seq: 3
-      sourceDescription: Applied by Edmund's <b>Rise, My Minions</b> ability
-      stacks: 1
-      time:
-        __typeName: TimePoint
-        initiativeid: 36ee4237-2e11-491d-a9d9-ca126d31050b
-        initiativeord: 0
-        queueguid: 98f39b50-622d-4138-8500-8936c5f7fa46
-        round: 1
-        time: 2.56740617752075
+    ongoingEffects: []
     opportunityAttack: 4
     resistances:
     - __typeName: ResistanceEntry
@@ -321,11 +322,7 @@ info:
       apply: Damage Reduction
       damageType: psychic
       dr: 2
-    resources:
-      a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b:
-        __typeName: CharacterResource
-        refreshid: 98f39b50-622d-4138-8500-8936c5f7fa46-1
-        used: 1
+    resources: []
     role: Platoon Support
     savingThrowRatings: []
     skillProficiencies: []

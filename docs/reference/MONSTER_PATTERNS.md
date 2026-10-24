@@ -102,14 +102,26 @@ numTargets: "3"
 
 Use `channeledResource` + `numTargets` with `Charges` to scale.
 
+`resourceNumber` is the base cost and buys the base targets. `Charges` counts
+only the additional increments channeled on top of it, so add it to the base
+count rather than multiplying.
+
 ```yaml
-# Example: Bull Rush -- 1 minotaur per 3 malice
-numTargets: "1 * Charges"
+# Example: Bull Rush -- 3 Malice for one acting minotaur, +1 per 3 more
+resourceCost: <malice-uuid>
+resourceNumber: "3"
+numTargets: 1 + Charges
 channeledResource: <malice-uuid>
 channelIncrement: 3
+targetType: target
+targetAllegiance: ally
+targetFilter: Target.Keywords has "Minotaur" and YourTurn
+selfTarget: true    # the acting minotaur casting it can pick itself
 ```
 
-**Used by**: Bull Rush (Minotaurs), Dread March (Undead), Gush (Ooze)
+**Used by**: Bull Rush (Minotaurs), Dread March (Undead, `Charges + 4`), the
+devils' teleport feature (`2 + Charges`). Gush (Ooze) scales its area instead
+(`range: 1+Charges`).
 
 ### All allies in range (any type)
 
@@ -920,7 +932,7 @@ behaviors:
 The ongoing effect contains modifiers that grant the actual buff (speed, damage, edge, etc.).
 
 **Used by**: Goblin Mode (+2 speed), Exploit Opening (+edge for Humans),
-Soulburn (+double edge for Demons), Bull Rush (+4 speed for Minotaurs)
+Soulburn (+double edge for Demons)
 
 ### All creatures of a type take an action (shift + free strike)
 
