@@ -1,7 +1,7 @@
 id: eb48d72b-3425-446b-a58b-dd965c79ec70
 name: Shadowmeld
 description: |
-  While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.
+  You are flattened into a shadow. Area abilities don't affect you, strikes against you take a bane, and tests made to find you take a bane. If you are flattened against a wall, only creatures within 60 degrees of straight in front of the wall can see you through your hiding. Moving, or using a main action or maneuver, ends this form.
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
@@ -19,19 +19,116 @@ display:
   saturation: 1
 guid: eb48d72b-3425-446b-a58b-dd965c79ec70
 iconid: a1f8b8ab-a695-4b99-af22-02986221aec6
-implementation: 2
+implementation: 4
 modifiers:
 - name: Shadowmeld
-  description: |
-    While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.
+  description: Area abilities don't affect you.
   __typeName: CharacterModifier
-  attribute: speed
+  attribute: 9f23d7c5-b356-4f0c-b94b-7165e34125b6
   behavior: attribute
-  guid: 4244fbf0-2f2d-4c20-b6fb-50c1041cc4d2
-  operation: min
+  guid: 0464561f-770d-4100-8f0a-b921034428c8
   source: Ongoing Effect
   sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
-  value: 0
+  value: 1
+- name: Shadowmeld
+  description: While hidden against a wall, only creatures within 60 degrees of straight in front of the wall can target you.
+  __typeName: CharacterModifier
+  attribute: 4d7ee03a-6b70-4cde-bdb8-f586b7506b68
+  behavior: attribute
+  guid: 4a2b0809-5c39-4aae-98c4-c66c96eeb18f
+  source: Ongoing Effect
+  sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
+  value: 60
+- name: Shadowmeld
+  description: Strikes against you take a bane.
+  __typeName: CharacterModifier
+  activationCondition: true
+  behavior: power
+  guid: 80f89136-94b0-4c8c-a0df-a19bc5fe19fd
+  keywords:
+    Strike: true
+  modtype: bane
+  rollType: enemy_ability_power_roll
+  source: Ongoing Effect
+  sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
+- name: Shadowmeld
+  description: Tests made to find you take a bane.
+  __typeName: CharacterModifier
+  activationCondition: Ability.SearchForHidden
+  behavior: power
+  guid: d1ae4158-68b6-4409-8c42-15a9b21b9cef
+  modtype: bane
+  rollType: opposed_power_roll
+  source: Ongoing Effect
+  sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
+- name: Shadowmeld
+  description: Moving ends Shadowmeld and the hiding it gave you.
+  __typeName: CharacterModifier
+  behavior: trigger
+  guid: ca4eef5d-f5fb-45f9-a6b1-c14b1f34bf0e
+  source: Ongoing Effect
+  sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
+  triggeredAbility:
+    name: Leave Shadowmeld
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      mode: effect
+      ongoingEffect: eb48d72b-3425-446b-a58b-dd965c79ec70
+      purgeType: all
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions:
+      - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+      mode: conditions
+      purgeType: all
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: a5928776-9391-4875-898c-42456f951b95
+    iconid: a1f8b8ab-a695-4b99-af22-02986221aec6
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    targetType: self
+    trigger: move
+- name: Shadowmeld
+  description: Using a main action or maneuver ends Shadowmeld.
+  __typeName: CharacterModifier
+  behavior: trigger
+  guid: 8d36d68f-ff06-4d9c-8829-24ae87baca89
+  source: Ongoing Effect
+  sourceguid: eb48d72b-3425-446b-a58b-dd965c79ec70
+  triggeredAbility:
+    name: Leave Shadowmeld
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      conditions: []
+      mode: effect
+      ongoingEffect: eb48d72b-3425-446b-a58b-dd965c79ec70
+      purgeType: all
+    conditionFormula: (UsedAbility.MainAction or UsedAbility.Maneuver) and not (UsedAbility.Name is "Shadowmeld")
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: d5c3231e-a70e-45e1-98a6-254bffab563c
+    iconid: a1f8b8ab-a695-4b99-af22-02986221aec6
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    targetType: self
+    trigger: useability
 - name: Shadowmeld
   description: |
     While in shadow form, you have full awareness of your surroundings, attacks against you and tests made to find you take a bane, and you can’t move or take actions or maneuvers except to exit this form. Any ability or effect that targets more than 1 square affects you in this form only if it explicitly affects the surface you are flattened against. You can exit this form as a maneuver.
