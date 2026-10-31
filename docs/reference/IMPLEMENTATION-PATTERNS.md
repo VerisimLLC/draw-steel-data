@@ -298,17 +298,20 @@ standardAbilityParams:
 **Example:** Kobold Signifier "Signum" (Malice for more allies), Tactician "Strike Now!" (Focus for extra target)
 **When:** Any "spend more for more" ability. `<<Charges>>` = number of ticks purchased.
 
-### Conditional Channeling
-Channel only available under certain conditions.
+### State-Gated Extra Spend
+An optional "spend more for more" offered only under certain conditions. Not channeling: use a
+multicost power modifier per state; `filterCondition` hides it otherwise, and the dialog caps
+the charges at the resource left after the ability's own cost.
 ```yaml
-maxChannel: 100 when winded else 0
 behaviors:
 - __typeName: ActivatedAbilityModifyPowerRollBehavior
   modifier:
+    resourceCostType: multicost
     filterCondition: Winded and not Dying
+    activationCondition: false
     damageModifier: charges d6
 ```
-**Example:** Fury "To the Uttermost End" (channel only when winded, d6 vs d10 by state)
+**Example:** Fury "To the Uttermost End" (d6 per Ferocity while winded, d10 while dying)
 **When:** State-dependent resource spending.
 
 ### Multi-Mode with Malice Gating

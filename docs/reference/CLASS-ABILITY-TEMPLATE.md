@@ -599,16 +599,23 @@ activatedAbility:
   # maxChannel not present = unlimited
 ```
 
-"To the Uttermost End" from Fury -- channeled with conditional activation:
+"To the Uttermost End" from Fury -- extra spend offered only in certain states. This is NOT
+channeling: with `channeledResource: none`, `maxChannel` does nothing. Each state gets its own
+roll-dialog option (a "multicost" power modifier) gated by `filterCondition`, and the player
+types how many charges to buy (capped at the resource they have left after the ability's cost):
 
 ```yaml
-activatedAbility:
-  __typeName: ActivatedAbility
-  name: "To the Uttermost End"
-  # ... standard fields ...
-  channeledResource: none                      # "none" = uses a custom channeling system
-  channelDescription: ""
-  maxChannel: "100 when winded else 0"         # GoblinScript formula for max channel
+behaviors:
+- __typeName: ActivatedAbilityModifyPowerRollBehavior
+  modifier:
+    __typeName: CharacterModifier
+    behavior: power
+    rollType: ability_power_roll
+    resourceCostType: multicost                # 1 heroic resource per charge, on top of the ability's cost
+    filterCondition: Winded and not Dying      # offered only in this state (evaluated on the caster)
+    activationCondition: false                 # offered unticked
+    damageModifier: charges d6                 # Charges = the number typed in the dialog
+# ...a second behavior with filterCondition: Dying and damageModifier: charges d10
 ```
 
 ---
