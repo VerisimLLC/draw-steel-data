@@ -12,7 +12,7 @@ features:
   __typeName: CharacterFeature
   addText: Add Magical Property
   guid: 2cf13459-5ad9-47de-9c73-fcd73ca366a6
-  implementationDetails: Attuning now purges all seven attunement effects before applying the chosen one, so only one element can ever be attuned. The mode list still offers all seven elements rather than only the keywords on the ability you just used, so picking the matching element is on the player.
+  implementationDetails: In combat, using an ability with an elemental keyword you are not attuned to offers a prompt listing only that ability's unattuned elements, plus a Keep option for your current attunement. Attuning replaces any previous element until the end of the encounter, and the edge then applies automatically to power rolls with that keyword. Declining or keeping leaves the current attunement in place.
   itemAttached: true
   modifiers:
   - name: Elemental
@@ -28,119 +28,141 @@ features:
       __typeName: TriggeredAbility
       abilityType: none
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        customAbility:
-          name: Elemental Attunement
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 00c339a7-3881-4895-88e2-f99c49dfb7d2
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 3d7feac7-35f6-4f4b-8e5f-b5d81969b094
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 34de73c8-9c33-4547-93cd-f6580a1666ca
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 999ad3ef-a691-4ac9-81c2-69083978f824
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 807b5053-8058-461a-be3a-b8c3d3738a6c
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 308d91c4-559d-4bae-85fd-f5ca74c497e1
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            conditions: []
-            mode: effect
-            ongoingEffect: 6c60e973-1d10-4e3e-8709-c7e1ff5326a7
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 1
-            ongoingEffect: 00c339a7-3881-4895-88e2-f99c49dfb7d2
-            ongoingEffectCustom: false
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 2
-            ongoingEffect: 3d7feac7-35f6-4f4b-8e5f-b5d81969b094
-            ongoingEffectCustom: false
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 3
-            ongoingEffect: 34de73c8-9c33-4547-93cd-f6580a1666ca
-            ongoingEffectCustom: 51dfe7fd-75da-47f9-88ee-49d353ea27dc
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 4
-            ongoingEffect: 999ad3ef-a691-4ac9-81c2-69083978f824
-            ongoingEffectCustom: false
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 5
-            ongoingEffect: 807b5053-8058-461a-be3a-b8c3d3738a6c
-            ongoingEffectCustom: false
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 6
-            ongoingEffect: 308d91c4-559d-4bae-85fd-f5ca74c497e1
-            ongoingEffectCustom: false
-            ongoingEffectSource: specific
-          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-            duration: eoe
-            modesSelected:
-            - 7
-            ongoingEffect: 6c60e973-1d10-4e3e-8709-c7e1ff5326a7
-            ongoingEffectCustom: 00a0e0b7-44aa-4947-8d7b-aa71c7ce304d
-            ongoingEffectSource: specific
-          castImmediately: false
-          categorization: Ability
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: bc3c18a7-80cc-4a63-bbae-6809967868b3
-          iconid: ui-icons/skills/1.png
-          modeList:
-          - text: Air
-          - condition: ""
-            text: Earth
-          - text: Fire
-          - text: Green
-          - text: Rot
-          - text: Void
-          - text: Water
-          modifiers: []
-          multipleModes: true
-          numTargets: "1"
-          persistence: []
-          range: 1
-          repeatTargets: false
-          strain: []
-          targetType: self
-        promptText: Select the elemental keyword from your used ability that you wish to attune to.
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 00c339a7-3881-4895-88e2-f99c49dfb7d2
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 3d7feac7-35f6-4f4b-8e5f-b5d81969b094
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 34de73c8-9c33-4547-93cd-f6580a1666ca
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 999ad3ef-a691-4ac9-81c2-69083978f824
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 807b5053-8058-461a-be3a-b8c3d3738a6c
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 308d91c4-559d-4bae-85fd-f5ca74c497e1
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        mode: effect
+        modesSelected:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        ongoingEffect: 6c60e973-1d10-4e3e-8709-c7e1ff5326a7
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 1
+        ongoingEffect: 00c339a7-3881-4895-88e2-f99c49dfb7d2
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 2
+        ongoingEffect: 3d7feac7-35f6-4f4b-8e5f-b5d81969b094
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 3
+        ongoingEffect: 34de73c8-9c33-4547-93cd-f6580a1666ca
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 4
+        ongoingEffect: 999ad3ef-a691-4ac9-81c2-69083978f824
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 5
+        ongoingEffect: 807b5053-8058-461a-be3a-b8c3d3738a6c
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 6
+        ongoingEffect: 308d91c4-559d-4bae-85fd-f5ca74c497e1
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        modesSelected:
+        - 7
+        ongoingEffect: 6c60e973-1d10-4e3e-8709-c7e1ff5326a7
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
       castImmediately: true
-      conditionFormula: Used Ability.Keywords has "air" or Used Ability.Keywords has "earth" or Used Ability.Keywords has "fire" or Used Ability.Keywords has "green" or Used Ability.Keywords has "rot" or Used Ability.Keywords has "void" or Used Ability.Keywords has "water"
+      conditionFormula: Combat Round > 0 and ((Used Ability.Keywords has "air" and not (Ongoing Effects has "Elemental Attunement - Air")) or (Used Ability.Keywords has "earth" and not (Ongoing Effects has "Elemental Attunement - Earth")) or (Used Ability.Keywords has "fire" and not (Ongoing Effects has "Elemental Attunement - Fire")) or (Used Ability.Keywords has "green" and not (Ongoing Effects has "Elemental Attunement - Green")) or (Used Ability.Keywords has "rot" and not (Ongoing Effects has "Elemental Attunement - Rot")) or (Used Ability.Keywords has "void" and not (Ongoing Effects has "Elemental Attunement - Void")) or (Used Ability.Keywords has "water" and not (Ongoing Effects has "Elemental Attunement - Water")))
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -149,9 +171,37 @@ features:
       guid: 88ebdea0-c687-4618-b0c3-81bbb26bbf79
       iconid: ui-icons/skills/1.png
       mandatory: false
-      modeList: []
+      modeList:
+      - text: Attune to Air
+        condition: Used Ability.Keywords has "air" and not (Ongoing Effects has "Elemental Attunement - Air")
+      - text: Attune to Earth
+        condition: Used Ability.Keywords has "earth" and not (Ongoing Effects has "Elemental Attunement - Earth")
+      - text: Attune to Fire
+        condition: Used Ability.Keywords has "fire" and not (Ongoing Effects has "Elemental Attunement - Fire")
+      - text: Attune to Green
+        condition: Used Ability.Keywords has "green" and not (Ongoing Effects has "Elemental Attunement - Green")
+      - text: Attune to Rot
+        condition: Used Ability.Keywords has "rot" and not (Ongoing Effects has "Elemental Attunement - Rot")
+      - text: Attune to Void
+        condition: Used Ability.Keywords has "void" and not (Ongoing Effects has "Elemental Attunement - Void")
+      - text: Attune to Water
+        condition: Used Ability.Keywords has "water" and not (Ongoing Effects has "Elemental Attunement - Water")
+      - text: Keep Air
+        condition: Ongoing Effects has "Elemental Attunement - Air"
+      - text: Keep Earth
+        condition: Ongoing Effects has "Elemental Attunement - Earth"
+      - text: Keep Fire
+        condition: Ongoing Effects has "Elemental Attunement - Fire"
+      - text: Keep Green
+        condition: Ongoing Effects has "Elemental Attunement - Green"
+      - text: Keep Rot
+        condition: Ongoing Effects has "Elemental Attunement - Rot"
+      - text: Keep Void
+        condition: Ongoing Effects has "Elemental Attunement - Void"
+      - text: Keep Water
+        condition: Ongoing Effects has "Elemental Attunement - Water"
       modifiers: []
-      multipleModes: variations
+      multipleModes: true
       numTargets: "1"
       persistence: []
       range: 1
@@ -159,13 +209,13 @@ features:
       strain: []
       targetType: self
       trigger: useability
-      triggerPrompt: 'Attune your implement with the Elemental keyword of the ability you just used. You gan an edge on power rolls with that keyword. Only one element can be attuned at a time. '
+      triggerPrompt: Attune your implement to an element of the ability you just used. Until the end of the encounter, you gain an edge on power rolls with that keyword. Only one element can be attuned at a time.
   source: Item
 iconid: 3b596a1f-bfef-4022-9f02-5e504b0a29fa
 imbueLevel: 1
 imbuePrereq: none
 imbueTargetType: implement
-implementation: 3
+implementation: 4
 itemPrerequisite: Ashes or other leavings from a natural disaster
 mtime: 1774442949950
 projectGoal: "150"
