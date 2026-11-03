@@ -84,7 +84,23 @@ info:
       domains:
         CharacterFeature:fb228597-f0e7-4c2e-89f8-f322f76db18a: true
       guid: fb228597-f0e7-4c2e-89f8-f322f76db18a
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Primordial Strength
+        description: +6 damage with strikes against objects.
+        __typeName: CharacterModifier
+        activationCondition: Target.Object
+        behavior: power
+        damageModifier: "6"
+        domains:
+          CharacterFeature:fb228597-f0e7-4c2e-89f8-f322f76db18a: true
+        guid: 77577319-1cc4-4a0f-babc-431e9a04cc6f
+        keywords:
+          Strike: true
+        modtype: none
+        rollType: ability_power_roll
+        source: Trait
+        sourceguid: fb228597-f0e7-4c2e-89f8-f322f76db18a
       source: Trait
     - name: Fickle and Free
       description: The force can't be restrained, slowed, or knocked prone, and they ignore difficult terrain.
@@ -92,15 +108,139 @@ info:
       domains:
         CharacterFeature:0cffc813-b826-4b8c-86ab-20b70f293346: true
       guid: 0cffc813-b826-4b8c-86ab-20b70f293346
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Fickle and Free
+        description: The force can't be restrained, slowed, or knocked prone.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 2989a051-204f-442e-967d-edafc2dd5e43
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        domains:
+          CharacterFeature:0cffc813-b826-4b8c-86ab-20b70f293346: true
+        guid: 67e4b0b1-d953-4a76-9e05-af4c7f1e8735
+        source: Trait
+        sourceguid: 0cffc813-b826-4b8c-86ab-20b70f293346
+      - name: Fickle and Free
+        description: The force ignores difficult terrain.
+        __typeName: CharacterModifier
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        behavior: attribute
+        domains:
+          CharacterFeature:0cffc813-b826-4b8c-86ab-20b70f293346: true
+        guid: fd97d024-0f38-442c-b473-4a6c2f8998d1
+        source: Trait
+        sourceguid: 0cffc813-b826-4b8c-86ab-20b70f293346
+        value: 1
       source: Trait
+    - name: Break Armor
+      description: ""
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:c9a6979e-937f-4d0f-851c-0db4018355e4: true
+      guid: c9a6979e-937f-4d0f-851c-0db4018355e4
+      implementation: 4
+      implementationDetails: "GOLD: When the force takes damage from a power roll, the Director can spend 1 Malice to halve it; the force then gains a stack of Break Armor for the encounter (+3 speed, damage weakness 3 per use). Damage that does not come from a power roll (auras, ongoing damage, triggered damage) does not offer the trigger, because the halving hooks the power roll."
+      modifiers:
+      - name: Break Armor
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          effect: "1 Malice: The force halves the damage, and has damage weakness 3 and a +3 bonus to speed until the end of the encounter. This damage weakness increases by 3 each time the force uses this ability in the same encounter."
+          guid: 098d7272-36d3-4ec5-a4b8-f8f59ff25bd8
+          keywords: []
+          trigger: The force takes damage.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:c9a6979e-937f-4d0f-851c-0db4018355e4: true
+        guid: aa486e73-e989-4d1a-a85b-010def64fb8f
+        source: Character Feature
+        sourceguid: c9a6979e-937f-4d0f-851c-0db4018355e4
+      - name: Break Armor
+        description: ""
+        __typeName: CharacterModifier
+        additionalCostModifiers: []
+        behavior: powertabletrigger
+        domains:
+          CharacterFeature:c9a6979e-937f-4d0f-851c-0db4018355e4: true
+        guid: ccdb23fc-dc38-420d-931f-03fe322e74ce
+        powerRollModifier:
+          name: Break Armor
+          description: The force halves the damage, and has damage weakness 3 and a +3 bonus to speed until the end of the encounter. This damage weakness increases by 3 each time the force uses this ability in the same encounter.
+          __typeName: CharacterModifier
+          activationCondition: false
+          behavior: power
+          customTrigger:
+            name: Break Armor
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+              applyto: caster
+              duration: eoe
+              ongoingEffect: 6ab5d7a5-28ee-48a3-a078-9566b5049bad
+              ongoingEffectCustom: false
+              stacks: "1"
+            castImmediately: true
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 3d24ad5b-eff2-48a4-9133-0c8d18252518
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            strain: []
+            targetType: self
+            trigger: d20roll
+          damageMultiplier: half
+          guid: 2ad1b253-1166-442f-a825-c3b7c3eebcc7
+          hasCustomTrigger: true
+          keywords: []
+          modtype: none
+          resourceCostAmount: "1"
+          resourceCostType: cost
+          rollType: ability_power_roll
+          rules: ""
+          source: Trigger
+        range: 1
+        rules: The force takes damage.
+        source: Character Feature
+        sourceguid: c9a6979e-937f-4d0f-851c-0db4018355e4
+        targetType: self
+        trigger: takedamage
+        type: trigger
+      source: Character Feature
+      tags:
+        Trigger: true
     - name: Stone Swim
       description: The force can burrow through stone, but can't drag other creatures underground when they do so.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:7ad05d79-37c9-4a11-86f3-3c6cfdbdfdce: true
       guid: 7ad05d79-37c9-4a11-86f3-3c6cfdbdfdce
-      modifiers: []
+      implementation: 4
+      implementationDetails: "GOLD: Burrowing is not limited by material, so the force already burrows through stone. When the force digs down, any creature it is grabbing is released and left on the surface instead of being dragged underground. Edge case: if the force grabs a creature while already underground and then moves, the engine still drags that creature along (needs an engine change)."
+      modifiers:
+      - name: Stone Swim
+        description: The force can't drag grabbed creatures underground.
+        __typeName: CharacterModifier
+        attribute: 31c30bc0-1edc-4713-b1cb-97d87417a0ff
+        behavior: attribute
+        domains:
+          CharacterFeature:7ad05d79-37c9-4a11-86f3-3c6cfdbdfdce: true
+        guid: 0f6b2d8e-5a41-4c7e-9b3d-6e8a1f2c4d57
+        source: Trait
+        sourceguid: 7ad05d79-37c9-4a11-86f3-3c6cfdbdfdce
+        value: 1
       source: Trait
     cr: 3
     creatureSize: "2"
@@ -157,76 +297,110 @@ info:
         - 8 damage
         - 12 damage; M<1 restrained (save ends)
         - 15 damage; M<2 restrained (save ends)
+      - __typeName: ActivatedAbilityAuraBehavior
+        aliveafterdeath: true
+        applyto: targets
+        aura:
+          name: Slam Into Dirt
+          description: This space is difficult terrain.
+          __typeName: Aura
+          applyto: all
+          difficult_terrain: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b348b728-9769-4a96-8200-42582577e128
+          implementation: 4
+          modifiers: []
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          triggers: []
+        duration: eoe
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: b4533531-f93c-4881-8849-2f9b1f3b9bca
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
+      implementationDetails: "GOLD: Damage and the potency-gated restrained (save ends) come from the power roll; each target's space becomes difficult terrain for the rest of the encounter (the book gives no end, so it lasts until the encounter ends)."
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
       range: 2
       repeatTargets: false
       targetType: target
     - name: Convocation of Quartz
-      description: The target imposes a bane on melee strikes made against them until the start of the force's next turn if they don't already have it.
+      description: |-
+        Until the start of the force's next turn, any melee strike made against the target takes a bane if it doesn't already have a bane or double bane.
+
+        **3 Malice:** Until the end of the encounter, the target grows a carapace of stone. They have a +3 bonus to stability and gain 15 temporary Stamina.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: 1
+        durationUntilEndOfTurn: false
+        ongoingEffect: 435f8a20-3ea6-4cf3-b6d2-87b5c3a7ba03
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        modesSelected:
+        - 2
+        ongoingEffect: 73aa0f0e-2662-4874-88a3-c86167e5e971
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        hasTemporaryHitpoints: true
+        modesSelected:
+        - 2
+        ongoingEffect: 7e1d5c3a-9b2f-4e8d-a6c4-1f3b8d2e5a90
+        ongoingEffectCustom: false
+        temporaryHitpoints: "15"
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: aa3c0085-7d22-4183-980e-10ef32bc5663
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
+      implementationDetails: "GOLD: Until the start of the force's next turn, melee strikes against the target take a bane unless the roll already has a net bane or double bane (rollRequirement nobane). The 3 Malice cost and the end-of-encounter carapace (+3 stability, 15 temporary Stamina) are automated."
       keywords:
         Magic: true
         Ranged: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: ""
+        rules: Until the end of the encounter, the target grows a carapace of stone. They have a +3 bonus to stability and gain 15 temporary Stamina.
+        text: 3 Malice - Carapace
       modifiers: []
+      multipleModes: true
       numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
-    - name: Break Armor
-      description: The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: c9a6979e-937f-4d0f-851c-0db4018355e4
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
+      range: 5
+      reasonedFilters:
+      - formula: Keywords has "Elemental"
+        reason: This ability can only target the force or an elemental.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      targetType: self
+      resourceNumber: 3 when Mode = 2 else 0
+      selfTarget: true
+      targetType: target
     innateAttacks: []
     innateLanguages:
       85fb494c-2f8d-4e2b-9887-d03a2949c4fa: true # Low Kuric

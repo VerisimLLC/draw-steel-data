@@ -146,6 +146,7 @@ Movement speed symbols are generated dynamically from `creature.movementTypeInfo
 | Flanked | boolean | True if this creature is currently being flanked. | MCDMCreature.lua |
 | Flanked By | function | `FlankedBy(creature)` or `FlankedBy(creature1, creature2)` -- checks if flanked by specific creature(s). | MCDMCreature.lua |
 | InWater | boolean | True if this creature is in water (swim movement type). | MCDMCreature.lua |
+| OnWaterSpace | boolean | True if any square the creature occupies contains water (water tiles, deep map water, water markup zones, apply-to-all auras with the Water keyword). Own footprint only -- no adjacent squares or water elementals (compare `AdjacentToWater`). Example: `OnWaterSpace` as a `beginturn` trigger condition. | EnvironmentalKeyword.lua |
 | Concealed | boolean | True if the creature is in a concealed area. | MCDMCreature.lua |
 | Your Turn | boolean | True if combat is active and it is this creature's turn. | Creature.lua (helpSymbols) |
 | Taken Turn | boolean | Has this creature taken its turn this round? | MCDMCreature.lua |

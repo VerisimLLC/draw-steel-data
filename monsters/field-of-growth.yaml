@@ -307,10 +307,10 @@ info:
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: 0
+        duration: endround
         filterTarget: Target.Conditions has "prone"
-        ongoingEffect: fb3607b3-261b-4fd8-8d88-c13d1863f9e3
-        ongoingEffectCustom: fb3607b3-261b-4fd8-8d88-c13d1863f9e3
+        ongoingEffect: 5a25b65b-d08a-4db7-8cbf-6d17aa70868d
+        ongoingEffectCustom: false
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
@@ -319,18 +319,54 @@ info:
         - 16 damage; R<2 prone and can't stand (save ends)
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: save_ends
-        filterTarget: not Cast.PassesPotency(Target, "R", 1) and Target.Ongoing Effects has "already prone"
-        ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
+        filterTarget: not Cast.PassesPotency(Target, "R", 1) and Target.OngoingEffects has "Hampering Roots Already Prone" and Target.IncludesConditionRider("Prone", "Cannot Stand")
+        ongoingEffect: 56dadcc3-6bb0-4d41-8217-0ad2cdd362aa
         ongoingEffectCustom: false
         tiersSelected:
         - 2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: save_ends
-        filterTarget: not Cast.PassesPotency(Target, "R", 2) and Target.Ongoing Effects has "already prone"
+        filterTarget: not Cast.PassesPotency(Target, "R", 1) and Target.OngoingEffects has "Hampering Roots Already Prone" and not Target.IncludesConditionRider("Prone", "Cannot Stand")
+        ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions:
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        filterTarget: not Cast.PassesPotency(Target, "R", 1) and Target.OngoingEffects has "Hampering Roots Already Prone" and Target.IncludesConditionRider("Prone", "Cannot Stand")
+        mode: conditions
+        purgeType: all
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "R", 2) and Target.OngoingEffects has "Hampering Roots Already Prone" and Target.IncludesConditionRider("Prone", "Cannot Stand")
+        ongoingEffect: 56dadcc3-6bb0-4d41-8217-0ad2cdd362aa
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "R", 2) and Target.OngoingEffects has "Hampering Roots Already Prone" and not Target.IncludesConditionRider("Prone", "Cannot Stand")
         ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
         ongoingEffectCustom: false
         tiersSelected:
         - 3
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions:
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        filterTarget: not Cast.PassesPotency(Target, "R", 2) and Target.OngoingEffects has "Hampering Roots Already Prone" and Target.IncludesConditionRider("Prone", "Cannot Stand")
+        mode: conditions
+        purgeType: all
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        conditions: []
+        filterTarget: Target.OngoingEffects has "Hampering Roots Already Prone"
+        mode: effect
+        ongoingEffect: 5a25b65b-d08a-4db7-8cbf-6d17aa70868d
+        purgeType: all
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -340,8 +376,8 @@ info:
       flavor: ""
       guid: e5b56f74-e4a3-4330-b484-7ce703821bb3
       iconid: ui-icons/skills/1.png
-      implementation: 3
-      implementationDetails: "SILVER: damage, the potency-gated prone and can't stand (save ends), and restrained (save ends) for targets who were already prone when the roll resolved are all automated. A target that was already prone also receives the can't stand effect on its own saving throw instead of having it end with restrained, since the two save-ends effects are tracked separately."
+      implementation: 4
+      implementationDetails: "GOLD: damage and the potency-gated prone and can't stand (save ends) are automated. A target that was already prone gets a silent prone immunity for the cast (Hampering Roots Already Prone), so the tier text leaves its existing prone alone and adds no new can't stand; if it fails the potency it is restrained (save ends) instead. If its prone already carried can't stand, that can't stand moves onto the restrained effect (Restrained by Roots) and ends exactly when that restrained does."
       keywords:
         Magic: true
         Ranged: true
@@ -467,8 +503,8 @@ info:
       flavor: ""
       guid: b1a43f84-71e3-420e-ab07-8dc8cad9e991
       iconid: ui-icons/skills/1.png
-      implementation: 3
-      implementationDetails: "SILVER: 15 temporary Stamina that expires at the start of the field's next turn, the 3 Malice cost, the end-of-encounter overgrown zone (prone on first entry each round and at the start of an enemy's turn there), and the pull after an enemy strike are automated. The pull is toward the warded creature rather than the fixed area and has no line-of-effect check, because triggered abilities cannot reference the aura's location."
+      implementation: 4
+      implementationDetails: "GOLD: 15 temporary Stamina that expires at the start of the field's next turn, the 3 Malice cost, the end-of-encounter overgrown zone (prone on first entry each round and at the start of an enemy's turn there), and the pull after an enemy strike are automated. The pull (Overgrown Ward) goes 5 squares toward the center of the Overgrown Ground placed around the target, and only when the striking enemy has line of effect to some square of it; with several such areas it uses the nearest one the enemy can see."
       keywords:
         Magic: true
         Ranged: true
@@ -476,7 +512,7 @@ info:
       - condition: ""
         text: Normal
       - condition: ""
-        rules: Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target, the enemy is pulled 5 squares toward the target after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.
+        rules: Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target while within line of effect of that area, the enemy is pulled 5 squares toward the area after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.
         text: 3 Malice - Overgrowth
       modifiers: []
       multipleModes: true

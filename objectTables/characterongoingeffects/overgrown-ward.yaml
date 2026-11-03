@@ -1,6 +1,6 @@
 id: e8821dee-c831-433d-a386-46f85bf35244
 name: Overgrown Ward
-description: The ground around you is overgrown with underbrush and vines. Whenever an enemy makes a strike against you, they are pulled 5 squares toward you after the strike is resolved.
+description: The ground around you is overgrown with underbrush and vines. Whenever an enemy makes a strike against you while within line of effect of that area, they are pulled 5 squares toward the area after the strike is resolved.
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
@@ -14,11 +14,11 @@ display:
   saturation: 1
 guid: e8821dee-c831-433d-a386-46f85bf35244
 iconid: ui-icons/skills/1.png
-implementation: 3
-implementationDetails: "SILVER: after any enemy strike resolves against the warded creature, the attacker is pulled 5 squares toward the warded creature. The book pulls toward the overgrown area and only when the attacker is within line of effect of it; the pull here is toward the creature (who normally stands in the area) and has no line-of-effect check, since triggered abilities cannot reference the aura's location."
+implementation: 4
+implementationDetails: "GOLD: after an enemy strike resolves against the warded creature, a Forced Movement Origin behavior finds the Overgrown Ground placed around that creature and drops the attacker unless it has line of effect to a square of it; the attacker is then pulled 5 squares toward the area's center. With several such areas the nearest one the attacker can see is used; with none left (the area was removed) there is no pull."
 modifiers:
 - name: Overgrown Ward
-  description: Whenever an enemy makes a strike against you, they are pulled 5 squares toward you after the strike is resolved.
+  description: Whenever an enemy makes a strike against you while within line of effect of the overgrown area, they are pulled 5 squares toward the area after the strike is resolved.
   __typeName: CharacterModifier
   behavior: trigger
   domains:
@@ -32,11 +32,16 @@ modifiers:
     __typeName: TriggeredAbility
     abilityType: none
     behaviors:
+    - __typeName: ActivatedAbilityForcedMovementLocBehavior
+      applyto: targets
+      auraName: Overgrown Ground
+      requireLineOfEffect: true
+      type: aura
     - __typeName: ActivatedAbilityDrawSteelCommandBehavior
       applyto: targets
       rule: pull 5
     castImmediately: true
-    conditionFormula: HasAttacker
+    conditionFormula: Attacker.PlayerAllied != PlayerAllied
     display:
       bgcolor: "#ffffffff"
       brightness: 1

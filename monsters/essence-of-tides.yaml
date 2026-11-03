@@ -77,15 +77,178 @@ info:
       domains:
         CharacterFeature:6e4f46af-16bf-4edd-9719-624ba80ec70b: true
       guid: 6e4f46af-16bf-4edd-9719-624ba80ec70b
-      modifiers: []
+      implementation: 4
+      implementationDetails: "GOLD: At the start of the essence's turn, if any square it occupies contains water (water terrain, water zones, or a Water-keyword aura such as Convocation of Waves' pool), it gains Water Glide until the end of the turn: it can fly, and while its movement type is Fly it doesn't provoke opportunity attacks."
+      modifiers:
+      - name: Water Glide
+        description: At the start of the essence's turn in water, they can fly until the end of their turn.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:6e4f46af-16bf-4edd-9719-624ba80ec70b: true
+        guid: 525346d9-564e-4285-88fd-83e52dabd38f
+        source: Trait
+        sourceguid: 6e4f46af-16bf-4edd-9719-624ba80ec70b
+        triggeredAbility:
+          name: Water Glide
+          description: The essence started their turn in water and can fly until the end of their turn.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: 0
+            ongoingEffect: e9d7c3f8-d23c-4e40-81c4-f20a9fb63658
+            ongoingEffectCustom: false
+          castImmediately: true
+          conditionFormula: OnWaterSpace
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3aa5a50e-6b8e-4f07-9d3c-8e2b4f1c7a19
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetType: self
+          trigger: beginturn
+          whenActive: combat
       source: Trait
+    - name: Sea-Salted Wounds
+      description: ""
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:1006e24d-ac1d-461d-9daa-8a50501ac3c5: true
+      guid: 1006e24d-ac1d-461d-9daa-8a50501ac3c5
+      implementation: 4
+      implementationDetails: "GOLD: When an ally's power-roll damage reduces the Stamina of an enemy adjacent to the essence, the Director is offered the trigger; spending 1 Malice makes the essence take a melee free strike against that enemy. The rolled-damage test is per ability: flat Effect damage from an ability that also has a damaging power roll also qualifies."
+      modifiers:
+      - name: Sea-Salted Wounds
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Melee 1
+          effect: The essence makes a free strike against the target.
+          guid: 146da64a-63c6-4952-a9bf-fad6be6d97dd
+          keywords:
+            Melee: true
+          malice: 1
+          target: One enemy
+          trigger: An ally deals rolled damage to the target.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:1006e24d-ac1d-461d-9daa-8a50501ac3c5: true
+        guid: bab6e49d-85c8-4b82-9839-3c57193ab5a8
+        source: Character Feature
+        sourceguid: 1006e24d-ac1d-461d-9daa-8a50501ac3c5
+      - name: Sea-Salted Wounds
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:1006e24d-ac1d-461d-9daa-8a50501ac3c5: true
+        guid: 9eeaf66a-84bb-4c6a-a9ba-7f2939611e08
+        source: Character Feature
+        sourceguid: 1006e24d-ac1d-461d-9daa-8a50501ac3c5
+        triggeredAbility:
+          name: Sea-Salted Wounds
+          description: The essence makes a free strike against the target.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            autoTarget: true
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 7f024cf6-5c45-45e9-8ead-c91b551aa9df
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            standardAbility: 491c36e6-a36b-47be-9134-788b071fa7ca
+            standardAbilityParams:
+              targetid: "<<subject.id>>"
+          conditionFormula: HasAttacker and Friends(self, Attacker) and Attacker != self and HasAbility and Ability.HasRolledDamage
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 20645015-e11a-45ad-9f72-46cf2d439175
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Melee: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          strain: []
+          subject: enemy
+          subjectRange: "1"
+          targetType: self
+          trigger: losehitpoints
+          triggerPrompt: An ally damaged an adjacent enemy. Spend 1 Malice to use Sea-Salted Wounds and make a free strike against them?
+          whenActive: combat
+      source: Character Feature
+      tags:
+        Trigger: true
     - name: Fickle and Free
       description: The essence can't be restrained, slowed, or knocked prone, and they ignore difficult terrain.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:f3281509-b425-433a-8bd7-86fefed831d7: true
       guid: f3281509-b425-433a-8bd7-86fefed831d7
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Fickle and Free
+        description: The essence can't be restrained, slowed, or knocked prone.
+        __typeName: CharacterModifier
+        behavior: conditionimmunity
+        conditions:
+        - 2989a051-204f-442e-967d-edafc2dd5e43
+        - 68f455f5-135f-495c-822d-40d809d2b15f
+        - da6867b1-01e3-4570-8d1b-1b94ea1ea343
+        domains:
+          CharacterFeature:f3281509-b425-433a-8bd7-86fefed831d7: true
+        guid: 96371476-ef95-4ea2-8a0c-a9d1d7190b28
+        source: Trait
+        sourceguid: f3281509-b425-433a-8bd7-86fefed831d7
+      - name: Fickle and Free
+        description: The essence ignores difficult terrain.
+        __typeName: CharacterModifier
+        attribute: b6c7c0b4-4584-4889-a2de-1f62aa9df2ce
+        behavior: attribute
+        domains:
+          CharacterFeature:f3281509-b425-433a-8bd7-86fefed831d7: true
+        guid: f45c19db-6a6c-4a2b-be2c-1b612a096c53
+        source: Trait
+        sourceguid: f3281509-b425-433a-8bd7-86fefed831d7
+        value: 1
       source: Trait
     cr: 3
     creatureSize: 1M
@@ -145,6 +308,12 @@ info:
         - 7 damage; slide 1
         - 11 damage; slide 2
         - 14 damage; slide 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: save_ends
+        filterTarget: not Cast.PassesPotency(Target, "P", 2)
+        ongoingEffect: d37a69c9-a695-4b9f-8d5e-57cd43ee0395
+        ongoingEffectCustom: false
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -154,71 +323,70 @@ info:
       flavor: ""
       guid: 688da97f-3a74-46e6-a197-11503c932327
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Magic: true
         Melee: true
         Strike: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
       range: 1
       repeatTargets: false
       targetType: target
     - name: Convocation of Waves
-      description: The target receives cold immunity 5 until the start of the essence's next turn if they don't already have it.
+      description: |-
+        Until the start of the essence's next turn, the target has cold immunity 5.
+
+        **3 Malice:** Until the end of the encounter, the ground within 1 square of the target is a pool of water that is difficult terrain. This water extends out behind the target as they move, creating a stream that lasts until the end of the encounter. Any enemy who ends their turn in the stream and has M<2 is slowed (save ends).
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: 1
+        durationUntilEndOfTurn: false
+        ongoingEffect: 87f890b2-9054-4675-8df3-86a63475f42e
+        ongoingEffectCustom: false
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        modesSelected:
+        - 2
+        ongoingEffect: c4e5eb1b-0330-4922-afff-1f1a9f562457
+        ongoingEffectCustom: false
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 6c488caf-427e-4991-96d4-ea24249d6d37
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 2
+      implementationDetails: "BRONZE: Cold immunity 5 until the start of the essence's next turn and the 3 Malice cost are automated. The 3 Malice pool moves with the target, is water and difficult terrain, and slows enemies with M<2 who end their turn in it (save ends), but the stream it should leave behind as the target moves is not created."
       keywords:
         Magic: true
         Ranged: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: ""
+        rules: Until the end of the encounter, the ground within 1 square of the target is a pool of water that is difficult terrain, extending behind the target as a stream as they move. Any enemy who ends their turn in the stream and has M<2 is slowed (save ends).
+        text: 3 Malice - Pool
       modifiers: []
+      multipleModes: true
       numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
-    - name: Sea-Salted Wounds
-      description: |
-        The essence makes a free strike against the target.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Trigger
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      flavor: ""
-      guid: 1006e24d-ac1d-461d-9daa-8a50501ac3c5
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords:
-        Melee: true
-      modifiers: []
-      numTargets: 1
-      range: 1
+      range: 5
+      reasonedFilters:
+      - formula: Keywords has "Elemental"
+        reason: This ability can only target the essence or an elemental.
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      sourceReference:
-        __typeName: SourceReference
-        docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 115
-      targetFilter: Enemy
+      resourceNumber: 3 when Mode = 2 else 0
+      selfTarget: true
       targetType: target
     innateAttacks: []
     innateLanguages:

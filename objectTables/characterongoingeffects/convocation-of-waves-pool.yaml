@@ -1,0 +1,72 @@
+id: c4e5eb1b-0330-4922-afff-1f1a9f562457
+name: Convocation of Waves (Pool)
+description: Until the end of the encounter, the ground within 1 square of this creature is a pool of water that is difficult terrain. Any enemy who ends their turn in it and has M<2 is slowed (save ends).
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+buffType: buff
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:c4e5eb1b-0330-4922-afff-1f1a9f562457: true
+guid: c4e5eb1b-0330-4922-afff-1f1a9f562457
+iconid: ui-icons/skills/1.png
+implementation: 2
+implementationDetails: "BRONZE: The pool moves with the creature, is water (Water keyword) and difficult terrain, and slows enemies with M<2 who end their turn in it (save ends). The stream the pool leaves behind as the creature moves is not created."
+modifiers:
+- name: Convocation of Waves (Pool)
+  description: A pool of water within 1 square of this creature.
+  __typeName: CharacterModifier
+  aura:
+    name: Convocation of Waves (Pool)
+    description: A pool of water that is difficult terrain. Any enemy who ends their turn here and has M<2 is slowed (save ends).
+    __typeName: Aura
+    applyto: all
+    difficult_terrain: true
+    environmentalKeywordId: 8d3d775f-7082-4f4c-9545-9961a8670048
+    guid: ea7ce345-f8fe-4363-a989-16c15f78ff83
+    modifiers:
+    - name: Convocation of Waves (Pool)
+      description: Ending your turn in the pool with M<2 slows you (save ends).
+      __typeName: CharacterModifier
+      behavior: trigger
+      guid: c7b1629d-e3bb-4c58-9935-2af5c00f0bd7
+      source: Aura
+      sourceguid: ea7ce345-f8fe-4363-a989-16c15f78ff83
+      triggeredAbility:
+        name: Convocation of Waves (Pool)
+        description: ""
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          applyto: targets
+          rule: M<2 slowed (save ends)
+        castImmediately: true
+        conditionFormula: not Friends(self, AurasCaster("Convocation of Waves (Pool)"))
+        guid: 3a29d040-22fa-40ba-b020-57b777ef657f
+        iconid: ui-icons/skills/1.png
+        mandatory: true
+        modifiers: []
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        silent: true
+        strain: []
+        targetType: self
+        trigger: endturn
+    objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+    triggers: []
+  behavior: aura
+  domains:
+    CharacterOngoingEffect:c4e5eb1b-0330-4922-afff-1f1a9f562457: true
+  guid: 23e87400-746b-465f-94e3-418667537ada
+  radius: "1"
+  source: Ongoing Effect
+  sourceguid: c4e5eb1b-0330-4922-afff-1f1a9f562457
+source: Ongoing Effect
+statusEffect: false
