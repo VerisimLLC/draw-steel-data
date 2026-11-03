@@ -163,35 +163,29 @@ info:
         - 6 damage
         - 8 damage
         - 10 damage; I<3 frightened (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        autoTarget: false
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            damageType: fire
-            roll: "3"
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 414f6604-f134-4514-ab7c-a30b36097ac5
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: "2"
-          repeatTargets: false
-          targetType: targets
-        invokeOnCaster: false
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: 7c2e41a6-93bd-4f0e-8a57-1d6b0c9e3f24
+        modifier:
+          name: Fuse-Iron Lance
+          description: This ability gains an edge while charging.
+          __typeName: CharacterModifier
+          activationCondition: true
+          behavior: power
+          domains: []
+          filterCondition: Charging > 0
+          guid: e85b1f30-6a4d-4c92-b7e1-52f8d3a07c6b
+          keywords: []
+          modtype: edge
+          rollType: ability_power_roll
+          sourceguid: 7c2e41a6-93bd-4f0e-8a57-1d6b0c9e3f24
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: target_proximity
+        damageType: fire
+        filterTarget: not Friends(Caster, Target)
         modesSelected:
         - 2
-        promptText: "Malice: The ability deals an extra 3 fire damage to the target and  each enemy adjacent to the target."
+        roll: "3"
+        titleText: Fuse-Iron Lance
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"

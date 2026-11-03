@@ -67,6 +67,47 @@ info:
         id: rea
         baseValue: 2
     characterFeatures:
+    - name: Mark of Agony
+      description: Whenever the tormentite takes damage, each target marked by them takes 3 damage.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:cb383dba-1faf-402e-9d0b-6cdc4e1fac8b: true
+      guid: cb383dba-1faf-402e-9d0b-6cdc4e1fac8b
+      implementation: 4
+      modifiers:
+      - name: Mark of Agony
+        description: Whenever the tormentite takes damage, each target marked by them takes 3 damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        guid: 30603c56-68ea-4632-854b-658b60977e8b
+        source: Trait
+        sourceguid: cb383dba-1faf-402e-9d0b-6cdc4e1fac8b
+        triggeredAbility:
+          name: Mark of Agony
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            roll: "3"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 7cfb39b5-9f85-4f59-929a-c10a98d318b8
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 100
+          repeatTargets: false
+          strain: []
+          targetFilter: Target.Effect Caster("Mark of Agony", Caster)
+          targetType: all
+          trigger: losehitpoints
+      source: Trait
     - name: Persistent Pain
       description: The tormentite takes 1 damage at the start of each of their turns.
       __typeName: CharacterFeature
@@ -88,7 +129,12 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityFloatTextBehavior
+            applyto: caster
+            color: "#ff0000ff"
+            text: Persistent Pain
           - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Persistent Pain
             roll: "1"
           display:
             bgcolor: "#ffffffff"
@@ -198,8 +244,8 @@ info:
         roll: 2d10 + Highest Characteristic
         tiers:
         - 6 corruption damage
-        - 8 corruption damage; the target is marked (save ends)
-        - 9 corruption damage; the target is marked (save ends)
+        - 8 corruption damage; mark of agony (save ends)
+        - 9 corruption damage; mark of agony (save ends)
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -210,7 +256,7 @@ info:
       flavor: ""
       guid: ff730891-732e-408e-9dad-df4bb1b89921
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Magic: true
         Ranged: true
@@ -232,6 +278,112 @@ info:
         - 2 corruption damage
         - 4 corruption damage
         - 5 corruption damage; one ally in the area can end one effect on them that can be ended by a saving throw, and can give that effect to one target
+      - __typeName: ActivatedAbilityHealBehavior
+        applyto: caster
+        roll: 2 * Cast.TargetCount
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Vortex of Pain - Find Allies
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRememberBehavior
+            calculation: "1"
+            filterTarget: Target.Save Ends Effects
+            memoryName: vortexAllies
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b20e667a-40dc-49ca-b8e1-349dc5751549
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          range: 100
+          repeatTargets: false
+          strain: []
+          targetType: target
+        targeting: formula
+        targetingFormula: Target.Is Friend(Caster) and Target != Caster and Target.Save Ends Effects and Cast.WithinArea(Target)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Vortex of Pain - Choose Ally
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: targets
+            customAbility:
+              name: Vortex of Pain - Give Effect
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                applyto: caster
+                conditions: []
+                conferTo: Target
+                mode: conditions_and_effects
+                purgeType: one
+                targetDuration: save
+                value: "1"
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 43ccdada-ab33-4fe7-ab1c-fef43853373d
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              range: 100
+              repeatTargets: false
+              strain: []
+              targetAllegiance: enemy
+              targetFilter: Cast.WithinArea(Target)
+              targetType: target
+            promptText: Choose the target who receives the effect
+            targeting: prompt
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 90abc5a4-2806-4aeb-ab14-26e1af6fa7fd
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          objectTarget: false
+          range: 100
+          repeatTargets: false
+          strain: []
+          targetAllegiance: ally
+          targetFilter: Target.Save Ends Effects and Cast.WithinArea(Target)
+          targetType: target
+        filterTarget: Cast.Memory("vortexAllies") > 0
+        promptText: One ally in the area can end one save ends effect and give it to one target
+        targeting: prompt
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityFloatTextBehavior
+        applyto: caster
+        color: "#ffffffff"
+        filterTarget: Cast.Memory("vortexAllies") = 0
+        text: No allies with Save Ends effects
+        tiersSelected:
+        - 3
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
@@ -242,7 +394,7 @@ info:
       flavor: ""
       guid: 777ce3a9-2e65-4522-915a-4afea1474343
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Area: true
         Magic: true

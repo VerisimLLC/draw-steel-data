@@ -149,34 +149,22 @@ info:
         - 11 damage
         - 19 damage; the strike spreads 1 square
         - 22 damage; the strike spreads 2 squares
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        autoTarget: false
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            roll: "3"
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 9fb1684a-a4b8-4479-a2fc-fcd9862cca12
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: "10"
-          repeatTargets: false
-          targetType: targets
-        invokeOnCaster: false
-        modesSelected:
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: proximity_only
+        filterTarget: not Friends(Caster, Target)
+        roll: 6 when Mode = 2 else 3
+        target_proximity_range: "1"
+        tiersSelected:
         - 2
-        promptText: "Malice: Each enemy within the strike spread takes an extra 3 damage."
+        titleText: Psionic Rifle Burst
+      - __typeName: ActivatedAbilityDamageBehavior
+        applyto: proximity_only
+        filterTarget: not Friends(Caster, Target)
+        roll: 6 when Mode = 2 else 3
+        target_proximity_range: "2"
+        tiersSelected:
+        - 3
+        titleText: Psionic Rifle Burst
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
