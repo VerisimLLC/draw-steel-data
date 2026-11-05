@@ -5808,7 +5808,7 @@ levels:
         domains:
           class:b41b7bcb-6246-4906-8115-831e55f62758: true
         guid: 920d23ea-88e0-4a24-84cc-c51d50fdc714
-        implementation: 2
+        implementation: 4
         modifiers:
         - name: Shield!
           description: You call upon a minion to use their body to dampen the blow
@@ -5822,7 +5822,6 @@ levels:
               **Spend 1 Essence:** Instead of commanding an existing minion, you summon a signature minion into an unoccupied space adjacent to the target to take the strike.
             flavor: You call upon a minion to use their body to dampen the blow.
             guid: 518e0de2-3d64-4e8e-8ec4-9345c6c4629e
-            implementationNotes: Spend 1 essence feature is not implemented
             keywords: []
             target: Self or one ally
             trigger: The target is targeted by a strike
@@ -5842,13 +5841,85 @@ levels:
             activationAfterRoll: false
             activationCondition: true
             behavior: power
+            filterCondition: "{Implemented via custom code to the Yaml file}"
             guid: 06ff6afa-1516-40e2-aa1d-1409b717b19b
+            hasTriggerBefore: true
             keywords: []
             modtype: none
+            resourceCostAmount: "1"
+            resourceCostType: cost
             rollType: ability_power_roll
             rules: ""
             rulesText: Instead of commanding an existing minion, you summon a signature minion into an unoccupied space adjacent to the target to take the strike.
             source: Trigger
+            triggerBefore:
+              name: Shield! Summon a new minion
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilitySummonBehavior
+                allCreaturesTheSame: true
+                bestiaryFilter: SignatureSummons.matches(beast)
+                choosePlacement: true
+                numSummons: "1"
+                placementRangeFrom: target
+                shareHeroicResourceWithSummoner: true
+                shareSurgesWithSummoner: true
+                summonRange: "1"
+              - name: ShieldSummonRetarget
+                __typeName: ActivatedAbilityScriptBehavior
+                code: |
+                  -- Shield! (1 Essence): the summon step before this replaced the
+                  -- cast's targets with the new signature minion. Make that minion
+                  -- the new target of the strike on the trigger that started this.
+                  local trigid = symbols.parenttriggerid
+                  local triggers = casterToken.properties:GetAvailableTriggers() or {}
+                  local trig = trigid and triggers[trigid]
+                  if trig == nil then
+                      print("ShieldSummon:: parent trigger not found")
+                      return
+                  end
+
+                  local minion = nil
+                  for _,target in ipairs(targets) do
+                      local tok = target.token
+                      if tok ~= nil and tok.valid and tok.properties.minion and tok.charid ~= trig.targets[1] then
+                          minion = tok
+                          break
+                      end
+                  end
+                  if minion == nil then
+                      print("ShieldSummon:: no minion was summoned")
+                      return
+                  end
+
+                  casterToken:ModifyProperties{
+                      undoable = false,
+                      description = "Shield!",
+                      execute = function()
+                          local live = casterToken.properties:GetAvailableTriggers() or {}
+                          local liveTrigger = live[trigid]
+                          if liveTrigger == nil then
+                              return
+                          end
+                          liveTrigger.retargetid = minion.charid
+                          casterToken.properties:DispatchAvailableTrigger(liveTrigger)
+                      end,
+                  }
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 87db9a76-5250-4db3-9eb9-baff1306a86a
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: target
+              trigger: d20roll
           behavior: powertabletrigger
           domains:
             class:b41b7bcb-6246-4906-8115-831e55f62758: true
@@ -5861,7 +5932,7 @@ levels:
             activationCondition: true
             behavior: power
             changeTarget: true
-            changeTargetFilter: Target.Minion and Target.Summoner = Triggerer
+            changeTargetFilter: Target.Minion and Target.Summoner = Triggerer and Target.Distance(Current) <= 1
             changeTargetRange: ability
             guid: 77d02e3b-74b9-4d29-a465-5c9f5550b19b
             keywords: []
@@ -7450,5 +7521,5 @@ levels:
       recommended:
       - e23a0b23-ab81-4526-9d25-4cff237e3b6d
       source: Summoner Class Feature
-mtime: 1793330742220
+mtime: 1793902517563
 portraitid: 4b4402e3-2f7c-46f0-98b9-2f906eba3dd0
