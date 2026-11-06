@@ -75,12 +75,87 @@ info:
       modifiers: []
       source: Trait
     - name: Searing Skin
-      description: Whenever an enemy makes physical contact with the lightbearer or uses a melee ability against the lightbearer, they take 5 fire damage.
+      description: Whenever an adjacent enemy grabs the lightbearer or uses a melee ability against them, that enemy takes 5 fire damage.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:70e81b0f-2ce2-4c13-aede-d5d18347780e: true
       guid: 70e81b0f-2ce2-4c13-aede-d5d18347780e
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the lightbearer or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:70e81b0f-2ce2-4c13-aede-d5d18347780e: true
+        guid: 1fa2ed60-cf5b-40ab-ae59-d319b282a00e
+        source: Trait
+        sourceguid: 70e81b0f-2ce2-4c13-aede-d5d18347780e
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: Condition = "Grabbed"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3c077157-8505-41ae-a51b-5c74933efb9f
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: attacker
+          trigger: inflictcondition
+          triggerPrompt: Whenever an adjacent enemy grabs the lightbearer or uses a melee ability against them, that enemy takes 5 fire damage.
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the lightbearer or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:70e81b0f-2ce2-4c13-aede-d5d18347780e: true
+        guid: 295df45c-fef4-464d-8a0b-1510f2243e56
+        source: Trait
+        sourceguid: 70e81b0f-2ce2-4c13-aede-d5d18347780e
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: 'UsedAbility.Keywords has "Melee" and Cast.HasTarget(Self)'
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 25e683e6-4600-4e0d-b2d0-4ce2bb7fb1ce
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: enemy
+          subjectRange: "1"
+          targetType: subject
+          trigger: useability
+          triggerPrompt: Whenever an adjacent enemy grabs the lightbearer or uses a melee ability against them, that enemy takes 5 fire damage.
       source: Trait
     cr: 9
     creatureSize: "4"

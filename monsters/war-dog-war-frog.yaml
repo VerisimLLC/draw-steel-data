@@ -140,17 +140,129 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Poisoned Dagger
-      description: The war frog jumps 3 squares before or after making their attack. If the war frog lands in cover or concealment, they can take the Hide maneuver as part of this ability.
+      description: The war frog can jump 3 squares before or after making the strike. If they end this jump in cover or concealment, they can attempt to hide.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 02614672-9946-423a-b3f1-1b56f8853ff5
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        invokeOnCaster: true
+        modesSelected:
+        - 1
+        promptText: The war frog can jump up to 3 squares before making the strike.
+        standardAbility: 8010820f-6bf3-422f-985b-2af02f620113
+        standardAbilityParams:
+          distance: "3"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 33ebbaf2-e2ac-4aa8-ae77-8e724d7c1bfc
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        filterTarget: CanHideHere
+        invokeOnCaster: true
+        modesSelected:
+        - 1
+        promptText: The war frog ended the jump in cover or concealment and can attempt to hide. Click confirm to hide, or skip.
+        promptWhenResolving: true
+        standardAbility: 003a1b5e-0b14-4c99-b948-0f0fc715bbf2
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
         - 3 poison damage
         - 5 poison damage
         - 7 poison damage
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b16bf889-9bee-47f7-8e92-514b134c7465
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        invokeOnCaster: true
+        modesSelected:
+        - 2
+        promptText: The war frog can jump up to 3 squares after making the strike.
+        standardAbility: 8010820f-6bf3-422f-985b-2af02f620113
+        standardAbilityParams:
+          distance: "3"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 2ce303d1-41d7-4ecc-b22c-1597367d79b3
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        filterTarget: CanHideHere
+        invokeOnCaster: true
+        modesSelected:
+        - 2
+        promptText: The war frog ended the jump in cover or concealment and can attempt to hide. Click confirm to hide, or skip.
+        promptWhenResolving: true
+        standardAbility: 003a1b5e-0b14-4c99-b948-0f0fc715bbf2
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -161,14 +273,18 @@ info:
       flavor: ""
       guid: d8859019-b840-4a93-b452-53a6388ce721
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Ranged: true
         Strike: true
         Weapon: true
       meleeRange: 1
+      modeList:
+      - text: Jump Before
+      - text: Jump After
       modifiers: []
+      multipleModes: true
       numTargets: 1
       range: 4
       repeatTargets: false

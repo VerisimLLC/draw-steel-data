@@ -164,18 +164,22 @@ info:
       domains:
         CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
       guid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
-      implementation: 2
+      implementation: 4
+      implementationDetails: "Both triggers offer the smash (1 Malice, triggered action) with the grabbed targets chosen in a prompt. The grab trigger fires when the giant zombie finishes an ability while holding two creatures or objects, so it can also be offered after an ability that did not make the grab."
       modifiers:
       - name: Knocking Heads
-        description: ""
+        description: The giant zombie starts their turn with two creatures or objects grabbed.
         __typeName: CharacterModifier
-        activatedAbility:
+        behavior: trigger
+        domains:
+          CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
+        guid: 19e26ee7-f71a-4aa8-ae80-72bf08d70188
+        source: Trait
+        sourceguid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
+        triggeredAbility:
           name: Knocking Heads
-          description: The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.
-          __typeName: ActivatedAbility
-          abilityFilters:
-          - formula: self.Number of Creatures Grabbed >= 2
-            reason: The giant zombie must have two creatures or objects grabbed
+          description: ""
+          __typeName: TriggeredAbility
           abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           behaviors:
@@ -221,38 +225,148 @@ info:
               objectTarget: true
               persistence: []
               range: 3
+              reasonedFilters:
+              - formula: ConditionCaster("grabbed") = Caster
+                reason: The giant zombie can only smash together creatures or objects they have grabbed
               repeatTargets: false
               strain: []
               targetType: target
             invokeOnCaster: true
             promptText: Smash the grabbed targets together with Rotten Smash (double edge)
-            targeting: inherit
-          categorization: Heroic Ability
+            targeting: prompt
+          categorization: Trigger
+          conditionFormula: NumberOfCreaturesGrabbed >= 2
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
-          flavor: ""
-          guid: c89667d1-f689-4628-858f-2479f157dbba
+          guid: 6c7f7622-4b29-4fdb-8964-0b787cc516b3
           iconid: ui-icons/skills/1.png
-          implementation: 3
-          keywords: []
+          mandatory: false
           modifiers: []
-          numTargets: 2
-          objectTarget: true
-          range: 3
-          reasonedFilters:
-          - formula: ConditionCaster("grabbed") = Caster
-            reason: The giant zombie can only smash together creatures or objects they have grabbed
+          numTargets: "1"
+          persistence: []
+          range: 1
           repeatTargets: false
           resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
           resourceNumber: 1
           strain: []
-          targetType: target
-        behavior: activated
-        guid: d6567b77-b9d5-4194-acfb-288f74205d32
-        source: Character Feature
+          subject: self
+          targetType: self
+          trigger: beginturn
+          triggerPrompt: The giant zombie starts their turn with two creatures or objects grabbed. Spend 1 Malice to smash them together with Rotten Smash (double edge)?
+          whenActive: combat
+      - name: Knocking Heads
+        description: The giant zombie grabs two creatures or objects.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
+        guid: 1c48a23d-9705-4696-be98-b1aac72d8315
+        source: Trait
+        sourceguid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
+        triggeredAbility:
+          name: Knocking Heads
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Rotten Smash (Knocking Heads)
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                roll: 2d10 + Highest Characteristic
+                tiers:
+                - 9 damage
+                - 14 damage; A<2 grabbed
+                - 17 damage; A<3 grabbed
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 0032531d-a8f0-4da4-8092-f307d453e561
+              iconid: ui-icons/skills/1.png
+              keywords:
+                Melee: true
+                Strike: true
+                Weapon: true
+              modifiers:
+              - name: Knocking Heads
+                description: The targets are smashed together, giving Rotten Smash a double edge.
+                __typeName: CharacterModifier
+                activationCondition: true
+                behavior: power
+                guid: c9ce5f47-c5e4-47eb-a6b2-1584ed4ed18c
+                keywords: []
+                modtype: double_edge
+                rollType: ability_power_roll
+                source: Ability
+              numTargets: 2
+              objectTarget: true
+              persistence: []
+              range: 3
+              reasonedFilters:
+              - formula: ConditionCaster("grabbed") = Caster
+                reason: The giant zombie can only smash together creatures or objects they have grabbed
+              repeatTargets: false
+              strain: []
+              targetType: target
+            invokeOnCaster: true
+            promptText: Smash the grabbed targets together with Rotten Smash (double edge)
+            targeting: prompt
+          categorization: Trigger
+          conditionFormula: NumberOfCreaturesGrabbed >= 2 and not PartOfAnotherAbility
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 74630f98-531e-4ec5-84d6-35e073c43d21
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          strain: []
+          subject: self
+          targetType: self
+          trigger: finishability
+          triggerPrompt: The giant zombie has two creatures or objects grabbed. Spend 1 Malice to smash them together with Rotten Smash (double edge)?
+          whenActive: combat
+      - name: Knocking Heads
+        description: |-
+          Trigger: The giant zombie grabs two creatures or objects, or starts their turn with two creatures or objects grabbed.
+
+          Effect: The creatures or objects are smashed together using Rotten Smash, which has a double edge.
+        __typeName: CharacterModifier
+        ability:
+          __typeName: TriggeredAbilityDisplay
+          distance: Self
+          effect: The creatures or objects are smashed together using Rotten Smash, which has a double edge.
+          guid: 5162c2eb-e045-4736-b9a4-f5b7bba03c7e
+          keywords: []
+          target: Self; see below
+          trigger: The giant zombie grabs two creatures or objects, or starts their turn with two creatures or objects grabbed.
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d: true
+        guid: 814a75ff-eaea-4448-8c32-c0d5f74add9a
+        source: Trait
+        sourceguid: e2f9ab1f-8b34-4fb5-aac5-294a0419cf2d
       source: Character Feature
       tags:
         Trigger: true
@@ -262,7 +376,6 @@ info:
     equipment: []
     ev: 24
     groupid: 4896bd82-a3b2-4f45-854d-81c22431335a
-    implementation: 2
     import:
       data: |+
         Giant Zombie    Level 4 Elite Brute

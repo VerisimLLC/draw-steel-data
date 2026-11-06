@@ -243,10 +243,14 @@ info:
           modtype: edge
           activationCondition: Self.GrabbedCreatures is Target
           activationAfterRoll: false
+      - __typeName: ActivatedAbilityRememberBehavior
+        calculation: "1"
+        filterTarget: Cast.WasForceMoved(Target) and Target.Distance(Caster) <= 1
+        memoryName: pulledAdjacent
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         applyto: caster
         duration: eoe
-        filterTarget: Caster.CountNearbyEnemies(1) > 0
+        filterTarget: Cast.Memory("pulledAdjacent") > 0
         ongoingEffect: 606dcd33-446b-49ed-829b-5ff4a3a64a1e
         ongoingEffectCustom: false
       categorization: Heroic Ability
@@ -258,8 +262,8 @@ info:
       flavor: ""
       guid: d5036dbc-0a8f-4472-aed3-b4cf8b45f839
       iconid: ui-icons/skills/1.png
-      implementation: 3
-      implementationDetails: The pull, the potency-gated corruption damage, the edge against creatures the koptourok has grabbed, and the flight are automated. Flight uses the shared Can Fly effect (until the end of the encounter) and is granted whenever any enemy is adjacent once the pulls resolve, so it also triggers if that enemy was already adjacent before the ability - remove it by hand in that case.
+      implementation: 4
+      implementationDetails: "GOLD: The pull, the potency-gated corruption damage, the edge against creatures the koptourok has grabbed, and the flight are automated. Flight uses the shared Can Fly effect (until the end of the encounter) and is granted only when a target this cast actually force moved ends adjacent to the koptourok (Cast.WasForceMoved), so an enemy that was already adjacent does not count."
       keywords:
         Area: true
         Magic: true

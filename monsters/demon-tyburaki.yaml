@@ -73,7 +73,46 @@ info:
       domains:
         CharacterFeature:b4131d7b-6e03-4d4e-a0dd-0465e2f55465: true
       guid: b4131d7b-6e03-4d4e-a0dd-0465e2f55465
-      modifiers: []
+      implementation: 3
+      implementationDetails: "The Breacher move ability, available only while the tyburaki is in water or swimming, jumps up to 5 squares and counts the distance against their movement this turn. Not yet tested in play: whether a jump that starts in water lands as expected."
+      modifiers:
+      - name: Breacher
+        description: While swimming, the tyburaki can jump 5 squares as part of their movement.
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Breacher
+          description: While swimming, jump up to 5 squares. The distance counts against your movement this turn.
+          __typeName: ActivatedAbility
+          abilityFilters:
+          - formula: InWater or MovementType = "Swim"
+            reason: The tyburaki can only breach while swimming
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            guid: 175b441e-2fcd-483c-b6a9-9b514bc59bf5
+            rule: jump 5
+          castImmediately: true
+          categorization: Move
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f0ae8a53-f07e-4a5a-956d-687508bb5579
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+        behavior: activated
+        domains:
+          CharacterFeature:b4131d7b-6e03-4d4e-a0dd-0465e2f55465: true
+        guid: 6008e70d-ac04-4b7f-b5e6-2b3d5f8713fa
+        source: Trait
+        sourceguid: b4131d7b-6e03-4d4e-a0dd-0465e2f55465
       source: Trait
     - name: Soulsight
       description: Each creature within 2 of the tyburaki can't be hidden from them.

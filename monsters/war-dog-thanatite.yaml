@@ -147,17 +147,82 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Snaking Entrails
-      description: "The target dies. The thanatite makes one power roll against each enemy within 2 of the target:"
+      description: |-
+        The target dies and the thanatite makes one power roll against each enemy within 2 squares of the target.
+
+        **3 Malice:** If an affected enemy is adjacent to any corpse, they are frightened of the thanatite (save ends).
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
-      - __typeName: ActivatedAbilityPowerRollBehavior
-        roll: 2d10 + Highest Characteristic
-        tiers:
-        - 3 corruption damage; A<1 slowed (save ends)
-        - 5 corruption damage; A<2 slowed (save ends)
-        - 7 corruption damage; A<3 restrained (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Snaking Entrails
+          description: The thanatite makes one power roll against each enemy within 2 squares of the target.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 3 corruption damage; A<1 slowed (save ends)
+            - 5 corruption damage; A<2 slowed (save ends)
+            - 7 corruption damage; A<3 restrained (save ends)
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 0cc20d7f-3ee5-43c8-9c47-5ce4489cda22
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Magic: true
+            Ranged: true
+          modifiers: []
+          numTargets: "1"
+          range: "12"
+          repeatTargets: false
+          targetType: target
+        invokeOnCaster: true
+        targeting: formula
+        targetingFormula: not Friends(Target, Caster) and not Target.Object and not Target.Dead and ParentTarget.Distance(Target) <= 2
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Snaking Entrails (Malice)
+          description: Each affected enemy adjacent to any corpse is frightened of the thanatite (save ends).
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            rule: frightened (save ends)
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a4d633c6-77ad-4a7d-9ba0-61b3cfa3d14a
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Magic: true
+            Ranged: true
+          modifiers: []
+          numTargets: "1"
+          range: "12"
+          repeatTargets: false
+          targetType: target
+        invokeOnCaster: true
+        modesSelected:
+        - 2
+        targeting: formula
+        # The target ally dies after this runs, so its own square counts as a corpse here.
+        targetingFormula: not Friends(Target, Caster) and not Target.Object and not Target.Dead and ParentTarget.Distance(Target) <= 2 and (Target.AdjacentToCorpse or ParentTarget.Distance(Target) <= 1)
+      - __typeName: ActivatedAbilityDestroyBehavior
+        applyto: targets
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -168,15 +233,25 @@ info:
       flavor: ""
       guid: dff29f56-5625-4c75-835a-5446609a524d
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
+      implementationDetails: "GOLD: The thanatite targets one ally. An invoked roll picks every non-friendly creature within 2 squares of that ally (Parent Target) and rolls once against each; then the ally is destroyed. The 3 Malice mode adds a second invoke that frightens (save ends, of the thanatite) each of those enemies who is adjacent to a corpse (AdjacentToCorpse) or to the dying ally. The roll runs before the death so the ally's square can still be measured from."
       keywords:
         Magic: true
         Ranged: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: ""
+        rules: If an affected enemy is adjacent to any corpse, they are frightened of the thanatite (save ends).
+        text: 3 Malice
       modifiers: []
+      multipleModes: true
       numTargets: 1
       range: 10
       repeatTargets: false
-      targetFilter: not Enemy
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 3 when Mode = 2 else 0
+      targetAllegiance: ally
       targetType: target
     - name: Wall of Flesh
       description: The target is molded into a wall of blood and bone. The wall must share at least one square with the target. Each enemy within the affected area vertical slides 2 and is knocked prone. Each square of wall has 3 Stamina.

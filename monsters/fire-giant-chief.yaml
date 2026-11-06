@@ -71,21 +71,84 @@ info:
         baseValue: 0
     availableTriggers: []
     characterFeatures:
-    - name: Searing Skin
-      description: Whenever an enemy makes physical contact with the chief or uses a melee ability against the chief, they take 9 fire damage.
-      __typeName: CharacterFeature
-      domains:
-        CharacterFeature:8f44b5aa-7736-4f44-a558-fb265fa5e16f: true
-      guid: 8f44b5aa-7736-4f44-a558-fb265fa5e16f
-      modifiers: []
-      source: Trait
     - name: Scorching Skin
-      description: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends)
+      description: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends).
       __typeName: CharacterFeature
       domains:
         CharacterFeature:3e2affa4-91a3-40f0-b0a5-fa4a24489fda: true
       guid: 3e2affa4-91a3-40f0-b0a5-fa4a24489fda
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Scorching Skin
+        description: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:3e2affa4-91a3-40f0-b0a5-fa4a24489fda: true
+        guid: b2c53744-4a90-47e4-8656-8c610bbe437b
+        source: Trait
+        sourceguid: 3e2affa4-91a3-40f0-b0a5-fa4a24489fda
+        triggeredAbility:
+          name: Scorching Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: 9 fire damage; M<4 weakened (save ends)
+          conditionFormula: Condition = "Grabbed"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 3ce95d24-eb14-4782-88ca-63e263283a13
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: attacker
+          trigger: inflictcondition
+          triggerPrompt: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends).
+      - name: Scorching Skin
+        description: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends).
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:3e2affa4-91a3-40f0-b0a5-fa4a24489fda: true
+        guid: 6f4defad-0d4b-42ae-a182-dcdb8c8b39c9
+        source: Trait
+        sourceguid: 3e2affa4-91a3-40f0-b0a5-fa4a24489fda
+        triggeredAbility:
+          name: Scorching Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            rule: 9 fire damage; M<4 weakened (save ends)
+          conditionFormula: 'UsedAbility.Keywords has "Melee" and Cast.HasTarget(Self)'
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: c537bddf-72e0-4605-91cc-93d129939d7a
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: enemy
+          subjectRange: "1"
+          targetType: subject
+          trigger: useability
+          triggerPrompt: Whenever an adjacent enemy grabs the chief or uses a melee ability against them, that enemy takes 9 fire damage, and if they have M<4 they are weakened (save ends).
       source: Trait
     cr: 9
     creatureSize: "5"

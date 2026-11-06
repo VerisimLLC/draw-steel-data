@@ -69,12 +69,83 @@ info:
     bloodColor: green
     characterFeatures:
     - name: Abyssal Buzzing
-      description: A creature who starts their turn with 2 or more soulraker minions adjacent to them takes 3 sonic damage.
+      description: Any enemy who starts their turn with two or more soulraker minions adjacent to them takes 3 sonic damage.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:85e95659-f1d1-4ad2-a84b-506288f7eb6b: true
       guid: 85e95659-f1d1-4ad2-a84b-506288f7eb6b
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Abyssal Buzzing
+        description: Any enemy who starts their turn with two or more soulraker minions adjacent to them takes 3 sonic damage.
+        __typeName: CharacterModifier
+        aura:
+          name: Abyssal Buzzing
+          description: Any enemy who starts their turn with two or more soulraker minions adjacent to them takes 3 sonic damage.
+          __typeName: Aura
+          applyto: enemies
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9aef6367-6fc9-4bc7-b231-02e3cc58cf23
+          implementation: 4
+          modifiers:
+          - name: Abyssal Buzzing
+            description: Any enemy who starts their turn with two or more soulraker minions adjacent to them takes 3 sonic damage.
+            __typeName: CharacterModifier
+            behavior: trigger
+            guid: 53e9079b-3edc-4450-983f-3a707455387e
+            resourceRefreshType: turn
+            source: Aura
+            sourceguid: 9aef6367-6fc9-4bc7-b231-02e3cc58cf23
+            triggeredAbility:
+              name: Abyssal Buzzing
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityFloatTextBehavior
+                color:
+                  __usertype: LuaColor
+                  a: 1
+                  h: 0
+                  s: 0.98632824420929
+                  v: 0.975643813610077
+                text: Abyssal Buzzing
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                rule: 3 sonic damage
+                runOnDismiss: true
+              castImmediately: false
+              conditionFormula: Count Nearby Creatures(1, "Abyssal Buzzing") > 1
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 458b4ffe-a1da-405b-b8fa-9cb27f1e14e4
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              trigger: beginturn
+              usageLimitOptions:
+                charges: "1"
+                resourceRefreshType: turn
+                resourceid: 53e9079b-3edc-4450-983f-3a707455387e
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+        behavior: aura
+        domains:
+          CharacterFeature:85e95659-f1d1-4ad2-a84b-506288f7eb6b: true
+        guid: 0475ae65-79ac-4ffc-83a7-fb1fb187127d
+        radius: "1"
+        seq: 54c4d108-328c-4aeb-b244-b809dc26162b
+        source: Trait
+        sourceguid: 85e95659-f1d1-4ad2-a84b-506288f7eb6b
       source: Trait
     cr: 7
     creatureSize: "2"

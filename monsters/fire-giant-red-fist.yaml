@@ -71,12 +71,87 @@ info:
         baseValue: 0
     characterFeatures:
     - name: Searing Skin
-      description: Whenever an enemy makes physical contact with the red fist or uses a melee ability against the red fist, they take 5 fire damage.
+      description: Whenever an adjacent enemy grabs the red fist or uses a melee ability against them, that enemy takes 5 fire damage.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:e2b4f0f0-77b9-4147-931f-b8d0bba2c307: true
       guid: e2b4f0f0-77b9-4147-931f-b8d0bba2c307
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the red fist or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:e2b4f0f0-77b9-4147-931f-b8d0bba2c307: true
+        guid: d33a5a2e-bc23-4108-950c-99275a94d7e0
+        source: Trait
+        sourceguid: e2b4f0f0-77b9-4147-931f-b8d0bba2c307
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: Condition = "Grabbed"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: a61923d9-3d3b-4146-a519-f0cb4c40deb7
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: attacker
+          trigger: inflictcondition
+          triggerPrompt: Whenever an adjacent enemy grabs the red fist or uses a melee ability against them, that enemy takes 5 fire damage.
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the red fist or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:e2b4f0f0-77b9-4147-931f-b8d0bba2c307: true
+        guid: 66782c28-f1b4-485c-9a0e-c2dd0be8664b
+        source: Trait
+        sourceguid: e2b4f0f0-77b9-4147-931f-b8d0bba2c307
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: 'UsedAbility.Keywords has "Melee" and Cast.HasTarget(Self)'
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 29fa6e22-6b52-453d-afdc-f48da8a9919a
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: enemy
+          subjectRange: "1"
+          targetType: subject
+          trigger: useability
+          triggerPrompt: Whenever an adjacent enemy grabs the red fist or uses a melee ability against them, that enemy takes 5 fire damage.
       source: Trait
     cr: 9
     creatureSize: "4"

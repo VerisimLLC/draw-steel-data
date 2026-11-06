@@ -140,11 +140,27 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Shrikegun Shot
-      description: This ability deals an additional 3 damage if the target is within 2 squares of the sweeper.
+      description: Any target within 2 squares of the sweeper takes an extra 3 damage.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - __typeName: ActivatedAbilityModifyPowerRollBehavior
+        guid: e809c8ca-ef5b-43f5-826b-b58177bd9edb
+        modifier:
+          name: Shrikegun Shot
+          description: Any target within 2 squares of the sweeper takes an extra 3 damage.
+          __typeName: CharacterModifier
+          activationCondition: Caster.Distance(Target) <= 2
+          behavior: power
+          damageModifier: "3"
+          displayCondition: Caster.Distance(Target) <= 2
+          domains: []
+          guid: daf83546-82c3-4ae9-a0d3-753b4b2d87e7
+          keywords: []
+          modtype: none
+          rollType: ability_power_roll
+          sourceguid: e809c8ca-ef5b-43f5-826b-b58177bd9edb
       - __typeName: ActivatedAbilityPowerRollBehavior
         promptWhenResolving: true
         promptWhenResolvingText: Select targets to push in your preferred order.
@@ -163,7 +179,7 @@ info:
       flavor: ""
       guid: 43b15ac8-e48e-43d1-abf6-7911623ce206
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Ranged: true
@@ -172,6 +188,7 @@ info:
       meleeRange: 1
       modifiers: []
       numTargets: 1
+      objectTarget: true
       persistence: []
       range: 3
       repeatTargets: false

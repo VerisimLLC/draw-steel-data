@@ -259,7 +259,7 @@ info:
       repeatTargets: false
       targetType: target
     - name: Soul Flay
-      description: A soul flayed creature is bleeding, except the Stamina they lose from the condition increases to 2d6.
+      description: Any creature who is bleeding from this ability loses 2d6 Stamina instead of 1d6.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -267,9 +267,13 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
-        - 4 psychic damage; P<3 soul flayed (save ends)
-        - 7 psychic damage; P<4 soul flayed (save ends)
-        - 9 psychic damage; P<5 soul flayed (save ends)
+        - 4 psychic damage; P<3 bleeding (save ends)
+        - 7 psychic damage; P<4 bleeding (save ends)
+        - 9 psychic damage; P<5 bleeding (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        applyto: targets
+        conditionid: 18ff50ab-053b-49d2-a456-927f8e4f9cf9
+        riderid: 3ec1480b-63de-4efa-8458-107a5cbaf673
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
@@ -280,17 +284,19 @@ info:
       flavor: ""
       guid: abd87109-9d56-40f6-ab60-37718452670b
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Area: true
-        Melee: true
+      lineDistance: "1"
       modifiers: []
       numTargets: "1"
-      range: 1
+      radius: "3"
+      range: "6"
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 5
-      targetType: self
+      targetAllegiance: enemy
+      targetType: line
     - name: Greedy Hands
       description: ""
       __typeName: ActivatedAbility

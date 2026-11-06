@@ -68,12 +68,87 @@ info:
         baseValue: 0
     characterFeatures:
     - name: Searing Skin
-      description: Whenever an enemy makes physical contact with the fireball or uses a melee ability against the fireball, they take 5 fire damage.
+      description: Whenever an adjacent enemy grabs the fireballer or uses a melee ability against them, that enemy takes 5 fire damage.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:db5c34b2-f579-4dc6-a309-f040cb4e7603: true
       guid: db5c34b2-f579-4dc6-a309-f040cb4e7603
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the fireballer or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:db5c34b2-f579-4dc6-a309-f040cb4e7603: true
+        guid: fbdb34ae-c28b-4d06-8d51-be9c6b0c82e8
+        source: Trait
+        sourceguid: db5c34b2-f579-4dc6-a309-f040cb4e7603
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: Condition = "Grabbed"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: bb657d39-5b7d-4bf5-8096-2a18e5d0e717
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: attacker
+          trigger: inflictcondition
+          triggerPrompt: Whenever an adjacent enemy grabs the fireballer or uses a melee ability against them, that enemy takes 5 fire damage.
+      - name: Searing Skin
+        description: Whenever an adjacent enemy grabs the fireballer or uses a melee ability against them, that enemy takes 5 fire damage.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:db5c34b2-f579-4dc6-a309-f040cb4e7603: true
+        guid: 7aa32697-f851-4da2-984e-ad5463c280cb
+        source: Trait
+        sourceguid: db5c34b2-f579-4dc6-a309-f040cb4e7603
+        triggeredAbility:
+          name: Searing Skin
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Searing Skin
+            damageType: fire
+            roll: "5"
+          conditionFormula: 'UsedAbility.Keywords has "Melee" and Cast.HasTarget(Self)'
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 48af9d96-3a10-41bf-b079-49c60e5700f4
+          iconid: ui-icons/skills/1.png
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: enemy
+          subjectRange: "1"
+          targetType: subject
+          trigger: useability
+          triggerPrompt: Whenever an adjacent enemy grabs the fireballer or uses a melee ability against them, that enemy takes 5 fire damage.
       source: Trait
     cr: 9
     creatureSize: "4"
@@ -105,7 +180,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Blazing Leap
-      description: The fireball can jump 4 squares before using this ability.
+      description: The fireballer can jump up to 4 squares before using this ability.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd

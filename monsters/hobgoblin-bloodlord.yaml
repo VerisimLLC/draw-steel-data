@@ -577,47 +577,13 @@ info:
         - 11 corruption damage; P<2 bleeding (save ends)
         - 16 corruption damage; P<3 bleeding (save ends)
         - 19 corruption damage; P<4 bleeding (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        customAbility:
-          name: Soul Sword - Mark
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-            promptWhenResolving: true
-            promptWhenResolvingText: ""
-            rule: Mark
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 449abf28-6551-463a-9e89-ef48a244571d
-          iconid: ui-icons/skills/1.png
-          implementation: 2
-          modifiers: []
-          numTargets: "2"
-          objectTarget: false
-          range: "1"
-          repeatTargets: false
-          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-          resourceNumber: "2"
-          sourceReference:
-            __typeName: SourceReference
-            docid: cc66844a-04d0-49a0-8687-65ef83b15363
-            page: 202
-          strain: []
-          targetType: target
-        filterTarget: caster.Heroic Resources Available to Spend >=2
-        guid: 327ccab0-97a6-44b2-b5d9-f4a9d0b8ecf8
-        invokeOnCaster: true
-        promptText: "spend 1 malice: while weakened this way, a target takes 1d6 poison damage at the start of each of their turns."
-        targeting: inherit
-        tiersSelected:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        modesSelected:
         - 2
-        - 3
+        ongoingEffect: b2ab5b33-5021-48e3-9a74-75f680a0d479
+        ongoingEffectCustom: false
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -627,17 +593,27 @@ info:
       flavor: ""
       guid: 966a32da-ddfa-40cc-9a1a-998ff38bbfdd
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Magic: true
         Melee: true
         Strike: true
         Weapon: true
+      modeList:
+      - condition: ""
+        text: Normal
+      - condition: ""
+        rules: Each target is marked until the end of the encounter or until they die. The bloodlord's allies gain an edge on strikes against any target marked this way.
+        text: Malice
       modifiers: []
+      multipleModes: true
       numTargets: 2
+      objectTarget: true
       persistence: []
       range: 1
       repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when Mode = 2 else 0
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363

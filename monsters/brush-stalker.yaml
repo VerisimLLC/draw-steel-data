@@ -108,16 +108,17 @@ info:
         CharacterFeature:5fb54cf8-b6f5-4cc8-8a49-bcc8ecb9d673: true
       guid: 5fb54cf8-b6f5-4cc8-8a49-bcc8ecb9d673
       implementation: 2
+      implementationDetails: "BRONZE: Animals (other than brush stalkers) within 30 squares that have line of effect to the brush stalker show as frightened. The condition is bestowed with no source creature, so Frightened's mechanics (bane against the brush stalker, its edge against them, not moving closer) do not apply."
       modifiers:
       - name: Wyrd Dyr
         description: While they have line of effect to the brush stalker, any animal except another brush stalker is frightened.
         __typeName: CharacterModifier
         aura:
           name: Wyrd Dyr
-          description: Any animal except another brush stalker within 30 squares of the brush stalker is frightened. (Approximates line of effect.)
+          description: Any animal except another brush stalker that has line of effect to the brush stalker (within 30 squares) is frightened.
           __typeName: Aura
           applyto: allother
-          creatureFilter: (Keywords has "Animal") and (not (Name is "Brush Stalker"))
+          creatureFilter: (Keywords has "Animal") and (not (Name is "Brush Stalker")) and Self.HasLineOfEffectTo(Caster)
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -131,7 +132,7 @@ info:
             behavior: bestowcondition
             conditionid: 1211270f-bfce-45a6-b937-d72f0e8a06a8
             domains: []
-            explanation: "Wyrd Dyr: any animal except another brush stalker is frightened while near the brush stalker."
+            explanation: "Wyrd Dyr: any animal except another brush stalker is frightened while it has line of effect to the brush stalker."
             guid: 7f3fbbbf-e0c4-4bc8-8a4d-62263a9599a3
             source: Aura
             sourceguid: 2ff216de-b749-4a66-916a-b7bdaf22314a
