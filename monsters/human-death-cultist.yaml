@@ -249,6 +249,35 @@ info:
       - __typeName: ActivatedAbilityRaiseCorpseBehavior
         guid: fa771fa5-5cd8-447b-ae20-7b4f5be3dfc5
         restoreStamina: true
+      - __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- Raise Corpse has swapped each target to its revived token. If any of them
+          -- was summoned by a hero, the cultist raised an enemy by mistake and says so.
+          local raisedHeroMinion = false
+          for _, target in ipairs(targets) do
+              local tok = target.token
+              if tok ~= nil and tok.valid and tok.summonerid ~= nil and tok.summonerid ~= "" then
+                  local summoner = dmhub.GetCharacterById(tok.summonerid)
+                  if summoner ~= nil and summoner.properties ~= nil and summoner.properties:IsHero() then
+                      raisedHeroMinion = true
+                      break
+                  end
+              end
+          end
+          if raisedHeroMinion then
+              casterToken:ModifyProperties{
+                  description = "Speech",
+                  undoable = false,
+                  execute = function()
+                      casterToken.properties:CharacterSpeech{
+                          text = "Oops!",
+                          -- Always Caelian, whatever language the token is set to speak.
+                          langid = "9f8bf21e-a483-46e7-aa12-dbe63591d928",
+                      }
+                  end,
+              }
+          end
+        guid: 6f1c2b7e-9d43-4a8e-b5f0-3e2a7c91d4b6
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: eoe_or_dying
         ongoingEffect: d3b50284-a103-4a7f-8567-db5484d41c53

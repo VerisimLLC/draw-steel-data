@@ -186,13 +186,16 @@ modifierInfo:
           - 1
           standardAbility: f57cb6f7-13b9-4ebb-8e88-88ead0a9c203
           targeting: self
-        - __typeName: ActivatedAbilityPurgeEffectsBehavior
-          conditions: []
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
           filterTarget: mode = 2
-          mode: effect
           modesSelected:
           - 2
+          runOnController: true
+          standardAbility: ed9870a5-c8ac-43a8-ae26-d731daed352a
+          targeting: self
         categorization: Common Ability
+        chooseModeAfterTargeting: true
         display:
           bgcolor:
             __usertype: LuaColor
@@ -211,12 +214,20 @@ modifierInfo:
         implementation: 4
         modeList:
         - text: Spend a Recovery
+          targetCondition: Target.Recoveries Available to Spend > 0
+          targetUnavailableText: This creature is out of Recoveries.
         - text: Saving Throw
+          targetCondition: Target.Save Ends Effects
+          targetUnavailableText: This creature has no Save Ends effects.
         modifiers: []
         multipleModes: true
         numTargets: "1"
         persistence: []
         range: 1
+        rangeTextOverride: Within 1
+        reasonedFilters:
+        - formula: Target.Recoveries Available to Spend > 0 or Target.Save Ends Effects
+          reason: This creature is out of Recoveries and has no Save Ends effects.
         repeatTargets: false
         sourceReference:
           __typeName: SourceReference
