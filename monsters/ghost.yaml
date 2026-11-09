@@ -57,6 +57,7 @@ info:
     pos:
       x: 0
       y: 0
+    rewindAnimId: null
     rotation: 0
     summonLoc: []
     summonLocCleared: null
@@ -781,8 +782,8 @@ info:
         movementConstraint: toward
         movementConstraintAnchor: nearest_enemy
         movementConstraintAnchorDistance: 3
-        movementConstraintPickAnyInRange: true
         movementConstraintAsForcedMovementOrigin: true
+        movementConstraintPickAnyInRange: true
         movementConstraintPrompt: Choose the nearest enemy (any enemy within 3 squares of the object)
         promptText: You may vertically pull the object up to 5 squares toward the nearest enemy within 3 squares of it.
         promptWhenResolving: true
@@ -843,28 +844,42 @@ info:
         - P<3 the target is levitated until the end of the encounter
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: end_of_next_turn
-        filterTarget: Presence Potency Resistance < 1
+        filterTarget: (Target.Flying Speed > 0) and not Cast.PassesPotency(Target,"P")
+        guid: b325e4b2-1d4a-49f2-871e-68949dc9d335
+        ongoingEffect: 32b9defb-ef39-4d65-b989-f2a756f07a3c
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 1
+        - 2
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: eoe
+        filterTarget: (Target.Flying Speed > 0) and not Cast.PassesPotency(Target,"P")
+        guid: e62cbffd-42ac-4fef-96f8-8ebddd22c72d
+        ongoingEffect: 32b9defb-ef39-4d65-b989-f2a756f07a3c
+        ongoingEffectCustom: false
+        ongoingEffectSource: specific
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: end_of_next_turn
+        filterTarget: Target.Flying Speed = 0 and not Cast.PassesPotency(Target,"P")
         ongoingEffect: 3879f6cd-b068-4482-8618-4218b5d4cf01
         ongoingEffectCustom: false
         tiersSelected:
         - 1
-      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-        duration: end_of_next_turn
-        filterTarget: Presence Potency Resistance < 2
-        ongoingEffect: 3879f6cd-b068-4482-8618-4218b5d4cf01
-        ongoingEffectCustom: false
-        tiersSelected:
         - 2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: eoe
-        filterTarget: Presence Potency Resistance < 3
+        filterTarget: Target.Flying Speed = 0 and not Cast.PassesPotency(Target,"P")
+        guid: 325fa4fe-d267-4083-b2d9-3bf4b530c0c9
         ongoingEffect: 3879f6cd-b068-4482-8618-4218b5d4cf01
         ongoingEffectCustom: false
         tiersSelected:
         - 3
       - __typeName: ActivatedAbilityLiftVerticalBehavior
         distance: "1"
-        filterTarget: Ongoing Effects has "Levitated"
+        filterTarget: Ongoing Effects has "Levitated" or Ongoing Effects has "Levitated, slowed and weakened"
         landAtEnd: false
       categorization: Villain Action
       display:
@@ -876,7 +891,7 @@ info:
       guid: a99d030f-4c3a-44ca-a320-b69343be5e50
       iconid: ui-icons/skills/1.png
       implementation: 3
-      implementationDetails: Potency tiers, duration, initial rise, end-turn rise, flight, slowed, and weakened are automated. Flight is not restricted to horizontal movement, and slowed and weakened are applied even to creatures that could already fly.
+      implementationDetails: Flight is not restricted to horizontal movement for creatures that cannot normally fly.
       keywords:
         Area: true
         Magic: true
@@ -1038,7 +1053,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: 1f94dd8d-f503-4d4b-8257-27a9c093c295
+  updateid: f3521a63-0487-4497-b322-11e519e45060
 mtime: 1775375020812
 ord: 3
 parentFolder: 3060d052-424f-414c-969f-12c5a80bd2f7
