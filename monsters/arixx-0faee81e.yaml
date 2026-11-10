@@ -445,7 +445,7 @@ info:
         CharacterFeature:58bdd65e-5a1b-4448-8a61-1b18d5171e7b: true
         CharacterFeature:ef38cf8f-1ce1-4963-8886-8ab0f0ff650b: true
       guid: ef38cf8f-1ce1-4963-8886-8ab0f0ff650b
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: End Effect
         description: At the end of their turn, the arixx can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
@@ -468,7 +468,7 @@ info:
           - __typeName: ActivatedAbilityPurgeEffectsBehavior
             conditions: []
             damageToSelf: "5"
-            mode: conditions
+            mode: conditions_and_effects
             purgeType: one
             targetDuration: save
           castImmediately: true
@@ -494,6 +494,7 @@ info:
           targetType: self
           trigger: endturn
           triggerPrompt: End one save ends effect on self, take 5 damage.
+          whenActive: combat
       - name: Solo Turns
         description: The arixx can take two turns each round. They can’t take turns consecutively.
         __typeName: CharacterModifier
@@ -1039,33 +1040,13 @@ info:
       abilityType: none
       actionResourceId: 67f15a17-523c-4a30-8f1a-a27e4f122605
       behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
         applyto: caster
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: dcde64ca-0f37-4efb-b706-7fb54d572f67
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        standardAbilityParams:
-          distance: "5"
+        rule: shift {MovementSpeed}
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         applyto: caster
+        filterTarget: DistanceBelowGround = 0 and CountNearbyCreatures(2, 2) > 0
         customAbility:
           name: Invoked Ability
           description: ""
@@ -1089,6 +1070,7 @@ info:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: named
         applyto: caster
+        filterTarget: DistanceBelowGround = 0 and CountNearbyCreatures(2, 2) > 0
         customAbility:
           name: Invoked Ability
           description: ""
@@ -1119,7 +1101,7 @@ info:
       flavor: ""
       guid: 7f16f540-6ca2-4c39-956d-76967c95ef68
       iconid: 6e4b74ab-b382-49ac-b2c2-bbc8dc629f04
-      implementation: 2
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: "1"

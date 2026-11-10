@@ -251,33 +251,33 @@ info:
         restoreStamina: true
       - __typeName: ActivatedAbilityScriptBehavior
         code: |
-          -- Raise Corpse has swapped each target to its revived token. If any of them
-          -- was summoned by a hero, the cultist raised an enemy by mistake and says so.
-          local raisedHeroMinion = false
+          -- Any dead minion in the burst rises, the heroes' too. When at least as
+          -- many enemy minions rose as allied ones, set the "Backfired" memory so
+          -- the Character Speech step below has the cultist call out its mistake.
+          local allies = 0
+          local enemies = 0
           for _, target in ipairs(targets) do
               local tok = target.token
-              if tok ~= nil and tok.valid and tok.summonerid ~= nil and tok.summonerid ~= "" then
-                  local summoner = dmhub.GetCharacterById(tok.summonerid)
-                  if summoner ~= nil and summoner.properties ~= nil and summoner.properties:IsHero() then
-                      raisedHeroMinion = true
-                      break
+              if tok ~= nil and tok.valid and not tok.isCorpse and tok.properties ~= nil then
+                  if tok:IsFriend(casterToken) then
+                      allies = allies + 1
+                  else
+                      enemies = enemies + 1
                   end
               end
           end
-          if raisedHeroMinion then
-              casterToken:ModifyProperties{
-                  description = "Speech",
-                  undoable = false,
-                  execute = function()
-                      casterToken.properties:CharacterSpeech{
-                          text = "Oops!",
-                          -- Always Caelian, whatever language the token is set to speak.
-                          langid = "9f8bf21e-a483-46e7-aa12-dbe63591d928",
-                      }
-                  end,
-              }
+          if symbols ~= nil and symbols.cast ~= nil then
+              symbols.cast:StoreMemory("Backfired", cond(enemies > 0 and enemies >= allies, 1, 0))
           end
-        guid: 6f1c2b7e-9d43-4a8e-b5f0-3e2a7c91d4b6
+        guid: 5b0e6f3a-2c7d-4e91-9a48-d6f1c3b8e027
+      - __typeName: ActivatedAbilityCharacterSpeechBehavior
+        applyto: caster
+        filterTarget: Cast.Memory("Backfired") = 1
+        variations:
+        - Wh-- what happened?
+        - No! I just made a big mistake!
+        - That didn't quite go as planned...
+        guid: 9c4d2a71-6e83-4b1f-8d05-3a7e9f6b14c2
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         duration: eoe_or_dying
         ongoingEffect: d3b50284-a103-4a7f-8567-db5484d41c53
