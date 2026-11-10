@@ -251,8 +251,8 @@ info:
       domains:
         CharacterFeature:7a036515-edcb-4139-be97-1cfc3826d18f: true
       guid: 7a036515-edcb-4139-be97-1cfc3826d18f
-      implementation: 3
-      implementationDetails: Strike targeting and damage halving are automated. The 2 sonic damage rider is keyed to the ghost losing Stamina, so it does not fire when the halved strike deals 0 net damage.
+      implementation: 4
+      implementationDetails: ""
       modifiers:
       - name: Shriek
         description: |-
@@ -282,60 +282,6 @@ info:
 
           Effect: The ghost halves the damage from the strike and the target takes 2 sonic damage.
         __typeName: CharacterModifier
-        behavior: trigger
-        domains:
-          CharacterFeature:7a036515-edcb-4139-be97-1cfc3826d18f: true
-        guid: 37861833-49ec-4387-93ed-3c4e96c0cdca
-        resourceRefreshType: round
-        source: Character Feature
-        sourceguid: 7a036515-edcb-4139-be97-1cfc3826d18f
-        triggeredAbility:
-          name: Shriek
-          description: ""
-          __typeName: TriggeredAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            chatMessage: 2 sonic damage
-            damageType: sonic
-            roll: "2"
-            titleText: Shriek
-          - __typeName: ActivatedAbilityPurgeEffectsBehavior
-            applyto: caster
-            conditions: []
-            mode: effect
-            ongoingEffect: d4e6b0ed-77a2-4889-9979-c824a83c02f0
-          conditionFormula: Ongoing Effects has "Shriek Rider"
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 5d31db58-ff93-4ce3-ae7d-eb6eb29dbd58
-          hasManualVersion: true
-          iconid: ui-icons/skills/1.png
-          implementation: 4
-          mandatory: true
-          modifiers: []
-          numTargets: "1"
-          persistence: []
-          range: 1
-          repeatTargets: false
-          strain: []
-          targetType: attacker
-          trigger: losehitpoints
-          triggerPrompt: "**Trigger:** The ghost is targeted with a melee 1 strike. **Effect:** The ghost halves the damage from the strike and the target takes 2 sonic damage."
-          usageLimitOptions:
-            charges: "1"
-            resourceRefreshType: round
-            resourceid: 37861833-49ec-4387-93ed-3c4e96c0cdca
-          whenActive: combat
-      - name: Shriek
-        description: |-
-          Trigger: A creature within distance targets the ghost with a strike.
-
-          Effect: The ghost halves the damage from the strike and the target takes 2 sonic damage.
-        __typeName: CharacterModifier
         abilityFilter: ability.keywords has "Strike"
         additionalCostModifiers: []
         behavior: powertabletrigger
@@ -346,12 +292,37 @@ info:
           name: Shriek
           __typeName: CharacterModifier
           activationCondition: false
-          armEffect: d4e6b0ed-77a2-4889-9979-c824a83c02f0
           behavior: power
           changeTarget: false
+          customTrigger:
+            name: Shriek
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityDamageBehavior
+              chatMessage: Shriek
+              damageType: sonic
+              roll: "2"
+              titleText: Shriek
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 46471641-a846-4ec2-8981-e83918867933
+            iconid: ui-icons/skills/1.png
+            modifierCustomTrigger: true
+            modifiers: []
+            numTargets: "1"
+            range: 1
+            repeatTargets: false
+            targetType: abilitycaster
+            trigger: custom
           damageMultiplier: half
+          filterCondition: (Has attacker) and attacker.Distance(self) <= 1
           guid: b86562af-feef-47f8-9707-bbea65ee69f6
-          hasCustomTrigger: false
+          hasCustomTrigger: true
           hasTriggerBefore: false
           keywords:
             Strike: true
@@ -379,7 +350,7 @@ info:
         CharacterFeature:eb4af70b-5da4-42e6-9284-0f83f05e5060: true
         CharacterFeature:f492943e-a198-49cb-8715-3f704c13bea4: true
       guid: f492943e-a198-49cb-8715-3f704c13bea4
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Corruptive Phasing
         description: The ghost can move through creatures and objects at their usual speed, but can't end their turn inside a creature or object. The first time in a round that the ghost moves through a creature, that creature takes 2 corruption damage. The ghost doesn't take damage from being force moved into objects.
@@ -806,8 +777,8 @@ info:
       flavor: ""
       guid: 09644de8-2d28-43ea-aecf-adf50ad2c2ec
       iconid: ebc8b529-f450-4bee-9466-86374c26dc13
-      implementation: 3
-      implementationDetails: Object targeting, nearest-enemy selection, and the vertical pull toward that enemy are automated. Objects cannot hold the Levitate effect, so the 1-square rise is not applied.
+      implementation: 4
+      implementationDetails: ""
       keywords:
         Area: true
         Magic: true
@@ -890,8 +861,8 @@ info:
       flavor: ""
       guid: a99d030f-4c3a-44ca-a320-b69343be5e50
       iconid: ui-icons/skills/1.png
-      implementation: 3
-      implementationDetails: Flight is not restricted to horizontal movement for creatures that cannot normally fly.
+      implementation: 4
+      implementationDetails: ""
       keywords:
         Area: true
         Magic: true
@@ -1053,7 +1024,7 @@ info:
   size: 2
   summonerid: null
   tokenType: null
-  updateid: f3521a63-0487-4497-b322-11e519e45060
-mtime: 1775375020812
+  updateid: 5bb760f6-3750-44cf-a45e-e2c7ef818b68
+mtime: 1794266371401
 ord: 3
 parentFolder: 3060d052-424f-414c-969f-12c5a80bd2f7
