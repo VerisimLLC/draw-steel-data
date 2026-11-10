@@ -1,0 +1,45 @@
+id: 68fe6473-c22d-425c-80c0-9f9b1f50377e
+name: Sheltered
+description: This area is inside, out of the weather. Rain, snow, fog and other weather on the map do not reach it.
+_table: environmentalKeywords
+__typeName: EnvironmentalKeyword
+ctime: 1794278909552
+defaultPlayerVisible: false
+display:
+  bgcolor: "#8a7356"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: 25dff4f4-3f6a-4961-b481-7ec753a92ee8
+iconid: ui-icons/skills/1.png
+implementation: 4
+modifiers: []
+mtime: 1794278909552
+script: |-
+  --Sheltered: marks the zone's tiles as out of the weather (indoors, a cave,
+  --under a roof). Weather Map Scripts fade out over them: the fog, colour
+  --grade and heat shimmer of every world atmosphere, and particles made with
+  --shelterMask = true (rain, snow, embers). Client-local, like every zone
+  --script, so it runs on each client.
+
+  local def = {}
+
+  def.create = function(zone)
+    zone.data.shelter = dmhub.CreateWeatherShelter{ locs = zone.locs }
+  end
+
+  def.locsChanged = function(zone)
+    if zone.data.shelter ~= nil then
+      zone.data.shelter:SetLocs(zone.locs)
+    end
+  end
+
+  def.destroy = function(zone)
+    if zone.data.shelter ~= nil then
+      zone.data.shelter:Destroy()
+      zone.data.shelter = nil
+    end
+  end
+
+  return def
+source: Environmental Keyword
