@@ -71,20 +71,276 @@ info:
         baseValue: -1
     characterFeatures:
     - name: Stubborn Rage
-      description: The predator is immune to being dazed or frightened while winded or while within 10 squares of another wyvern.
+      description: While winded or within 10 squares of another wyvern, the predator can't be made dazed or frightened.
       __typeName: CharacterFeature
       domains:
-        CharacterFeature:10d97dba-f5aa-4a67-b5b2-8d7477e68eca: true
-      guid: 10d97dba-f5aa-4a67-b5b2-8d7477e68eca
-      modifiers: []
+        CharacterFeature:b4bbc422-dce4-4542-b77d-9bea95812ea1: true
+      guid: b4bbc422-dce4-4542-b77d-9bea95812ea1
+      implementation: 4
+      modifiers:
+      - behavior: conditionimmunity
+        conditions:
+        - c27e0b16-291a-45ad-8406-973e26576a44
+        - 1211270f-bfce-45a6-b937-d72f0e8a06a8
+        filterCondition: Winded or CountNearbyFriends(10, "Wyvern") > 0
+        immunityMessage: Stubborn Rage!
+        name: Stubborn Rage
+        description: While winded or within 10 squares of another wyvern, the predator can't be made dazed or frightened.
+        __typeName: CharacterModifier
+        domains:
+          CharacterFeature:b4bbc422-dce4-4542-b77d-9bea95812ea1: true
+        guid: 3117e63d-12b8-4611-984c-560cffb6d444
+        source: Trait
+        sourceguid: b4bbc422-dce4-4542-b77d-9bea95812ea1
       source: Trait
     - name: Tenacious Hunter
-      description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the predator.
+      description: Any creature affected by a condition imposed by a wyvern can't be hidden from the predator.
       __typeName: CharacterFeature
       domains:
-        CharacterFeature:52506228-bf16-4133-b031-0416a3a2b84f: true
-      guid: 52506228-bf16-4133-b031-0416a3a2b84f
-      modifiers: []
+        CharacterFeature:3d8476d9-55d9-4ac0-91b9-87841137248b: true
+      guid: 3d8476d9-55d9-4ac0-91b9-87841137248b
+      implementation: 4
+      modifiers:
+      - behavior: aura
+        radius: '60'
+        aura:
+          name: Tenacious Hunter
+          description: Any creature affected by a condition imposed by a wyvern can't be hidden from the predator.
+          __typeName: Aura
+          applyto: enemies
+          creatureFilter: (Conditions has "Slowed" and ConditionCaster("Slowed").Keywords has "Wyvern") or (Conditions has "Restrained" and ConditionCaster("Restrained").Keywords has "Wyvern") or (Conditions has "Grabbed" and ConditionCaster("Grabbed").Keywords has "Wyvern") or (Conditions has "Bleeding" and ConditionCaster("Bleeding").Keywords has "Wyvern") or (Conditions has "Weakened" and ConditionCaster("Weakened").Keywords has "Wyvern") or (Conditions has "Taunted" and ConditionCaster("Taunted").Keywords has "Wyvern")
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 1c89ba27-285a-41de-b995-8ed6d6745958
+          implementation: 4
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          radius: '60'
+          sourceguid: 3d8476d9-55d9-4ac0-91b9-87841137248b
+          modifiers:
+          - name: Tenacious Hunter
+            description: Any creature affected by a condition imposed by a wyvern can't be hidden from the predator.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            guid: 931dc964-164e-4f49-b352-4f5d09836464
+            immunityMessage: I can't hide from the Wyvern Predator while a wyvern's condition afflicts me
+            source: Aura
+            sourceguid: 1c89ba27-285a-41de-b995-8ed6d6745958
+        name: Tenacious Hunter
+        description: Any creature affected by a condition imposed by a wyvern can't be hidden from the predator.
+        __typeName: CharacterModifier
+        domains:
+          CharacterFeature:3d8476d9-55d9-4ac0-91b9-87841137248b: true
+        guid: bc6530c3-6319-4e96-865d-a275c5dfd5ab
+        source: Trait
+        sourceguid: 3d8476d9-55d9-4ac0-91b9-87841137248b
+      source: Trait
+    - name: Deterring Sting
+      description: The predator uses Sedating Stinger against the target, then shifts up to 3 squares.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:6f6d341e-70a5-451f-bbbc-07cbe0f93b1a: true
+      guid: 6f6d341e-70a5-451f-bbbc-07cbe0f93b1a
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Deterring Sting
+        domains:
+          CharacterFeature:6f6d341e-70a5-451f-bbbc-07cbe0f93b1a: true
+        guid: 913a777c-b2e6-495f-a836-5a7a3682c955
+        source: Trait
+        sourceguid: 6f6d341e-70a5-451f-bbbc-07cbe0f93b1a
+        description: The predator uses Sedating Stinger against the target, then shifts up to 3 squares.
+        behavior: triggerdisplay
+        ability:
+          name: Deterring Sting
+          __typeName: TriggeredAbilityDisplay
+          cost: 1 Malice
+          distance: Melee 3
+          effect: The predator uses Sedating Stinger against the target, then shifts up to 3 squares.
+          guid: 19c8c4db-e83a-4103-9e92-055ae3c26e75
+          keywords: []
+          target: The triggering creature
+          trigger: A creature within distance deals damage to the predator with a melee ability.
+          type: trigger
+      - __typeName: CharacterModifier
+        name: Deterring Sting
+        domains:
+          CharacterFeature:6f6d341e-70a5-451f-bbbc-07cbe0f93b1a: true
+        guid: 22dfdea2-d28d-4579-84ff-7783176c3778
+        source: Trait
+        sourceguid: 6f6d341e-70a5-451f-bbbc-07cbe0f93b1a
+        description: The predator uses Sedating Stinger against the target, then shifts up to 3 squares.
+        behavior: trigger
+        triggeredAbility:
+          name: Deterring Sting
+          description: The predator uses Sedating Stinger against the target, then shifts up to 3 squares.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            abilityType: named
+            namedAbility: Sedating Stinger
+            invokeOnCaster: true
+            targeting: inherit
+            customAbility:
+              name: Invoked Ability
+              description: ''
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: '#ffffffff'
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: c785a7ef-01e0-49d5-a2c3-d6a330a3a6c6
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: '1'
+              range: 1
+              repeatTargets: false
+              targetType: self
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: caster
+            rule: shift 3
+          - __typeName: ActivatedAbilityReplenishBehavior
+            chatMessage: Deterring Sting
+            mode: expend
+            resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          castImmediately: true
+          conditionFormula: (Ability.Keywords has "Melee") and (Distance(Attacker) <= 3) and (Malice > 0)
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f291b299-2227-44c8-9862-9a17c67beb01
+          hasManualVersion: true
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
+          modifiers: []
+          numTargets: '1'
+          persistence: []
+          range: 3
+          repeatTargets: false
+          resourceCost: none
+          resourceNumber: 1
+          strain: []
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: 'Trigger: A creature within distance deals damage to the predator with a melee ability. Effect: Use Sedating Stinger ability against the target, then shift 3.'
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 325
+      source: Trait
+      tags:
+        Trigger: true
+    - name: Tail Sweep Repeat
+      description: '5 Malice: The predator uses this ability a second time, either recreating the same line or creating a new line.'
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:edbfea1e-27be-42f8-8f1e-f705790e29e8: true
+      guid: edbfea1e-27be-42f8-8f1e-f705790e29e8
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        name: Tail Sweep Repeat
+        domains:
+          CharacterFeature:edbfea1e-27be-42f8-8f1e-f705790e29e8: true
+        guid: cb21fc8a-9bd6-479b-8c20-ec8da0bd9b9f
+        source: Trait
+        sourceguid: edbfea1e-27be-42f8-8f1e-f705790e29e8
+        description: '5 Malice: The predator uses this ability a second time, either recreating the same line or creating a new line.'
+        behavior: trigger
+        triggeredAbility:
+          name: Tail Sweep Again (5 Malice)
+          description: '5 Malice: The predator uses this ability a second time, either recreating the same line or creating a new line.'
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: caster
+            duration: eoe
+            ongoingEffect: 8e4b7a90-61d2-4f3c-a5b8-2c9d1e07f4a6
+            ongoingEffectCustom: false
+          - __typeName: ActivatedAbilityReplenishBehavior
+            chatMessage: Tail Sweep again
+            mode: expend
+            resourceid: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+            quantity: '5'
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            abilityType: named
+            namedAbility: Tail Sweep
+            invokeOnCaster: true
+            promptText: 'Tail Sweep a second time: choose the same line or a new one'
+            customAbility:
+              name: Invoked Ability
+              description: ''
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: '#ffffffff'
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 7dbf3d79-63f6-4884-b7fd-78b2ce9fff54
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: '1'
+              range: 1
+              repeatTargets: false
+              targetType: self
+          conditionFormula: Used Ability.Name = "Tail Sweep" and Malice >= 5 and Stacks("Tail Sweep Used Twice") = 0
+          display:
+            bgcolor: '#ffffffff'
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 2d530249-c888-402c-aa82-8e1076200e6a
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
+          modifiers: []
+          numTargets: '1'
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: useability
+          triggerPrompt: Spend 5 Malice to use Tail Sweep again
+          sourceReference:
+            __typeName: SourceReference
+            docid: cc66844a-04d0-49a0-8687-65ef83b15363
+            page: 325
+      - __typeName: CharacterModifier
+        name: Tail Sweep Repeat
+        domains:
+          CharacterFeature:edbfea1e-27be-42f8-8f1e-f705790e29e8: true
+        guid: 4abc0ba5-8b9d-4065-b798-d6e34d7e705a
+        source: Trait
+        sourceguid: edbfea1e-27be-42f8-8f1e-f705790e29e8
+        description: '5 Malice: The predator uses this ability a second time, either recreating the same line or creating a new line.'
+        behavior: triggerdisplay
+        ability:
+          name: Tail Sweep Again
+          __typeName: TriggeredAbilityDisplay
+          effect: '5 Malice: The predator uses this ability a second time, either recreating the same line or creating a new line.'
+          guid: 2051fcda-3d93-4be3-89a3-edab2f8b46a0
+          keywords: []
+          type: passive
       source: Trait
     cr: 4
     creatureSize: "3"
@@ -178,41 +434,63 @@ info:
     initiativeGrouping: c16fd4fa-495f-43f0-8b61-1390d2aaac9b
     innateActivatedAbilities:
     - name: Sedating Stinger
-      description: The target is restrained (save ends) if they are already slowed.
+      description: If a target slowed this way is already slowed, they are instead restrained (save ends).
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: targets
+        duration: eoe
+        filterTarget: Conditions has "slowed"
+        ongoingEffect: 5d1c2f6e-3a7b-4c58-9e41-7b2a6d0f8c31
+        ongoingEffectCustom: false
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
         - 9 damage
         - 14 damage; M<2 slowed (save ends)
         - 17 damage; M<3 slowed (save ends)
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Target.Stacks("Sedating Stinger Already Slowed") > 0 and not Cast.PassesPotency(Target, "M", 2)
+        rule: restrained (save ends)
+        tiersSelected:
+        - 2
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        filterTarget: Target.Stacks("Sedating Stinger Already Slowed") > 0 and not Cast.PassesPotency(Target, "M", 3)
+        rule: restrained (save ends)
+        tiersSelected:
+        - 3
+      - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+        applyto: targets
+        ongoingEffectid: 5d1c2f6e-3a7b-4c58-9e41-7b2a6d0f8c31
       categorization: Signature Ability
       display:
-        bgcolor: "#ffffffff"
+        bgcolor: '#ffffffff'
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: e3c2b4fe-1236-4319-a76f-b2a34b24a4b4
+      flavor: ''
+      guid: d3aa0469-0d2a-4f5d-a003-20cbd71df2ba
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
+        Magic: true
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 2
+      objectTarget: true
       range: 3
       repeatTargets: false
       targetType: target
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 325
     - name: Tail Sweep
-      description: |2-
-
-        **5 Malice**: The predator uses this ability a second time, either recreating the same line or creating a new line.
+      description: ''
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -220,30 +498,37 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
-        - 6 damage; 3 acid damage
-        - 11 damage; 3 acid damage
-        - 14 damage; 3 acid damage
-      categorization: Signature Ability
+        - 6 damage; A<1 3 acid damage
+        - 11 damage; A<2 3 acid damage
+        - 14 damage; A<3 3 acid damage
+      categorization: Ability
       display:
-        bgcolor: "#ffffffff"
+        bgcolor: '#ffffffff'
         brightness: 1
         hueshift: 0
         saturation: 1
-      flavor: ""
-      guid: 1cd58e83-c8bd-45ac-b4f6-52c3ae255568
+      flavor: ''
+      guid: 00d595bf-413c-4349-a347-b597256660e7
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Area: true
-        Melee: true
         Weapon: true
       modifiers: []
-      numTargets: 1
-      range: 1
+      numTargets: '1'
+      objectTarget: true
+      radius: '3'
+      range: '6'
+      rangeTextOverride: 6 x 3 line within 1
       repeatTargets: false
-      targetType: target
+      targetAllegiance: enemy
+      targetType: line
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 325
     - name: Grasping Jaws
-      description: ""
+      description: ''
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -253,53 +538,39 @@ info:
         tiers:
         - 9 damage; A<1 grabbed
         - 14 damage; A<2 grabbed
-        - 17 damage; A<3 grabbed and the target takes a bane on the Escape Maneuver
+        - 17 damage; A<3 grabbed
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 70504ebe-3899-41d3-9f60-74b52ce35e39
+        riderid: 6906316a-26fe-4101-9a4b-60192b77c270
+        tiersSelected:
+        - 3
       categorization: Heroic Ability
       display:
-        bgcolor: "#ffffffff"
+        bgcolor: '#ffffffff'
         brightness: 1
         hueshift: 0
         saturation: 1
-      flavor: ""
-      guid: 4d0cb0f8-2a26-4481-a79c-99d6665a3823
+      flavor: ''
+      guid: 3eb0f8e8-6330-4b08-846b-bfef388692de
       iconid: ui-icons/skills/1.png
       implementation: 4
       keywords:
+        Magic: true
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       range: 2
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 2
       targetType: target
-    - name: Deterring Sting
-      description: The predator uses their Sedating Stinger ability against the target and then shifts 3.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: dd97adbd-5c36-4606-a2e4-cd459626dc79
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      targetType: self
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 325
     innateAttacks: []
     keywords:
       Beast: true
