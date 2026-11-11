@@ -38,6 +38,7 @@ info:
     pos:
       x: 0
       y: 0
+    rewindAnimId: null
     rotation: 0
     summonLoc: []
     summonLocCleared: null
@@ -73,7 +74,61 @@ info:
       domains:
         CharacterFeature:577a6fca-5cde-4c6b-86da-ffffb632e731: true
       guid: 577a6fca-5cde-4c6b-86da-ffffb632e731
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Ruthless Rage
+        description: The lurker deals an additional 3 damage on strikes while within 10 squares of another wyvern.
+        __typeName: CharacterModifier
+        activationCondition: CountNearbyCreatures(10, "Wyvern", Self) >= 1
+        activationNote: another wyvern is within 10 squares
+        behavior: power
+        damageModifier: "3"
+        domains:
+          CharacterFeature:577a6fca-5cde-4c6b-86da-ffffb632e731: true
+        guid: dfb74695-5f12-497e-87f0-d28d998c2380
+        keywords:
+          Strike: true
+        modtype: none
+        rollType: ability_power_roll
+        source: Trait
+        sourceguid: 577a6fca-5cde-4c6b-86da-ffffb632e731
+      - name: Ruthless Rage (Free Strikes)
+        description: The lurker deals an additional 3 damage on strikes while within 10 squares of another wyvern.
+        __typeName: CharacterModifier
+        ability:
+          name: New Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityModification: true
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: bc7cc249-45dc-4363-bd8d-dc72f934090b
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        applyToTriggeredAbilities: true
+        attributes:
+        - id: directdamageroll
+          operation: Add
+          value: "3"
+        behavior: modifyability
+        domains:
+          CharacterFeature:577a6fca-5cde-4c6b-86da-ffffb632e731: true
+        filterAbility: CountNearbyCreatures(10, "Wyvern", Self) >= 1
+        guid: 177536c1-3afd-49f9-a8cd-f99ad4c16b34
+        keywords:
+          Strike: true
+        mustPayResourceCost: false
+        source: Trait
+        sourceguid: 577a6fca-5cde-4c6b-86da-ffffb632e731
       source: Trait
     - name: Tenacious Hunter
       description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
@@ -81,10 +136,328 @@ info:
       domains:
         CharacterFeature:1271d948-3e8f-4956-8082-4dac9fb82aec: true
       guid: 1271d948-3e8f-4956-8082-4dac9fb82aec
-      modifiers: []
+      implementation: 4
+      modifiers:
+      - name: Tenacious Hunter
+        description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+        __typeName: CharacterModifier
+        aura:
+          name: Tenacious Hunter
+          description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+          __typeName: Aura
+          applyto: enemies
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          hideFromPlayers: true
+          implementation: 4
+          modifiers:
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Bleeding" and ConditionCaster("Bleeding").Keywords has "Wyvern"
+            guid: d2fa9cd5-17d3-4a99-9180-d8c430617aae
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Weakened" and ConditionCaster("Weakened").Keywords has "Wyvern"
+            guid: 0c7d2934-f224-4cc8-b79b-d9e6bf8fca48
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Taunted" and ConditionCaster("Taunted").Keywords has "Wyvern"
+            guid: be6d69e8-2f3c-4db0-a1c0-6a338e12f5e0
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Frightened" and ConditionCaster("Frightened").Keywords has "Wyvern"
+            guid: 14c94376-6c53-412f-8b69-bd769433c7a8
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Grabbed" and ConditionCaster("Grabbed").Keywords has "Wyvern"
+            guid: f160da9e-f355-4594-9410-655e999f80f2
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Restrained" and ConditionCaster("Restrained").Keywords has "Wyvern"
+            guid: 140015ec-095c-4f4e-b0e7-b608b53d79f7
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          - name: Tenacious Hunter
+            description: Any creature suffering a condition inflicted by a wyvern can't be hidden from the lurker.
+            __typeName: CharacterModifier
+            behavior: conditionimmunity
+            conditions:
+            - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+            filterCondition: Conditions has "Dazzled" and ConditionCaster("Dazzled").Keywords has "Wyvern"
+            guid: c9453427-d6fe-4104-810a-af635459d4d0
+            immunityMessage: Can't hide from this wyvern.
+            source: Aura
+            sourceguid: d5c8d655-ea8c-452a-abef-d522abce8fdc
+          objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
+          radius: "60"
+          seq: 3ecedaad-953b-4632-845d-6f3d9343f521
+          sourceguid: 1271d948-3e8f-4956-8082-4dac9fb82aec
+        behavior: aura
+        domains:
+          CharacterFeature:1271d948-3e8f-4956-8082-4dac9fb82aec: true
+        guid: 211a6395-a5bc-4612-91c1-067a59a1f815
+        radius: "60"
+        seq: 3cd595c4-9cf8-4959-8bfc-8967c89776cb
+        source: Trait
+        sourceguid: 1271d948-3e8f-4956-8082-4dac9fb82aec
       source: Trait
+    - name: Retaliatory Dive
+      description: "Trigger: A creature within distance deals damage to the lurker with a ranged ability. Effect: The lurker flies into a square adjacent to the target and makes a free strike against them."
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:aaec9a03-8b37-473f-8c1b-528592812a5c: true
+      guid: aaec9a03-8b37-473f-8c1b-528592812a5c
+      implementation: 4
+      modifiers:
+      - name: Retaliatory Dive
+        description: The lurker flies into a square adjacent to the target and makes a free strike against them.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:aaec9a03-8b37-473f-8c1b-528592812a5c: true
+        guid: 2bd4e723-3e5f-452c-9444-132e14abd9d3
+        source: Trait
+        sourceguid: aaec9a03-8b37-473f-8c1b-528592812a5c
+        triggeredAbility:
+          name: Retaliatory Dive
+          description: The lurker flies into a square adjacent to the target and makes a free strike against them.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: c748355a-cb89-471f-89e8-ba05fac60389
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            invokeOnCaster: true
+            standardAbility: 7891188c-3bba-4649-b533-4c73127d0add
+            standardAbilityParams:
+              targetid: "<<Cast.PrimaryTarget.id>>"
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: false
+            customAbility:
+              name: Dive Adjacent
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                movementType: move
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 380e23ab-8dbe-4fed-9c27-227667c85b92
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 12
+              repeatTargets: false
+              strain: []
+              targetType: anyspace
+            inheritRange: false
+            invokeOnCaster: false
+            promptText: The lurker flies into a square adjacent to the creature that hit them with a ranged ability.
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 9450da46-d22c-4a51-9b22-ca7fea3e2dd4
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            invokeOnCaster: true
+            promptText: The lurker makes a free strike against the target.
+            standardAbility: 952ff59e-8467-4141-aae6-d9ce35094c25
+            standardAbilityParams:
+              targetid: "<<Cast.PrimaryTarget.id>>"
+            targeting: prompt
+          conditionFormula: Has Attacker and Keywords has "Ranged" and Self.Distance(Attacker) <= 5
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 330ae864-9861-4637-b675-f312b8295ec5
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          strain: []
+          targetType: attacker
+          trigger: losehitpoints
+          triggerPrompt: |-
+            Trigger: A creature dealt damage to the lurker with a ranged ability.
+            Effect: the lurker flies into a square adjacent to the creature and makes a free strike against them.
+          whenActive: combat
+      source: Trait
+      tags:
+        Trigger: true
+    - name: Agonizing Stinger (1 Malice)
+      description: "1 Malice: One target with cover or concealment takes an additional 6 acid damage."
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:eefc3874-24fe-4476-988d-f706bdd6c123: true
+      guid: eefc3874-24fe-4476-988d-f706bdd6c123
+      implementation: 4
+      modifiers:
+      - name: Agonizing Stinger (1 Malice)
+        description: "1 Malice: One target with cover or concealment takes an additional 6 acid damage."
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:eefc3874-24fe-4476-988d-f706bdd6c123: true
+        guid: d337a84b-6703-4ee5-9a8e-1922521c313f
+        source: Trait
+        sourceguid: eefc3874-24fe-4476-988d-f706bdd6c123
+        triggeredAbility:
+          name: Agonizing Stinger (1 Malice)
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: false
+            customAbility:
+              name: Agonizing Stinger Malice
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDamageBehavior
+                chatMessage: Agonizing Stinger - 6 extra acid damage
+                damageType: acid
+                roll: "6"
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: ef81c2cf-8681-446e-af47-5179b2c9f5a1
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: "2"
+              repeatTargets: false
+              resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+              resourceNumber: "1"
+              strain: []
+              targetFilter: Target.Concealed or Target.Cover From Any Enemy
+              targetType: target
+            invokeOnCaster: false
+            promptText: One target with cover or concealment takes an additional 6 acid damage
+            targeting: prompt
+          conditionFormula: Used Ability.Name = "Agonizing Stinger" and Malice >= 1 and Cast.AnyTargetCoverOrConcealment
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: d365529c-d998-4750-a61c-eaf8cf1cd0fa
+          iconid: ui-icons/skills/1.png
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 5
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: finishability
+          triggerPrompt: One target with cover or concealment takes an additional 6 acid damage
+          whenActive: combat
+      source: Trait
+      tags:
+        Trigger: true
     cr: 4
     creatureSize: "2"
+    currentMoveType: fly
     damage_taken: 0
     equipment: []
     ev: 24
@@ -112,7 +485,7 @@ info:
         %E2%9C%B8	%E2%89%A411	10 acid damage; M<1 weakened (save ends)
         %E2%98%85	12%E2%80%9316	16 acid damage; M<2 weakened (save ends)
         %E2%9C%A6	17	20 acid damage; M<3 weakened (save ends)
-        <b>Effect</b> A target weakened from this ability takes 1d4 acid damage at the start of each of their turns until the condition ends.
+        <b>Effect</b> A target weakened from this ability takes 1d6 acid damage at the start of each of their turns until the condition ends.
 
         <b>Swooping Torment</b> (Maneuver)
         <b>Keywords</b> -
@@ -134,11 +507,10 @@ info:
 
 
       type: mcdm
+    inflictedConditions: []
     innateActivatedAbilities:
     - name: Agonizing Stinger
-      description: |2-
-
-        **1 Malice**: One target hidden from the lurker takes an extra 6 acid damage.
+      description: ""
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -149,35 +521,6 @@ info:
         - 9 damage
         - 14 damage; M<2 bleeding (save ends)
         - 17 damage; M<3 bleeding (save ends)
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        applyto: caster
-        autoTarget: false
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors:
-          - __typeName: ActivatedAbilityDamageBehavior
-            damageType: acid
-            roll: "6"
-          categorization: Hidden
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 26af496c-cfa3-4480-8c2c-4983b1817698
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: "2"
-          repeatTargets: false
-          targetType: target
-        invokeOnCaster: false
-        modesSelected:
-        - 2
-        promptText: "Malice: One target hidden from the lurker takes an extra 6 acid damage."
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -192,26 +535,17 @@ info:
         Magic: true
         Strike: true
         Weapon: true
-      modeList:
-      - condition: ""
-        text: Normal
-      - condition: ""
-        rules: One target hidden from the lurker takes an extra 6 acid damage.
-        text: Malice
       modifiers: []
-      multipleModes: true
       numTargets: 2
       range: 2
       repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1 when Mode = 2 else 0
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
-        page: 324
+        page: 325
       targetType: target
     - name: Acidic Anguish
-      description: A target weakened from this ability takes 1d4 acid damage at the start of each of their turns until the condition ends.
+      description: A target weakened from this ability takes 1d6 acid damage at the start of each of their turns until the condition ends.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -222,17 +556,19 @@ info:
         - 10 acid damage; M<1 weakened (save ends)
         - 16 acid damage; M<2 weakened (save ends)
         - 20 acid damage; M<3 weakened (save ends)
+      - __typeName: ActivatedAbilityApplyRidersBehavior
+        conditionid: 567a3454-ead6-4416-b338-ed73d64b7805
+        riderid: 00ad6948-08bb-41a4-867a-e41778ebf8b5
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: 51362643-84d5-498a-923d-1367181ca0ca
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Strike: true
@@ -243,53 +579,100 @@ info:
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 3
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 325
       targetType: target
     - name: Swooping Torment
       description: The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
-      categorization: Signature Ability
+      behaviors:
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: move
+        targetMoveVicinity: true
+        vicinity: 1
+        vicinityFilter: enemy
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: targets
+        castPromptText: Take 3 Sonic Damage or Fall Prone
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: b38c1d55-a4a4-4ebd-8cac-fa6be15aa1b9
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        promptCard: true
+        promptCardTitle: Swooping Torment
+        promptText: Each creature the wyvern lurker moves adjacent to during their Swooping Torment movement must choose either to take 3 sonic damage or fall prone
+        standardAbility: 56079bea-7f49-425b-9062-3ea7e8fee8f7
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        applyto: caster
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: dd499d3a-e98b-47f8-92e0-43554548d488
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        hideSightlines: true
+        invokeOnCaster: true
+        promptText: The lurker may hide if they have cover or concealment.
+        standardAbility: 003a1b5e-0b14-4c99-b948-0f0fc715bbf2
+      categorization: Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
       flavor: ""
       guid: c4ad601b-c556-402f-87c0-2af164182886
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: 1
-      range: 1
+      persistence: []
+      range: Flying Speed
+      rangeTextOverride: Self
       repeatTargets: false
-      targetType: self
-    - name: Retaliatory Dive
-      description: The lurker flies into a square adjacent to the target and makes a free strike against them.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Signature Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 50b5a116-d21c-4983-95f0-d54423c702ee
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      targetType: self
+      sourceReference:
+        __typeName: SourceReference
+        docid: cc66844a-04d0-49a0-8687-65ef83b15363
+        page: 325
+      strain: []
+      targetTextOverride: Self
+      targetType: anyspace
+      targeting: pathfind
     innateAttacks: []
     keywords:
       Beast: true
@@ -302,16 +685,21 @@ info:
     monster_type: Wyvern Lurker
     movementSpeeds:
       fly: 9
+    notes:
+    - text: ""
+      title: Monster Notes
     opportunityAttack: 6
     resistances:
     - __typeName: ResistanceEntry
       apply: Damage Reduction
       damageType: acid
       dr: 5
+    resources: []
     role: Elite Ambusher
     savingThrowRatings: []
     skillRatings: []
     stability: 2
+    titles: []
     traitNames: []
     walkingSpeed: 9
   settings:
@@ -329,7 +717,7 @@ info:
   size: -1
   summonerid: null
   tokenType: null
-  updateid: 019a5068-692f-48d8-8d1e-35866f3adaca
+  updateid: 78b07cc8-120e-4bc6-bb21-b91e2c7f87c5
 mtime: 1785702737337
 ord: 0
 parentFolder: 3343aa43-c50f-4db2-ab7b-dc2db7192c7a
