@@ -1527,7 +1527,19 @@ info:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityBulldozeBehavior
+        applyto: caster
+        carryFilter: MightPotencyResistance < 3
+        guid: 3c1f6a52-8e0b-4d57-9a64-b7d2e5f10c38
+        obstacleRule: dazed (save ends)
+        promptText: Choose the nearest unoccupied space outside the path
+        searchRadius: 5
+        shoveText: The ashen hoarder pushes you into the nearest unoccupied space outside their path.
+        shoveTitle: Bone Dozer
+        skipFilter: OngoingEffects has "Impaled (Ashen Hoarder)"
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: move
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
@@ -1537,17 +1549,18 @@ info:
       flavor: ""
       guid: ffd1c901-ee3d-48cd-ad3d-28cf1987daa4
       iconid: ui-icons/skills/1.png
-      implementation: 1
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: 1
-      range: 1
+      range: Movement Speed * 2
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 46
-      targetType: target
+      targetType: emptyspace
+      targeting: straightpathignorecreatures
     - name: Armor of Corpses
       description: |
         The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.
