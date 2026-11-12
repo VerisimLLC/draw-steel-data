@@ -137,14 +137,75 @@ info:
       guid: 38d05e7a-bb50-4538-9b51-a969e9416eed
       modifiers: []
       source: Trait
-    - name: Soul Singularity
+    - __typeName: CharacterFeature
+      name: Soul Singularity
       description: When the ashen hoarder is reduced to 0 Stamina, they explode in a swirling singularity of bone shards and soul energy. Each creature within 5 squares of the ashen hoarder who has M<3 takes 11 corruption damage. A creature killed by this damage has their soul sucked into the vortex and lost somewhere in the Abyssal Wasteland, and can't be brought back to life until their soul is recovered.
-      __typeName: CharacterFeature
+      source: Trait
       domains:
         CharacterFeature:83fdca88-e68c-499d-b794-5a9302bbddcf: true
+      implementation: 4
+      modifiers:
+      - __typeName: CharacterModifier
+        triggeredAbility:
+          __typeName: TriggeredAbility
+          numTargets: "1"
+          trigger: zerohitpoints
+          description: ""
+          iconid: ui-icons/skills/1.png
+          range: 5
+          modifiers: []
+          behaviors:
+          - __typeName: ActivatedAbilityAuraBehavior
+            applyto: caster
+            aura:
+              name: Soul Singularity
+              description: A swirling singularity of bone shards and soul energy.
+              __typeName: Aura
+              applyto: all
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 5b7e2c1a-93d4-4f60-a8e1-2c4d7f9b0a31
+              modifiers: []
+              objectid: 9d1f3ad3-e3e2-4938-bd3f-29fdbd329537
+            duration: endcast
+            grow: 4
+          - __typeName: ActivatedAbilityDelayBehavior
+            delay: "1.5"
+          - __typeName: ActivatedAbilityDamageBehavior
+            filterTarget: Might Potency Resistance < 3
+            titleText: Soul Singularity
+            damageType: corruption
+            roll: "11"
+            chatMessage: Soul Singularity deals 11 corruption damage within 5 square burst when Hoarder dies
+          - __typeName: ActivatedAbilityDelayBehavior
+            delay: "3"
+          repeatTargets: false
+          targetType: all
+          display:
+            saturation: 1
+            bgcolor: "#ffffffff"
+            hueshift: 0
+            brightness: 1
+          abilityType: none
+          mandatory: true
+          implementation: 4
+          triggerPrompt: When the ashen hoarder is reduced to 0 Stamina, each creature within 5 squares of them who has M<3 takes 11 corruption damage.
+          name: Soul Singularity
+          strain: []
+          persistence: []
+          guid: ebfde983-4c37-48f3-8035-347795cdf631
+        behavior: trigger
+        description: ""
+        domains:
+          CharacterFeature:83fdca88-e68c-499d-b794-5a9302bbddcf: true
+        name: Soul Singularity
+        source: Trait
+        sourceguid: 83fdca88-e68c-499d-b794-5a9302bbddcf
+        guid: 8dc09d98-b9fc-4157-8a07-36ba83a58d3f
       guid: 83fdca88-e68c-499d-b794-5a9302bbddcf
-      modifiers: []
-      source: Trait
     cr: 4
     creatureSize: "3"
     damage_taken: 0
