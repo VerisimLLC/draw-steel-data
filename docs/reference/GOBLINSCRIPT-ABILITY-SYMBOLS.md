@@ -103,6 +103,7 @@ Symbols available on the cast object during and after ability execution. Accesse
 | `memory` | function | Returns a stored memory value by name. Example: `memory('Damage at Start')` |
 | `firsttarget` | creature | The first target of this ability (only valid if there is at least one target). |
 | `opportunityattackstriggered` | number | The number of opportunity attacks triggered while using this ability. |
+| `lastcreaturepassed` | creature | The last creature, in path order, that this ability's movement passed. Set by a Relocate Creatures behavior that targets the creatures in its movement's vicinity. |
 | `heroicresourcesgained` | number | The amount of heroic resources gained while using this ability. |
 | `numberofaddedcreatures` | number | The number of creatures added to creature lists. Example: `Number of Added Creatures > 0` |
 | `creaturelistsize` | number | The number of creatures in manipulated creature lists. Example: `Creature List Size = 3` |

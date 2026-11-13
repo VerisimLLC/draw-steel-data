@@ -195,7 +195,7 @@ info:
           name: Abyssal Rift Damage
           __typeName: Aura
           applyto: enemies
-          damage: 1
+          damage: Highest Level On Map("Demon")
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -204,6 +204,7 @@ info:
           guid: 6f113c04-c513-43f5-bc5d-7e24da75a51d
           modifiers: []
           movedamage: corruption
+          movedamageStartTurn: true
           objectid: 9d1f3ad3-e3e2-4938-bd3f-29fdbd329537
           source: Abyssal Rift Damage
         behavior: aura
@@ -226,7 +227,7 @@ info:
           name: Abyssal Rift Teleport
           __typeName: Aura
           applyto: friends
-          creatureFilter: ""
+          creatureFilter: Keywords has "Demon"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -244,13 +245,15 @@ info:
               abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                abilityType: standard
+                abilityType: custom
                 customAbility:
-                  name: Invoked Ability
-                  description: ""
+                  name: Abyssal Portal
+                  description: Teleport to any unoccupied space in another abyssal rift.
                   __typeName: ActivatedAbility
                   abilityType: none
-                  behaviors: []
+                  behaviors:
+                  - __typeName: ActivatedAbilityRelocateCreatureBehavior
+                  categorization: Hidden
                   display:
                     bgcolor: "#ffffffff"
                     brightness: 1
@@ -258,16 +261,15 @@ info:
                     saturation: 1
                   guid: d26ef85e-4bf6-4265-9376-5686c8c63058
                   iconid: ui-icons/skills/1.png
+                  implementation: 4
                   modifiers: []
                   numTargets: "1"
-                  range: 1
+                  range: "100"
                   repeatTargets: false
-                  targetType: self
+                  targetFilter: target.Creatures Here has "Abyssal Rift"
+                  targetType: anyspace
                 promptText: Teleport to any unoccupied space in another abyssal rift.
                 runOnController: true
-                standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
-                standardAbilityParams:
-                  range: "20"
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
