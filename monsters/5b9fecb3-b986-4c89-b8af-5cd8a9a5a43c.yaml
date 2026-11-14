@@ -95,19 +95,20 @@ info:
         Hidden: true
     - name: Abyssal Aura
       description: |
-        <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
-        12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
+        <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
+        12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
         17+ Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round; the orb summons four frenzied into unoccupied spaces within 5 squares of it. 
       __typeName: CharacterFeature
       domains:
         CharacterFeature:012cf42a-c29a-4895-a4f1-ed175e512b30: true
         CharacterFeature:1202f0a9-a0c2-4821-8344-0a5dc42a4ba9: true
       guid: 1202f0a9-a0c2-4821-8344-0a5dc42a4ba9
+      implementation: 4
       modifiers:
       - name: Abyssal Aura
         description: |
-          <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
-          12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
+          <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
+          12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
           17+ Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round; the orb summons four frenzied into unoccupied spaces within 5 squares of it. 
         __typeName: CharacterModifier
         behavior: trigger
@@ -130,101 +131,38 @@ info:
             - Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
             - Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
             - Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round; the orb summons four frenzied within 5
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            applyto: caster
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                duration: endround
-                durationUntilEndOfTurn: false
-                ongoingEffect: b0fa1d80-d549-4ec0-a1c5-f93538095084
-                ongoingEffectCustom: false
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 1b7f354f-37db-492d-b40f-6870aa55ad02
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              objectTarget: false
-              persistence: []
-              range: "5"
-              repeatTargets: false
-              strain: []
-              targetAllegiance: ally
-              targetFilter: Target.Keywords has "Demon"
-              targetType: all
-            invokeOnCaster: true
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: proximity_only
+            duration: endround
+            durationUntilEndOfTurn: false
+            filterTarget: Friends(Caster, Target) and Target.Keywords has "Demon"
+            guid: 1c68e8cc-634d-40d7-8d89-b88b60cc35c5
+            ongoingEffect: 2f6d4cef-2c71-446f-8949-cdb326dcc398
+            ongoingEffectCustom: false
+            target_proximity_range: "5"
             tiersSelected:
             - 1
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            applyto: caster
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
-                duration: endround
-                durationUntilEndOfTurn: false
-                ongoingEffect: b0fa1d80-d549-4ec0-a1c5-f93538095084
-                ongoingEffectCustom: false
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 1b7f354f-37db-492d-b40f-6870aa55ad02
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              objectTarget: false
-              persistence: []
-              range: "10"
-              repeatTargets: false
-              strain: []
-              targetAllegiance: ally
-              targetFilter: Target.Keywords has "Demon"
-              targetType: all
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: proximity_only
+            duration: endround
+            durationUntilEndOfTurn: false
+            filterTarget: Friends(Caster, Target) and Target.Keywords has "Demon"
             guid: 651d1331-d2f6-45df-8e64-40c190802dda
-            invokeOnCaster: true
+            ongoingEffect: 2f6d4cef-2c71-446f-8949-cdb326dcc398
+            ongoingEffectCustom: false
+            target_proximity_range: "10"
             tiersSelected:
             - 2
             - 3
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          - __typeName: ActivatedAbilitySummonBehavior
+            allCreaturesTheSame: true
             applyto: caster
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilitySummonBehavior
-                allCreaturesTheSame: true
-                groupInitiativeWithCaster: false
-                monsterType: 77f0f1e0-e31e-4b2f-b9f8-c0c704c60c57
-                newInitiativeGroup: true
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: 60a83c01-47ac-4fef-8b00-96a6fa8580a6
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "4"
-              persistence: []
-              range: "5"
-              repeatTargets: false
-              strain: []
-              targetType: anyspace
+            casterChoosesCreatures: false
+            groupInitiativeWithCaster: false
+            guid: aab29e78-ceee-448d-8a16-db8efb3bf87a
+            monsterType: 77f0f1e0-e31e-4b2f-b9f8-c0c704c60c57
+            newInitiativeGroup: true
+            numSummons: "4"
             tiersSelected:
             - 3
           display:
@@ -238,7 +176,7 @@ info:
           guid: d207f846-b94c-4011-aacf-125e0712f235
           hasManualVersion: true
           iconid: ui-icons/skills/1.png
-          mandatory: false
+          mandatory: true
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -250,8 +188,8 @@ info:
           triggerPrompt: At the start of a round the Abyssal Aura ability happens
       - name: Abyssal Aura
         description: |
-          <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
-          12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
+          <=11 Each demon within 5 squares of the orb gains an edge on power rolls until the start of the next combat round.
+          12-16 Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round.
           17+ Each demon within 10 squares of the orb gains an edge on power rolls until the start of the next combat round; the orb summons four frenzied into unoccupied spaces within 5 squares of it. 
         __typeName: CharacterModifier
         ability:
