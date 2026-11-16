@@ -1588,7 +1588,640 @@ info:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - name: BoneDozer
+        __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- ======================================================================
+          -- BONE DOZER, PART 1 OF 2: CLEARING THE PATH
+          -- ======================================================================
+          --
+          -- What the ability does at the table:
+          -- The ashen hoarder charges up to twice its speed in a straight line. Any
+          -- creature standing in the way gets moved. A creature with Might lower than 3
+          -- is scooped up and pushed along in front of the hoarder until the charge ends.
+          -- Every other creature is shoved sideways into the nearest empty square that
+          -- is out of the hoarder's way. If a creature being pushed along is rammed into
+          -- a wall or another obstacle, it becomes dazed until it makes a saving throw.
+          --
+          -- How the ability is built:
+          -- If you open this ability in the editor, you will see three behaviors listed
+          -- in order, and the game runs them from top to bottom:
+          --   1. This script, named "BoneDozer", moves everybody out of the way first.
+          --   2. A "Relocate Creature" behavior then moves the hoarder itself.
+          --   3. A second script, named "BoneDozerRecoil", runs last. It only does
+          --      anything when a creature got pinned against a wall, and it is explained
+          --      near the end of this script.
+          --
+          -- If you have never read code before, here is what you need to know:
+          --   * Any line that starts with two dashes, like this one, is a note for
+          --     people to read. The game skips over it completely.
+          --   * "local name = something" gives a value a name, so the code can refer to
+          --     it later by that name.
+          --   * "if something then ... end" only does the part in the middle when the
+          --     something is true.
+          --   * "for ... do ... end" repeats the part in the middle once for every item
+          --     in a list.
+          --   * "return" stops this script straight away. Nothing after it runs.
+          --   * "nil" means "nothing" or "no value".
+          --   * "{}" is an empty list that we can add things to.
+          --
+          -- A few game words you will see:
+          --   * A "token" is a piece on the map, such as a creature. Its character sheet
+          --     information is found in token.properties.
+          --   * A "square" is one space on the map grid. The game stores where a square
+          --     is as an x number (left to right) and a y number (top to bottom).
+          --   * A "charid" is a token's unique ID. We use it to keep track of which
+          --     creature is which.
+          --
+          -- The game hands every script a few things to work with:
+          --   * ability is this ability, Bone Dozer.
+          --   * casterToken is the creature using the ability, so here the hoarder.
+          --   * targets holds the square that was picked as the end of the charge.
+          --   * symbols and options hold information shared by every behavior in this
+          --     one use of the ability, which lets the two scripts talk to each other.
+
+
+          -- RelocateHelpers is a toolbox of movement tools that the game provides for
+          -- scripts like this one. We give it the shorter name "helpers" so the lines
+          -- below are easier to read.
+          local helpers = RelocateHelpers
+
+
+          -- These are the settings for the ability. You can change any of them to tune
+          -- how Bone Dozer behaves without touching the rest of the script.
+
+          -- The heading shown on the card that a shoved creature's player receives.
+          local cardTitle = "Bulldozed"
+
+          -- How many squares away from a shoved creature we search for an empty square
+          -- to push it into.
+          local searchDistance = 5
+
+          -- The longest we will wait, in seconds, for players to answer their cards
+          -- before the charge carries on without them. 630 seconds is ten and a half
+          -- minutes, which is plenty of time even at a slow table.
+          local cardWaitLimit = 630
+
+
+          -- ----------------------------------------------------------------------
+          -- STEP 1: Work out exactly which squares the hoarder will travel through.
+          -- ----------------------------------------------------------------------
+
+          -- The last entry in "targets" is the square the hoarder is charging toward.
+          -- If no square was picked, there is nothing to do, so we stop here.
+          local destination = targets[#targets]
+          if destination == nil or destination.loc == nil then
+              return
+          end
+
+          -- We ask the game to work out a straight path to that square, the same way it
+          -- does when it draws a movement arrow on the map. The game knows where the
+          -- walls are, so the path it gives back stops short at any wall in the way.
+          -- Saying "ignorecreatures" means creatures do not block the path, because we
+          -- are about to move them anyway. We erase the arrow straight away because we
+          -- only wanted the path, not the drawing.
+          local startSquare = casterToken.loc
+          local movementInfo = casterToken:MarkMovementArrow(destination.loc, { straightline = true, ignorecreatures = true })
+          casterToken:ClearMovementArrow()
+
+          -- pathSquares is a list of every square on the path, in order. The first
+          -- entry is where the hoarder starts, the second is one square further along,
+          -- and so on until the end of the charge.
+          local pathSquares = { startSquare }
+          if movementInfo ~= nil and movementInfo.path ~= nil then
+              for _, step in ipairs(movementInfo.path.steps or {}) do
+                  -- Occasionally the game lists the same square twice in a row. We only
+                  -- add a square when it is different from the one before it.
+                  local previousSquare = pathSquares[#pathSquares]
+                  if step.x ~= previousSquare.x or step.y ~= previousSquare.y then
+                      pathSquares[#pathSquares + 1] = step
+                  end
+              end
+          end
+
+          -- squaresToMove is how far the hoarder will travel. If it is zero, a wall is
+          -- directly in front of the hoarder and it cannot charge at all.
+          local squaresToMove = #pathSquares - 1
+          if squaresToMove == 0 then
+              return
+          end
+
+          -- Next we work out which direction the charge is heading. stepX and stepY say
+          -- how far the x and y numbers change for each square the hoarder moves. For
+          -- example, stepX = 1 and stepY = 0 would mean the hoarder is moving straight
+          -- to the right, one square at a time.
+          local endSquare = pathSquares[#pathSquares]
+          local changeInX = endSquare.x - startSquare.x
+          local changeInY = endSquare.y - startSquare.y
+          local chargeLength = math.max(math.abs(changeInX), math.abs(changeInY))
+          local stepX = changeInX / chargeLength
+          local stepY = changeInY / chargeLength
+
+          -- The hoarder is a big creature that takes up more than one square, so as it
+          -- charges its body sweeps across a wide lane of squares. This little tool
+          -- lists every square in that lane, assuming the hoarder travels for
+          -- "squaresTravelled" squares and then stops.
+          --
+          -- It gives back the same squares in two different forms, because each one is
+          -- handy for a different job:
+          --   * laneLookup lets us ask quickly whether one particular square is in the
+          --     lane. For example, laneLookup["3,7"] is true when the square at x 3,
+          --     y 7 is in the lane.
+          --   * laneSquares is a plain list of the squares, so we can go through them
+          --     one at a time.
+          local function SquaresInLane(squaresTravelled)
+              local laneLookup = {}
+              local laneSquares = {}
+              for pathIndex = 1, squaresTravelled + 1 do
+                  local bodySquares = casterToken:LocsOccupyingWhenAt(pathSquares[pathIndex]) or {}
+                  for _, square in ipairs(bodySquares) do
+                      local squareName = helpers.LocKey(square)
+                      if not laneLookup[squareName] then
+                          laneLookup[squareName] = true
+                          laneSquares[#laneSquares + 1] = square
+                      end
+                  end
+              end
+              return laneLookup, laneSquares
+          end
+
+          local fullLaneLookup, fullLaneSquares = SquaresInLane(squaresToMove)
+
+
+          -- ----------------------------------------------------------------------
+          -- STEP 2: Find every creature standing in the lane and decide what happens
+          -- to it. Creatures with Might lower than 3 go on the "carried" list and will
+          -- be pushed along in front of the hoarder. Everyone else goes on the
+          -- "shoved" list and will be pushed out to the side.
+          -- ----------------------------------------------------------------------
+
+          -- A large creature can stand on several squares of the lane at once, so we
+          -- note down each creature we have already looked at. That way nobody gets
+          -- counted twice.
+          local alreadyChecked = {}
+          local carried = {}
+          local shoved = {}
+
+          for _, square in ipairs(fullLaneSquares) do
+              for _, token in ipairs(dmhub.GetTokensAtLoc(square) or {}) do
+                  local isUsable = token.valid and token.loc ~= nil and token.properties ~= nil
+                  local isTheHoarder = token.charid == casterToken.charid
+                  if isUsable and not isTheHoarder and not alreadyChecked[token.charid] then
+                      alreadyChecked[token.charid] = true
+
+                      -- If the hoarder is already holding this creature in a grab, the
+                      -- creature moves along with the hoarder anyway, so we leave it alone.
+                      local grabbedByHoarder = token.properties:try_get("_tmp_grabbedby") == casterToken.charid
+                      if not grabbedByHoarder then
+                          -- "mgt" is the game's short name for Might. Some things on the map,
+                          -- such as objects, do not have a Might score at all. Asking them for
+                          -- one would cause an error, so we use "pcall", which means "try this,
+                          -- and if it fails, carry on instead of stopping the whole script."
+                          -- Anything without a Might score is treated as shoved.
+                          local askedSuccessfully, might = pcall(function()
+                              return token.properties:AttributeForPotencyResistance("mgt")
+                          end)
+                          if askedSuccessfully and might ~= nil and might < 3 then
+                              carried[#carried + 1] = token
+                          else
+                              shoved[#shoved + 1] = token
+                          end
+                      end
+                  end
+              end
+          end
+
+          -- If nobody is in the way, there is nothing for this script to do. The
+          -- Relocate behavior that comes next will simply move the hoarder.
+          if #carried == 0 and #shoved == 0 then
+              return
+          end
+
+          -- This tells the game the ability is definitely going ahead, so any cost it
+          -- has is paid now.
+          ability:CommitToPaying(casterToken, options)
+
+          -- As we decide where each creature lands, we write its new squares down here.
+          -- The game takes a moment to actually move a token, so without this list we
+          -- could accidentally send two creatures to the same empty square.
+          local promisedSquares = {}
+
+          -- This builds a small test that answers the question "is this square a good
+          -- place to put this creature?" The answer is yes only when the square is
+          -- outside the hoarder's lane and has not already been promised to another
+          -- creature.
+          local function MakeOutsideTheLaneTest(token)
+              return function(square)
+                  local wouldBeInTheLane = helpers.FootprintTouches(token, square, fullLaneLookup)
+                  local wouldBeOnAPromisedSquare = helpers.FootprintTouches(token, square, promisedSquares)
+                  return not wouldBeInTheLane and not wouldBeOnAPromisedSquare
+              end
+          end
+
+
+          -- ----------------------------------------------------------------------
+          -- STEP 3: Shove the creatures that are not being carried.
+          --
+          -- Each shoved creature gets a card with an exclamation mark on its token.
+          -- When that creature's player accepts the card, we move the creature out of
+          -- the way. The card does not move anything by itself; this script keeps an
+          -- eye on the cards and does the moving.
+          --
+          -- If a player dismisses their card instead of accepting it, their creature is
+          -- not shoved and stays where it is. When the table uses the "Strictly Enforce
+          -- Action Economy" setting, players are not allowed to dismiss these cards.
+          -- ----------------------------------------------------------------------
+
+          -- waitingCards lists every card that has not been answered yet.
+          local waitingCards = {}
+
+          for _, token in ipairs(shoved) do
+              local card = ActiveTrigger.new{
+                  -- A brand new unique ID, so we can find this exact card again later.
+                  id = dmhub.GenerateGuid(),
+                  text = cardTitle,
+                  rules = "You are pushed into the nearest unoccupied space outside the path.",
+                  -- The card shows the hoarder as the creature doing the shoving.
+                  targets = { casterToken.charid },
+                  clearOnDismiss = true,
+                  noDeduplicate = true,
+                  free = true,
+                  hostile = true,
+                  -- When a player hovers over the card, the arrow on the map points from
+                  -- the hoarder to the shoved creature, rather than the other way round.
+                  arrowFromTarget = true,
+              }
+
+              -- Whenever a script changes a token, the change has to go through
+              -- ModifyProperties. That is what sends the change to every player in the
+              -- game, so everyone sees the same thing.
+              token:ModifyProperties{
+                  description = "Bulldoze Prompt",
+                  undoable = false,
+                  execute = function()
+                      token.properties:DispatchAvailableTrigger(card)
+                  end,
+              }
+
+              waitingCards[#waitingCards + 1] = { token = token, cardId = card.id, hasAppeared = false }
+          end
+
+          -- While we wait for the cards, every player sees a message at the bottom of
+          -- their screen saying who we are waiting on, so nobody wonders why the game
+          -- has paused. The message disappears on its own if it is not refreshed, so we
+          -- send it again every few seconds while the wait goes on.
+          local messageOnScreen = nil
+          local timeMessageWasSent = 0
+
+          local function UpdateWaitingMessage()
+              -- When there is nothing left to wait for, the message is set to nil,
+              -- which hides it.
+              local message = nil
+              if #waitingCards > 0 then
+                  local names = {}
+                  for _, waitingCard in ipairs(waitingCards) do
+                      names[#names + 1] = creature.GetTokenDescription(waitingCard.token)
+                  end
+                  message = cardTitle .. ": Waiting on " .. table.concat(names, ", ") .. ". Click the ! on their token to continue."
+              end
+
+              local messageChanged = message ~= messageOnScreen
+              local messageIsGettingOld = message ~= nil and dmhub.Time() > timeMessageWasSent + 3
+              if messageChanged or messageIsGettingOld then
+                  messageOnScreen = message
+                  timeMessageWasSent = dmhub.Time()
+                  helpers.BroadcastCastPrompt(message)
+              end
+          end
+
+          -- This is the waiting loop. It looks at every card, deals with any that have
+          -- been answered, pauses for a moment, and then looks again. It keeps going
+          -- until every card has been answered, the time limit runs out, or the hoarder
+          -- is removed from the map.
+          local waitStartTime = dmhub.Time()
+          while #waitingCards > 0 and dmhub.Time() < waitStartTime + cardWaitLimit and casterToken.valid do
+              UpdateWaitingMessage()
+
+              -- We go through the list from the last card to the first. That way,
+              -- crossing a card off the list does not make us skip over the next one.
+              for cardIndex = #waitingCards, 1, -1 do
+                  local waitingCard = waitingCards[cardIndex]
+                  local token = waitingCard.token
+
+                  -- Look up the card on the creature's token to see what the player did.
+                  local cardRecord = nil
+                  if token.valid and token.properties ~= nil then
+                      cardRecord = token.properties:GetAvailableTriggerRecord(waitingCard.cardId)
+                  end
+
+                  local creatureIsGone = not token.valid or token.loc == nil
+                  local cardWasDismissed = cardRecord ~= nil and cardRecord.dismissed
+
+                  if creatureIsGone or cardWasDismissed then
+                      -- The creature left the map, or its player dismissed the card.
+                      -- Either way, we cross the card off the list and move nobody.
+                      table.remove(waitingCards, cardIndex)
+
+                  elseif cardRecord == nil then
+                      -- The card has vanished, which also means it was dismissed. A brand
+                      -- new card can take a moment to appear on the token, though, so we
+                      -- give it two seconds before deciding it is really gone.
+                      if waitingCard.hasAppeared or dmhub.Time() > waitStartTime + 2 then
+                          table.remove(waitingCards, cardIndex)
+                      end
+
+                  elseif cardRecord.triggered ~= false then
+                      -- The player accepted the card. We cross it off the list, remove the
+                      -- card from their token, and then shove their creature.
+                      table.remove(waitingCards, cardIndex)
+                      token:ModifyProperties{
+                          description = "Clear Bulldoze Prompt",
+                          undoable = false,
+                          execute = function()
+                              token.properties:ClearAvailableTrigger({ id = waitingCard.cardId })
+                          end,
+                      }
+
+                      -- First we look for the nearest empty squares outside the lane that
+                      -- the creature could slide to in a straight line without a wall in
+                      -- between. If there are none of those, we settle for the nearest
+                      -- empty squares outside the lane, even if a wall is in the way.
+                      local isOutsideTheLane = MakeOutsideTheLaneTest(token)
+                      local choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, function(square)
+                          return isOutsideTheLane(square) and helpers.CanSlideStraightTo(token, square)
+                      end)
+                      if #choices == 0 then
+                          choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, isOutsideTheLane)
+                      end
+
+                      -- If there is still nowhere to put the creature, it stays where it is.
+                      if #choices > 0 then
+                          local landingSquare = choices[1]
+                          -- When several squares are equally close, the Director picks
+                          -- one of them by clicking on the map.
+                          if #choices > 1 then
+                              landingSquare = helpers.ChooseTransitDestination(token, choices, symbols, casterToken, {
+                                  name = cardTitle,
+                                  prompt = "Choose where the shoved creature goes",
+                              }) or choices[1]
+                          end
+                          helpers.ClaimFootprint(token, landingSquare, promisedSquares)
+                          helpers.FreeMoveOntoSquare(token, landingSquare)
+                      end
+
+                  else
+                      -- The card is on the token and still waiting for an answer, so we
+                      -- leave it on the list and check it again next time round.
+                      waitingCard.hasAppeared = true
+                  end
+              end
+
+              if #waitingCards > 0 then
+                  -- Pause for a tenth of a second so the rest of the game keeps running
+                  -- smoothly, then go round the loop again.
+                  coroutine.yield(0.1)
+              end
+          end
+
+          -- The waiting is over, either because every card was answered or because we
+          -- ran out of time. Emptying the list and updating the message hides the
+          -- "Waiting on" message from everyone's screen.
+          waitingCards = {}
+          UpdateWaitingMessage()
+
+
+          -- ----------------------------------------------------------------------
+          -- STEP 4: Push the carried creatures along in front of the hoarder.
+          -- ----------------------------------------------------------------------
+
+          -- If any carried creature was removed from the map while we were waiting,
+          -- we take it off the list.
+          for carriedIndex = #carried, 1, -1 do
+              local token = carried[carriedIndex]
+              if not token.valid or token.loc == nil then
+                  table.remove(carried, carriedIndex)
+              end
+          end
+
+          -- We deal with the carried creatures in order, starting with the one nearest
+          -- the back of the charge. That way, if two creatures are in the same lane,
+          -- the one in front stays in front. The sum below measures how far along the
+          -- direction of the charge each creature is standing.
+          local function DistanceAlongCharge(token)
+              return token.loc.x * stepX + token.loc.y * stepY
+          end
+          table.sort(carried, function(firstToken, secondToken)
+              return DistanceAlongCharge(firstToken) < DistanceAlongCharge(secondToken)
+          end)
+
+          -- Checking for walls between two squares takes the game a little effort, and
+          -- the planning below can ask the very same question several times. So we
+          -- write each answer down the first time and reuse it afterwards.
+          local wallCheckAnswers = {}
+          local function CanBePushedTo(token, square)
+              local question = token.charid .. " to " .. helpers.LocKey(square)
+              if wallCheckAnswers[question] == nil then
+                  wallCheckAnswers[question] = helpers.CanSlideStraightTo(token, square)
+              end
+              return wallCheckAnswers[question]
+          end
+
+          -- This plans where each carried creature would end up if the hoarder stopped
+          -- after travelling "squaresTravelled" squares. It doesn't move anyone yet; it
+          -- only works out the plan. It gives back two things:
+          --   * landingSquares tells us, for each carried creature, the square it would
+          --     land on. It is looked up using the creature's charid.
+          --   * pinnedCreatures lists the creatures that would have no room in front of
+          --     them, because a wall or other obstacle is in the way.
+          local function PlanTheCarry(squaresTravelled)
+              local laneLookup = SquaresInLane(squaresTravelled)
+
+              -- Start with the squares the shoved creatures have already been given, so
+              -- nobody gets pushed on top of them.
+              local takenSquares = {}
+              for squareName in pairs(promisedSquares) do
+                  takenSquares[squareName] = true
+              end
+
+              local landingSquares = {}
+              local pinnedCreatures = {}
+
+              for _, token in ipairs(carried) do
+                  local startingSquare = token.loc
+
+                  -- Only creatures that the hoarder's body actually reaches get carried.
+                  -- If the hoarder stops early, a creature further along is never touched.
+                  if helpers.FootprintTouches(token, startingSquare, laneLookup) then
+                      local landingSquare = nil
+
+                      -- Picture sliding the creature forward one square at a time in the
+                      -- direction of the charge. We keep sliding until the creature is
+                      -- completely clear of the hoarder's body and of any creature that
+                      -- was carried ahead of it. The first square where that is true is
+                      -- where it lands, as long as that square is empty and no wall is in
+                      -- the way. If the square is blocked, the creature is pinned.
+                      --
+                      -- The hoarder's body is only a few squares wide, so sliding the
+                      -- length of the charge plus 12 more squares is always enough to get
+                      -- clear of it. The limit is there so the search can never run on
+                      -- forever.
+                      for distance = 1, chargeLength + 12 do
+                          local offsetX = math.floor(stepX * distance + 0.5)
+                          local offsetY = math.floor(stepY * distance + 0.5)
+                          local square = startingSquare:dir(offsetX, offsetY)
+
+                          local stillTouchingTheHoarder = helpers.FootprintTouches(token, square, laneLookup)
+                          local stillTouchingAnotherCreature = helpers.FootprintTouches(token, square, takenSquares)
+                          if not stillTouchingTheHoarder and not stillTouchingAnotherCreature then
+                              if helpers.LocIsFreeForToken(token, square) and CanBePushedTo(token, square) then
+                                  landingSquare = square
+                              end
+                              break
+                          end
+                      end
+
+                      if landingSquare ~= nil then
+                          landingSquares[token.charid] = landingSquare
+                          helpers.ClaimFootprint(token, landingSquare, takenSquares)
+                      else
+                          pinnedCreatures[#pinnedCreatures + 1] = token
+                      end
+                  end
+              end
+
+              return landingSquares, pinnedCreatures
+          end
+
+          -- First we plan for the full charge. If any creature would be pinned, the
+          -- hoarder must have rammed it into an obstacle, so we plan again with the
+          -- hoarder stopping one square earlier. We keep doing that until every carried
+          -- creature has room. Every creature that was pinned along the way is noted
+          -- down, because those are the ones that end up dazed.
+          local squaresTheHoarderMoves = squaresToMove
+          local rammedIntoObstacle = {}
+          local landingSquares, pinnedCreatures = PlanTheCarry(squaresTheHoarderMoves)
+          while #pinnedCreatures > 0 and squaresTheHoarderMoves > 0 do
+              for _, token in ipairs(pinnedCreatures) do
+                  rammedIntoObstacle[token.charid] = true
+              end
+              squaresTheHoarderMoves = squaresTheHoarderMoves - 1
+              landingSquares, pinnedCreatures = PlanTheCarry(squaresTheHoarderMoves)
+          end
+
+          -- If the hoarder has to stop short, there are two ways this can look:
+          --   * If the BoneDozerRecoil script is part of this ability, the hoarder
+          --     charges all the way in so it looks like a proper crunch, and then that
+          --     script backs it up afterwards.
+          --   * If BoneDozerRecoil is not part of the ability, we simply shorten the
+          --     charge so the hoarder stops in the right place.
+          if squaresTheHoarderMoves < squaresToMove then
+              local hasRecoilScript = false
+              for _, behavior in ipairs(ability.behaviors) do
+                  if behavior.typeName == "ActivatedAbilityScriptBehavior" and behavior.name == "BoneDozerRecoil" then
+                      hasRecoilScript = true
+                  end
+              end
+
+              local restingSquare = pathSquares[squaresTheHoarderMoves + 1]
+              if hasRecoilScript then
+                  -- We leave a note in "options" for the BoneDozerRecoil script. It says
+                  -- where the charge ends and where the hoarder should back up to.
+                  options.boneDozerRecoil = { chargeLoc = endSquare, restLoc = restingSquare }
+              else
+                  -- The Relocate behavior reads its destination from this same place,
+                  -- so changing it here changes where the hoarder moves to.
+                  destination.loc = restingSquare
+              end
+          end
+
+          -- Now we actually move the carried creatures to their planned squares, and
+          -- daze every creature that was rammed into an obstacle. A creature that was
+          -- already pressed right up against the obstacle doesn't move at all, but it
+          -- still gets crushed into it and is still dazed.
+          for _, token in ipairs(carried) do
+              local landingSquare = landingSquares[token.charid]
+              if landingSquare ~= nil then
+                  helpers.FreeMoveOntoSquare(token, landingSquare)
+              end
+              if rammedIntoObstacle[token.charid] then
+                  local dazed = ActivatedAbilityDrawSteelCommandBehavior.new{ rule = "dazed (save ends)" }
+                  dazed:ExecuteCommand(ability, casterToken, token, options, "dazed (save ends)")
+              end
+          end
+
+          -- Finally, we give the game a moment to finish all of these moves before the
+          -- Relocate behavior starts moving the hoarder.
+          helpers.WaitForNextGameUpdate()
+      - __typeName: ActivatedAbilityRelocateCreatureBehavior
+        movementType: move
+      - name: BoneDozerRecoil
+        __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- ======================================================================
+          -- BONE DOZER, PART 2 OF 2: BACKING OFF AFTER A CRUNCH
+          -- ======================================================================
+          --
+          -- This script runs last, after the hoarder has finished its charge. Most of
+          -- the time it does nothing at all.
+          --
+          -- It only matters when the BoneDozer script found a creature pinned against
+          -- a wall or another obstacle. In that case the hoarder was allowed to charge
+          -- all the way in, so on the map it looks like the creature really got
+          -- crunched. Now the hoarder backs up along its path to the last square where
+          -- it is no longer overlapping the creature it pinned.
+          --
+          -- If you are new to reading code, the BoneDozer script starts with a short
+          -- guide to what the different parts mean.
+          --
+          -- The BoneDozer script leaves a note for this one inside "options", which
+          -- both scripts can see. The note holds two squares:
+          --   * chargeLoc is where the charge ended.
+          --   * restLoc is where the hoarder should back up to.
+
+
+          -- Read the note. If there isn't one, nobody was pinned, so there is nothing
+          -- to do and the script stops here.
+          local recoil = options.boneDozerRecoil
+          if recoil == nil then
+              return
+          end
+
+          -- Rub the note out, so it can never be used a second time by accident.
+          options.boneDozerRecoil = nil
+
+          -- Before backing up, we wait for the charge animation to finish. Backing up
+          -- while the hoarder is still sliding across the map would cut the animation
+          -- short and make it look like the hoarder teleported.
+          --
+          -- First we wait until the hoarder reaches the end of its charge. Then we wait
+          -- until it has completely stopped moving. Each wait gives up after a few
+          -- seconds, so a stuck animation can never freeze the game.
+          local waitStartTime = dmhub.Time()
+
+          local function HasReachedTheEndOfTheCharge()
+              return casterToken.loc.x == recoil.chargeLoc.x and casterToken.loc.y == recoil.chargeLoc.y
+          end
+
+          while casterToken.valid and not HasReachedTheEndOfTheCharge() and dmhub.Time() < waitStartTime + 4 do
+              -- Pause for a tenth of a second, then check again.
+              coroutine.yield(0.1)
+          end
+
+          while casterToken.valid and casterToken.isMoving and dmhub.Time() < waitStartTime + 8 do
+              coroutine.yield(0.1)
+          end
+
+          -- Hold still for a little under half a second, so players can see the crunch
+          -- before the hoarder backs off.
+          coroutine.yield(0.4)
+
+          -- Now back the hoarder up. We check that it is still on the map first, in
+          -- case it was removed while we were waiting.
+          if casterToken.valid then
+              RelocateHelpers.FreeMoveOntoSquare(casterToken, recoil.restLoc)
+              RelocateHelpers.WaitForNextGameUpdate()
+          end
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
@@ -1598,17 +2231,18 @@ info:
       flavor: ""
       guid: ffd1c901-ee3d-48cd-ad3d-28cf1987daa4
       iconid: ui-icons/skills/1.png
-      implementation: 1
+      implementation: 3
       keywords: []
       modifiers: []
-      numTargets: 1
-      range: 1
+      numTargets: "1"
+      range: 2 * Movement Speed
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 46
-      targetType: target
+      targetType: emptyspace
+      targeting: straightpathignorecreatures
     - name: Armor of Corpses
       description: |
         The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.
