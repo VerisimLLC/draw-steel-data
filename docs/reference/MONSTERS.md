@@ -1399,7 +1399,7 @@ potencymod: "none"            # Potency modifier: "none", "1", "2", "-1", "-2", 
 | `project_roll` | Project rolls |
 | `enemy_ability_power_roll` | Enemy ability rolls vs us |
 
-#### modtype Values (code-verified from s_modificationTypes -- 28 values)
+#### modtype Values (code-verified from s_modificationTypes -- 29 values)
 
 | ID | Description |
 |----|-------------|
@@ -1416,6 +1416,7 @@ potencymod: "none"            # Potency modifier: "none", "1", "2", "-1", "-2", 
 | `ignore_edges` | Ignore all Edges |
 | `ignore_banes` | Ignore all Banes |
 | `tier3` | Automatic Tier 3 (auto-success) |
+| `tier2` | Automatic Tier 2 (both nottierone and nottierthree) |
 | `tier1` | Automatic Tier 1 (auto-failure) |
 | `nottierthree` | Cannot roll Tier 3 |
 | `nottierone` | Cannot roll Tier 1 |
