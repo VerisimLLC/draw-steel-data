@@ -76,15 +76,15 @@ info:
       domains:
         CharacterFeature:271fd629-7d4f-4cb1-8265-a6d03693b046: true
       guid: 271fd629-7d4f-4cb1-8265-a6d03693b046
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the saboteur is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: 271fd629-7d4f-4cb1-8265-a6d03693b046
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -93,13 +93,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -107,9 +115,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the saboteur is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:271fd629-7d4f-4cb1-8265-a6d03693b046: true
+        guid: 90cba470-0782-5e3f-8147-754eba10f67e
+        source: Trait
+        sourceguid: 271fd629-7d4f-4cb1-8265-a6d03693b046
+        value: 1
       source: Trait
     cr: 7
     creatureSize: 1S
@@ -135,7 +156,7 @@ info:
         <b>Effect</b> This ability ignores cover and concealment. The affected area blocks line of effect.
 
         <b>Loyalty Collar</b>
-        When the saboteur dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the saboteur is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

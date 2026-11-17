@@ -118,7 +118,7 @@ info:
       domains:
         CharacterFeature:a782551d-646e-4e93-bc1e-5627c16393f2: true
       guid: a782551d-646e-4e93-bc1e-5627c16393f2
-      implementation: 3
+      implementation: 4
       implementationDetails: On death, each enemy within 2 squares takes 1d6 damage, and each creature the boomdog has grabbed takes another 1d6 damage and is bleeding (save ends). A grabbed object does not take the extra damage - apply it by hand.
       modifiers:
       - name: Loyalty Implants
@@ -138,6 +138,7 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             chatMessage: Loyalty Implants
+            filterTarget: Enemy
             roll: 1d6
           - __typeName: ActivatedAbilityDamageBehavior
             chatMessage: Loyalty Implants (grabbed)
@@ -147,23 +148,44 @@ info:
             applyto: targets
             filterTarget: Target.Conditions has "Grabbed" and Target.ConditionCaster("Grabbed") = Caster
             rule: bleeding (save ends)
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 69f0f2e9-6bdc-405b-9d5f-4ae5b16394b0
+          hostile: true
           iconid: ui-icons/skills/1.png
-          mandatory: true
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 2
           repeatTargets: false
           strain: []
           targetFilter: Enemy or (Target.Conditions has "Grabbed" and Target.ConditionCaster("Grabbed") = Caster)
           targetType: all
-          trigger: creaturedeath
+          trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Implants"
+      - name: Loyalty Implants
+        description: When the boomdog is reduced to 0 Stamina, their implanted devices explode, dealing 1d6 damage to each enemy within 2 squares of them. Additionally, any creature or object grabbed by the boomdog is dealt an additional 1d6 damage and is bleeding (save ends).
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:a782551d-646e-4e93-bc1e-5627c16393f2: true
+        guid: ab921bda-fa24-5948-8e75-f51f334d64e4
+        source: Trait
+        sourceguid: a782551d-646e-4e93-bc1e-5627c16393f2
+        value: 1
       source: Trait
     cr: 3
     creatureSize: 1M

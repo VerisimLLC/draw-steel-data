@@ -120,7 +120,7 @@ info:
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: e504a536-9762-44a5-a707-5d6e0fef47fc
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -129,23 +129,44 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 1d3
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
           implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the tetherite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:e504a536-9762-44a5-a707-5d6e0fef47fc: true
+        guid: dc9e4db0-c1a0-5199-a2c2-36f194490098
+        source: Trait
+        sourceguid: e504a536-9762-44a5-a707-5d6e0fef47fc
+        value: 1
       source: Trait
     cr: 1
     creatureSize: 1M
@@ -173,7 +194,7 @@ info:
         A captain attached to a tetherite squad has their Stability increased by the number of tetherites within 2 squares of them.
 
         <b>Loyalty Collar</b>
-        When the tetherite dies, they explode, dealing 1d6 damage to each adjacent enemy.
+        When the tetherite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
 
 
       override: true

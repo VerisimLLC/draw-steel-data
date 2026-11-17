@@ -84,15 +84,15 @@ info:
       domains:
         CharacterFeature:606765f7-6d75-4553-b4c9-549d261cdd67: true
       guid: 606765f7-6d75-4553-b4c9-549d261cdd67
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the breaker is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: 606765f7-6d75-4553-b4c9-549d261cdd67
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -101,13 +101,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 3d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -115,9 +123,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the breaker is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:606765f7-6d75-4553-b4c9-549d261cdd67: true
+        guid: 5112130e-a9d6-5dca-a3ac-890307c57ec5
+        source: Trait
+        sourceguid: 606765f7-6d75-4553-b4c9-549d261cdd67
+        value: 1
       source: Trait
     cr: 7
     creatureSize: "2"
@@ -151,31 +172,7 @@ info:
         When the breaker is reduced to 0 Stamina, they do not die. They lose any conditions affecting them and immediately take a turn, regardless of if they have already taken one this round. During this turn, they deal an additional 5 damage on their strikes and abilities. The breaker dies at the end of this turn.
 
         <b>Loyalty Collar</b>
-        When the breaker dies, they explode, dealing 3d6 damage to each adjacent enemy.
-        War Dog Firestarter    Level 8 Horde Hexer
-        Humanoid, War Dog    EV 10
-        <b>Stamina</b> 45    <b>Immunity </b>Fire 8
-        <b>Speed</b> 5    <b>Size</b> 1M /<b> Stability</b> 0
-        <b>Free Strike</b> 3
-        Might +0    Agility +2    Reason +3    Intuition +4    Presence +1
-        <b>Twin Flamebelchers</b> (Action) %E2%97%86 2d10 + 4%E2%97%86 Signature
-        <b>Keywords</b> Area, Weapon
-        <b>Distance</b> 10 x 1 line within 1<b>    Target</b> All creatures and objects
-        %E2%9C%A6    <b>%E2%89%A411</b>    3 fire damage; A<2 seared (save ends)
-        %E2%98%85    <b>12-16</b>    6 fire damage; A<3 seared (save ends)
-        %E2%9C%B8    <b>17</b>    8 fire damage; A<4 seared (save ends)
-        <b>Effect</b> A seared creature has a bane on their strikes and damage weakness 5. A tier-3 result that includes an already seared target allows the firestarter to immediately use Enflame as a free triggered action.
-
-        <b>Enflame </b>(Maneuver) %E2%97%86 2d10 + 4
-        <b>Keywords</b> Magic
-        <b>Distance</b> Ranged 10<b>    Target</b> Special
-        <b>Effect</b> Roll power against each enemy within 2 of a seared creature within distance:
-        %E2%9C%A6    <b>%E2%89%A411</b>    2 fire damage
-        %E2%98%85    <b>12-16</b>    4 fire damage; A<3 seared (save ends)
-        %E2%9C%B8    <b>17</b>    6 fire damage; A<4 seared (save ends)
-
-        <b>Loyalty Collar</b>
-        When the firestarter dies, they explode, dealing 3d6 damage to each adjacent enemy.
+        When the breaker is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

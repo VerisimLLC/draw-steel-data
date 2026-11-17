@@ -104,14 +104,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 4d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 022c76b4-29ba-49cd-aa1e-22bd5bcca121
+          hostile: true
           iconid: ui-icons/skills/1.png
-          mandatory: true
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -119,9 +126,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
-          trigger: creaturedeath
+          trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Subcutaneous Loyalty Collar"
+      - name: Subcutaneous Loyalty Collar
+        description: When the torso is reduced to 0 Stamina, their loyalty collar explodes, dealing 4d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:3d7640de-4998-4de8-a27c-3f2bdb3e9a2a: true
+        guid: ab5b678a-b068-5e8d-b696-a927b5002ab7
+        source: Trait
+        sourceguid: 3d7640de-4998-4de8-a27c-3f2bdb3e9a2a
+        value: 1
       source: Trait
     - name: Scoop 'Em Up Grab
       description: While grabbed by Scoop 'Em Up, a target takes 10 damage at the start of each of their turns.

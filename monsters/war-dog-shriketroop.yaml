@@ -1,5 +1,5 @@
 id: 1b390969-68bd-4624-8a3e-6ab5df4527c4
-description: War Dog Shriketrooper
+description: War Dog Shriketroop
 artist: null
 ctime: 1749972307221
 hidden: false
@@ -68,15 +68,15 @@ info:
         baseValue: 3
     characterFeatures:
     - name: Loyalty Collar
-      description: When the shriketrooper dies, they explode, dealing 2d6 damage to each adjacent enemy.
+      description: When the shriketroop is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:178ae29a-2838-4d0d-a207-996b722466be: true
       guid: 178ae29a-2838-4d0d-a207-996b722466be
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: When the ground commander dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        description: When the shriketroop is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         domains:
@@ -92,22 +92,44 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 85bad5a0-ee30-4717-939e-0a5f1b979791
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the shriketroop is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:178ae29a-2838-4d0d-a207-996b722466be: true
+        guid: d86c241b-b6c6-50e2-bba5-226d531bd6a3
+        source: Trait
+        sourceguid: 178ae29a-2838-4d0d-a207-996b722466be
+        value: 1
       source: Trait
     cr: 7
     creatureSize: 1M
@@ -118,7 +140,7 @@ info:
     groupid: f3f01a76-0278-4aea-9ac0-fc527ec3d731
     import:
       data: |+
-        War Dog Shriketrooper	Level 7 Minion Artillery
+        War Dog Shriketroop	Level 7 Minion Artillery
         Humanoid, War Dog	EV 9 for four minions
         <b>Stamina</b> 10
         <b>Speed</b> 5	<b>Size</b> 1M /<b> Stability</b> 0
@@ -129,11 +151,11 @@ info:
         <b>Distance</b> Ranged 10<b>	Target</b> One creature or object per minion
         %E2%9C%A6	<b>%E2%89%A411</b>	4 damage
         %E2%98%85	<b>12-16</b>	7 damage
-        %E2%9C%B8	<b>17</b>	8 damage; I<3 frightened of all shriketroopers (EoT)
-        <b>Effect</b> The target moves up to their speed away from the shriketrooper.
+        %E2%9C%B8	<b>17</b>	8 damage; I<3 frightened of all shriketroops (EoT)
+        <b>Effect</b> The target moves up to their speed away from the shriketroop.
 
         <b>Loyalty Collar</b>
-        When the shriketrooper dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the shriketroop is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
 
 
@@ -141,7 +163,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Canis Shrikegun
-      description: The target moves up to their speed away from the shriketrooper.
+      description: The target moves up to their speed away from the shriketroop.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -151,7 +173,7 @@ info:
         tiers:
         - 4 damage
         - 7 damage
-        - 8 damage; I<3 frightened of all shriketroopers (EoT)
+        - 8 damage; I<3 frightened of all shriketroops (EoT)
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -183,7 +205,7 @@ info:
     max_hitpoints_roll: "10"
     minion: true
     monster_category: Monster
-    monster_type: War Dog Shriketrooper
+    monster_type: War Dog Shriketroop
     movementSpeeds: []
     opportunityAttack: 4
     resistances: []

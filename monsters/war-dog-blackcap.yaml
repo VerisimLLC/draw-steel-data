@@ -96,17 +96,28 @@ info:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            damageType: poison
+            roll: 3d6
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             applyto: targets
-            rule: 3d6 poison damage; A<3 weakened (save ends)
+            filterTarget: Enemy
+            rule: A<3 weakened (save ends)
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: '#ffffffff'
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: d7f61c98-53b2-4d07-ae84-16b0942ce35d
+          hostile: true
           iconid: ui-icons/skills/1.png
-          mandatory: true
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: '1'
           objectTarget: true
@@ -114,9 +125,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
-          trigger: creaturedeath
+          trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: 'Detonate: Duplicating Loyalty Collar'
+      - name: Duplicating Loyalty Collar
+        description: When the blackcap or any of their ash clones is reduced to 0 Stamina, that creature's loyalty collar explodes, dealing 3d6 poison damage to each adjacent enemy and object. If any adjacent enemy has A<3 they are also weakened (save ends).
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:3c85a712-6d09-4f4b-b927-e0518c3d76fa: true
+        guid: 80f6806d-a36f-532b-a077-d835dc820e1f
+        source: Trait
+        sourceguid: 3c85a712-6d09-4f4b-b927-e0518c3d76fa
+        value: 1
       source: Trait
     cr: 7
     creatureSize: 1M

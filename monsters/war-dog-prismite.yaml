@@ -71,14 +71,15 @@ info:
         baseValue: 4
     characterFeatures:
     - name: Prismacore Detonation
-      description: When the prisimite dies, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
+      description: When the prismite is reduced to 0 Stamina, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:bef68bd1-f089-45ea-b048-5044af9595dd: true
       guid: bef68bd1-f089-45ea-b048-5044af9595dd
+      implementation: 4
       modifiers:
       - name: Prismacore Detonation
-        description: When the prisimite dies, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
+        description: When the prismite is reduced to 0 Stamina, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 299bd127-40f5-4aad-89bd-e0a748db800c
@@ -93,23 +94,43 @@ info:
           - __typeName: ActivatedAbilityDamageBehavior
             damageType: psychic
             roll: 3d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 90003c34-bc0f-4061-994a-afa01d6eb838
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
-          objectTarget: false
           persistence: []
           range: 2
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
-          trigger: creaturedeath
+          trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Prismacore Detonation"
+      - name: Prismacore Detonation
+        description: When the prismite is reduced to 0 Stamina, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:bef68bd1-f089-45ea-b048-5044af9595dd: true
+        guid: 05e814eb-bf59-59e5-a38f-ccf385d399fc
+        source: Trait
+        sourceguid: bef68bd1-f089-45ea-b048-5044af9595dd
+        value: 1
       source: Trait
     cr: 8
     creatureSize: "2"
@@ -146,7 +167,7 @@ info:
         <b>Effect</b> Pull 5. The damage is halved and the ally ignores any additional effects.
 
         <b>Prismacore Detonation</b>
-        When the prisimite dies, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
+        When the prismite is reduced to 0 Stamina, they explode, dealing 3d6 psychic damage to each enemy within 2 squares of them.
 
       type: mcdm
     inflictedConditions: []
@@ -208,7 +229,7 @@ info:
       targetFilter: Enemy
       targetType: target
     - name: Grasping Tonguetacles
-      description: The prisimite can have an unlimited number of creatures grabbed.
+      description: The prismite can have an unlimited number of creatures grabbed.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd

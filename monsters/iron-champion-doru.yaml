@@ -84,14 +84,15 @@ info:
       modifiers: []
       source: Trait
     - name: Champion's Loyalty Collar
-      description: When Doru dies, he explodes, dealing 4d6 damage to each enemy within 3 spaces.
+      description: When Doru is reduced to 0 Stamina, his loyalty collar explodes, dealing 20 damage to each enemy and object within 3 squares of him.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:605be704-9388-4455-bc5b-bec80e247316: true
       guid: 605be704-9388-4455-bc5b-bec80e247316
+      implementation: 4
       modifiers:
       - name: Champion's Loyalty Collar
-        description: When Doru dies, he explodes, dealing 4d6 damage to each enemy within 3 spaces.
+        description: When Doru is reduced to 0 Stamina, his loyalty collar explodes, dealing 20 damage to each enemy and object within 3 squares of him.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 3a1e1e5e-e3bf-4b11-953d-7112cbefcbaf
@@ -104,24 +105,45 @@ info:
           abilityType: none
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
-            roll: 4d6
+            roll: "20"
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 60e89625-4288-49e9-a375-2cdf7d6afbb9
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
-          objectTarget: false
+          objectTarget: true
           persistence: []
           range: 3
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
-          trigger: creaturedeath
+          trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Champion's Loyalty Collar"
+      - name: Champion's Loyalty Collar
+        description: When Doru is reduced to 0 Stamina, his loyalty collar explodes, dealing 20 damage to each enemy and object within 3 squares of him.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:605be704-9388-4455-bc5b-bec80e247316: true
+        guid: 579d3b99-cbfc-5d59-96bb-b63d29fce217
+        source: Trait
+        sourceguid: 605be704-9388-4455-bc5b-bec80e247316
+        value: 1
       source: Trait
     cr: 10
     creatureSize: 1L
@@ -180,7 +202,7 @@ info:
         Doru regenerates 10 Stamina at the beginning of his turn unless he was dealt fire or acid damage the previous round. Whenever he regains Stamina this way, he can spend 2 malice to end one save ends condition on himself.
 
         <b>Champion's Loyalty Collar</b>
-        When Doru dies, he explodes, dealing 4d6 damage to each enemy within 3 spaces.
+        When Doru is reduced to 0 Stamina, his loyalty collar explodes, dealing 20 damage to each enemy and object within 3 squares of him.
 
       type: mcdm
     inflictedConditions: []

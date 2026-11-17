@@ -97,7 +97,7 @@ info:
     availableTriggers: []
     characterFeatures:
     - name: Loyalty Collar
-      description: When the sharpshooter is reduced to 0 Stamina, their loyalty Collar explodes, dealing 1d3 damage to each adjacent enemy and object.
+      description: When the sharpshooter is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:bbfdbfd0-f6a3-461d-9e71-331d19b84226: true
@@ -105,12 +105,12 @@ info:
       implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: When the sharpshooter is reduced to 0 Stamina, their loyalty Collar explodes, dealing 1d3 damage to each adjacent enemy and object.
+        description: When the sharpshooter is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: bbfdbfd0-f6a3-461d-9e71-331d19b84226
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -119,14 +119,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 1d3
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
           implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -134,9 +141,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the sharpshooter is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:bbfdbfd0-f6a3-461d-9e71-331d19b84226: true
+        guid: 36153e3e-6423-51c7-bed3-91e72767a0f3
+        source: Trait
+        sourceguid: bbfdbfd0-f6a3-461d-9e71-331d19b84226
+        value: 1
       source: Trait
     cr: 1
     creatureSize: 1M
@@ -172,7 +192,7 @@ info:
         <b>Effect</b> This ability ignores cover and concealment.
 
         <b>Loyalty Collar</b>
-        When the sharpshooter dies, they explode, dealing 1d6 damage to each adjacent enemy.
+        When the sharpshooter is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.
 
 
 

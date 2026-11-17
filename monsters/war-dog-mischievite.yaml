@@ -82,7 +82,7 @@ info:
         behavior: attribute
         guid: 5f6dc5e3-e640-4c30-9948-58d27d598bda
         source: Trait
-        sourceguid: 37e008e8-005a-433b-b273-eef5f201e287
+        sourceguid: a9ad49bc-2fde-4081-bd12-5f358df105c0
         value: 1
       source: Trait
     - name: Loyalty Collar
@@ -94,12 +94,12 @@ info:
       implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the mischievite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: 41e94d8c-a2f6-412b-8f53-43335551e72d
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -108,13 +108,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -122,9 +130,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the mischievite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:41e94d8c-a2f6-412b-8f53-43335551e72d: true
+        guid: 7fa48bce-aa4d-5b9d-b519-f7b1ba8ef4d9
+        source: Trait
+        sourceguid: 41e94d8c-a2f6-412b-8f53-43335551e72d
+        value: 1
       source: Trait
     cr: 5
     creatureSize: 1M
@@ -159,7 +180,7 @@ info:
         The mischievite's movement does not trigger opportunity attacks.
 
         <b>Loyalty Collar</b>
-        When the mischievite dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the mischievite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

@@ -93,22 +93,44 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 1d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: adfd28bc-470a-4be1-8ef6-eca3316ef033
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 2
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Shrapnel-Laced Loyalty Collar"
+      - name: Shrapnel-Laced Loyalty Collar
+        description: When the sweeper is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each enemy and object within 2 squares of them.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:9e62a626-a064-4d41-8cdc-24825996e2d5: true
+        guid: c2c372e0-fd19-5bd0-8105-4954349e2b5e
+        source: Trait
+        sourceguid: 9e62a626-a064-4d41-8cdc-24825996e2d5
+        value: 1
       source: Trait
     cr: 4
     creatureSize: 1M
@@ -134,7 +156,7 @@ info:
         <b>Effect</b> This ability deals an additional 3 damage if the target is within 2 squares of the sweeper.
 
         <b>Shrapnel-Laced Loyalty Collar</b>
-        When the sweeper dies, they explode, dealing 1d6 damage to each enemy within 2 squares of them.
+        When the sweeper is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each enemy and object within 2 squares of them.
 
       type: mcdm
     inflictedConditions: []

@@ -84,12 +84,12 @@ info:
       implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the doomthief is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: e543912d-ad8b-4cb3-910e-cc55f6341e46
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -98,13 +98,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -112,9 +120,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the doomthief is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:e543912d-ad8b-4cb3-910e-cc55f6341e46: true
+        guid: c9bc7908-cdba-5323-aca6-3f9f87a56029
+        source: Trait
+        sourceguid: e543912d-ad8b-4cb3-910e-cc55f6341e46
+        value: 1
       source: Trait
     cr: 5
     creatureSize: 1L
@@ -148,7 +169,7 @@ info:
         <b>Effect </b>The doomthief gains damage immunity 4 and their doom magnet aura increases by 3 until the start of their next turn.
 
         <b>Loyalty Collar</b>
-        When the doomthief dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the doomthief is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

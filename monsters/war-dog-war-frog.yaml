@@ -76,12 +76,12 @@ info:
       implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the war frog is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: dad018b0-d225-4cad-8719-d0b0129a3684
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -90,13 +90,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 1d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -104,9 +112,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the war frog is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:dad018b0-d225-4cad-8719-d0b0129a3684: true
+        guid: 498052f2-a3a1-5cbd-9857-75ac22c8792b
+        source: Trait
+        sourceguid: dad018b0-d225-4cad-8719-d0b0129a3684
+        value: 1
       source: Trait
     cr: 4
     creatureSize: 1S
@@ -132,7 +153,7 @@ info:
         <b>Effect</b> The war frog jumps 3 squares before or after making their attack. If the war frog lands in cover or concealment, they can take the Hide maneuver as part of this ability.
 
         <b>Loyalty Collar</b>
-        When the war frog dies, they explode, dealing 1d6 damage to each adjacent enemy.
+        When the war frog is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.
 
 
 

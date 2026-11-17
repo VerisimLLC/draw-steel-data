@@ -76,20 +76,20 @@ info:
       modifiers: []
       source: Trait
     - name: Loyalty Collar
-      description: When the geomancer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage; M<3 push to each adjacent enemy and object.
+      description: When the geomancer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:ed7a25e6-ce0a-4bed-9283-7c06b85e43c5: true
       guid: ed7a25e6-ce0a-4bed-9283-7c06b85e43c5
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the geomancer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
         source: Trait
-        sourceguid: 7253f97d-6734-4d77-b3ff-37c1691830dd
+        sourceguid: ed7a25e6-ce0a-4bed-9283-7c06b85e43c5
         triggeredAbility:
           name: Loyalty Collar
           description: ""
@@ -98,13 +98,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 3d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -112,9 +120,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the geomancer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:ed7a25e6-ce0a-4bed-9283-7c06b85e43c5: true
+        guid: 7f38ab32-6ee6-5ede-8a7e-899a65e8d72e
+        source: Trait
+        sourceguid: ed7a25e6-ce0a-4bed-9283-7c06b85e43c5
+        value: 1
       source: Trait
     cr: 8
     creatureSize: 1M
@@ -149,7 +170,7 @@ info:
         The geomancer is surrounded by a 2 aura of swirling dust and earthen debris. The geomancer and all allies in the affected area are concealed.
 
         <b>Loyalty Collar</b>
-        When the geomancer dies, they explode, dealing 3d6 damage to each adjacent enemy.
+        When the geomancer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
         War Dog Iron Priest    Level 8 Horde Support
         Humanoid, War Dog    EV 10
         <b>Stamina</b> 50

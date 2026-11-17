@@ -68,15 +68,15 @@ info:
         baseValue: 3
     characterFeatures:
     - name: Loyalty Collar
-      description: When the hunter-killer dies, they explode, dealing 3d6 damage to each adjacent enemy.
+      description: When the hunter-killer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:52b4a3bb-c769-4648-bb0d-e82f2b0bf4cc: true
       guid: 52b4a3bb-c769-4648-bb0d-e82f2b0bf4cc
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the hunter-killer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: c19c39b5-8e76-42a6-a8d3-0d4e74332772
@@ -90,22 +90,44 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 3d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 28cd5db2-0a70-4c25-8f12-df08405ac3d1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
           trigger: creaturedeath
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the hunter-killer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:52b4a3bb-c769-4648-bb0d-e82f2b0bf4cc: true
+        guid: 1eee168f-8ed5-5ef5-adc7-3ba41aaabc90
+        source: Trait
+        sourceguid: 52b4a3bb-c769-4648-bb0d-e82f2b0bf4cc
+        value: 1
       source: Trait
     cr: 10
     creatureSize: 1M
@@ -131,7 +153,7 @@ info:
         <b>Effect</b> Each enemy adjacent to the target takes 5 fire damage.
 
         <b>Loyalty Collar</b>
-        When the hunter-killer dies, they explode, dealing 3d6 damage to each adjacent enemy.
+        When the hunter-killer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

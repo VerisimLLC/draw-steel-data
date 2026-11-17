@@ -162,7 +162,7 @@ info:
       implementation: 4
       modifiers:
       - name: Loyalty Collar
-        description: ""
+        description: When the tormentite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
         __typeName: CharacterModifier
         behavior: trigger
         guid: 5c60d6bf-6f67-4a2c-8bb8-21ffa0f5e486
@@ -176,13 +176,21 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: e37ab7b8-87b2-475c-b7ce-c1308e3ea3e1
+          hostile: true
           iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
           objectTarget: true
@@ -190,9 +198,22 @@ info:
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: enemy or target.object
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the tormentite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:c025d260-6a4c-4f20-8249-ee0ba5125073: true
+        guid: 6f71b5ed-eafe-52e7-87d3-88ff9ec832de
+        source: Trait
+        sourceguid: c025d260-6a4c-4f20-8249-ee0ba5125073
+        value: 1
       source: Trait
     cr: 5
     creatureSize: 1M
@@ -229,7 +250,7 @@ info:
         The tormentite takes 1 damage at the start of each of their turns.
 
         <b>Loyalty Collar</b>
-        When the tormentite dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the tormentite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
       type: mcdm
     inflictedConditions: []

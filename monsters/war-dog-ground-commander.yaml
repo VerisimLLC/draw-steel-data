@@ -262,23 +262,44 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
             roll: 2d6
+          - __typeName: ActivatedAbilityRemoveCreatureBehavior
+            applyto: caster
+            dropsLoot: true
+            leavesCorpse: true
+            runOnDismiss: true
           display:
             bgcolor: "#ffffffff"
             brightness: 1
             hueshift: 0
             saturation: 1
           guid: 026780fa-b93e-442f-9223-2c425b806995
+          hostile: true
           iconid: ui-icons/skills/1.png
-          implementation: 3
+          implementation: 4
+          mandatory: false
           modifiers: []
           numTargets: "1"
+          objectTarget: true
           persistence: []
           range: 1
           repeatTargets: false
           strain: []
-          targetFilter: Enemy
+          targetAllegiance: enemy
           targetType: all
           trigger: zerohitpoints
+          triggerAfterCasts: true
+          triggerPrompt: "Detonate: Loyalty Collar"
+      - name: Loyalty Collar
+        description: When the ground commander is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
+        __typeName: CharacterModifier
+        attribute: 85a764fd-db81-4b1e-aa45-aecac9fff052
+        behavior: attribute
+        domains:
+          CharacterFeature:75ccac6c-6963-4025-9e3a-06520e36aa75: true
+        guid: 9a5bff29-b3fa-5dc2-bee9-ca10b88b0c37
+        source: Trait
+        sourceguid: 75ccac6c-6963-4025-9e3a-06520e36aa75
+        value: 1
       source: Trait
     - name: Grab Limit
       description: The ground commander can grab up to two creatures at a time
@@ -642,7 +663,7 @@ info:
         At the end of their turn, the ground commander can take 5 damage to end one save ends effect affecting them. This damage can't be reduced in any way.
 
         <b>Loyalty Collar</b>
-        When the ground commander dies, they explode, dealing 2d6 damage to each adjacent enemy.
+        When the ground commander is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
 
         <b>Combined Arms</b> (Villain Action 1)
         <b>Keywords</b> Area
