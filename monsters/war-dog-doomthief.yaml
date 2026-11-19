@@ -68,12 +68,51 @@ info:
         baseValue: 0
     characterFeatures:
     - name: Doom Magnet
-      description: The doomthief emits a 3 aura of warped fate, blocking line of effect for enemy abilities that don't include the doomthief as a target.
+      description: The doomthief emits a 3 aura of warped fate that blocks line of effect for any enemy ability that doesn't include them as a target.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:de4e6246-f05c-455b-8b64-cd7ef1f06bdf: true
       guid: de4e6246-f05c-455b-8b64-cd7ef1f06bdf
-      modifiers: []
+      implementation: 4
+      implementationDetails: Enemies can't target anyone through the aura's squares unless they target the doomthief. An area ability that includes the doomthief is still checked per target.
+      modifiers:
+      - name: Doom Magnet
+        description: Blocks enemy line of effect within 3 squares.
+        __typeName: CharacterModifier
+        attribute: 028166a9-354f-46cc-b57c-6ae840b30c83
+        behavior: attribute
+        domains:
+          CharacterFeature:de4e6246-f05c-455b-8b64-cd7ef1f06bdf: true
+        guid: 4b9e2c7a-1f5d-4a3e-8c6b-0d2f7a9e1c45
+        source: Trait
+        sourceguid: de4e6246-f05c-455b-8b64-cd7ef1f06bdf
+        value: 3
+      - name: Doom Magnet Aura
+        description: Shows the Doom Magnet aura on the map. It grows with Expanding Doom.
+        __typeName: CharacterModifier
+        aura:
+          name: Doom Magnet
+          description: The doomthief emits a 3 aura of warped fate that blocks line of effect for any enemy ability that doesn't include them as a target.
+          __typeName: Aura
+          applyto: enemies
+          display:
+            bgcolor: "#d04220ff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: f6fb998e-2e78-41cc-badb-e68fef62cf5a
+          implementation: 4
+          modifiers: []
+          objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
+          source: Doomthief
+        behavior: aura
+        domains:
+          CharacterFeature:de4e6246-f05c-455b-8b64-cd7ef1f06bdf: true
+        guid: c1302d93-f3a6-40fc-92c3-45e97057f3c9
+        radius: Block Enemy Line of Effect Aura
+        seq: f4a902a5-1e83-4b64-af20-ee1a9514e518
+        source: Trait
+        sourceguid: de4e6246-f05c-455b-8b64-cd7ef1f06bdf
       source: Trait
     - name: Loyalty Collar
       description: When the doomthief is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
@@ -175,7 +214,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Ripper Shrikegun
-      description: The doomthief cannot move on the same turn they use this ability.
+      description: The doomthief can't willingly move on the same turn they use this ability.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -189,6 +228,7 @@ info:
         - 5 damage; push 3
         - 6 damage; push 5; A<3 slowed (save ends)
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
         duration: 0
         ongoingEffect: 14b4ede4-57ca-4ee0-a9ee-3ba79bd3f099
         ongoingEffectCustom: 14b4ede4-57ca-4ee0-a9ee-3ba79bd3f099
@@ -212,30 +252,37 @@ info:
       persistence: []
       radius: "3"
       range: "10"
+      rangeTextOverride: "10 x 3 line within 1"
       repeatTargets: false
       sourceReference:
         __typeName: SourceReference
         docid: cc66844a-04d0-49a0-8687-65ef83b15363
         page: 306
       strain: []
+      targetFilter: Enemy
+      targetTextOverride: "Each enemy in the area"
       targetType: line
     - name: Expanding Doom
-      description: The doomthief gains damage immunity 4 and their doom magnet aura increases by 3 until the start of their next turn.
+      description: The doomthief has damage immunity 4 and the size of the aura from their Doom Magnet trait increases by 3, both until the start of their next turn.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        applyto: caster
+        ongoingEffect: 3e7b1c9a-5d2f-4a8e-b6c1-9f0d4e2a7b58
+        ongoingEffectCustom: false
       categorization: Heroic Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: cacfba9e-23aa-42a0-b80e-05b46040a219
       iconid: ui-icons/skills/1.png
-      implementation: 0
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: 1
@@ -243,6 +290,7 @@ info:
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 4
+      targetTextOverride: "Self"
       targetType: self
     innateAttacks: []
     keywords:
