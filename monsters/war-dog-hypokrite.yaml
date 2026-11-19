@@ -161,6 +161,109 @@ info:
         sourceguid: 5f439a91-c5d6-4765-ae0f-cc8a00b86887
         value: 1
       source: Trait
+    - name: Feign Death
+      description: |-
+        **2 Malice.** Trigger: The hypokrite takes damage.
+
+        Effect: The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, but teleports to an unoccupied space adjacent to an ally within distance and remains alive.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
+      guid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
+      implementation: 3
+      implementationDetails: The collar blast and the teleport are automated. The teleport lets you pick any unoccupied space within 20 squares; choosing one adjacent to an ally is up to you.
+      modifiers:
+      - name: Feign Death
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Feign Death
+          __typeName: TriggeredAbilityDisplay
+          cost: 2 Malice
+          distance: Ranged 20
+          effect: The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, but teleports to an unoccupied space adjacent to an ally within distance and remains alive.
+          guid: 2a9d4f7c-6e1b-4c3a-8d5f-0b7e2c9a1f36
+          keywords:
+            Ranged: true
+          target: Special
+          trigger: The hypokrite takes damage.
+          type: trigger
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
+        guid: 7f3b1e9d-4a6c-4d2e-b8f0-5c1a7e3d9b62
+        source: Trait
+        sourceguid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
+      - name: Feign Death
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
+        guid: 1e6c9a3d-8b2f-4e7a-9d4c-3f0b6a8e2d17
+        source: Trait
+        sourceguid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
+        triggeredAbility:
+          name: Feign Death
+          description: The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, then teleports to an unoccupied space adjacent to an ally within 20 squares and remains alive.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityDamageBehavior
+            chatMessage: Feign Death
+            roll: 2d6
+            titleText: Feign Death
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 0d4b8e2a-5f7c-4a1e-9b3d-6c2f8a0e4b71
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              range: 1
+              repeatTargets: false
+              targetType: self
+            promptText: Teleport to an unoccupied space adjacent to an ally within 20 squares.
+            standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
+            standardAbilityParams:
+              range: "20"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 9b2e6d4a-3c8f-4b1e-a7d5-2e9c0f6b8a43
+          iconid: ui-icons/skills/1.png
+          implementation: 3
+          keywords:
+            Ranged: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 2
+          strain: []
+          subject: self
+          targetAllegiance: enemy
+          targetType: all
+          trigger: losehitpoints
+          triggerPrompt: "Feign Death (2 Malice): blast adjacent enemies for 2d6 and teleport next to an ally."
+      source: Trait
     cr: 4
     creatureSize: 1M
     damage_taken: 0
@@ -200,7 +303,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Needle-Knife
-      description: This ability deals an additional 6 damage if the hypocrite is hidden or disguised.
+      description: This ability deals an extra 6 damage if the hypokrite is hidden or disguised.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -215,9 +318,9 @@ info:
         guid: 1d5b93ca-7e46-4c02-9f81-3ab60d47e2c5
         modifier:
           name: Hidden or Disguised
-          description: This ability deals an additional 6 damage if the hypokrite is hidden or disguised.
+          description: This ability deals an extra 6 damage if the hypokrite is hidden or disguised.
           __typeName: CharacterModifier
-          activationCondition: Conditions has "Hidden"
+          activationCondition: Conditions has "Hidden" or Ongoing Effects has "Disguised"
           behavior: power
           damageModifier: "6"
           damageModifierType: none
@@ -233,45 +336,21 @@ info:
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: d2044577-2056-4842-aefc-d58af7061456
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Melee: true
         Strike: true
         Weapon: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       range: 1
       repeatTargets: false
       targetType: target
-    - name: 'Feign Death '
-      description: The hypokrite activates their Loyalty Collar ability and teleports to an unoccupied square adjacent to an ally within distance alive.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 0df61ed1-2e1f-4afa-a93e-031ab457025f
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 2
-      targetType: self
     innateAttacks: []
     keywords:
       Humanoid: true

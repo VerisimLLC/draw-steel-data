@@ -72,7 +72,7 @@ info:
         baseValue: 2
     characterFeatures:
     - name: Eight-Eyed Sight
-      description: The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
+      description: At the start of each of their turns, the arachnite automatically knows the location of each hidden creature within 10 squares of them.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:8d9091a3-f46d-4bd1-a07e-dd6334738629: true
@@ -81,7 +81,7 @@ info:
       implementationDetails: During the arachnite's own turn, hidden creatures within 10 squares can't stay hidden from it (Ignore Hidden Within Range 10, only while it is the arachnite's turn). The range is checked each time it targets rather than once at the start of its turn.
       modifiers:
       - name: Eight-Eyed Sight
-        description: The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
+        description: At the start of each of their turns, the arachnite automatically knows the location of each hidden creature within 10 squares of them.
         __typeName: CharacterModifier
         attribute: 168a8bd9-f0ca-4438-9377-c8e72707cb94
         behavior: attribute
@@ -237,7 +237,7 @@ info:
         <b>Effect </b>The affected area becomes difficult terrain.
 
         <b>Eight-Eyed Sight</b>
-        The arachnite automatically finds all hidden creatures within 10 at the start of their turn.
+        At the start of each of their turns, the arachnite automatically knows the location of each hidden creature within 10 squares of them.
 
         <b>Loyalty Collar</b>
         When the arachnite is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.
@@ -247,37 +247,161 @@ info:
     initiativeGrouping: 7a009003-48a1-4343-b276-cdb2a038131f
     innateActivatedAbilities:
     - name: Longarm Shrikegun
-      description: "This ability ignores cover and concealment. The arachnite chooses one of the following damage types when making the attack: acid, cold, fire, lightning, poison, psychic, or sonic."
+      description: |-
+        This ability ignores cover and concealment. The arachnite chooses one of the following damage types when making the strike: acid, cold, fire, lightning, poison, psychic, or sonic.
+        **2 Malice**: The arachnite can use this ability as if they were in the space of any ally within distance.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
+      - name: Ability Duration Effect
+        __typeName: ActivatedAbilityApplyAbilityDurationEffect
+        applyto: caster
+        momentaryEffect:
+          id: 5e1c7a3b-9d2f-4a6e-b8c4-1f0a7d3e9b52
+          name: Ignore Cover and Concealment
+          description: ""
+          __typeName: CharacterOngoingEffect
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 5e1c7a3b-9d2f-4a6e-b8c4-1f0a7d3e9b52
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers:
+          - name: Ignore Concealment
+            description: ""
+            __typeName: CharacterModifier
+            attribute: 16228928-9f29-4510-a703-65344f2356ef
+            behavior: attribute
+            guid: a3d8f1c6-2e7b-4b9a-8c5d-6f1e0a4b7c93
+            source: Ongoing Effect
+            sourceguid: 5e1c7a3b-9d2f-4a6e-b8c4-1f0a7d3e9b52
+            value: 1
+          - name: Ignore Cover
+            description: ""
+            __typeName: CharacterModifier
+            attribute: 33b6a265-6b89-4def-b86d-507d86061fe8
+            behavior: attribute
+            guid: c7b2e9a4-1f6d-4e3c-9a8b-5d0f2c7e1a46
+            source: Ongoing Effect
+            sourceguid: 5e1c7a3b-9d2f-4a6e-b8c4-1f0a7d3e9b52
+            value: 1
+          source: Ongoing Effect
       - __typeName: ActivatedAbilityPowerRollBehavior
+        modesSelected:
+        - 1
         roll: 2d10 + Highest Characteristic
         tiers:
         - 7 damage
         - 9 damage
         - 11 damage; A<3 bleeding (save ends)
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: targets
+        autoTarget: false
+        customAbility:
+          name: Longarm Shrikegun
+          description: Fired from the ally's space.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - name: Ability Duration Effect
+            __typeName: ActivatedAbilityApplyAbilityDurationEffect
+            applyto: caster
+            momentaryEffect:
+              id: 2b9f4e7a-6c1d-4a8e-b3f5-0d7c2e9a1b64
+              name: Ignore Cover and Concealment
+              description: ""
+              __typeName: CharacterOngoingEffect
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 2b9f4e7a-6c1d-4a8e-b3f5-0d7c2e9a1b64
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers:
+              - name: Ignore Concealment
+                description: ""
+                __typeName: CharacterModifier
+                attribute: 16228928-9f29-4510-a703-65344f2356ef
+                behavior: attribute
+                guid: e8a1c5f3-7b2d-4c9e-a6f0-3b8d1e5c2a97
+                source: Ongoing Effect
+                sourceguid: 2b9f4e7a-6c1d-4a8e-b3f5-0d7c2e9a1b64
+                value: 1
+              - name: Ignore Cover
+                description: ""
+                __typeName: CharacterModifier
+                attribute: 33b6a265-6b89-4def-b86d-507d86061fe8
+                behavior: attribute
+                guid: 4f6d0b2e-8a3c-4e7f-9b1d-2c5a8e0f6b13
+                source: Ongoing Effect
+                sourceguid: 2b9f4e7a-6c1d-4a8e-b3f5-0d7c2e9a1b64
+                value: 1
+              source: Ongoing Effect
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            roll: 2d10 + Highest Characteristic
+            tiers:
+            - 7 damage
+            - 9 damage
+            - 11 damage; A<3 bleeding (save ends)
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 6a3e9c1f-4b8d-4e2a-b7c5-1d0f8e3a6c29
+          iconid: ui-icons/skills/1.png
+          keywords:
+            Ranged: true
+            Strike: true
+            Weapon: true
+          modifiers: []
+          numTargets: "1"
+          objectTarget: true
+          range: "15"
+          repeatTargets: false
+          targetType: target
+        invokeOnCaster: true
+        modesSelected:
+        - 2
+        promptText: Choose the target of the strike, measured from the ally's space.
+        rangeOrigin: parent_primary_target
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: a8e75719-43d8-4f58-86f8-9bc97ee185ac
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Ranged: true
         Strike: true
         Weapon: true
+      modeList:
+      - text: Normal
+      - rules: The arachnite can use this ability as if they were in the space of any ally within distance. Target the ally first.
+        text: 2 Malice
       modifiers: []
+      multipleModes: true
       numTargets: 1
+      objectTarget: true
       range: 15
       repeatTargets: false
+      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+      resourceNumber: 2 when Mode = 2 else 0
       strain: []
+      targetFilter: Mode = 1 or (Friends(Target, Caster) and not (Target = Caster))
       targetType: target
     - name: Web Vial
       description: The area is difficult terrain until the end of the encounter.
@@ -302,7 +426,7 @@ info:
           modifiers: []
           objectid: db02fb5e-fb33-438b-8441-72c39ee6bd11
         duration: eoe
-      categorization: Signature Ability
+      categorization: Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -320,7 +444,9 @@ info:
       numTargets: 1
       radius: 2
       range: 10
+      rangeTextOverride: "2 cube within 10"
       repeatTargets: false
+      targetTextOverride: "Special"
       targetType: cube
     innateAttacks: []
     keywords:

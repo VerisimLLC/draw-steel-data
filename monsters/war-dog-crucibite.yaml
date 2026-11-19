@@ -54,13 +54,6 @@ info:
   partyid: null
   properties:
     __typeName: monster
-    a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b_history:
-      __typeName: StatHistory
-      entries:
-        c8c54471-821c-40f0-bdbf-30bb1b8f2dbc:
-          note: Posthumous Promotion
-          set: 1/1
-          userid: D6sdmF0OHEONGesX4Pcv3FOx6Wi1
     animations:
       anim:
       - animType: consumeResource
@@ -86,7 +79,6 @@ info:
       rea:
         id: rea
         baseValue: 0
-    auras: []
     characterFeatures:
     - name: Loyalty Collar
       description: When the crucibite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.
@@ -190,24 +182,9 @@ info:
           refreshid: 08a320f9-a82e-46d7-99b8-164c78c506d8-1
           set: 0/1
           userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-    damageEntries:
-      ee10917f-8e00-4be1-b28e-4611cfc210f1:
-        id: ee10917f-8e00-4be1-b28e-4611cfc210f1
-        heal: 10
     damage_taken: 0
-    deathSavingThrowFailures: 0
-    deathSavingThrowSuccesses: 0
     equipment: []
     ev: 3
-    expectedDamage: []
-    floatEffects:
-      bd452c22-aa69-4587-b82d-a1164781c213:
-        display:
-          bgcolor: "#ffffffff"
-          brightness: 1
-          hueshift: 0
-          saturation: 1
-        iconid: ui-icons/skills/1.png
     footprintStyle: boots
     groupid: f3f01a76-0278-4aea-9ac0-fc527ec3d731
     import:
@@ -244,8 +221,8 @@ info:
     innateActivatedAbilities:
     - name: Flamebelcher
       description: |-
-        The area is covered in sticky fire until the start of the crucibite's next turn. Whenever a creature enters the area for the first time in a round or starts their turn there, they take 2 fire damage.
-        **3 Malice**: The area increases to a 10 x 1 line, and if any ally of the crucibite is in the area when it is created, the crucibite deals an additional 2 damage to each target.
+        The area is covered in sticky fire until the start of the crucibite's next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 fire damage.
+        3 Malice: The area becomes a 10 × 1 line, and if any ally of the crucibite is in the area when it is created, the ability deals an extra 2 damage to each target.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -293,18 +270,20 @@ info:
             hueshift: 0
             saturation: 1
           guid: eff2bcd9-ed2d-45a4-96dc-2d34f6b2fe5a
-          implementation: 3
+          implementation: 4
           modifiers: []
           objectid: 5619c849-e671-40e6-9624-ce75771f8884
           triggers:
           - ability:
-              name: Flame belcher
+              name: Sticky Fire
               description: ""
               __typeName: TriggeredAbility
               abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
                 rule: 2 fire damage
+              castImmediately: true
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
@@ -315,14 +294,40 @@ info:
               modifiers: []
               numTargets: "1"
               persistence: []
-              radius: 0
-              range: 5
+              range: 1
               repeatTargets: false
               silent: true
               strain: []
               targetType: self
-              trigger: losehitpoints
-            trigger: onenter
+              trigger: onfirstenterround
+            trigger: onfirstenterround
+          - ability:
+              name: Sticky Fire
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+                applyto: targets
+                rule: 2 fire damage
+              castImmediately: true
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 4c1e8a2f-7b3d-4e9a-9c5f-2d8b6a1e3f70
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: targetstartturnaura
+            trigger: targetstartturnaura
         duration: nextturn
       categorization: Signature Ability
       display:
@@ -340,21 +345,24 @@ info:
         Weapon: true
       modeList:
       - text: Normal
-      - rules: The area increases to a 10 x 1 line, and if any ally of the crucibite is in the area when it is created, the crucibite deals an additional 2 damage to each target.
+      - rules: The area becomes a 10 × 1 line, and if any ally of the crucibite is in the area when it is created, the ability deals an extra 2 damage to each target.
         text: Malice
       modifiers: []
       multipleModes: true
       numTargets: 1
+      objectTarget: true
       persistence: []
       radius: 1
       range: 10 when Mode = 2 else 5
+      rangeTextOverride: "5 x 1 line within 1"
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 3 when mode = 2 else 0
       strain: []
+      targetTextOverride: "Each creature and object in the area"
       targetType: line
     - name: Posthumous Promotion
-      description: If the target has a loyalty collar, they are reduced to 0 stamina.
+      description: If the target has a loyalty collar, they are reduced to 0 Stamina.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -382,6 +390,7 @@ info:
       selfTarget: true
       strain: []
       targetFilter: Target has "*Loyalty Collar*"
+      targetTextOverride: "One war dog"
       targetType: target
     innateAttacks: []
     keywords:
@@ -394,9 +403,6 @@ info:
     minion: false
     monster_category: Monster
     monster_type: War Dog Crucibite
-    moveDiag: 0
-    moveDistance: 41
-    moveDistanceRoundId: 08a320f9-a82e-46d7-99b8-164c78c506d8-1
     movementSpeeds: []
     notes:
     - text: ""
@@ -421,54 +427,6 @@ info:
     skillProficiencies: []
     skillRatings: []
     stability: 0
-    stamina_history:
-      __typeName: StatHistory
-      entries:
-        6e88237a-76a5-449f-bf1b-d91aca7c1ba9:
-          attackerid: 84f899fc-b61a-4cc5-99b7-ced9dbbd0381
-          disposition: bad
-          note: 7 damage from Goblin Monarch 1's Handaxe; Damage Reduction reduced by 3 to 4
-          set: 2
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        9dcf7c21-a0a8-45c9-908a-dad5bf05fe03:
-          attackerid: cfc9e9ed-2d74-436c-a58a-4b3a4ecc040f
-          disposition: bad
-          note: 3 damage from Goblin Cursespitter 1's Eye of Surlach; Damage Reduction reduced by 3 to 0
-          set: 10
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        a21c948a-460e-40d1-9cc5-7ea48f7db306:
-          attackerid: 84f899fc-b61a-4cc5-99b7-ced9dbbd0381
-          disposition: bad
-          note: 7 damage from Goblin Monarch 1's Handaxe; Damage Reduction reduced by 3 to 4
-          set: 6
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        a5cd94d6-23e7-4090-a457-4314c1909347:
-          disposition: good
-          note: 10 Healing
-          set: 10
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        aacb6f41-431e-4b2f-832d-77017812fdda:
-          attackerid: 84f899fc-b61a-4cc5-99b7-ced9dbbd0381
-          disposition: bad
-          note: 7 damage from Goblin Monarch 1's Handaxe
-          set: 3
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        d73ed8b4-4d95-4d29-a8eb-91f9c5c401f2:
-          disposition: good
-          note: 10 Healing
-          set: 10
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        d8a7f7d7-67f3-4167-8666-4919ecd632d8:
-          attackerid: 84f899fc-b61a-4cc5-99b7-ced9dbbd0381
-          disposition: bad
-          note: 7 damage from Goblin Monarch 1's Handaxe; Damage Reduction reduced by 3 to 4
-          set: 6
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
-        eb55787a-107b-4f78-a06e-514317f584b2:
-          disposition: good
-          note: 10 Healing
-          set: 10
-          userid: o0Z9FIHOGMTGSDawp2pf82DJHmx2
     titles: []
     traitNames: []
     walkingSpeed: 5

@@ -68,7 +68,7 @@ info:
         baseValue: 3
     characterFeatures:
     - name: Body Bank Branch Manager
-      description: The Reconstitute Malice effect costs 1 malice fewer. Each ally may treat the war doc as a source of corpses for the purposes of using Reconstitute.
+      description: If the war doc uses the Reconstitute war dog Malice feature, it costs 1 Malice less. Additionally, allies can treat the living war doc as a corpse when using the Reconstitute feature.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:490e80be-72a8-4eb3-854e-66eacfb197f8: true
@@ -89,6 +89,89 @@ info:
         modifyDescription: Costs 1 Malice fewer for the war doc (Body Bank Branch Manager).
         source: Trait
         sourceguid: 490e80be-72a8-4eb3-854e-66eacfb197f8
+      source: Trait
+    - name: Sanguine Stimulants
+      description: |-
+        **1 Malice.** Trigger: One ally within distance dies.
+
+        Effect: Each ally adjacent to the dead ally deals an extra 6 damage on their next strike.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51: true
+      guid: 7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51
+      implementation: 4
+      modifiers:
+      - name: Sanguine Stimulants
+        description: ""
+        __typeName: CharacterModifier
+        ability:
+          name: Sanguine Stimulants
+          __typeName: TriggeredAbilityDisplay
+          cost: 1 Malice
+          distance: Ranged 15
+          effect: Each ally adjacent to the dead ally deals an extra 6 damage on their next strike.
+          guid: 3b8e1f6a-2c4d-4a7e-8f1b-5d9c0e2a7b64
+          keywords:
+            Magic: true
+            Ranged: true
+          target: Special
+          trigger: One ally within distance dies.
+          type: trigger
+        behavior: triggerdisplay
+        domains:
+          CharacterFeature:7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51: true
+        guid: 9f2c5a1d-6e3b-4c8f-a7d2-0b4e1c6f8a39
+        source: Trait
+        sourceguid: 7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51
+      - name: Sanguine Stimulants
+        description: ""
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51: true
+        guid: 4e7a9c2b-1d5f-4b3e-8a6c-2f0d9e1b7c58
+        source: Trait
+        sourceguid: 7d2a4c1e-5b3f-4e8a-9c6d-1f0e2b3a4c51
+        triggeredAbility:
+          name: Sanguine Stimulants
+          description: Each ally adjacent to the dead ally deals an extra 6 damage on their next strike.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
+          behaviors:
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            duration: eoe
+            filterTarget: Subject.Distance(Target) <= 1 and not (Target = Subject)
+            ongoingEffect: 36cc3465-f1e5-43ae-b130-895fb34f2189
+            ongoingEffectCustom: false
+            stacks: "6"
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 6c1d8e3f-9a2b-4f7c-b5e1-3a8d0f2c6b47
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Magic: true
+            Ranged: true
+          mandatory: false
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 16
+          repeatTargets: false
+          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
+          resourceNumber: 1
+          selfTarget: false
+          strain: []
+          subject: allies
+          subjectRange: "15"
+          targetAllegiance: ally
+          targetType: all
+          trigger: zerohitpoints
+          triggerPrompt: "Sanguine Stimulants (1 Malice): allies next to the fallen war dog deal an extra 6 damage on their next strike."
       source: Trait
     cr: 5
     creatureSize: 1L
@@ -131,28 +214,57 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Syringe Crossbow
-      description: An ally targeted by this ability gains 5 temporary Stamina and makes a free strike instead of taking damage.
+      description: A target enemy is subject to this ability's power roll. A target ally instead gains 5 temporary Stamina and can make a free strike.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
       behaviors:
       - __typeName: ActivatedAbilityPowerRollBehavior
+        filterTarget: not Friends(Target, Caster)
         roll: 2d10 + Highest Characteristic
         tiers:
         - 6 poison damage
         - 8 poison damage
         - 9 poison damage; M<3 weakened (save ends)
+      - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+        filterTarget: Friends(Target, Caster)
+        stamina: "5"
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: standard
+        customAbility:
+          name: Invoked Ability
+          description: ""
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors: []
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8a3f1c5e-2b7d-4e9a-b6c3-1d4f0e8a2c75
+          iconid: ui-icons/skills/1.png
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          targetType: self
+        filterTarget: Friends(Target, Caster)
+        invokeOnCaster: false
+        promptText: The war doc's ally can make a free strike.
+        runOnController: true
+        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      effectImplemented: false
+      effectImplemented: true
       flavor: ""
       guid: 282444e0-a5a2-415a-b9a1-31b1713eac61
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords:
         Ranged: true
         Strike: true
@@ -162,33 +274,8 @@ info:
       range: 10
       repeatTargets: false
       targetType: target
-    - name: Sanguine Stimulants
-      description: Each ally adjacent to the target deals an additional 6 damage on their next strike.
-      __typeName: ActivatedAbility
-      abilityType: none
-      actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
-      behaviors: []
-      categorization: Heroic Ability
-      display:
-        bgcolor: "#ffffffff"
-        brightness: 1
-        hueshift: 0
-        saturation: 1
-      effectImplemented: false
-      flavor: ""
-      guid: 2e469830-4848-414d-8d8d-93cbb984c173
-      iconid: ui-icons/skills/1.png
-      implementation: 0
-      keywords: []
-      modifiers: []
-      numTargets: 1
-      range: 1
-      repeatTargets: false
-      resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 1
-      targetType: self
     - name: Posthumous Promotion
-      description: If the target has a loyalty collar, they are reduced to 0 stamina.
+      description: If the target has a loyalty collar, they are reduced to 0 Stamina.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -216,6 +303,7 @@ info:
       selfTarget: true
       strain: []
       targetFilter: Target has "*Loyalty Collar*"
+      targetTextOverride: "One war dog"
       targetType: target
     innateAttacks: []
     keywords:

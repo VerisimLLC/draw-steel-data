@@ -31,11 +31,88 @@ modifiers:
     __typeName: TriggeredAbility
     abilityType: none
     behaviors:
-    - __typeName: ActivatedAbilityRollBehavior
-      roll: 1d10
-      rollDescription: Roll Detonator Die
+    - __typeName: ActivatedAbilityScriptBehavior
+      code: |-
+        --Caustic Detonator: the odd/even die. Triggered casts run on the machine of
+        --whoever controls the creature wearing the detonator, so a hero's player rolls
+        --it and the Director rolls it for a monster. The roll goes on the sidebar roll
+        --card; the old roll dialog is only used when there is no sidebar to show it on.
+        --The result is stored as Cast.Memory("detonatorDie") for the explosion steps.
+        local done, total = false, nil
+        --Name who is rolling: one player can have several detonators go off at once.
+        local title = "Roll Detonator Die"
+        if casterToken.name ~= nil and casterToken.name ~= "" then
+            title = title .. " for " .. casterToken.name
+        end
+        local params = {
+            title = title,
+            description = "Roll Detonator Die",
+            explanation = "On an odd result, the detonator explodes.",
+            roll = "1d10",
+            creature = casterToken.properties,
+            completeRoll = function(rollInfo)
+                total = rollInfo.total
+                done = true
+            end,
+            cancelRoll = function()
+                done = true
+            end,
+        }
+
+        --The sidebar holds one roll at a time. When several detonators go off at
+        --once, each waits for its turn on it; the old dialog is only a last resort.
+        local mount = nil
+        if rawget(_G, "CharacterPanel") ~= nil and CharacterPanel.EmbedPromptRollDialog ~= nil then
+            local waitStart = dmhub.Time()
+            while mount == nil and dmhub.Time() - waitStart < 60 do
+                mount = CharacterPanel.EmbedPromptRollDialog{token = casterToken, ability = ability}
+                if mount == nil then
+                    coroutine.yield(0.2)
+                end
+            end
+        end
+
+        --Free the sidebar for the next roll, and put the ability card away again
+        --if we were the ones who put it up.
+        local function Teardown()
+            if mount == nil then return end
+            if mount.dialog ~= nil and mount.dialog.valid and mount.dialog.data ~= nil then
+                mount.dialog.data.promptPending = nil
+            end
+            if mount.locked then CharacterPanel.UnlockDisplayAbility(mount.lockId) end
+            if mount.ownedAbility ~= nil then CharacterPanel.HideAbility(mount.ownedAbility) end
+        end
+
+        local onSidebar = false
+        if mount ~= nil and mount.dialog ~= nil and mount.dialog.valid and mount.dialog.data ~= nil
+            and mount.dialog.data.ShowDialog ~= nil then
+            params.promptHeader = "<b>" .. title .. "</b>\nOn an odd result, the detonator explodes."
+            params.delay = mount.showDelay
+            onSidebar = mount.dialog.data.ShowDialog(params) ~= nil and mount.dialog.valid
+        end
+        if not onSidebar then
+            Teardown()
+            mount = nil
+            GameHud.instance.rollDialog.data.ShowDialog(params)
+        end
+
+        while not done do
+            --a sidebar card destroyed without finishing (displaced by another cast) can
+            --never call back, so treat that as a cancel rather than waiting forever.
+            if mount ~= nil and (mount.dialog == nil or not mount.dialog.valid) then
+                done = true
+            end
+            coroutine.yield(0.1)
+        end
+        Teardown()
+
+        symbols.cast:StoreMemory("detonatorDie", total or 0)
+        if total ~= nil then
+            ability:CommitToPaying(casterToken, options)
+        end
+      name: DetonatorDie
     - __typeName: ActivatedAbilityPowerRollBehavior
-      filterTarget: Cast.Roll = 1 or Cast.Roll = 3 or Cast.Roll = 5 or Cast.Roll = 7 or Cast.Roll = 9
+      filterTarget: Cast.Memory("detonatorDie") = 1 or Cast.Memory("detonatorDie") = 3 or Cast.Memory("detonatorDie") = 5 or Cast.Memory("detonatorDie") = 7 or Cast.Memory("detonatorDie") = 9
       roll: 2d10 + 2
       tiers:
       - 4 acid damage; M<0 bleeding (save ends)
@@ -43,7 +120,7 @@ modifiers:
       - 10 acid damage; M<2 bleeding (save ends)
     - __typeName: ActivatedAbilityPurgeEffectsBehavior
       conditions: []
-      filterTarget: Cast.Roll = 1 or Cast.Roll = 3 or Cast.Roll = 5 or Cast.Roll = 7 or Cast.Roll = 9
+      filterTarget: Cast.Memory("detonatorDie") = 1 or Cast.Memory("detonatorDie") = 3 or Cast.Memory("detonatorDie") = 5 or Cast.Memory("detonatorDie") = 7 or Cast.Memory("detonatorDie") = 9
       mode: effect
       ongoingEffect: 7c7cee0e-ad89-4c42-8a1d-94dec05a7b60
       purgeType: all
@@ -56,6 +133,7 @@ modifiers:
       CharacterOngoingEffect:7c7cee0e-ad89-4c42-8a1d-94dec05a7b60: true
     guid: 95a586c5-132e-4d5d-91d5-23f53f378a6a
     iconid: ui-icons/skills/1.png
+    implementation: 4
     modifiers: []
     numTargets: "1"
     persistence: []
@@ -63,8 +141,9 @@ modifiers:
     repeatTargets: false
     strain: []
     subject: self
+    targetTextOverride: Self
     targetType: self
-    trigger: beginround
+    trigger: endround
     whenActive: always
 - name: Caustic Detonator
   description: At the end of each round, roll a die. On an odd result, the detonator explodes
@@ -85,16 +164,17 @@ modifiers:
       __typeName: CharacterModifier
       activatedAbility:
         name: Remove Caustic Detonator
-        description: You can attempt an <b>easy Agility test</b> to remove the caustic detonator.
+        description: A creature adjacent to the target can attempt an Agility test as a maneuver to remove the detonator.
         __typeName: ActivatedAbility
         abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
         behaviors:
         - __typeName: ActivatedAbilityPowerRollBehavior
           roll: 2d10 + Agility
           tiers:
-          - Failure
-          - Disarm and destroy
-          - Disarm and throw
+          - No effect.
+          - The detonator is disarmed and destroyed.
+          - The creature can attach the detonator to another creature or object within 5 squares of them.
         - __typeName: ActivatedAbilityPurgeEffectsBehavior
           conditions: []
           mode: effect
@@ -128,6 +208,7 @@ modifiers:
               Ranged: true
             modifiers: []
             numTargets: "1"
+            objectTarget: true
             persistence: []
             range: "5"
             repeatTargets: false
@@ -136,7 +217,7 @@ modifiers:
           promptText: Throw Caustic Detonator
           tiersSelected:
           - 3
-        categorization: Heroic Ability
+        categorization: Ability
         display:
           bgcolor: "#ffffffff"
           brightness: 1
@@ -145,6 +226,7 @@ modifiers:
         domains: []
         guid: 1f95d4eb-ee62-42c2-bf20-8e7d456f56ad
         iconid: ui-icons/skills/1.png
+        implementation: 4
         modifiers: []
         numTargets: "1"
         persistence: []

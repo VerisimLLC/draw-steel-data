@@ -53,6 +53,7 @@ maliceAbilities:
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: 3
   strain: []
+  targetTextOverride: "Self"
   targetType: self
 - name: Fire for Effect
   description: ""
@@ -117,14 +118,16 @@ maliceAbilities:
   numTargets: "1"
   persistence: []
   preDescription: |+
-    Each creature in the area makes an Agility test. The same condition is imposed on each affected target.
+    Each target makes an Agility test. The same condition is imposed on each affected target.
 
   radius: "4"
   range: "10"
+  rangeTextOverride: "4 cube within 10"
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: 5
   strain: []
+  targetTextOverride: "Each creature in the area"
   targetType: cube
 - name: Fodder Run
   description: |
@@ -133,77 +136,52 @@ maliceAbilities:
   abilityType: none
   behaviors:
   - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    abilityType: standard
     customAbility:
       name: Invoked Ability
       description: ""
       __typeName: ActivatedAbility
       abilityType: none
-      behaviors:
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 4fead516-78f7-41f0-83db-8b2ad3769e61
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        promptText: Shift up to your speed
-        standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
-        standardAbilityParams:
-          distance: "<<movement speed>>"
-        targeting: self
-      - __typeName: ActivatedAbilityInvokeAbilityBehavior
-        abilityType: standard
-        customAbility:
-          name: Invoked Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: c65311da-a5cb-46c4-865c-ad5a13cbebde
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        promptText: Make a free strike
-        standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
-      - __typeName: ActivatedAbilityDestroyBehavior
-      categorization: Hidden
+      behaviors: []
       display:
         bgcolor: "#ffffffff"
         brightness: 1
         hueshift: 0
         saturation: 1
-      guid: c027eb06-3a8f-4b50-8a11-c1f685db8682
+      guid: 4fead516-78f7-41f0-83db-8b2ad3769e61
       iconid: ui-icons/skills/1.png
       modifiers: []
       numTargets: "1"
-      persistence: []
       range: 1
       repeatTargets: false
-      strain: []
       targetType: self
-    promptText: ""
-    targeting: inherit
+    promptText: Shift up to your speed
+    standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+    standardAbilityParams:
+      distance: movement speed
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    abilityType: standard
+    customAbility:
+      name: Invoked Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      behaviors: []
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: c65311da-a5cb-46c4-865c-ad5a13cbebde
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    promptText: Make a free strike
+    standardAbility: 6ff06550-b5f4-4259-8146-57f377d16dd9
+  - __typeName: ActivatedAbilityDestroyBehavior
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -213,27 +191,178 @@ maliceAbilities:
   iconid: ui-icons/skills/1.png
   implementation: 4
   modifiers: []
-  numTargets: "1"
+  numTargets: "99"
   persistence: []
-  range: 1
+  range: "100"
+  rangeTextOverride: "Special"
   reasonedFilters: []
   repeatTargets: false
   resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
   resourceNumber: 7
+  selfTarget: true
   strain: []
-  targetFilter: (not enemy) and target.minion and target.Type is War Dog
-  targetType: map
+  targetFilter: (not enemy) and target.minion and target.Type is "War Dog"
+  targetTextOverride: "Each war dog minion in the encounter"
+  targetType: target
 - name: Loyalty Unto Death
   description: ""
   __typeName: MaliceAbility
   abilityType: none
   actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
   behaviors:
-  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+  - __typeName: ActivatedAbilityInvokeAbilityBehavior
+    abilityType: standard
     applyto: targets
-    rule: shift {Movement Speed}
-  - __typeName: ActivatedAbilityDestroyBehavior
+    customAbility:
+      name: Invoked Ability
+      description: ""
+      __typeName: ActivatedAbility
+      abilityType: none
+      behaviors: []
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 5b2e8f1a-9c3d-4e7b-a6f0-1d8c4b2e7a93
+      iconid: ui-icons/skills/1.png
+      modifiers: []
+      numTargets: "1"
+      range: 1
+      repeatTargets: false
+      targetType: self
+    promptText: Shift up to your speed
+    standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+    standardAbilityParams:
+      distance: movement speed
+  - __typeName: ActivatedAbilityScriptBehavior
     applyto: targets
+    code: |-
+      --Loyalty Unto Death: reduce each target to 0 Stamina and resolve its Loyalty
+      --Collar now, before the Presence tests. Left alone, a collar waits for this
+      --ability to finish, so its automatic trigger is switched off while the target
+      --dies and the collar is fired from here instead, which runs it straight away.
+      ability:CommitToPaying(casterToken, options)
+
+      --An AI-run war dog answers the collar prompt itself, as the AI does for every
+      --collar; otherwise the Director's prompt is left for them to answer.
+      local aiCast = creature.IsTokenAIControlled ~= nil and creature.IsTokenAIControlled(casterToken.charid)
+
+      local function FindCollar(props)
+          for _, entry in ipairs(props:GetActiveModifiers() or {}) do
+              local m = entry.mod
+              if m ~= nil and m.behavior == "trigger" and m:has_key("triggeredAbility")
+                  and string.find(m.triggeredAbility.name or "", "Loyalty Collar", 1, true) then
+                  return m, entry
+              end
+          end
+          return nil, nil
+      end
+
+      local function CollarPrompt(tok)
+          for _, trig in pairs(tok.properties:GetAvailableTriggers(true) or {}) do
+              local ok, text = pcall(function() return trig:GetText() end)
+              if ok and type(text) == "string" and string.find(text, "Collar", 1, true) then
+                  return trig
+              end
+          end
+          return nil
+      end
+
+      for _, target in ipairs(targets) do
+          local tok = target.token
+          if tok ~= nil and tok.valid and tok.properties ~= nil and not tok.properties:IsDead() then
+              --the Presence tests are made by enemies adjacent to where the target was,
+              --even once its collar has removed it from the map.
+              target.loc = tok.loc
+
+              local props = tok.properties
+              local isMinion = props.minion
+              local collarMod, collarContext = FindCollar(props)
+
+              tok:ModifyProperties{
+                  description = "Destroyed by Loyalty Unto Death",
+                  execute = function()
+                      if collarMod ~= nil then
+                          tok.properties:SetTriggeredAbilityEnabled(collarMod.triggeredAbility, false)
+                      end
+                      if isMinion then
+                          tok.properties:TakeDamage(tok.properties:SingleMinionMaxStamina(), "Destroyed by Loyalty Unto Death")
+                      else
+                          local p = tok.properties
+                          local needed = p:CurrentHitpoints() + p:TemporaryHitpoints() - p:KillThresholdStamina()
+                          p:TakeDamage(math.max(needed, p:MaxHitpoints()), "Destroyed by Loyalty Unto Death")
+                      end
+                  end,
+              }
+
+              --a minion only dies once its death is confirmed (the skull click); do that now.
+              if isMinion and not tok.properties.minionDead then
+                  local live = tok.properties
+                  live._tmp_minionDeathPending = dmhub.Time()
+                  live:TriggerEvent("creaturedeath", {hasattacker = false})
+                  live:MinionDeath()
+              end
+
+              if collarMod ~= nil then
+                  --The collar's removal step waits for every running cast except ones
+                  --marked "reaping"; mark this one so it does not wait on us while we wait on it.
+                  local castInfo = ActivatedAbility.CurrentCastInfo()
+                  local priorActivity = castInfo ~= nil and castInfo.activity or nil
+                  if castInfo ~= nil then
+                      castInfo.activity = "reaping"
+                  end
+
+                  --a waiting caller makes the trigger run at once rather than after this ability.
+                  local done = false
+                  local collar = tok.properties:ApplyAbilityModifiers(collarMod.triggeredAbility, nil, "triggered") or collarMod.triggeredAbility
+                  collar:Trigger(collarMod, tok.properties, {}, nil, collarContext, {complete = function() done = true end})
+
+                  local start = dmhub.Time()
+                  local accepted = false
+                  while not done and dmhub.Time() - start < 120 do
+                      if not tok.valid or tok.properties == nil then
+                          break
+                      end
+                      if aiCast and not accepted then
+                          local prompt = CollarPrompt(tok)
+                          if prompt ~= nil then
+                              accepted = true
+                              tok:ModifyProperties{
+                                  description = "Detonate loyalty collar",
+                                  undoable = false,
+                                  execute = function()
+                                      prompt.triggered = true
+                                      tok.properties:DispatchAvailableTrigger(prompt)
+                                  end,
+                              }
+                          end
+                      end
+                      coroutine.yield(0.1)
+                  end
+                  if castInfo ~= nil then
+                      castInfo.activity = priorActivity
+                  end
+
+                  --switch the automatic collar back on, in case this war dog comes back.
+                  if tok.valid and tok.properties ~= nil then
+                      tok:ModifyProperties{
+                          description = "Restore loyalty collar",
+                          undoable = false,
+                          execute = function()
+                              tok.properties:SetTriggeredAbilityEnabled(collarMod.triggeredAbility, true)
+                          end,
+                      }
+                  end
+              end
+
+              --The collar despawns the war dog, and a despawned token finds no one nearby,
+              --so the later "adjacent enemy" steps would hit nobody. Without a token they
+              --use target.loc (where it died) instead.
+              target.token = nil
+          end
+      end
+    name: CollarsResolveFirst
   - __typeName: ActivatedAbilityPowerRollBehavior
     applyto: proximity_only
     filterTarget: not Friends(target, caster) and not target.object
@@ -241,9 +370,61 @@ maliceAbilities:
     resistanceRoll: true
     roll: 2d10 + Presence
     tiers:
-    - push 4; frightened (save ends)
-    - push 2; frightened (EoT)
-    - push 2
+    - "#Push 4; the enemy is frightened of the nearest non-minion war dog (save ends)"
+    - "#Push 2; the enemy is frightened of the nearest non-minion war dog (EoT)"
+    - "#Push 2"
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: proximity_only
+    filterTarget: not Friends(target, caster) and not target.object and Cast.TierForTarget(Target) = 1
+    rule: frightened (save ends)
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: proximity_only
+    filterTarget: not Friends(target, caster) and not target.object and Cast.TierForTarget(Target) = 2
+    rule: frightened (EoT)
+  - __typeName: ActivatedAbilityScriptBehavior
+    applyto: caster
+    code: |-
+      --Loyalty Unto Death: each enemy this ability frightened is frightened of the
+      --nearest living non-minion war dog on the caster's side, not of the war dog
+      --that used the ability.
+      local frightened = CharacterCondition.conditionsByName["frightened"]
+      if frightened == nil then return end
+      local affected = symbols.cast:try_get("inflictedConditions", {})[frightened.id] or {}
+      for _, charid in ipairs(affected) do
+          local tok = dmhub.GetTokenById(charid)
+          if tok ~= nil and tok.valid then
+              local best, bestDistance = nil, nil
+              for _, other in ipairs(dmhub.allTokens) do
+                  local props = other.properties
+                  if other.valid and props ~= nil and other.charid ~= tok.charid
+                      and other.floorIndex == tok.floorIndex and not props:IsDead()
+                      and not props.minion and props:try_get("keywords", {})["War Dog"]
+                      and casterToken:IsFriend(other) then
+                      local distance = tok:Distance(other)
+                      if bestDistance == nil or distance < bestDistance then
+                          best, bestDistance = other, distance
+                      end
+                  end
+              end
+              if best ~= nil then
+                  tok:ModifyProperties{
+                      description = "Frightened of the nearest war dog",
+                      execute = function()
+                          tok.properties:SetInflictedConditionSource(frightened.id, {tokenid = best.charid})
+                      end,
+                  }
+              end
+          end
+      end
+    name: NearestWarDogFrightens
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: proximity_only
+    filterTarget: not Friends(target, caster) and not target.object and Cast.TierForTarget(Target) = 1
+    rule: push 4
+  - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+    applyto: proximity_only
+    filterTarget: not Friends(target, caster) and not target.object and Cast.TierForTarget(Target) >= 2
+    rule: push 2
   display:
     bgcolor: "#ffffffff"
     brightness: 1
@@ -271,6 +452,7 @@ maliceAbilities:
   resourceNumber: 5
   selfTarget: true
   strain: []
+  targetTextOverride: "Two war dogs"
   targetType: target
 - name: Alchemical Cloud
   description: ""

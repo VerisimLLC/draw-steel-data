@@ -109,7 +109,7 @@ info:
           trigger: losehitpoints
       source: Trait
     - name: Persistent Pain
-      description: The tormentite takes 1 damage at the start of each of their turns.
+      description: From the start of the encounter, the tormentite takes 1 damage at the start of each of their turns.
       __typeName: CharacterFeature
       domains:
         CharacterFeature:86d9ec06-91da-4f99-a99d-6b34ee89dc21: true
@@ -117,7 +117,7 @@ info:
       implementation: 4
       modifiers:
       - name: Persistent Pain
-        description: The tormentite takes 1 damage at the start of each of their turns.
+        description: From the start of the encounter, the tormentite takes 1 damage at the start of each of their turns.
         __typeName: CharacterModifier
         behavior: trigger
         guid: b6fd34b7-eec1-4420-871e-975b4e09ce0b
@@ -256,7 +256,7 @@ info:
     inflictedConditions: []
     innateActivatedAbilities:
     - name: Mark of Agony
-      description: Strikes against marked targets have an edge. Whenever the tormentite takes damage, each marked target takes 3 damage.
+      description: Strikes made against a target marked this way gain an edge. Additionally, whenever the tormentite takes damage, each target marked by them takes 3 damage.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -265,8 +265,15 @@ info:
         roll: 2d10 + Highest Characteristic
         tiers:
         - 6 corruption damage
-        - 8 corruption damage; mark of agony (save ends)
-        - 9 corruption damage; mark of agony (save ends)
+        - "8 corruption damage; #the target is marked (save ends)"
+        - "9 corruption damage; #the target is marked (save ends)"
+      - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+        duration: save_ends
+        ongoingEffect: b9688e7e-767b-4562-bb9b-ea721759d567
+        ongoingEffectCustom: false
+        tiersSelected:
+        - 2
+        - 3
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
@@ -284,11 +291,12 @@ info:
         Strike: true
       modifiers: []
       numTargets: 1
+      objectTarget: true
       range: 10
       repeatTargets: false
       targetType: target
     - name: Vortex of Pain
-      description: The tormentite regains 2 Stamina per target of this ability.
+      description: The tormentite regains 2 Stamina for each creature targeted by this ability.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
@@ -419,14 +427,17 @@ info:
       keywords:
         Area: true
         Magic: true
+        Ranged: true
       modifiers: []
       numTargets: 1
       radius: 4
       range: 10
+      rangeTextOverride: "4 cube within 10"
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
       resourceNumber: 3
       targetFilter: Enemy
+      targetTextOverride: "Each enemy in the area"
       targetType: cube
     innateAttacks: []
     keywords:
