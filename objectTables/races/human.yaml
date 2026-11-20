@@ -52,9 +52,66 @@ modifierInfo:
     __typeName: CharacterFeature
     guid: 75d8f226-1848-4e98-b245-31d350c644d4
     implementation: 4
-    modifiers: []
+    implementationDetails: The maneuver shows a 5-square aura until the end of your next turn. The Director tells you what you sense in it.
+    modifiers:
+    - name: "Signature Trait: Detect the Supernatural"
+      description: You open your awareness to detect supernatural creatures and phenomena.
+      __typeName: CharacterModifier
+      activatedAbility:
+        name: Detect the Supernatural
+        description: Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another plane of existence within 5 squares of you, even if you don't have line of effect to them. You know if you're detecting an item or a creature, and you know if a creature is undead, a construct, or from another plane of existence.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: cb3932c8-d911-4490-a1f2-94aa9adb6266
+          ongoingEffectCustom: cb3932c8-d911-4490-a1f2-94aa9adb6266
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions:
+          - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+          filterTarget: Keywords has "Undead" or Keywords has "Construct" or Keywords has "Demon" or Keywords has "Abyssal" or Keywords has "Devil" or Keywords has "Infernal" or Keywords has "Elemental" or Keywords has "Soulless"
+          mode: conditions
+          purgeType: all
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          filterTarget: Keywords has "Undead" or Keywords has "Construct" or Keywords has "Demon" or Keywords has "Abyssal" or Keywords has "Devil" or Keywords has "Infernal" or Keywords has "Elemental" or Keywords has "Soulless"
+          mode: effect
+          ongoingEffect: 0aa81848-85f7-4c0a-915c-146de14eb8aa
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: You open your awareness to detect supernatural creatures and phenomena.
+        guid: a3563477-ff55-49a5-ad03-cb2581db5464
+        iconid: 7b697bac-911c-45ea-8989-ac7cd5d2db80
+        implementation: 4
+        implementationDetails: Undead, constructs, demons, devils, elementals and soulless creatures in the aura lose Hidden and can't hide until the end of your next turn. The Director tells you what else you sense, including what is out of sight.
+        keywords:
+          Area: true
+        modifiers: []
+        numTargets: "1"
+        properties:
+          searchforhidden: true
+        range: 5
+        repeatTargets: false
+        selfTarget: true
+        strain: []
+        targetFilter: Self = Caster or Keywords has "Undead" or Keywords has "Construct" or Keywords has "Demon" or Keywords has "Abyssal" or Keywords has "Devil" or Keywords has "Infernal" or Keywords has "Elemental" or Keywords has "Soulless"
+        targetTextOverride: Self and each supernatural creature
+        targetType: all
+      behavior: activated
+      domains:
+        race:6f995f3d-a4e3-456a-9294-ff2c9ec5cb95: true
+      guid: 5bfa6e07-352e-4cc7-a45f-ff73bba46e48
+      source: Human Race Feature
+      sourceguid: 75d8f226-1848-4e98-b245-31d350c644d4
     source: Human Race Feature
     tags:
+      Ability: true
       Exploration: true
   - name: Purchased Human Traits
     description: You have 3 ancestry points to spend on the following traits.
@@ -69,7 +126,7 @@ modifierInfo:
       __typeName: CharacterFeature
       canHavePrerequisites: true
       guid: 4081942d-fdb3-4975-9096-8bfa0c268832
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Can't Take Hold
         description: 'Your connection to the natural world allows you resist supernatural effects. You ignore difficult terrain (but not other effects) created by magic and psionic abilities. Additionally, when you are force moved by a magic or psionic ability, you reduce the forced movement by 1. '

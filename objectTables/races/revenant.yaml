@@ -117,7 +117,8 @@ modifierInfo:
     domains:
       race:a68bafb1-60b2-4c60-b4f7-58032ef8fdbc: true
     guid: f2932630-2019-40e8-b683-f390d0b733c2
-    implementation: 2
+    implementation: 4
+    implementationDetails: Becoming inert instead of dying, and being destroyed by fire damage while inert, are handled at the table.
     modifiers:
     - name: "Signature Trait: Tough But Withered"
       description: |-
@@ -190,7 +191,8 @@ modifierInfo:
           saturation: 1
         guid: b9997374-ce5a-4cf9-8664-74bd163dea65
         iconid: ui-icons/skills/1.png
-        implementation: 2
+        implementation: 4
+        implementationDetails: Becoming inert instead of dying, and being destroyed by fire damage while inert, are handled at the table.
         modifiers: []
         numTargets: "1"
         range: 1
@@ -294,7 +296,8 @@ modifierInfo:
       domains:
         race:a68bafb1-60b2-4c60-b4f7-58032ef8fdbc: true
       guid: ad2db645-8ab3-4623-8791-5977911d6548
-      implementation: 2
+      implementation: 4
+      implementationDetails: Placing a sigil past your limit (your level) removes your oldest sigil automatically, on any creature in the game. Placing one again on a creature that already has it makes that sigil your newest. Knowing the direction to a sigil is narrative.
       modifiers:
       - name: Vengeance Mark
         description: |-
@@ -316,6 +319,70 @@ modifierInfo:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             ongoingEffect: ab39ec05-193a-41f2-b00f-f66e067cc948
             ongoingEffectCustom: ab39ec05-193a-41f2-b00f-f66e067cc948
+          - name: SigilLimit
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |-
+              --Vengeance Mark: you can have as many sigils as your level. When placing one takes you
+              --over that, your oldest sigil disappears. Each sigil is stamped with a counter kept on
+              --you, so "oldest" means placed (or placed again) longest ago. Unstamped sigils count as oldest.
+              local sigilId = "ab39ec05-193a-41f2-b00f-f66e067cc948"
+              local caster = casterToken.properties
+              local limit = math.max(1, caster:CharacterLevel())
+
+              --This caster's sigil on a creature, or nil. Another revenant's sigil is left alone.
+              local function MySigil(props)
+                  for _, effect in ipairs(props:try_get("ongoingEffects") or {}) do
+                      local info = effect:try_get("casterInfo")
+                      if effect.ongoingEffectid == sigilId and info ~= nil and info.tokenid == casterToken.charid then
+                          return effect
+                      end
+                  end
+                  return nil
+              end
+
+              --Stamp the sigil just placed as the newest.
+              local counter = (caster:try_get("vengeanceSigilCounter") or 0) + 1
+              casterToken:ModifyProperties{
+                  description = "Vengeance Mark",
+                  undoable = false,
+                  execute = function()
+                      caster.vengeanceSigilCounter = counter
+                  end,
+              }
+              for _, target in ipairs(targets) do
+                  local tok = target.token
+                  if tok ~= nil and tok.valid then
+                      tok:ModifyProperties{
+                          description = "Vengeance Mark",
+                          execute = function()
+                              local sigil = MySigil(tok.properties)
+                              if sigil ~= nil then
+                                  sigil.sigilOrder = counter
+                              end
+                          end,
+                      }
+                  end
+              end
+
+              --Every sigil of yours in the game, on this map or not, oldest first.
+              local sigils = {}
+              for _, tok in pairs(dmhub.GetAllCharacters()) do
+                  local sigil = tok.properties ~= nil and MySigil(tok.properties) or nil
+                  if sigil ~= nil then
+                      sigils[#sigils+1] = {token = tok, seq = sigil.seq, order = sigil:try_get("sigilOrder") or 0}
+                  end
+              end
+              table.sort(sigils, function(a, b) return a.order < b.order end)
+
+              for i = 1, #sigils - limit do
+                  local entry = sigils[i]
+                  entry.token:ModifyProperties{
+                      description = "Oldest sigil disappears",
+                      execute = function()
+                          entry.token.properties:RemoveOngoingEffectBySeq(entry.seq)
+                      end,
+                  }
+              end
           categorization: Ability
           display:
             bgcolor:
@@ -336,11 +403,12 @@ modifierInfo:
             You always know the direction to the exact location of a creature who bears one of your sigils and is on the same plane of existence as you.
           guid: 94c54844-c2b1-4f62-ab24-fa1403ee384e
           iconid: 6ed7bff0-8d17-4f1d-9494-531883f754ab
-          implementation: 2
+          implementation: 4
+          implementationDetails: Placing a sigil past your limit (your level) removes your oldest sigil automatically, on any creature in the game. Placing one again on a creature that already has it makes that sigil your newest. Knowing the direction to a sigil is narrative.
           modifiers: []
           numTargets: "1"
           persistence: []
-          range: "10		"
+          range: "10"
           repeatTargets: false
           strain: []
           targetType: target
@@ -368,7 +436,7 @@ modifierInfo:
           actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
           behaviors:
           - __typeName: ActivatedAbilityPowerRollBehavior
-            roll: 2d10 + Reason, Intuition or Presence
+            roll: 2d10 + Reason or Intuition or Presence
             tiers:
             - 3 + R, I, or P damage; slide 1
             - 5 + R, I, or P damage; slide 2
@@ -393,9 +461,10 @@ modifierInfo:
             race:a68bafb1-60b2-4c60-b4f7-58032ef8fdbc: true
           guid: 73da34bc-0589-41d0-9447-65481fbea129
           iconid: 74db885f-d96e-4b14-af40-69292a0d6a22
-          implementation: 2
+          implementation: 4
           keywords:
             Magic: true
+            Ranged: true
             Strike: true
           modifiers: []
           numTargets: "1"

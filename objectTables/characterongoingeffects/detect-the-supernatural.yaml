@@ -1,0 +1,96 @@
+id: cb3932c8-d911-4490-a1f2-94aa9adb6266
+name: Detect the Supernatural
+description: Until the end of your next turn, you know the location of any supernatural object, undead, construct, or creature from another plane of existence within 5 squares of you, even if you don't have line of effect to them. You know if you're detecting an item or a creature, and you know if a creature is undead, a construct, or from another plane of existence.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+ctime: 1795124266968
+custom: true
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+domains:
+  CharacterOngoingEffect:cb3932c8-d911-4490-a1f2-94aa9adb6266: true
+guid: cb3932c8-d911-4490-a1f2-94aa9adb6266
+iconid: 7b697bac-911c-45ea-8989-ac7cd5d2db80
+implementation: 4
+implementationDetails: The aura shows the 5 squares you sense. The Director tells you what is in it.
+modifiers:
+- name: Detect the Supernatural
+  description: You sense supernatural objects, undead, constructs and creatures from another plane of existence within 5 squares of you, even without line of effect.
+  __typeName: CharacterModifier
+  aura:
+    name: Detect the Supernatural
+    description: You sense supernatural objects, undead, constructs and creatures from another plane of existence within 5 squares of you, even without line of effect.
+    __typeName: Aura
+    applyto: all
+    creatureFilter: Keywords has "Undead" or Keywords has "Construct" or Keywords has "Demon" or Keywords has "Abyssal" or Keywords has "Devil" or Keywords has "Infernal" or Keywords has "Elemental" or Keywords has "Soulless"
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: 5becc005-4338-46e4-87a3-da12f357d08e
+    modifiers:
+    - name: Detect the Supernatural
+      description: A supernatural creature in the aura can't become hidden.
+      __typeName: CharacterModifier
+      behavior: conditionimmunity
+      conditions:
+      - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+      guid: 441efaa4-a8fa-43cd-95fc-8096bd384688
+      immunityMessage: Something here can sense me. I can't hide!
+      source: Aura
+      sourceguid: 5becc005-4338-46e4-87a3-da12f357d08e
+    - name: Detect the Supernatural
+      description: A supernatural creature in the aura can't use the Hide maneuver.
+      __typeName: CharacterModifier
+      abilityFilter: not Ability.name is Hide
+      behavior: suppressabilities
+      explanation: You can't hide while a hero is detecting the supernatural around you
+      guid: d3a77539-0b4f-460f-b59c-4fcff32d5793
+      source: Aura
+      sourceguid: 5becc005-4338-46e4-87a3-da12f357d08e
+    objectid: b7cbb1bf-6ed4-40b8-b1c9-ce091f24f651
+    triggers:
+    - ability:
+        name: Detect the Supernatural
+        description: A hidden supernatural creature that enters the aura, or starts its turn in it, stops being hidden.
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions:
+          - 31daf7f6-f77c-4f73-8eab-43e2d0f123c0
+          mode: conditions
+          purgeType: all
+        - __typeName: ActivatedAbilityPurgeEffectsBehavior
+          conditions: []
+          mode: effect
+          ongoingEffect: 0aa81848-85f7-4c0a-915c-146de14eb8aa
+        conditionFormula: Conditions has "hidden"
+        guid: f689a442-38ab-4264-893d-413d702742ec
+        iconid: ui-icons/skills/1.png
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        radius: 0
+        range: 5
+        repeatTargets: false
+        silent: true
+        strain: []
+        targetType: self
+        trigger: onenter
+      trigger: onenter
+  behavior: aura
+  domains:
+    CharacterOngoingEffect:cb3932c8-d911-4490-a1f2-94aa9adb6266: true
+  guid: 0e8b8d0b-596c-447d-aa63-ddc43ee27416
+  radius: "5"
+  seq: 88202f4e-4694-412a-bd69-eb356e8ea049
+  source: Ongoing Effect
+  sourceguid: cb3932c8-d911-4490-a1f2-94aa9adb6266
+mtime: 1795124266968
+source: Ongoing Effect
