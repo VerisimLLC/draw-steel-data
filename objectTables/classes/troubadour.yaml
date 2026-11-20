@@ -3576,6 +3576,7 @@ levels:
             class:97bd30e0-b670-41c7-9136-6a832625f049: true
           guid: 93763dec-0b14-454b-bcb6-83b6e7cbb424
           iconid: fbfb413b-5378-48cc-9a8d-44af9bddd71c
+          implementation: 4
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -3586,7 +3587,7 @@ levels:
         behavior: activated
         domains:
           class:97bd30e0-b670-41c7-9136-6a832625f049: true
-        filterCondition: (Stamina <= -Maximum Stamina/2) and (Resources.Heroic Resource >= 30)
+        filterCondition: Dead and (Resources.Heroic Resource >= 30)
         guid: d0752b1f-44c3-4009-a1e7-6be3dddcb9ab
         source: Troubadour Class Feature
         sourceguid: 3469a0e7-4153-41c3-8a4d-6df3934342e1
@@ -4034,65 +4035,83 @@ levels:
               - 5 + P psychic damage
               - 7 + P psychic damage
             - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
               applyto: caster
               autoTarget: false
               customAbility:
-                name: Invoked Ability
-                description: ""
+                name: Witty Banter
+                description: One ally within 10 squares can end one effect on them that is ended by a saving throw or that ends at the end of their turn.
                 __typeName: ActivatedAbility
                 abilityType: none
-                behaviors: []
+                actionResourceId: none
+                behaviors:
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  abilityType: standard
+                  autoTarget: false
+                  standardAbility: c987c375-efaf-4728-91aa-d705557c099a
+                  standardAbilityParams:
+                    range: "10"
+                    targetcount: "1"
+                  targeting: inherit
+                - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                  abilityType: custom
+                  autoSelectInheritedTargets: true
+                  customAbility:
+                    name: "Witty Banter: Spend 1 Drama"
+                    description: The chosen ally can also spend a Recovery.
+                    __typeName: ActivatedAbility
+                    abilityType: none
+                    actionResourceId: none
+                    behaviors:
+                    - __typeName: ActivatedAbilityInvokeAbilityBehavior
+                      abilityType: standard
+                      autoTarget: false
+                      standardAbility: a478d5f1-fed3-4772-9930-c3e82dc23f12
+                      standardAbilityParams:
+                        numrecoveries: "1"
+                        numtargets: "1"
+                        range: "10"
+                      targeting: inherit
+                    categorization: Hidden
+                    display:
+                      bgcolor: "#ffffffff"
+                      brightness: 1
+                      hueshift: 0
+                      saturation: 1
+                    guid: 479da170-16e0-4618-be6c-8ab7f5aaac9a
+                    iconid: 2db779f8-a498-4fc6-a8e4-4f0f7f609e27
+                    implementation: 4
+                    modifiers: []
+                    numTargets: "1"
+                    persistence: []
+                    range: "10"
+                    repeatTargets: false
+                    resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+                    resourceNumber: 1
+                    strain: []
+                    targetType: target
+                  filterTarget: Caster.Heroic Resources Available to Spend >= 1
+                  invokeOnCaster: true
+                  promptText: "Spend 1 Drama: the chosen ally can also spend a Recovery"
+                  targeting: prompt_inherit
+                categorization: Hidden
                 display:
                   bgcolor: "#ffffffff"
                   brightness: 1
                   hueshift: 0
                   saturation: 1
-                guid: c22b1d22-9cc2-4937-bcb1-a03501e319cb
-                iconid: ui-icons/skills/1.png
+                guid: 238c12df-b635-4ead-8fdc-a08d8771d716
+                iconid: 2db779f8-a498-4fc6-a8e4-4f0f7f609e27
+                implementation: 4
                 modifiers: []
                 numTargets: "1"
-                range: 1
-                repeatTargets: false
-                targetType: self
-              modesSelected:
-              - 1
-              promptText: Choose an ally to end a "save ends" or "EoT" effect on
-              standardAbility: c987c375-efaf-4728-91aa-d705557c099a
-              standardAbilityParams:
+                objectTarget: false
+                persistence: []
                 range: "10"
-                targetcount: "1"
-            - __typeName: ActivatedAbilityInvokeAbilityBehavior
-              abilityType: standard
-              applyto: caster
-              autoTarget: false
-              customAbility:
-                name: Invoked Ability
-                description: ""
-                __typeName: ActivatedAbility
-                abilityType: none
-                behaviors: []
-                display:
-                  bgcolor: "#ffffffff"
-                  brightness: 1
-                  hueshift: 0
-                  saturation: 1
-                guid: c22b1d22-9cc2-4937-bcb1-a03501e319cb
-                iconid: ui-icons/skills/1.png
-                modifiers: []
-                numTargets: "1"
-                range: 1
                 repeatTargets: false
-                targetType: self
-              filterTarget: ""
-              guid: 690cb617-be64-4230-b343-90ed60988eeb
-              modesSelected:
-              - 2
-              promptText: Choose an ally to end a "save ends" effect on and spend Recovery
-              standardAbility: ce0faa6b-3dc2-40f3-8b95-657ad1aab873
-              standardAbilityParams:
-                range: "10"
-                targetcount: "1"
+                strain: []
+                targetAllegiance: ally
+                targetType: target
+              promptText: "Witty Banter: choose one ally within 10 squares"
             categorization: Signature Ability
             display:
               bgcolor: "#ffffffff"
@@ -4105,20 +4124,15 @@ levels:
             flavor: A lyrical (and physical) jab insults an enemy and inspires an ally.
             guid: e59e2523-c738-43f6-8c99-7afb567e31bd
             iconid: 2db779f8-a498-4fc6-a8e4-4f0f7f609e27
-            implementation: 3
-            implementationDetails: Spending 1 Drama must be determined before the ability roll is made, when it could be at the time the effect is ended.
+            implementation: 4
+            implementationDetails: After the roll you pick the ally, who chooses the effect to end. You are then asked whether to spend 1 Drama so they can also spend a Recovery.
             keywords:
               Magic: true
               Melee: true
               Ranged: true
               Strike: true
             meleeRange: 1
-            modeList:
-            - text: No Recovery
-            - condition: Resources.Heroic Resource > 0
-              text: "1 Drama: Ally spends Recovery"
             modifiers: []
-            multipleModes: true
             numTargets: 1
             persistence: []
             range: 5
@@ -4527,7 +4541,7 @@ levels:
       domains:
         class:97bd30e0-b670-41c7-9136-6a832625f049: true
       guid: 449fbaaf-8490-48f3-8db1-e3a55cc6684f
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Routines
         description: "You enter every performance with a set of routines at the ready. Routines are auras and other wide-reaching effects that have the Routine keyword, and which center around you while you move through the fray. At the start of each round of combat, as long as you are not dazed, dead, or surprised, you can either set a new routine to be active or maintain your current routine (no action required). Your routine ends if you are unable to maintain it, or at the end of the encounter. \n\nYou start off with the Choreography and Revitalizing Limerick routine ability. Your choice of troubadour class act then grants you additional routines. "
@@ -4872,7 +4886,7 @@ levels:
           targetType: self
           trigger: endturn
           triggerPrompt: Choose {presence} allies, they may each spend a Recovery.
-      - name: Choreography
+      - name: Revitalizing Limerick
         description: ""
         __typeName: CharacterModifier
         aura:
@@ -4890,7 +4904,7 @@ levels:
             brightness: 1
             hueshift: 0
             saturation: 1
-          guid: 671931f9-c6c2-4e34-96be-7a2ab8e5023a
+          guid: 6a5b0662-1295-4f56-80cf-087f20dfde85
           iconid: 12cdef25-2e5b-47e0-bccf-758198de8442
           implementation: 3
           modifiers: []
@@ -4901,9 +4915,9 @@ levels:
           class:97bd30e0-b670-41c7-9136-6a832625f049: true
         guid: e822a153-65b6-4ce4-a971-35fa315995e9
         radius: "5"
-        seq: 91f1e8ec-5daf-4046-9dd7-068c72d112f1
+        seq: 80c020f9-276f-4ba5-8c7f-fb9b57958caf
         source: Troubadour Class Feature
-        sourceguid: 0827be19-5567-4536-893e-605200b2eb14
+        sourceguid: 3c5dd793-193d-4e41-8336-17e16d391294
       source: Troubadour Class Feature
       sourceReference:
         __typeName: SourceReference
