@@ -19,6 +19,7 @@ modifierInfo:
     __typeName: CharacterFeature
     canHavePrerequisites: true
     guid: 8bf830cf-c719-4895-91f0-9b65fe8e53f7
+    implementation: 3
     modifiers:
     - name: Summon Familiar
       description: ""
@@ -27,10 +28,64 @@ modifierInfo:
         name: Summon Familiar
         description: ""
         __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: (Combat Round = 0) or (not (Ongoing Effects has "Familiar Destroyed")) or (Recoveries Available to Spend > 0)
+          reason: You need a Recovery to bring your familiar back in combat.
         abilityType: none
+        actionNumber: 1 when (Combat Round > 0) and (Ongoing Effects has "Familiar Destroyed") else 0
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
         behaviors:
+        - name: OneFamiliar
+          __typeName: ActivatedAbilityScriptBehavior
+          code: |-
+            --Familiar perk: a hero has only one familiar. If this hero's familiar is
+            --still on the map, stop before the summon step so no second one appears.
+            --A destroyed familiar is dead or despawned, so it can be brought back.
+            local familiarBestiaryId = "affc11be-5ac7-407e-8e61-c9297d6aef5f"
+            for _,tok in ipairs(dmhub.GetTokens()) do
+                local props = tok.properties
+                if tok.valid and not tok.despawned and props ~= nil
+                    and tok.summonerid == casterToken.charid
+                    and (tok.bestiaryId == familiarBestiaryId or props:try_get("monster_type") == "Familiar")
+                    and not props:IsDead() then
+                    casterToken:ModifyProperties{
+                        description = "Float text",
+                        undoable = false,
+                        execute = function()
+                            casterToken.properties:FloatLabel("You already have a familiar", "#ffffffff")
+                        end,
+                    }
+                    --abort without paying, and skip the summon behavior below.
+                    options.abort = true
+                    options.stopProcessing = true
+                    return
+                end
+            end
+            --Once the new familiar is here, clear the Familiar Destroyed marker so the
+            --next summon is free again. This runs after the cast is paid for, because
+            --the main action cost is worked out from the marker at payment time.
+            local destroyedEffectId = "e680f37b-32ef-473c-aa1c-fdf71a4f8e4c"
+            options.OnFinishCastHandlers = options.OnFinishCastHandlers or {}
+            options.OnFinishCastHandlers[#options.OnFinishCastHandlers+1] = function()
+                if options.abort or not casterToken.valid or casterToken.properties == nil then
+                    return
+                end
+                casterToken:ModifyProperties{
+                    description = "Familiar restored",
+                    execute = function()
+                        casterToken.properties:RemoveOngoingEffect(destroyedEffectId)
+                    end,
+                }
+            end
         - __typeName: ActivatedAbilitySummonBehavior
           monsterType: affc11be-5ac7-407e-8e61-c9297d6aef5f
+          persistAfterCombat: true
+        - __typeName: ActivatedAbilityReplenishBehavior
+          applyto: caster
+          chatMessage: Recovery Spent
+          filterTarget: (Combat Round > 0) and (Ongoing Effects has "Familiar Destroyed")
+          mode: expend
+          resourceid: 5bd90f9b-46be-4cf2-8ca6-a96430d62949
         castImmediately: false
         categorization: Ability
         display:
@@ -47,8 +102,8 @@ modifierInfo:
         flavor: 'A supernatural spirit who has taken the form of a specific small animal or animated object has chosen to be your familiar—or to adopt you as their familiar. '
         guid: 955f711a-2c92-4faf-9f26-c538f6617d53
         iconid: d2035312-afaa-4011-a88e-d812fc56cac3
-        implementation: 2
-        implementationDetails: "The familiar can hold small objects in their mouth or claws, but can’t perform activities that would typically require hands (opening a door, unrolling a scroll, and so forth). They can’t harm other creatures or objects. They can flank in combat, but only with you. \n\nIf your familiar is destroyed, you can restore them as a respite activity, or by spending a Recovery as a main action to bring them back into existence in an unoccupied space adjacent to you. "
+        implementation: 3
+        implementationDetails: "Flanking is not automated yet. The familiar can't flank at all, when it should flank with you (and only with you). Holding small objects, having no hands and the telepathy are handled at the table. Outside combat, bringing back a destroyed familiar is free and stands in for the respite activity."
         modifiers: []
         numTargets: "1"
         persistence: []

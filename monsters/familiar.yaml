@@ -190,6 +190,71 @@ info:
       source: Character Feature
       tags:
         Hidden: true
+    - name: Destroyed
+      description: When your familiar is destroyed, bringing them back in combat costs a main action and a Recovery.
+      __typeName: CharacterFeature
+      domains:
+        CharacterFeature:d5b52ac4-8d4d-4b1a-abb4-a39851043ce2: true
+      guid: d5b52ac4-8d4d-4b1a-abb4-a39851043ce2
+      implementation: 4
+      modifiers:
+      - name: Destroyed
+        description: When your familiar is destroyed, bringing them back in combat costs a main action and a Recovery.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:d5b52ac4-8d4d-4b1a-abb4-a39851043ce2: true
+        guid: 25e770ed-abeb-4176-a222-cfde3e8f130e
+        source: Character Feature
+        sourceguid: d5b52ac4-8d4d-4b1a-abb4-a39851043ce2
+        triggeredAbility:
+          name: Familiar Destroyed
+          description: ""
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - name: MarkSummoner
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |-
+              --Familiar perk: put the Familiar Destroyed marker on this familiar's
+              --summoner. Summon Familiar reads it to charge its in-combat cost, then
+              --removes it once a new familiar is summoned.
+              local destroyedEffectId = "e680f37b-32ef-473c-aa1c-fdf71a4f8e4c"
+              local summonerid = casterToken.summonerid
+              if summonerid == nil or summonerid == "" then
+                  return
+              end
+              local summoner = dmhub.GetCharacterById(summonerid)
+              if summoner == nil or not summoner.valid or summoner.properties == nil then
+                  return
+              end
+              summoner:ModifyProperties{
+                  description = "Familiar destroyed",
+                  execute = function()
+                      --remove first so a second death never stacks the marker.
+                      summoner.properties:RemoveOngoingEffect(destroyedEffectId)
+                      summoner.properties:ApplyOngoingEffect(destroyedEffectId)
+                  end,
+              }
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: aba9dadc-2381-42f1-8ec9-9eda1fbc362d
+          iconid: d2035312-afaa-4011-a88e-d812fc56cac3
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          silent: true
+          strain: []
+          targetType: self
+          trigger: creaturedeath
+      source: Character Feature
+      tags:
+        Hidden: true
     cr: 1
     creatureSize: 1T
     damage_taken: 0
