@@ -54,12 +54,6 @@ info:
   partyid: null
   properties:
     __typeName: monster
-    animations:
-      anim:
-      - animType: consumeResource
-        resources:
-          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
-      guid: ee88d421-2e34-416e-bb53-13fcf0e2ae70-415
     attributes:
       agl:
         id: agl
@@ -113,7 +107,49 @@ info:
           __typeName: ActivatedAbility
           abilityType: none
           actionResourceId: d81ce1e9-96a3-4705-9180-1c80f72a86cf
-          behaviors: []
+          behaviors:
+          - __typeName: ActivatedAbilityRememberBehavior
+            calculation: "1"
+            filterTarget: Target.ConditionCaster("Escorted by Dwarf Warden") = Caster
+            memoryName: alreadyEscorted
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: false
+            customAbility:
+              name: Release Escorted Prisoners
+              description: Ends Escorted by Dwarf Warden on every creature this warden is escorting.
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                applyto: targets
+                conditions: []
+                mode: effect
+                ongoingEffect: 5fe60581-6827-4b68-b1d0-c2763baa4617
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: cb1e0a31-6c8c-4741-ab86-17a3628cd3d7
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              numTargets: "99"
+              objectTarget: false
+              range: 99
+              repeatTargets: false
+              targetType: target
+            invokeOnCaster: true
+            promptText: ""
+            targeting: formula
+            targetingFormula: Target.ConditionCaster("Escorted by Dwarf Warden") = Caster
+          - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+            applyto: targets
+            duration: eoe
+            filterTarget: Cast.Memory("alreadyEscorted") < 1
+            ongoingEffect: 5fe60581-6827-4b68-b1d0-c2763baa4617
+            ongoingEffectCustom: false
           categorization: Ability
           display:
             bgcolor: "#ffffffff"
