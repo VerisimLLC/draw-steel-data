@@ -1,9 +1,10 @@
 id: 4e6d3575-3b91-4143-8202-500414c62546
 name: Molecular Rearrangement Field
-description: Null Field ability inscrease by 1. Enemies in the area with I<A bleed. Allies gain tempoary hit points {Intuition}
+description: Until the end of the encounter, the size of your Null Field ability increases by 1. While the area of that ability is enlarged this way, each enemy who has I < average and enters the area for the first time in a combat round or starts their turn there is bleeding (save ends). Each ally who enters the area for the first time in a combat round or starts their turn there gains temporary Stamina equal to your Intuition score.
 _table: characterOngoingEffects
 __typeName: CharacterOngoingEffect
 association: []
+buffType: buff
 ctime: 1763302984089
 custom: true
 display:
@@ -15,9 +16,10 @@ domains:
   CharacterOngoingEffect:4e6d3575-3b91-4143-8202-500414c62546: true
 guid: 4e6d3575-3b91-4143-8202-500414c62546
 iconid: ui-icons/skills/1.png
+implementation: 4
 modifiers:
 - name: Molecular Rearrangement Field
-  description: Null Field ability inscrease by 1. Enemies in the area with I<A bleed. Allies gain tempoary hit points {Intuition}
+  description: The size of your Null Field ability increases by 1.
   __typeName: CharacterModifier
   attribute: bd01a4c5-0758-4453-8d71-5d2257aa23fd
   behavior: attribute
@@ -25,22 +27,85 @@ modifiers:
     CharacterOngoingEffect:4e6d3575-3b91-4143-8202-500414c62546: true
   guid: 50eba321-8b1e-42ff-ad1b-05aecbbcf8ae
   source: Ongoing Effect
-  sourceguid: c68b9ef9-a813-40e9-a23c-e6453b470233
+  sourceguid: 4e6d3575-3b91-4143-8202-500414c62546
   value: 1
 - name: Molecular Rearrangement Field
-  description: Null Field ability inscrease by 1. Enemies in the area with I<A bleed. Allies gain tempoary hit points {Intuition}
+  description: Until the end of the encounter, the size of your Null Field ability increases by 1. While the area of that ability is enlarged this way, each enemy who has I < average and enters the area for the first time in a combat round or starts their turn there is bleeding (save ends). Each ally who enters the area for the first time in a combat round or starts their turn there gains temporary Stamina equal to your Intuition score.
   __typeName: CharacterModifier
   aura:
     name: Molecular Rearrangement Field
+    description: Each enemy who has I < average and enters the area for the first time in a combat round or starts their turn there is bleeding (save ends).
     __typeName: Aura
-    applyto: allother
+    applyto: enemies
     display:
       bgcolor: "#ffffffff"
       brightness: 1
       hueshift: 0
       saturation: 1
     guid: 96756f43-a9b7-4577-96eb-1019998568c1
+    implementation: 4
     modifiers: []
+    subauras:
+    - name: Molecular Rearrangement Field (Allies)
+      description: Each ally who enters the area for the first time in a combat round or starts their turn there gains temporary Stamina equal to the Null's Intuition score.
+      __typeName: Aura
+      applyto: friends
+      guid: 8bcd07d9-8f5c-414e-9a6a-5990b5c3de3a
+      modifiers: []
+      source: Ongoing Effect
+      triggers:
+        - ability:
+            name: Molecular Rearrangement Field
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+              stamina: Aura.Caster.Intuition
+            castImmediately: true
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 0aa05a06-4c8c-4213-8a36-47207bf84937
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            silent: true
+            strain: []
+            targetType: self
+            trigger: onfirstenterround
+          trigger: onfirstenterround
+        - ability:
+            name: Molecular Rearrangement Field
+            description: ""
+            __typeName: TriggeredAbility
+            abilityType: none
+            behaviors:
+            - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
+              stamina: Aura.Caster.Intuition
+            castImmediately: true
+            display:
+              bgcolor: "#ffffffff"
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 3fce185c-13de-4d16-b6ec-83dad9de271e
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: "1"
+            persistence: []
+            range: 1
+            repeatTargets: false
+            silent: true
+            strain: []
+            targetType: self
+            trigger: targetstartturnaura
+          trigger: targetstartturnaura
     triggers:
     - ability:
         name: Molecular Rearrangement Field
@@ -49,12 +114,10 @@ modifiers:
         abilityType: none
         behaviors:
         - __typeName: ActivatedAbilityDrawSteelCommandBehavior
-          filterTarget: (not Friends(Caster, Target)) and (not Target.Passes Potency("I", Caster.Average))
+          applyto: targets
+          filterTarget: not Passes Potency("I", Aura.Caster.Average)
           rule: bleeding (save ends)
-        - __typeName: ActivatedAbilityGrantTemporaryStaminaBehavior
-          filterTarget: Friends(Caster, Target)
-          stamina: Caster.Intuition
-        conditionFormula: ""
+        castImmediately: true
         display:
           bgcolor: "#ffffffff"
           brightness: 1
@@ -65,14 +128,41 @@ modifiers:
         modifiers: []
         numTargets: "1"
         persistence: []
-        radius: 0
-        range: 5
+        range: 1
         repeatTargets: false
         silent: true
         strain: []
         targetType: self
-        trigger: onenter
-      trigger: onenter
+        trigger: onfirstenterround
+      trigger: onfirstenterround
+    - ability:
+        name: Molecular Rearrangement Field
+        description: ""
+        __typeName: TriggeredAbility
+        abilityType: none
+        behaviors:
+        - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+          applyto: targets
+          filterTarget: not Passes Potency("I", Aura.Caster.Average)
+          rule: bleeding (save ends)
+        castImmediately: true
+        display:
+          bgcolor: "#ffffffff"
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        guid: ff434d03-712c-4344-ad98-cc68bc6bf970
+        iconid: ui-icons/skills/1.png
+        modifiers: []
+        numTargets: "1"
+        persistence: []
+        range: 1
+        repeatTargets: false
+        silent: true
+        strain: []
+        targetType: self
+        trigger: targetstartturnaura
+      trigger: targetstartturnaura
   behavior: aura
   domains:
     CharacterOngoingEffect:4e6d3575-3b91-4143-8202-500414c62546: true
@@ -81,7 +171,7 @@ modifiers:
   seq: f65271cc-742a-404c-8087-0b018e4b9f04
   source: Ongoing Effect
   sourceguid: 4e6d3575-3b91-4143-8202-500414c62546
-mtime: 1763302984089
+mtime: 1795063765066
 source: Ongoing Effect
 statusEffect: false
 sustainFormula: Ongoing Effects has "Null Field"
