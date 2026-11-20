@@ -229,7 +229,7 @@ info:
       strain: []
       targetType: target
     - name: Steam Powered Snare
-      description: The snare remains until the end of the encounter. Any enemy who moves into the area for the first time in a turn or starts their turn there must make the test.
+      description: The snare remains until the end of the encounter. Any enemy who moves into the area for the first time in a round or starts their turn there must make the test.
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
@@ -275,6 +275,7 @@ info:
                 saturation: 1
               guid: 96e47cd2-7bf5-40e8-9023-cd81cae266a8
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
               persistence:
@@ -285,8 +286,47 @@ info:
               silent: true
               strain: []
               targetType: self
-              trigger: onenter
-            trigger: onenter
+              trigger: onfirstenterround
+            trigger: onfirstenterround
+          - ability:
+              name: Steam Powered Snare Damage
+              description: ""
+              __typeName: TriggeredAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPowerRollBehavior
+                applyto: targets
+                filterTarget: ""
+                guid: 991b6bf2-0207-4976-ab68-f7e41b9bbe81
+                isTest: false
+                resistanceAttr: mgt
+                resistanceRoll: true
+                roll: 2d10 + Might
+                tiers:
+                - 7 damage; restrained (EoT)
+                - 5 damage; slowed (EoT)
+                - No effect
+              castImmediately: false
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 0b943335-15d9-45c7-bb00-8a419965e7eb
+              iconid: ui-icons/skills/1.png
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              persistence:
+                enabled: false
+              radius: 0
+              range: 5
+              repeatTargets: false
+              silent: true
+              strain: []
+              targetType: self
+              trigger: targetstartturnaura
+            trigger: targetstartturnaura
         duration: eoe
       - __typeName: ActivatedAbilityPowerRollBehavior
         attrid: mgt
