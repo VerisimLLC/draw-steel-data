@@ -566,7 +566,114 @@ levels:
             class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
           guid: fef703ae-e3e7-4d62-bf66-071805064644
           implementation: 4
-          modifiers: []
+          implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+          modifiers:
+          - name: Blessing of Fortunate Weather
+            description: ""
+            __typeName: CharacterModifier
+            activatedAbility:
+              name: Blessing of Fortunate Weather
+              description: "When you finish a respite, you can decide the weather conditions within 100 squares of you. Until you finish another respite, the weather conditions you establish follow you through any mundane outdoor locations. Choose one of the following types of weather, each of which grants a benefit to you and your allies."
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: 5758da29-8660-47d3-805b-7c6038f476a1
+              behaviors:
+              - name: HideWeatherAura
+                __typeName: ActivatedAbilityScriptBehavior
+                code: |-
+                  --The weather aura covers 100 squares, so hide it on this hero's token the first
+                  --time they use the card. A setting already saved for it (the eye icon on the aura
+                  --chip) is left alone, so a player who chose to show the aura keeps that choice.
+                  local auraName = "Blessing of Fortunate Weather"
+                  local props = casterToken.properties
+                  local saved = props:try_get("auraDisplaySettings")
+                  if saved ~= nil and saved[auraName] ~= nil then
+                      return
+                  end
+                  casterToken:ModifyProperties{
+                      description = "Hide Fortunate Weather aura",
+                      undoable = false,
+                      execute = function()
+                          props:SetAuraDisplaySetting(auraName, {hide = true, opacity = 1})
+                      end,
+                  }
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 1
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+                ongoingEffectCustom: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 2
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+                ongoingEffectCustom: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 3
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+                ongoingEffectCustom: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 4
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+                ongoingEffectCustom: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              categorization: Ability
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              domains:
+                class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+              guid: ca3367cf-a233-4e8c-a6ac-aaaa587ac402
+              iconid: 1c1b85b7-98f3-423c-8d45-705e86fc0227
+              implementation: 4
+              implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+              modeList:
+              - text: "Clear: edge on Search and Navigate tests"
+              - text: "Foggy: edge on Hide tests"
+              - text: "Overcast: edge on Endurance tests"
+              - text: "Precipitation: edge on Track tests"
+              modifiers: []
+              multipleModes: true
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              usageLimitOptions:
+                charges: "1"
+                multicharge: false
+                resourceRefreshType: long
+                resourceid: 7e9117a9-3c07-4cc2-912b-af79d245c57d
+            behavior: activated
+            domains:
+              class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            guid: 7e9117a9-3c07-4cc2-912b-af79d245c57d
+            resourceRefreshType: long
+            source: Conduit Class Feature
+            sourceguid: fef703ae-e3e7-4d62-bf66-071805064644
           source: Conduit Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -691,7 +798,35 @@ levels:
             class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
           guid: 08ab8186-f810-46e9-a131-5ae64190e028
           implementation: 4
-          modifiers: []
+          implementationDetails: "On a test that uses one of your intrigue skills, the roll uses Intuition instead when Intuition is higher. The option is ticked for you then, and you can untick it."
+          modifiers:
+          - name: Inspired Deception
+            description: "Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic."
+            __typeName: CharacterModifier
+            activationCondition: Intuition > RollCharacteristic
+            behavior: power
+            domains:
+              class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            guid: 2eef560c-43a9-45b9-8511-588b8ebae36f
+            keywords: []
+            modtype: replaceroll
+            replaceText: 2d10 + Intuition
+            rollType: test_power_roll
+            skills:
+            - db532974-aa0a-41a9-aacf-4adc1e6121d3
+            - 54c39860-b658-4563-9ae1-66d36f26e50f
+            - b0bf2f97-6776-4a9e-b691-4845275df2f8
+            - c9eb14a5-e283-448a-80f1-7ea071e0d883
+            - 772f0953-2cee-4aad-a2ed-de9af9fa9b47
+            - fdd43bde-6062-484d-aea6-3803d396ea8e
+            - fc095c29-84cd-4e3f-8f65-03cd7a7736ad
+            - 978652ee-5553-40ee-97d8-44c607ecdf15
+            - cab282ce-2063-4ce3-b94c-209e81b22e0b
+            - 7f6d9375-0ab0-415c-8196-4d99e98aa12b
+            - ae13b5cf-718a-42a4-ab5e-18d46b289ac6
+            - a27ca113-bc01-49d0-9864-3316e6f525f4
+            source: Conduit Class Feature
+            sourceguid: 08ab8186-f810-46e9-a131-5ae64190e028
           source: Conduit Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -1308,7 +1443,7 @@ levels:
               range: 1
               repeatTargets: false
               targetType: self
-            promptText: List of Heaven - You may spend a resource
+            promptText: "The Lists of Heaven: Whenever you allow another creature to spend a Recovery, you can also spend a Recovery."
             standardAbility: 3b05eb22-02fd-4654-85e9-d71104172166
             standardAbilityParams:
               numrecoveries: "1"
@@ -1839,7 +1974,114 @@ levels:
             class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
           guid: e483d950-6a20-443d-bf57-36c1aeaa4eb5
           implementation: 4
-          modifiers: []
+          implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+          modifiers:
+          - name: Blessing of Fortunate Weather
+            description: ""
+            __typeName: CharacterModifier
+            activatedAbility:
+              name: Blessing of Fortunate Weather
+              description: "When you finish a respite, you can decide the weather conditions within 100 squares of you. Until you finish another respite, the weather conditions you establish follow you through any mundane outdoor locations. Choose one of the following types of weather, each of which grants a benefit to you and your allies."
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: 5758da29-8660-47d3-805b-7c6038f476a1
+              behaviors:
+              - name: HideWeatherAura
+                __typeName: ActivatedAbilityScriptBehavior
+                code: |-
+                  --The weather aura covers 100 squares, so hide it on this hero's token the first
+                  --time they use the card. A setting already saved for it (the eye icon on the aura
+                  --chip) is left alone, so a player who chose to show the aura keeps that choice.
+                  local auraName = "Blessing of Fortunate Weather"
+                  local props = casterToken.properties
+                  local saved = props:try_get("auraDisplaySettings")
+                  if saved ~= nil and saved[auraName] ~= nil then
+                      return
+                  end
+                  casterToken:ModifyProperties{
+                      description = "Hide Fortunate Weather aura",
+                      undoable = false,
+                      execute = function()
+                          props:SetAuraDisplaySetting(auraName, {hide = true, opacity = 1})
+                      end,
+                  }
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 1
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+                ongoingEffectCustom: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 2
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+                ongoingEffectCustom: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 3
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+                ongoingEffectCustom: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 4
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+                ongoingEffectCustom: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              categorization: Ability
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              domains:
+                class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+              guid: 1f919d8b-225e-4ac8-94a7-f7c8536207b5
+              iconid: 1c1b85b7-98f3-423c-8d45-705e86fc0227
+              implementation: 4
+              implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+              modeList:
+              - text: "Clear: edge on Search and Navigate tests"
+              - text: "Foggy: edge on Hide tests"
+              - text: "Overcast: edge on Endurance tests"
+              - text: "Precipitation: edge on Track tests"
+              modifiers: []
+              multipleModes: true
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              usageLimitOptions:
+                charges: "1"
+                multicharge: false
+                resourceRefreshType: long
+                resourceid: 5400a056-9d65-4a46-a426-a46fec4aad64
+            behavior: activated
+            domains:
+              class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            guid: 5400a056-9d65-4a46-a426-a46fec4aad64
+            resourceRefreshType: long
+            source: Conduit Class Feature
+            sourceguid: e483d950-6a20-443d-bf57-36c1aeaa4eb5
           source: Conduit Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -1964,7 +2206,35 @@ levels:
             class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
           guid: e2d5c2cd-8968-4cec-9900-0b12d9e68cbe
           implementation: 4
-          modifiers: []
+          implementationDetails: "On a test that uses one of your intrigue skills, the roll uses Intuition instead when Intuition is higher. The option is ticked for you then, and you can untick it."
+          modifiers:
+          - name: Inspired Deception
+            description: "Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic."
+            __typeName: CharacterModifier
+            activationCondition: Intuition > RollCharacteristic
+            behavior: power
+            domains:
+              class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
+            guid: f8e08f95-64fe-4750-a165-f315bcf9d1e1
+            keywords: []
+            modtype: replaceroll
+            replaceText: 2d10 + Intuition
+            rollType: test_power_roll
+            skills:
+            - db532974-aa0a-41a9-aacf-4adc1e6121d3
+            - 54c39860-b658-4563-9ae1-66d36f26e50f
+            - b0bf2f97-6776-4a9e-b691-4845275df2f8
+            - c9eb14a5-e283-448a-80f1-7ea071e0d883
+            - 772f0953-2cee-4aad-a2ed-de9af9fa9b47
+            - fdd43bde-6062-484d-aea6-3803d396ea8e
+            - fc095c29-84cd-4e3f-8f65-03cd7a7736ad
+            - 978652ee-5553-40ee-97d8-44c607ecdf15
+            - cab282ce-2063-4ce3-b94c-209e81b22e0b
+            - 7f6d9375-0ab0-415c-8196-4d99e98aa12b
+            - ae13b5cf-718a-42a4-ab5e-18d46b289ac6
+            - a27ca113-bc01-49d0-9864-3316e6f525f4
+            source: Conduit Class Feature
+            sourceguid: e2d5c2cd-8968-4cec-9900-0b12d9e68cbe
           source: Conduit Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -3062,7 +3332,7 @@ levels:
           domains:
             class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
           guid: 973f8250-f158-43af-994c-9c6ac1625723
-          implementation: 3
+          implementation: 4
           modifiers:
           - name: Divine Comedy
             description: ""
@@ -3074,35 +3344,17 @@ levels:
               abilityType: none
               actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
               behaviors:
-              - __typeName: ActivatedAbilityRelocateCreatureBehavior
-                swapCreatures: true
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
                 abilityType: standard
                 autoTarget: false
-                customAbility:
-                  name: Invoked Ability
-                  description: ""
-                  __typeName: ActivatedAbility
-                  abilityType: none
-                  behaviors: []
-                  display:
-                    bgcolor: "#ffffffff"
-                    brightness: 1
-                    hueshift: 0
-                    saturation: 1
-                  guid: 7f0fc4fa-34c6-4398-ad2a-364e83a707e4
-                  iconid: ui-icons/skills/1.png
-                  modifiers: []
-                  numTargets: "1"
-                  range: 1
-                  repeatTargets: false
-                  targetType: self
                 inheritRange: false
+                promptText: Choose a creature in the area to swap places with
+                rangeOrigin: caster
                 runOnController: true
-                standardAbility: fc0a431a-f572-4fbc-b2cc-f5ad58c7a76c
+                standardAbility: 4c12fa39-27ff-478e-a960-eca8cc0dba62
                 standardAbilityParams:
                   range: "5"
-                  targetfilter: not enemy
+                  targetfilter: not Object
               categorization: Heroic Ability
               display:
                 bgcolor: "#ffffffff"
@@ -3114,9 +3366,10 @@ levels:
               flavor: 'You and your allies swap places to confound your foes. '
               guid: bda95364-ffd8-4d31-8695-c0f06bc182b6
               iconid: 3c1e36ff-3769-4880-bced-a8626672c15e
+              implementation: 4
               keywords:
+                Area: true
                 Magic: true
-                Ranged: true
               modifiers: []
               numTargets: "1"
               persistence: []
@@ -3124,7 +3377,7 @@ levels:
               repeatTargets: false
               resourceCost: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
               resourceNumber: 5
-              selfTarget: false
+              selfTarget: true
               sourceReference:
                 __typeName: SourceReference
                 docid: e6cab5b7-a1c9-4b12-ad06-ed573f6ba904
@@ -3446,7 +3699,7 @@ levels:
         domains:
           class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
         guid: d878b785-fdd4-4b61-94a2-7f6291d2ba9f
-        implementation: 3
+        implementation: 4
         importOverride: true
         imported: 331df8c6-986e-4743-ba30-3db8f141a0b8
         modifiers:
@@ -3500,7 +3753,7 @@ levels:
                   inheritRange: true
                   standardAbility: a478d5f1-fed3-4772-9930-c3e82dc23f12
                   standardAbilityParams:
-                    numrecoveries: "99"
+                    numrecoveries: "6"
                     numtargets: "1"
                 display:
                   bgcolor: "#ffffffff"
@@ -3522,6 +3775,8 @@ levels:
               standardAbilityParams:
                 expendmessage: Soul Siphon
                 expendrecovery: "1"
+                numrecoveries: "6"
+                numtargets: "1"
                 targets: "1"
             categorization: Heroic Ability
             display:
@@ -3535,7 +3790,7 @@ levels:
             flavor: A beam of energy connects a foe to a friend, draining life from one to heal the other.
             guid: 084eed77-8e62-4f9d-988c-e308e236369d
             iconid: ui-icons/skills/1.png
-            implementation: 3
+            implementation: 4
             keywords:
               Magic: true
               Ranged: true
@@ -3684,7 +3939,7 @@ levels:
       domains:
         class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
       guid: f6692d84-bfbb-4cd9-973d-ecec27691303
-      implementation: 4
+      implementation: 0
       modifiers: []
       source: Conduit Class Feature
       sourceReference:
@@ -14773,7 +15028,7 @@ levels:
         domains:
           class:e0263246-c362-433a-9c1e-ee29c3b63b2c: true
         guid: 9eaad700-ad76-4fba-ba9a-c7a669b3ccf6
-        implementation: 3
+        implementation: 4
         modifiers:
         - name: Spirit Ward
           description: 'Invisible spirits surround you if you are harmed. Whenever an adjacent creature deals damage to you, they take corruption damage equal to your Intuition score. '
@@ -14833,7 +15088,7 @@ levels:
       source: Conduit Class Feature
       tags:
         Kit Equivalent: true
-mtime: 1793270033988
+mtime: 1795064546707
 numKits: 1
 portraitid: c7e83428-b3fe-4708-9967-a0df309819b8
 quantity: 1d3

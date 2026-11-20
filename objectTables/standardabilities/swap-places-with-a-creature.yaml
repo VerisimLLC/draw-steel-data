@@ -1,0 +1,63 @@
+id: 4c12fa39-27ff-478e-a960-eca8cc0dba62
+name: Swap Places with a Creature
+description: Swap places with the chosen creature. Each of you must be able to fit into the space the other leaves.
+_table: standardAbilities
+__typeName: ActivatedAbility
+abilityType: none
+behaviors:
+- name: SwapPlaces
+  __typeName: ActivatedAbilityScriptBehavior
+  code: |-
+    --Swap Places: the creature using this trades places with the creature it chose.
+    --The swap only happens when each creature fits into the space the other leaves:
+    --every square of its new footprint must be free of creatures other than the two swapping.
+    local other = targets[1] ~= nil and targets[1].token or nil
+    if other == nil or not other.valid or other.charid == casterToken.charid then
+        return
+    end
+
+    local function FitsAt(mover, destination)
+        for _,loc in ipairs(mover:LocsOccupyingWhenAt(destination)) do
+            for _,occupant in ipairs(game.GetTokensAtLoc(loc) or {}) do
+                if occupant.charid ~= casterToken.charid and occupant.charid ~= other.charid then
+                    return false
+                end
+            end
+        end
+        return true
+    end
+
+    if not (FitsAt(casterToken, other.loc) and FitsAt(other, casterToken.loc)) then
+        casterToken.properties:FloatLabel("Can't fit to swap", "#ff8822ff")
+        return
+    end
+
+    --Count the swap like a teleport, so later steps can tell the creature moved.
+    local distance = casterToken:Distance(other.loc)
+    if distance > 0 and symbols.cast ~= nil then
+        symbols.cast.spacesMoved = symbols.cast.spacesMoved + distance
+        symbols.cast:CountTeleportDistance(distance)
+    end
+    casterToken:SwapPositions(other)
+categorization: Hidden
+display:
+  bgcolor: "#ffffffff"
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: 5fa786ad-64c2-446d-b558-d9cecc6296c2
+iconid: ui-icons/skills/1.png
+implementation: 4
+modifiers: []
+mtime: 1795066452665
+numTargets: "1"
+persistence: []
+range: "<<range>>"
+rangeTextOverride: Within <<range>>
+repeatTargets: false
+selfTarget: false
+source: Monster
+strain: []
+targetFilter: "<<targetfilter>>"
+targetTextOverride: One creature
+targetType: target
