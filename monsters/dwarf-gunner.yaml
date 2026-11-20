@@ -54,20 +54,6 @@ info:
   partyid: null
   properties:
     __typeName: monster
-    animations:
-      anim:
-      - animType: refreshResource
-        resources:
-          d19658a2-4d7b-4504-af9e-1a5410fb17fd: 1
-      - animType: floatlabel
-        color:
-          __usertype: LuaColor
-          a: 1
-          h: 0.135749965906143
-          s: 0.28417956829071
-          v: 0.989622592926025
-        text: Critical Hit!
-      guid: 331b9e9a-485a-4795-83b2-f2a0f7e32070-741
     attributes:
       agl:
         id: agl
@@ -84,16 +70,6 @@ info:
       rea:
         id: rea
         baseValue: 0
-    availableTriggers:
-      d928ae56-cdc9-48a6-b0b0-d7a48c9ec270:
-        id: d928ae56-cdc9-48a6-b0b0-d7a48c9ec270
-        __typeName: ActiveTrigger
-        clearOnDismiss: true
-        rules: Choose a creature or object adjacent to the target to take 3 damage.
-        targets:
-        - fa08860c-9233-427c-9813-a648e53988b6
-        text: Split Shot
-        timestamp: 1778676437697
     characterFeatures:
     - name: Split Shot
       description: Whenever the gunner deals rolled damage to a target, one creature or object adjacent to the target takes 3 damage.
@@ -140,10 +116,14 @@ info:
                 saturation: 1
               guid: b375dea6-3a74-4383-84ea-7786f5d82582
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
               objectTarget: true
               range: "1"
+              reasonedFilters:
+              - reason: Split Shot hits a different creature or object adjacent to the target.
+                formula: Target != ParentTarget
               repeatTargets: false
               targetType: target
             invokeOnCaster: true
@@ -157,6 +137,7 @@ info:
             saturation: 1
           guid: edb16676-2402-4969-9992-137ad87dfcde
           iconid: ui-icons/skills/1.png
+          implementation: 4
           mandatory: false
           numTargets: "1"
           range: 1
@@ -250,9 +231,66 @@ info:
       - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
         applyto: targets
         duration: end_of_next_turn
-        filterTarget: Target.AdjacentToWall or Target.AdjacentToTargetableObject
+        filterTarget: Target.AdjacentToWall
         ongoingEffect: edf8e3e7-a511-48af-a78a-9e38fb7fe385
         ongoingEffectCustom: false
+      - name: Restrain Next To Object
+        __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          -- Restrains (EoT) a target left next to a live Targetable object after the push.
+          -- Walls are handled by the behavior before this one; objects are done here because
+          -- core Target.AdjacentToTargetableObject never finds object tokens (hasTokenOnThisMap).
+          local RESTRAINED_EFFECT = "edf8e3e7-a511-48af-a78a-9e38fb7fe385"
+
+          local function ActualFloor(tok)
+              if game.currentMap == nil or tok.loc == nil then
+                  return nil
+              end
+              local floor = game.currentMap:GetFloorFromLoc(tok.loc)
+              if floor == nil or not floor.valid then
+                  return nil
+              end
+              return floor.actualFloor
+          end
+
+          local function NextToObject(tok)
+              local floor = ActualFloor(tok)
+              if floor == nil then
+                  return false
+              end
+              for _, other in ipairs(dmhub.allTokensIncludingObjects or {}) do
+                  local component = other.valid and other.isObject and other.objectComponent or nil
+                  if component ~= nil and other.charid ~= tok.charid
+                      and component.componentType == "LuaTargetableObject"
+                      and other.isAttackableObject
+                      and ActualFloor(other) == floor then
+                      local alive = false
+                      pcall(function() alive = other.properties:CurrentHitpoints() > 0 end)
+                      if alive and tok:Distance(other) <= 1 then
+                          return true
+                      end
+                  end
+              end
+              return false
+          end
+
+          for _, target in ipairs(targets) do
+              local tok = target.token
+              if tok ~= nil and tok.valid then
+                  -- Already restrained by the wall check: don't apply it twice.
+                  local nearWall = false
+                  pcall(function() nearWall = tok:IsAdjacentToWall() end)
+                  if (not nearWall) and NextToObject(tok) then
+                      tok:ModifyProperties{
+                          description = "Portable Ballista: restrained against an object",
+                          execute = function()
+                              tok.properties:ApplyOngoingEffect(RESTRAINED_EFFECT, "end_of_next_turn",
+                                  {tokenid = casterToken.charid, abilityName = ability.name})
+                          end,
+                      }
+                  end
+              end
+          end
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         applyto: caster
         autoTarget: false
@@ -309,7 +347,7 @@ info:
       guid: e645e83c-72a8-410a-8b81-aa86b3048ce8
       iconid: df0b2b8d-8987-476f-b7d0-c312e0bf32af
       implementation: 4
-      implementationDetails: The 5 Malice option appears only after a creature collision and automatically targets every creature involved. The Director still chooses whether to spend the Malice.
+      implementationDetails: The 5 Malice option appears only after a creature collision and automatically targets every creature involved. The Director still chooses whether to spend the Malice. For the restrain, "object" means a live Targetable object on the map (a barrel, a grenade); plain map decoration doesn't count unless the map has walls drawn around it.
       keywords:
         Ranged: true
         Strike: true
@@ -334,7 +372,8 @@ info:
       behaviors:
       - __typeName: ActivatedAbilityInvokeAbilityBehavior
         abilityType: standard
-        applyto: caster
+        applyto: targets
+        autoTarget: false
         customAbility:
           name: Invoked Ability
           description: ""
@@ -355,8 +394,9 @@ info:
           targetType: self
         invokeOnCaster: true
         promptText: The Gunner makes a free strike against the target, then the Prone, Restrained and Slowed conditions on the target end. The target is then restrained (save ends).
-        standardAbility: f4a4f737-cc4d-4bc1-8aa8-a4ee344e2d42
-        targeting: inherit
+        standardAbility: 49180e7f-0337-4a80-a98f-1543c67550bb
+        standardAbilityParams:
+          targetid: "<<target.id>>"
       - __typeName: ActivatedAbilityPurgeEffectsBehavior
         chatMessage: "Conditions Ended: Prone, Restrained and Slowed."
         conditions:
@@ -410,25 +450,6 @@ info:
     notes:
     - text: ""
       title: Monster Notes
-    ongoingEffects:
-    - id: 52341e6f-b113-45ef-8074-fd9cd3ab5694
-      __typeName: CharacterOngoingEffectInstance
-      casterInfo:
-        abilityName: 'Entropy Ward '
-        tokenid: fa08860c-9233-427c-9813-a648e53988b6
-      duration: 1
-      ongoingEffectid: ee79555f-ba72-4612-81ae-428a0382656e
-      seq: 7
-      sourceDescription: Applied by Talent's <b>Entropy Ward </b> ability
-      stacks: 4
-      time:
-        __typeName: TimePoint
-        initiativeid: fa08860c-9233-427c-9813-a648e53988b6
-        initiativeord: 0
-        queueguid: ee87f1d0-2386-4460-8be8-51ed9ebf0f85
-        round: 1
-        time: 3.48905328488818
-      timestamp: 1778676437697
     opportunityAttack: 4
     resistances: []
     resources:
