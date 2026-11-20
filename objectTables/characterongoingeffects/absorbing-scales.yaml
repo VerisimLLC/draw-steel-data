@@ -1,0 +1,73 @@
+id: c2a2cfd7-12fb-4655-a633-596afa0dfcde
+name: Absorbing Scales
+description: Locratix has damage immunity 6 against the next strike made against her.
+_table: characterOngoingEffects
+__typeName: CharacterOngoingEffect
+association: []
+custom: true
+display:
+  bgcolor: '#ffffffff'
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: c2a2cfd7-12fb-4655-a633-596afa0dfcde
+iconid: bc90bb09-9e3c-46d4-bf16-0e5c0134dbf8
+implementation: 3
+modifiers:
+- name: Absorbing Scales
+  description: Damage immunity 6.
+  __typeName: CharacterModifier
+  behavior: resistance
+  domains:
+    CharacterOngoingEffect:c2a2cfd7-12fb-4655-a633-596afa0dfcde: true
+  guid: d83a6d7b-4211-44dd-95cd-3afaa64e57fb
+  resistances:
+  - __typeName: ResistanceEntry
+    apply: Damage Reduction
+    damageType: all
+    dr: '6'
+  source: Ongoing Effect
+  sourceguid: c2a2cfd7-12fb-4655-a633-596afa0dfcde
+- name: Absorbing Scales
+  description: Ends after the next strike against her resolves.
+  __typeName: CharacterModifier
+  activationCondition: true
+  behavior: power
+  customTrigger:
+    name: Strike Against Target
+    description: ''
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityPurgeEffectsBehavior
+      chatMessage: Strike used against Locratix
+      conditions: []
+      mode: effect
+      ongoingEffect: c2a2cfd7-12fb-4655-a633-596afa0dfcde
+      purgeType: all
+    conditionFormula: Used Ability.Keywords has "strike"
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: ce2c7753-c1f0-4c17-afc0-9f880bffccdf
+    iconid: ui-icons/skills/1.png
+    modifiers: []
+    numTargets: '1'
+    range: 1
+    repeatTargets: false
+    strain: []
+    targetType: self
+    trigger: targetwithability
+  domains:
+    CharacterOngoingEffect:c2a2cfd7-12fb-4655-a633-596afa0dfcde: true
+  guid: 4065b3df-0517-479c-9ae7-b8f2cf0c0fdb
+  hasCustomTrigger: true
+  keywords:
+    Strike: true
+  modtype: none
+  rollType: enemy_ability_power_roll
+  source: Ongoing Effect
+  sourceguid: c2a2cfd7-12fb-4655-a633-596afa0dfcde
+source: Ongoing Effect
