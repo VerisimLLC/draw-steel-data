@@ -54,12 +54,6 @@ info:
   partyid: null
   properties:
     __typeName: monster
-    animations:
-      anim:
-      - animType: floatlabel
-        color: "#ffffffff"
-        text: Test
-      guid: 15dac188-ca7b-4e96-b338-d8911de08111-727
     attributes:
       agl:
         id: agl
@@ -111,6 +105,7 @@ info:
             saturation: 1
           guid: 046fa13c-73d3-4fcb-a162-883769ff1862
           iconid: ui-icons/skills/1.png
+          implementation: 4
           mandatory: true
           modifiers: []
           numTargets: "1"
@@ -122,66 +117,21 @@ info:
           targetType: all
           trigger: losehitpoints
       - name: Shoot the Hostage
-        description: The brawler takes half damage from strikes if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the other half of the damage.
+        description: The brawler takes half damage from strikes while they have a creature or object of size 1S or larger grabbed.
         __typeName: CharacterModifier
-        abilityTargets: "+1"
-        behavior: powertabletrigger
-        castingFilter: ""
+        activationCondition: true
+        behavior: power
+        damageMultiplier: half
         domains:
           CharacterFeature:bafe3792-6342-4e7d-9c93-7612e4de3e3b: true
         filterCondition: GrabbedCreatures.Highest("Size") >= 2
         guid: 7dfacac0-50a0-4b9f-bcc1-406daaf00451
-        powerRollModifier:
-          name: Shoot the Hostage
-          description: The brawler takes half damage from strikes if they have a creature or object grabbed. The grabbed creature or object takes the other half of the damage.
-          __typeName: CharacterModifier
-          activationAfterRoll: false
-          activationCondition: true
-          behavior: power
-          changeTarget: false
-          changeTargetDistance: 1
-          changeTargetRange: distance
-          customTrigger:
-            name: New Ability
-            description: ""
-            __typeName: TriggeredAbility
-            abilityType: none
-            behaviors:
-            - __typeName: ActivatedAbilityFloatTextBehavior
-              color: "#ffffffff"
-              text: Half damage to grabbed creature
-            display:
-              bgcolor: "#ffffffff"
-              brightness: 1
-              hueshift: 0
-              saturation: 1
-            guid: ff989a8a-6d6e-4249-9344-602302ad09b1
-            iconid: ui-icons/skills/1.png
-            modifiers: []
-            numTargets: "1"
-            objectTarget: false
-            persistence: []
-            range: Grab Range
-            repeatTargets: false
-            strain: []
-            targetFilter: Target.ConditionCaster("Grabbed") = Caster and Target.Size >= 2
-            targetType: all
-            trigger: d20roll
-          damageMultiplier: half
-          guid: 96093610-e6f8-4e2e-8baa-b7d69b64dacb
-          hasCustomTrigger: true
-          keywords: []
-          modtype: none
-          rollType: ability_power_roll
-          rules: ""
-          source: Trigger
-        range: 10
-        rules: The brawler takes half damage from strikes if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the other half of the damage.
+        keywords:
+          Strike: true
+        modtype: none
+        rollType: enemy_ability_power_roll
         source: Trait
         sourceguid: bafe3792-6342-4e7d-9c93-7612e4de3e3b
-        targetType: self
-        trigger: strike
-        type: passive
       source: Trait
     - name: Supernatural Insight
       description: The brawler ignores concealment if it's granted by a supernatural effect.
@@ -210,12 +160,6 @@ info:
       source: Trait
     cr: 1
     creatureSize: 1M
-    damageEntries:
-      2498e972-4284-4cf7-ac1e-279e2cf28793:
-        id: 2498e972-4284-4cf7-ac1e-279e2cf28793
-        attackerid: fa08860c-9233-427c-9813-a648e53988b6
-        damage: 1
-        damage_type: untyped
     damage_taken: 0
     equipment: []
     ev: 6
