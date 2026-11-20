@@ -1449,7 +1449,110 @@ levels:
         class:56180917-b5c2-4030-9fc8-9a00113d5ad4: true
       guid: 7c0aed07-0fd2-443f-b798-132729dbc7d5
       implementation: 4
-      modifiers: []
+      implementationDetails: The Studied Commander card is a respite activity. Pick combat encounter or negotiation, then make the Reason test. On a negotiation 17+ you and each ally get an edge to tick on influence tests. The Director gives the information, applies Surprised when the encounter begins, and handles the cheaper Discover Lore project.
+      modifiers:
+      - name: Studied Commander
+        description: ""
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Studied Commander
+          description: If you have a reasonable amount of time before a combat encounter or negotiation, and you have at least one clue or rumor regarding the encounter or negotiation, you can make a Reason test as a respite activity. You can make this test only once for any encounter or negotiation.
+          __typeName: ActivatedAbility
+          abilityType: none
+          actionResourceId: 5758da29-8660-47d3-805b-7c6038f476a1
+          behaviors:
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            attrid: rea
+            isTest: true
+            modesSelected:
+            - 1
+            resistanceRoll: false
+            roll: 2d10 + Reason
+            tiers:
+            - The Director tells you the number of creatures in the encounter.
+            - The Director tells you the number and level of the creatures in the encounter.
+            - The Director tells you the number and level of the creatures, and every enemy starts the encounter surprised.
+          - __typeName: ActivatedAbilityPowerRollBehavior
+            attrid: rea
+            isTest: true
+            modesSelected:
+            - 2
+            resistanceRoll: false
+            roll: 2d10 + Reason
+            tiers:
+            - The Director tells you three different motivations, one of which is one of an NPC's motivations, while the other two are not.
+            - The Director tells you one of an NPC's motivations.
+            - The Director tells you one of an NPC's motivations, and you and each of your allies gain an edge on tests made to influence NPCs during the negotiation.
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            autoTarget: true
+            customAbility:
+              name: "Studied Commander: Negotiation Edge"
+              description: You and each of your allies gain an edge on tests made to influence NPCs during the negotiation.
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: none
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                ongoingEffect: 7672b47c-c21b-4d14-a15c-deb7b368385a
+                ongoingEffectCustom: 7672b47c-c21b-4d14-a15c-deb7b368385a
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: eb71c386-86dd-411d-a758-5f183f162327
+              iconid: b2cd4026-2b0a-4f05-821c-a3435536405a
+              implementation: 4
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "100"
+              repeatTargets: false
+              selfTarget: true
+              strain: []
+              targetAllegiance: ally
+              targetType: all
+            filterTarget: Cast.Tier = 3
+            modesSelected:
+            - 2
+            promptText: ""
+            targeting: formula
+            targetingFormula: Friends(Caster, Target) and not Target.Object
+          categorization: Ability
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:506d41b6-816b-45c5-8f28-765f29d6f8ae: true
+            class:56180917-b5c2-4030-9fc8-9a00113d5ad4: true
+          guid: fa4a14b6-d338-4674-b88a-233ba3a0608c
+          iconid: b2cd4026-2b0a-4f05-821c-a3435536405a
+          implementation: 4
+          implementationDetails: The Director gives you the information. On a combat 17+ the Director applies Surprised to every enemy when the encounter begins. On a negotiation 17+ you and each ally get an edge to tick on influence tests until your next respite.
+          modeList:
+          - text: Before a combat encounter
+          - text: Before a negotiation
+          modifiers: []
+          multipleModes: true
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          targetType: self
+        behavior: activated
+        domains:
+          class:506d41b6-816b-45c5-8f28-765f29d6f8ae: true
+          class:56180917-b5c2-4030-9fc8-9a00113d5ad4: true
+        guid: 1bbec82d-a5f6-4a57-a5fa-9fb6658bd112
+        source: Mastermind Class Feature
+        sourceguid: 7c0aed07-0fd2-443f-b798-132729dbc7d5
       source: Mastermind Class Feature
       sourceReference:
         __typeName: SourceReference
