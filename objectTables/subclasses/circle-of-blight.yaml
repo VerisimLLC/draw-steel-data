@@ -55,7 +55,7 @@ levels:
         class:4dcb43f4-a4be-4c9a-a583-45b6bbb81bfe: true
         class:b41b7bcb-6246-4906-8115-831e55f62758: true
       guid: f29b8809-10da-4e82-94b2-28c111432d1d
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Summoner’s Dominion
         description: |-
@@ -85,7 +85,7 @@ levels:
             class:b41b7bcb-6246-4906-8115-831e55f62758: true
           guid: 748cacf2-5760-42ec-842c-ac02483c158f
           iconid: ui-icons/skills/1.png
-          implementation: 3
+          implementation: 4
           modifiers: []
           numTargets: "1"
           preDescription: "Your circle allows you to call forth a piece of your portfolio’s dominion like any minion. \nOnce per encounter, you can use a maneuver to summon a fixture from your minions’ native manifold or origin into an unoccupied space on the ground within your Summoner’s Range. You can spend 1 essence to relocate the fixture as a free maneuver on your turn. The fixture stays until the end of the encounter, until its Stamina is reduced to 0, or until you become dying. "
@@ -1100,7 +1100,7 @@ levels:
         class:4dcb43f4-a4be-4c9a-a583-45b6bbb81bfe: true
         class:b41b7bcb-6246-4906-8115-831e55f62758: true
       guid: a84a5f2e-39a7-4a91-9b2a-292990488ee0
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Death Snap
         description: Whenever one of your demon minions would die unwillingly, they can deal damage to an adjacent creature equal to their free strike value before dying.
@@ -1132,14 +1132,16 @@ levels:
               abilityType: none
               behaviors:
               - __typeName: ActivatedAbilityInvokeAbilityBehavior
-                abilityType: standard
                 applyto: targets
                 customAbility:
-                  name: Invoked Ability
-                  description: ""
+                  name: Death Snap
+                  description: Deal damage equal to your free strike value to an adjacent creature before you die.
                   __typeName: ActivatedAbility
                   abilityType: none
-                  behaviors: []
+                  behaviors:
+                  - __typeName: ActivatedAbilityDamageBehavior
+                    chatMessage: Death Snap
+                    roll: Free Strike Damage
                   display:
                     bgcolor: "#ffffffff"
                     brightness: 1
@@ -1147,14 +1149,16 @@ levels:
                     saturation: 1
                   guid: 29d637a2-24f3-4e2c-b7c3-c5dbd5d53663
                   iconid: ui-icons/skills/1.png
+                  implementation: 4
                   modifiers: []
                   numTargets: "1"
+                  objectTarget: false
                   range: 1
                   repeatTargets: false
-                  targetType: self
+                  targetType: target
                 filterTarget: ""
+                promptText: "Death Snap: choose an adjacent creature to take your free strike damage"
                 runOnController: true
-                standardAbility: 9b123334-6d7c-4848-8b17-db3255c4012c
                 targeting: prompt
               - __typeName: ActivatedAbilityRemoveCreatureBehavior
                 leavesCorpse: true
