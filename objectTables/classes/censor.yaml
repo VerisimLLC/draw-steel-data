@@ -540,7 +540,114 @@ levels:
             class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           guid: 12acfb81-aa66-4bdd-98b6-5a3e1b3bef22
           implementation: 4
-          modifiers: []
+          implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+          modifiers:
+          - name: Blessing of Fortunate Weather
+            description: ""
+            __typeName: CharacterModifier
+            activatedAbility:
+              name: Blessing of Fortunate Weather
+              description: "When you finish a respite, you can decide the weather conditions within 100 squares of you. Until you finish another respite, the weather conditions you establish follow you through any mundane outdoor locations. Choose one of the following types of weather, each of which grants a benefit to you and your allies."
+              __typeName: ActivatedAbility
+              abilityType: none
+              actionResourceId: 5758da29-8660-47d3-805b-7c6038f476a1
+              behaviors:
+              - name: HideWeatherAura
+                __typeName: ActivatedAbilityScriptBehavior
+                code: |-
+                  --The weather aura covers 100 squares, so hide it on this hero's token the first
+                  --time they use the card. A setting already saved for it (the eye icon on the aura
+                  --chip) is left alone, so a player who chose to show the aura keeps that choice.
+                  local auraName = "Blessing of Fortunate Weather"
+                  local props = casterToken.properties
+                  local saved = props:try_get("auraDisplaySettings")
+                  if saved ~= nil and saved[auraName] ~= nil then
+                      return
+                  end
+                  casterToken:ModifyProperties{
+                      description = "Hide Fortunate Weather aura",
+                      undoable = false,
+                      execute = function()
+                          props:SetAuraDisplaySetting(auraName, {hide = true, opacity = 1})
+                      end,
+                  }
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 1
+                ongoingEffect: 6965073f-14f5-4e10-83f3-2e6412425286
+                ongoingEffectCustom: 6965073f-14f5-4e10-83f3-2e6412425286
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 2
+                ongoingEffect: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+                ongoingEffectCustom: bd5b67df-feb7-41bc-b523-77d0370f8fbf
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 3
+                ongoingEffect: bb01148d-05fa-4029-aa46-5291b0a1100d
+                ongoingEffectCustom: bb01148d-05fa-4029-aa46-5291b0a1100d
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: until_rest
+                modesSelected:
+                - 4
+                ongoingEffect: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+                ongoingEffectCustom: a3fa6186-7440-4933-b98d-a5cc1a7774e4
+              categorization: Ability
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              domains:
+                class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+              guid: a0dabfb9-007d-4e18-90a0-9939abf11e55
+              iconid: 1c1b85b7-98f3-423c-8d45-705e86fc0227
+              implementation: 4
+              implementationDetails: "Use this card as a respite activity to pick the weather. It ends any weather you set before and gives you and each ally within 100 squares the edge until your next respite. The Precipitation edge is offered unticked, so tick it when the ground is muddy or snowy. Weathers that cancel where two areas overlap are handled at the table."
+              modeList:
+              - text: "Clear: edge on Search and Navigate tests"
+              - text: "Foggy: edge on Hide tests"
+              - text: "Overcast: edge on Endurance tests"
+              - text: "Precipitation: edge on Track tests"
+              modifiers: []
+              multipleModes: true
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+              usageLimitOptions:
+                charges: "1"
+                multicharge: false
+                resourceRefreshType: long
+                resourceid: 094634a6-2ea5-4afe-bdf6-219dae1bb2d4
+            behavior: activated
+            domains:
+              class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+            guid: 094634a6-2ea5-4afe-bdf6-219dae1bb2d4
+            resourceRefreshType: long
+            source: Censor Class Feature
+            sourceguid: 12acfb81-aa66-4bdd-98b6-5a3e1b3bef22
           source: Censor Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -663,7 +770,35 @@ levels:
             class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           guid: d0d77c14-ee20-4f2f-bc1f-136003ad2b89
           implementation: 4
-          modifiers: []
+          implementationDetails: "On a test that uses one of your intrigue skills, the roll uses Presence instead when Presence is higher. The option is ticked for you then, and you can untick it."
+          modifiers:
+          - name: Inspired Deception
+            description: "Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Presence on the test instead of another characteristic."
+            __typeName: CharacterModifier
+            activationCondition: Presence > RollCharacteristic
+            behavior: power
+            domains:
+              class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
+            guid: 43f4beb2-37ce-4dbf-b247-86eb55619ce4
+            keywords: []
+            modtype: replaceroll
+            replaceText: 2d10 + Presence
+            rollType: test_power_roll
+            skills:
+            - db532974-aa0a-41a9-aacf-4adc1e6121d3
+            - 54c39860-b658-4563-9ae1-66d36f26e50f
+            - b0bf2f97-6776-4a9e-b691-4845275df2f8
+            - c9eb14a5-e283-448a-80f1-7ea071e0d883
+            - 772f0953-2cee-4aad-a2ed-de9af9fa9b47
+            - fdd43bde-6062-484d-aea6-3803d396ea8e
+            - fc095c29-84cd-4e3f-8f65-03cd7a7736ad
+            - 978652ee-5553-40ee-97d8-44c607ecdf15
+            - cab282ce-2063-4ce3-b94c-209e81b22e0b
+            - 7f6d9375-0ab0-415c-8196-4d99e98aa12b
+            - ae13b5cf-718a-42a4-ab5e-18d46b289ac6
+            - a27ca113-bc01-49d0-9864-3316e6f525f4
+            source: Censor Class Feature
+            sourceguid: d0d77c14-ee20-4f2f-bc1f-136003ad2b89
           source: Censor Class Feature
           sourceReference:
             __typeName: SourceReference
@@ -698,7 +833,7 @@ levels:
           domains:
             class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
           guid: dee136f1-bdbd-4fa2-96a4-16523f72a8d1
-          implementation: 3
+          implementation: 4
           modifiers:
           - name: Sanctified Weapon
             description: As a respite activity, you can bless a weapon. Any creature who wields the weapon gains a +1 rolled damage bonus with abilities that use the weapon. This benefit lasts until you finish another respite.
@@ -738,6 +873,8 @@ levels:
                 class:1df3a5c8-7b81-4db0-b9c8-8e9e39bc5049: true
               guid: ba2f67ab-d575-424e-81f0-01214b3949aa
               iconid: c12a60e3-9a18-43a7-a6ad-228834cc5fc2
+              implementation: 4
+              implementationDetails: Use it during a respite, targeting whoever will wield the weapon.
               modeList:
               - rules: +1 rolled damage bonues with abilities that use your melee weapon attacks.
                 text: Melee Weapon
