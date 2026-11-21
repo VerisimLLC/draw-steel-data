@@ -120,11 +120,87 @@ maliceAbilities:
     - The target is taunted by the nearest creature or object (save ends). While the target is taunted this way, power rolls against them have a double edge.
     - The target is taunted by the nearest creature or object (save ends).
     - No effect.
-  - __typeName: ActivatedAbilityTauntByNearestBehavior
-    alsoApplyOngoingEffect: 6b6f3556-851b-4ef9-b03d-4593ba7617e7
-    alsoTiersSelected:
-    - 1
-    duration: save_ends
+  - name: OverflowingRage
+    __typeName: ActivatedAbilityScriptBehavior
+    code: |-
+      --Overflowing Rage: each target is taunted by the nearest creature or object (save ends).
+      --On tier 1 it also gets an effect that gives power rolls against it a double edge.
+      --Only targets that rolled tier 1 or 2 reach this script (set by the behavior's tiers).
+      local doubleEdgeEffectId = "6b6f3556-851b-4ef9-b03d-4593ba7617e7"
+      local doubleEdgeTier = 1
+
+      local taunted = CharacterCondition.conditionsByName["taunted"]
+      if taunted == nil then
+          return
+      end
+
+      local cast = symbols and symbols.cast
+      local tokenToTier = cast and cast:try_get("tokenToTier") or {}
+
+      --The nearest other creature or object on the target's floor. Dead creatures and
+      --anything players cannot see are skipped; objects count only if they can be attacked.
+      local function nearestTo(token)
+          local best, bestDistance = nil, nil
+          for _, other in ipairs(dmhub.allTokensIncludingObjects) do
+              if other.valid and other.charid ~= token.charid and other.properties ~= nil and other.floorid == token.floorid then
+                  local eligible
+                  if other.isObject then
+                      eligible = other.isAttackableObject and not other.objectInvisibleToPlayers
+                  else
+                      eligible = not other.properties:IsDead() and not other.invisibleToPlayers
+                  end
+                  if eligible then
+                      local distance = token:DistanceInFeet(other)
+                      if bestDistance == nil or distance < bestDistance then
+                          best, bestDistance = other, distance
+                      end
+                  end
+              end
+          end
+          return best
+      end
+
+      local tauntedIds = {}
+      for _, target in ipairs(targets) do
+          local targetToken = target.token
+          local nearest = targetToken ~= nil and targetToken.valid and nearestTo(targetToken) or nil
+          if nearest ~= nil then
+              --Spend the Malice only once someone is actually taunted.
+              ability:CommitToPaying(casterToken, options)
+              tauntedIds[#tauntedIds+1] = targetToken.charid
+              local doubleEdge = tokenToTier[targetToken.charid] == doubleEdgeTier
+
+              targetToken:ModifyProperties{
+                  description = "Taunted by nearest",
+                  execute = function()
+                      ActivatedAbility.RecordTokenMessage(targetToken, options, "Taunted")
+                      --The nearest creature or object is recorded as the taunter.
+                      targetToken.properties:InflictCondition(taunted.id, {
+                          duration = "save",
+                          sourceDescription = string.format("Inflicted by %s's <b>%s</b> ability", creature.GetTokenDescription(casterToken), ability.name),
+                          casterInfo = { tokenid = nearest.charid },
+                          cast = cast,
+                      })
+
+                      if doubleEdge then
+                          local effect = targetToken.properties:ApplyOngoingEffect(doubleEdgeEffectId, "save_ends", {
+                              tokenid = casterToken.charid,
+                              abilityName = ability.name,
+                          }, {
+                              sourceDescription = ActivatedAbility.DescribeEffectSource(ability, casterToken),
+                          })
+                          if effect ~= nil and cast ~= nil then
+                              cast:RecordAppliedOngoingEffect(effect)
+                          end
+                      end
+                  end,
+              }
+          end
+      end
+
+      if #tauntedIds > 0 then
+          game.Refresh{ tokens = tauntedIds }
+      end
     tiersSelected:
     - 1
     - 2
