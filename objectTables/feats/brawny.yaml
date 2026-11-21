@@ -6,6 +6,47 @@ __typeName: CharacterFeat
 ctime: 1755373592458
 modifierInfo:
   __typeName: ClassLevel
-  features: []
+  features:
+  - name: Brawny
+    description: Whenever you fail a Might test, you can lose Stamina equal to 1d6 + your level to improve the outcome of the test by one tier. You can use this perk only once per test.
+    __typeName: CharacterFeature
+    canHavePrerequisites: true
+    guid: d68adcff-4e96-4a99-8bd7-b92297adb8b1
+    implementation: 3
+    implementationDetails: "After a failed Might test, tick Brawny in the roll: the outcome goes up one tier and you lose 1d6 + your level Stamina when you accept the result. It is offered on every Might test, including tests an ability makes you roll, so ticking it only on your own failed test is up to you."
+    modifiers:
+    - name: Brawny
+      description: "Lose Stamina equal to 1d6 + your level to improve the outcome of this test by one tier. Use it only on a failed (tier 1) test."
+      __typeName: CharacterModifier
+      activationCondition: false
+      attribute: mgt
+      behavior: power
+      customTrigger:
+        name: Brawny
+        description: ""
+        __typeName: TriggeredAbility
+        abilityType: none
+        implementation: 4
+        behaviors:
+        - __typeName: ActivatedAbilityDamageBehavior
+          cannotBeReduced: true
+          chatMessage: Brawny
+          roll: 1d6 + Level
+          titleText: Brawny
+        guid: 4789f4cc-9f85-432f-9102-6395b4003df5
+        modifiers: []
+        numTargets: "1"
+        range: 1
+        repeatTargets: false
+        targetType: self
+        trigger: d20roll
+      guid: 72b634f5-3302-48ae-a277-54bd5668b382
+      hasCustomTrigger: true
+      keywords: []
+      modtype: tierup
+      rollType: test_power_roll
+      source: Feat
+      sourceguid: d68adcff-4e96-4a99-8bd7-b92297adb8b1
+    source: Feat
 mtime: 1755373592458
 tag: Exploration Perks
