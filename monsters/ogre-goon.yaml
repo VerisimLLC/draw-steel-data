@@ -510,11 +510,168 @@ info:
           modifiers: []
           objectid: c994501f-85ec-475e-b9f6-8113a814f8d1
         duration: endcast
-      - __typeName: ActivatedAbilityHurlGrabbedBehavior
+      - name: PeopleBowling
+        __typeName: ActivatedAbilityScriptBehavior
         applyto: caster
-        hurlFilter: Size < 5
-        promptText: Choose where the hurled creature lands
-        searchRadius: 3
+        code: |-
+          --People Bowling: the goon hurls the creature it is grabbing down the line.
+          --Runs before the power roll. The hurled creature is added to the targets so the
+          --roll hits it too. This is not forced movement: no stability, no collision damage.
+          local helpers = RelocateHelpers
+          local grabbedConditionId = "70504ebe-3899-41d3-9f60-74b52ce35e39"
+          local searchRadius = 3
+
+          --The ability's filter already requires exactly one grabbed Size 1 creature.
+          local hurled = nil
+          casterToken.properties:VisitConditionCasterSource(function(conditionid, grabbedTok)
+              if conditionid == grabbedConditionId and grabbedTok ~= nil and grabbedTok.valid then
+                  hurled = grabbedTok
+              end
+          end)
+          if hurled == nil then
+              casterToken.properties:FloatLabel("Nothing to hurl", "red")
+              return
+          end
+
+          --The end of the line is the line square furthest from the goon.
+          local lineLocs = (options.targetArea and options.targetArea.locations) or {}
+          local endLoc = nil
+          for _, loc in ipairs(lineLocs) do
+              if endLoc == nil or loc:DistanceInTiles(casterToken.loc) > endLoc:DistanceInTiles(casterToken.loc) then
+                  endLoc = loc
+              end
+          end
+          if endLoc == nil then
+              casterToken.properties:FloatLabel("Hurl needs a line target", "red")
+              return
+          end
+
+          --Land on the end square if it is free, otherwise on the nearest free squares
+          --the goon can see (all ties kept, so the Director can pick one).
+          local landing = {}
+          if helpers.LocIsFreeForToken(hurled, endLoc) then
+              landing = { endLoc }
+          else
+              local nearestDist = nil
+              for _, loc in ipairs(endLoc:LocsInRadius(searchRadius) or {}) do
+                  local dist = loc:DistanceInTiles(endLoc)
+                  if dist > 0 and (nearestDist == nil or dist <= nearestDist) and helpers.LocIsFreeForToken(hurled, loc) then
+                      local visible = true
+                      local ok, los = pcall(function() return casterToken:GetLineOfSight(loc) end)
+                      if ok and type(los) == "number" then
+                          visible = los > 0
+                      end
+                      if visible then
+                          if nearestDist == nil or dist < nearestDist then
+                              landing = { loc }
+                              nearestDist = dist
+                          else
+                              landing[#landing+1] = loc
+                          end
+                      end
+                  end
+              end
+          end
+          if #landing == 0 then
+              casterToken.properties:FloatLabel("No room to land", "red")
+              return
+          end
+
+          --"Hurl Landing Square" is the prompt name the Monster AI answers for the Director.
+          local dest = landing[1]
+          if #landing > 1 then
+              dest = helpers.ChooseTransitDestination(hurled, landing, symbols, casterToken, {
+                  name = "Hurl Landing Square",
+                  prompt = "Choose where the hurled creature lands",
+              })
+              if dest == nil then
+                  return
+              end
+          end
+
+          local origLoc = hurled.loc
+
+          --The throw ends the grab. Only this goon's grab is removed; another grabber keeps theirs.
+          hurled:ModifyProperties{
+              description = "Hurled",
+              execute = function()
+                  hurled.properties:InflictCondition(grabbedConditionId, {
+                      purge = true,
+                      casterInfo = { tokenid = casterToken.charid },
+                  })
+              end,
+          }
+
+          --A free straight-line move that passes over creatures and does not provoke.
+          local function throwMove(toLoc, movementType)
+              hurled.properties._tmp_freeMovement = true
+              local path = hurled:Move(toLoc.withGroundAltitude, {
+                  straightline = true,
+                  ignorecreatures = true,
+                  moveThroughFriends = true,
+                  maxCost = 30000,
+                  movementType = movementType,
+                  jumpHeight = 2,
+                  ignoreFalling = (movementType == "jump"),
+                  freeMovement = true,
+                  forced = true,
+              })
+              hurled.properties._tmp_freeMovement = false
+              return path ~= nil
+          end
+
+          --Slide the whole line to its end, then hop onto the landing square if it is off the end.
+          local legs = {}
+          if hurled.loc.xyfloorOnly.str ~= endLoc.xyfloorOnly.str then
+              legs[#legs+1] = { loc = endLoc, movementType = "move" }
+          end
+          if dest.xyfloorOnly.str ~= endLoc.xyfloorOnly.str then
+              legs[#legs+1] = { loc = dest, movementType = "jump" }
+          end
+
+          local moved = true
+          for i, leg in ipairs(legs) do
+              if i > 1 then
+                  helpers.WaitForNextGameUpdate()
+              end
+              moved = throwMove(leg.loc, leg.movementType)
+              if not moved then
+                  break
+              end
+          end
+
+          --If the engine refused a move, teleport instead: the creature must still land.
+          if not moved then
+              hurled.properties._tmp_suppressTeleportEvent = true
+              hurled:Teleport(dest.withGroundAltitude)
+              hurled.properties._tmp_suppressTeleportEvent = nil
+          end
+          hurled.properties:FloatLabel("Hurled!", "white")
+
+          --Let the move land before anything rolls against the creature.
+          helpers.WaitForNextGameUpdate()
+          if hurled.valid then
+              hurled:TryFall()
+          end
+
+          --Pay only now, so a cancelled landing pick never charges the Malice.
+          ability:CommitToPaying(casterToken, options)
+
+          if options.targets ~= nil and hurled.valid then
+              local present = false
+              for _, existing in ipairs(options.targets) do
+                  if existing.token ~= nil and existing.token.charid == hurled.charid then
+                      present = true
+                      break
+                  end
+              end
+              if not present then
+                  options.targets[#options.targets+1] = { token = hurled, origLoc = origLoc }
+              end
+              if symbols ~= nil and symbols.cast ~= nil then
+                  symbols.cast.targets = options.targets
+              end
+          end
       - __typeName: ActivatedAbilityPowerRollBehavior
         guid: 8a03bae9-fffd-4961-b5a5-1b4f8dae162f
         roll: 2d10 + Highest Characteristic
