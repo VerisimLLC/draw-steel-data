@@ -1,0 +1,187 @@
+previewType: null
+components:
+  86dc5209-43e3-4153-8be2-84038d6d0073:
+    '@class': ObjectComponentTrigger
+    triggers:
+    - '@class': ObjectTriggerInfo
+      objid: 03d40f41-07da-4141-bb7b-4e6004d2120e
+      triggerid: plateon
+      connections: []
+    disabled: false
+    properties:
+      __typeName: EventTriggerComponent
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 1
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 1
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 0
+    hasShadow: false
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  af8ee97b-cbc1-441f-9444-094898479c1e:
+    '@class': ObjectComponentHoverText
+    text: Pressure Plate
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  bd6f33d2-c999-49ca-923b-a087cef72aa9:
+    '@class': ObjectComponentPressurePlate
+    imageSwap: null
+    haltMovement: true
+    filterTargets: Size >= 3 {1M calibration} and Movement Type = "Walk"
+    disabled: false
+    properties: null
+  d55daee8-e170-4e9a-9abf-b56575c84c2c:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: false
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: 1S
+      max_hitpoints: 1
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a pressure plate can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the pressure plate.'
+          - '#The trap is deactivated but the creature is slowed (EoT).'
+          - '#The trap is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 5aa90649-5615-4212-b552-033ef859e7c9
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: 'Granted to every creature adjacent to the plate as its own maneuver, usable only on the plate. Tier 1 sets off every mechanism linked to the plate (their Linked Trigger Activated abilities; the plate''s own engine links, such as Make Visible, only fire on a real step). Tiers 2 and 3 remove the plate; tier 2 also slows the creature until the end of their turn.'
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The pressure plate
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 80021a76-7707-42da-bcd8-cc965061c2d1
+        name: Passable
+        description: Creatures can enter and end their movement in this object's space.
+        source: Character Feature
+        implementation: 1
+        domains:
+          CharacterFeature:80021a76-7707-42da-bcd8-cc965061c2d1: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Passable
+          attribute: 7e3f9c24-1b58-4d62-a37e-9c5d8b3f6a14
+          behavior: attribute
+          value: 1
+          guid: ec5df4a5-bb08-4a2d-8c21-ad7c39e80470
+          source: Character Feature
+          sourceguid: 80021a76-7707-42da-bcd8-cc965061c2d1
+          domains:
+            CharacterFeature:80021a76-7707-42da-bcd8-cc965061c2d1: true
+      - __typeName: CharacterFeature
+        guid: 1b0548ed-8365-4d5e-9022-7e515b188b45
+        name: Pressure Plate
+        implementation: 2
+        domains:
+          CharacterFeature:1b0548ed-8365-4d5e-9022-7e515b188b45: true
+        description: This mechanism acts as a trigger for another linked mechanism, and is skillfully hidden from view in the floor. It triggers when a creature of the appropriate size enters its area, and resets automatically.
+        implementationDetails: 'BRONZE: Link the plate''s Pressure Plate On trigger to an event on the mechanism (a Dart Trap''s Play Sound). A 1M or larger creature walking onto the plate stops there and sets off every linked mechanism. Not built: objects setting it off, other size calibrations (edit the plate''s filter), the Tripwire upgrade.'
+        source: Character Feature
+        modifiers: []
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/vL2KHEBe67aNEXzRGyqdYg
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Pressure Plate
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 305
+ctime: 1795169340820
+mtime: 1795169340820
+hidden: false
+id: a7453bab-c2e9-4f39-8832-d0a58a2da6da

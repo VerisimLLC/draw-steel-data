@@ -1,0 +1,167 @@
+id: e9e49a2d-0ad2-4778-be5f-555819238bfc
+name: Corrosive Pool
+description: A shallow pool bubbles with acid or some other corrosive liquid. A creature or object takes 3 acid damage for each square of the pool they enter, and a creature takes 3 acid damage if they start their turn there. If the pool takes fire damage, it explodes (Explosive Reaction) and is consumed.
+_table: environmentalKeywords
+__typeName: EnvironmentalKeyword
+appearance:
+  alpha: 1
+  edgeFade: 0
+  edgeImageId: 0d2745ef-819a-493a-aa1c-38d05a2c82d2
+  edgeOwned: true
+  edgeWallId: 07de8632-63f9-4149-9161-4a2980207d16
+  fractalEdge: 0.55
+  mode: floor
+  spriteAlpha: 1
+  spriteScale: 1
+  tileImageId: 740a794a-6b2b-46ab-84dd-998eacd67c42
+  tileOwned: true
+  tileid: 5b265cb6-a7bc-4d0d-9900-c05cbc843ada
+ctime: 1795169340820
+mtime: 1795169340820
+damage: 3
+defaultHeight: 0
+defaultPlayerVisible: true
+difficultTerrain: true
+display:
+  bgcolor: '#7fa83a'
+  brightness: 1
+  hueshift: 0
+  saturation: 1
+guid: eae66236-0180-45e8-a7bd-5c20ee1c1060
+iconid: ui-icons/skills/1.png
+implementation: 3
+movedamage: acid
+movementDamageFilter: all
+modifiers:
+- name: Corrosive Pool
+  description: A creature that starts their turn in the corrosive pool takes 3 acid damage.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    EnvironmentalKeyword:eae66236-0180-45e8-a7bd-5c20ee1c1060: true
+  guid: 105e1b2d-0611-4e33-9146-99f31a6c7e53
+  source: Environmental Keyword
+  sourceguid: eae66236-0180-45e8-a7bd-5c20ee1c1060
+  triggeredAbility:
+    name: Corrosive Pool
+    description: A creature that starts their turn in the corrosive pool takes 3 acid damage.
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+      applyto: targets
+      rule: 3 acid damage
+    castImmediately: true
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    environmentalSource: true
+    guid: 3f37cd4b-7789-44a9-9323-b099c39924bd
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    numTargets: '1'
+    persistence: []
+    range: '0'
+    repeatTargets: false
+    strain: []
+    subject: self
+    targetType: self
+    trigger: beginturn
+- name: Corrosive Pool
+  description: 'Explosive Reaction: when a creature or object in the pool takes fire damage, the pool explodes.'
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    EnvironmentalKeyword:eae66236-0180-45e8-a7bd-5c20ee1c1060: true
+  guid: 5de43449-7a1b-464a-9f2e-0391dd3c7b4a
+  source: Environmental Keyword
+  sourceguid: eae66236-0180-45e8-a7bd-5c20ee1c1060
+  triggeredAbility:
+    name: Explosive Reaction
+    description: ''
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityTransformZoneBehavior
+      abortIfNone: true
+      fromKeyword: e9e49a2d-0ad2-4778-be5f-555819238bfc
+      location: targets
+      reveal: true
+      toKeyword: none
+    - __typeName: ActivatedAbilityPowerRollBehavior
+      roll: 2d10 + 2
+      tiers:
+      - 3 fire damage; M<1 burning (save ends)
+      - 6 fire damage; M<2 burning (save ends)
+      - 9 fire damage; M<3 burning (save ends)
+    conditionFormula: DamageType is "fire"
+    display:
+      bgcolor: '#ffffffff'
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    environmentalSource: true
+    environmentRoll: true
+    guid: bd01c0ce-7101-45cd-8afb-d11a669cfcf5
+    iconid: ui-icons/skills/1.png
+    mandatory: true
+    modifiers: []
+    keywords:
+      Area: true
+    numTargets: '1'
+    range: 3
+    repeatTargets: false
+    targetType: all
+    selfTarget: true
+    objectTarget: true
+    targetTextOverride: Each creature and object in the area
+    trigger: losehitpoints
+    implementation: 3
+    implementationDetails: 'SILVER: Fires when a creature or object standing in the pool takes fire damage, as a 3 burst around it (including it). The pool it stands in is removed first, so the explosion''s own fire damage can''t set it off again. Not automated: the double edge against targets in the pool, and acid weakness applying to the fire damage.'
+mapFeature:
+  name: Corrosive Pool
+  description: ''
+  __typeName: CharacterFeature
+  guid: 8322aaa7-2c3f-400f-a095-b26d6a6df448
+  source: Environmental Keyword
+  modifiers:
+  - name: Corrosive Pool
+    description: Allied Awareness - allies of the pool can throw a torch to set it off.
+    __typeName: CharacterModifier
+    behavior: activated
+    filterCondition: not Hero
+    guid: 0be67535-8087-4780-8840-99b0d839e699
+    source: Environmental Keyword
+    sourceguid: 8322aaa7-2c3f-400f-a095-b26d6a6df448
+    activatedAbility:
+      name: Torch
+      description: Throw a torch up to 5 squares at a creature or object in a corrosive pool, dealing 1 fire damage and triggering Explosive Reaction.
+      __typeName: ActivatedAbility
+      actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+      behaviors:
+      - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+        rule: 1 fire damage
+      categorization: Ability
+      display:
+        bgcolor: '#ffffffff'
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: da0052b5-3458-40a0-b86c-d983be0a8114
+      iconid: ui-icons/skills/1.png
+      implementation: 3
+      implementationDetails: 'SILVER: The torch has to hit a creature or object standing in the pool; its fire damage sets off Explosive Reaction around that target. An empty pool can''t be torched.'
+      keywords:
+        Ranged: true
+      modifiers: []
+      numTargets: '1'
+      range: 5
+      repeatTargets: false
+      objectTarget: true
+      targetFilter: Target.Environment has "Corrosive Pool"
+      targetTextOverride: A creature or object in a corrosive pool
+      targetType: target
+source: Environmental Keyword

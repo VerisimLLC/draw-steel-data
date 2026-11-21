@@ -1,0 +1,300 @@
+previewType: null
+components:
+  38bb0275-820d-438e-a0ca-23427e69f360:
+    '@class': ObjectComponentEventHandler
+    exposedEvents:
+      c9944cc8-41f0-4e18-b720-3315239f2370-Play Sound:
+        '@class': ObjectComponentEventHandlerEntry
+        exposed: true
+    disabled: false
+    properties:
+      __typeName: EventHandlerComponent
+  c9944cc8-41f0-4e18-b720-3315239f2370:
+    '@class': ObjectComponentAudio
+    playGuid: 17fb8ca4-fbd6-43f8-acc1-dcb3c7249733
+    audio: 3878a8a9-0274-486b-8b49-49955a1b7653
+    volume: 1
+    falloffDistance: 10
+    wallPenetration: 0
+    playOnlyOnTrigger: true
+    silentOnOtherFloors: true
+    falloffCurve:
+      points:
+      - x: 0
+        y: 1
+        z: -1
+      - x: 0.5
+        y: 0.4
+        z: -1
+      - x: 1
+        y: 0
+        z: -1
+      displayRange:
+        x: 0
+        y: 1
+      xmapping:
+        x: 0
+        y: 1
+    disabled: false
+    properties: null
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 0.515
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 0.515
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 0.5
+    hasShadow: true
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  e4ac0ab8-6a24-4777-96d4-1ac07a079593:
+    '@class': ObjectComponentSolid
+    blockMovement: true
+    blockForcedMovement: true
+    blockVision: false
+    blockLight: false
+    cover: Half
+    _noutlineRefresh: 0
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: true
+    properties: null
+  34ddb684-16ab-4507-b0d1-8153eeb60d4c:
+    '@class': ObjectComponentHoverText
+    text: Ram
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  9d715114-762a-4e57-a7fd-fb651787fdce:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: '3'
+      max_hitpoints: 27
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a ram can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the ram and is affected as if in its space.'
+          - '#The ram is deactivated but the creature is slowed (EoT).'
+          - '#The ram is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          guid: e0bebd33-126d-481e-bf0b-f4d2cfcfb2ce
+          abilityType: custom
+          applyto: caster
+          invokeOnCaster: true
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+          customAbility:
+            __typeName: ActivatedAbility
+            name: Ram
+            description: The creature triggers the ram while trying to deactivate it.
+            abilityType: none
+            implementation: 4
+            keywords:
+              Area: true
+              Weapon: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 1d6 + 3 damage
+              - 1d6 + 6 damage
+              - 1d6 + 9 damage
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: d11edeff-787c-4611-a8c9-269e3544aed5
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+          springTarget: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 13186c33-52ef-4cbb-af04-befce73aa852
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: 'Granted to every creature adjacent to the ram as its own maneuver, usable only on the ram. Tier 1 rolls Ram against the creature (without the slide) and springs the ram on anything in its path; tiers 2 and 3 remove it; tier 2 also slows the creature until the end of their turn.'
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The ram
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 547aedab-e096-4cb9-970c-e6953c0eda89
+        name: Ram
+        implementation: 3
+        domains:
+          CharacterFeature:547aedab-e096-4cb9-970c-e6953c0eda89: true
+        description: 'A heavy metal ram, hidden until a linked pressure plate or switch sends it crashing forward. 9 Stamina per square, 1d6 extra damage. Level 2 Trap Ambusher, EV 5.'
+        implementationDetails: 'SILVER: Link a pressure plate''s Pressure Plate On or a switch''s Button Pressed to the ram''s Play Sound event. Its front is the left end of the picture (the head of the metal ram); rotate it to aim. Reset it by hand: slide it back, hide it again and switch its Solid component off.'
+        source: Character Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Ram
+          behavior: trigger
+          guid: 4237ce82-5a66-4c0a-9a3c-e9edbedbd9c2
+          sourceguid: 547aedab-e096-4cb9-970c-e6953c0eda89
+          source: Character Feature
+          domains:
+            CharacterFeature:547aedab-e096-4cb9-970c-e6953c0eda89: true
+          description: When a linked trigger is activated, the ram springs, using Ram.
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Ram
+            displayName: Ram
+            description: A pressure plate, switch, or other linked trigger is activated.
+            implementation: 3
+            implementationDetails: 'SILVER: Revealed when its link fires; rolls Ram against each creature and attackable object in the 3 squares in front of it (pushes go the way it moves), slides tier 1 targets to a random side of its path, then slides 3 squares forward (stopping short of a creature still in the way) and blocks movement.'
+            trigger: linkedtrigger
+            mandatory: true
+            targetType: self
+            range: 1
+            numTargets: '1'
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Area: true
+              Weapon: true
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 722b8a27-3557-42bb-ab68-3d9caab3cf7e
+            behaviors:
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: reveal
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: targetpath
+              distance: 3
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 1d6 + 3 damage
+              - 1d6 + 6 damage; push 3
+              - 1d6 + 9 damage; push 5
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: targets
+              mode: slideaside
+              tiersSelected:
+              - 1
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: advance
+              distance: 3
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: solid
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/yXSzBFTzLQPpC6KrDcSLPg
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Ram (Metal)
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 341
+ctime: 1795212000000
+mtime: 1795212000000
+hidden: false
+id: a3e383f8-126f-4b01-892b-b4b666898ade

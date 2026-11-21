@@ -1,0 +1,231 @@
+previewType: null
+components:
+  5481a4cd-8dd1-41ea-90cd-0924c6f6a9d9:
+    '@class': ObjectComponentAppearance
+    locked: false
+    imageNumber: 0
+    imageSwaps:
+    - dbcd02b6-e285-4006-a0ec-6315b76594de
+    - 5c72fd05-1c75-42a4-84c0-d5f01a4e9329
+    - 04aa2e12-04f6-49be-a09d-a0e2acaaed3d
+    - 5fd8e66b-9198-4a55-8cf7-0a4a55c2c66d
+    - b0d29460-149a-4a5f-9a8a-9cea5b558314
+    - eedf9c06-4ac2-4684-9cc3-7ac7102e491a
+    imageSwapNames:
+    - Red
+    - Blue
+    - Green
+    - Purple
+    - White
+    - Yellow
+    imageDefaultName: Black
+    hue: 0
+    saturation: 1
+    brightness: 1
+    opacity: 1
+    alphaCurve: 1
+    premultiplyAlpha: false
+    additiveBlend: false
+    disabled: false
+    properties: null
+  5a467fd4-70b8-46bf-98c5-1386897ae304:
+    '@class': ObjectComponentButton
+    value: 0
+    maxValue: 1
+    resetAtMax: true
+    transitionTime: 0
+    locked: true
+    command: ''
+    imageSwap: null
+    disabled: false
+    properties: null
+  2171e214-6081-4d59-9492-56515ca754b5:
+    '@class': ObjectComponentTrigger
+    triggers:
+    - '@class': ObjectTriggerInfo
+      objid: 7ab36c91-ecdf-48c1-925e-623c97f471d5
+      triggerid: press
+      connections: []
+    disabled: false
+    properties:
+      __typeName: EventTriggerComponent
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 0.447
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 0.447
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: false
+    height: 0
+    hasShadow: false
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  969d3be3-a795-4418-b653-be42d99fba7e:
+    '@class': ObjectComponentHoverText
+    text: Switch
+    hideFromPlayers: false
+    disabled: false
+    properties: null
+  55313771-4067-4591-95c2-3e83522df67f:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: 1T
+      max_hitpoints: 3
+      innateActivatedAbilities:
+      - name: Trigger Switch
+        description: An adjacent creature triggers the switch, activating the linked mechanism.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 29c77d89-7164-4766-87e7-ab983c493d41
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the switch as its own maneuver, usable only on the switch. Sets off every mechanism linked to the switch's Button Pressed trigger.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The switch
+        targetType: target
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a switch can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the switch.'
+          - '#The switch is deactivated but the creature is slowed (EoT).'
+          - '#The switch is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 2b863e7e-466a-46a2-96ca-7cd618762210
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the switch as its own maneuver, usable only on the switch. Tier 1 sets off the linked mechanisms; tiers 2 and 3 remove the switch; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The switch
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 2188730c-77ce-4bcf-aa37-4079b683064e
+        name: Switch
+        implementation: 3
+        domains:
+          CharacterFeature:2188730c-77ce-4bcf-aa37-4079b683064e: true
+        description: A switch set into the floor. It activates a linked mechanism when triggered, and resets automatically.
+        implementationDetails: 'SILVER: Link the switch''s Button Pressed trigger to an event on the mechanism (a Dart Trap''s Play Sound, a Portcullis or Ram event). Trigger Switch (a maneuver for an adjacent creature) sets them all off, and the engine''s own links (Make Visible, doors) fire too. The handle colour is a look (Appearance). Not built: the Concealed upgrade (hide the switch by hand).'
+        source: Character Feature
+        modifiers: []
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/t12EMSkU21Tv-EGKetFBvA
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Switch (Floor)
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 320
+ctime: 1795212000000
+mtime: 1795212000000
+hidden: false
+id: 7ab36c91-ecdf-48c1-925e-623c97f471d5

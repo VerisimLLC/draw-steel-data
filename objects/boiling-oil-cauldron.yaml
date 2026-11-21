@@ -1,0 +1,247 @@
+id: bbc18f78-ee6b-4230-a25e-ccdc2a214128
+description: Boiling Oil Cauldron
+artist: null
+children: {}
+components:
+  CORE:
+    '@class': ObjectComponentCore
+    _lastRotation: -1
+    _lastScale: -1
+    disabled: false
+    hasShadow: true
+    height: 0.8
+    keywords: []
+    locked: false
+    pivot_x: 0.5
+    pivot_y: 0.5
+    properties: null
+    rotation: 0
+    scale: 1
+    sprite_invisible_to_players: false
+    sublayer: Objects
+  63b12152-f0b8-448d-9183-886cddc6661a:
+    '@class': ObjectComponentTargetable
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    turnSpeed: 120
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+          baseValue: 2
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+      creatureSize: 1L
+      max_hitpoints: 50
+      resources: []
+      characterFeatures: []
+      classes: []
+      titles: []
+      skillProficiencies: []
+      equipment: []
+      notes:
+      - title: Backstory
+        text: ''
+      innateActivatedAbilities:
+      - name: Boiling Oil
+        description: If the boiling oil is poured down on targets from above, it has high ground and gains an edge on the power roll. A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. This ability can't be used again until the boiling oil cauldron is reloaded.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Boiling Oil Cauldron Deactivated")
+          reason: The boiling oil cauldron has been deactivated and can't be used.
+        - formula: not (OngoingEffects has "Boiling Oil Cauldron Unloaded")
+          reason: The boiling oil cauldron must be reloaded before it can fire again.
+        abilityType: none
+        aimCasterAtTarget: false
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Highest Characteristic
+          tiers:
+          - 5 fire damage; M<1 burning (save ends)
+          - 9 fire damage; M<2 burning (save ends)
+          - 12 fire damage; M<3 burning (save ends)
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          ongoingEffect: 9af4772c-dbde-4608-b4e0-801983fd3e2d
+          ongoingEffectCustom: false
+          stacks: '1'
+        categorization: Ability
+        conditionalReminders:
+        - formula: OngoingEffects has "Boiling Oil Cauldron Unloaded"
+          text: The boiling oil cauldron is unloaded. A creature adjacent to it must use Reload before it can fire again.
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 9ff7d7de-9615-457f-a49b-88fbcde2741f
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: 'Firing applies Boiling Oil Cauldron Unloaded to the cauldron, which blocks Boiling Oil until Reload removes it. Not automated: the edge for pouring down from above.'
+        keywords:
+          Area: true
+          Weapon: true
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetTextOverride: Each creature and object in the area
+        targetType: cube
+        radius: 3
+      - name: Reload
+        description: The boiling oil cauldron is reloaded, allowing Boiling Oil to be used again. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Boiling Oil Cauldron Deactivated")
+          reason: The boiling oil cauldron has been deactivated and can't be used.
+        - formula: OngoingEffects has "Boiling Oil Cauldron Unloaded"
+          reason: The boiling oil cauldron is already loaded.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 9af4772c-dbde-4608-b4e0-801983fd3e2d
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 11878141-899d-4acd-a179-c36512f7efb5
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Removes Boiling Oil Cauldron Unloaded from the boiling oil cauldron. Limited to once per round on the cauldron itself, whoever operates it.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: '1'
+          resourceRefreshType: round
+          resourceid: 1aa33d7b-f37b-4bf8-90ba-0296256dfe31
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a boiling oil cauldron can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature accidentally activates the Boiling Oil ability.'
+          - '#The boiling oil cauldron is deactivated but the creature is slowed (EoT).'
+          - '#The boiling oil cauldron is deactivated and can''t be used.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: named
+          customAbility:
+            name: Invoked Ability
+            description: ''
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 8c1a9d98-35d5-45a4-a5e1-e48fee61e5e6
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+          filterTarget: not (Target.OngoingEffects has "Boiling Oil Cauldron Unloaded")
+          namedAbility: Boiling Oil
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: 21656be7-b1b0-480c-8ae6-6cdb3dcc42fc
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: c9d02f53-c08b-4858-b2d0-39327b944509
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the boiling oil cauldron as its own maneuver, usable only on the boiling oil cauldron. Tier 1 makes the boiling oil cauldron fire Boiling Oil (if loaded) with the creature choosing the target; tiers 2 and 3 apply Boiling Oil Cauldron Deactivated, which blocks all of its abilities; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Boiling Oil Cauldron Deactivated")
+          reason: The boiling oil cauldron is already deactivated.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The boiling oil cauldron
+        targetType: target
+ctime: 1795169340820
+height: 0
+hidden: false
+imageId: https://codexback.com/oaxPEWf1p_JR3OOMG3rjNw
+keywords: null
+mtime: 1795169340820
+ord: 308
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+previewType: null
+tint:
+  a: 1
+  b: 1
+  g: 1
+  r: 1
+width: 0

@@ -1,0 +1,354 @@
+id: 1c03cd42-18a2-4ee0-8ac7-30cbd71bc880
+description: Iron Dragon
+artist: null
+children: {}
+components:
+  CORE:
+    '@class': ObjectComponentCore
+    _lastRotation: -1
+    _lastScale: -1
+    disabled: false
+    hasShadow: true
+    height: 0.8
+    keywords: []
+    locked: false
+    pivot_x: 0.5
+    pivot_y: 0.5
+    properties: null
+    rotation: 0
+    scale: 1
+    sprite_invisible_to_players: false
+    sublayer: Objects
+  63b12152-f0b8-448d-9183-886cddc6661a:
+    '@class': ObjectComponentTargetable
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    turnSpeed: 120
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+          baseValue: 2
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+      creatureSize: '2'
+      max_hitpoints: 60
+      resources: []
+      characterFeatures: []
+      classes: []
+      titles: []
+      skillProficiencies: []
+      equipment: []
+      notes:
+      - title: Backstory
+        text: ''
+      innateActivatedAbilities:
+      - name: Gout of Flame
+        description: A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. This ability can't be used again until the iron dragon is reloaded.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Iron Dragon Deactivated")
+          reason: The iron dragon has been deactivated and can't be used.
+        - formula: not (OngoingEffects has "Iron Dragon Unloaded")
+          reason: The iron dragon must be reloaded before it can fire again.
+        abilityType: none
+        aimCasterAtTarget: true
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Highest Characteristic
+          tiers:
+          - 6 fire damage; A<0 burning (save ends)
+          - 10 fire damage; A<1 burning (save ends)
+          - 13 fire damage; A<2 burning (save ends)
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 9d74ff75-e4f7-46fc-a582-86438322c956
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          ongoingEffect: 6649dd5f-ab12-499b-b0a5-a31680c5cbbd
+          ongoingEffectCustom: false
+          stacks: '1'
+        categorization: Ability
+        conditionalReminders:
+        - formula: OngoingEffects has "Iron Dragon Unloaded"
+          text: The iron dragon is unloaded. A creature adjacent to it must use Reload before it can fire again.
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 28d8a5d7-a161-4196-b8ed-b45eb1a18ab0
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Firing applies Iron Dragon Unloaded to the iron dragon, which blocks Gout of Flame until Reload removes it. Firing also spends any Spot bonus; Spot makes the next Gout of Flame an 18 x 2 line with an edge (ruling 6.3).
+        keywords:
+          Area: true
+          Weapon: true
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 8
+        repeatTargets: false
+        strain: []
+        targetTextOverride: Each creature and object in the area
+        targetType: line
+        radius: 2
+        lineDistance: 1
+      - name: Reload
+        description: The iron dragon is reloaded, allowing Gout of Flame to be used again. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Iron Dragon Deactivated")
+          reason: The iron dragon has been deactivated and can't be used.
+        - formula: OngoingEffects has "Iron Dragon Unloaded"
+          reason: The iron dragon is already loaded.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 6649dd5f-ab12-499b-b0a5-a31680c5cbbd
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 41eafa08-5dd7-4597-b49d-eb2b31c5d43b
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Removes Iron Dragon Unloaded from the iron dragon. Limited to once per round on the iron dragon itself, whoever operates it.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: '1'
+          resourceRefreshType: round
+          resourceid: d918cdb7-8eea-4be1-9e58-ac35c4e83d66
+      - name: Spot
+        description: The next use of Gout of Flame gains an edge and becomes an 18 x 2 line. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Iron Dragon Deactivated")
+          reason: The iron dragon has been deactivated and can't be used.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: eoe
+          ongoingEffect: 9d74ff75-e4f7-46fc-a582-86438322c956
+          ongoingEffectCustom: false
+          stacks: '1'
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: f3c26a16-0f1e-4ef4-a8aa-f1ab7367ac6d
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Applies Iron Dragon Spotted to the iron dragon (an edge, and an 18 x 2 line instead of 8 x 2, per ruling 6.3). Gout of Flame removes it when fired. Limited to once per round on the iron dragon itself.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: '1'
+          resourceRefreshType: round
+          resourceid: 9a9db3c5-4cef-4bf2-b0bf-ff888fbbd9bc
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a iron dragon can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature accidentally activates the Gout of Flame ability.'
+          - '#The iron dragon is deactivated but the creature is slowed (EoT).'
+          - '#The iron dragon is deactivated and can''t be used.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: named
+          customAbility:
+            name: Invoked Ability
+            description: ''
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: a9d95aa5-f14d-4cde-8e72-b8a096fb288f
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+          filterTarget: not (Target.OngoingEffects has "Iron Dragon Unloaded")
+          namedAbility: Gout of Flame
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: e3797d9d-f8de-47de-bc4e-b30d8777d521
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: ce59ae2e-dbaa-49de-8868-3c85d77c62ca
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the iron dragon as its own maneuver, usable only on the iron dragon. Tier 1 makes the iron dragon fire Gout of Flame (if loaded) with the creature choosing the target; tiers 2 and 3 apply Iron Dragon Deactivated, which blocks all of its abilities; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Iron Dragon Deactivated")
+          reason: The iron dragon is already deactivated.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The iron dragon
+        targetType: target
+      - name: Move
+        description: The iron dragon and the creature using this action move together up to 2 squares.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: eoe
+          ongoingEffect: 4752c3f7-57dd-4264-a772-1bc76ae98366
+          ongoingEffectCustom: false
+          stacks: '1'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
+          applyto: caster
+          customAbility:
+            name: Invoked Ability
+            description: ''
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: fc2293a9-c27b-48be-9070-d1e8e454819f
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+          invokeOnCaster: true
+          standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+          standardAbilityParams:
+            distance: '2'
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          ongoingEffectid: 4752c3f7-57dd-4264-a772-1bc76ae98366
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: bd7bfa54-b39d-4d40-ae82-f10da18a9645
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: Granted to every creature adjacent to the iron dragon, usable only on the iron dragon. Hitches the iron dragon to the creature (Iron Dragon Hitched, a movement carrier), the creature moves up to 2 squares, then it unhitches. Needs the engine change that lets a movement carrier drag a map object.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Iron Dragon Deactivated")
+          reason: The iron dragon has been deactivated and can't be used.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The iron dragon
+        targetType: target
+ctime: 1795169340820
+height: 0
+hidden: false
+imageId: https://codexback.com/J4abifKnidXo_UlHoNmL8g
+keywords: null
+mtime: 1795169340820
+ord: 308
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+previewType: null
+tint:
+  a: 1
+  b: 1
+  g: 1
+  r: 1
+width: 0

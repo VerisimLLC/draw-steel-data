@@ -1,0 +1,337 @@
+previewType: null
+components:
+  36a25a08-9baf-4e7c-8915-ef11d535172d:
+    '@class': ObjectComponentEventHandler
+    exposedEvents:
+      3a419ca3-5711-457e-8761-69796b847396-Play Sound:
+        '@class': ObjectComponentEventHandlerEntry
+        exposed: true
+    disabled: false
+    properties:
+      __typeName: EventHandlerComponent
+  3a419ca3-5711-457e-8761-69796b847396:
+    '@class': ObjectComponentAudio
+    playGuid: 0f6d690f-db2a-4e28-8596-9aec627ff11b
+    audio: 299d46f9-ef97-4fed-a314-5ba2f6a31f4f
+    volume: 1
+    falloffDistance: 10
+    wallPenetration: 0
+    playOnlyOnTrigger: true
+    silentOnOtherFloors: true
+    falloffCurve:
+      points:
+      - x: 0
+        y: 1
+        z: -1
+      - x: 0.5
+        y: 0.4
+        z: -1
+      - x: 1
+        y: 0
+        z: -1
+      displayRange:
+        x: 0
+        y: 1
+      xmapping:
+        x: 0
+        y: 1
+    disabled: false
+    properties: null
+  86dc5209-43e3-4153-8be2-84038d6d0073:
+    '@class': ObjectComponentTrigger
+    triggers:
+    - '@class': ObjectTriggerInfo
+      objid: 03d40f41-07da-4141-bb7b-4e6004d2120e
+      triggerid: plateon
+      connections: []
+    disabled: false
+    properties:
+      __typeName: EventTriggerComponent
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 1
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 1
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 0.8
+    hasShadow: true
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  af8ee97b-cbc1-441f-9444-094898479c1e:
+    '@class': ObjectComponentHoverText
+    text: Spike Trap
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  bd6f33d2-c999-49ca-923b-a087cef72aa9:
+    '@class': ObjectComponentPressurePlate
+    imageSwap: null
+    haltMovement: true
+    filterTargets: Size >= 3 {1M calibration} and Movement Type = "Walk"
+    disabled: false
+    properties: null
+  d55daee8-e170-4e9a-9abf-b56575c84c2c:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: '2'
+      max_hitpoints: 6
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a spike trap can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the trap and is affected as if in its area.'
+          - '#The trap is deactivated but the creature is slowed (EoT).'
+          - '#The trap is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          guid: 54fe8d51-7499-4467-9455-14448b720e8e
+          abilityType: custom
+          applyto: caster
+          invokeOnCaster: true
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+          customAbility:
+            __typeName: ActivatedAbility
+            name: Spike Trap
+            description: The creature triggers the spike trap while trying to deactivate it.
+            abilityType: none
+            implementation: 4
+            keywords:
+              Area: true
+              Weapon: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - '3 damage; #the target shifts 1 square away from the trap'
+              - '4 damage; #the target falls into the pit; A<0 prone'
+              - '6 damage; #the target falls into the pit; A<1 prone; restrained (save ends)'
+            - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+              applyto: targets
+              rule: shift 1
+              tiersSelected:
+              - 1
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 96ad13a2-708f-435d-99c3-9150d2557107
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 09573e17-b8d0-4e2d-9e11-7d70e889d0cf
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the trap as its own maneuver, usable only on the trap. Tier 1 makes the creature roll the Spike Trap power roll against itself; tiers 2 and 3 remove the trap; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The spike trap
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 6a2f4964-1b8f-48b1-be1a-aabe762fab8d
+        name: Passable
+        description: Creatures can enter and end their movement in this object's space.
+        source: Character Feature
+        implementation: 1
+        domains:
+          CharacterFeature:6a2f4964-1b8f-48b1-be1a-aabe762fab8d: true
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Passable
+          attribute: 7e3f9c24-1b58-4d62-a37e-9c5d8b3f6a14
+          behavior: attribute
+          value: 1
+          guid: 3fd2eeb2-3536-4e13-8395-cf88bfd82d93
+          source: Character Feature
+          sourceguid: 6a2f4964-1b8f-48b1-be1a-aabe762fab8d
+          domains:
+            CharacterFeature:6a2f4964-1b8f-48b1-be1a-aabe762fab8d: true
+      - __typeName: CharacterFeature
+        implementation: 3
+        guid: a143af8e-04e4-496f-9d11-ddc7445bf5d9
+        domains:
+          CharacterFeature:a143af8e-04e4-496f-9d11-ddc7445bf5d9: true
+        description: A pit dug into the ground is filled with spikes, and camouflaged to avoid detection. It is calibrated to be triggered by creatures or objects of a particular size or larger.
+        source: Character Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Spike Trap
+            displayName: Spike Trap
+            description: The target ends their movement when they enter the trap's area. The pit is typically 2 squares deep. The trap must be manually reset.
+            implementation: 3
+            implementationDetails: 'SILVER: The roll, damage, potency, prone, restrained (save ends) and the shift on tier 1 are automated, and the trap ends the target''s movement. The pit itself is not modelled: no depth or fall, so climbing out is left to the Director. The trap fires once; reset it by placing a fresh one. Objects that enter are not targeted.'
+            trigger: pressureplate
+            targetType: target
+            range: 1
+            numTargets: '1'
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Area: true
+              Weapon: true
+            usageLimitOptions:
+              resourceid: 59e2dccc-5b90-4a3a-b264-2cd9bf5c1c94
+              resourceRefreshType: none
+              charges: '1'
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: '#ffffffff'
+              hueshift: 0
+              brightness: 1
+              saturation: 1
+            guid: 6a592e76-d9bb-49c8-82b9-aa9d55d6f5fb
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - '3 damage; #the target shifts 1 square away from the trap'
+              - '4 damage; #the target falls into the pit; A<0 prone'
+              - '6 damage; #the target falls into the pit; A<1 prone; restrained (save ends)'
+            - __typeName: ActivatedAbilityInvokeAbilityBehavior
+              guid: a5addc1f-9077-40a4-86fb-0ea1ab98772b
+              abilityType: standard
+              applyto: targets
+              runOnController: true
+              invokeOnCaster: false
+              promptText: Shift 1 square away from the trap.
+              standardAbility: 14c386b6-693c-4abf-aebe-3b5f5a017886
+              standardAbilityParams:
+                distance: '1'
+              tiersSelected:
+              - 1
+              customAbility:
+                __typeName: ActivatedAbility
+                name: Invoked Ability
+                description: ''
+                abilityType: none
+                behaviors: []
+                display:
+                  bgcolor: '#ffffffff'
+                  brightness: 1
+                  hueshift: 0
+                  saturation: 1
+                guid: 7d743e51-895c-4e65-91f0-f1825dc39bdb
+                iconid: ui-icons/skills/1.png
+                modifiers: []
+                numTargets: '1'
+                range: 1
+                repeatTargets: false
+                targetType: self
+          guid: 59e2dccc-5b90-4a3a-b264-2cd9bf5c1c94
+          behavior: trigger
+          domains:
+            CharacterFeature:a143af8e-04e4-496f-9d11-ddc7445bf5d9: true
+          description: A pit dug into the ground is filled with spikes, and camouflaged to avoid detection. It is calibrated to be triggered by creatures or objects of a particular size or larger.
+          source: Character Feature
+          name: Spike Trap
+          sourceguid: a143af8e-04e4-496f-9d11-ddc7445bf5d9
+        name: Spike Trap
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/3rmQIveZWre6qPziJ0Dh9Q
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Spike Trap
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 2
+ctime: 1795169340820
+mtime: 1795169340820
+hidden: false
+id: b9b42bc2-0085-4175-b3ce-79bbb86aa62a

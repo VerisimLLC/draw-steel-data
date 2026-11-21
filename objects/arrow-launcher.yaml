@@ -1,0 +1,354 @@
+id: 8a659f2f-c136-4441-8609-e773edc4d7a8
+description: Arrow Launcher
+artist: null
+children: {}
+components:
+  CORE:
+    '@class': ObjectComponentCore
+    _lastRotation: -1
+    _lastScale: -1
+    disabled: false
+    hasShadow: true
+    height: 0.8
+    keywords: []
+    locked: false
+    pivot_x: 0.5
+    pivot_y: 0.5
+    properties: null
+    rotation: 0
+    scale: 1
+    sprite_invisible_to_players: false
+    sublayer: Objects
+  63b12152-f0b8-448d-9183-886cddc6661a:
+    '@class': ObjectComponentTargetable
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    turnSpeed: 120
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+          baseValue: 2
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+      creatureSize: 1L
+      max_hitpoints: 30
+      resources: []
+      characterFeatures: []
+      classes: []
+      titles: []
+      skillProficiencies: []
+      equipment: []
+      notes:
+      - title: Backstory
+        text: ''
+      innateActivatedAbilities:
+      - name: Arrow Storm
+        description: This ability can't be used again until the arrow launcher is reloaded.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Arrow Launcher Deactivated")
+          reason: The arrow launcher has been deactivated and can't be used.
+        - formula: not (OngoingEffects has "Arrow Launcher Unloaded")
+          reason: The arrow launcher must be reloaded before it can fire again.
+        abilityType: none
+        aimCasterAtTarget: true
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Highest Characteristic
+          tiers:
+          - 5 damage
+          - 8 damage
+          - 11 damage
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: e6be803a-ac14-4507-a8e8-7e985ce85749
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          ongoingEffect: 5dca518e-b1b2-4f5a-9ef8-0abdbe49da7f
+          ongoingEffectCustom: false
+          stacks: '1'
+        categorization: Ability
+        conditionalReminders:
+        - formula: OngoingEffects has "Arrow Launcher Unloaded"
+          text: The arrow launcher is unloaded. A creature adjacent to it must use Reload before it can fire again.
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 319c2295-7794-4a90-8c68-130fbbfd54b6
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Firing applies Arrow Launcher Unloaded to the launcher, which blocks Arrow Storm until Reload removes it. Firing also spends any Spot bonus. Upgrades (Flaming Arrows, Screamers) are not built.
+        keywords:
+          Area: true
+          Ranged: true
+          Weapon: true
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 20
+        repeatTargets: false
+        strain: []
+        targetTextOverride: Each creature and object in the area
+        targetType: cube
+        radius: 5
+      - name: Reload
+        description: The arrow launcher is reloaded, allowing Arrow Storm to be used again. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Arrow Launcher Deactivated")
+          reason: The arrow launcher has been deactivated and can't be used.
+        - formula: OngoingEffects has "Arrow Launcher Unloaded"
+          reason: The arrow launcher is already loaded.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          applyto: caster
+          ongoingEffectid: 5dca518e-b1b2-4f5a-9ef8-0abdbe49da7f
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 9460a3a2-4768-4bf8-bf63-8166cb1458ea
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Removes Arrow Launcher Unloaded from the arrow launcher. Limited to once per round on the arrow launcher itself, whoever operates it.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: '1'
+          resourceRefreshType: round
+          resourceid: b18e5937-6a8d-496f-8847-61cb5f85eeac
+      - name: Spot
+        description: The next use of Arrow Storm gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.
+        __typeName: ActivatedAbility
+        abilityFilters:
+        - formula: not (OngoingEffects has "Arrow Launcher Deactivated")
+          reason: The arrow launcher has been deactivated and can't be used.
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        operatedByAdjacentCreature: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: eoe
+          ongoingEffect: e6be803a-ac14-4507-a8e8-7e985ce85749
+          ongoingEffectCustom: false
+          stacks: '1'
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: dfd5cbd9-f4a0-4afd-92d7-5957b4c84a22
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Applies Arrow Launcher Spotted to the arrow launcher (an edge and +10 distance on Arrow Storm). Arrow Storm removes it when fired. Limited to once per round on the arrow launcher itself.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetType: self
+        usageLimitOptions:
+          charges: '1'
+          resourceRefreshType: round
+          resourceid: fa6bef47-32af-4a43-bde0-0fe2f38b63a1
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a arrow launcher can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature accidentally activates the Arrow Storm ability.'
+          - '#The arrow launcher is deactivated but the creature is slowed (EoT).'
+          - '#The arrow launcher is deactivated and can''t be used.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: named
+          customAbility:
+            name: Invoked Ability
+            description: ''
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 3d6ce0a5-546b-4d5e-8e06-e2c42136f887
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+          filterTarget: not (Target.OngoingEffects has "Arrow Launcher Unloaded")
+          namedAbility: Arrow Storm
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          ongoingEffect: a69e4537-4a59-4a9c-a8ae-2256fd06ca17
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: 4a4ba3cc-554d-4ca6-8c98-f89b71cffc5d
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the arrow launcher as its own maneuver, usable only on the arrow launcher. Tier 1 makes the arrow launcher fire Arrow Storm (if loaded) with the creature choosing the target; tiers 2 and 3 apply Arrow Launcher Deactivated, which blocks all of its abilities; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Arrow Launcher Deactivated")
+          reason: The arrow launcher is already deactivated.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The arrow launcher
+        targetType: target
+      - name: Move
+        description: The arrow launcher and the creature using this action move together up to 3 squares.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: d19658a2-4d7b-4504-af9e-1a5410fb17fd
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          duration: eoe
+          ongoingEffect: f95db46a-ae42-4eb7-91bb-c533f611ff3f
+          ongoingEffectCustom: false
+          stacks: '1'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          abilityType: standard
+          applyto: caster
+          customAbility:
+            name: Invoked Ability
+            description: ''
+            __typeName: ActivatedAbility
+            abilityType: none
+            behaviors: []
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: ac0d5754-eab3-4457-bd3d-e3a5c11f3019
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+          invokeOnCaster: true
+          standardAbility: 4a993863-896f-47d0-8449-74c1fe2279b0
+          standardAbilityParams:
+            distance: '3'
+        - __typeName: ActivatedAbilityRemoveOngoingEffectBehavior
+          ongoingEffectid: f95db46a-ae42-4eb7-91bb-c533f611ff3f
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: d670f45b-fbdf-4c7c-80dd-c88f6a8d0a1a
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: Granted to every creature adjacent to the arrow launcher, usable only on the arrow launcher. Hitches the arrow launcher to the creature (Arrow Launcher Hitched, a movement carrier), the creature moves up to 3 squares, then it unhitches. Needs the engine change that lets a movement carrier drag a map object.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        reasonedFilters:
+        - formula: not (OngoingEffects has "Arrow Launcher Deactivated")
+          reason: The arrow launcher has been deactivated and can't be used.
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The arrow launcher
+        targetType: target
+ctime: 1795169340820
+height: 0
+hidden: false
+imageId: https://codexback.com/oUB0Mh52OKG3gWZMHV_jHg
+keywords: null
+mtime: 1795169340820
+ord: 308
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+previewType: null
+tint:
+  a: 1
+  b: 1
+  g: 1
+  r: 1
+width: 0

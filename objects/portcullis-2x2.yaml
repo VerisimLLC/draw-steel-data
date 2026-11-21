@@ -1,0 +1,295 @@
+previewType: null
+components:
+  cfdee64e-2e31-4809-80c1-cb06e5247684:
+    '@class': ObjectComponentEventHandler
+    exposedEvents:
+      1023c215-fda4-4790-b55b-ba04a565e473-Play Sound:
+        '@class': ObjectComponentEventHandlerEntry
+        exposed: true
+    disabled: false
+    properties:
+      __typeName: EventHandlerComponent
+  1023c215-fda4-4790-b55b-ba04a565e473:
+    '@class': ObjectComponentAudio
+    playGuid: 7454efb6-cc60-4261-8edb-526f94bcc5eb
+    audio: e9950541-0c22-41d3-baba-f7f307b3e81a
+    volume: 1
+    falloffDistance: 10
+    wallPenetration: 0
+    playOnlyOnTrigger: true
+    silentOnOtherFloors: true
+    falloffCurve:
+      points:
+      - x: 0
+        y: 1
+        z: -1
+      - x: 0.5
+        y: 0.4
+        z: -1
+      - x: 1
+        y: 0
+        z: -1
+      displayRange:
+        x: 0
+        y: 1
+      xmapping:
+        x: 0
+        y: 1
+    disabled: false
+    properties: null
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 0.486
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 0.486
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 1
+    hasShadow: true
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  4521eded-dfef-46ad-bab6-73d1782374ae:
+    '@class': ObjectComponentSolid
+    blockMovement: true
+    blockForcedMovement: true
+    blockVision: false
+    blockLight: false
+    cover: None
+    _noutlineRefresh: 0
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: true
+    properties: null
+  2c1818c5-ad23-4f06-a501-b116fb2c44c3:
+    '@class': ObjectComponentHoverText
+    text: Portcullis
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  ad5982aa-8c9e-488d-9321-1f296bc551a6:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: '2'
+      max_hitpoints: 36
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a portcullis can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the portcullis and is affected as if in its area.'
+          - '#The portcullis is deactivated but the creature is slowed (EoT).'
+          - '#The portcullis is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          guid: a893774c-656f-4668-933c-0339900ac746
+          abilityType: custom
+          applyto: caster
+          invokeOnCaster: true
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+          customAbility:
+            __typeName: ActivatedAbility
+            name: Heavy Gate
+            description: The creature triggers the portcullis while trying to deactivate it.
+            abilityType: none
+            implementation: 4
+            keywords:
+              Area: true
+              Weapon: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 3 damage
+              - 7 damage; A<2 restrained (save ends)
+              - 10 damage; A<3 restrained (save ends)
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 6e37652d-1932-4c3a-9e79-5549ac85d9d3
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+          springTarget: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: a258de39-9eb0-4737-b820-4b361575ec19
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: 'Granted to every creature adjacent to the portcullis as its own maneuver, usable only on the portcullis. Tier 1 rolls Heavy Gate against the creature (without the slide) and springs the portcullis on anything beneath it; tiers 2 and 3 remove it; tier 2 also slows the creature until the end of their turn.'
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The portcullis
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 44b006ed-c72c-499e-a999-b6c5a86a7359
+        name: Portcullis
+        implementation: 3
+        domains:
+          CharacterFeature:44b006ed-c72c-499e-a999-b6c5a86a7359: true
+        description: 'A portcullis hidden in the ceiling drops when a linked pressure plate or switch is activated. 2 x 2 squares, 9 Stamina per square. Level 3 Trap Ambusher, EV 4.'
+        implementationDetails: 'SILVER: Link a pressure plate''s Pressure Plate On or a switch''s Button Pressed to the portcullis''s Play Sound event. Not built: per-square Stamina (one pool for the whole gate, so a destroyed square does not open a gap). Reset it by hand: hide it again and switch its Solid component off.'
+        source: Character Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Heavy Gate
+          behavior: trigger
+          guid: ffb1190c-de89-4335-8bf4-ddb3e910b1f8
+          sourceguid: 44b006ed-c72c-499e-a999-b6c5a86a7359
+          source: Character Feature
+          domains:
+            CharacterFeature:44b006ed-c72c-499e-a999-b6c5a86a7359: true
+          description: When a linked trigger is activated, the portcullis springs, using Heavy Gate.
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Heavy Gate
+            displayName: Heavy Gate
+            description: A pressure plate, switch, or other linked trigger is activated.
+            implementation: 3
+            implementationDetails: 'SILVER: Revealed when its link fires; rolls Heavy Gate against each creature and attackable object beneath it, slides tier 1 targets to a random side (the long sides of the picture), then blocks movement.'
+            trigger: linkedtrigger
+            mandatory: true
+            targetType: self
+            range: 1
+            numTargets: '1'
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Area: true
+              Weapon: true
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: c88de670-cd11-4566-8eaf-0c3d37ae1de4
+            behaviors:
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: reveal
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: targetfootprint
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 3 damage
+              - 7 damage; A<2 restrained (save ends)
+              - 10 damage; A<3 restrained (save ends)
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: targets
+              mode: slideaside
+              tiersSelected:
+              - 1
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: solid
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/WhJdyWXlIHwQhXWR_kU97Q
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Portcullis (2 x 2)
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 333
+ctime: 1795212000000
+mtime: 1795212000000
+hidden: false
+id: 6d38da3f-d7c1-4eff-b493-95db2bdcce6a

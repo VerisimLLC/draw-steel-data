@@ -93,7 +93,7 @@ features:
         ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
         ongoingEffectCustom: false
       castImmediately: true
-      categorization: Signature Ability
+      categorization: Ability
       display:
         bgcolor: "#ffffffff"
         brightness: 1
@@ -148,6 +148,42 @@ features:
       strain: []
       targetType: self
       trigger: losehitpoints
+  - name: Maneuver Invisibility
+    description: Your invisibility ends if you use an ability. From 9th level it no longer does.
+    __typeName: CharacterModifier
+    behavior: trigger
+    filterCondition: Level < 9
+    guid: 3f6b2d1e-8a4c-4e57-9b0d-2c7e5a91f4d3
+    source: Item
+    sourceguid: a950a3fd-3029-4447-a827-621e0fd8a994
+    triggeredAbility:
+      name: Maneuver Invisibility
+      description: Your invisibility ends when you use an ability.
+      __typeName: TriggeredAbility
+      abilityType: none
+      behaviors:
+      - __typeName: ActivatedAbilityPurgeEffectsBehavior
+        applyto: caster
+        conditions: []
+        mode: effect
+        ongoingEffect: 6b9ea931-b803-4811-8086-c1590a2195e5
+      castImmediately: true
+      conditionFormula: Subject.Conditions has "Invisible" and not (UsedAbility.Name is "Turn Invisible")
+      display:
+        bgcolor: "#ffffffff"
+        brightness: 1
+        hueshift: 0
+        saturation: 1
+      guid: 7c1e9a42-5d3b-4f86-a0e2-91b4c6d8e7f5
+      iconid: ce22a366-97fc-4e9d-90ab-50c3501ae02b
+      modifiers: []
+      numTargets: "1"
+      persistence: []
+      range: 1
+      repeatTargets: false
+      strain: []
+      targetType: self
+      trigger: useability
   source: Item
 - name: Level 5 Psychic Immunity
   description: ""
@@ -194,6 +230,7 @@ features:
 flavor: Shimmering light flows like liquid along this suit of crystalline armor.
 iconid: ce22a366-97fc-4e9d-90ab-50c3501ae02b
 implementation: 3
+implementationDetails: "Silver. Not automated: knowing the location of creatures with concealment within 2 squares (5 at 5th level, 10 at 9th)."
 itemPrerequisite: A large vessel of astral ice, a pint of supercooled mercury
 keywords:
   Heavy Armor: true

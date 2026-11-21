@@ -1,0 +1,264 @@
+previewType: null
+components:
+  36a25a08-9baf-4e7c-8915-ef11d535172d:
+    '@class': ObjectComponentEventHandler
+    exposedEvents:
+      3a419ca3-5711-457e-8761-69796b847396-Play Sound:
+        '@class': ObjectComponentEventHandlerEntry
+        exposed: true
+    disabled: false
+    properties:
+      __typeName: EventHandlerComponent
+  3a419ca3-5711-457e-8761-69796b847396:
+    '@class': ObjectComponentAudio
+    playGuid: 0f6d690f-db2a-4e28-8596-9aec627ff11b
+    audio: 299d46f9-ef97-4fed-a314-5ba2f6a31f4f
+    volume: 1
+    falloffDistance: 10
+    wallPenetration: 0
+    playOnlyOnTrigger: true
+    silentOnOtherFloors: true
+    falloffCurve:
+      points:
+      - x: 0
+        y: 1
+        z: -1
+      - x: 0.5
+        y: 0.4
+        z: -1
+      - x: 1
+        y: 0
+        z: -1
+      displayRange:
+        x: 0
+        y: 1
+      xmapping:
+        x: 0
+        y: 1
+    disabled: false
+    properties: null
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 0.86
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 0.86
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 0.3
+    hasShadow: false
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  af8ee97b-cbc1-441f-9444-094898479c1e:
+    '@class': ObjectComponentHoverText
+    text: Dart Trap
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  d55daee8-e170-4e9a-9abf-b56575c84c2c:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: 1S
+      max_hitpoints: 3
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a dart trap can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the trap and is affected as if in its space.'
+          - '#The trap is deactivated but the creature is slowed (EoT).'
+          - '#The trap is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          guid: eaf780a0-46cf-4287-b034-9f79f7d8a290
+          abilityType: custom
+          applyto: caster
+          invokeOnCaster: true
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+          customAbility:
+            __typeName: ActivatedAbility
+            name: Dart
+            description: The creature triggers the dart trap while trying to deactivate it.
+            abilityType: none
+            implementation: 4
+            keywords:
+              Ranged: true
+              Strike: true
+              Weapon: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 2 damage
+              - 4 damage
+              - 5 damage
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 0a8c0866-5b08-44f9-bbe0-a11db9649320
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: a6b9c486-191a-4bc2-88ca-2a7dcd308770
+        iconid: ui-icons/skills/1.png
+        implementation: 4
+        implementationDetails: Granted to every creature adjacent to the trap as its own maneuver, usable only on the trap. Tier 1 makes the creature roll the Dart power roll against itself; tiers 2 and 3 remove the trap; tier 2 also slows the creature until the end of their turn.
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The dart trap
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 03daf17f-658a-4f1a-a4ce-cc636c528cfb
+        name: Dart Trap
+        implementation: 3
+        domains:
+          CharacterFeature:03daf17f-658a-4f1a-a4ce-cc636c528cfb: true
+        description: A concealed dart thrower hurls missiles at short range. It fires when a linked pressure plate, switch, or other trigger is activated.
+        source: Character Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Dart
+          behavior: trigger
+          guid: 087dd24d-0857-4e1a-be26-9aa38ec7e242
+          sourceguid: 03daf17f-658a-4f1a-a4ce-cc636c528cfb
+          source: Character Feature
+          domains:
+            CharacterFeature:03daf17f-658a-4f1a-a4ce-cc636c528cfb: true
+          description: When a linked trigger is activated, the dart trap fires at the creature that set it off.
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Dart
+            displayName: Dart
+            description: A pressure plate, switch, or other linked trigger is activated.
+            implementation: 3
+            implementationDetails: 'SILVER: Fires at the creature that set off a linked pressure plate when that creature is within 5 squares. Link the plate''s Pressure Plate On trigger to the dart trap''s Play Sound event. Not built: the fixed firing direction, choosing another target, the Poison, Large and Gatling upgrades.'
+            trigger: linkedtrigger
+            targetType: target
+            range: 5
+            numTargets: '1'
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Ranged: true
+              Strike: true
+              Weapon: true
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 98c33c73-da4e-4f3d-ae81-94e9b6193bdf
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 2 damage
+              - 4 damage
+              - 5 damage
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/1I25llpjxsxWaewJPwEMWg
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Dart Trap
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 304
+ctime: 1795169340820
+mtime: 1795169340820
+hidden: false
+id: cd72aed3-450e-437c-b157-8d6f28f956b6

@@ -1,0 +1,318 @@
+previewType: null
+components:
+  38bb0275-820d-438e-a0ca-23427e69f360:
+    '@class': ObjectComponentEventHandler
+    exposedEvents:
+      c9944cc8-41f0-4e18-b720-3315239f2370-Play Sound:
+        '@class': ObjectComponentEventHandlerEntry
+        exposed: true
+    disabled: false
+    properties:
+      __typeName: EventHandlerComponent
+  c9944cc8-41f0-4e18-b720-3315239f2370:
+    '@class': ObjectComponentAudio
+    playGuid: 17fb8ca4-fbd6-43f8-acc1-dcb3c7249733
+    audio: 3878a8a9-0274-486b-8b49-49955a1b7653
+    volume: 1
+    falloffDistance: 10
+    wallPenetration: 0
+    playOnlyOnTrigger: true
+    silentOnOtherFloors: true
+    falloffCurve:
+      points:
+      - x: 0
+        y: 1
+        z: -1
+      - x: 0.5
+        y: 0.4
+        z: -1
+      - x: 1
+        y: 0
+        z: -1
+      displayRange:
+        x: 0
+        y: 1
+      xmapping:
+        x: 0
+        y: 1
+    disabled: false
+    properties: null
+  8e0408c1-30f4-48a6-9fa6-27946f2ab332:
+    '@class': ObjectComponentAppearance
+    locked: false
+    imageNumber: 0
+    imageSwaps:
+    - 011912b4-1158-4e2a-9440-ad2598e38f18
+    imageSwapNames:
+    - Plain log
+    imageDefaultName: Roped log
+    hue: 0
+    saturation: 1
+    brightness: 1
+    opacity: 1
+    alphaCurve: 1
+    premultiplyAlpha: false
+    additiveBlend: false
+    disabled: false
+    properties: null
+  CORE:
+    '@class': ObjectComponentCore
+    _lastScale: 0.54
+    _lastRotation: 0
+    locked: false
+    keywords:
+    - summonable
+    rotation: 0
+    scale: 0.54
+    pivot_x: 0.5
+    pivot_y: 0.5
+    sublayer: Objects
+    sprite_invisible_to_players: true
+    height: 0.5
+    hasShadow: true
+    shadowLength: 0.175
+    disabled: false
+    properties: null
+  34e748d6-cc03-4f68-a6c5-79a80a814fd8:
+    '@class': ObjectComponentSolid
+    blockMovement: true
+    blockForcedMovement: true
+    blockVision: false
+    blockLight: false
+    cover: Half
+    _noutlineRefresh: 0
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: true
+    properties: null
+  4be2fb9f-4258-41b9-b31e-00510252957d:
+    '@class': ObjectComponentHoverText
+    text: Ram
+    hideFromPlayers: true
+    disabled: false
+    properties: null
+  1c314474-f0f7-4d8a-8b4a-cbd99f83223d:
+    '@class': ObjectComponentTargetable
+    _moveAnim: null
+    _prevMoveid: none
+    speed: 0
+    xorigin: 0
+    yorigin: 0
+    attackable: true
+    onDeath: delete
+    maxPoints: 16
+    manuallySetOutline: null
+    disabled: false
+    properties:
+      __typeName: TargetableObject
+      attributes:
+        inu:
+          __typeName: CharacterAttribute
+          id: inu
+        agl:
+          __typeName: CharacterAttribute
+          id: agl
+        prs:
+          __typeName: CharacterAttribute
+          id: prs
+        mgt:
+          __typeName: CharacterAttribute
+          id: mgt
+        rea:
+          __typeName: CharacterAttribute
+          id: rea
+      resources: []
+      creatureSize: '3'
+      max_hitpoints: 9
+      innateActivatedAbilities:
+      - name: Deactivate
+        description: As a maneuver, a creature adjacent to a ram can make an Agility test.
+        __typeName: ActivatedAbility
+        abilityType: none
+        actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
+        grantedToAdjacentCreatures: true
+        behaviors:
+        - __typeName: ActivatedAbilityPowerRollBehavior
+          roll: 2d10 + Agility
+          attrid: agl
+          isTest: true
+          tiers:
+          - '#The creature triggers the ram and is affected as if in its space.'
+          - '#The ram is deactivated but the creature is slowed (EoT).'
+          - '#The ram is deactivated and doesn''t trigger.'
+        - __typeName: ActivatedAbilityInvokeAbilityBehavior
+          guid: f1ef5ce9-2ccd-486e-a40a-0adb27f5b4dc
+          abilityType: custom
+          applyto: caster
+          invokeOnCaster: true
+          suppressInvokedActionCost: true
+          tiersSelected:
+          - 1
+          customAbility:
+            __typeName: ActivatedAbility
+            name: Ram
+            description: The creature triggers the ram while trying to deactivate it.
+            abilityType: none
+            implementation: 4
+            keywords:
+              Area: true
+              Weapon: true
+            behaviors:
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 3 damage
+              - 6 damage
+              - 9 damage
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: 7705ab18-f7ad-43ac-aca9-923a838a0b9d
+            iconid: ui-icons/skills/1.png
+            modifiers: []
+            numTargets: '1'
+            range: 1
+            repeatTargets: false
+            targetType: self
+        - __typeName: ActivatedAbilitySetOffLinksBehavior
+          applyto: targets
+          springTarget: true
+          tiersSelected:
+          - 1
+        - __typeName: ActivatedAbilityDestroyBehavior
+          applyto: targets
+          tiersSelected:
+          - 2
+          - 3
+        - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+          applyto: caster
+          duration: end_of_next_turn
+          ongoingEffect: 12bc7f58-0ae8-4b9e-9018-74d28b083992
+          ongoingEffectCustom: false
+          stacks: '1'
+          tiersSelected:
+          - 2
+        categorization: Ability
+        display:
+          bgcolor: '#ffffffff'
+          brightness: 1
+          hueshift: 0
+          saturation: 1
+        flavor: ''
+        guid: a436c1b9-34c5-4aa2-9d85-266c90b266c5
+        iconid: ui-icons/skills/1.png
+        implementation: 3
+        implementationDetails: 'Granted to every creature adjacent to the ram as its own maneuver, usable only on the ram. Tier 1 rolls Ram against the creature (without the slide) and springs the ram on anything in its path; tiers 2 and 3 remove it; tier 2 also slows the creature until the end of their turn.'
+        keywords: {}
+        modifiers: []
+        numTargets: '1'
+        objectTarget: true
+        persistence: []
+        range: 1
+        repeatTargets: false
+        strain: []
+        targetAllegiance: none
+        targetTextOverride: The ram
+        targetType: target
+      characterFeatures:
+      - __typeName: CharacterFeature
+        guid: 3ca0ee8e-bb10-4c6e-9d2e-09f1edfd4dee
+        name: Ram
+        implementation: 3
+        domains:
+          CharacterFeature:3ca0ee8e-bb10-4c6e-9d2e-09f1edfd4dee: true
+        description: 'A heavy wooden ram, hidden until a linked pressure plate or switch sends it crashing forward. 3 Stamina per square. Level 2 Trap Ambusher, EV 3.'
+        implementationDetails: 'SILVER: Link a pressure plate''s Pressure Plate On or a switch''s Button Pressed to the ram''s Play Sound event. Its front is the left end of the picture (the head of the metal ram); rotate it to aim. Reset it by hand: slide it back, hide it again and switch its Solid component off.'
+        source: Character Feature
+        modifiers:
+        - __typeName: CharacterModifier
+          name: Ram
+          behavior: trigger
+          guid: 2e6a844d-f122-4d57-b55a-270c556717cb
+          sourceguid: 3ca0ee8e-bb10-4c6e-9d2e-09f1edfd4dee
+          source: Character Feature
+          domains:
+            CharacterFeature:3ca0ee8e-bb10-4c6e-9d2e-09f1edfd4dee: true
+          description: When a linked trigger is activated, the ram springs, using Ram.
+          triggeredAbility:
+            __typeName: TriggeredAbility
+            name: Ram
+            displayName: Ram
+            description: A pressure plate, switch, or other linked trigger is activated.
+            implementation: 3
+            implementationDetails: 'SILVER: Revealed when its link fires; rolls Ram against each creature and attackable object in the 3 squares in front of it (pushes go the way it moves), slides tier 1 targets to a random side of its path, then slides 3 squares forward (stopping short of a creature still in the way) and blocks movement.'
+            trigger: linkedtrigger
+            mandatory: true
+            targetType: self
+            range: 1
+            numTargets: '1'
+            objectTarget: false
+            repeatTargets: false
+            abilityType: none
+            keywords:
+              Area: true
+              Weapon: true
+            strain: []
+            persistence: []
+            modifiers: []
+            iconid: ui-icons/skills/1.png
+            display:
+              bgcolor: '#ffffffff'
+              brightness: 1
+              hueshift: 0
+              saturation: 1
+            guid: accd4f5a-f6f0-43a8-b671-326618403381
+            behaviors:
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: reveal
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: targetpath
+              distance: 3
+            - __typeName: ActivatedAbilityPowerRollBehavior
+              roll: 2d10 + 2
+              tiers:
+              - 3 damage
+              - 6 damage; push 3
+              - 9 damage; push 5
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: targets
+              mode: slideaside
+              tiersSelected:
+              - 1
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: advance
+              distance: 3
+            - __typeName: ActivatedAbilityMechanismBehavior
+              applyto: caster
+              mode: solid
+      inflictedConditions: []
+      classes: []
+      titles: []
+      notes:
+      - title: Backstory
+        text: ''
+      skillProficiencies: []
+      equipment: []
+children: {}
+keywords: null
+imageId: https://codexback.com/1_EwJMMaQM_YMWmrQ342uQ
+tint:
+  r: 1
+  g: 1
+  b: 1
+  a: 1
+width: 0
+height: 0
+description: Ram (Wood)
+parentFolder: 1384d03c-9a39-4702-bfb1-a5a4dfb5c3f0
+artist: null
+ord: 340
+ctime: 1795212000000
+mtime: 1795212000000
+hidden: false
+id: c98ed134-735a-49ab-b4ec-25405532054f
