@@ -836,7 +836,20 @@ levels:
                 __typeName: ActivatedAbility
                 abilityModification: true
                 abilityType: none
-                behaviors: []
+                behaviors:
+                - name: Record Scan Use
+                  __typeName: ActivatedAbilityScriptBehavior
+                  code: |
+                    -- Scan casts Search for Hidden Creatures in its place. The codex copies Scan's
+                    -- cost onto that cast but not its once-per-turn limit, so record the use
+                    -- against Scan's own limit here; a second Scan this turn is then refused.
+                    if casterToken == nil or not casterToken.valid then return end
+                    casterToken:ModifyProperties{
+                        description = "Scan",
+                        execute = function()
+                            casterToken.properties:ConsumeResource("38d043e2-0b63-4f4b-bcff-8d4467fe9933", "turn", 1, "Scan")
+                        end,
+                    }
                 display:
                   bgcolor: "#ffffffff"
                   brightness: 1
