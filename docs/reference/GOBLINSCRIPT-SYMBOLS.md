@@ -370,6 +370,7 @@ Every custom attribute in `compendium/tables/customattributes/_table.yaml` autom
 | Cannot Be Removed | `0` | Non-zero prevents creature from being removed from the board when dead. |
 | Delay Death | `0` | Delay monster death by this many seconds for on-death effects. |
 | Free Strike Bonus | `0` | Bonus to free strike damage (monsters). |
+| Extra Free Strikes | `0` | Extra free strikes made on top of the usual one; picks on the same creature combine into one strike (monsters). |
 | Critical Threshold | `19` | Natural roll needed for critical hit. |
 
 ### Flanking
