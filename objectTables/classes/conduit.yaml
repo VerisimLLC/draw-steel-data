@@ -1423,6 +1423,68 @@ levels:
           __typeName: TriggeredAbility
           abilityType: none
           behaviors:
+          - name: Only Recoveries You Allow
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |
+              --Offer the Recovery only when the ability just finished let another creature
+              --spend one (Heal, Healing Grace, Soul Siphon and the like). For any other
+              --ability this stops the trigger before the Recovery prompt.
+              local MAY_SPEND = "f57cb6f7-13b9-4ebb-8e88-88ead0a9c203"      --May Spend Recovery: its targets may spend one
+              local PROMPT_SPEND = "3b05eb22-02fd-4654-85e9-d71104172166"   --Prompt Spend Recovery: its targets are asked to spend one
+              local ALLY_MAY_SPEND = "a478d5f1-fed3-4772-9930-c3e82dc23f12" --Ally May Spend Recovery: the user picks an ally to spend one
+
+              --"targets" when the ability's own targets may spend a Recovery, "ally" when the
+              --user picks an ally partway through, nil when nobody else may spend one.
+              local function grantMode(behaviors, depth)
+                  for _, behavior in ipairs(behaviors or {}) do
+                      local kind = behavior.typeName
+                      if kind == "ActivatedAbilityRecoverySelectionBehavior" then
+                          return "targets"
+                      elseif kind == "ActivatedAbilityCustomTriggerBehavior" then
+                          local triggerName = behavior:try_get("triggerName")
+                          if triggerName == "Spend Recovery" or triggerName == "Prompt Recovery" then
+                              return "targets"
+                          end
+                      elseif kind == "ActivatedAbilityInvokeAbilityBehavior" then
+                          local standard = behavior:try_get("standardAbility")
+                          if standard == ALLY_MAY_SPEND then
+                              return "ally"
+                          elseif (standard == MAY_SPEND or standard == PROMPT_SPEND) and behavior:try_get("applyto") ~= "caster" then
+                              return "targets"
+                          end
+                          local custom = behavior:try_get("customAbility")
+                          if custom ~= nil and depth < 4 then
+                              local mode = grantMode(custom.behaviors, depth + 1)
+                              if mode ~= nil then
+                                  return mode
+                              end
+                          end
+                      end
+                  end
+                  return nil
+              end
+
+              local usedAbility = symbols.usedability
+              local mode = nil
+              --This trigger's own Recovery prompt also finishes an ability; never count it.
+              if usedAbility ~= nil and usedAbility.name ~= ability.name then
+                  mode = grantMode(usedAbility.behaviors, 0)
+              end
+
+              local allowed = (mode == "ally")
+              if mode == "targets" then
+                  --This trigger's targets are the finished ability's targets. Only one other
+                  --than the user counts: Healing Grace on himself lets nobody else spend.
+                  for _, target in ipairs(targets or {}) do
+                      if target.token ~= nil and target.token.charid ~= casterToken.charid then
+                          allowed = true
+                      end
+                  end
+              end
+
+              if not allowed then
+                  options.stopProcessing = true
+              end
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: standard
             customAbility:
@@ -1443,12 +1505,13 @@ levels:
               range: 1
               repeatTargets: false
               targetType: self
+            applyto: caster
             promptText: "The Lists of Heaven: Whenever you allow another creature to spend a Recovery, you can also spend a Recovery."
             standardAbility: 3b05eb22-02fd-4654-85e9-d71104172166
             standardAbilityParams:
               numrecoveries: "1"
             targeting: self
-          conditionFormula: Your Turn and Resource is Recovery
+          conditionFormula: not Part Of Another Ability
           display:
             bgcolor:
               __usertype: LuaColor
@@ -1464,6 +1527,7 @@ levels:
           guid: 110bd0b7-7f5c-4227-a2ab-2f65feb0327b
           hasManualVersion: true
           iconid: 12cdef25-2e5b-47e0-bccf-758198de8442
+          mandatory: true
           modifiers: []
           numTargets: "1"
           persistence: []
@@ -1475,10 +1539,8 @@ levels:
             page: 102
             type: pdf
           strain: []
-          subject: allies
-          subjectRange: "100"
-          targetType: self
-          trigger: useresource
+          targetType: casttargets
+          trigger: finishability
           whenActive: combat
       source: Conduit Class Feature
       sourceReference:
