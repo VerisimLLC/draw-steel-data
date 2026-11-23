@@ -280,11 +280,67 @@ info:
             source: Ongoing Effect
             sourceguid: 4e8ab5a7-e510-4056-8afc-79eae0179d83
             value: 1
+          - name: Ignore Difficult Terrain
+            description: ""
+            __typeName: CharacterModifier
+            behavior: ignoredifficultterrain
+            guid: f2c3db98-46db-4f12-99a6-d5699f263f30
+            source: Ongoing Effect
+            sourceguid: 4e8ab5a7-e510-4056-8afc-79eae0179d83
           source: Ongoing Effect
       - __typeName: ActivatedAbilityRelocateCreatureBehavior
         movementType: move
         targetMoveVicinity: true
+        targetPassedSquares: true
         vicinityFilter: Enemy
+      - name: SmashObjects
+        __typeName: ActivatedAbilityScriptBehavior
+        code: |
+          --"Any mundane size 1 object whose space they move through is destroyed." The move above
+          --hands the squares it crossed to this step as areas. Each attackable one-square object
+          --there (not keyworded magic) drops to 0 Stamina, so its own Destroyed effects still run.
+          local areas = options.targetAreaList or {}
+          if options.targetArea ~= nil then
+              areas = { options.targetArea }
+          end
+          local crossed = {}
+          for _, area in ipairs(areas) do
+              for _, loc in ipairs(area.locations or {}) do
+                  crossed[loc.xyfloorOnly.str] = true
+              end
+          end
+          --The power roll that follows hits the enemies passed, not these squares.
+          options.targetArea = nil
+          options.targetAreaList = nil
+
+          local SIZE_ONE = { ["1T"] = true, ["1S"] = true, ["1M"] = true, ["1L"] = true }
+          local function IsMagic(tok)
+              local magic = false
+              pcall(function()
+                  for keyword, _ in pairs(tok.objectComponent.levelObject.keywords or {}) do
+                      if string.lower(keyword) == "magic" then
+                          magic = true
+                      end
+                  end
+              end)
+              return magic
+          end
+
+          for _, tok in ipairs(dmhub.allObjectTokens or {}) do
+              if tok.valid and tok.isAttackableObject and not tok.isCorpse and tok.properties ~= nil and not IsMagic(tok) then
+                  local locs = tok.locsOccupying or { tok.loc }
+                  local size = tok.properties:try_get("creatureSize")
+                  local stamina = tok.properties:CurrentHitpoints()
+                  if #locs == 1 and (size == nil or SIZE_ONE[size]) and stamina > 0 and crossed[locs[1].xyfloorOnly.str] then
+                      tok:ModifyProperties{
+                          description = "Blazing Charge",
+                          execute = function()
+                              tok.properties:TakeDamage(stamina, "Blazing Charge", {})
+                          end,
+                      }
+                  end
+              end
+          end
       - __typeName: ActivatedAbilityPowerRollBehavior
         roll: 2d10 + Highest Characteristic
         tiers:
@@ -301,8 +357,8 @@ info:
       flavor: ""
       guid: c4ece09d-3870-4238-926c-22883d749fc1
       iconid: ui-icons/skills/1.png
-      implementation: 3
-      implementationDetails: Moving through enemies and the power roll against each enemy passed through are automated. Ignoring difficult terrain and destroying mundane size 1 objects in the path are not.
+      implementation: 4
+      implementationDetails: Automated. While choosing the path and moving, the equivite moves through enemies and ignores difficult terrain. Each attackable one-square object on the path (not keyworded magic) drops to 0 Stamina, and each enemy passed through gets the power roll.
       keywords:
         Melee: true
         Weapon: true
