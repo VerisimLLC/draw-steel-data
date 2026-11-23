@@ -179,8 +179,8 @@ info:
       domains:
         CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
       guid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
-      implementation: 3
-      implementationDetails: The collar blast and the teleport are automated. The teleport lets you pick any unoccupied space within 20 squares; choosing one adjacent to an ally is up to you.
+      implementation: 4
+      implementationDetails: The collar blast and the teleport are automated. The teleport only offers unoccupied spaces within 20 squares that are adjacent to an ally.
       modifiers:
       - name: Feign Death
         description: ""
@@ -224,14 +224,15 @@ info:
             roll: 2d6
             titleText: Feign Death
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: standard
+            abilityType: custom
             applyto: caster
             customAbility:
-              name: Invoked Ability
-              description: ""
+              name: Feign Death
+              description: Teleport to an unoccupied space adjacent to an ally within 20 squares.
               __typeName: ActivatedAbility
               abilityType: none
-              behaviors: []
+              behaviors:
+              - __typeName: ActivatedAbilityRelocateCreatureBehavior
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
@@ -239,15 +240,15 @@ info:
                 saturation: 1
               guid: 0d4b8e2a-5f7c-4a1e-9b3d-6c2f8a0e4b71
               iconid: ui-icons/skills/1.png
+              implementation: 4
               modifiers: []
               numTargets: "1"
-              range: 1
+              range: 20
               repeatTargets: false
-              targetType: self
+              targetFilter: target.Count Nearby Friends(1) > 0
+              targetTextOverride: An unoccupied space adjacent to an ally
+              targetType: emptyspace
             promptText: Teleport to an unoccupied space adjacent to an ally within 20 squares.
-            standardAbility: 1de07d8e-11c3-4621-9055-bb8e26c9a40f
-            standardAbilityParams:
-              range: "20"
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -255,7 +256,7 @@ info:
             saturation: 1
           guid: 9b2e6d4a-3c8f-4b1e-a7d5-2e9c0f6b8a43
           iconid: ui-icons/skills/1.png
-          implementation: 3
+          implementation: 4
           keywords:
             Ranged: true
           mandatory: false
