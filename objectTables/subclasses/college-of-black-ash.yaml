@@ -1022,7 +1022,7 @@ levels:
         class:a58112e5-6466-4189-b810-5d0d93adc075: true
         class:d5b2e07d-657a-4405-899a-7fed0771f184: true
       guid: 7caa5397-d3ee-4c5d-a388-a480a44a586e
-      implementation: 3
+      implementation: 4
       modifiers:
       - name: Cinder Step
         description: Whenever you willingly move, you can teleport. When you teleport this way, it counts as using a shadow ability for the purpose of using your Burning Ash and Trail of Cinders features.
@@ -1048,6 +1048,215 @@ levels:
         source: College of Black Ash Class Feature
         sourceguid: 7caa5397-d3ee-4c5d-a388-a480a44a586e
         text: "Cinder Step: Whenever you willingly move, you can teleport."
+      - name: Cinder Step
+        description: Hold Ctrl while moving to teleport.
+        __typeName: CharacterModifier
+        behavior: movementtext
+        color: codex
+        domains:
+          class:a58112e5-6466-4189-b810-5d0d93adc075: true
+          class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+        guid: c4a93779-10fa-4e26-8c67-96d461846741
+        source: College of Black Ash Class Feature
+        sourceguid: 7caa5397-d3ee-4c5d-a388-a480a44a586e
+        text: Hold Ctrl while moving to teleport.
+      - name: Cinder Step
+        description: Teleport using your movement.
+        __typeName: CharacterModifier
+        activatedAbility:
+          name: Cinder Step
+          description: Teleport up to the distance you have left to move this turn.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityRelocateCreatureBehavior
+            movementType: teleport
+            teleportCountsAsMovement: true
+          categorization: Move
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+            class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+          guid: a33f7dc6-5bfc-4df2-bbe9-c39cc2ee6526
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: Movement Speed - Moved This Turn
+          repeatTargets: false
+          strain: []
+          targetType: emptyspace
+          targeting: direct
+        behavior: activated
+        domains:
+          class:a58112e5-6466-4189-b810-5d0d93adc075: true
+          class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+        guid: abb01251-3f2d-4e18-8746-aafb2972bca4
+        source: College of Black Ash Class Feature
+        sourceguid: 7caa5397-d3ee-4c5d-a388-a480a44a586e
+        suppressOthers: false
+      - name: Cinder Step
+        description: When you teleport using your movement, you can bring an ally and trigger Burning Ash.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          class:a58112e5-6466-4189-b810-5d0d93adc075: true
+          class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+        guid: e32221e3-a0b4-4968-a379-0ac2c937c2f0
+        source: College of Black Ash Class Feature
+        sourceguid: 7caa5397-d3ee-4c5d-a388-a480a44a586e
+        triggeredAbility:
+          name: Cinder Step
+          description: When you teleport using your movement, you can bring an ally and trigger Burning Ash.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            customAbility:
+              name: Clear Burning Ash Targets
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityPurgeEffectsBehavior
+                conditions: []
+                mode: effect
+                ongoingEffect: 082efe38-ad68-4570-9f4d-f643f9446345
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 21f9dee3-8b4c-4dad-87ce-f11a1a90f057
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              properties:
+                remainhidden: true
+              range: "100"
+              repeatTargets: false
+              strain: []
+              targetType: all
+            guid: 81e1d1a1-268d-4039-8b30-41b05133b748
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
+                duration: 0
+                ongoingEffect: 082efe38-ad68-4570-9f4d-f643f9446345
+                ongoingEffectCustom: 082efe38-ad68-4570-9f4d-f643f9446345
+              categorization: Hidden
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: c224174f-0279-4bec-a273-f7ca714bb08d
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              objectTarget: false
+              persistence: []
+              range: "100"
+              targetFilter: Caster.TeleportOriginDistance(Target) <= 1
+              repeatTargets: false
+              strain: []
+              targetAllegiance: enemy
+              targetType: all
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: standard
+            applyto: caster
+            autoTarget: false
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors: []
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 756c3907-03db-4dea-976f-5f6272a51c15
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+            filterTarget: Level >= 5 and AlliesAdjacentToTeleportOrigin > 0 and UnoccupiedAdjacentSpaces > 0
+            promptText: You can bring an adjacent willing creature along with you.
+            standardAbility: 6b1f0c2e-9d4a-4c5e-8f37-2a91c0d7e4b3
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityCharacterSpeechBehavior
+                variations:
+                - There's no space to teleport an ally.
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 1c34b094-3514-45c2-a013-1ac04ace5063
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+            filterTarget: Level >= 5 and AlliesAdjacentToTeleportOrigin > 0 and UnoccupiedAdjacentSpaces = 0
+          - __typeName: ActivatedAbilityCustomTriggerBehavior
+            applyto: caster
+            guid: 42b48310-2bfc-4975-8f80-75e4a28f6926
+            triggerName: Burning Ash
+            value: ""
+            waitForResolution: true
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          domains:
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+            class:d5b2e07d-657a-4405-899a-7fed0771f184: true
+          guid: 31e0150e-bfdc-49cc-beee-0087fdf594ec
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          persistence: []
+          range: 1
+          repeatTargets: false
+          strain: []
+          subject: self
+          targetType: self
+          trigger: teleportmove
       source: College of Black Ash Class Feature
       sourceReference:
         __typeName: SourceReference
@@ -1370,6 +1579,7 @@ levels:
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: standard
             applyto: caster
+            autoTarget: false
             customAbility:
               name: Invoked Ability
               description: ""
@@ -1381,19 +1591,45 @@ levels:
                 brightness: 1
                 hueshift: 0
                 saturation: 1
-              guid: 9ed879e0-f6a0-4e9c-8f47-5addc57b99a4
+              guid: 756c3907-03db-4dea-976f-5f6272a51c15
               iconid: ui-icons/skills/1.png
               modifiers: []
               numTargets: "1"
+              persistence: []
               range: 1
               repeatTargets: false
+              strain: []
               targetType: self
-            filterTarget: Level >= 5
+            filterTarget: Level >= 5 and AlliesAdjacentToTeleportOrigin > 0 and UnoccupiedAdjacentSpaces > 0
             promptText: You can bring an adjacent willing creature along with you.
-            standardAbility: 4963b93d-cb3a-409b-a0df-4d8b9bdeeeb8
-            standardAbilityParams:
-              range: "5"
-              targetfilter: friends(Target, Caster)
+            standardAbility: 6b1f0c2e-9d4a-4c5e-8f37-2a91c0d7e4b3
+          - __typeName: ActivatedAbilityInvokeAbilityBehavior
+            abilityType: custom
+            applyto: caster
+            customAbility:
+              name: Invoked Ability
+              description: ""
+              __typeName: ActivatedAbility
+              abilityType: none
+              behaviors:
+              - __typeName: ActivatedAbilityCharacterSpeechBehavior
+                variations:
+                - There's no space to teleport an ally.
+              display:
+                bgcolor: "#ffffffff"
+                brightness: 1
+                hueshift: 0
+                saturation: 1
+              guid: 1c34b094-3514-45c2-a013-1ac04ace5063
+              iconid: ui-icons/skills/1.png
+              modifiers: []
+              numTargets: "1"
+              persistence: []
+              range: 1
+              repeatTargets: false
+              strain: []
+              targetType: self
+            filterTarget: Level >= 5 and AlliesAdjacentToTeleportOrigin > 0 and UnoccupiedAdjacentSpaces = 0
           - __typeName: ActivatedAbilityCustomTriggerBehavior
             applyto: caster
             guid: 5850237d-c0d2-441a-a352-f62d4f445e2f
