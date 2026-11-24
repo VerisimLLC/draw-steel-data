@@ -287,7 +287,100 @@ info:
       __typeName: ActivatedAbility
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
-      behaviors: []
+      behaviors:
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        abilityType: custom
+        applyto: caster
+        customAbility:
+          name: Wall of Flesh
+          description: Build a 10 wall of flesh. Its first square must be the corpse's square.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityBuildWallBehavior
+            objectid: 6e873840-042e-40ec-b668-3c809f532d48
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 8c27609e-c434-4599-84e0-978ac28286e5
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
+            Ranged: true
+          modifiers: []
+          numTargets: "10"
+          persistence: []
+          range: "0"
+          rangeTextOverride: 10 wall within 10
+          repeatTargets: false
+          strain: []
+          targetTextOverride: Starts on the corpse's square
+          targetType: anyspace
+          targeting: contiguous_wall
+        invokeOnCaster: true
+        promptText: Build a 10 wall of flesh, starting on the corpse's square.
+        rangeOrigin: parent_primary_target
+      - __typeName: ActivatedAbilityInvokeAbilityBehavior
+        applyto: caster
+        customAbility:
+          name: Wall of Flesh (Slide)
+          description: Each creature in the new wall is lifted onto it. Each enemy then vertically slides up to 2 squares and is knocked prone.
+          __typeName: ActivatedAbility
+          abilityType: none
+          behaviors:
+          - __typeName: ActivatedAbilityScriptBehavior
+            code: |
+              -- A creature where the wall rose is now inside it, and a forced move from inside a
+              -- wall only collides, so lift it onto the top first. One already at or above the top
+              -- (on an older wall of flesh, or flying) was not in the area: drop it from the slide.
+              for i = #targets, 1, -1 do
+                  local tok = targets[i].token
+                  local top = nil
+                  if tok ~= nil and tok.valid then
+                      for _, loc in ipairs(tok.locsOccupying) do
+                          local ground = loc.withGroundAltitude.altitude
+                          if top == nil or ground > top then
+                              top = ground
+                          end
+                      end
+                  end
+                  if top ~= nil and tok.altitude < top then
+                      tok:MoveVertical(top)
+                  else
+                      table.remove(targets, i)
+                  end
+              end
+            guid: 093a9ac3-becb-40b1-8c3a-38205d480d8b
+          - __typeName: ActivatedAbilityDrawSteelCommandBehavior
+            applyto: targets
+            filterTarget: not Friends(Target, Caster)
+            rule: vertical slide 2; prone
+          categorization: Hidden
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 7c6b2400-d041-4dd3-8444-eedabf0c5c55
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          keywords:
+            Area: true
+            Magic: true
+            Ranged: true
+          modifiers: []
+          numTargets: "1"
+          range: "30"
+          repeatTargets: false
+          targetType: target
+        invokeOnCaster: true
+        targeting: formula
+        targetingFormula: (not Target.Object) and (not Target.Dead) and Target.DistanceToObjectWithKeyword("flesh wall") = 0
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
@@ -298,18 +391,21 @@ info:
       flavor: ""
       guid: 0d7936c3-bb55-47a7-a95a-55e17ccc8237
       iconid: ui-icons/skills/1.png
-      implementation: 1
+      implementation: 4
+      implementationDetails: "GOLD: Target a corpse within 10 squares, then place the 10 wall square by square, starting on the corpse's square. Every creature standing in the new wall is lifted onto it. Each enemy then slides up to 2 squares (you pick where; the Vertical dial sets how high, and a drop deals falling damage) and is knocked prone. The wall stays until its squares are destroyed (3 Stamina each) or you remove it from Map Modifications."
       keywords:
         Area: true
         Magic: true
         Ranged: true
       modifiers: []
       numTargets: 1
-      range: 1
+      objectTarget: false
+      range: 10
       rangeTextOverride: 10 wall within 10
       repeatTargets: false
+      targetAllegiance: dead
       targetTextOverride: One corpse
-      targetType: self
+      targetType: target
     innateAttacks: []
     keywords:
       Humanoid: true
