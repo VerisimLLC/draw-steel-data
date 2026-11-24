@@ -31,13 +31,12 @@ info:
     floor: null
     loc: []
     map: null
-    mountedOn: null
-    mountedOnObject: null
     mountedSaddle: 0
     path: null
     pos:
       x: 0
       y: 0
+    rewindAnimId: null
     rotation: 0
     summonLoc: []
     summonLocCleared: null
@@ -180,7 +179,7 @@ info:
         CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
       guid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
       implementation: 4
-      implementationDetails: The collar blast and the teleport are automated. The teleport only offers unoccupied spaces within 20 squares that are adjacent to an ally.
+      implementationDetails: "Automated. To players it looks like a real collar death: the same Loyalty Collar card and 2d6, the collar fireball, the token gone and a corpse left behind. The teleport only offers unoccupied spaces within 20 squares that are adjacent to an ally, and players don't see it move. It then becomes Hidden (house ruling, not in the book), and the decoy corpse is removed when it shows itself again. While the Director picks the spot, Director Mouse Cursor Shared is switched off so players don't see the cursor or the picker's outline (it comes back on after), and the picker draws no movement arrow. The 2 Malice is taken just after the cast, so players get no Malice spent card and no Malice cost in History. Needs the Hidden Creatures are Invisible setting."
       modifiers:
       - name: Feign Death
         description: ""
@@ -213,16 +212,56 @@ info:
         source: Trait
         sourceguid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
         triggeredAbility:
-          name: Feign Death
-          description: The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, then teleports to an unoccupied space adjacent to an ally within 20 squares and remains alive.
+          name: Loyalty Collar
+          description: ""
           __typeName: TriggeredAbility
           abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           behaviors:
           - __typeName: ActivatedAbilityDamageBehavior
-            chatMessage: Feign Death
             roll: 2d6
-            titleText: Feign Death
+          - __typeName: ActivatedAbilityLoyaltyCollarExplosionBehavior
+          - name: FakeDeath
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |
+              --Feign Death looks like a real collar death to players: same card name, the collar
+              --fireball above, then the token gone and a corpse left behind. The fireball hides the
+              --token on every client for a few seconds; keep it hidden from players while it moves.
+
+              --The 2 Malice is paid here, not as the ability's cost: a cost posts a "Malice
+              --spent" card, and History puts Malice spent during a cast on its row for players.
+              --A scheduled spend runs outside the cast, so only the Director's History shows it.
+              dmhub.Schedule(0.1, function()
+                  CharacterResource.SpendMalice(2, "Feign Death")
+              end)
+              options.feignDeathBlastAt = dmhub.Time()
+              coroutine.yield(0.2)
+              if casterToken == nil or not casterToken.valid then
+                  return
+              end
+              casterToken.invisibleToPlayers = true
+
+              --The decoy is the corpse a real death leaves. It names this hypokrite, so the next
+              --step can find it and remove it once the hypokrite shows itself.
+              local corpse = nil
+              local ok, err = pcall(function()
+                  corpse = ActivatedAbilityRemoveCreatureBehavior:LeaveCorpse(casterToken, nil)
+              end)
+              if not ok then
+                  print("Feign Death: no decoy corpse: " .. tostring(err))
+              end
+              if corpse ~= nil then
+                  corpse:Upload()
+              end
+
+              --Players see the Director's cursor and map markers while "Director Mouse Cursor
+              --Shared" is on, so the teleport picker would show them every allowed square.
+              --Switch it off for the pick; the GoIntoHiding step puts it back.
+              local shared = dmhub.GetSettingValue("gmbroadcastmouse")
+              if shared and shared ~= 0 then
+                  options.feignDeathMouseShared = shared
+                  dmhub.SetSettingValue("gmbroadcastmouse", false)
+              end
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
             applyto: caster
@@ -232,7 +271,18 @@ info:
               __typeName: ActivatedAbility
               abilityType: none
               behaviors:
-              - __typeName: ActivatedAbilityRelocateCreatureBehavior
+              - name: TeleportUnseen
+                __typeName: ActivatedAbilityScriptBehavior
+                code: |
+                  --A Script move, not a Relocate step, so no movement preview runs while the
+                  --hypokrite is hidden; suppressMovementArrow stops the picker's own arrow, which
+                  --the engine shares with players even while the token is hidden from them.
+                  local target = targets[1]
+                  if casterToken == nil or not casterToken.valid or target == nil or target.loc == nil then
+                      return
+                  end
+                  casterToken:Teleport(target.loc.withGroundAltitude)
+              categorization: Hidden
               display:
                 bgcolor: "#ffffffff"
                 brightness: 1
@@ -245,10 +295,93 @@ info:
               numTargets: "1"
               range: 20
               repeatTargets: false
+              suppressMovementArrow: true
               targetFilter: target.Count Nearby Friends(1) > 0
               targetTextOverride: An unoccupied space adjacent to an ally
               targetType: emptyspace
             promptText: Teleport to an unoccupied space adjacent to an ally within 20 squares.
+          - name: GoIntoHiding
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |
+              --After the teleport the hypokrite is Hidden, which keeps it off the players' screens
+              --until it acts, is grabbed or a hero moves next to it (the "Hidden Creatures are
+              --Invisible" setting). When it shows itself, dies or leaves, its decoy corpse goes.
+              if options.feignDeathMouseShared ~= nil then
+                  dmhub.SetSettingValue("gmbroadcastmouse", options.feignDeathMouseShared)
+                  options.feignDeathMouseShared = nil
+              end
+              if casterToken == nil or not casterToken.valid then
+                  return
+              end
+              local charid = casterToken.charid
+              local mapid = game.currentMapId
+
+              --The collar fireball hides the token's picture and shows it again 5 seconds later.
+              --A teleport landing at that moment leaves it hidden on the Director's screen, so
+              --show it again here once that window has passed.
+              local blastAt = options.feignDeathBlastAt or dmhub.Time()
+              local function ShowAgain()
+                  local tok = dmhub.GetTokenById(charid)
+                  if tok ~= nil and tok.valid and not tok.despawned then
+                      pcall(function() tok.animation:SetVisible(true) end)
+                  end
+              end
+              dmhub.Schedule(math.max(0.5, blastAt + 5.5 - dmhub.Time()), ShowAgain)
+              dmhub.Schedule(math.max(2, blastAt + 7 - dmhub.Time()), ShowAgain)
+
+              casterToken:ModifyProperties{
+                  description = "Feign Death",
+                  execute = function()
+                      casterToken.properties:BecomeHidden(casterToken)
+                  end,
+              }
+
+              --It is alive, so every corpse that names it is a decoy.
+              local decoys = {}
+              for _, tok in ipairs(dmhub.allObjectTokens or {}) do
+                  pcall(function()
+                      if tok.valid and tok.isCorpse and tok.objectInstance ~= nil then
+                          local corpse = tok.objectInstance:GetComponent("Corpse")
+                          if corpse ~= nil and corpse.properties.charid == charid then
+                              decoys[tok.objectInstance.id] = true
+                          end
+                      end
+                  end)
+              end
+
+              local function RemoveDecoys()
+                  for _, tok in ipairs(dmhub.allObjectTokens or {}) do
+                      pcall(function()
+                          if tok.valid and tok.objectInstance ~= nil and decoys[tok.objectInstance.id] then
+                              tok.objectInstance:Destroy()
+                          end
+                      end)
+                  end
+              end
+
+              --Hidden takes over from the Director-only flag a moment later, once every client
+              --has the condition, so the token never flashes up between the two.
+              local handedOver = false
+              local function Check()
+                  if game.currentMapId ~= mapid then
+                      return
+                  end
+                  local tok = dmhub.GetTokenById(charid)
+                  local alive = tok ~= nil and tok.valid and not tok.despawned
+                  if not handedOver then
+                      handedOver = true
+                      if alive then
+                          tok.invisibleToPlayers = false
+                      end
+                  end
+                  if alive and tok.properties:IsHidden() then
+                      dmhub.Schedule(0.5, Check)
+                      return
+                  end
+                  RemoveDecoys()
+              end
+              dmhub.Schedule(1, Check)
+          conditionFormula: Malice >= 2
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -265,8 +398,6 @@ info:
           persistence: []
           range: 1
           repeatTargets: false
-          resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-          resourceNumber: 2
           strain: []
           subject: self
           targetAllegiance: enemy
@@ -373,6 +504,9 @@ info:
     monster_category: Monster
     monster_type: War Dog Hypokrite
     movementSpeeds: []
+    notes:
+    - text: ""
+      title: Monster Notes
     opportunityAttack: 3
     resistances: []
     resources: []
@@ -398,7 +532,7 @@ info:
   size: -1
   summonerid: null
   tokenType: null
-  updateid: fd0152e8-d234-415e-a862-951de9b3995f
+  updateid: 86d38566-6e1f-47a2-b3a1-5c412f99c8a4
 mtime: 1787744236003
 ord: 7
 parentFolder: dae14576-8f19-4322-a12b-9051d730ed99
