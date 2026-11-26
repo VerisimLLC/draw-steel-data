@@ -1604,50 +1604,14 @@ levels:
           abilityType: none
           actionResourceId: b9bc06dd-80f1-4f33-bc55-25c114e3300c
           behaviors:
-          - __typeName: ActivatedAbilityInvokeAbilityBehavior
-            abilityType: custom
-            applyto: caster
-            autoTarget: false
-            customAbility:
-              name: Invoked Ability
-              description: ""
-              __typeName: ActivatedAbility
-              implementation: 4
-              abilityType: none
-              behaviors:
-              - __typeName: ActivatedAbilityCustomTriggerBehavior
-                triggerName: Overwatch Strike
-                value: "<<targetid>>"
-                waitForResolution: true
-              display:
-                bgcolor: "#ffffffff"
-                brightness: 1
-                hueshift: 0
-                saturation: 1
-              guid: cdb1e5c8-f85a-4d9f-bace-1c734bed353b
-              iconid: ui-icons/skills/1.png
-              modifiers: []
-              numTargets: "1"
-              persistence: []
-              range: "100"
-              repeatTargets: false
-              selfTarget: false
-              strain: []
-              targetFilter: not enemy
-              targetType: target
-            invokeOnCaster: false
-            promptText: Select Ally to Make Free Strike
-            standardAbility: 9eb2b74c-bf41-48db-a7a4-d0ebb62201f8
-            standardAbilityParams:
-              range: "100"
-              targetid: "<<subject.id>>"
-              targets: "1"
-            targeting: prompt
           - __typeName: ActivatedAbilityDrawSteelCommandBehavior
             filterTarget: ""
             modesSelected:
             - 2
             rule: R < average, slowed (EoT)
+          - __typeName: ActivatedAbilityCutShortSlowedMoveBehavior
+            modesSelected:
+            - 2
           - __typeName: ActivatedAbilityReplenishBehavior
             applyto: caster
             filterTarget: "Cast.Primary Target.Reason < average {Implement the rule where we only charge heroic resources if a resistance gated effect actually does something. TODO: work out if there is a more general/better way to do this.}"
@@ -1655,6 +1619,8 @@ levels:
             modesSelected:
             - 2
             resourceid: 2d3d5511-4b80-46d1-a8c6-4705b9aa45ca
+          - __typeName: ActivatedAbilityDirectAllyFreeStrikeBehavior
+            triggerName: Overwatch Strike
           conditionFormula: not path.forced
           display:
             bgcolor: "#ffffffff"
