@@ -179,7 +179,7 @@ info:
         CharacterFeature:5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84: true
       guid: 5c8e2a7f-1b4d-4f9e-a3c6-7d0e9b2f1a84
       implementation: 4
-      implementationDetails: "Automated. To players it looks like a real collar death: the same Loyalty Collar card and 2d6, the collar fireball, the token gone and a corpse left behind. The teleport only offers unoccupied spaces within 20 squares that are adjacent to an ally, and players don't see it move. It then becomes Hidden (house ruling, not in the book), and the decoy corpse is removed when it shows itself again. While the Director picks the spot, Director Mouse Cursor Shared is switched off so players don't see the cursor or the picker's outline (it comes back on after), and the picker draws no movement arrow. The 2 Malice is taken just after the cast, so players get no Malice spent card and no Malice cost in History. Needs the Hidden Creatures are Invisible setting."
+      implementationDetails: "Automated. To players it looks like a real collar death: the same Loyalty Collar card and 2d6, the collar fireball, the token gone and a corpse left behind. The teleport only offers unoccupied spaces within 20 squares that are adjacent to an ally, and players don't see it move. It then becomes Hidden (house ruling, not in the book), and the decoy corpse is removed when it shows itself again. While the Director picks the spot, Director Mouse Cursor Shared is switched off so players don't see the cursor or the picker's outline, and the picker draws no movement arrow. The cursor comes back a few seconds after it lands, once your mouse is well away from it. The 2 Malice is taken just after the cast, so players get no Malice spent card and no Malice cost in History. Switches on the Hidden Creatures are Invisible setting if it is off."
       modifiers:
       - name: Feign Death
         description: ""
@@ -262,6 +262,11 @@ info:
                   options.feignDeathMouseShared = shared
                   dmhub.SetSettingValue("gmbroadcastmouse", false)
               end
+
+              --Its hiding only fools players when Hidden creatures vanish from their screens.
+              if not dmhub.GetSettingValue("strict:hiddeninvisible") then
+                  dmhub.SetSettingValue("strict:hiddeninvisible", true)
+              end
           - __typeName: ActivatedAbilityInvokeAbilityBehavior
             abilityType: custom
             applyto: caster
@@ -306,15 +311,45 @@ info:
               --After the teleport the hypokrite is Hidden, which keeps it off the players' screens
               --until it acts, is grabbed or a hero moves next to it (the "Hidden Creatures are
               --Invisible" setting). When it shows itself, dies or leaves, its decoy corpse goes.
-              if options.feignDeathMouseShared ~= nil then
-                  dmhub.SetSettingValue("gmbroadcastmouse", options.feignDeathMouseShared)
-                  options.feignDeathMouseShared = nil
-              end
+              local mouseShared = options.feignDeathMouseShared
+              options.feignDeathMouseShared = nil
               if casterToken == nil or not casterToken.valid then
+                  if mouseShared ~= nil then
+                      dmhub.SetSettingValue("gmbroadcastmouse", mouseShared)
+                  end
                   return
               end
               local charid = casterToken.charid
               local mapid = game.currentMapId
+
+              --The Director's cursor would reappear right where it landed. It comes back only
+              --after CURSOR_DELAY seconds, once the mouse is CURSOR_DISTANCE squares away.
+              local CURSOR_DELAY = 3
+              local CURSOR_DISTANCE = 8
+              local landedAt = dmhub.Time()
+              local function RestoreCursor()
+                  if mouseShared == nil then
+                      return
+                  end
+                  local tok = dmhub.GetTokenById(charid)
+                  local far = true
+                  if game.currentMapId == mapid and tok ~= nil and tok.valid then
+                      local mouse = dmhub.GetMouseWorldPoint()
+                      local pos = tok.pos
+                      far = false
+                      if mouse ~= nil and pos ~= nil then
+                          local dx = mouse.x - pos.x
+                          local dy = mouse.y - pos.y
+                          far = dx * dx + dy * dy >= CURSOR_DISTANCE * CURSOR_DISTANCE
+                      end
+                  end
+                  if far and dmhub.Time() - landedAt >= CURSOR_DELAY then
+                      dmhub.SetSettingValue("gmbroadcastmouse", mouseShared)
+                      return
+                  end
+                  dmhub.Schedule(0.5, RestoreCursor)
+              end
+              dmhub.Schedule(CURSOR_DELAY, RestoreCursor)
 
               --The collar fireball hides the token's picture and shows it again 5 seconds later.
               --A teleport landing at that moment leaves it hidden on the Director's screen, so
