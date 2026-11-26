@@ -99,5 +99,74 @@ modifiers:
     targetType: self
     trigger: beginround
     whenActive: always
+- name: Burning
+  description: A burning creature that moves into flammable oil sets the oil alight.
+  __typeName: CharacterModifier
+  behavior: trigger
+  domains:
+    CharacterOngoingEffect:e42504bd-9018-4ca5-97e0-f38b03dadf17: true
+  guid: f7ad7600-397a-46ea-a42e-25c93fc3d9cb
+  source: Ongoing Effect
+  sourceguid: e42504bd-9018-4ca5-97e0-f38b03dadf17
+  triggeredAbility:
+    name: Burning Ignites Oil
+    description: ""
+    __typeName: TriggeredAbility
+    abilityType: none
+    behaviors:
+    - __typeName: ActivatedAbilityScriptBehavior
+      name: IgniteOil
+      code: |-
+        --A burning creature that moves into flammable oil sets it alight, as a
+        --thrown burning candelabra does. Every square of the move counts, the
+        --creature's whole footprint, at the height it was at: a flyer passing
+        --over the oil doesn't touch it. Each patch it touched becomes Burning Oil.
+        --Mandatory "local": the trigger runs on the mover's own machine, because
+        --the path is lost when the move event is passed to another machine.
+        local FLAMMABLE_OIL = "3a267b83-0b33-4ac7-a410-ff47d1fb6c07"
+        local BURNING_OIL = "2bbec711-e414-439a-b6fc-76ac6d7f21c3"
+
+        local path = nil
+        pcall(function() path = symbols.path.path end)
+        if path == nil or casterToken == nil or not casterToken.valid then
+          return
+        end
+
+        local height = casterToken.tileSize or 1
+        local zoneids, seen = {}, {}
+        for _, step in ipairs(path.steps or {}) do
+          local span = { bottom = step.altitude, top = step.altitude + height - 1 }
+          for _, loc in ipairs(casterToken:LocsOccupyingWhenAt(step) or {}) do
+            for _, zone in ipairs(EnvironmentalKeyword.AuraInstancesCoveringSquare(loc, span)) do
+              local aura = zone:try_get("aura")
+              local zoneid = zone:try_get("guid")
+              if aura ~= nil and zoneid ~= nil and not seen[zoneid]
+                and aura:try_get("environmentalKeywordId") == FLAMMABLE_OIL then
+                seen[zoneid] = true
+                zoneids[#zoneids + 1] = zoneid
+              end
+            end
+          end
+        end
+
+        if #zoneids > 0 then
+          ActivatedAbilityTransformZoneBehavior.RewriteZoneRecords(zoneids, FLAMMABLE_OIL, BURNING_OIL, true)
+        end
+    display:
+      bgcolor: "#ffffffff"
+      brightness: 1
+      hueshift: 0
+      saturation: 1
+    guid: b0ab04ac-c80d-4cf5-a780-e314537ecf0d
+    iconid: ui-icons/skills/1.png
+    implementation: 4
+    mandatory: local
+    modifiers: []
+    numTargets: "1"
+    range: 1
+    repeatTargets: false
+    targetType: self
+    trigger: move
+    whenActive: always
 mtime: 1779550921159
 source: Ongoing Effect
