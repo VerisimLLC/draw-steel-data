@@ -1659,9 +1659,9 @@ info:
           local searchDistance = 5
 
           -- The longest we will wait, in seconds, for players to answer their cards
-          -- before the charge carries on without them. 630 seconds is ten and a half
-          -- minutes, which is plenty of time even at a slow table.
-          local cardWaitLimit = 630
+          -- before the charge carries on without them. Two minutes is plenty at the
+          -- table, and it stops one player who has stepped away from stalling everyone.
+          local cardWaitLimit = 120
 
 
           -- ----------------------------------------------------------------------
@@ -1828,9 +1828,9 @@ info:
           -- the way. The card does not move anything by itself; this script keeps an
           -- eye on the cards and does the moving.
           --
-          -- If a player dismisses their card instead of accepting it, their creature is
-          -- not shoved and stays where it is. When the table uses the "Strictly Enforce
-          -- Action Economy" setting, players are not allowed to dismiss these cards.
+          -- The shove is not optional. If a player dismisses their card, or never
+          -- answers it before the time limit, their creature is shoved anyway. The card
+          -- only lets the player see it coming and choose the moment.
           -- ----------------------------------------------------------------------
 
           -- waitingCards lists every card that has not been answered yet.
@@ -1847,7 +1847,8 @@ info:
                   clearOnDismiss = true,
                   noDeduplicate = true,
                   free = true,
-                  hostile = true,
+                  -- The text a player sees when picking between equally near squares.
+                  bulldozePrompt = "Choose where you are shoved",
                   -- When a player hovers over the card, the arrow on the map points from
                   -- the hoarder to the shoved creature, rather than the other way round.
                   arrowFromTarget = true,
@@ -1895,13 +1896,58 @@ info:
               end
           end
 
+          -- Takes a card off a creature's token, if it is still there.
+          local function ClearCard(waitingCard)
+              local token = waitingCard.token
+              if token.valid and token.properties ~= nil and token.properties:GetAvailableTriggerRecord(waitingCard.cardId) ~= nil then
+                  token:ModifyProperties{
+                      description = "Clear Bulldoze Prompt",
+                      undoable = false,
+                      execute = function()
+                          token.properties:ClearAvailableTrigger({ id = waitingCard.cardId })
+                      end,
+                  }
+              end
+          end
+
+          -- Moves one creature out of the lane. cardId is the creature's card when it
+          -- is still on the token, so its player can pick the square as well as us.
+          local function ShoveCreature(token, cardId)
+              -- First we look for the nearest empty squares outside the lane that
+              -- the creature could slide to in a straight line without a wall in
+              -- between. If there are none of those, we settle for the nearest
+              -- empty squares outside the lane, even if a wall is in the way.
+              local isOutsideTheLane = MakeOutsideTheLaneTest(token)
+              local choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, function(square)
+                  return isOutsideTheLane(square) and helpers.CanSlideStraightTo(token, square)
+              end)
+              if #choices == 0 then
+                  choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, isOutsideTheLane)
+              end
+
+              -- If there is still nowhere to put the creature, it stays where it is.
+              if #choices == 0 then
+                  return
+              end
+
+              -- When several squares are equally close, the Director and the creature's
+              -- player can both pick one. Whoever answers first wins.
+              local landingSquare = helpers.ChooseSquareWithPlayer(token, choices, symbols, casterToken, cardId, {
+                  name = cardTitle,
+                  prompt = "Choose where the shoved creature goes",
+              })
+              helpers.ClaimFootprint(token, landingSquare, promisedSquares)
+              helpers.FreeMoveOntoSquare(token, landingSquare)
+          end
+
           -- This is the waiting loop. It looks at every card, deals with any that have
           -- been answered, pauses for a moment, and then looks again. It keeps going
           -- until every card has been answered, the time limit runs out, or the hoarder
           -- is removed from the map.
           local waitStartTime = dmhub.Time()
-          while #waitingCards > 0 and dmhub.Time() < waitStartTime + cardWaitLimit and casterToken.valid do
+          while #waitingCards > 0 and casterToken.valid do
               UpdateWaitingMessage()
+              local timedOut = dmhub.Time() > waitStartTime + cardWaitLimit
 
               -- We go through the list from the last card to the first. That way,
               -- crossing a card off the list does not make us skip over the next one.
@@ -1915,65 +1961,42 @@ info:
                       cardRecord = token.properties:GetAvailableTriggerRecord(waitingCard.cardId)
                   end
 
-                  local creatureIsGone = not token.valid or token.loc == nil
-                  local cardWasDismissed = cardRecord ~= nil and cardRecord.dismissed
-
-                  if creatureIsGone or cardWasDismissed then
-                      -- The creature left the map, or its player dismissed the card.
-                      -- Either way, we cross the card off the list and move nobody.
+                  -- A card is finished when it was answered, dismissed, vanished, or the
+                  -- time limit ran out. Every one of those ends in a shove.
+                  local finished = timedOut
+                  if not token.valid or token.loc == nil then
+                      -- The creature left the map, so there is nobody to shove.
                       table.remove(waitingCards, cardIndex)
-
+                      finished = false
                   elseif cardRecord == nil then
-                      -- The card has vanished, which also means it was dismissed. A brand
-                      -- new card can take a moment to appear on the token, though, so we
+                      -- The card has vanished, which means it was dismissed. A brand new
+                      -- card can take a moment to appear on the token, though, so we
                       -- give it two seconds before deciding it is really gone.
-                      if waitingCard.hasAppeared or dmhub.Time() > waitStartTime + 2 then
-                          table.remove(waitingCards, cardIndex)
-                      end
-
-                  elseif cardRecord.triggered ~= false then
-                      -- The player accepted the card. We cross it off the list, remove the
-                      -- card from their token, and then shove their creature.
-                      table.remove(waitingCards, cardIndex)
-                      token:ModifyProperties{
-                          description = "Clear Bulldoze Prompt",
-                          undoable = false,
-                          execute = function()
-                              token.properties:ClearAvailableTrigger({ id = waitingCard.cardId })
-                          end,
-                      }
-
-                      -- First we look for the nearest empty squares outside the lane that
-                      -- the creature could slide to in a straight line without a wall in
-                      -- between. If there are none of those, we settle for the nearest
-                      -- empty squares outside the lane, even if a wall is in the way.
-                      local isOutsideTheLane = MakeOutsideTheLaneTest(token)
-                      local choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, function(square)
-                          return isOutsideTheLane(square) and helpers.CanSlideStraightTo(token, square)
-                      end)
-                      if #choices == 0 then
-                          choices = helpers.NearestFreeLocs(token, token.loc, searchDistance, isOutsideTheLane)
-                      end
-
-                      -- If there is still nowhere to put the creature, it stays where it is.
-                      if #choices > 0 then
-                          local landingSquare = choices[1]
-                          -- When several squares are equally close, the Director picks
-                          -- one of them by clicking on the map.
-                          if #choices > 1 then
-                              landingSquare = helpers.ChooseTransitDestination(token, choices, symbols, casterToken, {
-                                  name = cardTitle,
-                                  prompt = "Choose where the shoved creature goes",
-                              }) or choices[1]
-                          end
-                          helpers.ClaimFootprint(token, landingSquare, promisedSquares)
-                          helpers.FreeMoveOntoSquare(token, landingSquare)
-                      end
-
+                      finished = finished or waitingCard.hasAppeared or dmhub.Time() > waitStartTime + 2
+                  elseif cardRecord.dismissed or cardRecord.triggered ~= false then
+                      finished = true
                   else
-                      -- The card is on the token and still waiting for an answer, so we
-                      -- leave it on the list and check it again next time round.
+                      -- Still waiting for an answer. We check it again next time round.
                       waitingCard.hasAppeared = true
+                  end
+
+                  if finished then
+                      table.remove(waitingCards, cardIndex)
+                      UpdateWaitingMessage()
+
+                      local accepted = cardRecord ~= nil and not cardRecord.dismissed and cardRecord.triggered ~= false
+                      if accepted then
+                          -- An accepted card stays on the token while the square is picked.
+                          -- It carries the player's answer, and removing it afterwards is
+                          -- what closes the player's picker.
+                          ShoveCreature(token, waitingCard.cardId)
+                          ClearCard(waitingCard)
+                      else
+                          -- Dismissed, vanished or timed out: clear the card first, then shove
+                          -- with only the Director picking.
+                          ClearCard(waitingCard)
+                          ShoveCreature(token, nil)
+                      end
                   end
               end
 
@@ -1984,8 +2007,13 @@ info:
               end
           end
 
-          -- The waiting is over, either because every card was answered or because we
-          -- ran out of time. Emptying the list and updating the message hides the
+          -- If the loop stopped early (the hoarder left the map), take any cards that are
+          -- still waiting off the tokens so no "!" is left behind.
+          for _, waitingCard in ipairs(waitingCards) do
+              ClearCard(waitingCard)
+          end
+
+          -- The waiting is over. Emptying the list and updating the message hides the
           -- "Waiting on" message from everyone's screen.
           waitingCards = {}
           UpdateWaitingMessage()
@@ -2212,6 +2240,12 @@ info:
               coroutine.yield(0.1)
           end
 
+          -- If the charge never arrived (it was interrupted or went somewhere else), the
+          -- hoarder stays where it is. Backing up from there could move it forward.
+          if not casterToken.valid or not HasReachedTheEndOfTheCharge() then
+              return
+          end
+
           -- Hold still for a little under half a second, so players can see the crunch
           -- before the hoarder backs off.
           coroutine.yield(0.4)
@@ -2231,7 +2265,7 @@ info:
       flavor: ""
       guid: ffd1c901-ee3d-48cd-ad3d-28cf1987daa4
       iconid: ui-icons/skills/1.png
-      implementation: 3
+      implementation: 4
       keywords: []
       modifiers: []
       numTargets: "1"
