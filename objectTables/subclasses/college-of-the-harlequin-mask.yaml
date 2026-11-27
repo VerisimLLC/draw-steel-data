@@ -37,7 +37,7 @@ levels:
         class:3e4ca196-05e0-4541-920b-049e7e87f943: true
         class:a58112e5-6466-4189-b810-5d0d93adc075: true
       guid: 6d65b960-bc50-417d-8760-a8b6adbb19e3
-      implementation: 2
+      implementation: 4
       modifiers:
       - name: Friend!
         description: |-
@@ -45,33 +45,269 @@ levels:
 
           Additionally, when you use your I’m No Threat ability, you can take the Disengage move action as part of that ability.
         __typeName: CharacterModifier
-        abilityTargets: ""
-        behavior: powertabletrigger
-        castingFilter: ""
+        behavior: trigger
         domains:
           class:3e4ca196-05e0-4541-920b-049e7e87f943: true
           class:a58112e5-6466-4189-b810-5d0d93adc075: true
         guid: 8bf52105-0548-4d06-8ec1-0072d9d441fe
-        multitarget: all
-        powerRollModifier:
-          name: Friend!
-          __typeName: CharacterModifier
-          activationCondition: false
-          behavior: power
-          guid: 80b6240c-5256-42c4-b388-606053123b95
-          keywords: []
-          modtype: none
-          rollType: ability_power_roll
-          rules: ""
-          source: Trigger
-        range: ""
-        rules: Your illusions make your enemies believe you are their friend in critical moments. Whenever an enemy uses an ability or trait that targets multiple allies and you are within distance of the effect, you can choose to be a target of the effect as well.
         source: College of the Harlequin Mask Class Feature
         sourceguid: 6d65b960-bc50-417d-8760-a8b6adbb19e3
-        targetFilter: Self
-        targetType: enemy
-        trigger: casting
-        type: passive
+        triggeredAbility:
+          name: Friend!
+          description: Your illusions make your enemies believe you are their friend in critical moments. Whenever an enemy uses an ability or trait that targets multiple allies and you are within distance of the effect, you can choose to be a target of the effect as well.
+          __typeName: TriggeredAbility
+          abilityType: none
+          behaviors:
+          - name: FriendJoinTargets
+            __typeName: ActivatedAbilityScriptBehavior
+            code: |
+              --Friend! (College of the Harlequin Mask). This trigger runs automatically on the
+              --machine that ran the enemy's ability (mandatory: local), where the area it used
+              --is still known. When the ability targeted several of the enemy's allies and you
+              --were within its distance, your player gets a Friend! card. If they use it, the
+              --ability's effects on its targets are cast again, as the enemy, on you alone.
+              local used = symbols.usedability
+              local cast = symbols.cast
+              local me = casterToken
+              local enemy = nil
+              if symbols.subject ~= nil then
+                  enemy = dmhub.LookupToken(symbols.subject)
+              end
+              if used == nil or enemy == nil or not enemy.valid or me == nil or not me.valid or me.properties == nil then
+                  return
+              end
+
+              --"Targets multiple allies": an area, or an ability that takes more than one target
+              --in the mode used (Cadenza takes a second ally only in its Malice mode). The count
+              --is the ability's, not how many were picked: one pick of a three-ally ability counts.
+              local isArea = used:IsTargetTypeAOE()
+              local mode = (cast ~= nil and cast:try_get("mode")) or 1
+              if (not isArea) and (tonumber(used:GetNumTargets(enemy, {mode = mode})) or 1) <= 1 then
+                  return
+              end
+
+              --An enemy that already counts you as an ally could target you directly, so
+              --there is nothing to add. (The cast's own target list can't be read here: while
+              --this trigger runs, cast.targets holds this trigger's targets.)
+              if IsFriendForTargeting(enemy, me) == true then
+                  return
+              end
+
+              if me.properties:IsDead() or me.properties:CalculateNamedCustomAttribute("Untargetable") > 0 then
+                  return
+              end
+
+              --"Within distance of the effect": inside the area it used, else within its
+              --range (a burst's range is its size), with line of effect either way.
+              local area = nil
+              if cast ~= nil then
+                  area = cast:try_get("_tmp_targetArea")
+              end
+              local within = false
+              if isArea and area ~= nil then
+                  within = area:ContainsToken(me) and me:GetLineOfSight(area.origin, me.properties:GetPierceWalls()) > 0
+              else
+                  local range = tonumber(used:GetRange(enemy.properties)) or 0
+                  within = enemy:Distance(me) <= range and enemy:GetLineOfSight(me, enemy.properties:GetPierceWalls()) > 0
+              end
+              if not within then
+                  return
+              end
+
+              local function Resolve()
+                  --A passive card shaped like the ones "Target is Casting" triggers raise:
+                  --the player's Use sets triggered, Dismiss sets dismissed, and both sync here.
+                  local triggerid = dmhub.GenerateGuid()
+                  local card = ActiveTrigger.new{
+                      id = triggerid,
+                      charid = me.charid,
+                      casterid = enemy.charid,
+                      dismissOnTrigger = true,
+                      powerRollModifier = CharacterModifier.new{
+                          behavior = "powertabletrigger",
+                          guid = dmhub.GenerateGuid(),
+                          name = ability.name,
+                          type = "passive",
+                          trigger = "casting",
+                          targetType = "enemy",
+                          range = "",
+                          rules = string.format("%s used %s on its allies while you were within its distance. Use Friend! to be one of its targets as well.", creature.GetTokenDescription(enemy), used.name),
+                          powerRollModifier = CharacterModifier.new{
+                              behavior = "power",
+                              guid = dmhub.GenerateGuid(),
+                              name = ability.name,
+                              source = "Trigger",
+                              rollType = "ability_power_roll",
+                              modtype = "none",
+                              activationCondition = false,
+                              keywords = {},
+                              rules = "",
+                              casterCharid = me.charid,
+                          },
+                      },
+                  }
+                  me:ModifyProperties{
+                      description = "Trigger",
+                      undoable = false,
+                      execute = function()
+                          me.properties:DispatchAvailableTrigger(card)
+                      end,
+                  }
+
+                  --The Monster AI's banner shows on every client, with Select and Dismiss
+                  --for the player. While the AI is busy it posts its own wait banner.
+                  local monsterAI = rawget(_G, "MonsterAI")
+                  local notice = monsterAI ~= nil and not (monsterAI.BusyHere ~= nil and monsterAI.BusyHere())
+                  if notice then
+                      monsterAI.SetWaiting("friend", string.format("Waiting for %s's %s", creature.GetTokenDescription(me), ability.name), {charid = me.charid, triggerid = triggerid})
+                  end
+
+                  local accepted = false
+                  local deadline = dmhub.Time() + 600
+                  while dmhub.Time() < deadline do
+                      coroutine.yield(0.1)
+                      if not me.valid or me.properties == nil then
+                          break
+                      end
+                      local live = (me.properties:try_get("availableTriggers") or {})[triggerid]
+                      if live == nil then
+                          break
+                      end
+                      --Using it also marks it dismissed, so check triggered first.
+                      if live.triggered then
+                          accepted = true
+                          break
+                      end
+                      if live.dismissed then
+                          break
+                      end
+                  end
+
+                  if notice then
+                      monsterAI.ClearWaiting()
+                  end
+                  if me.valid and me.properties ~= nil and (me.properties:try_get("availableTriggers") or {})[triggerid] ~= nil then
+                      me:ModifyProperties{
+                          description = "Clear Trigger",
+                          undoable = false,
+                          execute = function()
+                              me.properties:ClearAvailableTrigger(card)
+                          end,
+                      }
+                  end
+
+                  if (not accepted) or (not enemy.valid) or enemy.properties == nil or (not me.valid) then
+                      return
+                  end
+
+                  --Hidden: no second card for the enemy, no second "uses an ability" event
+                  --(so no second Friend!) and no Malice banner. Free: the enemy already paid.
+                  local copy = DeepCopy(used)
+                  copy._tmp_temporaryClone = true
+                  copy.categorization = "Hidden"
+                  copy.actionResourceId = "none"
+                  copy.resourceCost = "none"
+                  copy.resourceNumber = 0
+                  copy.usageLimitOptions = {resourceRefreshType = "none", charges = "0", resourceid = "none"}
+                  copy.forceCasterTarget = false
+                  if copy:has_key("villainAction") then
+                      copy.villainAction = nil
+                  end
+
+                  --Auras are left out for now. An aura worn as an effect counts sides from
+                  --whoever wears it, so on you it would help your allies, not the enemy's
+                  --(Form Up!), and an aura placed on the map would be placed a second time.
+                  local effectsTable = dmhub.GetTable("characterOngoingEffects")
+                  local function AppliesAura(behavior)
+                      if behavior.typeName == "ActivatedAbilityAuraBehavior" then
+                          return true
+                      end
+                      if behavior.typeName ~= "ActivatedAbilityApplyOngoingEffectBehavior" then
+                          return false
+                      end
+                      local effect = effectsTable[behavior:try_get("ongoingEffect", "")]
+                      for _, modifier in ipairs(effect ~= nil and effect:try_get("modifiers") or {}) do
+                          if modifier.behavior == "aura" then
+                              return true
+                          end
+                      end
+                      return false
+                  end
+                  local function StripAuras(list)
+                      local kept = {}
+                      for _, behavior in ipairs(list or {}) do
+                          if not AppliesAura(behavior) then
+                              local custom = behavior:try_get("customAbility")
+                              if custom ~= nil then
+                                  custom.behaviors = StripAuras(custom.behaviors)
+                              end
+                              kept[#kept+1] = behavior
+                          end
+                      end
+                      return kept
+                  end
+
+                  --Keep what the ability does to its targets. What it did to its user, or to
+                  --its first target only, has already happened.
+                  local behaviors = {}
+                  for _, behavior in ipairs(StripAuras(copy.behaviors)) do
+                      local applyto = behavior:try_get("applyto", "targets")
+                      if applyto == "caster_and_targets" or applyto == "other_than_first_target" then
+                          behavior.applyto = "targets"
+                          applyto = "targets"
+                      end
+                      if applyto == "targets" or applyto == "hit_targets" or applyto == "failed_save_targets" or applyto == "passed_save_targets" then
+                          behaviors[#behaviors+1] = behavior
+                      end
+                  end
+                  if #behaviors == 0 then
+                      return
+                  end
+                  copy.behaviors = behaviors
+
+                  --The copy runs in its own coroutine while this one waits for it. The Monster
+                  --AI holds its turn while a hero's cast is open, and this one is the hero's.
+                  print(string.format("FRIEND:: %s joins %s's %s", creature.GetTokenDescription(me), creature.GetTokenDescription(enemy), used.name))
+                  local copyFinished = false
+                  dmhub.Coroutine(function()
+                      --Inside a coroutine the cast runs to its end before Cast returns, so an
+                      --error or an early return also ends the wait.
+                      pcall(function()
+                          copy:Cast(enemy, {{token = me, loc = me.loc}}, {
+                              symbols = {mode = (cast ~= nil and cast:try_get("mode")) or 1},
+                              pay = false,
+                              OnFinishCastHandlers = {function()
+                                  copyFinished = true
+                              end},
+                          })
+                      end)
+                      copyFinished = true
+                  end)
+                  local copyDeadline = dmhub.Time() + 600
+                  while (not copyFinished) and dmhub.Time() < copyDeadline and enemy.valid do
+                      coroutine.yield(0.1)
+                  end
+              end
+
+              if dmhub.inCoroutine and dmhub.canSafelyYield then
+                  Resolve()
+              else
+                  dmhub.Coroutine(Resolve)
+              end
+          conditionFormula: 'Used Ability.Allegiance = "ally" and (not Part Of Another Ability)'
+          domains:
+            class:3e4ca196-05e0-4541-920b-049e7e87f943: true
+            class:a58112e5-6466-4189-b810-5d0d93adc075: true
+          guid: 315522b6-3876-4a66-89b2-d3a8b3c589dc
+          mandatory: local
+          modifiers: []
+          numTargets: "1"
+          range: 1
+          repeatTargets: false
+          subject: enemy
+          targetType: self
+          trigger: useability
+          whenActive: combat
       source: College of the Harlequin Mask Class Feature
       sourceReference:
         __typeName: SourceReference
