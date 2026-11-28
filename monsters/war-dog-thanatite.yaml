@@ -250,8 +250,32 @@ info:
         - 2
         targeting: formula
         targetingFormula: not Friends(Target, Caster) and not Target.Object and not Target.Dead and ParentTarget.Distance(Target) <= 2 and (Target.AdjacentToCorpse or ParentTarget.Distance(Target) <= 1)
-      - __typeName: ActivatedAbilityDestroyBehavior
+      - name: KillTarget
+        __typeName: ActivatedAbilityScriptBehavior
         applyto: targets
+        code: |-
+          --Kills the target outright. On a minion, Destroy alone only takes one minion's share
+          --of the squad's Stamina, and the Director would then be asked which minion dies; this
+          --confirms the targeted minion's own death, as clicking its skull does.
+          ability:CommitToPaying(casterToken, options)
+          for _, target in ipairs(targets) do
+              local tok = target.token
+              if tok ~= nil and tok.valid and tok.properties ~= nil and not tok.properties:IsDead() then
+                  local isMinion = tok.properties.minion
+                  tok:ModifyProperties{
+                      description = "Destroyed",
+                      execute = function()
+                          tok.properties:Destroy(string.format("Destroyed by %s", ability.name))
+                      end,
+                  }
+                  local live = tok.properties
+                  if isMinion and live ~= nil and not live.minionDead and live:try_get("_tmp_minionDeathPending") == nil then
+                      live._tmp_minionDeathPending = dmhub.Time()
+                      live:TriggerEvent("creaturedeath", {hasattacker = false})
+                      live:MinionDeath()
+                  end
+              end
+          end
       categorization: Signature Ability
       display:
         bgcolor: "#ffffffff"
