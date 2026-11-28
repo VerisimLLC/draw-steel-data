@@ -33,6 +33,11 @@ maliceAbilities:
   description: |
     One war dog acting this turn tears apart a nearby corpse of a humanoid and incorporates its body parts into their own. The war dog regains Stamina equal to 5 times their level.
   __typeName: MaliceAbility
+  abilityFilters:
+  - formula: not Minion
+    reason: Cannot be used by a minion
+  - formula: AdjacentToCorpse or Count Nearby Friends(1, "Body Bank Branch Manager") > 0
+    reason: No corpse or living war doc is next to this war dog. The Director can still use it.
   abilityType: none
   behaviors:
   - __typeName: ActivatedAbilityHealBehavior
@@ -45,6 +50,7 @@ maliceAbilities:
   guid: 9b3c64f8-f96e-440d-92ec-be34df1ea988
   iconid: 59057dc1-7abf-4304-8375-46e5905a875a
   implementation: 4
+  implementationDetails: Shows red for a minion, or when neither a corpse nor a living war doc (Body Bank Branch Manager) is next to the war dog. The Director can still use it.
   modifiers: []
   numTargets: "1"
   persistence: []
