@@ -162,59 +162,6 @@ info:
         sourceguid: 57694284-488e-4ac6-8e4d-3f56a8440432
         value: 1
       source: Trait
-    - name: Longarm Shrikegun Damage Choices
-      description: ""
-      __typeName: CharacterFeature
-      domains:
-        CharacterFeature:7b152096-a470-41cf-9ef1-1d6dc6a9ec8a: true
-        CharacterFeature:af75266e-1309-4131-aab0-94fcedb4fc22: true
-      guid: 7b152096-a470-41cf-9ef1-1d6dc6a9ec8a
-      implementation: 4
-      modifiers:
-      - name: Longarm Shrikegun Damage Choices
-        description: ""
-        __typeName: CharacterModifier
-        ability:
-          name: New Ability
-          description: ""
-          __typeName: ActivatedAbility
-          abilityModification: true
-          abilityType: none
-          behaviors: []
-          display:
-            bgcolor: "#ffffffff"
-            brightness: 1
-            hueshift: 0
-            saturation: 1
-          guid: 443370b9-1078-476c-bec3-aef888a5eeeb
-          iconid: ui-icons/skills/1.png
-          modifiers: []
-          numTargets: "1"
-          range: 1
-          repeatTargets: false
-          targetType: self
-        attributes:
-        - id: damagetype
-          damageTypes:
-            acid: true
-            cold: true
-            fire: true
-            lightning: true
-            poison: true
-            psychic: true
-            sonic: true
-          operation: Add
-        behavior: modifyability
-        domains:
-          CharacterFeature:7b152096-a470-41cf-9ef1-1d6dc6a9ec8a: true
-          CharacterFeature:af75266e-1309-4131-aab0-94fcedb4fc22: true
-        filterAbility: Ability.name = "Longarm Shrikegun"
-        guid: 1d0e2a65-e15e-4319-8d11-cfdfa83ab7e7
-        source: Character Feature
-        sourceguid: 7b152096-a470-41cf-9ef1-1d6dc6a9ec8a
-      source: Character Feature
-      tags:
-        Hidden: true
     cr: 6
     creatureSize: 1L
     damage_taken: 0
@@ -301,6 +248,12 @@ info:
       - __typeName: ActivatedAbilityPowerRollBehavior
         modesSelected:
         - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
         roll: 2d10 + Highest Characteristic
         tiers:
         - 7 damage
@@ -312,7 +265,7 @@ info:
         autoTarget: false
         customAbility:
           name: Longarm Shrikegun
-          description: Fired from the ally's space.
+          description: Fired from the ally's space. The arachnite chooses the damage type.
           __typeName: ActivatedAbility
           abilityType: none
           behaviors:
@@ -366,11 +319,35 @@ info:
             saturation: 1
           guid: 6a3e9c1f-4b8d-4e2a-b7c5-1d0f8e3a6c29
           iconid: ui-icons/skills/1.png
+          implementation: 4
           keywords:
             Ranged: true
             Strike: true
             Weapon: true
+          modeList:
+          - damageType: acid
+            rules: ""
+            text: Acid
+          - damageType: cold
+            rules: ""
+            text: Cold
+          - damageType: fire
+            rules: ""
+            text: Fire
+          - damageType: lightning
+            rules: ""
+            text: Lightning
+          - damageType: poison
+            rules: ""
+            text: Poison
+          - damageType: psychic
+            rules: ""
+            text: Psychic
+          - damageType: sonic
+            rules: ""
+            text: Sonic
           modifiers: []
+          multipleModes: true
           numTargets: "1"
           objectTarget: true
           range: "15"
@@ -378,8 +355,8 @@ info:
           targetType: target
         invokeOnCaster: true
         modesSelected:
-        - 2
-        promptText: Choose the target of the strike, measured from the ally's space.
+        - 8
+        promptText: Choose the damage type and the target of the strike, measured from the ally's space.
         rangeOrigin: parent_primary_target
       categorization: Signature Ability
       display:
@@ -392,12 +369,33 @@ info:
       guid: a8e75719-43d8-4f58-86f8-9bc97ee185ac
       iconid: ui-icons/skills/1.png
       implementation: 4
+      implementationDetails: Pick the damage type as the mode. The 2 Malice mode targets the ally first, then asks for the damage type and the real target, measured from the ally's space.
       keywords:
         Ranged: true
         Strike: true
         Weapon: true
       modeList:
-      - text: Normal
+      - damageType: acid
+        rules: ""
+        text: Acid
+      - damageType: cold
+        rules: ""
+        text: Cold
+      - damageType: fire
+        rules: ""
+        text: Fire
+      - damageType: lightning
+        rules: ""
+        text: Lightning
+      - damageType: poison
+        rules: ""
+        text: Poison
+      - damageType: psychic
+        rules: ""
+        text: Psychic
+      - damageType: sonic
+        rules: ""
+        text: Sonic
       - rules: The arachnite can use this ability as if they were in the space of any ally within distance. Target the ally first.
         text: 2 Malice
       modifiers: []
@@ -407,9 +405,9 @@ info:
       range: 15
       repeatTargets: false
       resourceCost: 101bab52-7f7c-4bab-92c2-9f8e0cfb7ec8
-      resourceNumber: 2 when Mode = 2 else 0
+      resourceNumber: 2 when Mode = 8 else 0
       strain: []
-      targetFilter: Mode = 1 or (Friends(Target, Caster) and not (Target = Caster))
+      targetFilter: Mode < 8 or (Friends(Target, Caster) and not (Target = Caster))
       targetType: target
     - name: Web Vial
       description: The area is difficult terrain until the end of the encounter.
