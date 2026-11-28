@@ -140,10 +140,11 @@ info:
           behaviors:
           - __typeName: ActivatedAbilityApplyOngoingEffectBehavior
             duration: eoe
-            filterTarget: Subject.Distance(Target) <= 1 and not (Target = Subject)
+            filterTarget: Subject.Distance(Target) <= 1 and not (Target = Subject) and not Target.Dead
             ongoingEffect: 36cc3465-f1e5-43ae-b130-895fb34f2189
             ongoingEffectCustom: false
             stacks: "6"
+          conditionFormula: Line of Sight(Self, Subject) > 0
           display:
             bgcolor: "#ffffffff"
             brightness: 1
@@ -168,8 +169,8 @@ info:
           subject: allies
           subjectRange: "15"
           targetAllegiance: ally
-          targetType: all
-          trigger: zerohitpoints
+          targetType: map
+          trigger: creaturedeath
           triggerPrompt: "Sanguine Stimulants (1 Malice): allies next to the fallen war dog deal an extra 6 damage on their next strike."
       source: Trait
     cr: 5
@@ -279,7 +280,32 @@ info:
       abilityType: none
       actionResourceId: a513b9a6-f311-4b0f-88b8-4e9c7bf92d0b
       behaviors:
-      - __typeName: ActivatedAbilityDestroyBehavior
+      - name: KillTarget
+        __typeName: ActivatedAbilityScriptBehavior
+        applyto: targets
+        code: |-
+          --Kills the target outright. On a minion, Destroy alone only takes one minion's share
+          --of the squad's Stamina, and the Director would then be asked which minion dies; this
+          --confirms the targeted minion's own death, as clicking its skull does.
+          ability:CommitToPaying(casterToken, options)
+          for _, target in ipairs(targets) do
+              local tok = target.token
+              if tok ~= nil and tok.valid and tok.properties ~= nil and not tok.properties:IsDead() then
+                  local isMinion = tok.properties.minion
+                  tok:ModifyProperties{
+                      description = "Destroyed",
+                      execute = function()
+                          tok.properties:Destroy(string.format("Destroyed by %s", ability.name))
+                      end,
+                  }
+                  local live = tok.properties
+                  if isMinion and live ~= nil and not live.minionDead and live:try_get("_tmp_minionDeathPending") == nil then
+                      live._tmp_minionDeathPending = dmhub.Time()
+                      live:TriggerEvent("creaturedeath", {hasattacker = false})
+                      live:MinionDeath()
+                  end
+              end
+          end
       categorization: Ability
       display:
         bgcolor: "#ffffffff"
