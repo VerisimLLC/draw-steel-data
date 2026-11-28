@@ -190,6 +190,134 @@ info:
         source: Trait
         sourceguid: 6e369f61-7a3e-4518-a2ce-2f84ef963a93
         text: You can bring an adjacent restrained enemy with you as if they were grabbed.
+      - name: Escort the Prisoners
+        description: When the warden takes stairs to another floor, the prisoner they escort comes along.
+        __typeName: CharacterModifier
+        behavior: trigger
+        domains:
+          CharacterFeature:6e369f61-7a3e-4518-a2ce-2f84ef963a93: true
+        guid: 69ada473-1893-4085-826f-fb7163634ea4
+        source: Trait
+        sourceguid: 6e369f61-7a3e-4518-a2ce-2f84ef963a93
+        triggeredAbility:
+          name: Escort the Prisoners
+          description: When the warden takes stairs to another floor, the prisoner they escort comes along.
+          __typeName: TriggeredAbility
+          abilityType: none
+          actionResourceId: none
+          behaviors:
+          - __typeName: ActivatedAbilityScriptBehavior
+            name: EscortThroughStairs
+            code: |
+              -- Escort the Prisoners, stairs. A spiral stair is a map teleporter: a moment after the
+              -- warden's move ends on it, it puts the warden on the other floor and leaves the
+              -- escorted prisoner behind. Note the prisoners now, wait for the warden to change
+              -- floors, then put each prisoner on a free square beside the warden.
+              local ESCORTED = "5fe60581-6827-4b68-b1d0-c2763baa4617"
+              local warden = casterToken
+              if warden == nil or not warden.valid then return end
+              local wardenId = warden.charid
+              --The floor the walk ended on. By the time this runs the stair may already have moved
+              --the warden, so read it from the move's path rather than the warden.
+              local startFloor = warden.loc.floor
+              pcall(function() startFloor = symbols.path.path.destination.floor end)
+
+              --true if this token carries Escorted by Dwarf Warden from this warden
+              local function EscortedByWarden(tok)
+                  for _, effect in ipairs(tok.properties:ActiveOngoingEffects()) do
+                      local caster = effect:try_get("casterInfo")
+                      if effect.ongoingEffectid == ESCORTED and caster ~= nil and caster.tokenid == wardenId then
+                          return true
+                      end
+                  end
+                  return false
+              end
+
+              --only prisoners carried along on that floor; one left on another floor stays there
+              local prisoners = {}
+              for _, tok in ipairs(dmhub.allTokens) do
+                  if tok.valid and tok.charid ~= wardenId and tok.properties ~= nil and tok.loc.floor == startFloor and EscortedByWarden(tok) then
+                      prisoners[#prisoners + 1] = tok.charid
+                  end
+              end
+              if #prisoners == 0 then return end
+
+              --A free square next to the warden on the warden's floor, or nil. claimed holds
+              --"x,y" squares already given to another prisoner.
+              local function FreeSquareBeside(wardenToken, claimed)
+                  local taken = {}
+                  for key in pairs(claimed) do taken[key] = true end
+                  for _, other in ipairs(dmhub.allTokens) do
+                      if other.valid and other.loc.floor == wardenToken.loc.floor then
+                          for _, occupied in ipairs(other.locsOccupying or { other.loc }) do
+                              taken[occupied.x .. "," .. occupied.y] = true
+                          end
+                      end
+                  end
+                  for _, loc in ipairs(wardenToken.properties:AdjacentLocations()) do
+                      local key = loc.x .. "," .. loc.y
+                      local square = core.Loc{ x = loc.x, y = loc.y, floorIndex = wardenToken.loc.floor }
+                      if not taken[key] and dmhub.GetTileRulesAtLoc(square) ~= nil then
+                          return square, key
+                      end
+                  end
+                  return nil, nil
+              end
+
+              local function Follow(wardenToken)
+                  local claimed = {}
+                  for _, charid in ipairs(prisoners) do
+                      local prisoner = dmhub.GetTokenById(charid)
+                      if prisoner ~= nil and prisoner.valid and prisoner.loc.floor == startFloor then
+                          local spot, key = FreeSquareBeside(wardenToken, claimed)
+                          if spot ~= nil then
+                              claimed[key] = true
+                              prisoner:ChangeLocation(spot)
+                              --stairs elsewhere may not line up, which ends the escort: put it back
+                              if not EscortedByWarden(prisoner) then
+                                  prisoner:ModifyProperties{
+                                      description = "Escort the Prisoners",
+                                      execute = function()
+                                          prisoner.properties:ApplyOngoingEffect(ESCORTED, "eoe", { tokenid = wardenId, abilityName = "Escort the Prisoners" })
+                                      end,
+                                  }
+                              end
+                          end
+                      end
+                  end
+              end
+
+              --The stair moves the warden once the move reaches the server, so check for a few seconds.
+              local tries = 0
+              local function Check()
+                  tries = tries + 1
+                  local wardenToken = dmhub.GetTokenById(wardenId)
+                  if wardenToken == nil or not wardenToken.valid then return end
+                  if wardenToken.loc.floor ~= startFloor then
+                      pcall(Follow, wardenToken)
+                  elseif tries < 8 then
+                      dmhub.Schedule(0.5, Check)
+                  end
+              end
+              dmhub.Schedule(0.5, Check)
+          conditionFormula: Count Nearby Enemies(1, "Escorted by Dwarf Warden") > 0
+          display:
+            bgcolor: "#ffffffff"
+            brightness: 1
+            hueshift: 0
+            saturation: 1
+          guid: 4e8ed152-81f7-470b-8256-0f13ad2490b2
+          iconid: ui-icons/skills/1.png
+          implementation: 4
+          mandatory: true
+          modifiers: []
+          numTargets: "1"
+          range: 100
+          repeatTargets: false
+          strain: []
+          targetType: self
+          trigger: finishmove
+          whenActive: combat
       source: Trait
     cr: 2
     creatureSize: 1M
